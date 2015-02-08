@@ -59,7 +59,7 @@ CREATE TABLE gps_full_data (
   io_eight float,
   signal_strength int,
   supply_voltage float,
-  PRIMARY KEY ((imei, date), server_time)
+  PRIMARY KEY ((imei, date_hour), server_time)
 );
 
 
@@ -88,7 +88,7 @@ CREATE TABLE gps_last_data (
   day_max_speed float,
   day_max_speed_time timestamp,
   last_halt_time timestamp,
-  PRIMARY KEY ((imei, date), server_time)
+  PRIMARY KEY ((imei, date_hour), server_time)
 );
 
 
