@@ -30,9 +30,7 @@ public class SampleTest {
 			} else {
 				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
 			}
-			
-
-		
+					
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
