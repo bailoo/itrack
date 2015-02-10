@@ -25,7 +25,6 @@ CREATE TABLE gps_full_data (
 
 CREATE TABLE gps_last_data (
   imei text,
-  date_hour timestamp,
   message_type text,
   version text,
   fix int,
@@ -47,5 +46,5 @@ CREATE TABLE gps_last_data (
   day_max_speed float,
   day_max_speed_time timestamp,
   last_halt_time timestamp,
-  PRIMARY KEY ((imei, date_hour), server_time)
+  PRIMARY KEY (imei)
 );
