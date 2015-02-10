@@ -15,10 +15,10 @@ public class LastDataInsertDao extends FullDataInsertDao{
 
 	@Override
 	protected String getInsertStatement(){
-		return "INSERT INTO gps_last_data (imei, date_hour, message_type, version, fix, lat, lon, speed, device_time, "+
+		return "INSERT INTO gps_last_data (imei, message_type, version, fix, lat, lon, speed, device_time, "+
 				"server_time, io_one, io_two, io_three, io_four, io_five, io_six, io_seven, io_eight, "+
 				"signal_strength, supply_voltage, day_max_speed, day_max_speed_time, last_halt_time) VALUES ("+
-				"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"+
+				"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"+
 				");";
 	}
 
@@ -27,7 +27,6 @@ public class LastDataInsertDao extends FullDataInsertDao{
 		BoundStatement boundStatement = new BoundStatement(statement);
 		session.execute(boundStatement.bind(
 				data.getImei(),
-				data.getDateHour(),
 				data.getMessageType(),
 				data.getVersion(),
 				data.getFix(),

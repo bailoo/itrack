@@ -47,6 +47,7 @@ public class SampleTest {
 		now.set(Calendar.MINUTE, 0);
 		now.set(Calendar.SECOND, 0);
 		now.set(Calendar.HOUR, 0);
+		now.set(Calendar.MILLISECOND, 0);
 		
 		
 		FullData data = initFulldata(now);
@@ -55,7 +56,7 @@ public class SampleTest {
 		int i = 0;
 		
 		System.out.println("Inserting Full Data");
-		for (i = 0; i < 5000; i++) {
+		for (i = 0; i < 1; i++) {
 			ops.insert(data);
 			incrementServerTime(data, now);
 		}
@@ -67,6 +68,8 @@ public class SampleTest {
 		now.set(Calendar.MINUTE, 0);
 		now.set(Calendar.SECOND, 0);
 		now.set(Calendar.HOUR, 0);
+		now.set(Calendar.MILLISECOND, 0);
+
 		
 		now.set(Calendar.MINUTE, 0);
 		now.set(Calendar.SECOND, 0);
@@ -119,7 +122,6 @@ public class SampleTest {
 		data.setSupplyVoltage((float)2.5);
 		data.setVersion("v1.53T");
 		
-		data.setDateHour(now.getTime());
 		data.setDeviceTime(now.getTime());
 		data.setServerTime(now.getTime());
 		
