@@ -6,17 +6,17 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Properties;
 
-import in.co.itracksolution.dao.FullDataInsertDao;
-import in.co.itracksolution.dao.LastDataInsertDao;
+import in.co.itracksolution.dao.FullDataDao;
+import in.co.itracksolution.dao.LastDataDao;
 import in.co.itracksolution.db.CassandraConn;
 import in.co.itracksolution.model.FullData;
 import in.co.itracksolution.model.LastData;
 
-public class SampleTest {
+public class SampleInsert {
 	
 	CassandraConn conn;
 	
-	public SampleTest(){
+	public SampleInsert(){
 		String propFileName = "config.properties";
 		Properties prop = new Properties();
 		
@@ -46,53 +46,44 @@ public class SampleTest {
 		Calendar now = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
 		now.set(Calendar.MINUTE, 0);
 		now.set(Calendar.SECOND, 0);
-		now.set(Calendar.HOUR, 0);
+		now.set(Calendar.HOUR_OF_DAY, 0);
 		now.set(Calendar.MILLISECOND, 0);
 		
 		
 		FullData data = initFulldata(now);
-		FullDataInsertDao ops = new FullDataInsertDao(conn.getSession());
+		FullDataDao ops = new FullDataDao(conn.getSession());
 		
 		int i = 0;
 		
 		System.out.println("Inserting Full Data");
-		for (i = 0; i < 1; i++) {
+		for (i = 0; i < 5000; i++) {
 			ops.insert(data);
 			incrementServerTime(data, now);
 		}
 	}
 	
-	public void insert5000Lastdata(){
+	public void insertLastdata(){
 		
 		Calendar now = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
 		now.set(Calendar.MINUTE, 0);
 		now.set(Calendar.SECOND, 0);
-		now.set(Calendar.HOUR, 0);
+		now.set(Calendar.HOUR_OF_DAY, 0);
 		now.set(Calendar.MILLISECOND, 0);
-
-		
-		now.set(Calendar.MINUTE, 0);
-		now.set(Calendar.SECOND, 0);
-		now.set(Calendar.HOUR, 0);
 		
 		LastData lastData = initLastdata(now);
-		LastDataInsertDao lastDao = new LastDataInsertDao(conn.getSession());
-		
-		int i = 0;
+		LastDataDao lastDao = new LastDataDao(conn.getSession());
 		
 		System.out.println("Inserting Last Data");
-		for (i = 0; i < 5000; i++) {
-			lastDao.insert(lastData);
-			incrementServerTime(lastData, now);
-		}
+		lastDao.insert(lastData);
+		
 	}
 	
 	public static void main(String[] args) {
 		
-		SampleTest st = new SampleTest();
+		SampleInsert st = new SampleInsert();
 		
 		st.insert5000Fulldata();
-		st.insert5000Lastdata();
+		st.insertLastdata();
 		
 		st.close();	
 	}
