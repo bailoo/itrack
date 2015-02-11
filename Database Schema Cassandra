@@ -1,4 +1,4 @@
-CREATE TABLE gps_full_data (
+CREATE TABLE full_data (
   imei text,
   date_hour timestamp,
   message_type text,
@@ -23,7 +23,7 @@ CREATE TABLE gps_full_data (
 );
 
 
-CREATE TABLE gps_last_data (
+CREATE TABLE last_data (
   imei text,
   message_type text,
   version text,
