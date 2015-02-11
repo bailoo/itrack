@@ -1,0 +1,8 @@
+CREATE TABLE full_data (
+  imei text,
+  date_hour timestamp,
+  device_time timestamp,
+  data text,
+  PRIMARY KEY ((imei, date_hour), device_time)
+); 
+
