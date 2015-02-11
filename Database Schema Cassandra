@@ -19,7 +19,7 @@ CREATE TABLE gps_full_data (
   io_eight float,
   signal_strength int,
   supply_voltage float,
-  PRIMARY KEY ((imei, date_hour), server_time)
+  PRIMARY KEY ((imei, date_hour), device_time)
 );
 
 
