@@ -53,19 +53,15 @@ public class SampleLastDataQuery {
 		SampleLastDataQuery st = new SampleLastDataQuery();
 		
 		LastData data = new LastData();
-		data.setImei("satuimei"); //the imei
+		data.setImei("862170011627815"); //make sure the imei exist in cassandra
 		
 		
 		LastDataDao dao = new LastDataDao(st.conn.getSession());
 		List<Row> rs= dao.selectByImei(data.getImei());
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
 		for (Row row : rs) {
 			System.out.print("imei: "+row.getString("imei")+" ");
-			System.out.print("Device time: "+sdf.format(row.getDate("device_time"))+" ");
-			System.out.print("Lat: "+row.getDouble("lat")+" ");
-			System.out.print("Lon "+row.getDouble("lon")+" ");
+			System.out.print("data: "+row.getString("data")+" ");
 			System.out.println();
 		}
 		

@@ -54,31 +54,26 @@ public class SampleFullDataQuery {
 		SampleFullDataQuery st = new SampleFullDataQuery();
 		
 		FullData data = new FullData();
-		data.setImei("satuimei"); //the imei
+		data.setImeih("862170011627815@2015-2-17@0"); //Make sure this imeih exists
 		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.MINUTE, 0);//minute, second and millisecond must be zero because our granularity only untuil hour
 		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		
-		cal.set(Calendar.YEAR, 2015);//set year
-		cal.set(Calendar.MONTH, Calendar.FEBRUARY);//set month
-		cal.set(Calendar.DATE, 11);//set date
-		cal.set(Calendar.HOUR_OF_DAY, 0);//set hour
+		data.setDTime(cal.getTime());//make sure the device time exist for that imei
 		
-		
-		data.setDateHour(cal.getTime());
 		
 		FullDataDao dao = new FullDataDao(st.conn.getSession());
-		List<Row> rs= dao.selectByImeiAndDateHour(data.getImei(), data.getDateHour());
+		List<Row> rs= dao.selectByImeiAndDateHour(data.getImeih(), data.getDTime());
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		for (Row row : rs) {
-			System.out.print("imei: "+row.getString("imei")+" ");
-			System.out.print("Date Hour "+sdf.format(row.getDate("date_hour"))+" ");
-			System.out.print("Lat: "+row.getDouble("lat")+" ");
-			System.out.print("Lon "+row.getDouble("lon")+" ");
+			System.out.print("imeih: "+row.getString("imeih")+" ");
+			System.out.print("Device times: "+sdf.format(row.getDate("dtime"))+" ");
+			System.out.print("data: "+row.getString("data")+" ");
 			System.out.println();
 		}
 		

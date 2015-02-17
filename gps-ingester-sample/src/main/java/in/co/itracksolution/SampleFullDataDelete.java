@@ -7,6 +7,7 @@ import in.co.itracksolution.model.FullData;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
 
@@ -47,24 +48,24 @@ public class SampleFullDataDelete {
 		SampleFullDataDelete st = new SampleFullDataDelete();
 		
 		FullData data = new FullData();
-		data.setImei("satuimei"); //the imei
+		data.setImeih("862170011627815@2015-2-17@0"); //Make sure this imeih exists
 		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.MINUTE, 0);//minute, second and millisecond must be zero because our granularity only untuil hour
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		
-		cal.set(Calendar.YEAR, 2015);//set year
-		cal.set(Calendar.MONTH, Calendar.FEBRUARY);//set month
-		cal.set(Calendar.DATE, 11);//set date
-		cal.set(Calendar.HOUR_OF_DAY, 0);//set hour
+		cal.set(Calendar.HOUR_OF_DAY, 0);
 		
 		
-		data.setDateHour(cal.getTime());
+		data.setDTime(cal.getTime());//make sure the device time exist for that imei
 		
 		FullDataDao dao = new FullDataDao(st.conn.getSession());
 		dao.delete(data);
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		
+		System.out.println("Full Data with imeih: "+data.getImeih()+" and dtime: "+sdf.format(data.getDTime())+" is deleted");
 		
 		st.close();	
 	}

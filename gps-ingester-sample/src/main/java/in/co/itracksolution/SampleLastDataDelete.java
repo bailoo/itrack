@@ -45,11 +45,12 @@ public class SampleLastDataDelete {
 		SampleLastDataDelete st = new SampleLastDataDelete();
 		
 		LastData data = new LastData();
-		data.setImei("satuimei"); //the imei
+		data.setImei("862170011627815"); //make sure the imei exist in cassandrass
 		
 		LastDataDao dao = new LastDataDao(st.conn.getSession());
 		dao.delete(data);
 		
+		System.out.println("Last Data with imei: "+data.getImei());
 		
 		st.close();	
 	}

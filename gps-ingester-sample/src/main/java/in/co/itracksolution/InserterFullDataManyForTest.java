@@ -13,11 +13,11 @@ import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.Session;
 
-public class Inserter {
+public class InserterFullDataManyForTest {
 
 	public CassandraConn conn;
 	
-	public Inserter(){
+	public InserterFullDataManyForTest(){
 		String propFileName = "config.properties";
 		Properties prop = new Properties();
 		
@@ -45,7 +45,7 @@ public class Inserter {
 	
 	public static void main(String[] args) {
 		
-		Inserter st = new Inserter();
+		InserterFullDataManyForTest st = new InserterFullDataManyForTest();
 		
 		Session session = st.conn.getSession();
 		

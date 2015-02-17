@@ -1,19 +1,18 @@
 package in.co.itracksolution;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Calendar;
-import java.util.Properties;
-
 import in.co.itracksolution.dao.FullDataDao;
 import in.co.itracksolution.dao.LastDataDao;
 import in.co.itracksolution.db.CassandraConn;
 import in.co.itracksolution.model.FullData;
 import in.co.itracksolution.model.LastData;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Properties;
+
 public class SampleInsert {
-	
 	CassandraConn conn;
 	
 	public SampleInsert(){
@@ -32,7 +31,6 @@ public class SampleInsert {
 			}
 					
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -42,38 +40,40 @@ public class SampleInsert {
 			conn.close();
 	}
 
-	public void insert5000Fulldata(){
+	public void insertFulldata(){
 		Calendar now = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
 		now.set(Calendar.MINUTE, 0);
 		now.set(Calendar.SECOND, 0);
 		now.set(Calendar.HOUR_OF_DAY, 0);
 		now.set(Calendar.MILLISECOND, 0);
 		
+		String imei = "862170011627815";
+		imei += "@"+now.get(Calendar.YEAR)+"-"+
+				(now.get(Calendar.MONTH)+1)+"-"+ //month +1 because it starts (january) as 0
+				now.get(Calendar.DATE)+"@"+
+				now.get(Calendar.HOUR_OF_DAY);
 		
-		FullData data = initFulldata(now);
+		String data = "N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88";
+		
+		FullData fullData = new FullData(imei, now.getTime(), data);
 		FullDataDao ops = new FullDataDao(conn.getSession());
 		
-		int i = 0;
+		System.out.println("Inserting Full Data with imeih: "+imei);
+
+		ops.insert(fullData);
 		
-		System.out.println("Inserting Full Data");
-		for (i = 0; i < 5000; i++) {
-			ops.insert(data);
-			incrementServerTime(data, now);
-		}
 	}
 	
 	public void insertLastdata(){
+			
+		String imei = "862170011627815";
 		
-		Calendar now = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
-		now.set(Calendar.MINUTE, 0);
-		now.set(Calendar.SECOND, 0);
-		now.set(Calendar.HOUR_OF_DAY, 0);
-		now.set(Calendar.MILLISECOND, 0);
+		String data = "N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88";
 		
-		LastData lastData = initLastdata(now);
+		LastData lastData = new LastData(imei, data);
 		LastDataDao lastDao = new LastDataDao(conn.getSession());
 		
-		System.out.println("Inserting Last Data");
+		System.out.println("Inserting Last Data with imei: "+imei);
 		lastDao.insert(lastData);
 		
 	}
@@ -82,73 +82,11 @@ public class SampleInsert {
 		
 		SampleInsert st = new SampleInsert();
 		
-		st.insert5000Fulldata();
+		st.insertFulldata();
 		st.insertLastdata();
 		
 		st.close();	
 	}
+		
 	
-	public void incrementServerTime(FullData data, Calendar cal){
-		cal.add(Calendar.SECOND, 1);
-		data.setServerTime(cal.getTime());
-	}
-	
-	public LastData initLastdata(Calendar now){
-		LastData data = new LastData();
-		data.setFix(1);
-		data.setImei("satuimei");
-		data.setIoOne(2219);
-		data.setIoTwo(2219);
-		data.setIoThree(2219);
-		data.setIoFour(2219);
-		data.setIoFive(2219);
-		data.setIoSix(2219);
-		data.setIoSeven(2219);
-		data.setIoEight(2219);
-		data.setLat(27.35942);
-		data.setLon(82.06958);
-		data.setMessageType("normal");
-		data.setSignalStrength(1);
-		data.setSpeed(2);
-		data.setSupplyVoltage((float)2.5);
-		data.setVersion("v1.53T");
-		
-		data.setDeviceTime(now.getTime());
-		data.setServerTime(now.getTime());
-		
-		data.setDayMaxSpeed((float)1.2);
-		data.setDayMaxSpeedTime(now.getTime());
-		data.setLastHaltTime(now.getTime());
-		
-		
-		return data;
-	}
-	
-	public static FullData initFulldata(Calendar now){
-		FullData data = new FullData();
-		data.setFix(1);
-		data.setImei("satuimei");
-		data.setIoOne(2219);
-		data.setIoTwo(2219);
-		data.setIoThree(2219);
-		data.setIoFour(2219);
-		data.setIoFive(2219);
-		data.setIoSix(2219);
-		data.setIoSeven(2219);
-		data.setIoEight(2219);
-		data.setLat(27.35942);
-		data.setLon(82.06958);
-		data.setMessageType("normal");
-		data.setSignalStrength(1);
-		data.setSpeed(2);
-		data.setSupplyVoltage((float)2.5);
-		data.setVersion("v1.53T");
-		
-		data.setDateHour(now.getTime());
-		data.setDeviceTime(now.getTime());
-		data.setServerTime(now.getTime());
-		
-		return data;
-	}
-
 }
