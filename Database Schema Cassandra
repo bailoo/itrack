@@ -1,50 +1,19 @@
+CREATE KEYSPACE gps
+  WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 2 };
+  
 CREATE TABLE full_data (
-  imei text,
-  date_hour timestamp,
-  message_type text,
-  version text,
-  fix int,
-  lat double,
-  lon double,
-  speed double,
-  device_time timestamp,
-  server_time timestamp,
-  io_one float,
-  io_two float,
-  io_three float,
-  io_four float,
-  io_five float,
-  io_six float,
-  io_seven float,
-  io_eight float,
-  signal_strength int,
-  supply_voltage float,
-  PRIMARY KEY ((imei, date_hour), device_time)
+  imeih ascii,
+  dtime timestamp,
+  data ascii,
+  PRIMARY KEY (imeih, dtime)
 );
-
+//Sample data for full_data: N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88
 
 CREATE TABLE last_data (
-  imei text,
-  message_type text,
-  version text,
-  fix int,
-  lat double,
-  lon double,
-  speed double,
-  device_time timestamp,
-  server_time timestamp,
-  io_one float,
-  io_two float,
-  io_three float,
-  io_four float,
-  io_five float,
-  io_six float,
-  io_seven float,
-  io_eight float,
-  signal_strength int,
-  supply_voltage float,
-  day_max_speed float,
-  day_max_speed_time timestamp,
-  last_halt_time timestamp,
+  imei ascii,
+  data ascii,
   PRIMARY KEY (imei)
-);
+); 
+//Sample data for last_data contains device time because device time is not part of the key and last_key is 
+//always one for each device: 
+//     N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88
