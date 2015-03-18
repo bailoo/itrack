@@ -14,14 +14,13 @@
 	$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 	
 	
-	$s_cql = "SELECT * FROM full_data 
-			  where 
-			  imeih = '862170011627815@2015-2-17@0';";//make sure the imeih exist in cassandra
+	$imei = '862170018323731';
+	$date = '2015-01-01';
+	$hour = '23';
+	//make sure the imeih exist in cassandra
+	$st_results = DBQueryDateHour($o_cassandra,$imei,$date,$hour); 
 	
-	// Launch the query
-	$st_results = $o_cassandra->query($s_cql);
-	
-	echo 'Execution time: '.$i_execution_time."\n";
+	// echo 'Execution time: '.$i_execution_time."\n";
 	echo "\n";
 	echo 'Printing Top 10 rows:'."\n";
 	
@@ -48,3 +47,13 @@
 	$o_cassandra->close();
 	
 	
+	function DBQueryDateHour($o_cassandra,$imei,$date,$hour)
+	{
+		$s_cql = "SELECT * FROM full_data 
+			  where 
+			  imeih = '$imei@$date@$hour';";
+			  //imeih = '862170018323731@2015-01-01@23';";//make sure the imeih exist in cassandra
+		// Launch the query
+		$st_results = $o_cassandra->query($s_cql);
+		return $st_results;
+	}
