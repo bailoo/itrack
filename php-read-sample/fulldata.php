@@ -2,7 +2,6 @@
 
 	require_once 'Cassandra/Cassandra.php';
 	
-	
 	$o_cassandra = new Cassandra();
 	
 	$s_server_host     = '52.74.33.255';    // Localhost
@@ -17,8 +16,11 @@
 	$imei = '862170018323731';
 	$date = '2015-01-01';
 	$hour = '23';
+	$dateminute1 = '2015-01-01-23-01';
+	$dateminute2 = '2015-01-01-23-02';
 	//make sure the imeih exist in cassandra
-	$st_results = DBQueryDateHour($o_cassandra,$imei,$date,$hour); 
+	//$st_results = DBQueryDateHour($o_cassandra,$imei,$date,$hour); 
+	$st_results = DBQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2); 
 	
 	// echo 'Execution time: '.$i_execution_time."\n";
 	echo "\n";
@@ -56,13 +58,13 @@
 	* 
 	* @return array 	Results of the query 
 	*/
-	function DBQueryDateHour($o_cassandra,$imei,$date,$hour)
+	function DBQueryDateHour($o_cassandra,$imei,$date,$HH)
 	{
 		$s_cql = "SELECT * FROM full_data 
 			  where 
-			  imeih = '$imei@$date@$hour';";//imeih = '862170018323731@2015-01-01@23'
-		// Launch the query
-		$st_results = $o_cassandra->query($s_cql);
+			  imeih = '$imei@$date@$HH'
+			;";//imeih = '862170018323731@2015-01-01@23'
+		$st_results = $o_cassandra->query($s_cql);// Launch the query
 		return $st_results;
 	}
 
@@ -71,19 +73,31 @@
 	* Runs CQL query on Cassandra datastore
 	* 
 	* @param object $o_cassandra	Cassandra object 
-	* @param string $imei	IMEI
-	* @param string $date	YYYY-MM-DD
-	* @param string $time	HH-MM-SS
+	* @param string $imei		IMEI
+	* @param string $dateminute1	YYYY-MM-DD-HH-MM
+	* @param string $dateminute2	YYYY-MM-DD-HH-MM
 	* 
 	* @return array 	Results of the query 
 	*/
-	function DBQueryDateTime($o_cassandra,$imei,$date,$time)
+	function DBQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2)
 	{
-		
-		$s_cql = "SELECT * FROM full_data 
-			  where 
-			  imeih = '$imei@$date@$hour';";
-		// Launch the query
-		$st_results = $o_cassandra->query($s_cql);
-		return $st_results;
+	
+		if (substr($dateminute1,0,13) == substr($dateminute2,0,13))
+		{	
+			$date = substr($dateminute1,0,10);
+			$HH = substr($dateminute1,11,2);
+			$MM1 = substr($dateminute1,14,2);
+			$MM2= substr($dateminute2,14,2);
+			echo "date = $date\n hh = $HH\n mm1 = $MM1 \n mm2 = $MM2\n";
+			$s_cql = "SELECT * FROM full_data 
+				where 
+			  	imeih = '$imei@$date@$HH'
+				and
+				dtime >= '$date $HH:$MM1:00'
+				and
+				dtime < '$date $HH:$MM2:00'
+				;";
+			$st_results = $o_cassandra->query($s_cql);// Launch the query
+			return $st_results;
+		}
 	}
