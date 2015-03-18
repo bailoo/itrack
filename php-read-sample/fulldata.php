@@ -45,14 +45,44 @@
 	
 	
 	$o_cassandra->close();
-	
-	
+
+	/***
+	* Runs CQL query on Cassandra datastore
+	* 
+	* @param object $o_cassandra	Cassandra object 
+	* @param string $imei	IMEI
+	* @param string $date	YYYY-MM-DD
+	* @param string $hour	HH
+	* 
+	* @return array 	Results of the query 
+	*/
 	function DBQueryDateHour($o_cassandra,$imei,$date,$hour)
 	{
 		$s_cql = "SELECT * FROM full_data 
 			  where 
+			  imeih = '$imei@$date@$hour';";//imeih = '862170018323731@2015-01-01@23'
+		// Launch the query
+		$st_results = $o_cassandra->query($s_cql);
+		return $st_results;
+	}
+
+	
+	/***
+	* Runs CQL query on Cassandra datastore
+	* 
+	* @param object $o_cassandra	Cassandra object 
+	* @param string $imei	IMEI
+	* @param string $date	YYYY-MM-DD
+	* @param string $time	HH-MM-SS
+	* 
+	* @return array 	Results of the query 
+	*/
+	function DBQueryDateTime($o_cassandra,$imei,$date,$time)
+	{
+		
+		$s_cql = "SELECT * FROM full_data 
+			  where 
 			  imeih = '$imei@$date@$hour';";
-			  //imeih = '862170018323731@2015-01-01@23';";//make sure the imeih exist in cassandra
 		// Launch the query
 		$st_results = $o_cassandra->query($s_cql);
 		return $st_results;
