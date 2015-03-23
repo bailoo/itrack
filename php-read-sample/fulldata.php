@@ -16,9 +16,9 @@
 	$imei = '862170018323731';
 	$date = '2015-01-01';
 	$HH = '23';
-	$dateminute1 = '2015-01-01-13-54';
-	$dateminute2 = '2015-01-01-15-06';
-	echo "dateminute1 = $dateminute1\n dateminute2 = $dateminute2\n";
+	$dateminute1 = '2015-01-01-00-00';
+	$dateminute2 = '2015-01-01-02-00';
+	//echo "dateminute1 = $dateminute1\n dateminute2 = $dateminute2\n";
 	//make sure the imeih exist in cassandra
 	//$st_results = DBQueryDateHour($o_cassandra,$imei,$date,$HH); 
 	$st_results = DBQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2); 
@@ -109,8 +109,7 @@
 			$HH2 = substr($dateminute2,11,2);
 			$MM1 = substr($dateminute1,14,2);
 			$MM2 = substr($dateminute2,14,2);
-			echo "date = $date\n hh1 = $HH1\n hh2 = $HH2\n mm1 = $MM1 \n mm2 = $MM2\n";
-			flush();
+			//echo "date = $date\n hh1 = $HH1\n hh2 = $HH2\n mm1 = $MM1 \n mm2 = $MM2\n";
 
 			$s_cql1 = "SELECT * FROM full_data 
 				where 
@@ -121,26 +120,29 @@
 				dtime <= '$date $HH1:59:59'
 				;";
 			$st_results1 = $o_cassandra->query($s_cql1);// Launch the query
-			echo "done 1\n";			
-	
-			$imeih_list = "(";
-			echo "imeih_list = $imeih_list\n";
-			for($i=$HH1+1;$i<$HH2;$i++)
-			{
-				$imeih_list .= "'".$imei.'@'.$date.'@'.$i."',";
-				echo "imeih_list = $imeih_list\n";
-			}
-			$imeih_list = substr($imeih_list,0,-1) . ")";
-			echo "imeih_list = $imeih_list\n";
-			flush();
-
-			$s_cql2 = "SELECT * FROM full_data
-				where
-				imeih IN $imeih_list
-				;";
-			$st_results2 = $o_cassandra->query($s_cql2);// Launch the query
-			echo "done 2\n";			
+			$st_results = $st_results1;
+			//echo "done 1\n";			
 			
+			if ($HH2 - $HH1 > 1)
+			{		
+				$imeih_list = "(";
+				for($i=$HH1+1;$i<$HH2;$i++)
+				{
+					$hour = ($i < 10)?'0'.$i:$i;
+					$imeih_list .= "'".$imei.'@'.$date.'@'.$hour."',";
+				}
+				$imeih_list = substr($imeih_list,0,-1) . ")";
+				//echo "imeih_list = $imeih_list\n";
+
+				$s_cql2 = "SELECT * FROM full_data
+					where
+					imeih IN $imeih_list
+					;";
+				$st_results2 = $o_cassandra->query($s_cql2);// Launch the query
+				$st_results = array_merge($st_results, $st_results2);
+				//echo "done 2\n";			
+			}			
+
 			$s_cql3 = "SELECT * FROM full_data 
 				where 
 			  	imeih = '$imei@$date@$HH2'
@@ -150,7 +152,8 @@
 				dtime <= '$date $HH2:$MM2:59'
 				;";
 			$st_results3 = $o_cassandra->query($s_cql3);// Launch the query
+			$st_results = array_merge($st_results, $st_results3);
 
-			return array_merge($st_results1, $st_results2, $st_results3);
+			return $st_results2; 
 		}	
 	}
