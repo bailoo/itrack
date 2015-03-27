@@ -16,8 +16,8 @@
 	$imei = '862170018323731';
 	$date = '2015-01-01';
 	$HH = '23';
-	$dateminute1 = '2015-01-01-00-00';
-	$dateminute2 = '2015-01-01-02-00';
+	$dateminute1 = '2015-01-01-09-00';
+	$dateminute2 = '2015-01-01-11-00';
 	//echo "dateminute1 = $dateminute1\n dateminute2 = $dateminute2\n";
 	//make sure the imeih exist in cassandra
 	//$st_results = DBQueryDateHour($o_cassandra,$imei,$date,$HH); 
@@ -154,6 +154,6 @@
 			$st_results3 = $o_cassandra->query($s_cql3);// Launch the query
 			$st_results = array_merge($st_results, $st_results3);
 
-			return $st_results2; 
+			return $st_results; 
 		}	
 	}
