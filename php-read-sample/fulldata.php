@@ -16,15 +16,17 @@
 	$imei = '862170018323731';
 	$date = '2015-01-01';
 	$HH = '23';
-	$dateminute1 = '2015-01-01-09-00';
-	$dateminute2 = '2015-01-01-11-00';
+	$dateminute1 = '2015-01-01-20-00';
+	$dateminute2 = '2015-01-01-21-00';
 	//echo "dateminute1 = $dateminute1\n dateminute2 = $dateminute2\n";
 	//make sure the imeih exist in cassandra
-	//$st_results = DBQueryDateHour($o_cassandra,$imei,$date,$HH); 
-	$st_results = DBQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2); 
-	
+	//$st_results = DBQueryDateHour($o_cassandra,$imei,$date,$HH);
+	$st_results = DBQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2);
+	$st_obj = Parser($st_results);
+	print_r($st_obj);
+
 	// echo 'Execution time: '.$i_execution_time."\n";
-	echo "\n";
+	/*echo "\n";
 	echo 'Printing Top 10 rows:'."\n";
 	
 	echo '<table style="width:100%">';
@@ -45,10 +47,41 @@
 	}
 	
 	echo'</table>';
-	
+	*/
 	
 	$o_cassandra->close();
 
+	/***
+	* Parses and Converts array returned by CQL to object
+	*
+	* @param array		Results of CQL
+	*
+	* @return object	Object with names of entities
+	* return json_decode(json_encode($st_results),FALSE);
+	*
+	*/
+	function Parser($st_results)
+	{
+		$st_obj = new stdClass();			
+		$gps_params = array('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r');
+
+		$num = 0;
+		foreach ($st_results as $row)
+		{
+			$st_obj->$num = new stdClass;
+			$st_obj->$num->h = $row['dtime'];	// device time is stored as row key
+
+			$i = 0;
+			foreach (str_getcsv($row['data'], ";") as $gps_val)
+			{
+				$st_obj->$num->$gps_params[$i++] = $gps_val;
+			}
+			$num++;
+		}
+		
+		return $st_obj;
+	}
+	
 	/***
 	* Runs CQL query on Cassandra datastore
 	* 
