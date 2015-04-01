@@ -19,37 +19,57 @@
 	$dateminute1 = '2015-01-01-13-00';
 	$dateminute2 = '2015-01-01-14-00';
 	//echo "dateminute1 = $dateminute1\n dateminute2 = $dateminute2\n";
+	
 	//make sure the imeih exist in cassandra
 	//$st_results = DBQueryDateHour($o_cassandra,$imei,$date,$HH);
+	
 	$st_results = DBQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2);
-	$st_obj = gpsParser($st_results);
+
+	$params = array('a','b','c','d','e','f','g','i','j','l','m','o','p','r');
+	$st_obj = gpsParser($st_results,$params);
 	print_r($st_obj);
 
+	//printHTML($st_results);
 	// echo 'Execution time: '.$i_execution_time."\n";
-	/* echo "\n";
-	echo 'Printing Top 10 rows:'."\n";
-	
-	echo '<table style="width:100%">';
-	echo '<tr>';
-	echo '<td>imeih</td>';
-	echo '<td>DateTime</td>';
-	echo '<td>Data</td>';
-	echo'</tr>';
-	
-	foreach ($st_results as $row){
-		echo '<tr>';
-		foreach($row as $key=>$value){
-				echo '<td>';
-				echo $value;
-				echo '</td>';
-		}
-		echo '</tr>';
-	}
-	
-	echo'</table>';
-	*/	
 	
 	$o_cassandra->close();
+
+
+
+
+	/***
+	* Prints Cassandra query results in HTML 
+	*
+	* @param array		Results of CQL
+	*
+	* @return		TRUE 
+	*
+	*/
+	function printHTML($st_results)
+	{
+	
+		echo "\n";
+		echo 'Printing Top 10 rows:'."\n";
+		
+		echo '<table style="width:100%">';
+		echo '<tr>';
+		echo '<td>imeih</td>';
+		echo '<td>DateTime</td>';
+		echo '<td>Data</td>';
+		echo'</tr>';
+		
+		foreach ($st_results as $row){
+			echo '<tr>';
+			foreach($row as $key=>$value){
+					echo '<td>';
+					echo $value;
+					echo '</td>';
+			}
+			echo '</tr>';
+		}
+		
+		echo'</table>';
+	}
 
 	/***
 	* Parses and Converts array returned by CQL to object
@@ -60,7 +80,7 @@
 	* return json_decode(json_encode($st_results),FALSE);
 	*
 	*/
-	function gpsParser($st_results)
+	function gpsParser($st_results,$params)
 	{
 		$st_obj = new stdClass();			
 		$gps_params = array('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r');
@@ -74,7 +94,11 @@
 			$i = 0;
 			foreach (str_getcsv($row['data'], ";") as $gps_val)
 			{
-				$st_obj->$num->$gps_params[$i++] = $gps_val;
+				if (in_array($gps_params[$i], $params))
+				{
+					$st_obj->$num->$gps_params[$i] = $gps_val;
+				}
+				$i++;
 			}
 			$num++;
 		}
