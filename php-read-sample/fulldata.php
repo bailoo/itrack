@@ -16,17 +16,17 @@
 	$imei = '862170018323731';
 	$date = '2015-01-01';
 	$HH = '23';
-	$dateminute1 = '2015-01-01-20-00';
-	$dateminute2 = '2015-01-01-21-00';
+	$dateminute1 = '2015-01-01-13-00';
+	$dateminute2 = '2015-01-01-14-00';
 	//echo "dateminute1 = $dateminute1\n dateminute2 = $dateminute2\n";
 	//make sure the imeih exist in cassandra
 	//$st_results = DBQueryDateHour($o_cassandra,$imei,$date,$HH);
 	$st_results = DBQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2);
-	$st_obj = Parser($st_results);
+	$st_obj = gpsParser($st_results);
 	print_r($st_obj);
 
 	// echo 'Execution time: '.$i_execution_time."\n";
-	/*echo "\n";
+	/* echo "\n";
 	echo 'Printing Top 10 rows:'."\n";
 	
 	echo '<table style="width:100%">';
@@ -47,7 +47,7 @@
 	}
 	
 	echo'</table>';
-	*/
+	*/	
 	
 	$o_cassandra->close();
 
@@ -60,7 +60,7 @@
 	* return json_decode(json_encode($st_results),FALSE);
 	*
 	*/
-	function Parser($st_results)
+	function gpsParser($st_results)
 	{
 		$st_obj = new stdClass();			
 		$gps_params = array('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r');
@@ -69,7 +69,7 @@
 		foreach ($st_results as $row)
 		{
 			$st_obj->$num = new stdClass;
-			$st_obj->$num->h = $row['dtime'];	// device time is stored as row key
+			$st_obj->$num->h = date('Y-m-d@H:i:s',$row['dtime']/1000-19800);	// device time is stored as row key as timestamp in milisecond
 
 			$i = 0;
 			foreach (str_getcsv($row['data'], ";") as $gps_val)
@@ -135,7 +135,7 @@
 			return $st_results;
 		}
 		/* same day */
-		elseif (substr($dateminute1,0,11) == substr($dateminute2,0,11))
+		elseif (substr($dateminute1,0,10) == substr($dateminute2,0,10))
 		{
 			$date = substr($dateminute1,0,10);
 			$HH1 = substr($dateminute1,11,2);
@@ -188,5 +188,29 @@
 			$st_results = array_merge($st_results, $st_results3);
 
 			return $st_results; 
-		}	
+		}
+		/* same month */
+		elseif (substr($dateminute1,0,7) == substr($dateminute2,0,7))
+		{
+			$date = substr($dateminute1,0,10);
+			$HH1 = substr($dateminute1,11,2);
+			$HH2 = substr($dateminute2,11,2);
+			$MM1 = substr($dateminute1,14,2);
+			$MM2 = substr($dateminute2,14,2);
+			//echo "date = $date\n hh1 = $HH1\n hh2 = $HH2\n mm1 = $MM1 \n mm2 = $MM2\n";
+
+			$s_cql1 = "SELECT * FROM full_data 
+				where 
+			  	imeih = '$imei@$date@$HH1'
+				and
+				dtime >= '$date $HH1:$MM1:00'
+				and
+				dtime <= '$date $HH1:59:59'
+				;";
+			$st_results1 = $o_cassandra->query($s_cql1);// Launch the query
+			$st_results = $st_results1;
+			//echo "done 1\n";			
+			
+
+		}
 	}
