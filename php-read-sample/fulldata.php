@@ -17,7 +17,7 @@
 	$date = '2015-01-01';
 	$HH = '23';
 	$dateminute1 = '2015-01-01-13-00';
-	$dateminute2 = '2015-01-01-14-00';
+	$dateminute2 = '2015-01-03-14-00';
 	//echo "dateminute1 = $dateminute1\n dateminute2 = $dateminute2\n";
 	
 	//make sure the imeih exist in cassandra
@@ -25,9 +25,11 @@
 	
 	$st_results = DBQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2);
 
-	$params = array('a','b','c','d','e','f','g','i','j','l','m','o','p','r');
+	//$params = array('a','b','c','d','e','f','g','i','j','l','m','o','p','r');
+	$params = array('a','b','c','d');
 	$st_obj = gpsParser($st_results,$params);
 	print_r($st_obj);
+		
 
 	//printHTML($st_results);
 	// echo 'Execution time: '.$i_execution_time."\n";
@@ -126,7 +128,45 @@
 		return $st_results;
 	}
 
+	/***
+	* Returns the list of imeih for different days 
+	*
+	* @param string $imei		IMEI
+	* @param string $dateminute1	YYYY-MM-DD-HH-MM
+	* @param string $dateminute2	YYYY-MM-DD-HH-MM
+	* 
+	* @return string	imeih list	
+	*
+	*/
+	function getIMEIHlist($imei,$dateminute1,$dateminute2)
+	{	
+		$date1 = substr($dateminute1,0,10);
+		$date2 = substr($dateminute2,0,10);
+		$HH1 = substr($dateminute1,11,2);
+		$HH2 = substr($dateminute2,11,2);
 	
+		$interval = new DateInterval('P1D');
+		$start = new DateTime($date1);		
+		$end = new DateTime($date2);
+		$end->add($interval);	
+
+		$period = new DatePeriod($start, $interval, $end);
+		$imeih_list = "(";
+		foreach ($period as $date)
+		{
+			$startHH = ($date1 == $date->format('Y-m-d'))?$HH1:0;
+			$endHH = ($date2 == $date->format('Y-m-d'))?$HH2:23;
+			for($i=$startHH; $i <= $endHH; $i++)
+			{
+				$hour = ($i < 10)?'0'.$i:$i;
+				$imeih_list .= "'".$imei.'@'.$date->format('Y-m-d').'@'.$hour."',";
+			}
+		}
+		$imeih_list = substr($imeih_list,0,-1) . ")";
+		
+		return $imeih_list;
+	}	
+
 	/***
 	* Runs CQL query on Cassandra datastore
 	* 
@@ -213,26 +253,18 @@
 
 			return $st_results; 
 		}
-		/* same month */
-		elseif (substr($dateminute1,0,7) == substr($dateminute2,0,7))
+		/* different days */
+		else
 		{
-			$date = substr($dateminute1,0,10);
-			$HH1 = substr($dateminute1,11,2);
-			$HH2 = substr($dateminute2,11,2);
-			$MM1 = substr($dateminute1,14,2);
-			$MM2 = substr($dateminute2,14,2);
-			//echo "date = $date\n hh1 = $HH1\n hh2 = $HH2\n mm1 = $MM1 \n mm2 = $MM2\n";
+			$imeih_list = getIMEIHlist($imei,$dateminute1,$dateminute2);
 
-			$s_cql1 = "SELECT * FROM full_data 
-				where 
-			  	imeih = '$imei@$date@$HH1'
-				and
-				dtime >= '$date $HH1:$MM1:00'
-				and
-				dtime <= '$date $HH1:59:59'
+			$s_cql2 = "SELECT * FROM full_data
+				where
+				imeih IN $imeih_list
 				;";
-			$st_results1 = $o_cassandra->query($s_cql1);// Launch the query
-			$st_results = $st_results1;
+			$st_results = $o_cassandra->query($s_cql2);// Launch the query
+
+			return $st_results; 
 			//echo "done 1\n";			
 			
 
