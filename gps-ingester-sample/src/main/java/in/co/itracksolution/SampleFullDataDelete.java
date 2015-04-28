@@ -48,7 +48,7 @@ public class SampleFullDataDelete {
 		SampleFullDataDelete st = new SampleFullDataDelete();
 		
 		FullData data = new FullData();
-		data.setImeih("862170011627815@2015-2-17@0"); //Make sure this imeih exists
+		data.setImeih("862170011627815@2015-2-17@00"); //Make sure this imeih exists
 		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.MINUTE, 0);//minute, second and millisecond must be zero because our granularity only untuil hour
@@ -57,7 +57,7 @@ public class SampleFullDataDelete {
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		
 		
-		data.setDTime(cal.getTime());//make sure the device time exist for that imei
+		//data.setDTime(cal.getTime());//make sure the device time exist for that imei
 		
 		FullDataDao dao = new FullDataDao(st.conn.getSession());
 		dao.delete(data);

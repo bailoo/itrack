@@ -54,7 +54,7 @@ public class SampleFullDataQuery {
 		SampleFullDataQuery st = new SampleFullDataQuery();
 		
 		FullData data = new FullData();
-		data.setImeih("862170011627815@2015-2-17@0"); //Make sure this imeih exists
+		data.setImeih("862170011627815@2015-01-01@01"); //Make sure this imeih exists
 		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.MINUTE, 0);//minute, second and millisecond must be zero because our granularity only untuil hour
@@ -62,7 +62,7 @@ public class SampleFullDataQuery {
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		
-		data.setDTime(cal.getTime());//make sure the device time exist for that imei
+		//data.setDTime(cal.getTime());//make sure the device time exist for that imei
 		
 		
 		FullDataDao dao = new FullDataDao(st.conn.getSession());

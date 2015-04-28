@@ -30,9 +30,9 @@ public class FullDataDao {
 
 	protected String getInsertStatement(){
 		return "INSERT INTO "+FullData.TABLE_NAME+
-				" (imeih, dtime, data)"
+				" (imeih, dtime, stime, data)"
 				+ " VALUES ("+
-				"?,?,?);";
+				"?,?,?,?);";
 	}
 	
 	protected String getDeleteStatement(){
@@ -49,6 +49,7 @@ public class FullDataDao {
 		session.execute(boundStatement.bind(
 				data.getImeih(),
 				data.getDTime(),
+				data.getSTime(),
 				data.getData()
 				) );
 	}
@@ -58,7 +59,7 @@ public class FullDataDao {
 		session.execute(boundStatement.bind(data.getImeih(), data.getDTime()));
 	}
 	
-	public List<Row> selectByImeiAndDateHour(String imei, Date dTime){
+	public List<Row> selectByImeiAndDateHour(String imei, String dTime){
 		BoundStatement boundStatement = new BoundStatement(selectbyImeiAndDateHourStatement);
 		ResultSet rs = session.execute(boundStatement.bind(imei, dTime));
 		return rs.all();

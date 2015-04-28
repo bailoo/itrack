@@ -9,6 +9,7 @@ import in.co.itracksolution.model.LastData;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.Calendar;
 import java.util.Properties;
 
@@ -48,14 +49,16 @@ public class SampleInsert {
 		now.set(Calendar.MILLISECOND, 0);
 		
 		String imei = "862170011627815";
-		imei += "@"+now.get(Calendar.YEAR)+"-"+
+		String data = "N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88";
+		String dtime = "2015-01-29 00:00:09";
+		imei += "@2015-01-29@00";
+		/*imei += "@"+now.get(Calendar.YEAR)+"-"+
 				(now.get(Calendar.MONTH)+1)+"-"+ //month +1 because it starts (january) as 0
 				now.get(Calendar.DATE)+"@"+
 				now.get(Calendar.HOUR_OF_DAY);
+		*/
 		
-		String data = "N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88";
-		
-		FullData fullData = new FullData(imei, now.getTime(), data);
+		FullData fullData = new FullData(imei, dtime, now.getTime(), data);
 		FullDataDao ops = new FullDataDao(conn.getSession());
 		
 		System.out.println("Inserting Full Data with imeih: "+imei);

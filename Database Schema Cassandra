@@ -1,9 +1,10 @@
 CREATE KEYSPACE gps
-  WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 2 };
+  WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
   
-CREATE TABLE full_data (
+CREATE TABLE log(
   imeih ascii,
-  dtime timestamp,
+  dtime ascii,
+  stime timestamp,
   data ascii,
   PRIMARY KEY (imeih, dtime)
 );
