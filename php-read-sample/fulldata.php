@@ -13,11 +13,12 @@
 	$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 	
 	
-	$imei = '862170018323731';
-	$date = '2015-01-01';
+	//$imei = '862170018323731';
+	$imei = '862170018378487';
+	$date = '2015-01-02';
 	$HH = '23';
-	$dateminute1 = '2015-01-01-13-00';
-	$dateminute2 = '2015-01-03-14-00';
+	$dateminute1 = '2015-01-02-00-00';
+	$dateminute2 = '2015-01-03-23-00';
 	//echo "dateminute1 = $dateminute1\n dateminute2 = $dateminute2\n";
 	
 	//make sure the imeih exist in cassandra
@@ -158,7 +159,7 @@
 			$endHH = ($date2 == $date->format('Y-m-d'))?$HH2:23;
 			for($i=$startHH; $i <= $endHH; $i++)
 			{
-				$hour = ($i < 10)?'0'.$i:$i;
+				$hour = (strlen($i) < 2)?'0'.$i:$i;
 				$imeih_list .= "'".$imei.'@'.$date->format('Y-m-d').'@'.$hour."',";
 			}
 		}
@@ -225,7 +226,7 @@
 				$imeih_list = "(";
 				for($i=$HH1+1;$i<$HH2;$i++)
 				{
-					$hour = ($i < 10)?'0'.$i:$i;
+					$hour = (strlen($i) < 2)?'0'.$i:$i;
 					$imeih_list .= "'".$imei.'@'.$date.'@'.$hour."',";
 				}
 				$imeih_list = substr($imeih_list,0,-1) . ")";
@@ -257,7 +258,7 @@
 		else
 		{
 			$imeih_list = getIMEIHlist($imei,$dateminute1,$dateminute2);
-
+			//echo $imeih_list;
 			$s_cql2 = "SELECT * FROM full_data
 				where
 				imeih IN $imeih_list
