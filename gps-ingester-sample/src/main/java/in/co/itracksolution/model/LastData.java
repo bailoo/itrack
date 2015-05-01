@@ -1,18 +1,23 @@
 package in.co.itracksolution.model;
 
+import java.util.Date;
+
 public class LastData {
 
-	private String imei, data;
+	private String imei, data, day;
+	private Date sTime;
 	
-	public static final String TABLE_NAME = "last_data";
+	public static final String TABLE_NAME = "lastlog";
 	
 	public LastData(){
 		super();
 	}
 	
-	public LastData(String imei, String data) {
+	public LastData(String imei, String day, Date sTime, String data) {
 		super();
 		this.imei = imei;
+		this.day = day;
+		this.sTime = sTime;
 		this.data = data;
 	}
 
@@ -27,6 +32,18 @@ public class LastData {
 	}
 	public void setData(String data) {
 		this.data = data;
+	}
+	public String getDay() {
+		return day;
+	}
+	public void setDay(String day) {
+		this.day = day;
+	}
+	public Date getSTime() {
+		return sTime;
+	}
+	public void setSTime(Date serverTime) {
+		this.sTime = serverTime;
 	}
 	
 }

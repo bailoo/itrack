@@ -18,18 +18,18 @@
 	//$imei = '862170018378487';
 	//$imei = '861074025248991';
 	$imei = '862170011627815';
-	$dateminute1 = '2015-01-29-04-00';
-	$dateminute2 = '2015-01-29-23-00';
+	$dateminute1 = '2015-01-29-00-00';
+	$dateminute2 = '2015-01-30-23-30';
 	//echo "dateminute1 = $dateminute1\n dateminute2 = $dateminute2\n";
 	
 	//make sure the imeih exist in cassandra
-	//$st_results = DBQueryDateHour($o_cassandra,$imei,$date,$HH);
+	//$st_results = dbQueryDateHour($o_cassandra,$imei,$date,$HH);
 	
-	$st_results = DBQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2);
+	$st_results = dbQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2);
 
-	//$params = array('a','b','c','d','e','f','g','i','j','l','m','o','p','r');
-	$params = array('a','b','c','d');
-	$st_obj = gpsParser($st_results,$params);
+	//$full_params = array('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
+	$params = array('a','b','c','d','ax','ay','az','ci');
+	$st_obj = gpsParser($st_results,$params,TRUE);
 	print_r($st_obj);
 		
 

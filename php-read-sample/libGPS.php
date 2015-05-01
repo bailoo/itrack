@@ -35,25 +35,53 @@
 	}
 
 	/***
+	* Runs CQL query on Cassandra datastore
+	* 
+	* @param object $o_cassandra	Cassandra object 
+	* @param string $imei	IMEI
+	* @param string $date	YYYY-MM-DD
+	* 
+	* @return array 	Results of the query 
+	*/
+	function dbQueryLastSeen($o_cassandra,$imei,$date)
+	{
+		$s_cql = "SELECT * FROM lastlog 
+			  WHERE 
+			  imei = '$imei'
+			  AND day <= '$date'
+			  ORDER BY day DESC
+			  LIMIT 1
+			  ;";
+	
+		$st_results = $o_cassandra->query($s_cql);
+		return $st_results;
+	}
+
+
+	/***
 	* Parses and Converts array returned by CQL to object
 	*
 	* @param array		Results of CQL
+	* @param array		Param filter	
+	* @param boolean	Full or Last Seen 
 	*
 	* @return object	Object with names of entities
-	* return json_decode(json_encode($st_results),FALSE);
 	*
+	* return json_decode(json_encode($st_results),FALSE);
 	*/
-	function gpsParser($st_results,$params)
+	function gpsParser($st_results,$params,$datatype)
 	{
 		$st_obj = new stdClass();			
-		$gps_params = array('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r');
+		$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
+		$last_params = array('a','b','c','d','e','f','h','i','j','k','l','m','n','o','p','q','r','s','t','u','ci','ax','ay','az','mx','my','mz','bx','by','bz');
+		$gps_params = ($datatype)?$full_params:$last_params;
 
 		$num = 0;
 		foreach ($st_results as $row)
 		{
 			$st_obj->$num = new stdClass;
-			//$st_obj->$num->h = date('Y-m-d@H:i:s',$row['dtime']/1000-19800);	// device time is stored as row key as timestamp in milisecond
-			$st_obj->$num->h = $row['dtime'];
+			$st_obj->$num->g = date('Y-m-d@H:i:s',$row['stime']/1000-19800);	// device time is stored as row key as timestamp in milisecond
+			if ($datatype) $st_obj->$num->h = $row['dtime'];
 
 			$i = 0;
 			foreach (str_getcsv($row['data'], ";") as $gps_val)
@@ -80,7 +108,7 @@
 	* 
 	* @return array 	Results of the query 
 	*/
-	function DBQueryDateHour($o_cassandra,$imei,$date,$HH)
+	function dbQueryDateHour($o_cassandra,$imei,$date,$HH)
 	{
 		$s_cql = "SELECT * FROM log 
 			  where 
@@ -139,7 +167,7 @@
 	* 
 	* @return array 	Results of the query 
 	*/
-	function DBQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2)
+	function dbQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2)
 	{
 		/* same hour */	
 		if (substr($dateminute1,0,13) == substr($dateminute2,0,13))
