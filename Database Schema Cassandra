@@ -11,10 +11,9 @@ CREATE TABLE log(
 
 CREATE TABLE lastlog(
   imei ascii,
-  day ascii,
   stime timestamp,
   data ascii,
-  PRIMARY KEY (imei, day)
+  PRIMARY KEY (imei)
 ); 
 
 CREATE TABLE full_data(
