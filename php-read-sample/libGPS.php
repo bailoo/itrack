@@ -35,7 +35,35 @@
 	}
 
 	/***
-	* Runs CQL query on Cassandra datastore
+	* Returns last seen data before given datetime from full data log
+	* 
+	* @param object $o_cassandra	Cassandra object 
+	* @param string $imei	IMEI
+	* @param string $date	YYYY-MM-DD
+	* 
+	* @return array 	Results of the query 
+	*/
+	function dbQueryLastSeenDateTime($o_cassandra,$imei,$datetime)
+	{
+		$yy = substr($datetime,0,4);
+	
+		$imeihList = getImeihlist($imei,str_replace($yy,$yy-1,$datetime),$datetime);
+		$s_cql = "SELECT * FROM log 
+			  WHERE 
+			  imeih IN $imeihList
+			  AND	
+			  dtime < '$datetime'
+			  ORDER BY dtime
+			  DESC
+			  LIMIT 1
+			  ;";
+	
+		$st_results = $o_cassandra->query($s_cql);
+		return $st_results;
+	}
+
+	/***
+	* Returns last seen data from last data table lastlog
 	* 
 	* @param object $o_cassandra	Cassandra object 
 	* @param string $imei	IMEI
@@ -78,7 +106,7 @@
 		{
 			$st_obj->$num = new stdClass;
 			$st_obj->$num->g = date('Y-m-d@H:i:s',$row['stime']/1000-19800);	// device time is stored as row key as timestamp in milisecond
-			if ($datatype) $st_obj->$num->h = $row['dtime'];
+			if ($datatype) $st_obj->$num->h = date('Y-m-d@H:i:s',$row['dtime']/1000-19800);	// device time is stored as row key as timestamp in milisecond
 
 			$i = 0;
 			foreach (str_getcsv($row['data'], ";") as $gps_val)
@@ -138,7 +166,7 @@
 		$end->add($interval);	
 
 		$period = new DatePeriod($start, $interval, $end);
-		$imeih_list = "(";
+		$imeihList = "(";
 		foreach ($period as $date)
 		{
 			$startHH = ($date1 == $date->format('Y-m-d'))?$HH1:0;
@@ -146,12 +174,12 @@
 			for($i=$startHH; $i <= $endHH; $i++)
 			{
 				$hour = (strlen($i) < 2)?'0'.$i:$i;
-				$imeih_list .= "'".$imei.'@'.$date->format('Y-m-d').'@'.$hour."',";
+				$imeihList .= "'".$imei.'@'.$date->format('Y-m-d').'@'.$hour."',";
 			}
 		}
-		$imeih_list = substr($imeih_list,0,-1) . ")";
+		$imeihList = substr($imeihList,0,-1) . ")";
 		
-		return $imeih_list;
+		return $imeihList;
 	}	
 
 	/***
@@ -209,18 +237,18 @@
 			
 			if ($HH2 - $HH1 > 1)
 			{		
-				$imeih_list = "(";
+				$imeihList = "(";
 				for($i=$HH1+1;$i<$HH2;$i++)
 				{
 					$hour = (strlen($i) < 2)?'0'.$i:$i;
-					$imeih_list .= "'".$imei.'@'.$date.'@'.$hour."',";
+					$imeihList .= "'".$imei.'@'.$date.'@'.$hour."',";
 				}
-				$imeih_list = substr($imeih_list,0,-1) . ")";
-				//echo "imeih_list = $imeih_list\n";
+				$imeihList = substr($imeihList,0,-1) . ")";
+				//echo "imeihList = $imeihList\n";
 
 				$s_cql2 = "SELECT * FROM log
 					where
-					imeih IN $imeih_list
+					imeih IN $imeihList
 					;";
 				$st_results2 = $o_cassandra->query($s_cql2);// Launch the query
 				$st_results = array_merge($st_results, $st_results2);
@@ -243,11 +271,11 @@
 		/* different days */
 		else
 		{
-			$imeih_list = getImeihlist($imei,$dateminute1,$dateminute2);
-			//echo $imeih_list;
+			$imeihList = getImeihlist($imei,$dateminute1,$dateminute2);
+			//echo $imeihList;
 			$s_cql2 = "SELECT * FROM log
 				where
-				imeih IN $imeih_list
+				imeih IN $imeihList
 				;";
 			$st_results = $o_cassandra->query($s_cql2);// Launch the query
 
