@@ -27,8 +27,8 @@ public class LastDataDao extends FullDataDao{
 	
 	@Override
 	protected String getInsertStatement(){
-		return "INSERT INTO "+LastData.TABLE_NAME+" (imei, day, stime, data) VALUES ("+
-				"?,?,?,?);";
+		return "INSERT INTO "+LastData.TABLE_NAME+" (imei, stime, data) VALUES ("+
+				"?,?,?);";
 	}
 
 	@Override
@@ -45,7 +45,6 @@ public class LastDataDao extends FullDataDao{
 		BoundStatement boundStatement = new BoundStatement(insertStatement);
 		session.execute(boundStatement.bind(
 				data.getImei(),
-				data.getDay(),
 				data.getSTime(),
 				data.getData()
 				) );

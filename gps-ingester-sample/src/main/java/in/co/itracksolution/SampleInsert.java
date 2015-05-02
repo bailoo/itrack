@@ -69,15 +69,15 @@ public class SampleInsert {
 		
 	}
 	
-	public void insertLastdata(String imei, String day, String data){
+	public void insertLastdata(String imei, String data){
 		TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
 		Calendar now = Calendar.getInstance(IST); // gets a calendar using the default time zone and locale.
 		now.setTimeZone(IST);
 	
-		LastData lastData = new LastData(imei, day, now.getTime(), data);
+		LastData lastData = new LastData(imei, now.getTime(), data);
 		LastDataDao lastDao = new LastDataDao(conn.getSession());
 		
-		System.out.println("Inserting Last Data with imei: "+imei+" on day: "+day);
+		System.out.println("Inserting Last Data with imei: "+imei);
 		lastDao.insert(lastData);
 		
 	}
@@ -95,9 +95,8 @@ public class SampleInsert {
 	
 	
 		/* Last Seen Data ('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r','s','t','u','ci','ax','ay','az','mx','my','mz','bx','by','bz');*/
-		String day = "2015-01-22";	
 		String lastSeenData = "N;v1.45C;1;26.25858;79.82557;0.06;2015-01-22@00:00:09;2;5;3;5;6;6;3;5;0;12.88;21;13:09:10;20:20:20;abcd;1;0;0;1;0;0;1;0;0";
-		st.insertLastdata(imei, day, lastSeenData);
+		st.insertLastdata(imei, lastSeenData);
 		
 		st.close();	
 	}

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class LastData {
 
-	private String imei, data, day;
+	private String imei, data;
 	private Date sTime;
 	
 	public static final String TABLE_NAME = "lastlog";
@@ -13,10 +13,9 @@ public class LastData {
 		super();
 	}
 	
-	public LastData(String imei, String day, Date sTime, String data) {
+	public LastData(String imei, Date sTime, String data) {
 		super();
 		this.imei = imei;
-		this.day = day;
 		this.sTime = sTime;
 		this.data = data;
 	}
@@ -32,12 +31,6 @@ public class LastData {
 	}
 	public void setData(String data) {
 		this.data = data;
-	}
-	public String getDay() {
-		return day;
-	}
-	public void setDay(String day) {
-		this.day = day;
 	}
 	public Date getSTime() {
 		return sTime;
