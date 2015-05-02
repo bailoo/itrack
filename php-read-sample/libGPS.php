@@ -128,7 +128,7 @@
 	* @return string	imeih list	
 	*
 	*/
-	function getIMEIHlist($imei,$dateminute1,$dateminute2)
+	function getImeihlist($imei,$dateminute1,$dateminute2)
 	{	
 		$date1 = substr($dateminute1,0,10);
 		$date2 = substr($dateminute2,0,10);
@@ -246,7 +246,7 @@
 		/* different days */
 		else
 		{
-			$imeih_list = getIMEIHlist($imei,$dateminute1,$dateminute2);
+			$imeih_list = getImeihlist($imei,$dateminute1,$dateminute2);
 			//echo $imeih_list;
 			$s_cql2 = "SELECT * FROM log
 				where

@@ -3,19 +3,11 @@ CREATE KEYSPACE gps
   
 CREATE TABLE log(
   imeih ascii,
-  dtime ascii,
+  dtime timestamp,
   stime timestamp,
   data ascii,
   PRIMARY KEY (imeih, dtime)
 );
-
-CREATE TABLE full_data(
-  imeih ascii,
-  dtime timestamp,
-  data ascii,
-  PRIMARY KEY (imeih, dtime)
-);
-//Sample data for full_data: N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88
 
 CREATE TABLE lastlog(
   imei ascii,
@@ -24,6 +16,14 @@ CREATE TABLE lastlog(
   data ascii,
   PRIMARY KEY (imei, day)
 ); 
+
+CREATE TABLE full_data(
+  imeih ascii,
+  dtime timestamp,
+  data ascii,
+  PRIMARY KEY (imeih, dtime)
+);
+//Sample data for full_data: N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88
 
 CREATE TABLE last_data (
   imei ascii,

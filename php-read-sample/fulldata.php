@@ -27,7 +27,7 @@
 	
 	$st_results = dbQueryDateTimeSlice($o_cassandra,$imei,$dateminute1,$dateminute2);
 
-	//$full_params = array('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
+	//$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
 	$params = array('a','b','c','d','ax','ay','az','ci');
 	$st_obj = gpsParser($st_results,$params,TRUE);
 	print_r($st_obj);

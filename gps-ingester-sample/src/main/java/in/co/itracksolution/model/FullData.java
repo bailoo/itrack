@@ -3,8 +3,8 @@ package in.co.itracksolution.model;
 import java.util.Date;
 
 public class FullData {
-	private String imeih, dTime, data;
-	private Date sTime;
+	private String imeih, data;
+	private Date sTime, dTime;
 	
 	public static final String TABLE_NAME = "log";
 	
@@ -12,7 +12,7 @@ public class FullData {
 		super();
 	}
 	
-	public FullData(String imeih, String dTime, Date sTime, String data) {
+	public FullData(String imeih, Date dTime, Date sTime, String data) {
 		super();
 		this.imeih = imeih;
 		this.dTime = dTime;
@@ -32,10 +32,10 @@ public class FullData {
 	public void setData(String data) {
 		this.data = data;
 	}
-	public String getDTime() {
+	public Date getDTime() {
 		return dTime;
 	}
-	public void setDTime(String deviceTime) {
+	public void setDTime(Date deviceTime) {
 		this.dTime = deviceTime;
 	}
 	public Date getSTime() {
