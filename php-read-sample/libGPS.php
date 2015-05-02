@@ -43,14 +43,11 @@
 	* 
 	* @return array 	Results of the query 
 	*/
-	function dbQueryLastSeen($o_cassandra,$imei,$date)
+	function dbQueryLastSeen($o_cassandra,$imei)
 	{
 		$s_cql = "SELECT * FROM lastlog 
 			  WHERE 
 			  imei = '$imei'
-			  AND day <= '$date'
-			  ORDER BY day DESC
-			  LIMIT 1
 			  ;";
 	
 		$st_results = $o_cassandra->query($s_cql);
