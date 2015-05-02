@@ -57,14 +57,23 @@ public class SampleLastDataQuery {
 		
 		
 		LastDataDao dao = new LastDataDao(st.conn.getSession());
-		List<Row> rs= dao.selectByImei(data.getImei());
 		
+		List<Row> rs= dao.selectByImei(data.getImei());
 		for (Row row : rs) {
 			System.out.print("imei: "+row.getString("imei")+" ");
 			System.out.print("data: "+row.getString("data")+" ");
 			System.out.println();
 		}
-		
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		List<Row> rs1= dao.selectByImeiAndDateTime(data.getImei(), "2015-01-30 23:20:20");
+		for (Row row : rs1) {
+			System.out.print("imei: "+row.getString("imeih")+" ");
+			System.out.print("device time: "+sdf.format(row.getDate("dtime"))+" ");
+			System.out.print("server time: "+sdf.format(row.getDate("stime"))+" ");
+			System.out.print("data: "+row.getString("data")+" ");
+			System.out.println();
+		}
 		
 		st.close();	
 	}
