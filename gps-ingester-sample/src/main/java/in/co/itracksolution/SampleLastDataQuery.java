@@ -53,25 +53,29 @@ public class SampleLastDataQuery {
 		SampleLastDataQuery st = new SampleLastDataQuery();
 		
 		LastData data = new LastData();
-		data.setImei("862170011627815"); //make sure the imei exist in cassandra
+		data.setImei("862170011627815");
 		
 		
 		LastDataDao dao = new LastDataDao(st.conn.getSession());
 		
-		List<Row> rs= dao.selectByImei(data.getImei());
-		for (Row row : rs) {
-			System.out.print("imei: "+row.getString("imei")+" ");
-			System.out.print("data: "+row.getString("data")+" ");
-			System.out.println();
-		}
+		Row row = dao.selectByImei(data.getImei());
+		System.out.print("imei: "+row.getString("imei")+" ");
+		System.out.print("data: "+row.getString("data")+" ");
+		System.out.println();
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		List<Row> rs1= dao.selectByImeiAndDateTime(data.getImei(), "2015-01-30 23:20:20");
-		for (Row row : rs1) {
-			System.out.print("imei: "+row.getString("imeih")+" ");
+		row = dao.selectByImeiAndDateTime("359231030125239", "2014-12-31 23:20:20");
+		if (row != null)
+		{
+			System.out.print("imei: "+row.getString("imei")+" ");
 			System.out.print("device time: "+sdf.format(row.getDate("dtime"))+" ");
 			System.out.print("server time: "+sdf.format(row.getDate("stime"))+" ");
 			System.out.print("data: "+row.getString("data")+" ");
+			System.out.println();
+		}
+		else
+		{
+			System.out.print("imei not found");
 			System.out.println();
 		}
 		
