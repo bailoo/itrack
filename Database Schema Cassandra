@@ -1,13 +1,17 @@
 CREATE KEYSPACE gps
   WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
-  
+
 CREATE TABLE log(
-  imeih ascii,
+  imei ascii,
+  date ascii,
   dtime timestamp,
-  stime timestamp,
   data ascii,
-  PRIMARY KEY (imeih, dtime)
-);
+  stime timestamp,
+  PRIMARY KEY ((imei, date), dtime))
+  WITH CLUSTERING ORDER BY (dtime DESC)
+;
+
+//Sample data for full_data: N;v1.45C;1;26.25148;79.86157;0.06;2;5;3;5;6;6;3;5;0;12.88
 
 CREATE TABLE lastlog(
   imei ascii,
@@ -16,19 +20,6 @@ CREATE TABLE lastlog(
   PRIMARY KEY (imei)
 ); 
 
-CREATE TABLE full_data(
-  imeih ascii,
-  dtime timestamp,
-  data ascii,
-  PRIMARY KEY (imeih, dtime)
-);
-//Sample data for full_data: N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88
-
-CREATE TABLE last_data (
-  imei ascii,
-  data ascii,
-  PRIMARY KEY (imei)
-); 
-//Sample data for last_data contains device time because device time is not part of the key and last_key is 
+//Sample data for last_data contains device time because device time is not part of the key
 //always one for each device: 
-//     N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88
+//     N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88
