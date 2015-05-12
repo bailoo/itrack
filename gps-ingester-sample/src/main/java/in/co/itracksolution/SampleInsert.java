@@ -49,7 +49,7 @@ public class SampleInsert {
 		Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
 		now.setTimeZone(IST);
 		
-		String imeih = imei+"@"+dtime.substring(0,10)+"@"+dtime.substring(11,13);
+		String date = dtime.substring(0,10);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 		Date dtObj = new Date();	
@@ -60,10 +60,10 @@ public class SampleInsert {
 			e.printStackTrace();
 		}
 	
-		FullData fullData = new FullData(imeih, dtObj, now.getTime(), data);
+		FullData fullData = new FullData(imei, date, dtObj, data, now.getTime());
 		FullDataDao ops = new FullDataDao(conn.getSession());
 		
-		System.out.println("Inserting Full Data with imeih: "+imeih);
+		System.out.println("Inserting Full Data with imei: "+imei);
 
 		ops.insert(fullData);
 		
