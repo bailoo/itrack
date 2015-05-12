@@ -21,7 +21,7 @@ import com.datastax.driver.core.Session;
 
 public class FullDataDao {
 
-	protected PreparedStatement insertStatement, deleteStatement, selectbyImeiAndDateHourStatement, selectbyImeiAndDateTimeSliceStatement;
+	protected PreparedStatement insertStatement, deleteStatement, selectbyImeiAndDateStatement, selectbyImeiAndDateTimeSliceStatement;
 	protected Session session;
 	 
 	public FullDataDao(Session session) {
@@ -33,54 +33,54 @@ public class FullDataDao {
 	protected void prepareStatement(){
 		insertStatement = session.prepare(getInsertStatement());
 		deleteStatement = session.prepare(getDeleteStatement());
-		selectbyImeiAndDateHourStatement = session.prepare(getSelectByImeiAndDateHourStatement());
+		selectbyImeiAndDateStatement = session.prepare(getSelectByImeiAndDateStatement());
 		selectbyImeiAndDateTimeSliceStatement = session.prepare(getSelectByImeiAndDateTimeSliceStatement());
 	}
 
 	protected String getInsertStatement(){
 		return "INSERT INTO "+FullData.TABLE_NAME+
-				" (imeih, dtime, stime, data)"
+				" (imei, date, dtime, data, stime)"
 				+ " VALUES ("+
-				"?,?,?,?);";
+				"?,?,?,?,?);";
 	}
 	
 	protected String getDeleteStatement(){
-		return "DELETE FROM "+FullData.TABLE_NAME+" WHERE imeih = ? AND dtime=?;";
+		return "DELETE FROM "+FullData.TABLE_NAME+" WHERE imei = ? AND date = ? AND dtime = ?;";
 	}
 
-	protected String getSelectByImeiAndDateHourStatement(){
-		return "SELECT * FROM "+FullData.TABLE_NAME+" WHERE imeih=?;";
+	protected String getSelectByImeiAndDateStatement(){
+		return "SELECT * FROM "+FullData.TABLE_NAME+" WHERE imei = ? AND date = ?;";
 	}
 
 	protected String getSelectByImeiAndDateTimeSliceStatement(){
-		return "SELECT * FROM "+FullData.TABLE_NAME+" WHERE imeih IN ? AND dtime >= ? AND dtime <= ? ;";
+		return "SELECT * FROM "+FullData.TABLE_NAME+" WHERE imei = ? AND date IN ? AND dtime >= ? AND dtime <= ? ;";
 	}
-
 	
 	public void insert(FullData data){
 		BoundStatement boundStatement = new BoundStatement(insertStatement);
 		session.execute(boundStatement.bind(
-				data.getImeih(),
+				data.getImei(),
+				data.getDate(),
 				data.getDTime(),
-				data.getSTime(),
-				data.getData()
+				data.getData(),
+				data.getSTime()
 				) );
 	}
 	
 	public void delete(FullData data){
 		BoundStatement boundStatement = new BoundStatement(deleteStatement);
-		session.execute(boundStatement.bind(data.getImeih(), data.getDTime()));
+		session.execute(boundStatement.bind(data.getImei(), data.getDate(), data.getDTime()));
 	}
 	
-	public List<Row> selectByImeiAndDateHour(String imeih){
-		BoundStatement boundStatement = new BoundStatement(selectbyImeiAndDateHourStatement);
-		ResultSet rs = session.execute(boundStatement.bind(imeih));
-		return rs.all();
+	public ResultSet selectByImeiAndDate(String imei, String date){
+		BoundStatement boundStatement = new BoundStatement(selectbyImeiAndDateStatement);
+		ResultSet rs = session.execute(boundStatement.bind(imei, date));
+		return rs;
 	}
 	
-	public List<Row> selectByImeiAndDateTimeSlice(String imei, String startDateTime, String endDateTime){
+	public ResultSet selectByImeiAndDateTimeSlice(String imei, String startDateTime, String endDateTime){
 		BoundStatement boundStatement = new BoundStatement(selectbyImeiAndDateTimeSliceStatement);
-		ArrayList imeihList = new ArrayList();
+		ArrayList dateList = new ArrayList();
 
 		int days = 1;
 		LocalDate sDate = new LocalDate();
@@ -104,35 +104,12 @@ public class FullDataDao {
 		days = Days.daysBetween(sDate, eDate).getDays();
 		for (int i=0; i<days+1; i++) {
 			LocalDate d = sDate.plusDays(i);
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@00");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@01");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@02");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@03");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@04");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@05");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@06");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@07");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@08");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@09");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@10");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@11");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@12");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@13");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@14");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@15");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@16");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@17");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@18");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@19");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@20");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@21");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@22");
-			imeihList.add(imei+"@"+d.toString("yyyy-MM-dd")+"@23");
+			dateList.add(d.toString("yyyy-MM-dd"));
 		}	
 
-		//System.out.println(imeihList);
-		ResultSet rs = session.execute(boundStatement.bind(imeihList, sDateTime, eDateTime));
-		return rs.all();
+		//System.out.println(dateList);
+		ResultSet rs = session.execute(boundStatement.bind(imei, dateList, sDateTime, eDateTime));
+		return rs;
 	}
 	
 }
