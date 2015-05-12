@@ -34,6 +34,52 @@
 		echo'</table>';
 	}
 
+
+	/***
+	* Returns last seen data before given datetime from full data log
+	* 
+	* @param object $o_cassandra	Cassandra object 
+	* @param string $imei		IMEI
+	* @param string $datetime	YYYY-MM-DD HH:MM:SS
+	* 
+	* @return array 	Results of the query 
+	*/
+	function getLastSeenDateTime($o_cassandra,$imei,$datetime)
+	{
+		$yy = substr($datetime,0,4);
+	
+		$date1 = substr($datetime,0,10);
+		$date2 = substr(str_replace($yy,$yy-1,$datetime),0,10);
+
+		$interval = new DateInterval('P1D');
+		$start = new DateTime($date1);
+		$end = new DateTime($date2);
+		$start->add($interval);
+
+		$st_results = array(); // initialize with empty array
+ 
+		for ($date = $start; $date->sub($interval); $date >= $end)
+		{
+			$strDate = $date->format('Y-m-d');
+			$s_cql = "SELECT * FROM log1 
+				  WHERE 
+				  imei = '$imei'
+				  AND
+				  date = '$strDate'
+				  AND	
+				  dtime < '$datetime'
+				  LIMIT 1
+				  ;";
+			$st_results = $o_cassandra->query($s_cql);
+			if (!empty($st_results))
+				break;
+		}
+		return $st_results;
+
+	}
+
+
+
 	/***
 	* Returns last seen data before given datetime from full data log
 	* 
@@ -48,7 +94,7 @@
 		$yy = substr($datetime,0,4);
 	
 		$imeihList = getImeihlist($imei,str_replace($yy,$yy-1,$datetime),$datetime);
-		$s_cql = "SELECT * FROM log 
+		$s_cql = "SELECT * FROM log1 
 			  WHERE 
 			  imeih IN $imeihList
 			  AND	
@@ -71,7 +117,7 @@
 	* 
 	* @return array 	Results of the query 
 	*/
-	function dbQueryLastSeen($o_cassandra,$imei)
+	function getLastSeen($o_cassandra,$imei)
 	{
 		$s_cql = "SELECT * FROM lastlog 
 			  WHERE 
@@ -123,24 +169,36 @@
 		return $st_obj;
 	}
 	
+
 	/***
-	* Runs CQL query on Cassandra datastore
+	* Returns the list of dates for different days 
+	*
+	* @param string $datetime1 YYYY-MM-DD HH:MM:SS
+	* @param string $datetime2 YYYY-MM-DD HH:MM:SS
 	* 
-	* @param object $o_cassandra	Cassandra object 
-	* @param string $imei	IMEI
-	* @param string $date	YYYY-MM-DD
-	* @param string $hour	HH
-	* 
-	* @return array 	Results of the query 
+	* @return string	date list	
+	*
 	*/
-	function dbQueryDateHour($o_cassandra,$imei,$date,$HH)
-	{
-		$s_cql = "SELECT * FROM log 
-			  where 
-			  imeih = '$imei@$date@$HH'
-			;";//imeih = '862170018323731@2015-01-01@23'
-		$st_results = $o_cassandra->query($s_cql);// Launch the query
-		return $st_results;
+	function getDateList($datetime1,$datetime2)
+	{	
+		$date1 = substr($datetime1,0,10);
+		$date2 = substr($datetime2,0,10);
+	
+		$interval = new DateInterval('P1D');
+		$start = new DateTime($date1);
+		$end = new DateTime($date2);
+		$end->add($interval);	
+
+		$period = new DatePeriod($start, $interval, $end);
+		$dateList = "(";
+		foreach ($period as $date)
+		{
+			$dateList .= "'".$date->format('Y-m-d')."',";
+		}
+		$dateList = substr($dateList,0,-1) . ")";
+		
+		return $dateList;
+
 	}
 
 	/***
@@ -187,6 +245,37 @@
 	* 
 	* @param object $o_cassandra	Cassandra object 
 	* @param string $imei		IMEI
+	* @param string $datetime1	YYYY-MM-DD HH:MM:SS
+	* @param string $datetime2	YYYY-MM-DD HH:MM:SS
+	* 
+	* @return array 	Results of the query 
+	*/
+	function getImeiDateTimes($o_cassandra,$imei,$datetime1,$datetime2)
+	{
+
+		$dateList = getDateList($datetime1,$datetime2);
+		$s_cql2 = "SELECT * FROM log1
+			WHERE
+			imei = '$imei'
+			AND
+			date IN $dateList
+			AND
+			dtime >= '$datetime1' 
+			AND
+			dtime <= '$datetime2'
+			;";
+		$st_results = $o_cassandra->query($s_cql2);
+
+		return $st_results; 
+			
+
+	}
+
+	/***
+	* Runs CQL query on Cassandra datastore
+	* 
+	* @param object $o_cassandra	Cassandra object 
+	* @param string $imei		IMEI
 	* @param string $dateminute1	YYYY-MM-DD-HH-MM
 	* @param string $dateminute2	YYYY-MM-DD-HH-MM
 	* 
@@ -202,7 +291,7 @@
 			$MM1 = substr($dateminute1,14,2);
 			$MM2= substr($dateminute2,14,2);
 			//echo "date = $date\n hh = $HH\n mm1 = $MM1 \n mm2 = $MM2\n";
-			$s_cql = "SELECT * FROM log 
+			$s_cql = "SELECT * FROM log1 
 				where 
 			  	imeih = '$imei@$date@$HH'
 				and
@@ -223,7 +312,7 @@
 			$MM2 = substr($dateminute2,14,2);
 			//echo "date = $date\n hh1 = $HH1\n hh2 = $HH2\n mm1 = $MM1 \n mm2 = $MM2\n";
 
-			$s_cql1 = "SELECT * FROM log 
+			$s_cql1 = "SELECT * FROM log1 
 				where 
 			  	imeih = '$imei@$date@$HH1'
 				and
@@ -246,7 +335,7 @@
 				$imeihList = substr($imeihList,0,-1) . ")";
 				//echo "imeihList = $imeihList\n";
 
-				$s_cql2 = "SELECT * FROM log
+				$s_cql2 = "SELECT * FROM log1
 					where
 					imeih IN $imeihList
 					;";
@@ -255,7 +344,7 @@
 				//echo "done 2\n";			
 			}			
 
-			$s_cql3 = "SELECT * FROM log 
+			$s_cql3 = "SELECT * FROM log1 
 				where 
 			  	imeih = '$imei@$date@$HH2'
 				and
@@ -273,7 +362,7 @@
 		{
 			$imeihList = getImeihlist($imei,$dateminute1,$dateminute2);
 			//echo $imeihList;
-			$s_cql2 = "SELECT * FROM log
+			$s_cql2 = "SELECT * FROM log1
 				where
 				imeih IN $imeihList
 				;";
