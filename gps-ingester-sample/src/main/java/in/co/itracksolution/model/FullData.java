@@ -3,28 +3,35 @@ package in.co.itracksolution.model;
 import java.util.Date;
 
 public class FullData {
-	private String imeih, data;
+	private String imei, date, data;
 	private Date sTime, dTime;
 	
-	public static final String TABLE_NAME = "log";
+	public static final String TABLE_NAME = "log1";
 	
 	public FullData(){
 		super();
 	}
 	
-	public FullData(String imeih, Date dTime, Date sTime, String data) {
+	public FullData(String imei, String date, Date dTime, String data, Date sTime) {
 		super();
-		this.imeih = imeih;
+		this.imei = imei;
+		this.date = date;
 		this.dTime = dTime;
-		this.sTime = sTime;
 		this.data = data;
+		this.sTime = sTime;
 	}
 
-	public String getImeih() {
-		return imeih;
+	public String getImei() {
+		return imei;
 	}
-	public void setImeih(String imeih) {
-		this.imeih = imeih;
+	public void setImei(String imei) {
+		this.imei = imei;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
 	}
 	public String getData() {
 		return data;
