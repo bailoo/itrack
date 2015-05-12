@@ -48,7 +48,8 @@ public class SampleFullDataDelete {
 		SampleFullDataDelete st = new SampleFullDataDelete();
 		
 		FullData data = new FullData();
-		data.setImeih("862170011627815@2015-2-17@00"); //Make sure this imeih exists
+		data.setImei("862170011627815"); //Make sure this imei exists
+		data.setDate("2015-2-17");
 		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.MINUTE, 0);//minute, second and millisecond must be zero because our granularity only untuil hour
@@ -65,7 +66,7 @@ public class SampleFullDataDelete {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		
-		System.out.println("Full Data with imeih: "+data.getImeih()+" and dtime: "+sdf.format(data.getDTime())+" is deleted");
+		System.out.println("Full Data with imei: "+data.getImei()+" and dtime: "+sdf.format(data.getDTime())+" is deleted");
 		
 		st.close();	
 	}

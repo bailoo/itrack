@@ -13,6 +13,7 @@ import java.util.Properties;
 import java.text.SimpleDateFormat;
 
 import com.datastax.driver.core.Row;
+import com.datastax.driver.core.ResultSet;
 
 public class SampleFullDataQuery {
 
@@ -57,23 +58,22 @@ public class SampleFullDataQuery {
 			
 		FullDataDao dao = new FullDataDao(st.conn.getSession());
 		
-		data.setImeih("862170011627815@2015-01-29@02"); //Make sure this imeih exists
-		//List<Row> rs= dao.selectByImeiAndDateHour(data.getImeih());
+		//data.setImei("862170011627815"); //Make sure this imei exists
+		//data.setDate("2015-01-29");
+		//ResultSet rs= dao.selectByImeiAndDate(data.getImei(), data.getDate());
 	
-		String imei = "862170011627815";	
-		String startDateTime = "2015-01-29 10:00:00";	
-		String endDateTime = "2015-01-30 15:00:00";	
-		List<Row> rs= dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime);
-		
-		for (Row row : rs) {
-			System.out.print("imeih: "+row.getString("imeih")+" ");
+		String imei = "359231030125239";
+		String startDateTime = "2015-01-01 10:00:00";
+		String endDateTime = "2015-01-01 15:00:00";
+		ResultSet rs = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime);
+		List<Row> rowlist = rs.all();	
+		for (Row row : rowlist) {
+			System.out.print("imei: "+row.getString("imei")+" ");
 			System.out.print("device time: "+sdf.format(row.getDate("dtime"))+" ");
 			System.out.print("server time: "+sdf.format(row.getDate("stime"))+" ");
 			System.out.print("data: "+row.getString("data")+" ");
 			System.out.println();
 		}
-		
-		
 		st.close();	
 	}
 }
