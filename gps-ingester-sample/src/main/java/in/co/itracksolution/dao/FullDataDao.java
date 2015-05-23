@@ -78,7 +78,7 @@ public class FullDataDao {
 		return rs;
 	}
 	
-	public ResultSet selectByImeiAndDateTimeSlice(String imei, String startDateTime, String endDateTime){
+	public ArrayList<ArrayList> selectByImeiAndDateTimeSlice(String imei, String startDateTime, String endDateTime){
 		BoundStatement boundStatement = new BoundStatement(selectbyImeiAndDateTimeSliceStatement);
 		ArrayList dateList = new ArrayList();
 
@@ -109,7 +109,30 @@ public class FullDataDao {
 
 		//System.out.println(dateList);
 		ResultSet rs = session.execute(boundStatement.bind(imei, dateList, sDateTime, eDateTime));
-		return rs;
+		List<Row> rowList = rs.all();
+
+		ArrayList<ArrayList> parsedList = new ArrayList<ArrayList>();
+		String data;
+		final String DELIMITER = ";";
+		for (Row row : rowList) {
+			ArrayList parsedRow = new ArrayList();
+			parsedRow.add(0,row.getString("imei"));
+			parsedRow.add(1,row.getDate("dtime"));
+			parsedRow.add(2,row.getDate("stime"));
+			
+			data = row.getString("data");
+			//System.out.println("data = "+data);
+			String[] tokens = data.split(DELIMITER);
+			int i = 3;
+			for(String token : tokens)
+			{
+				parsedRow.add(i++,token);
+			}
+			parsedList.add(parsedRow);
+		}
+		
+		return parsedList;
+		
 	}
 	
 }

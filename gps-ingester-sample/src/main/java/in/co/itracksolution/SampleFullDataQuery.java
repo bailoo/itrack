@@ -7,8 +7,10 @@ import in.co.itracksolution.model.FullData;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.text.SimpleDateFormat;
 
@@ -65,15 +67,51 @@ public class SampleFullDataQuery {
 		String imei = "359231030125239";
 		String startDateTime = "2015-01-01 10:00:00";
 		String endDateTime = "2015-01-01 15:00:00";
-		ResultSet rs = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime);
-		List<Row> rowlist = rs.all();	
-		for (Row row : rowlist) {
-			System.out.print("imei: "+row.getString("imei")+" ");
-			System.out.print("device time: "+sdf.format(row.getDate("dtime"))+" ");
-			System.out.print("server time: "+sdf.format(row.getDate("stime"))+" ");
-			System.out.print("data: "+row.getString("data")+" ");
+		ArrayList<ArrayList> rowList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime);
+		//ArrayList fullParams = new ArrayList("a","b","c","d","e","f","i","j","k","l","m","n","o","p","q","r","ci","ax","ay","az","mx","my","mz","bx","by","bz");
+		for (ArrayList row : rowList) {
+
+			imei = (String)row.get(0);
+			Date dtime = (Date)row.get(1);
+			Date stime = (Date)row.get(2);
+			String a = (String)row.get(3);
+			String b = (String)row.get(4);
+			String c = (String)row.get(5);
+			String d = (String)row.get(6);
+			String e = (String)row.get(7);
+			String f = (String)row.get(8);
+			String i = (String)row.get(9);
+			String j = (String)row.get(10);
+			String k = (String)row.get(11);
+			String l = (String)row.get(12);
+			String m = (String)row.get(13);
+			String n = (String)row.get(14);
+			String o = (String)row.get(15);
+			String p = (String)row.get(16);
+			String q = (String)row.get(17);
+			String r = (String)row.get(18);
+			/*String ci = (String)row.get(19);
+			String ax = (String)row.get(20);
+			String ay = (String)row.get(21);
+			String az = (String)row.get(22);
+			String mx = (String)row.get(23);
+			String my = (String)row.get(24);
+			String mz = (String)row.get(25);
+			String bx = (String)row.get(26);
+			String by = (String)row.get(27);
+			String bz = (String)row.get(28);
+			*/
+			System.out.print("imei: "+imei+" ");
+			System.out.print("device time: "+sdf.format(dtime)+" ");
+			System.out.print("server time: "+sdf.format(stime)+" ");
+			System.out.print("a: "+a+" ");
+			System.out.print("b: "+b+" ");
+			System.out.print("i: "+i+" ");
+			System.out.print("j: "+j+" ");
+			System.out.print("k: "+k+" ");
+			System.out.print("l: "+l+" ");
 			System.out.println();
 		}
-		st.close();	
+		st.close();
 	}
 }
