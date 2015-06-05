@@ -1,7 +1,7 @@
 CREATE KEYSPACE gps
   WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
 
-CREATE TABLE log(
+CREATE TABLE log1(
   imei ascii,
   date ascii,
   dtime timestamp,
@@ -12,6 +12,17 @@ CREATE TABLE log(
 ;
 
 //Sample data for full_data: N;v1.45C;1;26.25148;79.86157;0.06;2;5;3;5;6;6;3;5;0;12.88
+
+CREATE TABLE log2(
+  imei ascii,
+  date ascii,
+  dtime timestamp,
+  data ascii,
+  stime timestamp,
+  PRIMARY KEY ((imei, date), stime))
+  WITH CLUSTERING ORDER BY (stime DESC)
+;
+
 
 CREATE TABLE lastlog(
   imei ascii,

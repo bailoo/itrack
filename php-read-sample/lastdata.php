@@ -16,7 +16,7 @@
 	
 	//$last_params = array('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r','s','t','u','ci','ax','ay','az','mx','my','mz','bx','by','bz');
 	//$params = array('a','b','c','d','e','f','h','i','j','k','l','m','n','o','p','q','r','s','t','u','ci','ax','ay','az','mx','my','mz','bx','by','bz');
-	$imei = '862170011627815';
+	$imei = '111231031744301';
 	$st_results = getLastSeen($o_cassandra,$imei);
 	$params = array('d','e','h');
 	$st_obj = gpsParser($st_results,$params,FALSE);	// returns from last seen data lastlog

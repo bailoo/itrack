@@ -183,19 +183,22 @@
 	* 
 	* @return array 	Results of the query 
 	*/
-	function getImeiDateTimes($o_cassandra,$imei,$datetime1,$datetime2)
+	function getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime)
 	{
 
+		$table = ($deviceTime)?'log1':'log2';
+		$qtime = ($deviceTime)?'dtime':'stime';
+
 		$dateList = getDateList($datetime1,$datetime2);
-		$s_cql2 = "SELECT * FROM log1
+		$s_cql2 = "SELECT * FROM $table
 			WHERE
 			imei = '$imei'
 			AND
 			date IN $dateList
 			AND
-			dtime >= '$datetime1' 
+			$qtime >= '$datetime1' 
 			AND
-			dtime <= '$datetime2'
+			$qtime <= '$datetime2'
 			;";
 		$st_results = $o_cassandra->query($s_cql2);
 
