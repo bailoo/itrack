@@ -65,9 +65,10 @@ public class SampleFullDataQuery {
 		//ResultSet rs= dao.selectByImeiAndDate(data.getImei(), data.getDate());
 	
 		String imei = "359231030125239";
-		String startDateTime = "2015-01-01 10:00:00";
-		String endDateTime = "2015-01-01 15:00:00";
-		ArrayList<ArrayList> rowList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime);
+		String startDateTime = "2015-01-01 23:00:00";
+		String endDateTime = "2015-01-01 23:59:59";
+		//true for dtime, false for stime
+		ArrayList<ArrayList> rowList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, false);
 		//ArrayList fullParams = new ArrayList("a","b","c","d","e","f","i","j","k","l","m","n","o","p","q","r","ci","ax","ay","az","mx","my","mz","bx","by","bz");
 		for (ArrayList row : rowList) {
 
@@ -106,10 +107,10 @@ public class SampleFullDataQuery {
 			System.out.print("server time: "+sdf.format(stime)+" ");
 			System.out.print("a: "+a+" ");
 			System.out.print("b: "+b+" ");
-			System.out.print("i: "+i+" ");
-			System.out.print("j: "+j+" ");
-			System.out.print("k: "+k+" ");
-			System.out.print("l: "+l+" ");
+			System.out.print("c: "+c+" ");
+			System.out.print("d: "+d+" ");
+			System.out.print("e: "+e+" ");
+			System.out.print("f: "+f+" ");
 			System.out.println();
 		}
 		st.close();

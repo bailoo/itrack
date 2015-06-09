@@ -6,7 +6,8 @@ public class FullData {
 	private String imei, date, data;
 	private Date sTime, dTime;
 	
-	public static final String TABLE_NAME = "log1";
+	public static final String TABLE_NAME1 = "log1";
+	public static final String TABLE_NAME2 = "log2";
 	
 	public FullData(){
 		super();

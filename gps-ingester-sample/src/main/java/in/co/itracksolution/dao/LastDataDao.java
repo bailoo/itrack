@@ -23,13 +23,14 @@ import com.datastax.driver.core.Session;
 
 public class LastDataDao extends FullDataDao{
 
-	protected PreparedStatement selectbyImeiStatement, selectbyImeiAndDateTimeStatement;
+	protected PreparedStatement insertStatement, deleteStatement, selectbyImeiStatement, selectbyImeiAndDateTimeStatement;
 
 	public LastDataDao(Session session) {
 		super(session);
+		prepareStatement();
 	}
 
-	@Override
+	//@Override
 	protected void prepareStatement(){
 		insertStatement = session.prepare(getInsertStatement());
 		deleteStatement = session.prepare(getDeleteStatement());
@@ -37,13 +38,13 @@ public class LastDataDao extends FullDataDao{
 		selectbyImeiAndDateTimeStatement = session.prepare(getSelectByImeiAndDateTimeStatement());
 	}
 	
-	@Override
+	//@Override
 	protected String getInsertStatement(){
 		return "INSERT INTO "+LastData.TABLE_NAME+" (imei, stime, data) VALUES ("+
 				"?,?,?);";
 	}
 
-	@Override
+	//@Override
 	protected String getDeleteStatement(){
 		return "DELETE FROM "+LastData.TABLE_NAME+" WHERE imei = ?;";
 	}
@@ -53,7 +54,7 @@ public class LastDataDao extends FullDataDao{
 	}
 	
 	protected String getSelectByImeiAndDateTimeStatement(){
-		return "SELECT * FROM "+FullData.TABLE_NAME+" WHERE imei = ? AND date = ? AND dtime <= ? LIMIT 1;";
+		return "SELECT * FROM "+FullData.TABLE_NAME1+" WHERE imei = ? AND date = ? AND dtime <= ? LIMIT 1;";
 	}
 	
 	public void insert(LastData data){
