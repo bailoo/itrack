@@ -89,8 +89,8 @@ public class SampleInsert {
 		/* Full Data ('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz'); */
 		String imei = "862170011627815";
 
-		String dtime = "2015-01-29 04:57:19";
-		String fullData = "N;v1.45C;1;26.25148;79.86157;0.06;2;5;3;5;6;6;3;5;0;12.88;abcd;1;0;0;1;0;0;1;0;0";
+		String dtime = "2015-01-29 14:17:19";
+		String fullData = "N;v1.45C;1;46.25148;39.86157;0.06;2;5;3;5;6;6;3;5;0;12.88;abcd;1;0;0;1;0;0;1;0;0";
 		st.insertFulldata(imei, dtime, fullData);
 	
 	
