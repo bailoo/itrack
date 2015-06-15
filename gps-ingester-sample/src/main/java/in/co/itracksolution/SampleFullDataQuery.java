@@ -64,11 +64,11 @@ public class SampleFullDataQuery {
 		//data.setDate("2015-01-29");
 		//ResultSet rs= dao.selectByImeiAndDate(data.getImei(), data.getDate());
 	
-		String imei = "359231030125239";
-		String startDateTime = "2015-01-01 23:00:00";
-		String endDateTime = "2015-01-01 23:59:59";
+		String imei = "12345";
+		String startDateTime = "2015-06-15 00:00:00";
+		String endDateTime = "2015-06-15 23:59:59";
 		//true for dtime, false for stime
-		ArrayList<ArrayList> rowList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, false);
+		ArrayList<ArrayList> rowList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, true);
 		//ArrayList fullParams = new ArrayList("a","b","c","d","e","f","i","j","k","l","m","n","o","p","q","r","ci","ax","ay","az","mx","my","mz","bx","by","bz");
 		for (ArrayList row : rowList) {
 
