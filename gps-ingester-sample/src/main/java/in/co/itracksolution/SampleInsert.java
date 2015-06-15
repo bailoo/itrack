@@ -45,7 +45,7 @@ public class SampleInsert {
 	}
 
 	public void insertFulldata(String imei, String dtime, String data){
-		TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
+		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
 		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
 		//Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
 		//now.setTimeZone(IST);
@@ -56,6 +56,7 @@ public class SampleInsert {
 		Date dtObj = new Date();	
 		try { 
 			dtObj = sdf.parse(dtime);
+			sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -71,9 +72,10 @@ public class SampleInsert {
 	}
 	
 	public void insertLastdata(String imei, String data){
-		TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
-		Calendar now = Calendar.getInstance(IST); // gets a calendar using time zone and locale.
-		now.setTimeZone(IST);
+		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
+		Calendar now = Calendar.getInstance(); // gets a calendar using time zone and locale.
+		//Calendar now = Calendar.getInstance(IST); // gets a calendar using time zone and locale.
+		//now.setTimeZone(IST);
 	
 		LastData lastData = new LastData(imei, now.getTime(), data);
 		LastDataDao lastDao = new LastDataDao(conn.getSession());

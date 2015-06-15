@@ -119,11 +119,13 @@
 		$gps_params = ($datatype)?$full_params:$last_params;
 
 		$num = 0;
+		//$TZDIFF = 19800;
+		$TZDIFF = 0;
 		foreach ($st_results as $row)
 		{
 			$st_obj->$num = new stdClass;
-			$st_obj->$num->g = date('Y-m-d@H:i:s',$row['stime']/1000-19800);	// device time is stored as row key as timestamp in milisecond
-			if ($datatype) $st_obj->$num->h = date('Y-m-d@H:i:s',$row['dtime']/1000-19800);	// device time is stored as row key as timestamp in milisecond
+			$st_obj->$num->g = date('Y-m-d@H:i:s',$row['stime']/1000-$TZDIFF);	// device time is stored as row key as timestamp in milisecond
+			if ($datatype) $st_obj->$num->h = date('Y-m-d@H:i:s',$row['dtime']/1000-$TZDIFF);	// device time is stored as row key as timestamp in milisecond
 
 			$i = 0;
 			foreach (str_getcsv($row['data'], ";") as $gps_val)
