@@ -46,8 +46,9 @@ public class SampleInsert {
 
 	public void insertFulldata(String imei, String dtime, String data){
 		TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
-		Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
-		now.setTimeZone(IST);
+		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
+		//Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
+		//now.setTimeZone(IST);
 		
 		String date = dtime.substring(0,10);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -71,7 +72,7 @@ public class SampleInsert {
 	
 	public void insertLastdata(String imei, String data){
 		TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
-		Calendar now = Calendar.getInstance(IST); // gets a calendar using the default time zone and locale.
+		Calendar now = Calendar.getInstance(IST); // gets a calendar using time zone and locale.
 		now.setTimeZone(IST);
 	
 		LastData lastData = new LastData(imei, now.getTime(), data);
@@ -87,16 +88,15 @@ public class SampleInsert {
 		SampleInsert st = new SampleInsert();
 		
 		/* Full Data ('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz'); */
-		String imei = "862170011627815";
-
-		String dtime = "2015-01-29 14:17:19";
+		String imei = "12345";
+		String dtime = "2015-06-15 16:17:18";
 		String fullData = "N;v1.45C;1;46.25148;39.86157;0.06;2;5;3;5;6;6;3;5;0;12.88;abcd;1;0;0;1;0;0;1;0;0";
 		st.insertFulldata(imei, dtime, fullData);
 	
 	
 		/* Last Seen Data ('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r','s','t','u','ci','ax','ay','az','mx','my','mz','bx','by','bz');*/
-		String lastSeenData = "N;v1.45C;1;26.25858;79.82557;0.06;2015-01-22@00:00:09;2;5;3;5;6;6;3;5;0;12.88;21;13:09:10;20:20:20;abcd;1;0;0;1;0;0;1;0;0";
-		st.insertLastdata(imei, lastSeenData);
+		//String lastSeenData = "N;v1.45C;1;26.25858;79.82557;0.06;2015-01-22@00:00:09;2;5;3;5;6;6;3;5;0;12.88;21;13:09:10;20:20:20;abcd;1;0;0;1;0;0;1;0;0";
+		//st.insertLastdata(imei, lastSeenData);
 		
 		st.close();	
 	}
