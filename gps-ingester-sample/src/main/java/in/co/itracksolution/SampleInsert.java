@@ -99,7 +99,7 @@ public class SampleInsert {
 		/* Last Seen Data ('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r','s','t','u','ci','ax','ay','az','mx','my','mz','bx','by','bz');*/
 		//String lastSeenData = "N;v1.45C;1;26.25858;79.82557;0.06;2015-01-22@00:00:09;2;5;3;5;6;6;3;5;0;12.88;21;13:09:10;20:20:20;abcd;1;0;0;1;0;0;1;0;0";
 		//st.insertLastdata(imei, lastSeenData);
-		
+		System.out.println("End");
 		st.close();	
 	}
 		
