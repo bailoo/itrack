@@ -1,21 +1,21 @@
 <?php 
-	include_once('Hierarchy.php');
-	include_once('util_session_variable.php');
-	include_once('util_php_mysql_connectivity.php');
-	include_once('active_vehicle_func.php');
+    include_once('Hierarchy.php');
+    include_once('util_session_variable.php');
+    include_once('util_php_mysql_connectivity.php');
+    include_once('active_vehicle_func.php');
+
+    include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
+    include_once("libGPS.php");     //##### INCLUDE CASSANDRA API
 	
-	include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
-	include_once("libGPS.php");     //##### INCLUDE CASSANDRA API
-	
-  $query1="SELECT vehicle_color from account_preference WHERE account_id='$account_id'";
-  $result1=mysql_query($query1,$DbConnection);
-  $row1=mysql_fetch_object($result1);
-  $vehicle_color1=$row1->vehicle_color;
-  
-  $vcolor = explode(':',$vehicle_color1); //account_name:active:inactive
-  $vcolor1 = "#".$vcolor[0];
-  $vcolor2 = "#".$vcolor[1];
-  $vcolor3 = "#".$vcolor[2];
+    $query1="SELECT vehicle_color from account_preference WHERE account_id='$account_id'";
+    $result1=mysql_query($query1,$DbConnection);
+    $row1=mysql_fetch_object($result1);
+    $vehicle_color1=$row1->vehicle_color;
+
+    $vcolor = explode(':',$vehicle_color1); //account_name:active:inactive
+    $vcolor1 = "#".$vcolor[0];
+    $vcolor2 = "#".$vcolor[1];
+    $vcolor3 = "#".$vcolor[2];
     
 
 	$root=$_SESSION['root'];
@@ -26,11 +26,11 @@
 	$category1 = $_POST['category'];
 	if($user_type_option=="group")
 	{
-		$tmp_type="By Group";
+            $tmp_type="By Group";
 	}
 	else if($user_type_option=="user")
 	{
-		$tmp_type="By User";
+            $tmp_type="By User";
 	}
 	else if($user_type_option=="vehicle_tag")
 	{
@@ -245,7 +245,7 @@
 								$vehicle_active_flag=1;
 							}*/
 							
-							$logResult=hasImeiLogged($o_cassandra, $imei, $logDate);
+							$logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
 							//$st_results = getCurrentDateTime($o_cassandra,$vehicle_imei,$sortFetchData);
 							//var_dump($st_results);
 							//$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
