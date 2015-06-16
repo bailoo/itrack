@@ -192,7 +192,6 @@ function getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTi
 {
 
 	global $TZ;
-	echo "TZ=$TZ\n";
 
 	$table = ($deviceTime)?'log1':'log2';
 	$qtime = ($deviceTime)?'dtime':'stime';
