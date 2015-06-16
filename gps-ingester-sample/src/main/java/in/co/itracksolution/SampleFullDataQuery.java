@@ -17,11 +17,13 @@ import java.text.SimpleDateFormat;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.ResultSet;
 
-public class SampleFullDataQuery {
+public class SampleFullDataQuery 
+{
 
 	CassandraConn conn;
 	
-	public SampleFullDataQuery(){
+	public SampleFullDataQuery()
+	{
 		String propFileName = "config.properties";
 		Properties prop = new Properties();
 		
@@ -42,75 +44,44 @@ public class SampleFullDataQuery {
 		}
 	}
 	
-	public void deleteFullData(){
+	public void deleteFullData()
+	{
 		
 	}
 	
-	public void close(){
+	public void close()
+	{
 		if (conn !=null)
 			conn.close();
 	}
 	
 
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) 
+	{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		SampleFullDataQuery st = new SampleFullDataQuery();
-		FullData data = new FullData();
 			
 		FullDataDao dao = new FullDataDao(st.conn.getSession());
 		
-		//data.setImei("862170011627815"); //Make sure this imei exists
-		//data.setDate("2015-01-29");
 		//ResultSet rs= dao.selectByImeiAndDate(data.getImei(), data.getDate());
 	
-		String imei = "12345";
+		String imei = "865733021562939"; //Make sure this imei exists
 		String startDateTime = "2015-06-15 00:00:00";
 		String endDateTime = "2015-06-15 23:59:59";
 		//true for dtime, false for stime
-		ArrayList<ArrayList> rowList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, true);
-		//ArrayList fullParams = new ArrayList("a","b","c","d","e","f","i","j","k","l","m","n","o","p","q","r","ci","ax","ay","az","mx","my","mz","bx","by","bz");
-		for (ArrayList row : rowList) {
+		ArrayList<FullData> fullDataArr = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, true);
 
-			imei = (String)row.get(0);
-			Date dtime = (Date)row.get(1);
-			Date stime = (Date)row.get(2);
-			String a = (String)row.get(3);
-			String b = (String)row.get(4);
-			String c = (String)row.get(5);
-			String d = (String)row.get(6);
-			String e = (String)row.get(7);
-			String f = (String)row.get(8);
-			String i = (String)row.get(9);
-			String j = (String)row.get(10);
-			String k = (String)row.get(11);
-			String l = (String)row.get(12);
-			String m = (String)row.get(13);
-			String n = (String)row.get(14);
-			String o = (String)row.get(15);
-			String p = (String)row.get(16);
-			String q = (String)row.get(17);
-			String r = (String)row.get(18);
-			/*String ci = (String)row.get(19);
-			String ax = (String)row.get(20);
-			String ay = (String)row.get(21);
-			String az = (String)row.get(22);
-			String mx = (String)row.get(23);
-			String my = (String)row.get(24);
-			String mz = (String)row.get(25);
-			String bx = (String)row.get(26);
-			String by = (String)row.get(27);
-			String bz = (String)row.get(28);
-			*/
-			System.out.print("imei: "+imei+" ");
-			System.out.print("device time: "+sdf.format(dtime)+" ");
-			System.out.print("server time: "+sdf.format(stime)+" ");
-			System.out.print("a: "+a+" ");
-			System.out.print("b: "+b+" ");
-			System.out.print("c: "+c+" ");
-			System.out.print("d: "+d+" ");
-			System.out.print("e: "+e+" ");
-			System.out.print("f: "+f+" ");
+		for (FullData fullData : fullDataArr)
+		{
+			System.out.print("imei: "+fullData.getImei()+" ");
+			System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
+			System.out.print("server time: "+sdf.format(fullData.getSTime())+" ");
+			System.out.print("a: "+fullData.pMap.get("a")+" ");
+			System.out.print("b: "+fullData.pMap.get("b")+" ");
+			System.out.print("c: "+fullData.pMap.get("c")+" ");
+			System.out.print("d: "+fullData.pMap.get("d")+" ");
+			System.out.print("e: "+fullData.pMap.get("e")+" ");
+			System.out.print("f: "+fullData.pMap.get("f")+" ");
 			System.out.println();
 		}
 		st.close();
