@@ -214,4 +214,28 @@ function getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTi
 
 }
 
+/***
+* Runs CQL query on Cassandra datastore
+* 
+* @param string $imei	IMEI
+* 
+* @return boolean 	true if imei has logged on a given day, false otherwise 
+*/
+function hasImeiLogged($o_cassandra, $imei, $date)
+{
+
+	$table = 'log1';
+	$s_cql2 = "SELECT * FROM $table
+		WHERE
+		imei = '$imei'
+		AND
+		date = '$date'
+		LIMIT 1
+		;";
+	$st_results = $o_cassandra->query($s_cql2);
+
+	return !(empty($st_results));
+
+}
+
 ?>
