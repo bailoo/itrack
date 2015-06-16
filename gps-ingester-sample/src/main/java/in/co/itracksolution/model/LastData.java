@@ -1,11 +1,14 @@
 package in.co.itracksolution.model;
 
 import java.util.Date;
+import java.util.TreeMap;
 
 public class LastData {
 
 	private String imei, data;
 	private Date sTime;
+	public TreeMap pMap = new TreeMap();
+	public String[] lastParams = { "a","b","c","d","e","f","h","i","j","k","l","m","n","o","p","q","r","s","t","u","ci","ax","ay","az","mx","my","mz","bx","by","bz" };
 	
 	public static final String TABLE_NAME = "lastlog";
 	

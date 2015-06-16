@@ -71,13 +71,30 @@ public class LastDataDao extends FullDataDao{
 		session.execute(boundStatement.bind(data.getImei()));
 	}
 	
-	public Row selectByImei(String imei){
+	public LastData selectByImei(String imei){
+		LastData lastData = new LastData();
 		BoundStatement boundStatement = new BoundStatement(selectbyImeiStatement);
 		ResultSet rs = session.execute(boundStatement.bind(imei));
-		return rs.one();
+		Row row = rs.one();
+		String data = row.getString("data");
+		Date stime = row.getDate("stime");
+			
+		final String DELIMITER = ";";
+		String[] tokens = data.split(DELIMITER);
+		int i = 0;
+		for(String token : tokens)
+			lastData.pMap.put(lastData.lastParams[i++], token);
+
+		lastData.setImei(imei);
+		lastData.setSTime(stime);
+		lastData.setData(data);
+		return lastData;
+
 	}
 
-	public Row selectByImeiAndDateTime(String imei, String endDateTime){
+	public FullData selectByImeiAndDateTime(String imei, String endDateTime)
+	{
+		FullData fullData = new FullData();
 		BoundStatement boundStatement = new BoundStatement(selectbyImeiAndDateTimeStatement);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -112,10 +129,22 @@ public class LastDataDao extends FullDataDao{
 			date = d.toString("yyyy-MM-dd");
 			//System.out.println(date);
 			ResultSet rs = session.execute(boundStatement.bind(imei, date, eDateTime));
-			Row r = rs.one();
-			if (r != null)
+			Row row = rs.one();
+			if (row != null)
 			{
-				return r;
+				//return row;
+				fullData.setImei(row.getString("imei"));
+				fullData.setDTime(row.getDate("dtime"));
+				fullData.setSTime(row.getDate("stime"));
+			
+				String data = row.getString("data");
+				final String DELIMITER = ";";
+				String[] tokens = data.split(DELIMITER);
+				int j = 0;
+				for(String token : tokens)
+					fullData.pMap.put(fullData.fullParams[j++], token);
+				
+				return fullData;
 			}
 		}	
 		
