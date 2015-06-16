@@ -16,8 +16,8 @@
 	
 	
 	$imei = '865733021571211';
-	$date = date("YYY-mm-dd"); 
-	echo hasImeiLogged($o_cassandra, $imei, $date);
+	$date = date("Y-m-d"); 
+	$todayLogResult=hasImeiLogged($o_cassandra, $imei, $date);
 	echo "\n";
 		
 	$o_cassandra->close();
