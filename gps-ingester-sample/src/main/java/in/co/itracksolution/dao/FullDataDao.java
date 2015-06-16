@@ -155,7 +155,6 @@ public class FullDataDao {
 	
 		FullData fullData = new FullData();
 		ArrayList<FullData> fullDataList = new ArrayList<FullData>();
-		String[] fullParams = { "a","b","c","d","e","f","i","j","k","l","m","n","o","p","q","r","ci","ax","ay","az","mx","my","mz","bx","by","bz" };
 
 		//ArrayList<ArrayList> parsedList = new ArrayList<ArrayList>();
 		String data;
@@ -177,7 +176,7 @@ public class FullDataDao {
 			for(String token : tokens)
 			{
 				//parsedRow.add(i++,token);
-				fullData.pMap.put(fullParams[i++], token);
+				fullData.pMap.put(fullData.fullParams[i++], token);
 			}
 			//parsedList.add(parsedRow);
 			fullDataList.add(fullData);
