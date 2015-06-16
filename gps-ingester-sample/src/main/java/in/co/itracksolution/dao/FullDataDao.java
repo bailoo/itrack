@@ -173,12 +173,11 @@ public class FullDataDao {
 			data = row.getString("data");
 			//System.out.println("data = "+data);
 			String[] tokens = data.split(DELIMITER);
-			int i = 3;
+			int i = 0;
 			for(String token : tokens)
 			{
 				//parsedRow.add(i++,token);
-				fullData.pMap.put(fullParams[i-3], token);
-				i++;
+				fullData.pMap.put(fullParams[i++], token);
 			}
 			//parsedList.add(parsedRow);
 			fullDataList.add(fullData);
