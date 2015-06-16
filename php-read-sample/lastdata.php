@@ -16,14 +16,14 @@
 	
 	//$last_params = array('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r','s','t','u','ci','ax','ay','az','mx','my','mz','bx','by','bz');
 	//$params = array('a','b','c','d','e','f','h','i','j','k','l','m','n','o','p','q','r','s','t','u','ci','ax','ay','az','mx','my','mz','bx','by','bz');
-	$imei = '111231031744301';
-	$st_results = getLastSeen($o_cassandra,$imei);
-	$params = array('d','e','h');
-	$st_obj = gpsParser($st_results,$params,FALSE);	// returns from last seen data lastlog
-	print_r($st_obj);
+	//$imei = '111231031744301';
+	//$st_results = getLastSeen($o_cassandra,$imei);
+	//$params = array('d','e','h');
+	//$st_obj = gpsParser($st_results,$params,FALSE);	// returns from last seen data lastlog
+	//print_r($st_obj);
 		
-	$imei = '359231030125239';
-	$st_results = getLastSeenDateTime($o_cassandra,$imei,"2014-12-31 23:10:20");
+	$imei = '862170017135813';
+	$st_results = getLastSeenDateTime($o_cassandra,$imei,"2015-05-20 23:10:20");
 	$params = array('a','b','c','d','e','ci');
 	$st_obj = gpsParser($st_results,$params,TRUE); // returns from full data log
 	print_r($st_obj);

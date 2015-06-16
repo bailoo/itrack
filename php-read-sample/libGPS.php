@@ -49,6 +49,8 @@ function printHTML($st_results)
 */
 function getLastSeenDateTime($o_cassandra,$imei,$datetime)
 {
+	global $TZ;
+
 	$yy = substr($datetime,0,4);
 
 	$date1 = substr($datetime,0,10);
