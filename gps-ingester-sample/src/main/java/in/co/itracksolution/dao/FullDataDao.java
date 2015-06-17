@@ -103,20 +103,23 @@ public class FullDataDao {
 				));
 	}
 	
-	public void delete(FullData data){
+	public void delete(FullData data)
+	{
 		BoundStatement boundStatement1 = new BoundStatement(deleteStatement1);
 		BoundStatement boundStatement2 = new BoundStatement(deleteStatement2);
 		session.execute(boundStatement1.bind(data.getImei(), data.getDate(), data.getDTime()));
 		session.execute(boundStatement2.bind(data.getImei(), data.getDate(), data.getDTime()));
 	}
 	
-	public ResultSet selectByImeiAndDate(String imei, String date){
+	public ResultSet selectByImeiAndDate(String imei, String date)
+	{
 		BoundStatement boundStatement = new BoundStatement(selectbyImeiAndDateStatement1);
 		ResultSet rs = session.execute(boundStatement.bind(imei, date));
 		return rs;
 	}
 	
-	public ArrayList<ArrayList> selectByImeiAndDateTimeSlice(String imei, String startDateTime, String endDateTime, Boolean deviceTime){
+	public ArrayList<FullData> selectByImeiAndDateTimeSlice(String imei, String startDateTime, String endDateTime, Boolean deviceTime)
+	{
 		BoundStatement boundStatement = (deviceTime)?new BoundStatement(selectbyImeiAndDateTimeSliceStatement1):new BoundStatement(selectbyImeiAndDateTimeSliceStatement2);
 		ArrayList dateList = new ArrayList();
 
@@ -140,7 +143,8 @@ public class FullDataDao {
 		//System.out.println("eDateTime = "+sdf.format(eDateTime));
 
 		days = Days.daysBetween(sDate, eDate).getDays();
-		for (int i=0; i<days+1; i++) {
+		for (int i=0; i<days+1; i++)
+		{
 			LocalDate d = sDate.plusDays(i);
 			dateList.add(d.toString("yyyy-MM-dd"));
 		}	
@@ -148,29 +152,36 @@ public class FullDataDao {
 		//System.out.println(dateList);
 		ResultSet rs = session.execute(boundStatement.bind(imei, dateList, sDateTime, eDateTime));
 		List<Row> rowList = rs.all();
+	
+		FullData fullData = new FullData();
+		ArrayList<FullData> fullDataList = new ArrayList<FullData>();
 
-		ArrayList<ArrayList> parsedList = new ArrayList<ArrayList>();
+		//ArrayList<ArrayList> parsedList = new ArrayList<ArrayList>();
 		String data;
 		final String DELIMITER = ";";
-		for (Row row : rowList) {
-			ArrayList parsedRow = new ArrayList();
-			parsedRow.add(0,row.getString("imei"));
-			parsedRow.add(1,row.getDate("dtime"));
-			parsedRow.add(2,row.getDate("stime"));
+		for (Row row : rowList)
+		{
+			//ArrayList parsedRow = new ArrayList();
+			//parsedRow.add(0,row.getString("imei"));
+			//parsedRow.add(1,row.getDate("dtime"));
+			//parsedRow.add(2,row.getDate("stime"));
+			fullData.setImei(row.getString("imei"));
+			fullData.setDTime(row.getDate("dtime"));
+			fullData.setSTime(row.getDate("stime"));
 			
 			data = row.getString("data");
 			//System.out.println("data = "+data);
 			String[] tokens = data.split(DELIMITER);
-			int i = 3;
+			int i = 0;
 			for(String token : tokens)
 			{
-				parsedRow.add(i++,token);
+				//parsedRow.add(i++,token);
+				fullData.pMap.put(fullData.fullParams[i++], token);
 			}
-			parsedList.add(parsedRow);
+			//parsedList.add(parsedRow);
+			fullDataList.add(fullData);
 		}
-		
-		return parsedList;
-		
+
+		return fullDataList;
 	}
-	
 }
