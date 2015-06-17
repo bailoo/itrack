@@ -65,13 +65,15 @@ public class SampleFullDataQuery
 		
 		//ResultSet rs= dao.selectByImeiAndDate(data.getImei(), data.getDate());
 	
-		String imei = "865733021562939"; //Make sure this imei exists
-		String startDateTime = "2015-06-15 00:00:00";
-		String endDateTime = "2015-06-15 23:59:59";
+		String imei = "865733021570015"; //Make sure this imei exists
+		String startDateTime = "2015-06-17 10:00:00";
+		String endDateTime = "2015-06-17 10:10:00";
 		//true for dtime, false for stime
-		ArrayList<FullData> fullDataArr = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, true);
+		Boolean deviceTime = true;	// true for device time index, otherwise server time
+		Boolean orderAsc = true;	// true for ascending , otherwise descending (default) 
+		ArrayList<FullData> fullDataList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, deviceTime, orderAsc);
 
-		for (FullData fullData : fullDataArr)
+		for (FullData fullData : fullDataList)
 		{
 			System.out.print("imei: "+fullData.getImei()+" ");
 			System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
@@ -84,6 +86,7 @@ public class SampleFullDataQuery
 			System.out.print("f: "+fullData.pMap.get("f")+" ");
 			System.out.println();
 		}
+
 		st.close();
 	}
 }
