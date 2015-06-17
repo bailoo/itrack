@@ -674,6 +674,7 @@ echo"</table>";
                             $vehicle_cnt++;
                             //if($account_id==2)
                             {
+                               $vehicle_active_flag=0;
                                /* $last_date=get_acitve_vlastdate($vehicle_imei,$DbConnection);
                                 //echo "last_date=".$last_date."today_date2=".$today_date2."<br>";
                                 $vehicle_active_flag=0;
@@ -865,6 +866,7 @@ echo"</table>";
                             $vehicle_cnt++;
                             //if($account_id==2)
                             {
+                                $vehicle_active_flag=0;
                                 /*$last_date=get_acitve_vlastdate($vehicle_imei,$DbConnection);
                                 //echo "last_date=".$last_date."today_date2=".$today_date2."<br>";
                                 $vehicle_active_flag=0;
@@ -1010,6 +1012,7 @@ echo"</table>";
                             $vehicle_cnt++;
                             //if($account_id==2)
                             {
+                                $vehicle_active_flag=0;
                                 /*$last_date=get_acitve_vlastdate($vehicle_imei,$DbConnection);
                                 //echo "last_date=".$last_date."today_date2=".$today_date2."<br>";
                                 $vehicle_active_flag=0;
