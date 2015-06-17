@@ -156,6 +156,7 @@ public class FullDataDao {
 		List<Row> rowList = rs.all();
 	
 		FullData fullData = new FullData();
+		String[] tokens = null ;
 		ArrayList<FullData> fullDataList = new ArrayList<FullData>();
 
 		String data;
@@ -169,7 +170,7 @@ public class FullDataDao {
 			
 			data = row.getString("data");
 			//System.out.println("dtime = "+fullData.getDTime());
-			String[] tokens = data.split(DELIMITER);
+			tokens = data.split(DELIMITER);
 			int i = 0;
 			for(String token : tokens)
 			{
