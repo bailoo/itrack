@@ -143,7 +143,7 @@
 		echo "sodt2=".$SortedDataObject->speedData[1]."<br>";
 		echo "<br><br>";*/
 		
-		if(count($SortedDataObject->deviceDatetime)>0)
+		/*if(count($SortedDataObject->deviceDatetime)>0)
 		{
 			//echo "in sorted=".$SortedDataObject->deviceDatetime."<br><br><br><br><br><br>";
 			$prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
@@ -172,16 +172,10 @@
 				$finalio8Arr[$i][$dataCnt]=$SortedDataObject->io8Data[$obi];				
 				$dataCnt++;
 			}
-		}
+		}*/
 		if(count($UnSortedDataObject->deviceDatetime)>0)
 		{
-			$sortObjTmp=sortData($UnSortedDataObject,$sortBy,$parameterizeData);
-			//var_dump($sortObjTmp);
-			/*echo"sdt1=".$sortObjTmp->deviceDatetime[0]."<br>";
-			echo "sdt2=".$sortObjTmp->deviceDatetime[1]."<br>";	
-			echo "ss1=".$sortObjTmp->speedData[0]."<br>";
-			echo "ss2=".$sortObjTmp->speedData[1]."<br>";
-			echo "<br><br>";*/
+			$sortObjTmp=sortData($UnSortedDataObject,$sortBy,$parameterizeData);			
 			$sortedSize=sizeof($sortObjTmp->deviceDatetime);			
 			for($obi=0;$obi<$sortedSize;$obi++)
 			{				
@@ -190,6 +184,7 @@
 				$finalLatitudeArr[$i][$dataCnt]=$sortObjTmp->latitudeData[$obi];
 				$finalLongitudeArr[$i][$dataCnt]=$sortObjTmp->longitudeData[$obi];	
 				$finalSpeedArr[$i][$dataCnt]=$sortObjTmp->speedData[$obi];
+				//echo "speedData=".$sortObjTmp->speedData[$obi]."<br>";
 				$finalMTArr[$i][$dataCnt]=$sortObjTmp->messageTypeData[$obi];
 				$finalVerArr[$i][$dataCnt]=$sortObjTmp->versionData[$obi];
 				$finalFixArr[$i][$dataCnt]=$sortObjTmp->fixData[$obi];
@@ -211,7 +206,7 @@
 		}
 		$innerSize=sizeof($finalDateTimeArr[$i]);
 		//echo"size=".$innerSize."<br>";
-		$SortedDataObject=null;			
+		//$SortedDataObject=null;			
 		$sortObjTmp=null;
 		$UnsortedDataObject =null;
 	}
@@ -263,9 +258,7 @@
 						$CurrentLat = $finalLatitudeArr[$i][$j];
 						$CurrentLong = $finalLongitudeArr[$i][$j];
 						//echo "xml_date_current=".$xml_date_current."date1=".$date1."date2=".$date2."timeinterval=".$timeinterval."<br>";
-                                                //(strtotime($xml_date_last)-strtotime($xml_date_current))
-                                                //(strtotime($xml_date_current)-strtotime($xml_date_last))
-						if(($xml_date_current >= $date1 && $xml_date_current <= $date2) && ((strtotime($xml_date_last)-strtotime($xml_date_current))>$timeinterval) && ($xml_date_current!="-") && $xml_date_current >= $xml_date_latest)
+						if(($xml_date_current >= $date1 && $xml_date_current <= $date2) && ((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval) && ($xml_date_current!="-") && $xml_date_current >= $xml_date_latest)
 						{
 							//echo "in date1";
 							$xml_date_latest = $xml_date_current;
@@ -334,7 +327,7 @@
 									$line = substr($line, 0, -3);   // REMOVE LAST TWO /> CHARARCTER
 									$finalDistance = $finalDistance + $distance;									
 									
-									$linetowrite='<x a="'.$finalMTArr[$i][$j].'" b="'.$finalVerArr[$i][$j].'" c="'.$finalFixArr[$i][$j].' d="'.$finalLatitudeArr[$i][$j].'" e="'.$finalLongitudeArr[$i][$j].'" f="'.$finalSpeedArr[$i][$j].' g="'.$finalSDateTimeArr[$i][$j].'" h="'.$finalDateTimeArr[$i][$j].'" i="'.$finalio1Arr[$i][$j].' j="'.$finalio2Arr[$i][$j].'" k="'.$finalio3Arr[$i][$j].'" l="'.$finalio4Arr[$i][$j].' m="'.$finalio5Arr[$i][$j].'" n="'.$finalio6Arr[$i][$j].'" o="'.$finalio7Arr[$i][$j].' p="'.$finalio8Arr[$i][$j].'" q="'.$finalSSArr[$i][$j].'" r="'.$finalSVArr[$i][$j].' s="'.$finalDMSVArr[$i][$j].'" v="'.$vserial[$i][$j].'" w="'.$finalVNameArr[$i].' x="'.$finalVNumArr[$i].'" y="'.$finalVTypeArr[$i].'" z="'.round($finalDistance,2).'"/>';
+									$linetowrite='<x a="'.$finalMTArr[$i][$j].'" b="'.$finalVerArr[$i][$j].'" c="'.$finalFixArr[$i][$j].'" d="'.$finalLatitudeArr[$i][$j].'" e="'.$finalLongitudeArr[$i][$j].'" f="'.$finalSpeedArr[$i][$j].'" g="'.$finalSDateTimeArr[$i][$j].'" h="'.$finalDateTimeArr[$i][$j].'" i="'.$finalio1Arr[$i][$j].'" j="'.$finalio2Arr[$i][$j].'" k="'.$finalio3Arr[$i][$j].'" l="'.$finalio4Arr[$i][$j].'" m="'.$finalio5Arr[$i][$j].'" n="'.$finalio6Arr[$i][$j].'" o="'.$finalio7Arr[$i][$j].'" p="'.$finalio8Arr[$i][$j].'" q="'.$finalSSArr[$i][$j].'" r="'.$finalSVArr[$i][$j].'" s="'.$finalDMSVArr[$i][$j].'" v="'.$vserial[$i].'" w="'.$finalVNameArr[$i].'" x="'.$finalVNumArr[$i].'" y="'.$finalVTypeArr[$i].'" z="'.round($finalDistance,2).'"/>';
 									//echo "<textarea>".$linetowrite."</textarea>";
 									//$linetowrite = "\n".$line.' v="'.$vehicle_serial.'" w="'.$vname.'" x="'.$vehicle_number.'" z="'.round($finalDistance,2).'"/>'; // for distance       // ADD DISTANCE
 									
