@@ -14,12 +14,12 @@
 <script type="text/javascript" src="src/js/jquery.js"></script> 
 <?php
 $getUrlModule=$_SERVER['REQUEST_URI'];
-echo "getUrlModule1=".$getUrlModule."<br>";
-if($getUrlModule=='/beta/report.htm')
+//echo "getUrlModule1=".$getUrlModule."<br>";
+if($getUrlModule=='/vts/beta/report.htm')
 {
 	echo'<script language="javascript" src="src/js/reportAjax.js?<?php echo time();?>"></script>';
 }
-else if($getUrlModule=='/beta/manage.htm')
+else if($getUrlModule=='/vts/beta/manage.htm')
 {
 	echo'<script language="javascript" src="src/js/manageAjax.js?<?php echo time();?>"></script>';
 }
