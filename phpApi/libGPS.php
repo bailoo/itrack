@@ -111,26 +111,28 @@ function getLastSeen($o_cassandra,$imei)
 * @param array		Results of CQL
 * @param array		Param filter	
 * @param boolean	Full or Last Seen 
+* @param boolean	Order by Ascending or Descending (default)	
 *
 * @return object	Object with names of entities
 *
 * return json_decode(json_encode($st_results),FALSE);
 */
-function gpsParser($st_results,$params,$datatype)
+function gpsParser($st_results, $params, $dataType, $orderAsc)
 {
 	$st_obj = new stdClass();			
 	$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
 	$last_params = array('a','b','c','d','e','f','h','i','j','k','l','m','n','o','p','q','r','s','t','u','ci','ax','ay','az','mx','my','mz','bx','by','bz');
-	$gps_params = ($datatype)?$full_params:$last_params;
+	$gps_params = ($dataType)?$full_params:$last_params;
+	$resArray = ($orderAsc)?array_reverse($st_results):$st_results;
 
 	$num = 0;
 	//$TZDIFF = 19800;	// Asia/Kolkata
 	$TZDIFF = 0;		// date takes system time zone
-	foreach ($st_results as $row)
+	foreach ($resArray as $row)
 	{
 		$st_obj->$num = new stdClass;
 		$st_obj->$num->g = date('Y-m-d@H:i:s',$row['stime']/1000-$TZDIFF);	// device time is stored as row key as timestamp in milisecond
-		if ($datatype) $st_obj->$num->h = date('Y-m-d@H:i:s',$row['dtime']/1000-$TZDIFF);	// device time is stored as row key as timestamp in milisecond
+		if ($dataType) $st_obj->$num->h = date('Y-m-d@H:i:s',$row['dtime']/1000-$TZDIFF);	// device time is stored as row key as timestamp in milisecond
 
 		$i = 0;
 		foreach (str_getcsv($row['data'], ";") as $gps_val)

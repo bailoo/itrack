@@ -16,8 +16,8 @@
 	
 	
 	$imei = '865733021570015';
-	$datetime1 = '2015-06-15 20:46:00';
-	$datetime2 = '2015-06-15 20:50:00';
+	$datetime1 = '2015-06-17 10:00:00';
+	$datetime2 = '2015-06-17 10:10:00';
 	//$imei = '359231030125239';
 	//$datetime1 = '2014-12-31 00:00:00';
 	//$datetime2 = '2015-01-01 23:59:59';
@@ -26,7 +26,9 @@
 
 	//$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
 	$params = array('a','b','c','d','ax','ay','az','ci');
-	$st_obj = gpsParser($st_results,$params,TRUE);
+	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
+	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
+	$st_obj = gpsParser($st_results, $params, $dataType, $orderAsc);
 	print_r($st_obj);
 		
 
