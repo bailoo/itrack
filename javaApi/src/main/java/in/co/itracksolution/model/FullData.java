@@ -27,6 +27,16 @@ public class FullData {
 		this.sTime = sTime;
 	}
 
+	public FullData(FullData f)
+	{
+		this.imei = f.imei;
+		this.date = f.date;
+		this.dTime = f.dTime;
+		this.data = f.data;
+		this.sTime = f.sTime;
+		this.pMap = f.pMap;
+	}
+
 	public String getImei() {
 		return imei;
 	}

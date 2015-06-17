@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
@@ -18,6 +19,7 @@ import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
+import com.google.common.collect.Lists;
 
 public class FullDataDao {
 
@@ -118,7 +120,7 @@ public class FullDataDao {
 		return rs;
 	}
 	
-	public ArrayList<FullData> selectByImeiAndDateTimeSlice(String imei, String startDateTime, String endDateTime, Boolean deviceTime)
+	public ArrayList<FullData> selectByImeiAndDateTimeSlice(String imei, String startDateTime, String endDateTime, Boolean deviceTime, Boolean orderAsc)
 	{
 		BoundStatement boundStatement = (deviceTime)?new BoundStatement(selectbyImeiAndDateTimeSliceStatement1):new BoundStatement(selectbyImeiAndDateTimeSliceStatement2);
 		ArrayList dateList = new ArrayList();
@@ -154,32 +156,27 @@ public class FullDataDao {
 		List<Row> rowList = rs.all();
 	
 		FullData fullData = new FullData();
+		String[] tokens = null ;
 		ArrayList<FullData> fullDataList = new ArrayList<FullData>();
 
-		//ArrayList<ArrayList> parsedList = new ArrayList<ArrayList>();
 		String data;
 		final String DELIMITER = ";";
-		for (Row row : rowList)
+		List<Row> rowListOrdered = (orderAsc)?Lists.reverse(rowList):rowList;
+		for (Row row : rowListOrdered)
 		{
-			//ArrayList parsedRow = new ArrayList();
-			//parsedRow.add(0,row.getString("imei"));
-			//parsedRow.add(1,row.getDate("dtime"));
-			//parsedRow.add(2,row.getDate("stime"));
 			fullData.setImei(row.getString("imei"));
 			fullData.setDTime(row.getDate("dtime"));
 			fullData.setSTime(row.getDate("stime"));
 			
 			data = row.getString("data");
-			//System.out.println("data = "+data);
-			String[] tokens = data.split(DELIMITER);
+			//System.out.println("dtime = "+fullData.getDTime());
+			tokens = data.split(DELIMITER);
 			int i = 0;
 			for(String token : tokens)
 			{
-				//parsedRow.add(i++,token);
 				fullData.pMap.put(fullData.fullParams[i++], token);
 			}
-			//parsedList.add(parsedRow);
-			fullDataList.add(fullData);
+			fullDataList.add(new FullData(fullData));
 		}
 
 		return fullDataList;
