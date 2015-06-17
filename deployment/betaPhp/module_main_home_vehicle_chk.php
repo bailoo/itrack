@@ -819,7 +819,9 @@ echo"</table>";
         global $vcolor1;
         global $vcolor2;
         global $vcolor3;   
-        global $DbConnection;		
+        global $DbConnection;
+        global $o_cassandra;
+        global $logDate;
      
         $vehicle_name_arr=array();
         $imei_arr=array();
@@ -964,7 +966,9 @@ echo"</table>";
         global $today_date2;
         global $vcolor2;
         global $vcolor3;
-        global $DbConnection;	
+        global $DbConnection;
+        global $o_cassandra;
+        global $logDate;
 		
         $vehicle_name_arr=array();
         $imei_arr=array();
