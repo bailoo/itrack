@@ -1,7 +1,7 @@
 <?php
 
 	require_once 'Cassandra/Cassandra.php';
-	require_once 'libGPS.php';
+	require_once 'libLog.php';
 	
 	$o_cassandra = new Cassandra();
 	

@@ -79,8 +79,11 @@ function getLastSeenDateTime($o_cassandra,$imei,$datetime)
 		if (!empty($st_results))
 			break;
 	}
-	return $st_results;
 
+	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
+	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
+	$st_obj = logParser($st_results, $dataType, $orderAsc);
+	return $st_obj;
 }
 
 
@@ -101,7 +104,10 @@ function getLastSeen($o_cassandra,$imei)
 		  ;";
 
 	$st_results = $o_cassandra->query($s_cql);
-	return $st_results;
+	$dataType = FALSE;	// TRUE for fulldata, otherwise lastdata
+	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
+	$st_obj = logParser($st_results, $dataType, $orderAsc);
+	return $st_obj;
 }
 
 
@@ -117,7 +123,7 @@ function getLastSeen($o_cassandra,$imei)
 *
 * return json_decode(json_encode($st_results),FALSE);
 */
-function gpsParser($st_results, $params, $dataType, $orderAsc)
+function logParser($st_results, $dataType, $orderAsc)
 {
 	$st_obj = new stdClass();			
 	$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
@@ -137,10 +143,8 @@ function gpsParser($st_results, $params, $dataType, $orderAsc)
 		$i = 0;
 		foreach (str_getcsv($row['data'], ";") as $gps_val)
 		{
-			if (in_array($gps_params[$i], $params))
-			{
+			//if (in_array($gps_params[$i], $params))
 				$st_obj->$num->$gps_params[$i] = $gps_val;
-			}
 			$i++;
 		}
 		$num++;
@@ -192,7 +196,7 @@ function getDateList($datetime1,$datetime2)
 * 
 * @return array 	Results of the query 
 */
-function getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime)
+function getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc)
 {
 
 	global $TZ;
@@ -213,9 +217,10 @@ function getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTi
 		;";
 	$st_results = $o_cassandra->query($s_cql2);
 
-	return $st_results; 
+	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
+	$st_obj = logParser($st_results, $dataType, $orderAsc);
 		
-
+	return $st_obj;
 }
 
 /***
