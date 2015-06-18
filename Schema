@@ -145,7 +145,7 @@ CREATE TABLE lastlog(
 
 
 
-    CREATE TABLE loggap(
+    CREATE TABLE gaplog(
       imei ascii,
       date ascii,
       type ascii,
@@ -157,7 +157,6 @@ CREATE TABLE lastlog(
       endlatitude ascii,
       endlongitude ascii,
       endlocation ascii,
-      alerttime timestamp,
       logtime timestamp,
       PRIMARY KEY ((imei, date), starttime))
       WITH CLUSTERING ORDER BY (starttime DESC);
