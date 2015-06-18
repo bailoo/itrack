@@ -92,7 +92,7 @@ CREATE TABLE lastlog(
       xroadid ascii,
       xroadcode ascii,
       xroadname ascii,
-      haltduration long,
+      haltduration int,
       speed float,
       location ascii,
       latitude ascii,
@@ -102,7 +102,7 @@ CREATE TABLE lastlog(
       WITH CLUSTERING ORDER BY (dtime DESC);
 
 
-    CREATE TABLE travellog();
+    CREATE TABLE travellog(
       imei ascii,
       date ascii,
       starttime timestamp,
@@ -113,7 +113,7 @@ CREATE TABLE lastlog(
       endlatitude ascii,
       endlongitude ascii,
       endlocation ascii,
-      duration long,
+      duration int,
       avgspeed float,
       distance float,
       maxspeed float,
@@ -134,7 +134,7 @@ CREATE TABLE lastlog(
       endlatitude ascii,
       endlongitude ascii,
       endlocation ascii,
-      duration long,
+      duration int,
       avgspeed float,
       distance float,
       maxspeed float,
@@ -145,7 +145,7 @@ CREATE TABLE lastlog(
 
 
 
-    CREATE TABLE loggap();
+    CREATE TABLE loggap(
       imei ascii,
       date ascii,
       type ascii,
