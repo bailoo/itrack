@@ -23,7 +23,6 @@ CREATE TABLE log2(
   WITH CLUSTERING ORDER BY (stime DESC)
 ;
 
-
 CREATE TABLE lastlog(
   imei ascii,
   stime timestamp,
@@ -31,6 +30,136 @@ CREATE TABLE lastlog(
   PRIMARY KEY (imei)
 ); 
 
-//Sample data for last_data contains device time because device time is not part of the key
+//Sample data for lastlog contains device time because device time is not part of the key
 //always one for each device: 
-//     N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88
+//N;v1.45C;1;26.25148;79.86157;0.06;2015-01-29@00:00:09;2;5;3;5;6;6;3;5;0;12.88
+
+
+#CQL Schema for Alert Log Tables
+
+    CREATE TABLE speedalert(
+      imei ascii,
+      date ascii,
+      dtime timestamp,
+      stime timestamp,
+      speed float,
+      location ascii,
+      latitude ascii,
+      longitude ascii,
+      roadid ascii,
+      logtime timestamp,
+      PRIMARY KEY ((imei, date), dtime))
+      WITH CLUSTERING ORDER BY (dtime DESC);
+    create index speedalert_roadid on speedalert(roadid);
+
+
+    CREATE TABLE turnalert(
+      imei ascii,
+      date ascii,
+      dtime timestamp,
+      stime timestamp,
+      speed float,
+      angle float,
+      location ascii,
+      latitude ascii,
+      longitude ascii,
+      roadid ascii,
+      logtime timestamp,
+      PRIMARY KEY ((imei, date), dtime))
+      WITH CLUSTERING ORDER BY (dtime DESC);
+    create index turnalert_roadid on turnalert(roadid);
+
+
+    CREATE TABLE distancelog(
+      imei ascii,
+      date ascii,
+      starttime timestamp,
+      endtime timestamp,
+      avgspeed float,
+      distance float,
+      maxspeed float,
+      alerttime timestamp,
+      logtime timestamp,
+      PRIMARY KEY ((imei, date), starttime))
+      WITH CLUSTERING ORDER BY (starttime DESC);
+
+
+    CREATE TABLE xroadlog(
+      imei ascii,
+      date ascii,
+      dtime timestamp,
+      stime timestamp,
+      xroadid ascii,
+      xroadcode ascii,
+      xroadname ascii,
+      haltduration long,
+      speed float,
+      location ascii,
+      latitude ascii,
+      longitude ascii,
+      logtime timestamp,
+      PRIMARY KEY ((imei, date), dtime))
+      WITH CLUSTERING ORDER BY (dtime DESC);
+
+
+    CREATE TABLE travellog();
+      imei ascii,
+      date ascii,
+      starttime timestamp,
+      startlatitude ascii,
+      startlongitude ascii,
+      startlocation ascii,
+      endtime timestamp,
+      endlatitude ascii,
+      endlongitude ascii,
+      endlocation ascii,
+      duration long,
+      avgspeed float,
+      distance float,
+      maxspeed float,
+      alerttime timestamp,
+      logtime timestamp,
+      PRIMARY KEY ((imei, date), starttime))
+      WITH CLUSTERING ORDER BY (starttime DESC);
+
+
+    CREATE TABLE nightlog(
+      imei ascii,
+      date ascii,
+      starttime timestamp,
+      startlatitude ascii,
+      startlongitude ascii,
+      startlocation ascii,
+      endtime timestamp,
+      endlatitude ascii,
+      endlongitude ascii,
+      endlocation ascii,
+      duration long,
+      avgspeed float,
+      distance float,
+      maxspeed float,
+      alerttime timestamp,
+      logtime timestamp,
+      PRIMARY KEY ((imei, date), starttime))
+      WITH CLUSTERING ORDER BY (starttime DESC);
+
+
+
+    CREATE TABLE loggap();
+      imei ascii,
+      date ascii,
+      type ascii,
+      starttime timestamp,
+      startlatitude ascii,
+      startlongitude ascii,
+      startlocation ascii,
+      endtime timestamp,
+      endlatitude ascii,
+      endlongitude ascii,
+      endlocation ascii,
+      alerttime timestamp,
+      logtime timestamp,
+      PRIMARY KEY ((imei, date), starttime))
+      WITH CLUSTERING ORDER BY (starttime DESC);
+
+
