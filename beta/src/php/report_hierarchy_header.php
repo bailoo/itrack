@@ -3,7 +3,7 @@
     include_once('util_session_variable.php');
     include_once('util_php_mysql_connectivity.php');
     include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
-    include_once("libGPS.php");     //##### INCLUDE CASSANDRA API
+       include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
 
     $query1="SELECT vehicle_color from account_preference WHERE account_id='$account_id'";
     $result1=mysql_query($query1,$DbConnection);
