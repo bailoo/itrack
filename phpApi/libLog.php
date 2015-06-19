@@ -130,6 +130,7 @@ function logParser($st_results, $dataType, $orderAsc)
 	$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
 	$last_params = array('a','b','c','d','e','f','h','i','j','k','l','m','n','o','p','q','r','s','t','u','ci','ax','ay','az','mx','my','mz','bx','by','bz');
 	$gps_params = ($dataType)?$full_params:$last_params;
+	$paramSize = sizeof($gps_params);
 	$resArray = ($orderAsc)?array_reverse($st_results):$st_results;
 
 	$num = 0;
@@ -142,11 +143,12 @@ function logParser($st_results, $dataType, $orderAsc)
 		if ($dataType) $st_obj->$num->h = date('Y-m-d@H:i:s',$row['dtime']/1000-$TZDIFF);	// device time is stored as row key as timestamp in milisecond
 
 		$i = 0;
+		
 		foreach (str_getcsv($row['data'], ";") as $gps_val)
 		{
-			//if (in_array($gps_params[$i], $params))
-				$st_obj->$num->$gps_params[$i] = $gps_val;
-			$i++;
+			if ($i == $paramSize)
+				break; 
+			$st_obj->$num->$gps_params[$i++] = $gps_val;
 		}
 		$num++;
 	}

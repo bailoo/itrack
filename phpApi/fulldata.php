@@ -15,9 +15,9 @@
 	$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 	
 	
-	$imei = '865733021570015';
-	$datetime1 = '2015-06-18 20:00:00';
-	$datetime2 = '2015-06-18 20:20:00';
+	$imei = '865733021562939';
+	$datetime1 = '2015-06-12 00:00:00';
+	$datetime2 = '2015-06-12 14:20:00';
 	//$imei = '359231030125239';
 	//$datetime1 = '2014-12-31 00:00:00';
 	//$datetime2 = '2015-01-01 23:59:59';
