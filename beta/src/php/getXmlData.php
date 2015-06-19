@@ -1,6 +1,6 @@
 <?php
 include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
-include_once("libGPS.php");     //##### INCLUDE CASSANDRA API
+include_once("libLog.php");     //##### INCLUDE CASSANDRA API
 
 function readFileXml($vSerial, $startDate, $endDate, $xmlFromDate, $xmlToDate, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, &$dataObject) {
 	
@@ -27,20 +27,20 @@ function readFileXml($vSerial, $startDate, $endDate, $xmlFromDate, $xmlToDate, $
    }
   // echo "deviceTime=".$deviceTime."<br>";
   // echo "imei=".$imei."<br>";
-
-    $st_results = getImeiDateTimes($o_cassandra,$imei,$startDate,$endDate,$deviceTime);
+$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
+	
+	$orderAsc = TRUE;
+    $st_results = getImeiDateTimes($o_cassandra, $imei, $startDate, $endDate, $deviceTime, $orderAsc);
 	
 	//var_dump($st_results);
-	$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r');
-	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
-	
-	$orderAsc = TRUE;	// TRUE for ascending, otherwise descending (default) 
-	$st_obj = gpsParser($st_results,$params,$dataType,$orderAsc);
+	//$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r');
+		// TRUE for ascending, otherwise descending (default) 
+	//$st_obj = gpsParser($st_results,$params,$dataType,$orderAsc);
 //print_r($st_obj);
    // $st_obj = gpsParser($st_results);
     //print_r($st_obj);
 
-    foreach($st_obj as $item) {
+    foreach($st_results as $item) {
         $msg_type = $item->a;                 
         $ver = $item->b;              
         $fix = $item->c;
@@ -276,20 +276,16 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
    }
   // echo "deviceTime=".$deviceTime."<br>";
   // echo "imei=".$imei."<br>";
-  $sortFetchData="ASC";
-    $st_results = getImeiDateTimes($o_cassandra,$imei,$startDate,$endDate,$deviceTime,$sortFetchData);
-	
-	//var_dump($st_results);
-	$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r');
-	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
-	$orderAsc = TRUE;	// TRUE for ascending, otherwise descending (default) 
-	$st_obj = gpsParser($st_results,$params,TRUE,$orderAsc);
+  $deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
+    $orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
+    $st_results = getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc);
+
 
    // $st_obj = gpsParser($st_results);
     //print_r($st_obj);
-	if(!empty((array) $st_obj))
+	//if(!empty((array) $st_obj))
 	{		
-		foreach($st_obj as $item) 
+		foreach($st_results as $item) 
 		{
 			$msg_type = $item->a;                 
 			$ver = $item->b;              
@@ -458,15 +454,15 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 	//echo "imie1=".$imei."<br>";
 	$st_results = getLastSeen($o_cassandra,$imei);
 	//var_dump($st_results);
-	$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r');
-	$st_obj = gpsParser($st_results,$params,TRUE);
+	//$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r');
+	//$st_obj = gpsParser($st_results,$params,TRUE);
 	// $st_obj = gpsParser($st_results);
 	//print_r($st_obj);
 	
-	if(!empty((array)$st_obj))
+	//if(!empty((array)$st_obj))
 	{
 		//echo "in if";
-		foreach($st_obj as $item) {
+		foreach($st_results as $item) {
 			$msg_type = $item->a;                 
 			$ver = $item->b;              
 			$fix = $item->c;

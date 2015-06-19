@@ -1,19 +1,10 @@
 <?php
 //echo "<br>usertype=".$user_type;
 include_once('util_session_variable.php');
-include_once('util_php_mysql_connectivity.php');
-	
+include_once('util_php_mysql_connectivity.php');	
 include("user_type_setting.php");
 
-
 $flag_sector = 0;
-$flag_station =0;
-$flag_substation = 0;
-$flag_visit = 0;
-$flag_vtrip = 0;
-$flag_load_cell = 0;
-$consignment_info = 0;
-
 for($k=0;$k<$size_feature_session;$k++)
 {
 	//$feature_id_session[$k];
@@ -35,8 +26,19 @@ for($k=0;$k<$size_feature_session;$k++)
 	if($feature_name_session[$k] == "substation")
 	{
 		$flag_substation = 1;
+	}
+	if($feature_name_session[$k] == "invoice")
+	{
+		$flag_invoice = 1;
 	}	
-	
+	if($feature_name_session[$k] == "raw_milk")
+	{
+		$flag_raw_milk = 1;
+	}	
+	if($feature_name_session[$k] == "hindalco_invoice")
+	{
+		$flag_hindalco_invoice = 1;
+	}
 	if($feature_name_session[$k] == "visit_track")
 	{
 		$flag_visit = 1;
@@ -55,9 +57,11 @@ for($k=0;$k<$size_feature_session;$k++)
 	{
 		$consignment_info = 1;
 	}
+	if($feature_name_session[$k] =="upl_flag")
+	{
+		$flag_upl = 1;
+	}
 }
-
-//echo "djjsadkdajkl;dj";
 $style1="\'border:none;width:20px;height:20px;\'";
 $nbsp="&nbsp;&nbsp;";
 $contetnbsp="&nbsp;";	
@@ -157,6 +161,72 @@ $contetnbsp="&nbsp;";
 										"</tr>"+
 									"</table>",editable:false, children:
 									[]},';
+									
+									if($account_id=='1')
+									{
+										echo'{type:"Text",
+										label:"<table border=0 class=mystyle>"+
+											"<tr>"+ 																	
+												"<td valign=\'top\'>"+
+													"<table border=0 class=mystyle>"+													
+														"<tr>"+
+															"<td>'.$nbsp.'"+ 																				
+																"<a href=javascript:manage_show_file(\'src/php/manage_account_thirdparty.htm\');>"+
+																	"<img src=\'images/manage/account.png\' style='.$style1.'>"+
+																"</a>"+																
+															"</td>"+
+														"</tr>"+
+													"</table>"+
+												"</td>"+
+												"<td >"+
+													"<table border=0 class=mystyle valign=\'top\'>"+
+														"<tr>"+
+															"<td height=2px></td>"+
+														"</tr>"+
+														"<tr>"+
+															"<td valign=\'top\'>"+ 																				
+																"<a href=javascript:manage_show_file(\'src/php/manage_account_thirdparty.htm\'); class=\'menuitem\'>"+
+																	"'.$contetnbsp.'ThirdParty Account"+
+																"</a>"+																
+															"</td>"+
+														"</tr>"+
+													"</table>"+														
+												"</td>"+
+											"</tr>"+
+										"</table>",editable:false, children:
+										[]},';
+									}
+									echo'{type:"Text",
+										label:"<table border=0 class=mystyle>"+
+											"<tr>"+ 																	
+												"<td valign=\'top\'>"+
+													"<table border=0 class=mystyle>"+													
+														"<tr>"+
+															"<td>'.$nbsp.'"+ 																				
+																"<a href=javascript:manage_show_file(\'src/php/manage_vehicle_thirdparty.htm\');>"+
+																	"<img src=\'images/manage/vehicle.png\' style='.$style1.'>"+
+																"</a>"+																
+															"</td>"+
+														"</tr>"+
+													"</table>"+
+												"</td>"+
+												"<td >"+
+													"<table border=0 class=mystyle valign=\'top\'>"+
+														"<tr>"+
+															"<td height=2px></td>"+
+														"</tr>"+
+														"<tr>"+
+															"<td valign=\'top\'>"+ 																				
+																"<a href=javascript:manage_show_file(\'src/php/manage_vehicle_thirdparty.htm\'); class=\'menuitem\'>"+
+																	"'.$contetnbsp.'ThirdParty Vehicle"+
+																"</a>"+																
+															"</td>"+
+														"</tr>"+
+													"</table>"+														
+												"</td>"+
+											"</tr>"+
+										"</table>",editable:false, children:
+										[]},';
 									if($consignment_info==1)
                                    {
 									echo'{type:"Text",
@@ -484,9 +554,40 @@ $contetnbsp="&nbsp;";
 										"</tr>"+
 									"</table>",editable:false, children:
 									[]},';
+									echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_polyline.htm\');>"+
+																"<img src=\'images/manage/geofence.png\' style='.$style1.'>"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_polyline.htm\'); class=\'menuitem\'>"+
+																"'.$contetnbsp.'Polyline"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';
 									
-									//if($account_id=="2")
-									//{
+									if($flag_invoice)
+									{
 									echo'{type:"Text",
 									label:"<table border=0 class=mystyle>"+
 										"<tr>"+ 																	
@@ -518,7 +619,206 @@ $contetnbsp="&nbsp;";
 										"</tr>"+
 									"</table>",editable:false, children:
 									[]},';									
-								//}
+									}
+									if($flag_raw_milk)
+									{
+									
+									echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=\'src/php/manage_invoice_milk_add_upload.htm\' target=\'_blank\' >"+
+																"<img src=\'images/manage/invoice.png\' style='.$style1.'>"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																				
+															"<a href=\'src/php/manage_invoice_milk_add_upload.htm\' class=\'menuitem\' target=\'_blank\' >"+
+																"'.$contetnbsp.'Create & Upload Invoice"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';
+									
+									echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=javascript:manage_show_file_jquery(\'src/php/manage_edit_invoice_raw_milk_admin_prev.htm\');>"+
+																"<img src=\'images/manage/invoice.png\' style='.$style1.'>"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																				
+															"<a href=javascript:manage_show_file_jquery(\'src/php/manage_edit_invoice_raw_milk_admin_prev.htm\'); class=\'menuitem\'>"+
+																"'.$contetnbsp.'Raw Milk Invoice"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';	
+										
+									echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_account_plant.htm\');>"+
+																"<img src=\'images/manage/invoice.png\' style='.$style1.'>"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_account_plant.htm\'); class=\'menuitem\'>"+
+																"'.$contetnbsp.'Plant Account Assignment"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';
+									
+									echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_default_chilling_plant.htm\');>"+
+																"<img src=\'images/manage/invoice.png\' style='.$style1.'>"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																			
+															"<a href=javascript:manage_show_file(\'src/php/manage_default_chilling_plant.htm\'); class=\'menuitem\'>"+
+																"'.$contetnbsp.'Transporter Default Chilling Plant"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';
+									
+									}
+								if($flag_hindalco_invoice)
+									{
+									echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_edit_hindalco_invoice_admin_prev.htm\');>"+
+																"<img src=\'images/manage/invoice.png\' style='.$style1.'>"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_edit_hindalco_invoice_admin_prev.htm\'); class=\'menuitem\'>"+
+																"'.$contetnbsp.'Hindalco Invoice"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';	
+									
+									echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_substation_vehicle.htm\');>"+
+																"<img src=\'images/manage/station.png\' style='.$style1.'>"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_substation_vehicle.htm\'); class=\'menuitem\'>"+
+																"Transporter'.$contetnbsp.''.$report_type.' Assignment"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';									
+									
+									}
 								if($flag_vtrip)
 								{	
 								echo'{type:"Text",
@@ -587,7 +887,7 @@ $contetnbsp="&nbsp;";
 										"</tr>"+
 									"</table>",editable:false, children:
 									[]},';
-																		
+								
 								if($flag_substation)
 								{
 									echo'{type:"Text",
@@ -620,8 +920,46 @@ $contetnbsp="&nbsp;";
 											"</td>"+
 										"</tr>"+
 									"</table>",editable:false, children:
-									[]},';									
-									
+									[]},';
+
+									if($account_id=="231" || $account_id=="1115" || $account_id=="1100")
+									{	
+										echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_secondary_vehicle.htm\');>"+
+																"<img src=\'images/manage/station.png\' style='.$style1.'>"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_secondary_vehicle.htm\'); class=\'menuitem\'>"+
+																"'.$contentnbsp.'Secondary Vehicle"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';	
+									}
+																		
+								}
+								if($flag_raw_milk || $flag_substation)
+								{
 									echo'{type:"Text",
 									label:"<table border=0 class=mystyle>"+
 										"<tr>"+ 																	
@@ -723,7 +1061,44 @@ $contetnbsp="&nbsp;";
 											[]},';
 									}		
 								}
-              						
+              					
+								/*echo'{type:\'Text\', label:\'<table border=0><tr><td valign="top"><a href=javascript:manage_show_file("src/php/manage_visit_area.htm"); class="menuitem"><img src="images/manage/visit.png" style="border:none;width:20px;height:20px;"></a></td><td valign="top"><div style="height:2px"></div><a href=javascript:manage_show_file("src/php/manage_visit_area.htm"); class="menuitem">Visit</a></td></tr></table>\', editable:false, children:
+								[							
+								]},';*/
+								if($flag_upl)
+								{
+									echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_schedule_upl.htm\');>"+
+																"<img src=\'images/manage/visit.png\' style='.$style1.'>"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_schedule_upl.htm\'); class=\'menuitem\'>"+
+																"'.$contetnbsp.'ScheduleUPL"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';
+								}
 								if($flag_visit)
 								{
 								/*echo'{type:\'Text\', label:\'<table border=0><tr><td valign="top"><a href=javascript:manage_show_file("src/php/manage_visit_area.htm"); class="menuitem"><img src="images/manage/visit.png" style="border:none;width:20px;height:20px;"></a></td><td valign="top"><div style="height:2px"></div><a href=javascript:manage_show_file("src/php/manage_visit_area.htm"); class="menuitem">Visit</a></td></tr></table>\', editable:false, children:
@@ -881,7 +1256,7 @@ $contetnbsp="&nbsp;";
 									"</table>",editable:false, children:
 									[]},';
   							}			
-							if(@$mining_user_type==1)
+							if($mining_user_type==1)
 							{
 								echo'{type:"Text",
 								label:"<table border=0 class=mystyle>"+
@@ -933,7 +1308,7 @@ $contetnbsp="&nbsp;";
   </tr>
   <tr  class="mb3">
       <td>
-          <?php include('module_copyright.php');?>
+          <?php include('module_copyright.htm');?>
       </td>
   </tr>
 </table>							  

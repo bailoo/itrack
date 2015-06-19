@@ -1,10 +1,12 @@
 <?php
 function get_report_location($lat,$lng,&$placename)
 {	
+	//echo "\nLoc0";
 	$geoCodeURL = "http://nominatim.openstreetmap.org/reverse?format=xml&lat=".$lat."&lon=".$lng."&zoom=18&addressdetails=1";
 	$xml=@simplexml_load_file($geoCodeURL);	
+	//echo "\nxml=".$xml;
 	foreach($xml->result[0]->attributes() as $a => $b) 
-	{
+	{		
 		if($a=="lat")
 		{
 			$lat_local=$b;
@@ -14,14 +16,17 @@ function get_report_location($lat,$lng,&$placename)
 			$lon_local=$b;
 		}
 	}
+	//echo "\nLoc0";
 	$lat=round($lat,4);
+	//echo "\nLoc1";
 	$lng=round($lng,4);	
+	//echo "\nLoc2";
 	$lat_local = round(floatval($lat_local),4);
 	$lon_local = round(floatval($lon_local),4);
 
-	//echo "lat1=".$lat."lng1=".$lng."lat2=".$lat_local."long2=".$lon_local."<br>";
+	//echo "\nlat1=".$lat."lng1=".$lng."lat2=".$lat_local."long2=".$lon_local."<br>";
 	$distance="";
-	calculate_report_distance($lat,$lat_local,$lng,$lon_local,&$distance);
+	calculate_report_distance($lat,$lat_local,$lng,$lon_local,$distance);
 	$placename=round($distance,2)." km from ".$xml->result;
 }
 
