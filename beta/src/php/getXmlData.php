@@ -1,6 +1,14 @@
 <?php
 include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
-include_once("libLog.php");     //##### INCLUDE CASSANDRA API
+if(file_exists("/../../../phpApi/libLog.php"))
+{
+echo "true";
+}
+ else {
+    
+echo "false";
+ }
+include_once("/../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API
 
 function readFileXml($vSerial, $startDate, $endDate, $xmlFromDate, $xmlToDate, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, &$dataObject) {
 	
@@ -19,17 +27,17 @@ function readFileXml($vSerial, $startDate, $endDate, $xmlFromDate, $xmlToDate, $
    //echo "sortBy=".$sortBy."<br>";
    if ($sortBy == "h")
    {
-		$deviceTime=TRUE;
+        $deviceTime=TRUE;
    }
    else if($sortBy == "g")
    {
-		$deviceTime=FALSE;
+        $deviceTime=FALSE;
    }
   // echo "deviceTime=".$deviceTime."<br>";
   // echo "imei=".$imei."<br>";
-$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
+   
 	
-	$orderAsc = TRUE;
+    $orderAsc = TRUE;
     $st_results = getImeiDateTimes($o_cassandra, $imei, $startDate, $endDate, $deviceTime, $orderAsc);
 	
 	//var_dump($st_results);
@@ -278,7 +286,11 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
   // echo "imei=".$imei."<br>";
   $deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
     $orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
-    $st_results = getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc);
+    echo "vserial=".$vSerial."<br>";
+     echo "startDate=".$startDate."<br>";
+       echo "endDate=".$endDate."<br>";
+         
+    $st_results = getImeiDateTimes($o_cassandra, $vSerial, $startDate, $endDate, $deviceTime, $orderAsc);
 
 
    // $st_obj = gpsParser($st_results);
