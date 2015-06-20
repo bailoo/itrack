@@ -1,4 +1,5 @@
 <?php
+echo "READ1";
 require_once 'cassandra_db_connect.php';
 /*require_once 'Cassandra/Cassandra.php';
 $o_cassandra = new Cassandra();

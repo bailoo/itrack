@@ -1,20 +1,25 @@
 <?php
-include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API   
-include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
-
+echo "INGET11";
+include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
+if($isReport) {
+    include_once("../../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
+} else {
+    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
+}
+//echo "EXISTS=".file_exists("../../../../../phpApi/libLog.php")."<br>";
 
 function readFileXml($vSerial, $startDate, $endDate, $xmlFromDate, $xmlToDate, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, &$dataObject) {
 	
-	global $o_cassandra; 
-	$imei = $vSerial;
-	$date = $startDate;
-	$HH = '23';
-	//echo "<br>SD=".$startDate." ,endDate=".$endDate;
-	$dateminute1 = str_replace(' ', '-', $startDate);
-	$dateminute1 = str_replace(':', '-', $dateminute1);
+    global $o_cassandra; 
+    $imei = $vSerial;
+    $date = $startDate;
+    $HH = '23';
+    //echo "<br>SDA=".$startDate." ,endDate=".$endDate;
+    $dateminute1 = str_replace(' ', '-', $startDate);
+    $dateminute1 = str_replace(':', '-', $dateminute1);
 
-	$dateminute2 = str_replace(' ', '-', $endDate);
-	$dateminute2 = str_replace(':', '-', $dateminute2);
+    $dateminute2 = str_replace(' ', '-', $endDate);
+    $dateminute2 = str_replace(':', '-', $dateminute2);
 
    //echo "imie=".$imei."<br>";
    //echo "sortBy=".$sortBy."<br>";
@@ -26,19 +31,18 @@ function readFileXml($vSerial, $startDate, $endDate, $xmlFromDate, $xmlToDate, $
    {
         $deviceTime=FALSE;
    }
-  // echo "deviceTime=".$deviceTime."<br>";
-  // echo "imei=".$imei."<br>";
-   
+    echo "deviceTime=".$deviceTime."<br>";
+    echo "imei=".$imei."<br>"; 
 	
     $orderAsc = TRUE;
     $st_results = getImeiDateTimes($o_cassandra, $imei, $startDate, $endDate, $deviceTime, $orderAsc);
-	
-	//var_dump($st_results);
-	//$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r');
-		// TRUE for ascending, otherwise descending (default) 
-	//$st_obj = gpsParser($st_results,$params,$dataType,$orderAsc);
-//print_r($st_obj);
-   // $st_obj = gpsParser($st_results);
+
+    //var_dump($st_results);
+    //$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r');
+            // TRUE for ascending, otherwise descending (default) 
+    //$st_obj = gpsParser($st_results,$params,$dataType,$orderAsc);
+    //print_r($st_obj);
+    // $st_obj = gpsParser($st_results);
     //print_r($st_obj);
 
     foreach($st_results as $item) {
@@ -65,7 +69,7 @@ function readFileXml($vSerial, $startDate, $endDate, $xmlFromDate, $xmlToDate, $
         
        
         $DataValid = 0;
-//exit();
+        //exit();
 
         if ($parameterizeData->latitude != null && $parameterizeData->longitude != null) {
              if ((strlen($lat) > 5) && ($lat != "-") && (strlen($lng) > 5) && ($lng != "-")) {

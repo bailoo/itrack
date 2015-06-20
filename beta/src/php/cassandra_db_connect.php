@@ -1,5 +1,6 @@
 <?php
     require_once 'Cassandra/Cassandra.php';
+
     $o_cassandra = new Cassandra();
     $s_server_host = '52.74.33.255'; // Localhost
     //$s_server_host = '52.74.144.159'; // Localhost

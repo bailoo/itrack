@@ -2,11 +2,10 @@
 set_time_limit(360000);
 //error_reporting(E_ALL);
 //ini_set('display_errors', TRUE);
-
-$DEBUG_OFFLINE = false;
-$DEBUG_ONLINE = true;
+$DEBUG_OFFLINE = true;
 $DEBUG_ONLINE = false;
 $CREATE_MASTER = true;
+$isReport = true;
 //$HOST = "111.118.181.156";
 $DBASE = "iespl_vts_beta";
 if($DEBUG_OFFLINE) {
@@ -38,18 +37,19 @@ echo "<br>ABSPAth=".$abspath;
 include_once($abspath."/common_xml_element.php");
 //include_once($abspath."/get_all_dates_between.php");
 
-//echo "\nD1";	
+echo "\nD1";	
 include_once($abspath.'/xmlParameters.php');
-///echo "\nD2";
+echo "\nD2";
 include_once($abspath.'/parameterizeData.php');
-//echo "\nD3";
+echo "\nD3";
 include_once($abspath.'/data.php');
 if(file_exists($tmp)){echo "File Exists1";} else {"Does not exist";}
-//echo "\nD4";
+echo "\nD4";
 include_once($abspath.'/sortXmlData.php');
 echo "\nD5:".$abspath;
-if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
-$tmp = $abspath.'/getXmlData.php';
+
+//$tmp = $abspath.'/getXmlData.php';
+//if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
 
 include_once($abspath.'/getXmlData.php');
 echo "\nD6";
@@ -62,15 +62,18 @@ include_once($abspath."/user_type_setting.php");
 //require_once $abspath."/excel_lib/class.writeexcel_workbook.inc.php";
 //require_once $abspath."/excel_lib/class.writeexcel_worksheet.inc.php";
 include_once($abspath."/util.hr_min_sec.php");
+echo "<br>D7";
+if("Exists=".file_exists($abspath."/mail_api/mailgun-php/attachment_mailgun.php"));
 include_once($abspath."/mail_api/mailgun-php/attachment_mailgun.php");
-
+echo "<br>D8";
 //include_once($abspath."/hourly_report/".$user_name."/get_master_detail.php");
 //### IMPORT XLSX LIBRARY
 
 //ini_set('display_startup_errors', TRUE);
-//echo "<br>D7";
+
 define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 require_once $abspath.'/PHPExcel/IOFactory.php';
+echo "\nD9:".$abspath;
 
 $objPHPExcel_1 = null;
 //echo "<br>D8";
@@ -626,7 +629,7 @@ if($shift_ev1)
         $message = "HOURLY_MAIL_VTS_HALT_REPORT_MORNING(MOTHER_MUMBAI)_".$msg."_".$time_1."_".$time_2."<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
         $random_hash = md5(date('r', time()));  
         $headers = "From: support@iembsys.co.in\r\n";
-        $headers .= "Cc: hourlyreport4@gmail.com"; 
+        $headers .= "Cc: hourlyreport4@gmail.com";
         //$headers .= "Cc: rizwan@iembsys.com";	
         //pass:8090025844
         //$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com";
@@ -634,7 +637,7 @@ if($shift_ev1)
         $filename_title = "HOURLY_MAIL_VTS_HALT_REPORT_MORNING_MOTHER_MUMBAI_".$msg."_".$time_1."_".$time_2.".xlsx";	
         $file_path = $evening_sent_file_path1;
 
-        //echo "\nFILE PATH:Ev=".$file_path;
+        echo "\nFILE PATH:Ev=".$file_path." ,domain=".$domain;
         //### MAILGUN -Make the call to the client.
         $result = $mgClient->sendMessage($domain, array(
             'from'    => 'Itrack <support@iembsys.co.in>',

@@ -1,17 +1,18 @@
 <?php
     function read_expected_time($account_id, $shift)
     {
+        global $abspath;
         global $DEBUG_OFFLINE;
         global $DEBUG_ONLINE;
         global $expected_customer_csv;
         global $expected_time_csv;	
 
         if($DEBUG_OFFLINE) {
-            $dir="D:\\test_app/gps_report/".$account_id."/master";
+            $dir= $abspath."/gps_report/".$account_id."/master";
         } else if($DEBUG_ONLINE) {
-            $dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";            
+            $dir = $abspath."/gps_report/".$account_id."/master";            
         } else {
-            $dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";
+            $dir = $abspath."/gps_report/".$account_id."/master";
         }
         //echo "\nDir=".$dir;
         $dh = opendir($dir);
