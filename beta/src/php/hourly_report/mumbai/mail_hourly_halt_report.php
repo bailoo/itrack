@@ -62,6 +62,7 @@ include_once($abspath."/user_type_setting.php");
 //require_once $abspath."/excel_lib/class.writeexcel_workbook.inc.php";
 //require_once $abspath."/excel_lib/class.writeexcel_worksheet.inc.php";
 include_once($abspath."/util.hr_min_sec.php");
+include_once($abspath."/mail_api/mailgun-php/attachment_mailgun.php");
 
 //include_once($abspath."/hourly_report/".$user_name."/get_master_detail.php");
 //### IMPORT XLSX LIBRARY
@@ -608,8 +609,8 @@ if($shift_ev1)
         //#### LAST TIME PROCESSED CLOSED #############
 
         //############ SEND EMAIL ##############
-        //$to = 'rizwan@iembsys.com';
-        $to = 'logistics.vashi@gmail.com,vivek.ghadge@motherdairy.com';
+        $to = 'rizwan@iembsys.com';
+        //$to = 'logistics.vashi@gmail.com,vivek.ghadge@motherdairy.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -633,8 +634,22 @@ if($shift_ev1)
         $filename_title = "HOURLY_MAIL_VTS_HALT_REPORT_MORNING_MOTHER_MUMBAI_".$msg."_".$time_1."_".$time_2.".xlsx";	
         $file_path = $evening_sent_file_path1;
 
-        //echo "\nFILE PATH:Ev=".$file_path; 	
-        include("send_mail_api.php");	
+        //echo "\nFILE PATH:Ev=".$file_path;
+        //### MAILGUN -Make the call to the client.
+        $result = $mgClient->sendMessage($domain, array(
+            'from'    => 'Itrack <support@iembsys.co.in>',
+            'to'      => $to,
+            'cc'      => 'taseen@iembsys.com',
+           //'cc'      => 'hourlyreport4@gmail.com',
+           // 'bcc'     => 'astaseen83@gmail.com',
+            'subject' => $subject,
+            'text'    => $message,
+            'html'    => '<html></html>'
+        ), array(
+                'attachment' => array($file_path)	
+        ));        
+         	 	
+   //     include("send_mail_api.php");	
         //######################################
     }
 }
