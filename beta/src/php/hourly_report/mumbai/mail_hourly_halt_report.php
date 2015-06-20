@@ -603,7 +603,7 @@ if($shift_ev1)
         echo "\nAfter Data Process";	
 
         //######### UPDATE LAST TIME PROCESSED -ALWAYS UPDATED #############	
- //       update_last_processed_time($evening_last_processed_time_path1, $current_time);
+        update_last_processed_time($evening_last_processed_time_path1, $current_time);
         update_last_halt_time($evening_last_halt_time_path1);
         echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############
