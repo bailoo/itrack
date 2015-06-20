@@ -78,14 +78,14 @@
 		overflow-x: hidden;
 		}
 
-		div.scrollTableContainer thead tr 
+		/*div.scrollTableContainer thead tr 
 		{
 		position:relative;
 		top: expression(offsetParent.scrollTop);
-		/*IE5+ only*/
-		/* fixes the header being over too far in IE, doesn’t seem to affect FF */
+		//IE5+ only
+		// fixes the header being over too far in IE, doesnï¿½t seem to affect FF 
 		left: 0px;	
-		}
+		}*/
 
 		/* Modern browsers (but especially firefox ) */
 
@@ -95,14 +95,14 @@
 		overflow-x: hidden;
 		}
 
-		div.scrollTableContainer tfoot tr
+		/*div.scrollTableContainer tfoot tr
 		{
 		position:relative;
-		top: expression(offsetParent.scrollTop);
-		/*IE5+ only*/
-		/* fixes the header being over too far in IE, doesn’t seem to affect FF */
+		top: expression(offsetParent.,scrollTop);
+		//IE5+ only
+		// fixes the header being over too far in IE, doesnï¿½t seem to affect FF
 		left: 0px;
-		}
+		}*/
 
 		/*prevent Mozilla scrollbar from hiding cell content*/
 
