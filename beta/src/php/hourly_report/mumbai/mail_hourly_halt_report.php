@@ -2,8 +2,8 @@
 set_time_limit(360000);
 //error_reporting(E_ALL);
 //ini_set('display_errors', TRUE);
-$DEBUG_OFFLINE = true;
-$DEBUG_ONLINE = false;
+$DEBUG_OFFLINE = false;
+$DEBUG_ONLINE = true;
 $CREATE_MASTER = true;
 $isReport = true;
 //$HOST = "111.118.181.156";
