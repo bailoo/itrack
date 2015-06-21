@@ -16,7 +16,12 @@ if($DEBUG_OFFLINE) {
     include_once("../database_ip.php");
 }    
 $USER = "root";
-$PASSWD = "mysql";
+if($DEBUG_OFFLINE) {
+    $PASSWD = "mysql";
+} else {
+    $PASSWD = 'neon04$VTS';
+}
+
 $account_id = "1115";
 if($account_id == "1115") $user_name = "mumbai";
 //if($account_id == "231") $user_name = "delhi@";
