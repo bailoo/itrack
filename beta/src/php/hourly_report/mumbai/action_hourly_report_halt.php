@@ -14,7 +14,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         //global $DEBUG_OFFLINE;
         //global $DEBUG_ONINE;
         global $abspath;
-        echo "\nEnddate	=".$enddate." ,time1_ev=".$time1_ev." ,time2_ev=".$time2_ev;
+        //echo "\nEnddate	=".$enddate." ,time1_ev=".$time1_ev." ,time2_ev=".$time2_ev;
 	global $va,$vb,$vc,$vd,$ve,$vf,$vg,$vh,$vi,$vj,$vk,$vl,$vm,$vn,$vo,$vp,$vq,$vr,$vs,$vt,$vu,$vv,$vw,$vx,$vy,$vz,$vaa,$vab;
 	global $old_xml_date;
 	

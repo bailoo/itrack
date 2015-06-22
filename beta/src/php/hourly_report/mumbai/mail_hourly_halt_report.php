@@ -2,8 +2,8 @@
 set_time_limit(360000);
 //error_reporting(E_ALL);
 //ini_set('display_errors', TRUE);
-$DEBUG_OFFLINE = true;
-$DEBUG_ONLINE = false;
+$DEBUG_OFFLINE = false;
+$DEBUG_ONLINE = true;
 $CREATE_MASTER = true;
 $isReport = true;
 //$HOST = "111.118.181.156";
@@ -16,7 +16,12 @@ if($DEBUG_OFFLINE) {
     include_once("../database_ip.php");
 }    
 $USER = "root";
-$PASSWD = "mysql";
+if($DEBUG_OFFLINE) {
+    $PASSWD = "mysql";
+} else {
+    $PASSWD = 'neon04$VTS';
+}
+
 $account_id = "1115";
 if($account_id == "1115") $user_name = "mumbai";
 //if($account_id == "231") $user_name = "delhi@";
