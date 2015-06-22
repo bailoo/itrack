@@ -1,10 +1,9 @@
-<?php
-set_time_limit(360000);
+<?php set_time_limit(360000);
 //error_reporting(E_ALL);
 //ini_set('display_errors', TRUE);
 $DEBUG_OFFLINE = false;
-$DEBUG_ONLINE = true;
-$CREATE_MASTER = true;
+$DEBUG_ONLINE = false;
+$CREATE_MASTER = false;
 $isReport = true;
 //$HOST = "111.118.181.156";
 $DBASE = "iespl_vts_beta";
@@ -97,11 +96,11 @@ include_once("update_last_halt_time.php");
 include_once("update_last_processed_time.php");
 include_once("delete_file.php");
 
-$sent_root_path = $abspath."/hourly_report/".$user_name."/sent_file";
+$sent_root_path = $abspath."/test_hourly_report/".$user_name."/sent_file";
 echo "\nSent_RootPath=".$sent_root_path;
 
-$evening_sent_file_path1 = $sent_root_path."/HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_DELHI_CASH_ROUTE.xlsx";
-$evening_sent_file_path2 = $sent_root_path."/HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_DELHI_FOCAL_ROUTE.xlsx";
+$evening_sent_file_path1 = $sent_root_path."/HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_MUMBAI.xlsx";
+$evening_sent_file_path2 = $sent_root_path."/HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_MUMBAI2.xlsx";
 $morning_sent_file_path = $sent_root_path."/HOURLY_MAIL_VTS_HALT_REPORT_MORNING_MOTHER_MUMBAI.xlsx";
 
 $evening_last_processed_time_path1 = $sent_root_path."/evening_last_processed_time_1.xlsx";
@@ -167,7 +166,7 @@ if($DEBUG_OFFLINE || $DEBUG_ONLINE) {
 $unchanged = true;
 //######## MAKE TWO SHIFTS
 
-$shift_ev1 = true;
+$shift_ev1 = false;
 $shift_ev2 = false;
 $shift_mor = false;
 
@@ -192,7 +191,7 @@ else
     $time1 = $pdate." 08:00:00";
 }
 
-/*
+
 //############## CHECK VALID SHIFT #############################
 //echo "\ncurrent_time=".$current_time.",shift_ev_date1=".$shift_ev_date1.", shift_ev_date2=".$shift_ev_date2;
 //######## CHECK EVENING SHIFT1 ###########
@@ -211,7 +210,6 @@ else
     if(file_exists($evening_last_processed_time_path1)) delete_file($evening_last_processed_time_path1);
     if(file_exists($evening_last_halt_time_path1)) delete_file($evening_last_halt_time_path1);
 }
-*/
 
 //####### CHECK FOR ALREADY OPENED FILE/INSTANCE 
 if($shift_ev1)
@@ -617,8 +615,8 @@ if($shift_ev1)
         //#### LAST TIME PROCESSED CLOSED #############
 
         //############ SEND EMAIL ##############
-        $to = 'rizwan@iembsys.com';
-        //$to = 'logistics.vashi@gmail.com,vivek.ghadge@motherdairy.com';
+        //$to = 'rizwan@iembsys.com';
+        $to = 'logistics.vashi@gmail.com,vivek.ghadge@motherdairy.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -647,7 +645,8 @@ if($shift_ev1)
         $result = $mgClient->sendMessage($domain, array(
             'from'    => 'Itrack <support@iembsys.co.in>',
             'to'      => $to,
-            'cc'      => 'taseen@iembsys.com',
+            //'cc'      => 'taseen@iembsys.com',
+            'cc'      => 'hourlyreport4@gmail.com',
            //'cc'      => 'hourlyreport4@gmail.com',
            // 'bcc'     => 'astaseen83@gmail.com',
             'subject' => $subject,

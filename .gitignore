@@ -92,3 +92,7 @@ hs_err_pid*
 /beta/src/php/junkFiles/
 /nbproject/private/
 /beta/src/php/hourly_report/mumbai/sent_file/
+<<<<<<< HEAD
+/beta/src/php/mail_api/
+=======
+>>>>>>> origin/master
