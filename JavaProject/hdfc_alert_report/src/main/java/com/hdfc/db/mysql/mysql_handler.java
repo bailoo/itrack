@@ -9,42 +9,48 @@ public class mysql_handler {
 	
 
 	//############ ALERT STATUS
-	public static String getVehicleInformation(int account_id)
+	public static String getVehicleInformation(connection conn, int account_id)
 	{		
-	   connection.stmt = null;
+	   conn.stmt = null;
 	   //int vehicle_id = 0;
 	   //float max_speed = 0.0f;
 	   //String device_imei_no ="", vehicle_name="";
-	   try{
+	   /*try{
 	      //STEP 2: Register JDBC driver
 
 	      //STEP 4: Execute a query
 	//      System.out.println("Selecting data...");
-		   connection.stmt = connection.conn.createStatement();
+		   conn.stmt = conn.conn.createStatement();
+
 	      String sql;
 	      sql = "SELECT DISTINCT vehicle.vehicle_id,vehicle.vehicle_name,vehicle.max_speed,vehicle_assignment.device_imei_no FROM vehicle,vehicle_assignment,"+
 	    		  "vehicle_grouping WHERE vehicle.vehicle_id = vehicle_assignment.vehicle_id AND vehicle_assignment.vehicle_id = vehicle_grouping.vehicle_id AND "+
 	    		  "vehicle_grouping.account_id="+account_id+" AND vehicle.status=1 AND vehicle_assignment.status=1 AND vehicle_grouping.status=1";
 	      //System.out.println("SQL="+sql);
-	      ResultSet rs = connection.stmt.executeQuery(sql);
+	      ResultSet rs = conn.stmt.executeQuery(sql);
 
 	      //STEP 5: Extract data from result set
-	      init init_var = new init();
+	      //init init_var = new init();
 	      while(rs.next()){
 	         //Retrieve by column name
-	    	  init_var.vehicle_id.add(rs.getInt("vehicle_id"));
-	    	  init_var.vehicle_name.add(rs.getString("vehicle_name"));
-	    	  init_var.max_speed.add(rs.getFloat("max_speed"));
-	    	  init_var.device_imei_no.add(rs.getString("device_imei_no"));
+	    	  init.vehicle_id.add(rs.getInt("vehicle_id"));
+	    	  init.vehicle_name.add(rs.getString("vehicle_name"));
+	    	  init.max_speed.add(rs.getFloat("max_speed"));
+	    	  init.device_imei_no.add(rs.getString("device_imei_no"));
 	         //Display values
-	         //System.out.print("Alert_str=" + alert_str);
+	         //System.out.print("device_imei_no=" + rs.getString("device_imei_no"));
 	      }
 	      //STEP 6: Clean-up environment
 	      rs.close();
-	      connection.stmt.close();
-	      }catch(SQLException se2){}
+	      conn.stmt.close();
+	      }catch(SQLException se2){}*/
 	    	  
-		return null;
+	 	  init.vehicle_id.add(10);
+	 	  init.vehicle_name.add("test_hdfc");
+	 	  init.max_speed.add(50.0f);
+	 	  init.device_imei_no.add("865733021569389");
+ 	  
+	   return null;
 	}
 	
 	public static void update_database_alert_status(String imei, String alert_string, String alert_type)

@@ -23,13 +23,14 @@ import com.datastax.driver.core.Session;
 
 public class LastDataDao extends FullDataDao{
 
-	protected PreparedStatement selectbyImeiStatement, selectbyImeiAndDateTimeStatement;
+	protected PreparedStatement insertStatement, deleteStatement, selectbyImeiStatement, selectbyImeiAndDateTimeStatement;
 
 	public LastDataDao(Session session) {
 		super(session);
+		prepareStatement();
 	}
 
-	@Override
+	//@Override
 	protected void prepareStatement(){
 		insertStatement = session.prepare(getInsertStatement());
 		deleteStatement = session.prepare(getDeleteStatement());
@@ -37,13 +38,13 @@ public class LastDataDao extends FullDataDao{
 		selectbyImeiAndDateTimeStatement = session.prepare(getSelectByImeiAndDateTimeStatement());
 	}
 	
-	@Override
+	//@Override
 	protected String getInsertStatement(){
 		return "INSERT INTO "+LastData.TABLE_NAME+" (imei, stime, data) VALUES ("+
 				"?,?,?);";
 	}
 
-	@Override
+	//@Override
 	protected String getDeleteStatement(){
 		return "DELETE FROM "+LastData.TABLE_NAME+" WHERE imei = ?;";
 	}
@@ -53,7 +54,7 @@ public class LastDataDao extends FullDataDao{
 	}
 	
 	protected String getSelectByImeiAndDateTimeStatement(){
-		return "SELECT * FROM "+FullData.TABLE_NAME+" WHERE imei = ? AND date = ? AND dtime <= ? LIMIT 1;";
+		return "SELECT * FROM "+FullData.TABLE_NAME1+" WHERE imei = ? AND date = ? AND dtime <= ? LIMIT 1;";
 	}
 	
 	public void insert(LastData data){
@@ -70,13 +71,30 @@ public class LastDataDao extends FullDataDao{
 		session.execute(boundStatement.bind(data.getImei()));
 	}
 	
-	public Row selectByImei(String imei){
+	public LastData selectByImei(String imei){
+		LastData lastData = new LastData();
 		BoundStatement boundStatement = new BoundStatement(selectbyImeiStatement);
 		ResultSet rs = session.execute(boundStatement.bind(imei));
-		return rs.one();
+		Row row = rs.one();
+		String data = row.getString("data");
+		Date stime = row.getDate("stime");
+			
+		final String DELIMITER = ";";
+		String[] tokens = data.split(DELIMITER);
+		int i = 0;
+		for(String token : tokens)
+			lastData.pMap.put(lastData.lastParams[i++], token);
+
+		lastData.setImei(imei);
+		lastData.setSTime(stime);
+		lastData.setData(data);
+		return lastData;
+
 	}
 
-	public Row selectByImeiAndDateTime(String imei, String endDateTime){
+	public FullData selectByImeiAndDateTime(String imei, String endDateTime)
+	{
+		FullData fullData = new FullData();
 		BoundStatement boundStatement = new BoundStatement(selectbyImeiAndDateTimeStatement);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -111,10 +129,22 @@ public class LastDataDao extends FullDataDao{
 			date = d.toString("yyyy-MM-dd");
 			//System.out.println(date);
 			ResultSet rs = session.execute(boundStatement.bind(imei, date, eDateTime));
-			Row r = rs.one();
-			if (r != null)
+			Row row = rs.one();
+			if (row != null)
 			{
-				return r;
+				//return row;
+				fullData.setImei(row.getString("imei"));
+				fullData.setDTime(row.getDate("dtime"));
+				fullData.setSTime(row.getDate("stime"));
+			
+				String data = row.getString("data");
+				final String DELIMITER = ";";
+				String[] tokens = data.split(DELIMITER);
+				int j = 0;
+				for(String token : tokens)
+					fullData.pMap.put(fullData.fullParams[j++], token);
+				
+				return fullData;
 			}
 		}	
 		

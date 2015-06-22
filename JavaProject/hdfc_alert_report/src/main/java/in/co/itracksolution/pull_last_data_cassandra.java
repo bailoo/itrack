@@ -3,6 +3,7 @@ package in.co.itracksolution;
 import in.co.itracksolution.dao.LastDataDao;
 import in.co.itracksolution.db.CassandraConn;
 import in.co.itracksolution.model.LastData;
+import in.co.itracksolution.model.FullData;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.util.Properties;
 import com.datastax.driver.core.Row;
 
 public class pull_last_data_cassandra {
+
 	CassandraConn conn;
 	
 	public pull_last_data_cassandra(){
@@ -28,7 +30,7 @@ public class pull_last_data_cassandra {
 				conn = new CassandraConn(prop.getProperty("nodes"), prop.getProperty("keyspace"));
 			
 			} else {
-				throw new FileNotFoundException("Property file '" + propFileName + "' not found in the classpath");
+				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
 			}
 					
 		} catch (IOException e) {
@@ -49,31 +51,46 @@ public class pull_last_data_cassandra {
 
 	public static void main(String[] args) {
 		
-		/*pull_last_data st = new pull_last_data();
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		LastData data = new LastData();
-		data.setImei("862170011627815"); //make sure the imei exist in cassandra
 		
+		SampleLastDataQuery st = new SampleLastDataQuery();
 		
+		data.setImei("865733021570015");
 		LastDataDao dao = new LastDataDao(st.conn.getSession());
+		LastData lastData = dao.selectByImei(data.getImei());
 		
-		List<Row> rs= dao.selectByImei(data.getImei());
-		for (Row row : rs) {
-			System.out.print("imei: "+row.getString("imei")+" ");
-			System.out.print("data: "+row.getString("data")+" ");
-			System.out.println();
-		}*/
+		System.out.print("imei: "+lastData.getImei()+" ");
+		System.out.print("stime: "+sdf.format(lastData.getSTime())+" ");
+		System.out.print("c: "+lastData.pMap.get("c")+" ");
+		System.out.print("d: "+lastData.pMap.get("d")+" ");
+		System.out.print("e: "+lastData.pMap.get("e")+" ");
+		System.out.print("h: "+lastData.pMap.get("h")+" ");
+		System.out.print("s: "+lastData.pMap.get("s")+" ");
+		System.out.print("t: "+lastData.pMap.get("t")+" ");
+		System.out.println();
 
-		/*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		List<Row> rs1= dao.selectByImeiAndDateTime(data.getImei(), "2015-01-30 23:20:20");
-		for (Row row : rs1) {
-			System.out.print("imei: "+row.getString("imeih")+" ");
-			System.out.print("device time: "+sdf.format(row.getDate("dtime"))+" ");
-			System.out.print("server time: "+sdf.format(row.getDate("stime"))+" ");
-			System.out.print("data: "+row.getString("data")+" ");
+
+		FullData fullData = dao.selectByImeiAndDateTime("865733021570015", "2015-06-17 23:20:20");
+		if (fullData != null)
+		{
+			System.out.print("imei: "+fullData.getImei()+" ");
+			System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
+			System.out.print("server time: "+sdf.format(fullData.getSTime())+" ");
+			System.out.print("a: "+fullData.pMap.get("a")+" ");
+			System.out.print("b: "+fullData.pMap.get("b")+" ");
+			System.out.print("c: "+fullData.pMap.get("c")+" ");
+			System.out.print("d: "+fullData.pMap.get("d")+" ");
+			System.out.print("e: "+fullData.pMap.get("e")+" ");
+			System.out.print("f: "+fullData.pMap.get("f")+" ");
 			System.out.println();
-		}*/
+		}
+		else
+		{
+			System.out.print("imei not found");
+			System.out.println();
+		}
 		
-		//st.close();	
+		st.close();	
 	}
 }

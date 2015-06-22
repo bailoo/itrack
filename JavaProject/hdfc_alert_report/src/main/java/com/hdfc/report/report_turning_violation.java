@@ -17,15 +17,26 @@ public class report_turning_violation {
 	public static void action_report_truning_violation(int vehicle_id, String imei, String device_time, String startdate, String enddate, double interval, double lat, double lng, double speed, int data_size, int record_count)
 	{
 		if(device_time!=null) {	
-			xml_date_latest_sec = utility_class.get_seconds(xml_date_latest);
-			device_time_sec = utility_class.get_seconds(device_time);
-			startdate_sec = utility_class.get_seconds(startdate);
-			enddate_sec = utility_class.get_seconds(enddate);
+			System.out.println(" vehicle_id="+vehicle_id+" imei="+imei+" device_time="+device_time+" startdate="+startdate+" enddate="+enddate+" interval="+interval+" lat="+lat+" lng="+lng+" speed="+speed+" data_size="+data_size+" record_count="+record_count);
+			try{
+				xml_date_latest_sec = utility_class.get_seconds(xml_date_latest);
+				//System.out.println("xml_date_latest_sec="+xml_date_latest_sec);
+				device_time_sec = utility_class.get_seconds(device_time);
+				//System.out.println("device_time_sec="+device_time_sec);
+				startdate_sec = utility_class.get_seconds(startdate);
+				//System.out.println("startdate_sec="+startdate_sec);
+				enddate_sec = utility_class.get_seconds(enddate);
+				//System.out.println("enddate_sec="+enddate_sec);			
+			}catch(Exception ed) {System.out.println(ed.getMessage());}
+			System.out.println("ValidDeviceTime Found2");
 			
 			if( (device_time_sec >= startdate_sec) && (device_time_sec <= enddate_sec) && (device_time_sec >= xml_date_latest_sec) && (device_time!="-") ) {
 				xml_date_latest = device_time;
 				  				
+				//System.out.println("Valid DateRange Found");
+				
 				if(firstdata_flag==0){					
+					//System.out.println("InFirstFlag");
 					halt_flag = 0;
 					firstdata_flag = 1;
 												
@@ -36,6 +47,7 @@ public class report_turning_violation {
 				}
 				else{						
 					//######### CHECK HALT IN 
+					//System.out.println("InNext");
 					lat_cr = lat;																									
 					lng_cr = lng;
 					datetime_cr = device_time;
@@ -46,7 +58,8 @@ public class report_turning_violation {
 					
 					if(angle > 30) {
 						
-						distance = utility_class.calculateDistance(lat_ref, lat_cr, lng_ref, lng_cr);
+						System.out.println("\nDevice_time="+device_time+" ,Angle="+angle+" ,lat_ref="+lat_ref+" ,lng_ref="+lng_ref+", lat_cr="+lat_cr+" ,lng_cr="+lng_cr);
+						/*distance = utility_class.calculateDistance(lat_ref, lat_cr, lng_ref, lng_cr);
 						if(distance>2000){
 							distance=0;
 							lat_ref = lat_cr;
@@ -66,7 +79,7 @@ public class report_turning_violation {
 						}
 						else {
 							tmp_speed1 = 1000.0; //very high value
-						}						
+						}*/						
 					}
 					
 					//last_time = device_time;
@@ -109,6 +122,7 @@ public class report_turning_violation {
 		double lat2 = 26.4522950421482;		//next
 		double lng2 = 80.33473491668701;*/	
 	
+		System.out.println("lat1="+lat1+" ,lng1="+lng1+",lat2="+lat2+",lng2="+lng2);
 		double yaxis = (lat1 + lat2)/2;
 		double xaxis = (lng1 + lng2)/2;
 				

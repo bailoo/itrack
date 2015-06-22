@@ -1,10 +1,10 @@
 package com.hdfc.utils;
 
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class utility_class {
@@ -90,15 +90,17 @@ public class utility_class {
 	}
 	
 	public static double get_seconds(String date_str){
+		System.out.println("date_str="+date_str);
 		SimpleDateFormat format = null;
 		double seconds = 0;
 
 		format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		try{
-		Date date = (Date) format.parse(date_str);	  		
-		seconds = (double) ((date.getTime()) / 1000);
-		//System.out.println("Seconds is " +seconds);
+			Date date = (Date) format.parse(date_str);	  	
+			//System.out.println("date= " +date);
+			seconds = (double) ((date.getTime()) / 1000);
+			//System.out.println("Seconds is " +seconds);
 		}catch(Exception esec) {System.out.println("Error in date conversion to seconds="+esec.getMessage());}
 		
 		return seconds;		
