@@ -124,8 +124,8 @@ public class RequestHandler {
 //		String RealDataPath = "D:\\itrack_vts/last_location";
 		//String LogDataPath = "/mnt/volume1/xml_vts/xml_data";		
 		//String RealDataPath = "/mnt/volume1/xml_vts/last_location";
-		String LogDataPath = "/home/current_data/xml_data";
-		String RealDataPath = "/home/current_data/last_location";
+		//String LogDataPath = "/home/current_data/xml_data";
+		//String RealDataPath = "/home/current_data/last_location";
 		
 		try
 		{
@@ -432,8 +432,8 @@ public class RequestHandler {
 							String fuel="-";					
 							String q="\"";							
 							
-							String mydir1 = LogDataPath;
-							boolean success1 = (new File(mydir1 + "/" + folderDate)).mkdir();
+							//String mydir1 = LogDataPath;
+							//boolean success1 = (new File(mydir1 + "/" + folderDate)).mkdir();
 							//System.out.println("Success="+success1);							
 							 
 						//	RandomAccessFile raf1 =null;
@@ -441,7 +441,7 @@ public class RequestHandler {
 						//	FileWriteHandler CurrentFileWriteHandler = null;
 							//BufferedWriter out_a1 =null;
 							//BufferedWriter out_a2 =null;
-							String SFile = LogDataPath+"/"+folderDate+"/"+vserial+".xml";
+							//String SFile = LogDataPath+"/"+folderDate+"/"+vserial+".xml";
 							// System.out.println("FilehandlerReceived1:"+FilehandlerReceived+" "+SFile);
 							 try{
 								 //synchronized(this.RFileHandler)
@@ -540,7 +540,7 @@ public class RequestHandler {
 								
 							try{	
 								//CALL WRITE LAST LOCATION															
-								String filename = RealDataPath+"/"+vserial+".xml";
+								//String filename = RealDataPath+"/"+vserial+".xml";
 								Speed = Float.toString(speed_f);
 								SupplyVoltage = Float.toString(supv_f);
 								write_last_location(MsgType,vserial,Version,Fix,Latitude,Longitude,Speed,serverdatetime,DateTime,io_value1,io_value2,io_value3,io_value4,io_value5,io_value6,io_value7,io_value8,Signal_Strength,SupplyVoltage,CellName);
