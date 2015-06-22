@@ -3,7 +3,7 @@
 //include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
 if($isReport) {
         include_once("../../../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
-   // include_once("../../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
+   include_once("../../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
 } else {
     
    // echo "in else";
