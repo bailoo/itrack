@@ -1,24 +1,40 @@
 package in.co.itracksolution.model;
 
 import java.util.Date;
+import java.util.TreeMap;
 
 public class FullData {
 	private String imei, date, data;
 	private Date sTime, dTime;
+	public TreeMap pMap = new TreeMap();
+	public String[] fullParams = { "a","b","c","d","e","f","i","j","k","l","m","n","o","p","q","r","ci","ax","ay","az","mx","my","mz","bx","by","bz" };
 	
-	public static final String TABLE_NAME = "log1";
+	public static final String TABLE_NAME1 = "log1";
+	public static final String TABLE_NAME2 = "log2";
 	
-	public FullData(){
+	public FullData()
+	{
 		super();
 	}
 	
-	public FullData(String imei, String date, Date dTime, String data, Date sTime) {
+	public FullData(String imei, String date, Date dTime, String data, Date sTime) 
+	{
 		super();
 		this.imei = imei;
 		this.date = date;
 		this.dTime = dTime;
 		this.data = data;
 		this.sTime = sTime;
+	}
+
+	public FullData(FullData f)
+	{
+		this.imei = f.imei;
+		this.date = f.date;
+		this.dTime = f.dTime;
+		this.data = f.data;
+		this.sTime = f.sTime;
+		this.pMap = f.pMap;
 	}
 
 	public String getImei() {
@@ -39,6 +55,7 @@ public class FullData {
 	public void setData(String data) {
 		this.data = data;
 	}
+
 	public Date getDTime() {
 		return dTime;
 	}

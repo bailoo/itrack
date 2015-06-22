@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
@@ -18,68 +19,110 @@ import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
+import com.google.common.collect.Lists;
 
 public class FullDataDao {
 
-	protected PreparedStatement insertStatement, deleteStatement, selectbyImeiAndDateStatement, selectbyImeiAndDateTimeSliceStatement;
+	protected PreparedStatement insertStatement1, deleteStatement1, selectbyImeiAndDateStatement1, selectbyImeiAndDateTimeSliceStatement1;
+	protected PreparedStatement insertStatement2, deleteStatement2, selectbyImeiAndDateStatement2, selectbyImeiAndDateTimeSliceStatement2;
 	protected Session session;
 	 
 	public FullDataDao(Session session) {
 		super();
 		this.session = session;
-		prepareStatement();
+		prepareStatement1();
+		prepareStatement2();
 	}
 
-	protected void prepareStatement(){
-		insertStatement = session.prepare(getInsertStatement());
-		deleteStatement = session.prepare(getDeleteStatement());
-		selectbyImeiAndDateStatement = session.prepare(getSelectByImeiAndDateStatement());
-		selectbyImeiAndDateTimeSliceStatement = session.prepare(getSelectByImeiAndDateTimeSliceStatement());
+	protected void prepareStatement1(){
+		insertStatement1 = session.prepare(getInsertStatement1());
+		deleteStatement1 = session.prepare(getDeleteStatement1());
+		selectbyImeiAndDateStatement1 = session.prepare(getSelectByImeiAndDateStatement1());
+		selectbyImeiAndDateTimeSliceStatement1 = session.prepare(getSelectByImeiAndDateTimeSliceStatement1());
 	}
 
-	protected String getInsertStatement(){
-		return "INSERT INTO "+FullData.TABLE_NAME+
+	protected void prepareStatement2(){
+		insertStatement2 = session.prepare(getInsertStatement2());
+		deleteStatement2 = session.prepare(getDeleteStatement2());
+		selectbyImeiAndDateStatement2 = session.prepare(getSelectByImeiAndDateStatement2());
+		selectbyImeiAndDateTimeSliceStatement2 = session.prepare(getSelectByImeiAndDateTimeSliceStatement2());
+	}
+
+	protected String getInsertStatement1(){
+		return "INSERT INTO "+FullData.TABLE_NAME1+
 				" (imei, date, dtime, data, stime)"
 				+ " VALUES ("+
 				"?,?,?,?,?);";
 	}
 	
-	protected String getDeleteStatement(){
-		return "DELETE FROM "+FullData.TABLE_NAME+" WHERE imei = ? AND date = ? AND dtime = ?;";
+	protected String getInsertStatement2(){
+		return "INSERT INTO "+FullData.TABLE_NAME2+
+				" (imei, date, dtime, data, stime)"
+				+ " VALUES ("+
+				"?,?,?,?,?);";
+	}
+	
+	protected String getDeleteStatement1(){
+		return "DELETE FROM "+FullData.TABLE_NAME1+" WHERE imei = ? AND date = ? AND dtime = ?;";
 	}
 
-	protected String getSelectByImeiAndDateStatement(){
-		return "SELECT * FROM "+FullData.TABLE_NAME+" WHERE imei = ? AND date = ?;";
+	protected String getDeleteStatement2(){
+		return "DELETE FROM "+FullData.TABLE_NAME2+" WHERE imei = ? AND date = ? AND stime = ?;";
 	}
 
-	protected String getSelectByImeiAndDateTimeSliceStatement(){
-		return "SELECT * FROM "+FullData.TABLE_NAME+" WHERE imei = ? AND date IN ? AND dtime >= ? AND dtime <= ? ;";
+	protected String getSelectByImeiAndDateStatement1(){
+		return "SELECT * FROM "+FullData.TABLE_NAME1+" WHERE imei = ? AND date = ?;";
+	}
+
+	protected String getSelectByImeiAndDateStatement2(){
+		return "SELECT * FROM "+FullData.TABLE_NAME2+" WHERE imei = ? AND date = ?;";
+	}
+
+	protected String getSelectByImeiAndDateTimeSliceStatement1(){
+		return "SELECT * FROM "+FullData.TABLE_NAME1+" WHERE imei = ? AND date IN ? AND dtime >= ? AND dtime <= ? ;";
+	}
+	
+	protected String getSelectByImeiAndDateTimeSliceStatement2(){
+		return "SELECT * FROM "+FullData.TABLE_NAME2+" WHERE imei = ? AND date IN ? AND stime >= ? AND stime <= ? ;";
 	}
 	
 	public void insert(FullData data){
-		BoundStatement boundStatement = new BoundStatement(insertStatement);
-		session.execute(boundStatement.bind(
+		BoundStatement boundStatement1 = new BoundStatement(insertStatement1);
+		BoundStatement boundStatement2 = new BoundStatement(insertStatement2);
+		session.execute(boundStatement1.bind(
 				data.getImei(),
 				data.getDate(),
 				data.getDTime(),
 				data.getData(),
 				data.getSTime()
-				) );
+				));
+		session.execute(boundStatement2.bind(
+				data.getImei(),
+				data.getDate(),
+				data.getDTime(),
+				data.getData(),
+				data.getSTime()
+				));
 	}
 	
-	public void delete(FullData data){
-		BoundStatement boundStatement = new BoundStatement(deleteStatement);
-		session.execute(boundStatement.bind(data.getImei(), data.getDate(), data.getDTime()));
+	public void delete(FullData data)
+	{
+		BoundStatement boundStatement1 = new BoundStatement(deleteStatement1);
+		BoundStatement boundStatement2 = new BoundStatement(deleteStatement2);
+		session.execute(boundStatement1.bind(data.getImei(), data.getDate(), data.getDTime()));
+		session.execute(boundStatement2.bind(data.getImei(), data.getDate(), data.getDTime()));
 	}
 	
-	public ResultSet selectByImeiAndDate(String imei, String date){
-		BoundStatement boundStatement = new BoundStatement(selectbyImeiAndDateStatement);
+	public ResultSet selectByImeiAndDate(String imei, String date)
+	{
+		BoundStatement boundStatement = new BoundStatement(selectbyImeiAndDateStatement1);
 		ResultSet rs = session.execute(boundStatement.bind(imei, date));
 		return rs;
 	}
 	
-	public ResultSet selectByImeiAndDateTimeSlice(String imei, String startDateTime, String endDateTime){
-		BoundStatement boundStatement = new BoundStatement(selectbyImeiAndDateTimeSliceStatement);
+	public ArrayList<FullData> selectByImeiAndDateTimeSlice(String imei, String startDateTime, String endDateTime, Boolean deviceTime, Boolean orderAsc)
+	{
+		BoundStatement boundStatement = (deviceTime)?new BoundStatement(selectbyImeiAndDateTimeSliceStatement1):new BoundStatement(selectbyImeiAndDateTimeSliceStatement2);
 		ArrayList dateList = new ArrayList();
 
 		int days = 1;
@@ -102,14 +145,40 @@ public class FullDataDao {
 		//System.out.println("eDateTime = "+sdf.format(eDateTime));
 
 		days = Days.daysBetween(sDate, eDate).getDays();
-		for (int i=0; i<days+1; i++) {
+		for (int i=0; i<days+1; i++)
+		{
 			LocalDate d = sDate.plusDays(i);
 			dateList.add(d.toString("yyyy-MM-dd"));
 		}	
 
 		//System.out.println(dateList);
 		ResultSet rs = session.execute(boundStatement.bind(imei, dateList, sDateTime, eDateTime));
-		return rs;
-	}
+		List<Row> rowList = rs.all();
 	
+		FullData fullData = new FullData();
+		String[] tokens = null ;
+		ArrayList<FullData> fullDataList = new ArrayList<FullData>();
+
+		String data;
+		final String DELIMITER = ";";
+		List<Row> rowListOrdered = (orderAsc)?Lists.reverse(rowList):rowList;
+		for (Row row : rowListOrdered)
+		{
+			fullData.setImei(row.getString("imei"));
+			fullData.setDTime(row.getDate("dtime"));
+			fullData.setSTime(row.getDate("stime"));
+			
+			data = row.getString("data");
+			//System.out.println("dtime = "+fullData.getDTime());
+			tokens = data.split(DELIMITER);
+			int i = 0;
+			for(String token : tokens)
+			{
+				fullData.pMap.put(fullData.fullParams[i++], token);
+			}
+			fullDataList.add(new FullData(fullData));
+		}
+
+		return fullDataList;
+	}
 }

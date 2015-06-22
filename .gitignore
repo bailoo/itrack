@@ -69,7 +69,6 @@ hs_err_pid*
 /beta/src/php/_class/
 /beta/src/php/schedule_location_data/
 /beta/src/php/daily_vehicle_status/
-/beta/src/php/Cassandra/
 /beta/src/php/csv_reports/
 /beta/src/php/Copy of module_superuser.php
 /beta/src/php/testPhp/
@@ -93,4 +92,7 @@ hs_err_pid*
 /beta/src/php/junkFiles/
 /nbproject/private/
 /beta/src/php/hourly_report/mumbai/sent_file/
+<<<<<<< HEAD
 /beta/src/php/mail_api/
+=======
+>>>>>>> origin/master
