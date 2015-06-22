@@ -4,8 +4,12 @@
     include_once('util_php_mysql_connectivity.php');
     include_once('active_vehicle_func.php');
 
-    include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
+    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
     include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
+    
+    $o_cassandra = new Cassandra();
+	
+    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 
     $query1="SELECT vehicle_color from account_preference WHERE account_id='$account_id'";
     $result1=mysql_query($query1,$DbConnection);
@@ -192,6 +196,7 @@ echo"</table>";
         global $DbConnection;
         global $account_id;
         global $o_cassandra;
+        //var_dump($o_cassandra);
         global $logDate;
     
         //echo "cat:".$category1;
@@ -248,7 +253,7 @@ echo"</table>";
                                 $vehicle_active_flag=1;
                             }*/
 
-                           // $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                           $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
                             //$st_results = getCurrentDateTime($o_cassandra,$vehicle_imei,$sortFetchData);
                             //var_dump($st_results);
                             //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";

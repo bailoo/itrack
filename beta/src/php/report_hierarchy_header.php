@@ -2,8 +2,11 @@
     include_once('Hierarchy.php');
     include_once('util_session_variable.php');
     include_once('util_php_mysql_connectivity.php');
-    include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
-       include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
+    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
+    
+    $o_cassandra = new Cassandra();	
+    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 
     $query1="SELECT vehicle_color from account_preference WHERE account_id='$account_id'";
     $result1=mysql_query($query1,$DbConnection);
@@ -228,6 +231,8 @@
         global $vcolor3;
         global $title;
         global $o_cassandra;
+        
+       // var_dump($o_cassandra);
         global $logDate;
 
         $type = 0;

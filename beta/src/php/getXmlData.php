@@ -1,12 +1,18 @@
 <?php
-echo "INGET11";
-include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
+//echo "INGET11";
+//include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
 if($isReport) {
-    include_once("../../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
+        include_once("../../../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
+   // include_once("../../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
 } else {
-    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
+    
+   // echo "in else";
+   include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
 }
 //echo "EXISTS=".file_exists("../../../../../phpApi/libLog.php")."<br>";
+ $o_cassandra = new Cassandra();	
+$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 
 function readFileXml($vSerial, $startDate, $endDate, $xmlFromDate, $xmlToDate, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, &$dataObject) {
 	
