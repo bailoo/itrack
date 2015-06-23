@@ -15,11 +15,11 @@
 <?php
 $getUrlModule=$_SERVER['REQUEST_URI'];
 //echo "getUrlModule1=".$getUrlModule."<br>";
-if($getUrlModule=='/itrack/beta/report.htm')
+if($getUrlModule=='/report.htm')
 {
 	echo'<script language="javascript" src="src/js/reportAjax.js?<?php echo time();?>"></script>';
 }
-else if($getUrlModule=='/itrack/beta/manage.htm')
+else if($getUrlModule=='/manage.htm')
 {
 	echo'<script language="javascript" src="src/js/manageAjax.js?<?php echo time();?>"></script>';
 }
