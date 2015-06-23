@@ -3,6 +3,7 @@ package in.co.itracksolution.dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.TreeMap;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -171,11 +172,14 @@ public class FullDataDao {
 			data = row.getString("data");
 			//System.out.println("dtime = "+fullData.getDTime());
 			tokens = data.split(DELIMITER);
+		
+			TreeMap pMap = new TreeMap();
 			int i = 0;
 			for(String token : tokens)
 			{
-				fullData.pMap.put(fullData.fullParams[i++], token);
+				pMap.put(fullData.fullParams[i++], token);
 			}
+			fullData.setPMap(pMap);
 			fullDataList.add(new FullData(fullData));
 		}
 
