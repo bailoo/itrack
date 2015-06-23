@@ -160,7 +160,7 @@ function sort_station($plant_input, $customer_input, $customer_name_input, $tran
 	
 	///////////// SORTING CLOSED /////////////////////
 
-	$linetowrite = "Customer,CustomerName,Plant,Transporter,Route";
+	$linetowrite = "Customer,Plant,Transporter,Route,CustomerName";
 	$repeated_index = array();
 	$repeatflag_plant=false;
 	$repeatflag_transporter=false;
@@ -235,7 +235,7 @@ function sort_station($plant_input, $customer_input, $customer_name_input, $tran
 		//echo "y=".$y."\n";
 		
 		if($plant_string == "") $plant_string = "-";
-		$linetowrite =  $linetowrite."\n"." ".$customer_string.",".$customer_name_string.",".$plant_string.",".$transporter_string.",".$route_string;
+		$linetowrite =  $linetowrite."\n"." ".$customer_string.",".$plant_string.",".$transporter_string.",".$route_string.",".$customer_name_string;
 		//echo "linetowrite=".$linetowrite."\n";		         
 	}		
 	
