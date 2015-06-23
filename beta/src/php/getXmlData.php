@@ -37,8 +37,8 @@ function readFileXml($vSerial, $startDate, $endDate, $xmlFromDate, $xmlToDate, $
    {
         $deviceTime=FALSE;
    }
-    echo "deviceTime=".$deviceTime."<br>";
-    echo "imei=".$imei."<br>"; 
+    //echo "deviceTime=".$deviceTime."<br>";
+    //echo "imei=".$imei."<br>"; 
 	
     $orderAsc = TRUE;
     $st_results = getImeiDateTimes($o_cassandra, $imei, $startDate, $endDate, $deviceTime, $orderAsc);
