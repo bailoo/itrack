@@ -73,10 +73,9 @@
 	for($i=0;$i<$vsize;$i++)
 	{
 		$dataCnt=0;
-//          $vehicle_info=get_vehicle_info($root,$vserial[$i]);
-//          $vehicle_detail_local=explode(",",$vehicle_info);
-//          $finalVNameArr[$i]=$vehicle_detail_local[0];
-		$finalVNameArr[$i]= "TEST_Vehicle";
+            $vehicle_info=get_vehicle_info($root,$vserial[$i]);
+            $vehicle_detail_local=explode(",",$vehicle_info);
+            $finalVNameArr[$i]=$vehicle_detail_local[0];		
 		//echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
 		//echo "<br>Before-getLastSortedDate";
 		$LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
@@ -173,10 +172,11 @@
    //echo "sizeFinaVname=".count($finalVNameArr);
 if(count($finalVNameArr)>0)
 {
+  
     $csv_string = "";
     echo'<form  name="text_data_report" method="post" target="_blank">';
  //   report_title($reportTitle,$date1,$date2);
-        echo '<center>
+        echo '<center>             
                 <div style="overflow: auto;height: 300px; width: 620px;">';
                         //$reportSize=sizeof($finalVNameArr);
                         //echo "vsize=".$vsize."<br>";
@@ -188,43 +188,43 @@ if(count($finalVNameArr)>0)
                                 {
                                         $sno=1;
                                         $csvtitle1=$reportTitle." Report :- ".$finalVNameArr[$i]." 
-                                                                (".$vserial[$i]." )  DateTime :".$date1." - ".$date2." )";
+                                        (".$vserial[$i]." )  DateTime :".$date1." - ".$date2." )";
                                         echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title[$x]\">";
                                         $csv_string = $csv_string.$title."\n";
                                         $csv_string = $csv_string."SNo,Vehicle,Date,".$displayFormat.",Average Speed (km/hr),Max Speed (km/hr)\n";
                                         echo'<br>
                                         <table align="center">
-                                                <tr>
-                                                        <td class="text" align="center">
-                                                                <b>'.$title.'</b> 
-                                                                <div style="height:8px;">
-                                                                </div>
-                                                        </td>
-                                                </tr>
+                                            <tr>
+                                                <td class="text" align="center">
+                                                    <b>'.$title.'</b> 
+                                                    <div style="height:8px;">
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         </table>
                                         <table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
-                                                <tr>
-                                                        <td class="text" align="left">
-                                                                <b>SNo</b>
-                                                        </td>
-                                                        <td class="text" align="left">
-                                                                <b>Vehicle</b>
-                                                        </td>	
-                                                        <td class="text" align="left">
-                                                                <b>Date</b>
-                                                        </td>
-                                                        <td class="text" align="left">
-                                                                <b>'.$displayFormat.'</b>
-                                                        </td>';
-                                                        if($speed_flag==1)
-                                                        {
-                                                echo'<td class="text" align="left">
-                                                                <b>Average Speed (km/hr)</b>
-                                                        </td>
-                                                        <td class="text" align="left">
-                                                                <b>Max Speed (km/hr)</b>
-                                                        </td>';
-                                                        }									
+                                            <tr>
+                                                <td class="text" align="left">
+                                                        <b>SNo</b>
+                                                </td>
+                                                <td class="text" align="left">
+                                                        <b>Vehicle</b>
+                                                </td>	
+                                                <td class="text" align="left">
+                                                        <b>Date</b>
+                                                </td>
+                                                <td class="text" align="left">
+                                                        <b>'.$displayFormat.'</b>
+                                                </td>';
+                                            if($speed_flag==1)
+                                            {
+                                            echo'<td class="text" align="left">
+                                                    <b>Average Speed (km/hr)</b>
+                                                </td>
+                                                <td class="text" align="left">
+                                                        <b>Max Speed (km/hr)</b>
+                                                </td>';
+                                            }									
                                         echo'</tr>';  
                                 }						
 
@@ -483,8 +483,8 @@ else
 }
 
 
-echo'<center>
-		<a href="javascript:showReportPrevPage(\'report_daily_distance.htm\',\''.$selected_account_id.'\',\''.$selected_options_value.'\',\''.$s_vehicle_display_option.'\');" class="back_css">
+echo'<center>		
+		<a href="javascript:showReportPrevPageNew();" class="back_css">
 			&nbsp;<b>Back</b>
 		</a>
 	</center>';	
