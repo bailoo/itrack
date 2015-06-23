@@ -173,13 +173,13 @@ public class FullDataDao {
 			//System.out.println("dtime = "+fullData.getDTime());
 			tokens = data.split(DELIMITER);
 		
-			TreeMap pMap = new TreeMap();
+			TreeMap pMap1 = new TreeMap();
 			int i = 0;
 			for(String token : tokens)
 			{
-				pMap.put(fullData.fullParams[i++], token);
+				pMap1.put(fullData.fullParams[i++], token);
 			}
-			fullData.setPMap(pMap);
+			fullData.setPMap(pMap1);
 			fullDataList.add(new FullData(fullData));
 		}
 
