@@ -37,8 +37,8 @@ function readFileXml($vSerial, $startDate, $endDate, $xmlFromDate, $xmlToDate, $
    {
         $deviceTime=FALSE;
    }
-    echo "deviceTime=".$deviceTime."<br>";
-    echo "imei=".$imei."<br>"; 
+    //echo "deviceTime=".$deviceTime."<br>";
+    //echo "imei=".$imei."<br>"; 
 	
     $orderAsc = TRUE;
     $st_results = getImeiDateTimes($o_cassandra, $imei, $startDate, $endDate, $deviceTime, $orderAsc);
@@ -468,7 +468,7 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 
 	//echo "imie1=".$imei."<br>";
 	$st_results = getLastSeen($o_cassandra,$imei);
-	var_dump($st_results);
+	//var_dump($st_results);
 	//$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r');
 	//$st_obj = gpsParser($st_results,$params,TRUE);
 	// $st_obj = gpsParser($st_results);
