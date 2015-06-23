@@ -32,7 +32,7 @@ public class report_turning_violation {
 	public static void action_report_truning_violation(String imei, String device_time, String sts, String startdate, String enddate, double interval, double lat, double lng, double speed, int data_size, int record_count)
 	{
 		if(device_time!=null) {	
-			System.out.println(" imei="+imei+" device_time="+device_time+" startdate="+startdate+" enddate="+enddate+" interval="+interval+" lat="+lat+" lng="+lng+" speed="+speed+" data_size="+data_size+" record_count="+record_count);
+			//System.out.println(" imei="+imei+" device_time="+device_time+" startdate="+startdate+" enddate="+enddate+" interval="+interval+" lat="+lat+" lng="+lng+" speed="+speed+" data_size="+data_size+" record_count="+record_count);
 			try{
 				xml_date_latest_sec = utility_class.get_seconds(xml_date_latest);
 				//System.out.println("xml_date_latest_sec="+xml_date_latest_sec);
@@ -43,14 +43,15 @@ public class report_turning_violation {
 				enddate_sec = utility_class.get_seconds(enddate);
 				//System.out.println("enddate_sec="+enddate_sec);			
 			}catch(Exception ed) {System.out.println(ed.getMessage());}
-			System.out.println("ValidDeviceTime Found2");
+			//System.out.println("ValidDeviceTime Found2");
 			
 			if( (device_time_sec >= startdate_sec) && (device_time_sec <= enddate_sec) && (device_time_sec >= xml_date_latest_sec) && (device_time!="-") ) {
 				xml_date_latest = device_time;
 				  				
-				//System.out.println("Valid DateRange Found");
+				//System.out.println("start_flag="+start_flag);
 				
 				if(start_flag==0){	//START POINT
+					System.out.println("IMEI_START="+imei);
 					start_flag = 1;
 												
 					lat_start = lat;						
@@ -61,6 +62,7 @@ public class report_turning_violation {
 				}
 				else if((start_flag==1) && (middle_flag==0)){	//MIDDLE POINT
 
+					System.out.println("IMEI_MIDDLE="+imei);
 					middle_flag = 1;
 												
 					lat_middle = lat;						
@@ -72,6 +74,7 @@ public class report_turning_violation {
 				}			
 				else if((start_flag==1) && (middle_flag==1)) { 	//END POINT
 
+					System.out.println("IMEI_END="+imei);
 					lat_end = lat;						
 					lng_end = lng;
 					devicetime_end = device_time;
@@ -80,20 +83,31 @@ public class report_turning_violation {
 					
 					//####### CHECK RANGE OF CHAURAHA
 					//get_turning_angle(lat_ref, lng_ref, lat_cr, lng_cr);
+					/*lat_start = 30.12768;
+					lng_start = 78.2944;
+					
+					lat_middle = 30.1282;
+					lng_middle = 78.29454;
+					
+					lat_end = 30.12544;
+					lng_end = 78.29692;*/
+					
 					angle = get_turning_angle(lat_start, lng_start, lat_middle, lng_middle, lat_end, lng_end);
 					//###############################
 					System.out.println("Angle="+angle+",lat_start="+lat_start+",lng_start="+lng_start+",lat_middle="+lat_middle+" ,lng_middle="+lng_middle+",lat_end="+lat_end+",lng_end="+lng_end);
 					
-					if(angle > 30) {
+					//if(angle > 30) {
+					//if(angle > 30) 
+					{
 						
-						System.out.println("Angle="+angle);
-						/*IMEI_No.add(imei);
+						//System.out.println("Angle2="+angle);
+						IMEI_No.add(imei);
 						turningDeviceTime.add(devicetime_middle);
 						turningServerTime.add(sts_middle);
 						turningSpeed.add(speed_middle);
 						turningAngle.add((float)angle);
 						turningLatitude.add(lat_middle);
-						turningLongitude.add(lng_middle);*/						
+						turningLongitude.add(lng_middle);					
 					}
 					
 					lat_start = lat_middle;
@@ -141,7 +155,7 @@ public class report_turning_violation {
 
 		//convert in degrees
 		int angle = (int)Math.toDegrees(Math.acos(cosTheata));
-		System.out.println("Math.toDegrees(Math.acos(cosTheata))   "+angle);
+		//System.out.println("Math.toDegrees(Math.acos(cosTheata))   "+angle);
 		return angle;
 	}
 	

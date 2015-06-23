@@ -99,24 +99,24 @@ public class Test
 */	
 	public static final int EARTH_RADIUS = 6371*1000; 
 	
-	public static double lat_start = 28.780298212186658;
-	public static double lng_start = 77.19818115234375;
+	/*public static double lat_start = 29.947532;
+	public static double lng_start = 78.16062;
 	
-	public static double lat_middle = 28.99913237453024;
-	public static double lng_middle = 76.97845458984375;
+	public static double lat_middle = 29.947532;
+	public static double lng_middle = 78.16062;
 	
-	public static double lat_end = 28.77066855563607;
-	public static double lng_end = 76.8548583984375;
+	public static double lat_end = 29.947532;
+	public static double lng_end = 78.16062;*/
 	
 	
-	/*public static double lat_start = 28.621295347525884;
-	public static double lng_start = 77.222900390625;
+	public static double lat_start = 30.12768;
+	public static double lng_start = 78.2944;
 	
-	public static double lat_middle = 28.912615763699517;
-	public static double lng_middle = 77.44537353515625;
+	public static double lat_middle = 30.1282;
+	public static double lng_middle = 78.29454;
 	
-	public static double lat_end = 28.647812595218262;
-	public static double lng_end = 77.30255126953125;*/
+	public static double lat_end = 30.12544;
+	public static double lng_end = 78.29692;
 
 	
 	/*public static double lat_start = 28.864519767126602;
