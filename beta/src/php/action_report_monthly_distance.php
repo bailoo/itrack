@@ -104,6 +104,16 @@
 		$datefrom=$date;
 		$dateto=$date;
 		
+		if($j==1) ////////// this is for startdate diplay on final report on web browser
+		{
+			$dateStartDisplay = $date." 00:00:00";
+		}
+		
+		if($j==$lastday) ////////// this is for enddate diplay on final report on web browser
+		{
+			$dateEndDisplay = $date." ".date("H:i:s");
+		}
+		
 		$date1 = $date." 00:00:00";
 		$date2 = $date." 23:59:59";	
 
@@ -189,12 +199,13 @@ $displayFormat="Daily Distance (km)";
 if(count($finalLatitudeArr)>0)
 {
 $csv_string = "";
+//echo "date1=".$date1."date2=".$date2."<br>";
 echo'<form  name="text_data_report" method="post" target="_blank">'.
-		report_title($reportTitle,$date1,$date2).'
+		report_title($reportTitle,$dateStartDisplay,$dateEndDisplay).'
 			<center>
 				<div style="overflow: auto;height: 300px; width: 620px;">';
 					//$reportSize=sizeof($finalVNameArr);
-					//echo "vsize=".$dataCnt."<br>";
+					//ech$date2o "vsize=".$dataCnt."<br>";
 					$sno=1;
 					$pdfi=0;
 				    $sum_dailydist =0;

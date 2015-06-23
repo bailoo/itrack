@@ -15,7 +15,7 @@
 
   echo'	
     <center>
-    
+
     	<table border=0 width = 100% cellspacing=2 cellpadding=0>
 				<tr>
 					<td height=10 class="report_heading" align="center">Daily Distance Report</td>
