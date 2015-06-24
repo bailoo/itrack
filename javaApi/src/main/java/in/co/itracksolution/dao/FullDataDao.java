@@ -146,7 +146,7 @@ public class FullDataDao {
 		//System.out.println("eDateTime = "+sdf.format(eDateTime));
 
 		days = Days.daysBetween(sDate, eDate).getDays();
-		for (int i=0; i<days+1; i++)
+		for (int i=days; i>=0; i--)
 		{
 			LocalDate d = sDate.plusDays(i);
 			dateList.add(d.toString("yyyy-MM-dd"));
