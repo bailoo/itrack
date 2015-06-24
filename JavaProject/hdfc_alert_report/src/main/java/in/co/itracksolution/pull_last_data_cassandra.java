@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Properties;
+import java.util.TreeMap;
 
 import com.datastax.driver.core.Row;
 
@@ -60,29 +61,32 @@ public class pull_last_data_cassandra {
 		LastDataDao dao = new LastDataDao(st.conn.getSession());
 		LastData lastData = dao.selectByImei(data.getImei());
 		
+		TreeMap pMap1 = new TreeMap();
+		pMap1 = lastData.getPMap();
+		
 		System.out.print("imei: "+lastData.getImei()+" ");
 		System.out.print("stime: "+sdf.format(lastData.getSTime())+" ");
-		System.out.print("c: "+lastData.pMap.get("c")+" ");
-		System.out.print("d: "+lastData.pMap.get("d")+" ");
-		System.out.print("e: "+lastData.pMap.get("e")+" ");
-		System.out.print("h: "+lastData.pMap.get("h")+" ");
-		System.out.print("s: "+lastData.pMap.get("s")+" ");
-		System.out.print("t: "+lastData.pMap.get("t")+" ");
+		System.out.print("c: "+pMap1.get("c")+" ");
+		System.out.print("d: "+pMap1.get("d")+" ");
+		System.out.print("e: "+pMap1.get("e")+" ");
+		System.out.print("h: "+pMap1.get("h")+" ");
+		System.out.print("s: "+pMap1.get("s")+" ");
+		System.out.print("t: "+pMap1.get("t")+" ");
 		System.out.println();
 
 
 		FullData fullData = dao.selectByImeiAndDateTime("865733021570015", "2015-06-17 23:20:20");
 		if (fullData != null)
-		{
+		{			
 			System.out.print("imei: "+fullData.getImei()+" ");
 			System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
 			System.out.print("server time: "+sdf.format(fullData.getSTime())+" ");
-			System.out.print("a: "+fullData.pMap.get("a")+" ");
-			System.out.print("b: "+fullData.pMap.get("b")+" ");
-			System.out.print("c: "+fullData.pMap.get("c")+" ");
-			System.out.print("d: "+fullData.pMap.get("d")+" ");
-			System.out.print("e: "+fullData.pMap.get("e")+" ");
-			System.out.print("f: "+fullData.pMap.get("f")+" ");
+			System.out.print("a: "+pMap1.get("a")+" ");
+			System.out.print("b: "+pMap1.get("b")+" ");
+			System.out.print("c: "+pMap1.get("c")+" ");
+			System.out.print("d: "+pMap1.get("d")+" ");
+			System.out.print("e: "+pMap1.get("e")+" ");
+			System.out.print("f: "+pMap1.get("f")+" ");
 			System.out.println();
 		}
 		else

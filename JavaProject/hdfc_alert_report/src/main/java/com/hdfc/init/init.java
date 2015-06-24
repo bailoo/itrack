@@ -12,9 +12,8 @@ public class init {
 	public static ArrayList<Float> max_speed = new ArrayList<Float>();
 	public static ArrayList<String> device_imei_no = new ArrayList<String>();
 	
-	public static void main(String args[])
-	{
-		worker worker_class = new worker();
-		worker_class.process_data(account_id);
+	public static void main(String args[]) {
+		//worker worker_class = new worker();
+		worker.process_data(account_id);
 	}
 }

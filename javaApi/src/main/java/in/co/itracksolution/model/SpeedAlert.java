@@ -1,4 +1,4 @@
-package in.co.itracksolution.model;
+package in.co.itracksolution.AlertsModel;
 
 import java.util.Date;
 
@@ -73,32 +73,32 @@ public class SpeedAlert {
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	} 
-	public float getLocation() {
+	public String getLocation() {
 		return location;
 	}
 	public void setLocation(String location) {
 		this.location = location ;
 	} 
-	public float getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 	public void setLatitude(String latitude) {
 		this.latitude= latitude;
 	} 
-	public float getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
 	public void setLongitude(String longitude) {
 		this.longitude= longitude;
 	} 
-	public float getRoadId() {
+	public String getRoadId() {
 		return roadId;
 	}
 	public void setRoadId(String roadId) {
 		this.roadId = roadId;
 	} 
-	public float getLogTime() {
-		return LogTime;
+	public Date getLogTime() {
+		return logTime;
 	}
 	public void setLogTime(Date logTime ) {
 		this.logTime = logTime;

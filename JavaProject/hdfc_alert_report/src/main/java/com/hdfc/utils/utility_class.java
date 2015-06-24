@@ -90,7 +90,7 @@ public class utility_class {
 	}
 	
 	public static double get_seconds(String date_str){
-		System.out.println("date_str="+date_str);
+		//System.out.println("date_str="+date_str);
 		SimpleDateFormat format = null;
 		double seconds = 0;
 

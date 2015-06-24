@@ -1,4 +1,4 @@
-package in.co.itracksolution.model;
+package in.co.itracksolution.AlertModel;
 
 import java.util.Date;
 
@@ -10,12 +10,12 @@ public class NightLog {
 	
 	public static final String TABLE_NAME = "nightlog";
 	
-	public SpeedAlert()
+	public NightLog()
 	{
 		super();
 	}
 	
-	public SpeedAlert(String imei, String date, Date startTime, String startLatitude, String startLongitude, String startLocation, String endLatitude, String endLongitude, String endLocation, Date endTime, int duration, float avgSpeed, float distance, float maxSpeed, Date logTime ) 
+	public NightLog(String imei, String date, Date startTime, String startLatitude, String startLongitude, String startLocation, String endLatitude, String endLongitude, String endLocation, Date endTime, int duration, float avgSpeed, float distance, float maxSpeed, Date logTime ) 
 	{
 		super();
 		this.imei 		= imei;
@@ -35,7 +35,7 @@ public class NightLog {
 		this.logTime 		= logTime;
 	}
 
-	public SpeedAlert(SpeedAlert f)
+	public NightLog(NightLog f)
 	{
 		this.imei 		= f.imei;
 		this.date 		= f.date;
@@ -72,19 +72,19 @@ public class NightLog {
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
-	public float getStartLatitude() {
+	public String getStartLatitude() {
 		return startLatitude;
 	}
 	public void setStartLatitude(String startLatitude) {
 		this.startLatitude= startLatitude;
 	} 
-	public float getStartLongitude() {
+	public String getStartLongitude() {
 		return startLongitude;
 	}
 	public void setStartLongitude(String startLongitude) {
 		this.startLongitude= startLongitude;
 	} 
-	public float getStartLocation() {
+	public String getStartLocation() {
 		return startLocation;
 	}
 	public void setStartLocation(String startLocation) {
@@ -96,29 +96,29 @@ public class NightLog {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-	public float getEndLatitude() {
+	public String getEndLatitude() {
 		return endLatitude;
 	}
 	public void setEndLatitude(String endLatitude) {
 		this.endLatitude= endLatitude;
 	} 
-	public float getEndLongitude() {
+	public String getEndLongitude() {
 		return endLongitude;
 	}
 	public void setEndLongitude(String endLongitude) {
 		this.endLongitude= endLongitude;
 	} 
-	public float getEndLocation() {
+	public String getEndLocation() {
 		return endLocation;
 	}
 	public void setEndLocation(String endLocation) {
 		this.endLocation = endLocation ;
 	} 
-	public float getDuration() {
+	public int getDuration() {
 		return duration;
 	}
 	public void setDuration(int duration) {
-		this.duration = durationa;
+		this.duration = duration;
 	} 
 	public float getAvgSpeed() {
 		return avgSpeed;
@@ -138,8 +138,8 @@ public class NightLog {
 	public void setMaxSpeed(float maxSpeed) {
 		this.maxSpeed = maxSpeed;
 	} 
-	public float getLogTime() {
-		return LogTime;
+	public Date getLogTime() {
+		return logTime;
 	}
 	public void setLogTime(Date logTime ) {
 		this.logTime = logTime;
