@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TreeMap;
@@ -60,6 +61,9 @@ public class SampleFullDataQuery
 	public static void main(String[] args) 
 	{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		TimeZone tz = TimeZone.getTimeZone("Asia/Kolkata");
+		sdf.setTimeZone(tz);	
+
 		SampleFullDataQuery st = new SampleFullDataQuery();
 			
 		FullDataDao dao = new FullDataDao(st.conn.getSession());
