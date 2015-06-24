@@ -26,7 +26,8 @@ public class pull_full_data_cassandra
 	
 	public pull_full_data_cassandra()
 	{
-		String propFileName = "config.properties";
+		//String propFileName = "config.properties";
+		String propFileName = "resources/config.properties";
 		Properties prop = new Properties();
 		
 		try {

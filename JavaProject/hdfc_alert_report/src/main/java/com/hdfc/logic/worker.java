@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.TreeMap;
 
 import com.datastax.driver.core.ResultSet;
@@ -29,7 +30,9 @@ public class worker {
 	public static ArrayList<String> vehicle_name = new ArrayList<String>();
 	public static ArrayList<Float> max_speed = new ArrayList<Float>();
 	public static ArrayList<String> device_imei_no = new ArrayList<String>();
-	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");	
+	public static TimeZone tz = TimeZone.getTimeZone("Asia/Kolkata");	
+	
 	//SampleFullDataQuery st = new SampleFullDataQuery();
 	public static pull_full_data_cassandra fd = new pull_full_data_cassandra();
 	public static FullData data = new FullData();			
@@ -47,7 +50,7 @@ public class worker {
 	//##############################
 
 	public worker() {
-		
+		sdf.setTimeZone(tz);
 	}
 	
 	public static void process_data(int account_id) {				
