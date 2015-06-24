@@ -15,12 +15,12 @@ public class mysql_handler {
 	   //int vehicle_id = 0;
 	   //float max_speed = 0.0f;
 	   //String device_imei_no ="", vehicle_name="";
-	   /*try{
+	    /*try{
 	      //STEP 2: Register JDBC driver
 
 	      //STEP 4: Execute a query
 	//      System.out.println("Selecting data...");
-		   conn.stmt = conn.conn.createStatement();
+		  conn.stmt = conn.conn.createStatement();
 
 	      String sql;
 	      sql = "SELECT DISTINCT vehicle.vehicle_id,vehicle.vehicle_name,vehicle.max_speed,vehicle_assignment.device_imei_no FROM vehicle,vehicle_assignment,"+
@@ -49,8 +49,8 @@ public class mysql_handler {
 	 	  init.vehicle_name.add("test_hdfc1");
 	 	  init.max_speed.add(30.0f);
 	 	  init.device_imei_no.add("865733021562939");
-	 	  
-	 	  /*init.vehicle_id.add(20);
+	 	  /*
+	 	  init.vehicle_id.add(20);
 	 	  init.vehicle_name.add("test_hdfc2");
 	 	  init.max_speed.add(30.0f);
 	 	  init.device_imei_no.add("865733021569389");
@@ -58,7 +58,7 @@ public class mysql_handler {
 	 	  init.vehicle_id.add(30);
 	 	  init.vehicle_name.add("test_hdfc3");
 	 	  init.max_speed.add(30.0f);
-	 	  init.device_imei_no.add("865733021569173");*/	 	  
+	 	  init.device_imei_no.add("865733021569959");*/	  
  	 
  	  
 	   return null;

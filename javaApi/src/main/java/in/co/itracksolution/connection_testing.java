@@ -18,15 +18,14 @@ import java.text.SimpleDateFormat;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.ResultSet;
 
-public class pull_full_data_cassandra 
+public class connection_testing 
 {
 
-	public CassandraConn conn;
+	CassandraConn conn;
 	
-	public pull_full_data_cassandra()
+	public connection_testing()
 	{
 		String propFileName = "config.properties";
-		//String propFileName = "resources/config.properties";
 		Properties prop = new Properties();
 		
 		try {
@@ -63,11 +62,16 @@ public class pull_full_data_cassandra
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		SampleFullDataQuery st = new SampleFullDataQuery();
 			
-		FullDataDao dao = new FullDataDao(st.conn.getSession());
+		for(int i=0;i<1000;i++) {
+			try{
+				FullDataDao dao = new FullDataDao(st.conn.getSession());
+				System.out.println("connection established");
+			} catch(Exception e){System.out.println("i="+i+" Msg="+e.getMessage());}
+		}
 		
-		String imei = "865733021569173"; //Make sure this imei exists
-		String startDateTime = "2015-06-10 11:48:29";
-		String endDateTime = "2015-06-13 11:50:41";
+		/*String imei = "865733021562939"; //Make sure this imei exists
+		String startDateTime = "2015-06-14 13:19:13";
+		String endDateTime = "2015-06-14 13:20:30";
 		//true for dtime, false for stime
 		Boolean deviceTime = true;	// true for device time index, otherwise server time
 		Boolean orderAsc = false;	// true for ascending , otherwise descending (default) 
@@ -87,7 +91,7 @@ public class pull_full_data_cassandra
 			System.out.print("e: "+pMap1.get("e")+" ");
 			System.out.print("f: "+pMap1.get("f")+" ");
 			System.out.println();
-		}
+		}*/
 
 		st.close();
 	}
