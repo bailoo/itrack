@@ -17,7 +17,7 @@ import com.datastax.driver.core.Row;
 
 public class pull_last_data_cassandra {
 
-	CassandraConn conn;
+	public CassandraConn conn;
 	
 	public pull_last_data_cassandra(){
 		String propFileName = "config.properties";
