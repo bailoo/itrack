@@ -146,9 +146,9 @@ public class report_turning_violation {
 
 		double A = distFrom(lat_start, lng_start, lat_middle, lng_middle);
 		//System.out.println("A "+(int)A);
-		double B = distFrom(lat_middle, lng_middle, lng_end, lng_end);
+		double B = distFrom(lat_middle, lng_middle, lat_end, lng_end);
 		//System.out.println("B "+(int)B);
-		double C = distFrom(lng_end, lng_end, lat_start, lng_start);
+		double C = distFrom(lat_end, lng_end, lat_start, lng_start);
 		//find the angle between the the three edges
 
 		double cosTheata = (-(C*C-A*A-B*B)/(2*A*B));
@@ -163,9 +163,7 @@ public class report_turning_violation {
 	    double earthRadius = 3958.75;
 	    double dLat = Math.toRadians(lat2-lat1);
 	    double dLng = Math.toRadians(lng2-lng1);
-	    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-	               Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-	               Math.sin(dLng/2) * Math.sin(dLng/2);
+	    double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(dLng/2) * Math.sin(dLng/2);
 	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 	    double dist = earthRadius * c;
 

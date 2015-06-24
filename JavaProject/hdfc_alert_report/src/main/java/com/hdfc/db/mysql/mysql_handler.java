@@ -58,7 +58,7 @@ public class mysql_handler {
 	 	  init.vehicle_id.add(30);
 	 	  init.vehicle_name.add("test_hdfc3");
 	 	  init.max_speed.add(30.0f);
-	 	  init.device_imei_no.add("865733021569959"); 	  
+	 	  init.device_imei_no.add("865733021569959");	  
  	 
  	  
 	   return null;

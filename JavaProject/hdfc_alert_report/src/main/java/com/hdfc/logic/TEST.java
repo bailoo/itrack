@@ -53,6 +53,8 @@ public class TEST {
 		double lng_end = 78.16244;
 		float angle = get_turning_angle(lat_start, lng_start, lat_middle, lng_middle, lat_end, lng_end);
 		System.out.println("Angle="+angle);
+		
+		//get_angle_test();
 	}
 	
 	public static void add()
@@ -116,9 +118,9 @@ public class TEST {
 
 		double A = distFrom(lat_start, lng_start, lat_middle, lng_middle);
 		//System.out.println("A "+(int)A);
-		double B = distFrom(lat_middle, lng_middle, lng_end, lng_end);
+		double B = distFrom(lat_middle, lng_middle, lat_end, lng_end);
 		//System.out.println("B "+(int)B);
-		double C = distFrom(lng_end, lng_end, lat_start, lng_start);
+		double C = distFrom(lat_end, lng_end, lat_start, lng_start);
 		//find the angle between the the three edges
 
 		double cosTheata = (-(C*C-A*A-B*B)/(2*A*B));
@@ -141,5 +143,50 @@ public class TEST {
 
 	    //return new Double(dist * meterConversion).doubleValue();
 	    return Double.valueOf(dist * meterConversion).doubleValue();
-	}    
-}
+	} 
+	
+	
+	/*public static void get_angle_test() {
+	
+		boolean isRight = false;
+	
+		double lat_start = 29.94744;
+		double lng_start = 78.16192;
+		double lat_middle = 29.94721;
+		double lng_middle = 78.16219;
+		double lat_end = 29.947;
+		double lng_end = 78.16244;
+	
+		//find the points on plain surface from latitude and longitude
+		double ax = EARTH_RADIUS * Math.sin(Math.toRadians(lat_start)) * Math.cos(Math.toRadians(lng_start));
+		//System.out.println("x "+ax);
+		double ay = EARTH_RADIUS * Math.sin(Math.toRadians(lat_start)) * Math.sin(Math.toRadians(lng_start));
+		//System.out.println("y "+ay);
+		double bx = EARTH_RADIUS * Math.sin(Math.toRadians(lat_middle)) * Math.cos(Math.toRadians(lng_middle));
+		//System.out.println("x "+bx);
+		double by = EARTH_RADIUS * Math.sin(Math.toRadians(lat_middle)) * Math.sin(Math.toRadians(lng_middle));
+		//System.out.println("y "+by);
+		double cx = EARTH_RADIUS * Math.sin(Math.toRadians(lat_end)) * Math.cos(Math.toRadians(lng_end));
+		//System.out.println("x "+cx);
+		double cy = EARTH_RADIUS * Math.sin(Math.toRadians(lat_end)) * Math.sin(Math.toRadians(lng_end));
+		//System.out.println("y "+cy);
+		isRight = (((bx - ax) * (cy - ay) - (by - ay) * (cx - ax)) > 0);
+		//System.out.println("is Right "+isRight);
+	
+		//get the edges length
+	
+		double A = distFrom(lat_start, lng_start, lat_middle, lng_middle);
+		//System.out.println("A "+(int)A);
+		double B = distFrom(lat_middle, lng_middle, lat_end, lng_end);
+		//System.out.println("B "+(int)B);
+		double C = distFrom(lat_end, lng_end, lat_start,lng_start);
+	
+		//find the angle between the the three edges
+	
+		double cosTheata = (-(C * C - A * A - B * B) / (2 * A * B));
+	
+		//convert in degrees
+		int angle = (int) Math.toDegrees(Math.acos(cosTheata));
+		System.out.println("(ANGLE) Math.toDegrees(Math.acos(cosTheata)) " + angle);	
+	}*/
+}	

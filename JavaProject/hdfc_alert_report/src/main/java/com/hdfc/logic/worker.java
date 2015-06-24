@@ -62,8 +62,8 @@ public class worker {
 		
 		//previous_date1 = "2015-06-14 13:19:35";
 		//previous_date2 = "2015-06-14 13:20:08";	
-		previous_date1 = "2015-06-10 00:00:00";
-		previous_date2 = "2015-06-14 23:30:37";			
+		previous_date1 = "2015-06-14 09:30:15";
+		previous_date2 = "2015-06-14 09:30:37";			
 				
 		System.out.println("AftergetVehicleInfo="+init.device_imei_no.size());
 		for(int i=0;i<(init.device_imei_no.size());i++) {			
@@ -214,7 +214,8 @@ public class worker {
 	
 	public static void write_to_database(String imei) {
 		
-		String filename= "D:\\itrack_vts/hdfc_alert_report/"+imei+".csv";
+		//String filename= "D:\\itrack_vts/hdfc_alert_report/"+imei+".csv";
+		String filename= "/mnt/hdfc_report/"+imei+".csv";
 		line = "DeviceTime,ServerTime,Speed,Angle,Latitude,Longitude\n";
 		try {
 			fw = new FileWriter(filename,true);
