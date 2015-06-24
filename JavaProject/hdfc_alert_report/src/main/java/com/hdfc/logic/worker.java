@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
@@ -140,20 +141,22 @@ public class worker {
 		
 		for (FullData fullData : fullDataList)
 		{
+			TreeMap pMap1 = new TreeMap();
+			pMap1 = fullData.getPMap();
 			System.out.print("imei: "+fullData.getImei()+" ");
 			System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
 			System.out.print("server time: "+sdf.format(fullData.getSTime())+" ");
-			System.out.print("a: "+fullData.pMap.get("a")+" ");
-			System.out.print("b: "+fullData.pMap.get("b")+" ");
-			System.out.print("c: "+fullData.pMap.get("c")+" ");
-			System.out.print("d: "+fullData.pMap.get("d")+" ");
-			System.out.print("e: "+fullData.pMap.get("e")+" ");
-			System.out.print("f: "+fullData.pMap.get("f")+" ");
+			System.out.print("a: "+pMap1.get("a")+" ");
+			System.out.print("b: "+pMap1.get("b")+" ");
+			System.out.print("c: "+pMap1.get("c")+" ");
+			System.out.print("d: "+pMap1.get("d")+" ");
+			System.out.print("e: "+pMap1.get("e")+" ");
+			System.out.print("f: "+pMap1.get("f")+" ");
 			System.out.println();
 				
 			//System.out.println("Lat="+fullData.pMap.get("d")+" ,Lng="+fullData.pMap.get("e"));
-			tmp_lat = (String) fullData.pMap.get("d");
-			tmp_lng = (String) fullData.pMap.get("e");
+			tmp_lat = (String) pMap1.get("d");
+			tmp_lng = (String) pMap1.get("e");
 			
 			//System.out.println("Lat="+tmp_lat+" ,Lng="+tmp_lng);
 			if( (!tmp_lat.equals("")) && (!tmp_lng.equals("")) ) {
@@ -175,7 +178,7 @@ public class worker {
 				tmp_lng = tmp_lng.substring(0,tmp_lng.length()-1);
 				lat = Double.parseDouble(tmp_lat);
 				lng = Double.parseDouble(tmp_lng);
-				speed = Double.parseDouble((String) fullData.pMap.get("f"));
+				speed = Double.parseDouble((String) pMap1.get("f"));
 				//CHECK ALERTS
 				CHECK_ALERTS(imei, startDateTime, endDateTime, interval, device_time, sts, lat, lng, speed, max_speed, data_size, record_count, rep_distance, rep_travel);
 				record_count++;
