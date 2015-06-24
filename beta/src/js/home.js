@@ -26,7 +26,7 @@ function switch_vehicle_selection(disp_value)
         document.getElementById('all').style.display='';
         document.getElementById(vchecktmp).style.display='';
         document.getElementById(vradiotmp).style.display='none';
-		document.getElementById('google_play').style.display='none';
+		//document.getElementById('google_play').style.display='none';
       }
       else if(disp_value == 2)
       {
@@ -34,7 +34,7 @@ function switch_vehicle_selection(disp_value)
         document.getElementById('all').style.display='none';
         document.getElementById(vradiotmp).style.display='';
         document.getElementById(vchecktmp).style.display='none';
-		document.getElementById('google_play').style.display='';
+		//document.getElementById('google_play').style.display='';
       }
     }
   }
@@ -46,12 +46,14 @@ function switch_vehicle_selection(disp_value)
       
       document.getElementById("vcheckbox").style.display='';
       document.getElementById("vradio").style.display='none';
+	  //document.getElementById('google_play').style.display='none';
     }
     else if(disp_value == 2)
     {
       //alert("2"+document.getElementById("vradio").display);
       document.getElementById("vradio").style.display='';
       document.getElementById("vcheckbox").style.display='none';
+	 // document.getElementById('google_play').style.display='';
     }    
   }  
 }
@@ -161,7 +163,23 @@ function initialize()
 		
 		} 										  
 	}
-}  
+} 
+function xmlParse(str) 
+{
+	if (typeof ActiveXObject != 'undefined' && typeof GetObject != 'undefined') 
+	{
+		var doc = new ActiveXObject('Microsoft.XMLDOM');
+		doc.loadXML(str);
+		return doc;
+	}
+
+	if (typeof DOMParser != 'undefined') 
+	{
+		return (new DOMParser()).parseFromString(str, 'text/xml');
+	}
+	return createElement('div', null);
+}
+ 
 function show_geofence(map)
 {
 	//alert('map='+map);

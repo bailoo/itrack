@@ -11,7 +11,6 @@
 	$option_string="";  
   	
   $function_string='get_'.$vehicle_display_option1.'_vehicle_radio';
-  //echo "functionName=".$function_string."<br>";
   //echo $function_string; 
 
   echo'	

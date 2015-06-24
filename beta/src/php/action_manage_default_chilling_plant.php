@@ -3,6 +3,7 @@
 	include_once('util_session_variable.php');	
 	include_once('util_php_mysql_connectivity.php');	
 	include_once('user_type_setting.php');
+	include_once('coreDb.php');
 	$root=$_SESSION['root'];	
 	$DEBUG=0;	
 	$post_action_type = $_POST['action_type'];		

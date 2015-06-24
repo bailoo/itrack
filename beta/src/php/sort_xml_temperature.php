@@ -35,7 +35,7 @@
 				{
 					$fix_tmp = 0;
 					$format = 1;
-				} */
+				}*/ 
 				$fix_tmp = 1;
 				$format = 1;
 				/*if ((preg_match('/'.$vd.'="\d+.\d+[a-zA-Z0-9]\"/', $line, $lat_match) ) && (preg_match('/'.$ve.'="\d+.\d+[a-zA-Z0-9]\"/', $line, $lng_match)) )
@@ -73,7 +73,6 @@
 				//if(($line[0] == '<') && ($line[strlen($line)-2] == '>') && ($fix_tmp==1) && ($format==1) && ($DataValid == 1))
 				if(($line[0] == '<') && ($line[strlen($line)-2] == '>') && ($fix_tmp==1) && ($format==1))
 				{
-					//echo "in if1";
 					$imei_flag=1;
 					if($vv=="v")
 					{
@@ -93,7 +92,7 @@
 					$status = preg_match('/'.$vh.'="[^"]+/', $line, $datetime_tmp);
 					if($status==0)
 					{
-						//continue;
+						continue;
 					}
 					//echo "test5".$datetime_tmp[0].'<BR>';
 					/*$status = preg_match('/'.$vd.'="[^" ]+/', $line, $lat_tmp);
@@ -111,64 +110,63 @@
 					$status = preg_match('/'.$vf.'="[^" ]+/', $line, $speed_tmp);
 					if($status==0)
 					{
-						//continue;
+						continue;
 					}
 				  //echo "test9".'<BR>';              
 					$status = preg_match('/'.$vc.'="[^" ]+/', $line, $fix_tmp_uni);
 					if($status==0)
 					{
-						//continue;
-					} 
-					echo "i=".$vi."<br>";
+						continue;
+					} 			
 					$status = preg_match('/'.$vi.'="[^" ]+/', $line, $io1_tmp);
 					if($status==0)
 					{
-						//continue;
+						continue;
 					}              
 					$status = preg_match('/'.$vj.'="[^" ]+/', $line, $io2_tmp);
 					if($status==0)
 					{
-						//continue;
+						continue;
 					}    
 				  
 					$status = preg_match('/'.$vk.'="[^" ]+/', $line, $io3_tmp);
 					if($status==0)
 					{
-						//continue;
+						continue;
 					}   
 
 					$status = preg_match('/'.$vl.'="[^" ]+/', $line, $io4_tmp);
 					if($status==0)
 					{
-						//continue;
+						continue;
 					}             
 
 					$status = preg_match('/'.$vm.'="[^" ]+/', $line, $io5_tmp);
 					if($status==0)
 					{
-						//continue;
+						continue;
 					}     
 
 					$status = preg_match('/'.$vn.'="[^" ]+/', $line, $io6_tmp);
 					if($status==0)
 					{
-						//continue;
+						continue;
 					}     
 				  
 					$status = preg_match('/'.$vo.'="[^"]+/', $line, $io7_tmp);
 					if($status==0)
 					{
-						//continue;
+						continue;
 					}  
 					$status = preg_match('/'.$vp.'="[^" ]+/', $line, $io8_tmp);
 					if($status==0)
 					{
-						//continue;
+						continue;
 					} 
 					$status = preg_match('/'.$vr.'="[^" ]+/', $line, $sup_v_tmp);
 					if($status==0)
 					{
-						//continue;
+						continue;
 					}  
 				} // FORMAT 1 CLOSED    
 				
@@ -194,8 +192,7 @@
 					$io8[$i] = $io8_tmp[0].'"';
 					//$sig_str[$i] = $sig_str_tmp[0].'"'; 
 					$sup_v[$i] = $sup_v_tmp[0].'"'; 
-					$i++;    
-					//echo "lat=". $io1_tmp[0]."<br>";
+					$i++;                      
 				}    // IF FORMAT 1 CLOSED  
 			}
 			if($format == 1)
@@ -298,7 +295,6 @@
 				fwrite($fh, $linetowrite);          
 				for($y=0;$y<$i;$y++)
 				{
-				
 					//$linetowrite =  "\n"."<marker ".$vehicleserial[$y]." ".$lat[$y]." ".$lng[$y]." ".$speed[$y]." ".$datetime[$y]." ".$io1[$y]." ".$io2[$y]." ".$io3[$y]." ".$io4[$y]." ".$io5[$y]." ".$io6[$y]." ".$io7[$y]." ".$io8[$y]." ".$fix[$y]." ".$sup_v[$y]."/>";
 					if($imei_flag==1)
 					{
@@ -308,8 +304,6 @@
 					{
 						$linetowrite =  "\n"."<x ".$lat[$y]." ".$lng[$y]." ".$speed[$y]." ".$datetime[$y]." ".$io1[$y]." ".$io2[$y]." ".$io3[$y]." ".$io4[$y]." ".$io5[$y]." ".$io6[$y]." ".$io7[$y]." ".$io8[$y]." ".$fix[$y]." ".$sup_v[$y]."/>";
 					}//echo "jfajds=".$linetowrite; 
-					
-					//echo "<textarea>".$linetowrite."</textarea>";
 					//echo "2=".$xml_original_tmp;
 					fwrite($fh, $linetowrite);  			      
 				}   

@@ -1,13 +1,17 @@
 <?php
 	include_once("report_hierarchy_header.php");
+	
 	$account_id_local1 = $_POST['account_id_local'];	
-  $vehicle_display_option1 = $_POST['vehicle_display_option'];	
-  $options_value1 = $_POST['options_value'];
+	echo "<input type='hidden' id='selected_account_id' value=".$account_id_local1.">";
+	$vehicle_display_option1 = $_POST['vehicle_display_option'];	
+	echo "<input type='hidden' id='s_vehicle_display_option' value=".$vehicle_display_option1.">";
+	$options_value1 = $_POST['options_value'];
+	echo "<input type='hidden' id='selected_options_value' value='".$options_value1."'>";  
   
-  $options_value2=explode(",",$options_value1);			
-  $option_size=sizeof($options_value2);
+	$options_value2=explode(",",$options_value1);			
+	$option_size=sizeof($options_value2);
 	$option_string="";  
-  
+
 	$function_string='get_'.$vehicle_display_option1.'_vehicle'; 
   //$function_string='get_all_persons';   
   
@@ -80,8 +84,16 @@
 			echo'</select>&nbsp;<SPAN STYLE="font-size: xx-small"> hr/hrs</SPAN></center><br> -->';
 														
 			//date_default_timezone_set('Asia/Calcutta');
-			$start_date=date("Y/m/d 00:00:00");	
-			$end_date=date("Y/m/d H:i:s");	
+			if($start_date=="" && $end_date=="")
+			{
+				$StartDate=date("Y/m/d 00:00:00");	
+				$EndDate=date("Y/m/d H:i:s");
+			}
+			else
+			{
+				$StartDate=$start_date;	
+				$EndDate=$end_date;
+			}	
 			
 			echo'
 			<table border=0 cellspacing=0 cellpadding=3 align="center">	
@@ -94,14 +106,14 @@
 								<td class="text">
 									Start Date
 															
-							<input type="text" id="date1" name="start_date" value="'.$start_date.'" size="10" maxlength="19">
+							<input type="text" id="date1" name="start_date" value="'.$StartDate.'" size="10" maxlength="19">
 					
 										<a href=javascript:NewCal_SD("date1","yyyymmdd",true,24)>
 											<img src="./images/cal.gif" width="16" height="16" border="0" alt="Pick a date">
 										</a>
 											&nbsp;&nbsp;&nbsp;End Date
 
-							<input type="text" id="date2" name="end_date" value="'.$end_date.'" size="10" maxlength="19">
+							<input type="text" id="date2" name="end_date" value="'.$EndDate.'" size="10" maxlength="19">
 					
 										<a href=javascript:NewCal("date2","yyyymmdd",true,24)>
 											<img src="./images/cal.gif" width="16" height="16" border="0" alt="Pick a date">

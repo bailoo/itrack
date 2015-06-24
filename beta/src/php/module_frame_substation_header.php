@@ -25,8 +25,68 @@
 					<table class="frame_header_table" border="0" cellspacing=0 cellpadding=0>
 						<tr>';	           
 							     						
-
-												
+									echo'
+										<td>
+											<table cellspacing=0 cellpadding=0>
+												<tr>
+													<td height="3px"></td>
+												</tr>
+												<tr>
+													<td>												
+														<a href="home.htm" style="text-decoration:none;">
+															<img src="images/icon/manage.png" '.$img_size.' style="border:none;">'.$set_nbsp.'
+														</a>
+													</td>
+												</tr>
+											</table>
+											</td>							
+										<td '.$v_align.'>';	
+											if($interface == "home.php")
+												{
+													echo '<b class="hs1">Home</b>';
+												}
+												else
+												{ 
+													echo '<a href="home.htm" class="hs2">Home</a>';
+												}
+									echo'</td>';
+								
+									echo'<td>
+											'.$set_nbsp.'|'.$set_nbsp.'
+										</td>';
+									echo'<td '.$v_align.'>
+												<table cellspacing=0 cellpadding=0>
+													<tr>
+														<td height="3px"></td>
+													</tr>
+													<tr>
+														<td>
+															<a href="setting.htm" style="text-decoration:none;">
+																<img src="images/icon/setting1.png" '.$img_size.' style="border:none;">'.$set_nbsp.'
+															</a>
+														</td>
+													</tr>
+												</table>
+											</t>
+											<td>';  
+											  
+										  if($interface == "setting.php")
+															{
+																echo '<b class="hs1">Setting</b>';
+															} 
+															else
+															{ 
+																echo '<a href="setting.htm" class="hs2">Setting</a>';
+															}
+											                           
+										
+									echo'</td>';
+									
+									
+									echo'
+										<td>
+												'.$set_nbsp.'|'.$set_nbsp.'
+										</td>';			
 									echo'<td>
 											<table cellspacing=0 cellpadding=0>
 												<tr>

@@ -1,29 +1,30 @@
 <?php
+	echo"reportPrevPage##";
 	include_once("report_hierarchy_header.php");
 	include("user_type_setting.php");
         	
 	$account_id_local1 = $_POST['account_id_local'];	
-  $vehicle_display_option1 = $_POST['vehicle_display_option'];	
-  $options_value1 = $_POST['options_value'];
+	$vehicle_display_option1 = $_POST['vehicle_display_option'];	
+	$options_value1 = $_POST['options_value'];
   
-  $options_value2=explode(",",$options_value1);			
-  $option_size=sizeof($options_value2);
+	$options_value2=explode(",",$options_value1);			
+	$option_size=sizeof($options_value2);
 	$option_string="";  
   
 	$function_string='get_'.$vehicle_display_option1.'_vehicle'; 		
 	
-  echo'<html>  
+ /* echo'<html>  
   <head>';         
         include_once('main_google_key.php'); 			
-		    include_once('map_js_css.php');
-		    include_once('common_js_css.php');
+	include_once('map_js_css.php');
+	include_once('common_js_css.php');
         include_once('util_calculate_distance_js.php');				
         //include('main_frame_part1.php');           
   echo'</head>
   
-  <body>
+  <body>';*/
   		
-  <center>
+  echo'<center>
     <table border=0 width = 100% cellspacing=2 cellpadding=0>
   		<tr>
   			<td height=10 class="report_heading" align="center">Data Gap Report</td>
@@ -54,6 +55,7 @@
 		<br>';							
 
 	 echo'
+	<input type="hidden" id="acc" value="'.$account_id.'"/>
    <fieldset class="report_fieldset">
 		<legend>Select display Option</legend>';		
 		
@@ -64,7 +66,12 @@
 		
     echo '<option value="select">Select</option>';
     
-    echo '<option value="5">5 min</option>';
+    if($account_id=="1")
+    {
+    	echo '<option value="1">1 min</option>';
+	echo '<option value="5">5 min</option>';
+    }
+    echo '<option value="10">10 min</option>';
     
     echo '<option value="15" selected>15 min</option>';
     
@@ -72,34 +79,40 @@
 		
     echo '<option value="60">1 hr</option>';
 
-		echo '<option value="120">2 hr</option>';
+    echo '<option value="120">2 hr</option>';
 
-		echo '<option value="180">3 hr</option>';																					
+    echo '<option value="180">3 hr</option>';																					
 		
-		echo '<option value="240">4 hr</option>';
+	echo '<option value="240">4 hr</option>';
 		
-		echo '<option value="300">5 hr</option>';
+	echo '<option value="300">5 hr</option>';
 		
-		echo '<option value="360">6 hr</option>';
-		
-		echo '<option value="420">7 hr</option>';
+	echo '<option value="360">6 hr</option>';
+	
+	echo '<option value="420">7 hr</option>';
 									
-		echo '<option value="480">8 hr</option>';
+	echo '<option value="480">8 hr</option>';
 		
-		echo '<option value="540">9 hr</option>';
+	echo '<option value="540">9 hr</option>';
 
-		echo '<option value="600">10 hr</option>';
+	echo '<option value="600">10 hr</option>';
 
-		echo '<option value="660">11 hr</option>';
+	echo '<option value="660">11 hr</option>';
 
-		echo '<option value="720">12 hr</option>';							
+	echo '<option value="720">12 hr</option>';							
 
-		echo'</select>&nbsp;<SPAN STYLE="font-size: xx-small"></SPAN>
+	echo'</select>&nbsp;<SPAN STYLE="font-size: xx-small"></SPAN>
     
     &nbsp;&nbsp;<SPAN STYLE="font-size: xx-small">Select NO Data Interval </SPAN>
     <select id="no_data_interval" name="no_data_interval"> 
-    <option value="select">Select</option>
-    <option value="5" selected>5 min</option>
+    <option value="select">Select</option>';
+    
+if($account_id=="1")
+{
+	echo '    <option value="1" selected>1 min</option>';
+	echo ' <option value="5" selected>5 min</option>';
+}
+echo ' <option value="10" selected>10 min</option>
     </select>
     </center><br>';												
 				
@@ -158,8 +171,8 @@
 		
 	</form>	
   </center>
-  </body>
-  </html>
+  <!--</body>
+  </html>-->
   ';
 
 ?>

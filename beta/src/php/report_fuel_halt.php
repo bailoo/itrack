@@ -1,16 +1,18 @@
 <?php
-  include_once("report_hierarchy_header.php");
+	echo"reportPrevPage##";
+	include_once("report_hierarchy_header.php");
 	include_once("user_type_setting.php");
-	
+
 	$title = $_POST['title1'];
-	$account_id_local1 = $_POST['account_id_local'];	
-  $vehicle_display_option1 = $_POST['vehicle_display_option'];	
-  $options_value1 = $_POST['options_value'];
-  
-  $options_value2=explode(",",$options_value1);			
-  $option_size=sizeof($options_value2);
+	
+	$account_id_local1 = $_POST['account_id_local'];
+	$vehicle_display_option1 = $_POST['vehicle_display_option'];	
+	$options_value1 = $_POST['options_value'];
+
+	$options_value2=explode(",",$options_value1);			
+	$option_size=sizeof($options_value2);
 	$option_string="";  
-  
+
 	$function_string='get_'.$vehicle_display_option1.'_vehicle';
 	//echo $function_string;
   

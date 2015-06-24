@@ -2336,7 +2336,7 @@
 								
 								}
 							echo']},';
-							if($person_user_type!=1 || ($fleet_user_type==1 || $mining_user_type==1 || $courier_user_type==1 || $school_user_type ==1 || $pos_user_type==1)) // for all user except person
+							/*if($person_user_type!=1 || ($fleet_user_type==1 || $mining_user_type==1 || $courier_user_type==1 || $school_user_type ==1 || $pos_user_type==1)) // for all user except person
 							{
 							echo'
 							{type:"Text", label:"Graph", editable:false, children:
@@ -2479,7 +2479,7 @@
                 }												
 								
 							echo ']},';
-							}
+							}*/
 							echo'
 							{type:"Text", label:"DataLog", editable:false, children:
 							[';
