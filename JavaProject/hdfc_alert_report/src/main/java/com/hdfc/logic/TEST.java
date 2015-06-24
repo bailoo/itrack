@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -189,4 +190,13 @@ public class TEST {
 		int angle = (int) Math.toDegrees(Math.acos(cosTheata));
 		System.out.println("(ANGLE) Math.toDegrees(Math.acos(cosTheata)) " + angle);	
 	}*/
+	
+	private static Date addMinutesToDate(int minutes, Date beforeTime){
+	    long ONE_MINUTE_IN_MILLIS = 60000;//millisecs
+
+	    long curTimeInMs = beforeTime.getTime();
+	    Date afterAddingMins = new Date(curTimeInMs + (minutes * ONE_MINUTE_IN_MILLIS));
+	    return afterAddingMins;
+	}
+	
 }	
