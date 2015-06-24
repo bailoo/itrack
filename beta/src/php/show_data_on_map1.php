@@ -166,7 +166,6 @@ function show_balloon_marker(marker_number)
     //alert(document.forms[0].m4.value);  
   }    
 }
-
 function show_data_on_map(report_format)
 {	
 	imei_iotype_arr.length=0;

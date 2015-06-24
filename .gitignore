@@ -99,3 +99,5 @@ hs_err_pid*
 /beta/sorted_xml_data/
 /beta/src/fonts/
 /beta/src/media/
+/beta/xml_tmp/
+/beta/xml_vts/

@@ -2638,7 +2638,7 @@ function PlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed
 	//}
 	//else
 	//{
-        alert("str="+str);
+       // alert("str="+str);
 		var strURL="src/php/select_landmark_marker.php?content="+str;
 	//}
 
@@ -3052,21 +3052,21 @@ function mapIWClose()
 
 function getXMLHTTP()
 {
-    alert("test");
+    //alert("test");
 	http_request_this=false;
-        alert("test1");
+        //alert("test1");
 	if (window.XMLHttpRequest)
 	{
 		http_request_this = new XMLHttpRequest();
-                alert("test2");
+               // alert("test2");
 	} 
 	else if (window.ActiveXObject) 
 	{
 		http_request_this = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-        alert("test3");
+        //alert("test3");
 	return http_request_this;
-         alert("test4");
+         //alert("test4");
 }
 
 
@@ -3294,7 +3294,7 @@ function checkbox_selection(obj)
        if (http_request.status == 200) 
        {
           result = http_request.responseText;
-          alert("result="+result);
+          //alert("result="+result);
        }
     }
   } 
