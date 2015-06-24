@@ -3,6 +3,7 @@
 <script language="javascript" src="src/js/simpletreemenu.js?<?php echo time();?>"></script>       
 <script language="javascript" src="src/js/report.js?<?php echo time();?>"></script>
 
+
 <script type="text/javascript" src="src/js/calculate_distance.js"></script>
 		<link rel="stylesheet" type="text/css" href="gm_minimap_in_infowindow_files/mapStyle.css">	
 		<style type="text/css">
@@ -44,7 +45,7 @@
 			//function MapWindow(vname,datetime,lat,lng)
 			function map_window(vname,date1,date2,lat,lng,type)
 			{
-				alert(vname+" "+date1+" "+lat+" "+lng);	
+				//alert(vname+" "+date1+" "+lat+" "+lng);	
 				//test2(vname,datetime,lat,lng);			
 				document.getElementById("window").style.display = '';
 				load_vehicle_on_mini_map(vname,date1,date2,lat,lng,type);							

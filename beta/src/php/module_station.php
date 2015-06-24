@@ -1,8 +1,5 @@
 <?php    
-	//include("user_type_setting.php");
-	
-	
-	
+
     echo '
     <tr>
       <td>
@@ -36,7 +33,7 @@
 				<!--<option value="4">Route Plant Morning</option>
 				<option value="5">Route Plant Evening</option>-->';
 				}
-				if($flag_chilling_plant)
+				if($flag_chilling_plant==1)
 				{
 					echo'<option value="4">Chilling Plant</option>';
 				}

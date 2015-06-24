@@ -43,8 +43,8 @@ else
     $max_no= $row->serial_no;
     if($max_no==""){$max_no=1;}
     
-    $query_string1="INSERT INTO station(user_account_id,station_id,station_name,customer_no,distance_variable,station_coord,status,create_id,create_date) VALUES".
-                    "('$account_id','$max_no','$landmark_name1','$customer_no1','$radius_distance1','$landmark_point1',1,'$account_id','$date');";
+    $query_string1="INSERT INTO station(user_account_id,station_id,station_name,customer_no,distance_variable,station_coord,type,status,create_id,create_date) VALUES".
+                    "('$account_id','$max_no','$landmark_name1','$customer_no1','$radius_distance1','$landmark_point1',$landmark_type1,1,'$account_id','$date');";
         
     //echo "q2=".$query_string1;
     $result = mysql_query($query_string1,$DbConnection);

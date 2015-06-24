@@ -64,8 +64,6 @@ $option=array('showLines'=>1,
 	$pdf->ezOutput('invoice.pdf');
 
 	$pdfcode = $pdf->ezOutput();
-	$pdfcode=str_replace(chr(194)," ",$pdfcode);
-	//$pdfcode = str_replace("\n","\n<br>",htmlspecialchars($pdfcode));
 	$fp=fopen($file_name,'wb');
 	fwrite($fp,$pdfcode);
 	fclose($fp);

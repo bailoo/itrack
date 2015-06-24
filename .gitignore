@@ -12,7 +12,6 @@ xml
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /sorted_xml_data/
-/xml_tmp/
 /xml_vts/
 /beta/images/
 /beta/graph/
@@ -96,3 +95,7 @@ hs_err_pid*
 /beta/src/php/mail_api/
 =======
 >>>>>>> origin/master
+/xml_tmp/
+/beta/sorted_xml_data/
+/beta/src/fonts/
+/beta/src/media/

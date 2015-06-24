@@ -1,5 +1,5 @@
 <?php
-echo "TEST";
+//echo "TEST";
 include_once('update_route_assignment.php');
 //get_master_detail("231", "ZPME");
 function get_master_detail($account_id, $shift_time)
@@ -22,8 +22,8 @@ function get_master_detail($account_id, $shift_time)
         $ev_file_orig = ""; $mor_file_orig="";
         $content_ev = ""; $content_mor = "";
 
-        $dir = "/var/www/html/vts/test/src/php/gps_report/".$account_id."/master";
-	//$dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";
+        //$dir = "/var/www/html/vts/test/src/php/gps_report/".$account_id."/master";
+	$dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";
 	$dh = opendir($dir);
 	while (($file = readdir($dh)) !== false) {
 		//echo "<A HREF=\"$file\">$file</A><BR>\n";
@@ -150,25 +150,25 @@ function get_master_detail($account_id, $shift_time)
 	if($shift_time == "ZPME")
 	{		
 		//$plant_customer_write_path_ev = "D:\\test_app/gps_report/231/master_test/".$account_id."/evening_plant_customer#1#7.csv";
-		//$plant_customer_write_path_ev = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";	
-                $plant_customer_write_path_ev = "/var/www/html/vts/test/src/php/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";	
+		$plant_customer_write_path_ev = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";	
+                //$plant_customer_write_path_ev = "/var/www/html/vts/test/src/php/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";	
 		unlink($plant_customer_write_path_ev);
 		//$plant_customer_write_path_ev = "C:\\xampp/htdocs/sorting_motherdairy/evening_plant_customer#1#7.csv";
 		sort_station($plant_input_ev, $customer_input_ev, $transporter_input_ev, $route_input_ev, $route_input_type_ev, $plant_customer_write_path_ev);
                 
-                update_vehicle_route_assignment($vehicle_input_ev, $route_input_ev, $account_id, "ev");
+                update_vehicle_route_assignment($vehicle_input_ev, $route_input_ev, $account_id, "ZPME");
 	}
 	
 	if($shift_time == "ZPMM")
 	{
 		//$plant_customer_write_path_mor = "D:\\test_app/gps_report/231/master_test/".$account_id."/master/morning_plant_customer#1#8.csv";
-		//$plant_customer_write_path_mor = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
-                $plant_customer_write_path_mor = "/var/www/html/vts/test/src/php/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
+		$plant_customer_write_path_mor = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
+                //$plant_customer_write_path_mor = "/var/www/html/vts/test/src/php/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
 		unlink($plant_customer_write_path_mor);
 		//$plant_customer_write_path_mor = "C:\\xampp/htdocs/sorting_motherdairy/morning_plant_customer#1#8.csv";	
 		sort_station($plant_input_mor, $customer_input_mor, $transporter_input_mor, $route_input_mor, $route_input_type_mor, $plant_customer_write_path_mor); 
 	
-                update_vehicle_route_assignment($vehicle_input_mor, $route_input_mor, $account_id, "mor");
+                update_vehicle_route_assignment($vehicle_input_mor, $route_input_mor, $account_id, "ZPMM");
         }
   
 } //function closed

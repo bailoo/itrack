@@ -8,6 +8,7 @@
 	$group_id1 = $tmp[1];
   
 	$query1="SELECT password FROM account WHERE account_id='$account_id_local'";
+//echo $query1;
 	$result1=mysql_query($query1,$DbConnection);
 	$row1=mysql_fetch_object($result1);
   echo'<form method = "post"  name="setting">

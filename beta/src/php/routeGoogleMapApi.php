@@ -716,8 +716,6 @@ var input = (document.getElementById('pac-input'));
 								}
 								else
 								{
-								
-									
 									if(client_type_combo=='1')
 									{	
 										if(station_counter_plant>0)

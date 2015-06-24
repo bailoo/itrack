@@ -1,6 +1,9 @@
 <?php
+	echo"reportPrevPage##";
 	include_once("reportRadioVehicleHierarchy.php");
-	$account_id_local1 = $_POST['account_id_local'];	
+	
+	$account_id_local1 = $_POST['account_id_local'];
+	echo '<input type="hidden" id="selected_accountid" value='.$account_id_local1.'>';
 	$vehicle_display_option1 = $_POST['vehicle_display_option'];	
 	$options_value1 = $_POST['options_value'];
 
@@ -8,7 +11,7 @@
 	$option_size=sizeof($options_value2);
 	$option_string="";  
 	$function_string='get_'.$vehicle_display_option1.'_vehicle';   
-	echo '<input type="hidden" id="selected_accountid" value='.$account_id_local1.'>';
+	
   
  echo'<center>
 			<table border=0 width = 100% cellspacing=2 cellpadding=0>

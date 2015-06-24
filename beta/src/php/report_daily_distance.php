@@ -1,11 +1,10 @@
 <?php
+	echo"reportPrevPage##";
 	include_once("report_hierarchy_header.php");
-	$account_id_local1 = $_POST['account_id_local'];	
-	echo "<input type='hidden' id='selected_account_id' value=".$account_id_local1.">";
+	
+	$account_id_local1 = $_POST['account_id_local'];
 	$vehicle_display_option1 = $_POST['vehicle_display_option'];	
-	echo "<input type='hidden' id='s_vehicle_display_option' value=".$vehicle_display_option1.">";
-	$options_value1 = $_POST['options_value'];
-	echo "<input type='hidden' id='selected_options_value' value='".$options_value1."'>";  
+	$options_value1 = $_POST['options_value']; 
 
 	$options_value2=explode(",",$options_value1);			
 	$option_size=sizeof($options_value2);
@@ -15,7 +14,7 @@
 
   echo'	
     <center>
-
+    
     	<table border=0 width = 100% cellspacing=2 cellpadding=0>
 				<tr>
 					<td height=10 class="report_heading" align="center">Daily Distance Report</td>

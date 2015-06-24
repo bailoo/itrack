@@ -51,6 +51,7 @@
 	$result1 = mysql_query($query1,$DbConnection); 	
 	$Row1=mysql_fetch_row($result1);
 	$distance_variable1=$Row1[0];
+	$placename2="";
 	if(($lowest_dist <=$distance_variable1) && ($placename1!=""))
 	{
 		$placename2 = $lowest_dist." km from ".$placename1;	 

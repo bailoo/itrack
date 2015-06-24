@@ -11,7 +11,7 @@
 	
 	echo"map_selection_information##";
 	
-	echo "display_type=".$display_type."<br>";
+	//echo "display_type=".$display_type."<br>";
 
 	$group=array(array());
 	$group_cnt;
@@ -378,7 +378,7 @@ echo"<table border=1 cellspacing=0 rules='all' bordercolor='#A3AAFF' cellpadding
 		$user_type1=explode(",",$user_type);
 		for($i=0;$i<sizeof($user_type1);$i++)
 		{
-			echo "cat=".$category1."user=".$user_type1[$i]."<br>";
+			//echo "cat=".$category1."user=".$user_type1[$i]."<br>";
 			if($user_type1[$i]==$category1)
 			{
 				$flag=1;

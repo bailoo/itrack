@@ -35,7 +35,7 @@ function get_master_detail($account_id, $shift_time)
 			//echo "\nEVVVV";
 			$path = $dir."/".$file;
 
-			$row = 1;
+			$row = 0;
 			if (($handle = fopen($path, "r")) !== FALSE) 
 			{
 				while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
@@ -47,7 +47,7 @@ function get_master_detail($account_id, $shift_time)
 					// echo "data[8]=".$data[8] . "\n";
 					// echo "data[9]=".$data[9] . "\n";
 										
-					if($num<3)
+					if($num<6)
 					{
 						continue;
 					}
@@ -56,7 +56,7 @@ function get_master_detail($account_id, $shift_time)
 						$vehicle_input_ev[] = $data[4];				
 						$customer_input_ev[] = $data[5];
 						$transporter_input_ev[] = $data[6];				
-						//echo "<br>EVE::r=".$row." ,data[5]=".$data[5]." ,data[6]=".$data[6]." ,data[7]=".$data[7]." ,data[8]=".$data[8]." ,data[9]=".$data[9]."\n";
+						//echo "<br>EVE::r=".$row." ,data[4]=".$data[4]." ,data[5]=".$data[5]." ,data[6]=".$data[6]."\n";
 					} 					
 				}
 				fclose($handle);
@@ -70,6 +70,7 @@ function get_master_detail($account_id, $shift_time)
 	
 	//######## MAKE VEHICLE ROUTE MASTER
 	$vehicle_customer_write_path = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master/vehicle_customer#1#7.csv";
+	//echo "<br>VehicleCustomerWritePath=".$vehicle_customer_write_path;
 	//unlink($vehicle_customer_write_path_ev);
 	//$plant_customer_write_path_ev = "C:\\xampp/htdocs/sorting_motherdairy/evening_plant_customer#1#7.csv";
 	sort_station($vehicle_input_ev, $customer_input_ev, $transporter_input_ev, $vehicle_customer_write_path);
@@ -79,7 +80,7 @@ function get_master_detail($account_id, $shift_time)
 } //function closed
   
 
-function sort_station($vehicle_input, $customer_input,$vehicle_customer_write_path)	//SORT BY VEHICLE
+function sort_station($vehicle_input, $customer_input,$transporter_input, $vehicle_customer_write_path)	//SORT BY VEHICLE
 {
 	//echo "\nSORT STATION=".$plant_customer_write_path." ,size=".sizeof($customer_input)."\n";
 	for($x = 1; $x < sizeof($customer_input); $x++) 

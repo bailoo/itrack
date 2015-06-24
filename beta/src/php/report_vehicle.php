@@ -1,5 +1,9 @@
-<?php 
+<?php
+	echo"reportPrevPage##";
 	include_once("report_hierarchy_header.php");
+	include_once('util_session_variable.php');
+	include_once('user_type_setting.php');
+	//echo "reportType=".$report_type."<br>";
 	$account_id_local1 = $_POST['account_id_local'];	
 	$vehicle_display_option1 = $_POST['vehicle_display_option'];	
 	$options_value1 = $_POST['options_value'];
@@ -19,33 +23,34 @@
  
   echo'  
 	<center>
-  <table border=0 width = 100% cellspacing=2 cellpadding=0>
-		<tr>
-			<td height=10 class="report_heading" align="center">Vehicle Report</td>
-		</tr>
-	</table>
-						
-	<form  method="post" name="thisform">
-	
-	<br>								
-	<fieldset class="report_fieldset">
-		<legend>Select Vehicle</legend>		
-
-		<table border=0  cellspacing=0 cellpadding=0  width="100%">
+		<table border=0 width = 100% cellspacing=2 cellpadding=0>
 			<tr>
-				<td align="center">							
-					<div style="overflow: auto;height: 150px; width: 650px;" align="center">
-						<table border=0 cellspacing=0 cellpadding=0 align="center" width="100%">';																	
-						
-								  echo'<tr><td height="10px" align="center" colspan="6" class=\'text\'>&nbsp;<input type=\'checkbox\' name=\'all\' value=\'1\' onClick=\'javascript:select_all_vehicle(this.form);\'>&nbsp;&nbsp;Select All</td></tr>';                 
-                 $function_string($account_id_local1,$options_value1);
-														
-								echo'
-						</table>
-					</div>
+				<td height=10 class="report_heading" align="center">
+					Vehicle Report
 				</td>
 			</tr>
-		</table>
+		</table>	
+		<form  method="post" name="thisform">
+		<br>								
+		<fieldset class="report_fieldset">
+			<legend>
+				Select Vehicle
+			</legend>	
+			<table border=0  cellspacing=0 cellpadding=0  width="100%">
+				<tr>
+					<td align="center">							
+						<div style="overflow: auto;height: 150px; width: 650px;" align="center">
+							<table border=0 cellspacing=0 cellpadding=0 align="center" width="100%">';																	
+							
+									  echo'<tr><td height="10px" align="center" colspan="6" class=\'text\'>&nbsp;<input type=\'checkbox\' name=\'all\' value=\'1\' onClick=\'javascript:select_all_vehicle(this.form);\'>&nbsp;&nbsp;Select All</td></tr>';                 
+					 $function_string($account_id_local1,$options_value1);
+															
+									echo'
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
 	</fieldset>
 	<br>	
 	<fieldset class="report_fieldset">
@@ -54,37 +59,45 @@
 		<table border=0 width = 100% cellpadding=3 align="center">						
 			
 			<tr>			   
-				<td class="text" width=30% align="center" colspan="4">
-					<input type="checkbox" name="selectall" value="1" onClick="javascript:updateFields(this.form)">Select All
+				<td class="text" width=30% align="center" colspan="5">
+					<input type="checkbox" name="selectall" value="1" onClick="javascript:updateFields(this.form,\''.$report_type.'\')">Select All
 				</td>
 			</tr>
-			<tr><td colspan="3"></td></tr>
+			<tr><td colspan="5"></td></tr>
 			
 			<tr>	
-			  <td class="text" width=10%></td>
-				<td class="text" width=30%>
+			  <td class="text" width=2%></td>
+				<td class="text">
 					<input type="checkbox" name="voption[]" id="option1" value="1">Vehicle Name
 				</td>
-				<td class="text" width=30%>
+				<td class="text">
 					<input type="checkbox" name="voption[]" id="option2" value="2">IMEI No
-				</td>
-				<td class="text" width=30%>				
-					<input type="checkbox" name="voption[]" id="option3" value="3">Vehicle Number
-				</td>																	
+				</td>';
+				//echo "repot_type1=".$report_type."<br>";
+				if($report_type==trim("Vehicle"))
+				{
+				//echo "in if";				
+				echo'<td class="text">				
+						<input type="checkbox" name="voption[]" id="option3" value="3">Vehicle Number
+					</td>';
+				}
+				echo'<td class="text">				
+						<input type="checkbox" name="voption[]" id="option4" value="4">Mobile Number
+					</td>
 			</tr>
 				
 			<tr>
-				<td class="text" width=10%></td>
-				<td class="text" width=30%>
-					 <input type="checkbox" name="voption[]" id="option4" value="4">MaxSpeed
-				</td>				
-        <td class="text" width=30%>
-					 <input type="checkbox" name="voption[]" id="option5" value="5">Vehicle Type
-				</td>															
+				<td class="text" width=2%></td>
 				<td class="text">
-					 <input type="checkbox" name="voption[]" id="option6" value="6">Vehicle Tag
+					 <input type="checkbox" name="voption[]" id="option5" value="5">MaxSpeed
+				</td>				
+				<td class="text">
+					 <input type="checkbox" name="voption[]" id="option6" value="6">Vehicle Type
+				</td>															
+				<td class="text" colspan="2">
+					 <input type="checkbox" name="voption[]" id="option7" value="7">Vehicle Tag
 				</td>
-      </tr>		
+			</tr>		
        
        <!-- <tr>	       				
 				<td class="text" width=10%></td>
