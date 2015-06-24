@@ -94,13 +94,13 @@ public class report_turning_violation {
 					
 					angle = get_turning_angle(lat_start, lng_start, lat_middle, lng_middle, lat_end, lng_end);
 					//###############################
-					System.out.println("Angle="+angle+",lat_start="+lat_start+",lng_start="+lng_start+",lat_middle="+lat_middle+" ,lng_middle="+lng_middle+",lat_end="+lat_end+",lng_end="+lng_end);
+					//System.out.println("Angle="+angle+",lat_start="+lat_start+",lng_start="+lng_start+",lat_middle="+lat_middle+" ,lng_middle="+lng_middle+",lat_end="+lat_end+",lng_end="+lng_end);
 					
 					//if(angle > 30) {
-					//if(angle > 30) 
+					if( (angle > 30.0f) && (speed>1.0) ) 
 					{
 						
-						//System.out.println("Angle2="+angle);
+						System.out.println("Angle Found="+angle+" ,DeviceTime="+device_time);
 						IMEI_No.add(imei);
 						turningDeviceTime.add(devicetime_middle);
 						turningServerTime.add(sts_middle);

@@ -50,7 +50,7 @@ public class mysql_handler {
 	 	  init.max_speed.add(30.0f);
 	 	  init.device_imei_no.add("865733021562939");
 	 	  
-	 	  /*init.vehicle_id.add(20);
+	 	  init.vehicle_id.add(20);
 	 	  init.vehicle_name.add("test_hdfc2");
 	 	  init.max_speed.add(30.0f);
 	 	  init.device_imei_no.add("865733021569389");
@@ -58,7 +58,7 @@ public class mysql_handler {
 	 	  init.vehicle_id.add(30);
 	 	  init.vehicle_name.add("test_hdfc3");
 	 	  init.max_speed.add(30.0f);
-	 	  init.device_imei_no.add("865733021569173");*/	 	  
+	 	  init.device_imei_no.add("865733021569959"); 	  
  	 
  	  
 	   return null;

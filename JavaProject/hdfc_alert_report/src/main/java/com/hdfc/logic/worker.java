@@ -60,8 +60,10 @@ public class worker {
 //		previous_date1 = previous_day+" 00:00:00";
 //		previous_date2 = previous_day+" 23:59:59";
 		
-		previous_date1 = "2015-06-14 13:19:35";
-		previous_date2 = "2015-06-14 13:20:08";		
+		//previous_date1 = "2015-06-14 13:19:35";
+		//previous_date2 = "2015-06-14 13:20:08";	
+		previous_date1 = "2015-06-10 00:00:00";
+		previous_date2 = "2015-06-14 23:30:37";			
 				
 		System.out.println("AftergetVehicleInfo="+init.device_imei_no.size());
 		for(int i=0;i<(init.device_imei_no.size());i++) {			
@@ -143,7 +145,7 @@ public class worker {
 		{
 			TreeMap pMap1 = new TreeMap();
 			pMap1 = fullData.getPMap();
-			System.out.print("imei: "+fullData.getImei()+" ");
+			/*System.out.print("imei: "+fullData.getImei()+" ");
 			System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
 			System.out.print("server time: "+sdf.format(fullData.getSTime())+" ");
 			System.out.print("a: "+pMap1.get("a")+" ");
@@ -152,7 +154,7 @@ public class worker {
 			System.out.print("d: "+pMap1.get("d")+" ");
 			System.out.print("e: "+pMap1.get("e")+" ");
 			System.out.print("f: "+pMap1.get("f")+" ");
-			System.out.println();
+			System.out.println();*/
 				
 			//System.out.println("Lat="+fullData.pMap.get("d")+" ,Lng="+fullData.pMap.get("e"));
 			tmp_lat = (String) pMap1.get("d");
@@ -161,17 +163,18 @@ public class worker {
 			//System.out.println("Lat="+tmp_lat+" ,Lng="+tmp_lng);
 			if( (!tmp_lat.equals("")) && (!tmp_lng.equals("")) ) {
 					
-				/*System.out.print("imei: "+fullData.getImei()+" ");
+				System.out.print("imei: "+fullData.getImei()+" ");
 				System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
 				System.out.print("server time: "+sdf.format(fullData.getSTime())+" ");
-				System.out.print("a: "+fullData.pMap.get("a")+" ");
-				System.out.print("b: "+fullData.pMap.get("b")+" ");
-				System.out.print("c: "+fullData.pMap.get("c")+" ");
-				System.out.print("d: "+fullData.pMap.get("d")+" ");
-				System.out.print("e: "+fullData.pMap.get("e")+" ");
-				System.out.print("f: "+fullData.pMap.get("f")+" ");
-				System.out.println();*/		
+				System.out.print("a: "+pMap1.get("a")+" ");
+				System.out.print("b: "+pMap1.get("b")+" ");
+				System.out.print("c: "+pMap1.get("c")+" ");
+				System.out.print("d: "+pMap1.get("d")+" ");
+				System.out.print("e: "+pMap1.get("e")+" ");
+				System.out.print("f: "+pMap1.get("f")+" ");
+				System.out.println();	
 				
+				//System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
 				device_time = sdf.format(fullData.getDTime());
 				sts = sdf.format(fullData.getSTime());
 				tmp_lat = tmp_lat.substring(0,tmp_lat.length()-1);
@@ -232,7 +235,7 @@ public class worker {
 				tLongitude = report_turning_violation.turningLongitude.get(i);						
 				
 				line += tDeviceTime+q+tServerTime+q+tSpeed+q+tAngle+q+tLatitude+q+tLongitude+"\n";
-				System.out.println("filename="+filename+" ,line="+line);
+				//System.out.println("filename="+filename+" ,line="+line);
 			}
 		    
 			try {
