@@ -74,7 +74,7 @@ public class report_turning_violation {
 				}			
 				else if((start_flag==1) && (middle_flag==1)) { 	//END POINT
 
-					System.out.println("IMEI_END="+imei);
+					//System.out.println("IMEI_END="+imei);
 					lat_end = lat;						
 					lng_end = lng;
 					devicetime_end = device_time;

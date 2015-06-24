@@ -63,7 +63,9 @@ public class worker {
 		//previous_date1 = "2015-06-14 13:19:35";
 		//previous_date2 = "2015-06-14 13:20:08";	
 		previous_date1 = "2015-06-14 09:30:15";
-		previous_date2 = "2015-06-14 09:30:37";			
+		previous_date2 = "2015-06-14 09:30:37";
+//		previous_date1 = "2015-04-26 00:00:00";
+//		previous_date2 = "2015-06-15 23:59:00";		
 				
 		System.out.println("AftergetVehicleInfo="+init.device_imei_no.size());
 		for(int i=0;i<(init.device_imei_no.size());i++) {			
@@ -89,7 +91,7 @@ public class worker {
 			report_turning_violation.start_flag = 0;
 			report_turning_violation.middle_flag = 0;
 			
-			System.out.println("Device="+init.device_imei_no.get(i));
+			//System.out.println("Device="+init.device_imei_no.get(i));
 			pull_and_process_data(init.vehicle_name.get(i), init.max_speed.get(i), init.device_imei_no.get(i), previous_date1, previous_date2);
 			
 			//### PUSH ::DISTANCE REPORT :: ARRAYLIST TO CASSANDRA
@@ -110,7 +112,7 @@ public class worker {
 		    report_distance.TotalDistance.clear();
 		    report_distance.AlertTime.clear();*/
 			//###### TEMPORARY WRITE
-			System.out.println("CALL="+i);
+			//System.out.println("CALL="+i);
 			write_to_database(init.device_imei_no.get(i));
 		}
 		
@@ -136,7 +138,10 @@ public class worker {
 				
 		Boolean deviceTime = true;	// true for device time index, otherwise server time
 		Boolean orderAsc = true;	// true for ascending , otherwise descending (default) 
+
+
 		ArrayList<FullData> fullDataList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, deviceTime, orderAsc);
+
 		String tmp_lat ="", tmp_lng="";
 		int data_size = fullDataList.size();
 		int record_count =1;
@@ -163,7 +168,7 @@ public class worker {
 			//System.out.println("Lat="+tmp_lat+" ,Lng="+tmp_lng);
 			if( (!tmp_lat.equals("")) && (!tmp_lng.equals("")) ) {
 					
-				System.out.print("imei: "+fullData.getImei()+" ");
+				/*System.out.print("imei: "+fullData.getImei()+" ");
 				System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
 				System.out.print("server time: "+sdf.format(fullData.getSTime())+" ");
 				System.out.print("a: "+pMap1.get("a")+" ");
@@ -172,9 +177,9 @@ public class worker {
 				System.out.print("d: "+pMap1.get("d")+" ");
 				System.out.print("e: "+pMap1.get("e")+" ");
 				System.out.print("f: "+pMap1.get("f")+" ");
-				System.out.println();	
+				System.out.println();*/	
 				
-				//System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
+				System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
 				device_time = sdf.format(fullData.getDTime());
 				sts = sdf.format(fullData.getSTime());
 				tmp_lat = tmp_lat.substring(0,tmp_lat.length()-1);
