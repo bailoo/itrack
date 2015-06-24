@@ -130,12 +130,12 @@ public class FullDataDao {
 		LocalDate sDate = new LocalDate();
 		LocalDate eDate = new LocalDate();
 		long sEpoch=0, eEpoch=0;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 		try {	
 			sDate = LocalDate.parse(startDateTime.substring(0,10));
 			eDate = LocalDate.parse(endDateTime.substring(0,10));
-			sEpoch = sdf.parse(startDateTime).getTime();
-			eEpoch = sdf.parse(endDateTime).getTime();
+			sEpoch = sdf.parse(startDateTime+"+0530").getTime();
+			eEpoch = sdf.parse(endDateTime+"+0530").getTime();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
