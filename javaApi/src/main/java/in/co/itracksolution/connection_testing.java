@@ -59,40 +59,15 @@ public class connection_testing
 
 	public static void main(String[] args) 
 	{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		SampleFullDataQuery st = new SampleFullDataQuery();
-			
-		for(int i=0;i<1000;i++) {
+		for(int i=0;i<=9999;i++) {
 			try{
+				SampleFullDataQuery st = new SampleFullDataQuery();
 				FullDataDao dao = new FullDataDao(st.conn.getSession());
-				System.out.println("connection established");
-			} catch(Exception e){System.out.println("i="+i+" Msg="+e.getMessage());}
+				System.out.println("connection open"+i);
+				st.close();
+				System.out.println("connection closed"+i);
+			} catch(Exception e){System.out.println("FAILED i="+i+" Msg="+e.getMessage());}
 		}
 		
-		/*String imei = "865733021562939"; //Make sure this imei exists
-		String startDateTime = "2015-06-14 13:19:13";
-		String endDateTime = "2015-06-14 13:20:30";
-		//true for dtime, false for stime
-		Boolean deviceTime = true;	// true for device time index, otherwise server time
-		Boolean orderAsc = false;	// true for ascending , otherwise descending (default) 
-		ArrayList<FullData> fullDataList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, deviceTime, orderAsc);
-
-		for (FullData fullData : fullDataList)
-		{
-			System.out.print("imei: "+fullData.getImei()+" ");
-			System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
-			System.out.print("server time: "+sdf.format(fullData.getSTime())+" ");
-			TreeMap pMap1 = new TreeMap();
-			pMap1 = fullData.getPMap(); 
-			System.out.print("a: "+pMap1.get("a")+" ");
-			System.out.print("b: "+pMap1.get("b")+" ");
-			System.out.print("c: "+pMap1.get("c")+" ");
-			System.out.print("d: "+pMap1.get("d")+" ");
-			System.out.print("e: "+pMap1.get("e")+" ");
-			System.out.print("f: "+pMap1.get("f")+" ");
-			System.out.println();
-		}*/
-
-		st.close();
 	}
 }
