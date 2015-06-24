@@ -91,69 +91,43 @@ public class SpeedAlertDao {
 		session.execute(boundStatement.bind(data.getImei(), data.getDate(), data.getDTime()));
 	}
 	
-	public ArrayList<SpeedAlert> getSpeedAlert(String imei, String date, boolean orderAsc)
+	private ArrayList<speedAlert> getSpeedAlertList(List<Row> rowList)
 	{
-		BoundStatement boundStatement = new BoundStatement(getSpeedAlertByDateStatement);
-		ResultSet rs = session.execute(boundStatement.bind(imei, date));
-		List<Row> rowList = rs.all();
-	
-		SpeedAlert speedAlert = new SpeedAlert();
 		ArrayList<SpeedAlert> speedAlertList = new ArrayList<SpeedAlert>();
-
-		List<Row> rowListOrdered = (orderAsc)?Lists.reverse(rowList):rowList;
-		for (Row row : rowListOrdered)
+		SpeedAlert speedAlert = new SpeedAlert();
+		
+		for (Row row : rowList)
 		{
 			speedAlert.setImei(row.getString("imei"));
 			speedAlert.setDate(row.getString("date"));
 			speedAlert.setDTime(row.getDate("dtime"));
 			speedAlert.setSTime(row.getDate("stime"));
-				row.getSpeed(speed),
-				row.getLocation(location),
-				row.getLattitude(lattitude),
-				row.getLongitude(longitude),
-				row.getRoadId(roadid),
-				row.getLogTime(logtime)
-			
-			data = row.getString("data");
-			//System.out.println("dtime = "+speedAlert.getDTime());
-			tokens = data.split(DELIMITER);
-		
-			TreeMap pMap1 = new TreeMap();
-			int i = 0;
-			for(String token : tokens)
-			{
-				pMap1.put(speedAlert.fullParams[i++], token);
-			}
-			speedAlert.setPMap(pMap1);
+			speedAlert.setSpeed(row.getSpeed("speed"));
+			speedAlert.setLocation(row.getLocation("location"));
+			speedAlert.setLattitude(row.getLattitude("lattitude"));
+			speedAlert.setLongitude(row.getLongitude("longitude"));
+			speedAlert.setRoadId(row.getRoadId("roadid"));
+			speedAlert.setLogTime(row.getLogTime("logtime"));
+	
+			/* now add speedAlert object to the list */		
 			speedAlertList.add(new SpeedAlert(speedAlert));
 		}
-
+		
 		return speedAlertList;
 	}
-	
-	public ArrayList<SpeedAlert> getSpeedAlert(String imei, String startDateTime, String endDateTime, Boolean deviceTime, Boolean orderAsc)
-	{
-		BoundStatement boundStatement = (deviceTime)?new BoundStatement(selectbyImeiAndDateTimeSliceStatement1):new BoundStatement(selectbyImeiAndDateTimeSliceStatement2);
-		ArrayList dateList = new ArrayList();
 
+	private ArrayList getDateList(String startDateTime, String endDateTime)
+	{
 		int days = 1;
 		LocalDate sDate = new LocalDate();
 		LocalDate eDate = new LocalDate();
-		long sEpoch=0, eEpoch=0;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {	
 			sDate = LocalDate.parse(startDateTime.substring(0,10));
 			eDate = LocalDate.parse(endDateTime.substring(0,10));
-			sEpoch = sdf.parse(startDateTime).getTime();
-			eEpoch = sdf.parse(endDateTime).getTime();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		Date sDateTime = new Date(sEpoch); // TODO TimeZone
-		Date eDateTime = new Date(eEpoch);
-		//System.out.println("sDateTime = "+sdf.format(sDateTime));
-		//System.out.println("eDateTime = "+sdf.format(eDateTime));
 
 		days = Days.daysBetween(sDate, eDate).getDays();
 		for (int i=0; i<days+1; i++)
@@ -163,6 +137,44 @@ public class SpeedAlertDao {
 		}	
 
 		//System.out.println(dateList);
+
+	}
+
+	public ArrayList<SpeedAlert> getSpeedAlert(String imei, String date, boolean orderAsc)
+	{
+		BoundStatement boundStatement = new BoundStatement(getSpeedAlertByDateStatement);
+		ResultSet rs = session.execute(boundStatement.bind(imei, date));
+		List<Row> rowList = rs.all();
+		List<Row> rowListOrdered = (orderAsc)?Lists.reverse(rowList):rowList;
+	
+		ArrayList<SpeedAlert> speedAlertList = new ArrayList<SpeedAlert>();
+		speedAlertList =  getSpeedAlertList(rowListOrdered);
+
+		return speedAlertList;
+	}
+	
+	public ArrayList<SpeedAlert> getSpeedAlert(String imei, String startDateTime, String endDateTime, Boolean orderAsc)
+	{
+		BoundStatement boundStatement = new BoundStatement(getSpeedAlertByDateTimeStatement);
+		ArrayList dateList = new ArrayList();
+		dateList = getDateList(startDateTime, endDateTime)
+
+		long sEpoch=0, eEpoch=0;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {	
+			sEpoch = sdf.parse(startDateTime+"+0530").getTime();
+			eEpoch = sdf.parse(endDateTime+"+0530").getTime();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		Date sDateTime = new Date(sEpoch); // TODO TimeZone
+		Date eDateTime = new Date(eEpoch);
+		//System.out.println("sDateTime = "+sdf.format(sDateTime));
+		//System.out.println("eDateTime = "+sdf.format(eDateTime));
+	
+		private ArrayList getDateList(String startDateTime, String endDateTime)
+
 		ResultSet rs = session.execute(boundStatement.bind(imei, dateList, sDateTime, eDateTime));
 		List<Row> rowList = rs.all();
 	
