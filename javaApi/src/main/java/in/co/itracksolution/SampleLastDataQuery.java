@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.Properties;
@@ -53,6 +54,9 @@ public class SampleLastDataQuery {
 	public static void main(String[] args) {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		TimeZone tz = TimeZone.getTimeZone("Asia/Kolkata");
+		sdf.setTimeZone(tz);	
+
 		LastData data = new LastData();
 		
 		SampleLastDataQuery st = new SampleLastDataQuery();
