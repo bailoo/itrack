@@ -12,8 +12,8 @@ $transporter_input_ev = array();
 function get_master_detail($account_id, $shift_time)
 {
 	echo "<br>ShiftTime=".$shift_time;
-	$abspath = "/var/www/html/vts/test/src/php/gps_report";
-	//$abspath = "/var/www/html/vts/beta/src/php/gps_report";
+	//$abspath = "/var/www/html/vts/test/src/php/gps_report";
+	$abspath = "/var/www/html/vts/beta/src/php/gps_report";
 	//$abspath = "D:\\test_app/gps_report";
 	
 	$tpt_path_ev = $abspath."/".$account_id."/master/tpt_ev#1#20.csv";	
@@ -34,7 +34,7 @@ function get_master_detail($account_id, $shift_time)
 	//$dir = "C:\\xampp/htdocs/sorting_motherdairy";	
 	//$dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";
 	$dir = $abspath."/".$account_id."/master";
-	echo "<br>Dir=".$dir;
+	//echo "<br>Dir=".$dir;
 
 	//######### GET PLANT MASTER
 
@@ -44,7 +44,7 @@ function get_master_detail($account_id, $shift_time)
                 $file_tmp = explode("#",$file);
                 $file_ext = explode(".",$file_tmp[2]);
 
-                echo "<br>file_ext[0]=".$file_ext[0]." ,shift_time=".$shift_time;
+                //echo "<br>file_ext[0]=".$file_ext[0]." ,shift_time=".$shift_time;
 
                 if($file_ext[0] == "2")
                 {
@@ -68,7 +68,9 @@ function get_master_detail($account_id, $shift_time)
 						}
 						if($row > 2)
 						{
-							$plant_master[$data[0]] = $data[1];											
+							$plant_master[$data[0]] = $data[1];
+                                                        $route_type_plant[$data[0]] = $data[5];
+                                                        //echo "<br>RouteType=".$route_type_plant[$data[0]];
 						}
 					}
 
@@ -94,7 +96,7 @@ function get_master_detail($account_id, $shift_time)
 		$file_tmp = explode("#",$file);
 		$file_ext = explode(".",$file_tmp[2]);
 		
-		echo "<br>file_ext[0]=".$file_ext[0]." ,shift_time=".$shift_time;  		
+		//echo "<br>file_ext[0]=".$file_ext[0]." ,shift_time=".$shift_time;  		
 		
 		if( ($file_ext[0] == "9") && ($shift_time=="ZBVE") )
 		{			
@@ -157,7 +159,8 @@ function get_master_detail($account_id, $shift_time)
 						if($row > 1)
 						{						
 							$route_input_billing_ev[] = $data[1];
-							$customer_input_billing_ev[] = $data[2];																
+							$customer_input_billing_ev[] = $data[2];
+                                                        $route_type_input_billing_ev[] = $route_type_plant[$data[1]];
 							//echo "\nEVE:9:r=".$row." ,data[1]=".$data[1]." ,data[2]=".$data[2]."\n";
 						} 					
 					}
@@ -169,7 +172,7 @@ function get_master_detail($account_id, $shift_time)
      
 		if( ($file_ext[0] == "10") && ($shift_time=="ZBVM") )			//###### MORNING FILE
 		{
-			echo "<br>MorningFile: file_ext=".$file_tmp[1];
+			//echo "<br>MorningFile: file_ext=".$file_tmp[1];
 			
 			if( ($file_tmp[1] == "1") && (!$read_ten1) )		//###### DISTANCE BVM -MORNING FILE
 			{
@@ -220,7 +223,8 @@ function get_master_detail($account_id, $shift_time)
 						if($row > 1)
 						{				
 							$route_input_billing_mor[] = $data[1];
-							$customer_input_billing_mor[] = $data[2];																
+							$customer_input_billing_mor[] = $data[2];
+                                                        $route_type_input_billing_mor[] = $route_type_plant[$data[1]];
 							//echo "\nMOR::r=".$row." ,data[5]=".$data[5]." ,data[9]=".$data[9]."\n";
 						}											
 					}
@@ -247,7 +251,6 @@ function get_master_detail($account_id, $shift_time)
 		//echo "<br>Size:Customer_InputBilling=".sizeof($customer_input_billing_ev);
 		//echo "<br>Size:Vehicle_InputDistance=".sizeof($vehicle_input_distance_ev);
 
-//######## COMMENT FOR TESTING
 		for($i=0;$i<sizeof($customer_input_billing_ev);$i++)
 		{			
 			for($j=0;$j<sizeof($vehicle_input_distance_ev);$j++)
@@ -260,32 +263,12 @@ function get_master_detail($account_id, $shift_time)
 					$vehicle_input_db_ev[] = $vehicle_input_distance_ev[$j];
 					$route_input_db_ev[] = $route_input_billing_ev[$i];
 					$plant_input_ev[] = $plant_master_ev[$j];
-					$route_input_type_ev[] = "-";
-					//break;
+					$route_input_type_ev[] = $route_type_input_billing_ev[$i];
+					break;
 				}
 			}
 		}
-
-/*
-				for($j=0;$j<sizeof($vehicle_input_distance_ev);$j++)
-				{
-					for($i=0;$i<sizeof($customer_input_billing_ev);$i++)
-					{
-						if((trim($route_input_distance_ev[$j])==trim($route_input_billing_ev[$i])) && ($route_input_distance_ev[$j]!=""))
-						{
-								$customer_input_ev[] = $customer_input_billing_ev[$i];
-								$route_input_ev[] = $route_input_billing_ev[$i];
-								$transporter_input_ev[] = $tranporter_input_distance_ev[$j];
-								$vehicle_input_db_ev[] = $vehicle_input_distance_ev[$j];
-								$route_input_db_ev[] = $route_input_billing_ev[$i];
-								$plant_input_ev[] = $plant_master_ev[$j];
-								$route_input_type_ev[] = "-";
-								break;
-						}
-                    }
-
-                }
-*/		
+		
 		//echo "<br>BS:SizeCustomerInputEv=".sizeof($customer_input_ev);
 		//####### SORT BY VEHICLE -VEHICLE_INPUT_EV
 		sort_all_vehicles($shift_time);
@@ -331,9 +314,9 @@ function get_master_detail($account_id, $shift_time)
 		fwrite($file,$linetowrite);
 		fclose($file);
 
-		$lines = file($master_db_path);
-		$lines = array_unique($lines);
-		file_put_contents($master_db_path, implode($lines));
+                //$lines = file($master_db_path);
+                //$lines = array_unique($lines);
+                //file_put_contents($master_db_path, implode($lines));
 
 		//######### MASTER DB FILE CLOSED
 		
@@ -389,10 +372,8 @@ function get_master_detail($account_id, $shift_time)
 		$customer_input_billing_mor[] = $data[2];*/
 		//echo "<br>SizeCustomerBilling_MOR=".sizeof($customer_input_billing_mor);
 		//echo "<br>SizeVehicleInputDistance_MOR=".sizeof($vehicle_input_distance_mor);
-
-		//######### TEST_COMMON
-
-		/*for($i=0;$i<sizeof($customer_input_billing_mor);$i++)
+		
+		for($i=0;$i<sizeof($customer_input_billing_mor);$i++)
 		{
 			for($j=0;$j<sizeof($vehicle_input_distance_mor);$j++)
 			{
@@ -404,29 +385,11 @@ function get_master_detail($account_id, $shift_time)
 					$vehicle_input_db_mor[] = $vehicle_input_distance_mor[$j];
 					$route_input_db_mor[] = $route_input_billing_mor[$i];
 					$plant_input_mor[] = $plant_master_mor[$j];
-					$route_input_type_mor[] = "-";
+					$route_input_type_mor[] = $route_type_input_billing_mor[$i];
 					break;
 				}
 			}
-		}*/
-
-		for($j=0;$j<sizeof($vehicle_input_distance_mor);$j++)
-		{				
-			for($i=0;$i<sizeof($customer_input_billing_mor);$i++)
-			{
-				if((trim($route_input_distance_mor[$j])==trim($route_input_billing_mor[$i])) && ($route_input_distance_mor[$j]!=""))
-				{
-					$customer_input_mor[] = $customer_input_billing_mor[$i];
-					$route_input_mor[] = $route_input_billing_mor[$i];
-					$transporter_input_mor[] = $tranporter_input_distance_mor[$j];
-					$vehicle_input_db_mor[] = $vehicle_input_distance_mor[$j];
-					$route_input_db_mor[] = $route_input_billing_mor[$i];
-					$plant_input_mor[] = $plant_master_mor[$j];
-					$route_input_type_mor[] = "-";
-					//break;
-				}
-                    	}
-                }
+		}
 		
 		//echo "<br>BS:Size:vehicle_input_db_mor=".sizeof($vehicle_input_db_mor);
 		//####### SORT BY VEHICLE -VEHICLE_INPUT_MOR
@@ -465,13 +428,12 @@ function get_master_detail($account_id, $shift_time)
 		if(file_exists($master_db_path)) unlink($master_db_path);
 		$file = fopen($master_db_path,"w");
 		fwrite($file,$linetowrite);
-		fclose($file);	
+		fclose($file);		
 
+                //$lines = file($master_db_path);
+                //$lines = array_unique($lines);
+                //file_put_contents($master_db_path, implode($lines));
 
-                $lines = file($master_db_path);
-                $lines = array_unique($lines);
-                file_put_contents($master_db_path, implode($lines));
-	
 		//######### MASTER DB FILE CLOSED
 		
 		//######### MAKE TRANSPORTER FILE

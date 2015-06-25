@@ -1,6 +1,7 @@
 <?php
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');
+	 include_once("util_account_detail.php");
 	$account_id_local=$_POST['setting_account_id'];
 	$tmp = explode(',',$account_id_local);
 	//echo $tmp[0].','.$tmp[1].'<BR>';
@@ -8,6 +9,7 @@
 	$group_id1 = $tmp[1];
   
 	$query1="SELECT password FROM account WHERE account_id='$account_id_local'";
+//echo $query1;
 	$result1=mysql_query($query1,$DbConnection);
 	$row1=mysql_fetch_object($result1);
   echo'<form method = "post"  name="setting">
@@ -46,5 +48,9 @@
 		</tr>
     </table>
   </form>';
-  echo'<center><a href="javascript:show_option(\'setting\',\'account_password_prev\');" class="back_css">&nbsp;<b>Back</b></a></center>';
+  if($user_type=="raw_milk" || $user_type=='substation' || $user_type=='plant_raw_milk'){
+  }
+  else{
+	echo'<center><a href="javascript:show_option(\'setting\',\'account_password_prev\');" class="back_css">&nbsp;<b>Back</b></a></center>';
+  }
 ?>

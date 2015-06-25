@@ -78,6 +78,8 @@ var angle_prev = new Array();
 var trail_flag = false;
 var route_div_flag = 0;
 
+var http_request_this=false;
+
 function select_all_routes()
 {	
 	var obj1 = document.forms[0];
@@ -1091,7 +1093,7 @@ function Load_MovingData_Map(startdate,enddate,pt_for_zoom,zoom_level,status)
   		 //alert('check');
         var date = new Date();
         // COPY ORIGINAL XML FILE        
-        var dest = "../../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml"
+        var dest = "../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml"
        
         dmode = 1; 
         thisdest = dest;        
@@ -2636,6 +2638,7 @@ function PlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed
 	//}
 	//else
 	//{
+       // alert("str="+str);
 		var strURL="src/php/select_landmark_marker.php?content="+str;
 	//}
 
@@ -3049,16 +3052,21 @@ function mapIWClose()
 
 function getXMLHTTP()
 {
-	http_request=false;
+    //alert("test");
+	http_request_this=false;
+        //alert("test1");
 	if (window.XMLHttpRequest)
 	{
-		http_request = new XMLHttpRequest();
+		http_request_this = new XMLHttpRequest();
+               // alert("test2");
 	} 
 	else if (window.ActiveXObject) 
 	{
-		http_request = new ActiveXObject("Microsoft.XMLHTTP");
+		http_request_this = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-	return http_request;
+        //alert("test3");
+	return http_request_this;
+         //alert("test4");
 }
 
 
@@ -3286,7 +3294,7 @@ function checkbox_selection(obj)
        if (http_request.status == 200) 
        {
           result = http_request.responseText;
-          alert("result="+result);
+          //alert("result="+result);
        }
     }
   } 

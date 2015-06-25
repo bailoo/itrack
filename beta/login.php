@@ -47,7 +47,7 @@
 	if ($DEBUG) print_query($query);
 	$result = mysql_query($query, $DbConnection);
 	$count = mysql_num_rows($result);	
-	//echo"count=".$count;
+	// echo"count=".$count;
 
 	if($count <= 0)
 	{
@@ -90,9 +90,13 @@
 					include_once("src/php/wockhardt_map_location.php");
 				}
 				$_SESSION['account_id'] = $account_id;
-				include_once("src/php/client_map_feature.php");
+				
 				include_once("src/php/util_account_detail.php");
+				//echo "DEBUG1<br>";
+				include_once("src/php/client_map_feature.php");
+				//echo "DEBUG2<br>";
 				include_once('src/php/tree_hierarchy.php');
+				//echo "DEBUG3<br>";
 				$group_cnt=0;		
 				$final_group_array=GetGroup_3($root,$DbConnection);
 				//echo "size=".sizeof($final_group_array);
@@ -109,12 +113,13 @@
 					}
 					else
 					{
+						//echo "DEBUG4<br>";					
 						  $re_url = "home.htm";
+						//echo "DEBUG5<br>";
 					}
 				}
 			}
 		}
-		//echo "re_url=".$re_url."<br>";
 	}
 	if($suspend_status==1)
 	{
@@ -186,12 +191,13 @@
 			if ($DEBUG) print_query($query);
 			$result = mysql_query($query, $DbConnection);
 
-			$row = mysql_fetch_object($result);
+			$row = mysql_fetch_object($result);*/
 			$log_id = $row->log_id;
-			$_SESSION['log_id'] = $log_id; */
+			$_SESSION['log_id'] = $log_id; 
 
 			//echo "size=".sizeof($final_group_array);					
-			echo"<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=".$re_url."\">";				
+			//echo "<br>URL=".$re_url;
+			echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=".$re_url."\">";				
 		}
 	}
 ?>

@@ -2,7 +2,12 @@
 	include_once('Hierarchy.php');
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');
-	
+	include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+        include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
+    
+        $o_cassandra = new Cassandra();	
+        $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+
 	$query1="SELECT vehicle_color from account_preference WHERE account_id='$account_id'";
 	$result1=mysql_query($query1,$DbConnection);
 	$row1=mysql_fetch_object($result1);
@@ -70,7 +75,7 @@
 	$today_date2 = str_replace("/","-",$today_date1);	
 	
 	echo "live_show_vehicle##";	
-	
+	 $logDate=date('Y-m-d');
 	echo"<table border=0 cellspacing=0 cellpadding=0 class='module_left_menu'>";
 		if($display_type=="default" || $display_type=="single")
 		{ 
@@ -175,105 +180,105 @@
   
 	function show_all_vehicle($AccountNode,$account_id_local,$category1)
 	{
-		global $today_date2;
-		global $vcolor1;
-		global $vcolor2;
-		global $vcolor3;
-		
-		//echo "cat:".$category1;
-		//echo $vcolor1.":".$vcolor2.":".$vcolor3;
-		 
-		$user_type_local=$AccountNode ->data-> AccountType;
-		$account_name=$AccountNode->data->AccountName;
-		$vehicle_name_arr=array();
-		$imei_arr=array();
-		$vehicle_color=array();
-		$veh_flag=1; 
-		  
-    //echo "<br>vcnt=".$AccountNode->data->VehicleCnt;
-    
-if($AccountNode ->data-> AccountUserType!="substation" && $AccountNode ->data-> AccountUserType!="raw_milk" && $AccountNode ->data-> AccountUserType!="plant_raw_milk" && $AccountNode ->data-> AccountUserType!="hindalco_invoice")
-{
+            global $today_date2;
+            global $vcolor1;
+            global $vcolor2;
+            global $vcolor3;
+            global $o_cassandra;
+            //var_dump($o_cassandra);
+            global $logDate;
 
-    for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)   ///////this is for show root vehicle of any account /////////
-	{				
-			//echo "<br>vcat=".$AccountNode->data->VehicleCategory[$j]." ,cat1=".$category1;
-			
-      if($AccountNode->data->VehicleCategory[$j]==$category1)
-	  {
-        $veh_flag=0;					
-				$vehicle_id = $AccountNode->data->VehicleID[$j];
-				$vehicle_name = $AccountNode->data->VehicleName[$j];
-				$vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
-				$iovalueandtypearr = $AccountNode->data->DeviceIOTypeValue[$j];
-				$tmp_iotype_str="";
-				if(count($iovalueandtypearr)>0)
-				{
-					$tmp_iotype_str="*".$iovalueandtypearr[$vehicle_imei];
-				}
-				else
-				{
-					$tmp_iotype_str="*tmp_str";
-				}
-				//$vehicle_ldt = $AccountNode->data->Vehicle_LDT[$j];
-				//if($vehicle_ldt=="") $vehicle_ldt="NA";
+            //echo "cat:".$category1;
+            //echo $vcolor1.":".$vcolor2.":".$vcolor3;
+
+            $user_type_local=$AccountNode ->data-> AccountType;
+            $account_name=$AccountNode->data->AccountName;
+            $vehicle_name_arr=array();
+            $imei_arr=array();
+            $vehicle_color=array();
+            $veh_flag=1; 
+            //echo "<br>vcnt=".$AccountNode->data->VehicleCnt;    
+            if($AccountNode ->data-> AccountUserType!="substation" && $AccountNode ->data-> AccountUserType!="raw_milk" && $AccountNode ->data-> AccountUserType!="plant_raw_milk" && $AccountNode ->data-> AccountUserType!="hindalco_invoice")
+            {
+                for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)   ///////this is for show root vehicle of any account /////////
+                {				
+                    //echo "<br>vcat=".$AccountNode->data->VehicleCategory[$j]." ,cat1=".$category1;
+                    if($AccountNode->data->VehicleCategory[$j]==$category1)
+                    {
+                        $veh_flag=0;					
+                        $vehicle_id = $AccountNode->data->VehicleID[$j];
+                        $vehicle_name = $AccountNode->data->VehicleName[$j];
+                        $vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
+                        $iovalueandtypearr = $AccountNode->data->DeviceIOTypeValue[$j];
+                        $tmp_iotype_str="";
+                        if(count($iovalueandtypearr)>0)
+                        {
+                            $tmp_iotype_str="*".$iovalueandtypearr[$vehicle_imei];
+                        }
+                        else
+                        {
+                            $tmp_iotype_str="*tmp_str";
+                        }
+                        //$vehicle_ldt = $AccountNode->data->Vehicle_LDT[$j];
+                        //if($vehicle_ldt=="") $vehicle_ldt="NA";
 				
-				if($vehicle_id!=null)
-				{
-					for($i=0;$i<$vehicle_cnt;$i++)
-					{
-						if($vehicleid[$i]==$vehicle_id)
-						{
-							break;
-						}
-					}			
-					if($i>=$vehicle_cnt)
-					{
-						$vehicleid[$vehicle_cnt]=$vehicle_id;
-						$vehicle_cnt++; 					
-						$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-  					if (file_exists($xml_current))
-  					{
-  					 //$color="green";
-  					 $color= $vcolor2;
-  					 $vehicle_name_arr[$color][] =$vehicle_name; 
-  					 $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
-  					}
-  					else
-  					{
-              //$color="gray";
-              $color= $vcolor3;      					  
-  						$vehicle_name_arr[$color][] =$vehicle_name; 
-  					  $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
-  					}
-					}
-				}
-			}
+                        if($vehicle_id!=null)
+                        {
+                            for($i=0;$i<$vehicle_cnt;$i++)
+                            {
+                                if($vehicleid[$i]==$vehicle_id)
+                                {
+                                        break;
+                                }
+                            }			
+                            if($i>=$vehicle_cnt)
+                            {
+                                $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                $vehicleid[$vehicle_cnt]=$vehicle_id;
+                                $vehicle_cnt++; 					
+                                //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
+                                //if(file_exists($xml_current))
+                                if ($logResult!='')
+                                {
+                                    //$color="green";
+                                    $color= $vcolor2;
+                                    $vehicle_name_arr[$color][] =$vehicle_name; 
+                                    $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                }
+                                else
+                                {
+                                    //$color="gray";
+                                    $color= $vcolor3;      					  
+                                    $vehicle_name_arr[$color][] =$vehicle_name; 
+                                    $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                }
+                            }
+                        }
+                    }
 		}
 		if($veh_flag==0)
 		{
-		 echo' <tr>
-        <td colspan="2">
-          <font color="'.$vcolor1.'">'.$account_name.'</font> 
-        </td>
-      </tr>';
-      $grn_cnt=sizeof($vehicle_name_arr[$vcolor2]);
-      //echo "sixe_of_green_vehicle=".$grn_cnt."<br>";
-      $gry_cnt=sizeof($vehicle_name_arr[$vcolor3]);
-     // echo "size_of_gray_vehicle=".$gry_cnt."<br>";	  
-      active_inactive_count($grn_cnt,$gry_cnt);
-      //echo "<br>color:".$color;  
-		 $color=$vcolor2;common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color); 
-     $color=$vcolor3; common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
-     
-      //show_live_vehicles_prev($imei_arr, $v_ldt_arr, $vehicle_name_arr);        
+                echo'<tr>
+                        <td colspan="2">
+                            <font color="'.$vcolor1.'">'.$account_name.'</font> 
+                        </td>
+                    </tr>';
+                    $grn_cnt=sizeof($vehicle_name_arr[$vcolor2]);
+                    //echo "sixe_of_green_vehicle=".$grn_cnt."<br>";
+                    $gry_cnt=sizeof($vehicle_name_arr[$vcolor3]);
+                   // echo "size_of_gray_vehicle=".$gry_cnt."<br>";	  
+                    active_inactive_count($grn_cnt,$gry_cnt);
+                    //echo "<br>color:".$color;  
+                    $color=$vcolor2;common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color); 
+                    $color=$vcolor3; common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
+                    //show_live_vehicles_prev($imei_arr, $v_ldt_arr, $vehicle_name_arr);        
 		}
-    $ChildCount=$AccountNode->ChildCnt;
+                $ChildCount=$AccountNode->ChildCnt;
 		for($i=0;$i<$ChildCount;$i++)   /////////////this is for show child vehicle only ///////////
 		{    
-			show_all_vehicle($AccountNode->child[$i],$account_id_local,$category1);
+                    show_all_vehicle($AccountNode->child[$i],$account_id_local,$category1);
 		}
-	} 
+            } 
 	}
 	
 	function get_group($AccountNode,$div_option_values,$category1)
@@ -303,89 +308,94 @@ if($AccountNode ->data-> AccountUserType!="substation" && $AccountNode ->data-> 
 	}
 	function print_count($AccountNode,$cmd,$category1,&$green_cnt1,&$gray_cnt1,$type)
 	{
-		//echo "in print group<br>";
-		global $vehicleid;
-		global $vehicle_cnt;
-		global $today_date2;
+            //echo "in print group<br>";
+            global $vehicleid;
+            global $vehicle_cnt;
+            global $today_date2;
+            global $o_cassandra;
+            //var_dump($o_cassandra);
+            global $logDate;
 
-		if($type=="group")
-		{
-			$cmd_local=$AccountNode->data->AccountGroupID;
-		}
-		else if($type=="user")
-		{
-			$cmd_local=$AccountNode->data->AccountID;
-		} 
-		/* else if($type=="vehicle_tag")
-		{
+            if($type=="group")
+            {
+                $cmd_local=$AccountNode->data->AccountGroupID;
+            }
+            else if($type=="user")
+            {
+                $cmd_local=$AccountNode->data->AccountID;
+            } 
+            /* else if($type=="vehicle_tag")
+            {
 
-		}
-		else if($type=="vehicle_type")
-		{
+            }
+            else if($type=="vehicle_type")
+            {
 
-		} */
-		//echo"greencnt=".$green_cnt."gray_cnt=".$gray_cnt."<br>"; 
+            } */
+            //echo"greencnt=".$green_cnt."gray_cnt=".$gray_cnt."<br>"; 
    	
-		if($cmd_local==$cmd)
-		{ 		  
-			for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
-			{
-				if($AccountNode->data->VehicleCategory[$j]==$category1)
-				{ 			  
-					$vehicle_id = $AccountNode->data->VehicleID[$j]; 			
-					$vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
+            if($cmd_local==$cmd)
+            { 		  
+                for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
+                {
+                    if($AccountNode->data->VehicleCategory[$j]==$category1)
+                    { 			  
+                        $vehicle_id = $AccountNode->data->VehicleID[$j]; 			
+                        $vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
 				
-					if($vehicle_id!=null)
-					{
-						for($i=0;$i<$vehicle_cnt;$i++)
-						{
-							if($vehicleid[$i]==$vehicle_id)
-							{
-								break;
-							}
-						}			
-						if($i>=$vehicle_cnt)
-						{
-							$vehicleid[$vehicle_cnt]=$vehicle_id;
-							$vehicle_cnt++;
-							$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-							if (file_exists($xml_current))
-							{
-								$green_cnt1++; 
-								//$green_cnt1=$green_cnt;     		
-							}
-							else
-							{
-								$gray_cnt1++; 
-								// $gray_cnt1=$gray_cnt;    				
-							} 										
-						}
-					}
-				}
-			}      
-    }
-    if($type=="group")   ///////only for group vehicle cnt 
-    { 
-      if($cmd_local!="")
-      {
-      }
-      else
-      {    
-    		$ChildCount=$AccountNode->ChildCnt;
-    		for($i=0;$i<$ChildCount;$i++)
-    		{ 
-    			print_count($AccountNode->child[$i],$cmd,$category1,$green_cnt1,$gray_cnt1,$type);
-    		}
+                        if($vehicle_id!=null)
+                        {
+                            for($i=0;$i<$vehicle_cnt;$i++)
+                            {
+                                if($vehicleid[$i]==$vehicle_id)
+                                {
+                                    break;
+                                }
+                            }			
+                            if($i>=$vehicle_cnt)
+                            {
+                                $vehicleid[$vehicle_cnt]=$vehicle_id;
+                                $vehicle_cnt++;
+                                $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
+                                //if(file_exists($xml_current))
+                                if($logResult!='')
+                                {
+                                    $green_cnt1++; 
+                                    //$green_cnt1=$green_cnt;     		
+                                }
+                                else
+                                {
+                                    $gray_cnt1++; 
+                                        // $gray_cnt1=$gray_cnt;    				
+                                } 										
+                            }
+                        }
+                    }
+                }      
+            }
+            if($type=="group")   ///////only for group vehicle cnt 
+            { 
+                if($cmd_local!="")
+                {
+                }
+                else
+                {    
+                    $ChildCount=$AccountNode->ChildCnt;
+                    for($i=0;$i<$ChildCount;$i++)
+                    { 
+                        print_count($AccountNode->child[$i],$cmd,$category1,$green_cnt1,$gray_cnt1,$type);
+                    }
   		}
-		}
-		else
-		{
-			$ChildCount=$AccountNode->ChildCnt;
+            }
+            else
+            {
+                $ChildCount=$AccountNode->ChildCnt;
     		for($i=0;$i<$ChildCount;$i++)
     		{ 
-    			print_count($AccountNode->child[$i],$cmd,$category1,$green_cnt1,$gray_cnt1,$type);
+                    print_count($AccountNode->child[$i],$cmd,$category1,$green_cnt1,$gray_cnt1,$type);
     		}
-		}
+            }
 	}	
 	
 	
@@ -413,90 +423,94 @@ if($AccountNode ->data-> AccountUserType!="substation" && $AccountNode ->data-> 
 	function print_group_vehicle($AccountNode,$groupid,$category1)
 	{
 	// echo "in group vehicle<br>";
-		global $vehicleid;
-		global $vehicle_cnt;
-		global $today_date2;
-		global $vcolor1;
-		global $vcolor2;
-		global $vcolor3;    
+            global $vehicleid;
+            global $vehicle_cnt;
+            global $today_date2;
+            global $vcolor1;
+            global $vcolor2;
+            global $vcolor3;
+            global $o_cassandra;
+            //var_dump($o_cassandra);
+            global $logDate;
          
-		$vehicle_name_arr=array();
-		$imei_arr=array();
-		$vehicle_color=array(); 
-	// echo "groupidlocal=".$AccountNode->data->AccountGroupID."group_id=".$groupid."<br>";
+            $vehicle_name_arr=array();
+            $imei_arr=array();
+            $vehicle_color=array(); 
+            // echo "groupidlocal=".$AccountNode->data->AccountGroupID."group_id=".$groupid."<br>";
   	
-		if($AccountNode->data->AccountGroupID==$groupid)
-		{ 		  
-			for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
-			{
-			  //echo "category=".$category1."local=".$AccountNode->data->VehicleCategory[$j]."<br>";
-				if($AccountNode->data->VehicleCategory[$j]==$category1)
-				{ 			  
-					$vehicle_id = $AccountNode->data->VehicleID[$j];
-					$vehicle_name = $AccountNode->data->VehicleName[$j];
-					$vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
-					
-					$iovalueandtypearr = $AccountNode->data->DeviceIOTypeValue[$j];
-					$tmp_iotype_str="";
-					if(count($iovalueandtypearr)>0)
-					{
-						$tmp_iotype_str="*".$iovalueandtypearr[$vehicle_imei];
-					}
-					else
-					{
-						$tmp_iotype_str="*tmp_str";
-					}
-				
-					if($vehicle_id!=null)
-					{
-						for($i=0;$i<$vehicle_cnt;$i++)
-						{
-							if($vehicleid[$i]==$vehicle_id)
-							{
-								break;
-							}
-						}			
-						if($i>=$vehicle_cnt)
-						{
-						 // echo "in if<br>";
-							$vehicleid[$vehicle_cnt]=$vehicle_id;
-							$vehicle_cnt++;
-							$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-						//	echo "xml_current=".$xml_current."<br>";
-      					if(file_exists($xml_current))
-      					{
-      					// echo "in if";
-      					 $color = $vcolor2;
-      					 $vehicle_name_arr[$color][] =$vehicle_name; 
-      					 $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
-      					}
-      					else
-      					{
-      					  // echo "in else";
-							$color = $vcolor3;      					  
-      						$vehicle_name_arr[$color][] =$vehicle_name; 
-							$imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
-      					}
-							//common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name);					
-						}
-					}
-				}
-			}      
-    }  
-   // echo "sizeofgreen=".$vehicle_name_arr[$color]."sizeofgray=".$vehicle_name_arr[$color]."<br>";
-    if($AccountNode->data->AccountGroupID!="")
-    {   
+            if($AccountNode->data->AccountGroupID==$groupid)
+            { 		  
+                for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
+                {
+                    //echo "category=".$category1."local=".$AccountNode->data->VehicleCategory[$j]."<br>";
+                    if($AccountNode->data->VehicleCategory[$j]==$category1)
+                    { 			  
+                        $vehicle_id = $AccountNode->data->VehicleID[$j];
+                        $vehicle_name = $AccountNode->data->VehicleName[$j];
+                        $vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
+
+                        $iovalueandtypearr = $AccountNode->data->DeviceIOTypeValue[$j];
+                        $tmp_iotype_str="";
+                        if(count($iovalueandtypearr)>0)
+                        {
+                            $tmp_iotype_str="*".$iovalueandtypearr[$vehicle_imei];
+                        }
+                        else
+                        {
+                            $tmp_iotype_str="*tmp_str";
+                        }
+                        if($vehicle_id!=null)
+                        {
+                            for($i=0;$i<$vehicle_cnt;$i++)
+                            {
+                                if($vehicleid[$i]==$vehicle_id)
+                                {
+                                    break;
+                                }
+                            }			
+                            if($i>=$vehicle_cnt)
+                            {
+                                $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                // echo "in if<br>";
+                                $vehicleid[$vehicle_cnt]=$vehicle_id;
+                                $vehicle_cnt++;
+                                //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
+                                //echo "xml_current=".$xml_current."<br>";
+                                //if(file_exists($xml_current))                                
+                                if($logResult!='')
+                                {
+                                    // echo "in if";
+                                    $color = $vcolor2;
+                                    $vehicle_name_arr[$color][] =$vehicle_name; 
+                                    $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                }
+                                else
+                                {
+                                    // echo "in else";
+                                    $color = $vcolor3;      					  
+                                    $vehicle_name_arr[$color][] =$vehicle_name; 
+                                    $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                }
+                                //common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name);					
+                            }
+                        }
+                    }
+                }      
+            }  
+            //echo "sizeofgreen=".$vehicle_name_arr[$color]."sizeofgray=".$vehicle_name_arr[$color]."<br>";
+            if($AccountNode->data->AccountGroupID!="")
+            {   
   		$color=$vcolor2;common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
 		$color=$vcolor3; common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);  		 	
-  	}
-  	else
-  	{
-  	  $ChildCount=$AccountNode->ChildCnt; 
+            }
+            else
+            {
+                $ChildCount=$AccountNode->ChildCnt; 
   		for($i=0;$i<$ChildCount;$i++)
   		{ 
-  			print_group_vehicle($AccountNode->child[$i],$groupid,$category1);
+                    print_group_vehicle($AccountNode->child[$i],$groupid,$category1);
   		}
-    }
+            }
 	}	
 		
 	function get_user($AccountNode,$div_option_values,$category1)
@@ -554,78 +568,84 @@ if($AccountNode ->data-> AccountUserType!="substation" && $AccountNode ->data-> 
 	
 	function print_user_vehicle($AccountNode,$userid,$category1)
 	{
-		global $vehicleid; 
-		global $vehicle_cnt;
-		global $today_date2;
-    global $vcolor1;
-    global $vcolor2;
-    global $vcolor3;
+            global $vehicleid; 
+            global $vehicle_cnt;
+            global $today_date2;
+            global $vcolor1;
+            global $vcolor2;
+            global $vcolor3;
+            global $o_cassandra;
+            //var_dump($o_cassandra);
+            global $logDate;
 		
-		$vehicle_name_arr=array();
-		$imei_arr=array();
-		$vehicle_color=array();
-		$veh_flag=0;
-		if($AccountNode->data->AccountID==$userid)
-		{
-			for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
-			{
-				if($AccountNode->data->VehicleCategory[$j]==$category1)
-				{
-				  $veh_flag=1;
-					$vehicle_id = $AccountNode->data->VehicleID[$j];
-					$vehicle_name = $AccountNode->data->VehicleName[$j];
-					$vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
-					$iovalueandtypearr = $AccountNode->data->DeviceIOTypeValue[$j];
-					$tmp_iotype_str="";
-					if(count($iovalueandtypearr)>0)
-					{
-						$tmp_iotype_str="*".$iovalueandtypearr[$vehicle_imei];
-					}
-					else
-					{
-						$tmp_iotype_str="*tmp_str";
-					}
-					if($vehicle_id!=null)
-					{
-						for($i=0;$i<$vehicle_cnt;$i++)
-						{
-							if($vehicleid[$i]==$vehicle_id)
-							{
-							break;
-							}
-						}			
-						if($i>=$vehicle_cnt)
-						{
-							$vehicleid[$vehicle_cnt]=$vehicle_id;
-							$vehicle_cnt++;
-							$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-      					if (file_exists($xml_current))
-      					{
-      					 $color=$vcolor2;
-      					 $vehicle_name_arr[$color][] =$vehicle_name; 
-      					 $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
-      					}
-      					else
-      					{
-                  $color=$vcolor3;      					  
-      						$vehicle_name_arr[$color][] =$vehicle_name; 
-      					  $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
-      					}
-							//common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name);
-						}
-					}
-				}
-			}
-		}
-
-    $color=$vcolor2;common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
-    $color=$vcolor3; common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);  
+            $vehicle_name_arr=array();
+            $imei_arr=array();
+            $vehicle_color=array();
+            $veh_flag=0;
+            if($AccountNode->data->AccountID==$userid)
+            {
+                for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
+                {
+                    if($AccountNode->data->VehicleCategory[$j]==$category1)
+                    {
+                        $veh_flag=1;
+                        $vehicle_id = $AccountNode->data->VehicleID[$j];
+                        $vehicle_name = $AccountNode->data->VehicleName[$j];
+                        $vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
+                        $iovalueandtypearr = $AccountNode->data->DeviceIOTypeValue[$j];
+                        $tmp_iotype_str="";
+                        if(count($iovalueandtypearr)>0)
+                        {
+                            $tmp_iotype_str="*".$iovalueandtypearr[$vehicle_imei];
+                        }
+                        else
+                        {
+                            $tmp_iotype_str="*tmp_str";
+                        }
+                        if($vehicle_id!=null)
+                        {
+                            for($i=0;$i<$vehicle_cnt;$i++)
+                            {
+                                if($vehicleid[$i]==$vehicle_id)
+                                {
+                                    break;
+                                }
+                            }			
+                            if($i>=$vehicle_cnt)
+                            {
+                                $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                $vehicleid[$vehicle_cnt]=$vehicle_id;
+                                $vehicle_cnt++;
+                                //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
+                                //if(file_exists($xml_current))
+                                if($logResult!='')
+                                {
+                                    $color=$vcolor2;
+                                    $vehicle_name_arr[$color][] =$vehicle_name; 
+                                    $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                }
+                                else
+                                {
+                                    $color=$vcolor3;      					  
+                                    $vehicle_name_arr[$color][] =$vehicle_name; 
+                                    $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                }
+                                //common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name);
+                            }
+                        }
+                    }
+                }
+            }
+            $color=$vcolor2;
+            common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
+            $color=$vcolor3; 
+            common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);  
     
-		$ChildCount=$AccountNode->ChildCnt;
-		for($i=0;$i<$ChildCount;$i++)
-		{ 
-			print_user_vehicle($AccountNode->child[$i],$userid,$category1);
-		}
+            $ChildCount=$AccountNode->ChildCnt;
+            for($i=0;$i<$ChildCount;$i++)
+            { 
+                print_user_vehicle($AccountNode->child[$i],$userid,$category1);
+            }
 	}
 
 	/*function get_user_type($AccountNode,$div_option_values)
@@ -710,89 +730,96 @@ if($AccountNode ->data-> AccountUserType!="substation" && $AccountNode ->data-> 
 	
 	function print_vehicle_tag($AccountNode,$vehicletag,$category1)
 	{
-		global $vehicleid;		global $vehicle_cnt;
-    global $vcolor1;
-    global $vcolor2;
-    global $vcolor3;    
+            global $vehicleid;		
+            global $vehicle_cnt;
+            global $vcolor1;
+            global $vcolor2;
+            global $vcolor3;            
+            global $o_cassandra;
+            //var_dump($o_cassandra);
+            global $logDate;
      
-    $vehicle_name_arr=array();
-		$imei_arr=array();
-		$vehicle_color=array();
-    global $today_date2;	
-		  $veh_flag=0;
-		for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
-		{
-			$vehicle_tag_local = $AccountNode->data->VehicleTag[$j];
-			if($vehicle_tag_local==$vehicletag)
-			{
-				if($AccountNode->data->VehicleCategory[$j]==$category1)
-				{
-				  $veh_flag=1;
-					$vehicle_id = $AccountNode->data->VehicleID[$j];
-					$vehicle_name = $AccountNode->data->VehicleName[$j];
-					$vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
-					$iovalueandtypearr = $AccountNode->data->DeviceIOTypeValue[$j];
-					$tmp_iotype_str="";
-					if(count($iovalueandtypearr)>0)
-					{
-						$tmp_iotype_str="*".$iovalueandtypearr[$vehicle_imei];
-					}
-					else
-					{
-						$tmp_iotype_str="*tmp_str";
-					}
-
-					if($vehicle_id!=null)
-					{
-						for($i=0;$i<$vehicle_cnt;$i++)
-						{
-							if($vehicleid[$i]==$vehicle_id)
-							{
-							break;
-							}
-						}			
-						if($i>=$vehicle_cnt)
-						{
-							$vehicleid[$vehicle_cnt]=$vehicle_id;
-							$vehicle_cnt++;
-							$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-      					if (file_exists($xml_current))
-      					{
-      					 $color=$vcolor2;
-      					 $vehicle_name_arr[$color][] =$vehicle_name; 
-      					 $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
-      					}
-      					else
-      					{
-                  $color=$vcolor3;      					  
-      						$vehicle_name_arr[$color][] =$vehicle_name; 
-      					  $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
-      					}
-							//common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name);
-						}
-					}
-				}
-			}
-		}
-		if($vehicle_tag_local!="")  ///////cause root include all child vehicle show for loop running once here for every vehicle tag
-		{
-  		if($veh_flag==1)
-  		{
-        $grn_cnt=sizeof($vehicle_name_arr[$vcolor2]);
-        $gry_cnt=sizeof($vehicle_name_arr[$vcolor3]);	  
-        active_inactive_count($grn_cnt,$gry_cnt);
-        $color=$vcolor2;common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
-        $color=$vcolor3; common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
-      } 
-    }
-    else
-    {
+            $vehicle_name_arr=array();
+            $imei_arr=array();
+            $vehicle_color=array();
+            global $today_date2;	
+            $veh_flag=0;
+            for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
+            {
+                $vehicle_tag_local = $AccountNode->data->VehicleTag[$j];
+                if($vehicle_tag_local==$vehicletag)
+                {
+                    if($AccountNode->data->VehicleCategory[$j]==$category1)
+                    {
+                        $veh_flag=1;
+                        $vehicle_id = $AccountNode->data->VehicleID[$j];
+                        $vehicle_name = $AccountNode->data->VehicleName[$j];
+                        $vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
+                        $iovalueandtypearr = $AccountNode->data->DeviceIOTypeValue[$j];
+                        $tmp_iotype_str="";
+                        if(count($iovalueandtypearr)>0)
+                        {
+                            $tmp_iotype_str="*".$iovalueandtypearr[$vehicle_imei];
+                        }
+                        else
+                        {
+                            $tmp_iotype_str="*tmp_str";
+                        }
+                        if($vehicle_id!=null)
+                        {
+                            for($i=0;$i<$vehicle_cnt;$i++)
+                            {
+                                if($vehicleid[$i]==$vehicle_id)
+                                {
+                                    break;
+                                }
+                            }			
+                            if($i>=$vehicle_cnt)
+                            {
+                                $vehicleid[$vehicle_cnt]=$vehicle_id;
+                                $vehicle_cnt++;
+                                $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
+                                //if (file_exists($xml_current))
+                                if($logResult!='')
+                                {
+                                    $color=$vcolor2;
+                                    $vehicle_name_arr[$color][] =$vehicle_name; 
+                                    $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                }
+                                else
+                                {
+                                    $color=$vcolor3;      					  
+                                    $vehicle_name_arr[$color][] =$vehicle_name; 
+                                    $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                }
+                                //common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name);
+                            }
+                        }
+                    }
+                }
+            }
+            if($vehicle_tag_local!="")  ///////cause root include all child vehicle show for loop running once here for every vehicle tag
+            {
+                if($veh_flag==1)
+                {
+                    $grn_cnt=sizeof($vehicle_name_arr[$vcolor2]);
+                    $gry_cnt=sizeof($vehicle_name_arr[$vcolor3]);	  
+                    active_inactive_count($grn_cnt,$gry_cnt);
+                    $color=$vcolor2;
+                    common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
+                    $color=$vcolor3; 
+                    common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
+                } 
+            }
+            else
+            {
   		$ChildCount=$AccountNode->ChildCnt;
   		for($i=0;$i<$ChildCount;$i++)
   		{ 
-  			print_vehicle_tag($AccountNode->child[$i],$vehicletag,$category1);
+                    print_vehicle_tag($AccountNode->child[$i],$vehicletag,$category1);
   		}
-  	}
+            }
 	}
 	
 	function get_vehicle_type($AccountNode,$div_option_values,$category1)
@@ -818,88 +845,95 @@ if($AccountNode ->data-> AccountUserType!="substation" && $AccountNode ->data-> 
 	
 	function print_vehicle_type($AccountNode,$vehicletype,$category1)
 	{
-		global $vehicleid;
-		global $vehicle_cnt; 
-		global $today_date2;
-		global $vcolor2;
-    global $vcolor3;
+            global $vehicleid;
+            global $vehicle_cnt; 
+            global $today_date2;
+            global $vcolor2;
+            global $vcolor3;
+            global $o_cassandra;
+            //var_dump($o_cassandra);
+            global $logDate;
 		
-		$vehicle_name_arr=array();
-		$imei_arr=array();
-		$vehicle_color=array();
-		$veh_flag=0;
-		for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
-		{
-		  $vehicle_type_local=$AccountNode->data->VehicleType[$j];
-			if($vehicle_type_local==$vehicletype)
-			{
-				if($AccountNode->data->VehicleCategory[$j]==$category1)
-				{
-				  $veh_flag=1;
-					$vehicle_id = $AccountNode->data->VehicleID[$j];
-					$vehicle_name = $AccountNode->data->VehicleName[$j];
-					$vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
-						$iovalueandtypearr = $AccountNode->data->DeviceIOTypeValue[$j];
-					$tmp_iotype_str="";
-					if(count($iovalueandtypearr)>0)
-					{
-						$tmp_iotype_str="*".$iovalueandtypearr[$vehicle_imei];
-					}
-					else
-					{
-						$tmp_iotype_str="*tmp_str";
-					}
-					if($vehicle_id!=null)
-					{
-						for($i=0;$i<$vehicle_cnt;$i++)
-						{
-							if($vehicleid[$i]==$vehicle_id)
-							{
-							break;
-							}
-						}			
-						if($i>=$vehicle_cnt)
-						{
-							$vehicleid[$vehicle_cnt]=$vehicle_id;
-							$vehicle_cnt++;
-							$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-      					if (file_exists($xml_current))
-      					{
-      					 $color=$vcolor2;
-      					 $vehicle_name_arr[$color][] =$vehicle_name; 
-      					 $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
-      					}
-      					else
-      					{
-                  $color=$vcolor3;      					  
-      						$vehicle_name_arr[$color][] =$vehicle_name; 
-      					  $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
-      					}
-							//common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name);
-						}
-					}
-				}
-			}
-		}
-		if($vehicle_type_local!="")
-		{
+            $vehicle_name_arr=array();
+            $imei_arr=array();
+            $vehicle_color=array();
+            $veh_flag=0;
+            for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
+            {
+                $vehicle_type_local=$AccountNode->data->VehicleType[$j];
+                if($vehicle_type_local==$vehicletype)
+                {
+                    if($AccountNode->data->VehicleCategory[$j]==$category1)
+                    {
+                        $veh_flag=1;
+                        $vehicle_id = $AccountNode->data->VehicleID[$j];
+                        $vehicle_name = $AccountNode->data->VehicleName[$j];
+                        $vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
+                        $iovalueandtypearr = $AccountNode->data->DeviceIOTypeValue[$j];
+                        $tmp_iotype_str="";
+                        if(count($iovalueandtypearr)>0)
+                        {
+                            $tmp_iotype_str="*".$iovalueandtypearr[$vehicle_imei];
+                        }
+                        else
+                        {
+                            $tmp_iotype_str="*tmp_str";
+                        }
+                        if($vehicle_id!=null)
+                        {
+                            for($i=0;$i<$vehicle_cnt;$i++)
+                            {
+                                if($vehicleid[$i]==$vehicle_id)
+                                {
+                                    break;
+                                }
+                            }			
+                            if($i>=$vehicle_cnt)
+                            {
+                                $vehicleid[$vehicle_cnt]=$vehicle_id;
+                                $vehicle_cnt++;
+                                $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
+                                //if(file_exists($xml_current))
+                                if($logResult!='')
+                                {
+                                    $color=$vcolor2;
+                                    $vehicle_name_arr[$color][] =$vehicle_name; 
+                                    $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                }
+                                else
+                                {
+                                    $color=$vcolor3;      					  
+                                    $vehicle_name_arr[$color][] =$vehicle_name; 
+                                    $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                }
+                                //common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name);
+                            }
+                        }
+                    }
+                }
+            }
+            if($vehicle_type_local!="")
+            {
   		if($veh_flag==1)
   		{
-        $grn_cnt=sizeof($vehicle_name_arr[$vcolor2]);
-        $gry_cnt=sizeof($vehicle_name_arr[$vcolor3]);	  
-        active_inactive_count($grn_cnt,$gry_cnt);       
-        $color=$vcolor2;common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
-        $color=$vcolor3; common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
-      } 
-    }
-    else
-    {
+                    $grn_cnt=sizeof($vehicle_name_arr[$vcolor2]);
+                    $gry_cnt=sizeof($vehicle_name_arr[$vcolor3]);	  
+                    active_inactive_count($grn_cnt,$gry_cnt);       
+                    $color=$vcolor2;
+                    common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
+                    $color=$vcolor3; 
+                    common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
+                } 
+            }
+            else
+            {
   		$ChildCount=$AccountNode->ChildCnt;
   		for($i=0;$i<$ChildCount;$i++)
   		{ 
-  			print_vehicle_type($AccountNode->child[$i],$vehicletype,$category1);
+                    print_vehicle_type($AccountNode->child[$i],$vehicletype,$category1);
   		}
-  	}
+            }
 	}
 	
 	function get_vehicle($AccountNode,$div_option_values,$category1)

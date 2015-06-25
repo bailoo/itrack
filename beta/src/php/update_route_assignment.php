@@ -1,5 +1,5 @@
 <?php
-echo "TEST";
+//echo "TEST";
 function update_vehicle_route_assignment($vehicle_input, $route_input, $account_id, $shift)
 {
     global $DbConnection;
@@ -137,24 +137,26 @@ if(sizeof($final_vehicle)>0)
 	$secondary_vehicle_list = "";
 	//###### READ SECONDARY VEHICLES
         $query ="SELECT vehicle.vehicle_name FROM vehicle,secondary_vehicle WHERE secondary_vehicle.vehicle_id=vehicle.vehicle_id AND secondary_vehicle.status=1 AND vehicle.status=1 AND secondary_vehicle.shift='$shift' AND secondary_vehicle.create_id='$account_id'";
-        echo $query."\n";
+        //echo $query."<br>";
         $result = mysql_query($query,$DbConnection);
         while($row = mysql_fetch_object($result))
         {
-                $secondary_vehicle_list.=$row->vehicle_name.",";
+                $secondary_vehicle_list.="'".$row->vehicle_name."',";
         }
 
 	$secondary_vehicle_list = substr($secondary_vehicle_list, 0, -1);
 
 	//######## 
+        //echo "<br>Shift=".$shift;
 
-        if($shift == "ev")
+        if($shift == "ZPME")
         {
+	   //echo "<br>IN Evening";
            $query_update1 ="UPDATE route_assignment2 set route_name_ev='',evening_update_time='$current_datetime',remark_ev='UpdtBy-Master',edit_date='$current_datetime',edit_id='$account_id' WHERE user_account_id='$account_id' AND status=1 AND vehicle_name NOT IN($secondary_vehicle_list)";
-           //echo "<br>".$query_update;
+           //echo "<br>Q1=".$query_update1;
            $result_update1 = mysql_query($query_update1,$DbConnection);
 	}
-	else if($shift == "mor")
+	else if($shift == "ZPMM")
 	{
            $query_update1 ="UPDATE route_assignment2 set route_name_mor='',morning_update_time='$current_datetime',remark_mor='UpdtBy-Master',edit_date='$current_datetime',edit_id='$account_id' WHERE user_account_id='$account_id' AND status=1 AND vehicle_name NOT IN($secondary_vehicle_list)";
            //echo "<br>".$query_update;
@@ -168,13 +170,13 @@ if(sizeof($final_vehicle)>0)
         $route_str = $final_string[$final_vehicle[$i]];
         $route_str = substr($route_str, 0, -1);
                 
-        if($shift == "ev")
+        if($shift == "ZPME")
         {
            $query_update2 ="UPDATE route_assignment2 set route_name_ev='$route_str',evening_update_time='$current_datetime',remark_ev='UpdtBy-Master',edit_date='$current_datetime',edit_id='$account_id' WHERE vehicle_name='$final_vehicle[$i]' AND user_account_id='$account_id' AND status=1 AND vehicle_name NOT IN($secondary_vehicle_list)";
-           //echo "<br>".$query_update;
+           //echo "<br>Q2=".$query_update2;
            $result_update2 = mysql_query($query_update2,$DbConnection);          
        }
-        else if($shift == "mor")
+        else if($shift == "ZPMM")
         {
            $query_update2 ="UPDATE route_assignment2 set route_name_mor='$route_str',morning_update_time='$current_datetime',remark_mor='UpdtBy-Master',edit_date='$current_datetime',edit_id='$account_id' WHERE vehicle_name='$final_vehicle[$i]' AND user_account_id='$account_id' AND status=1 AND vehicle_name NOT IN($secondary_vehicle_list)";
            //echo "<br>".$query_update;

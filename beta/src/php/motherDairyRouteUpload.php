@@ -9,7 +9,7 @@ else
 {
 echo "false";
 }*/
-$final_dest_file='/var/www/html/vts/test/src/php/client_map_feature_data/'.$fileName;
+$final_dest_file='/var/www/html/vts/beta/src/php/client_map_feature_data/'.$fileName;
 if (move_uploaded_file($_FILES['routeFile']['tmp_name'], $final_dest_file)) 
 {
     echo "File is valid, and was successfully uploaded.\n";
@@ -111,7 +111,7 @@ $objPHPExcel_1 = PHPExcel_IOFactory::load($filePath);
 		$hd[$z + 1] = $tmp_hd;
 		$tname[$z + 1] = $tmp_tname;
 	}
-	$pathtowrite="/var/www/html/vts/test/src/php/client_map_feature_data/commonXmlFile.xml";
+	$pathtowrite="/var/www/html/vts/beta/src/php/client_map_feature_data/commonXmlFile.xml";
 	$fh = fopen($pathtowrite, 'w') or die("can't open file 1"); // new
 	fwrite($fh, "<t1>"); 
 	//print_r($ad_dt);

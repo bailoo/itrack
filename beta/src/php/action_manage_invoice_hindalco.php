@@ -4,7 +4,7 @@
 	include_once('util_php_mysql_connectivity.php');
 	//require 'PHPMailer_5.2.4/class.phpmailer.php';
 	include_once("util_account_detail.php");
-	
+	include_once('coreDb.php');
 	$root = $_SESSION['root'];
 	$DEBUG=0; 
 	//$account_id_local=explode(",",$account_id_local);

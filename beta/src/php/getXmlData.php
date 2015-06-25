@@ -555,6 +555,7 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 			}
 		}
 	}
+        //var_dump($dataObject);
 	return $dataObject;
 }
 

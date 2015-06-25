@@ -108,4 +108,9 @@ echo "<input type='hidden' id='vehicle_id_local' value=".$vehicle_id.">";
 	{
 		print "<center><h3><font color='red'>No Data Found!</font></h3></center>";
 	}
+	echo'<br><center>		
+		<a href="javascript:showReportPrevPageNew();" class="back_css">
+			&nbsp;<b>Back</b>
+		</a>
+	</center>';
 ?>
