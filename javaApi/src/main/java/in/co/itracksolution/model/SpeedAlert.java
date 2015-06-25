@@ -1,4 +1,4 @@
-package in.co.itracksolution.AlertsModel;
+package in.co.itracksolution.model;
 
 import java.util.Date;
 
@@ -7,7 +7,7 @@ public class SpeedAlert {
   	private float speed;
 	private Date sTime, dTime, logTime;
 	
-	public static final String TABLE_NAME = "speedlog";
+	public static final String TABLE_NAME = "speedalert";
 	
 	public SpeedAlert()
 	{

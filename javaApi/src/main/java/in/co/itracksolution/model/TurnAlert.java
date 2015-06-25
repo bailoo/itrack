@@ -1,4 +1,4 @@
-package in.co.itracksolution.AlertModel;
+package in.co.itracksolution.model;
 
 import java.util.Date;
 
@@ -7,7 +7,7 @@ public class TurnAlert {
   	private float speed, angle;
 	private Date sTime, dTime, logTime;
 	
-	public static final String TABLE_NAME = "turnlog";
+	public static final String TABLE_NAME = "turnalert";
 	
 	public TurnAlert()
 	{
