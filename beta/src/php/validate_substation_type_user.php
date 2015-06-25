@@ -27,13 +27,18 @@
 				//return false; 
 				//echo "No Valid User";
 				if($flag_search==0){
+			
 				echo "No Valid User";
 				}
 		}	
 		
 		$route_input = array();		
 		get_route_detail($account_id, "ZPME");	
+		//$route_input1 = array_unique($route_input);
+				
+		get_route_detail($account_id, "ZPMM");	
 		$route_input1 = array_unique($route_input);
+
 		//print_r($route_input1);
 		//arraySearch(array("12345","1500","3400"),$str); // will return mysql
 		arraySearch($route_input1,$strun); // will return mysql
@@ -85,7 +90,37 @@ function get_route_detail($account_id, $shift_time)
 					fclose($handle);
 					//echo "\nsizeof(route_input)=".sizeof($route_input);
 				}
-			}								
+			}
+			if( ($file_ext[0] == "5") && ($shift_time=="ZPMM") )		//###### EVENING FILE
+			{
+				$path = $dir."/".$file;
+
+				$row = 1;
+				if (($handle = fopen($path, "r")) !== FALSE)
+				{
+					while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+					{
+						$num = count($data);
+						//echo "<p> $num fields in line $row: <br /></p>\n";
+						$row++;
+							
+						if($num<10)
+						{
+							continue;
+						}
+						if($row > 2)
+						{
+							//$shift_input[] = $data[4];
+							$route_input[] = $data[5];
+							//$vehicle_input[] = $data[7];
+							//$transporter_input[] = $data[8];
+							//echo "\nEV:r=".$row." ,data[4]=".$data[4]." ,data[6]=".$data[6]." ,data[7]=".$data[7]." ,data[9]=".$data[9];
+						}
+					}
+					fclose($handle);
+					//echo "\nsizeof(route_input)=".sizeof($route_input);
+				}
+			}
 		}  //
 	}
 	closedir($dh);

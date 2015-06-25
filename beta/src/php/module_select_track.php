@@ -123,25 +123,40 @@
               <td align="right"><a href="#" style="text-decoration:none" class="map_text_bt" Onclick="javascript:return show_data_on_map('map_report');">Map</a></td>
               <td><a href="#" Onclick="javascript:return show_data_on_map('text_report');" style="text-decoration:none" class="map_text_bt">Report</a></td> 
             </tr>
+			<!--
 			<tr>
-			<td id="google_play" style="display:none;" colspan=2 align=center>
+			<td id="google_play" style="display:none;" colspan="2" align=center >
 				<fieldset>
-					<a href="#" Onclick="javascript:return show_data_on_map('play_report');" style="text-decoration:none" class="map_text_bt">Track Play</a>
-					Play Interval<select id="play_interval" name="play_interval" >
-					<option value="1">1(Msec)</option>
-					<option value="10">10(Msec)</option>					
-					<option value="100">100(Msec)</option>	
-					<option value="200" selected >200(Msec)</option>	
-					<option value="300">300(Msec)</option>	
-					<option value="400">400(Msec)</option>
-					<option value="500">500(Msec)</option>					
-					<option value="1000">1(sec)</option>
-					<option value="2000">2(sec)</option>
-					<option value="3000">3(sec)</option>	
-					</select>
+					<table  class="module_left_menu" width="100%">
+						<tr>
+							<td align=center>
+								<input type=button value="Track Play" Onclick="javascript:return show_data_on_map('play_report');" style="text-decoration:none" class="map_text_bt" id="play_stop">
+								
+							</td>
+						</tr>
+						<tr>
+							<td align=center>
+								Play Interval<select id="play_interval" name="play_interval" >
+								<option value="0.05">Fastest</option>
+								<option value="1">1(Msec)</option>
+								<option value="10">10(Msec)</option>					
+								<option value="100">100(Msec)</option>	
+								<option value="200" selected >200(Msec)</option>	
+								<option value="300">300(Msec)</option>	
+								<option value="400">400(Msec)</option>
+								<option value="500">500(Msec)</option>					
+								<option value="1000">1(sec)</option>
+								<option value="2000">2(sec)</option>
+								<option value="3000">3(sec)</option>	
+								</select>
+							</td>
+						</tr>
+					</table>
+					
+					
 				</fieldset>
 			  </td>
-			</tr>
+			</tr>-->
           </table>
         </td>
       </tr>

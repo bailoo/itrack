@@ -23,21 +23,28 @@ class Tree
 class Info {	
 	public $AccountName;
 	public $AccountID;
-	public $AccountType;	
+	public $AccountType;
+	public $AccountUserType;	
 	public $AccountGroupID;
 	public $AccountGroupname;
 	public $AccountHierarchyLevel;
 	public $AccountCreateID;
 	Public $AccountCreateName;
 	Public $AdminID;
+	Public $AccountAdminID;
 	Public $VehicleCnt;
 	//Public $VehicleGroupID;
+	//----updated on 30032015-------//
+	public $AccountTypeThirdParty;
+	//-----------------------------//
+	
 	Public $VehicleID=array();
 	Public $Vehicle_LDT=array();
 	Public $DeviceIMEINo=array();
 	Public $DeviceIOTypeValue=array();
 	Public $VehicleName=array();
 	Public $VehicleNumber=array();
+	Public $MobileNumber=array();
 	Public $VehicleType=array();
 	Public $VehicleCategory=array();
 	Public $VehicleMaxSpeed=array();
@@ -46,12 +53,17 @@ class Info {
 	Public $VehicleTag=array();
 	Public $VehicleGroup=array();
 	Public $VehicleGroupName=array();
+	//==code updated 27032015==//
+	Public $VehicleTypeThirdParty=array();
+	Public $VehicleActiveDate=array();
+	//==end====================//
 	
 	function __construct()
 	{
 		$this->AccountName = NULL;
 		$this->AccountID = NULL;
 		$this->AccountType = NULL;
+		$this->AccountUserType = NULL;
 		$this->AdminID = NULL;
 		$this->AccountGroupname = NULL;
 		$this->AccountGroupID = NULL;
@@ -60,6 +72,9 @@ class Info {
 		$this->AccountCreateName = NULL;
 		$this->AccountGroupID = NULL; 		   
 		$this->VehicleCnt = 0;
+		//----updated on 30032015-------//
+		$this->AccountTypeThirdParty= NULL;
+		//-----------------------------//
 	}
 }
 

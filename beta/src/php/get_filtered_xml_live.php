@@ -10,10 +10,11 @@ include_once('parameterizeData.php');
 include_once('lastRecordData.php');
 include_once("getXmlData.php");	
 
-echo "in if";
+//echo "in if";
 $pathtowrite = $_REQUEST['xml_file']; 
 $mode = $_REQUEST['mode'];
 $vserial1 = $_REQUEST['vserial'];
+//echo"veserial=".$vserial1."<br>";
 $vserial = explode(',',$vserial1) ;
 $vsize=sizeof($vserial);
 $startdate = $_REQUEST['startdate'];
@@ -47,7 +48,7 @@ $current_date=date("Y-m-d");
 $fh = fopen($pathtowrite, 'w') or die("can't open file 1"); // new
 fwrite($fh, "<t1>");  
 fclose($fh);
-$vserial_arr = explode(',',$vserial);
+//$vserial_arr = explode(',',$vserial);
 $vname1 ="";
 //echo "t1=";
 //echo"vsize=".$vsize."<br>";
@@ -61,10 +62,12 @@ for($i=0;$i<$vsize;$i++)
 	$LastRecordObject=new lastRecordData();	
 	//echo "imei=".$imei."<br>";
 	$LastRecordObject=getLastRecord($imei,$sortBy,$parameterizeData);
+        //echo "getOBJ";
 	//var_dump($LastRecordObject);
 	
 	if(!empty($LastRecordObject))
 	{
+                //echo "inOBJ";
 		$current_time = date('Y-m-d H:i:s');
 		$last_halt_time_sec = strtotime($LastRecordObject->lastHaltTimeLR[0]);			
 		$current_time_sec = strtotime($current_time);

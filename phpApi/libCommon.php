@@ -20,12 +20,19 @@ function getDateList($datetime1,$datetime2)
 	$end = new DateTime($date2);
 	$end->add($interval);	
 
-	$period = new DatePeriod($start, $interval, $end);
+	//$period = new DatePeriod($start, $interval, $end);
+	$date = $end;
 	$dateList = "(";
-	foreach ($period as $date)
+	while ($date >= $start)
 	{
 		$dateList .= "'".$date->format('Y-m-d')."',";
+		$date = $date->sub($interval);
 	}
+
+	/*foreach ($period as $date)
+	{
+		$dateList .= "'".$date->format('Y-m-d')."',";
+	}*/
 	$dateList = substr($dateList,0,-1) . ")";
 	
 	return $dateList;

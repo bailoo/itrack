@@ -3,6 +3,7 @@ package in.co.itracksolution.dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.TreeMap;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -129,12 +130,12 @@ public class FullDataDao {
 		LocalDate sDate = new LocalDate();
 		LocalDate eDate = new LocalDate();
 		long sEpoch=0, eEpoch=0;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 		try {	
 			sDate = LocalDate.parse(startDateTime.substring(0,10));
 			eDate = LocalDate.parse(endDateTime.substring(0,10));
-			sEpoch = sdf.parse(startDateTime).getTime();
-			eEpoch = sdf.parse(endDateTime).getTime();
+			sEpoch = sdf.parse(startDateTime+"+0530").getTime();
+			eEpoch = sdf.parse(endDateTime+"+0530").getTime();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -145,7 +146,7 @@ public class FullDataDao {
 		//System.out.println("eDateTime = "+sdf.format(eDateTime));
 
 		days = Days.daysBetween(sDate, eDate).getDays();
-		for (int i=0; i<days+1; i++)
+		for (int i=days; i>=0; i--)
 		{
 			LocalDate d = sDate.plusDays(i);
 			dateList.add(d.toString("yyyy-MM-dd"));
@@ -171,11 +172,14 @@ public class FullDataDao {
 			data = row.getString("data");
 			//System.out.println("dtime = "+fullData.getDTime());
 			tokens = data.split(DELIMITER);
+		
+			TreeMap pMap1 = new TreeMap();
 			int i = 0;
 			for(String token : tokens)
 			{
-				fullData.pMap.put(fullData.fullParams[i++], token);
+				pMap1.put(fullData.fullParams[i++], token);
 			}
+			fullData.setPMap(pMap1);
 			fullDataList.add(new FullData(fullData));
 		}
 

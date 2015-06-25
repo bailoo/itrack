@@ -7,7 +7,7 @@ public class LastData {
 
 	private String imei, data;
 	private Date sTime;
-	public TreeMap pMap = new TreeMap();
+	private TreeMap pMap = new TreeMap();
 	public String[] lastParams = { "a","b","c","d","e","f","h","i","j","k","l","m","n","o","p","q","r","s","t","u","ci","ax","ay","az","mx","my","mz","bx","by","bz" };
 	
 	public static final String TABLE_NAME = "lastlog";
@@ -40,6 +40,12 @@ public class LastData {
 	}
 	public void setSTime(Date serverTime) {
 		this.sTime = serverTime;
+	}
+	public TreeMap getPMap() {
+		return pMap;
+	}
+	public void setPMap(TreeMap pMap) {
+		this.pMap = pMap;
 	}
 	
 }

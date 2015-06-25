@@ -7,8 +7,7 @@
     include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
     include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
     
-    $o_cassandra = new Cassandra();
-	
+    $o_cassandra = new Cassandra();	
     $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 
     $query1="SELECT vehicle_color from account_preference WHERE account_id='$account_id'";
@@ -96,6 +95,7 @@
         $function_name($root,$div_option_values,$category1);
     }
 echo"</table>";
+$o_cassandra->close();
     
     function common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name)
     {	

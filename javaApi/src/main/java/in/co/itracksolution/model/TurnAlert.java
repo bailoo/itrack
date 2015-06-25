@@ -7,14 +7,14 @@ public class TurnAlert {
   	private float speed, angle;
 	private Date sTime, dTime, logTime;
 	
-	public static final String TABLE_NAME = "turnlog";
+	public static final String TABLE_NAME = "turnalert";
 	
-	public SpeedAlert()
+	public TurnAlert()
 	{
 		super();
 	}
 	
-	public SpeedAlert(String imei, String date, Date dTime, Date sTime, float speed, float angle, String location, String latitude, String longitude, String roadId, Date logTime ) 
+	public TurnAlert(String imei, String date, Date dTime, Date sTime, float speed, float angle, String location, String latitude, String longitude, String roadId, Date logTime ) 
 	{
 		super();
 		this.imei = imei;
@@ -30,7 +30,7 @@ public class TurnAlert {
 		this.logTime = logTime;
 	}
 
-	public SpeedAlert(SpeedAlert f)
+	public TurnAlert(TurnAlert f)
 	{
 		this.imei = f.imei;
 		this.date = f.date;
@@ -81,32 +81,32 @@ public class TurnAlert {
 	public void setAngle(float angle) {
 		this.angle = angle;
 	} 
-	public float getLocation() {
+	public String getLocation() {
 		return location;
 	}
 	public void setLocation(String location) {
 		this.location = location ;
 	} 
-	public float getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 	public void setLatitude(String latitude) {
 		this.latitude= latitude;
 	} 
-	public float getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
 	public void setLongitude(String longitude) {
 		this.longitude= longitude;
 	} 
-	public float getRoadId() {
+	public String getRoadId() {
 		return roadId;
 	}
 	public void setRoadId(String roadId) {
 		this.roadId = roadId;
 	} 
-	public float getLogTime() {
-		return LogTime;
+	public Date getLogTime() {
+		return logTime;
 	}
 	public void setLogTime(Date logTime ) {
 		this.logTime = logTime;

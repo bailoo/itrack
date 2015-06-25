@@ -9,12 +9,12 @@ public class DistanceLog {
 	
 	public static final String TABLE_NAME = "speedlog";
 	
-	public SpeedAlert()
+	public DistanceLog()
 	{
 		super();
 	}
 	
-	public SpeedAlert(String imei, String date, Date startTime, Date endTime, float avgSpeed, float distance, float maxSpeed, Date logTime ) 
+	public DistanceLog(String imei, String date, Date startTime, Date endTime, float avgSpeed, float distance, float maxSpeed, Date logTime ) 
 	{
 		super();
 		this.imei = imei;
@@ -27,7 +27,7 @@ public class DistanceLog {
 		this.logTime = logTime;
 	}
 
-	public SpeedAlert(SpeedAlert f)
+	public DistanceLog(DistanceLog f)
 	{
 		this.imei = f.imei;
 		this.date = f.date;
@@ -81,8 +81,8 @@ public class DistanceLog {
 	public void setMaxSpeed(float maxSpeed) {
 		this.maxSpeed = maxSpeed;
 	} 
-	public float getLogTime() {
-		return LogTime;
+	public Date getLogTime() {
+		return logTime;
 	}
 	public void setLogTime(Date logTime ) {
 		this.logTime = logTime;

@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Date;
+import java.util.TreeMap;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
@@ -81,10 +82,12 @@ public class LastDataDao extends FullDataDao{
 			
 		final String DELIMITER = ";";
 		String[] tokens = data.split(DELIMITER);
+		TreeMap pMap = new TreeMap();
 		int i = 0;
 		for(String token : tokens)
-			lastData.pMap.put(lastData.lastParams[i++], token);
-
+			pMap.put(lastData.lastParams[i++], token);
+		
+		lastData.setPMap(pMap);
 		lastData.setImei(imei);
 		lastData.setSTime(stime);
 		lastData.setData(data);
@@ -140,10 +143,12 @@ public class LastDataDao extends FullDataDao{
 				String data = row.getString("data");
 				final String DELIMITER = ";";
 				String[] tokens = data.split(DELIMITER);
+				TreeMap pMap = new TreeMap();
 				int j = 0;
 				for(String token : tokens)
-					fullData.pMap.put(fullData.fullParams[j++], token);
+					pMap.put(fullData.fullParams[j++], token);
 				
+				fullData.setPMap(pMap);
 				return fullData;
 			}
 		}	

@@ -6,7 +6,7 @@ import java.util.TreeMap;
 public class FullData {
 	private String imei, date, data;
 	private Date sTime, dTime;
-	public TreeMap pMap = new TreeMap();
+	private TreeMap pMap = new TreeMap();
 	public String[] fullParams = { "a","b","c","d","e","f","i","j","k","l","m","n","o","p","q","r","ci","ax","ay","az","mx","my","mz","bx","by","bz" };
 	
 	public static final String TABLE_NAME1 = "log1";
@@ -17,6 +17,7 @@ public class FullData {
 		super();
 	}
 	
+	//public FullData(String imei, String date, Date dTime, String data, Date sTime, TreeMap pMap) 
 	public FullData(String imei, String date, Date dTime, String data, Date sTime) 
 	{
 		super();
@@ -25,6 +26,7 @@ public class FullData {
 		this.dTime = dTime;
 		this.data = data;
 		this.sTime = sTime;
+		//this.pMap = pMap;
 	}
 
 	public FullData(FullData f)
@@ -67,6 +69,12 @@ public class FullData {
 	}
 	public void setSTime(Date serverTime) {
 		this.sTime = serverTime;
+	}
+	public TreeMap getPMap() {
+		return pMap;
+	}
+	public void setPMap(TreeMap pMap) {
+		this.pMap = pMap;
 	}
 	
 }

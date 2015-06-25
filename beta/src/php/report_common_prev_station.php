@@ -1,15 +1,22 @@
 <?php 
-	include_once('Hierarchy.php');		include_once('util_session_variable.php');		include_once('util_php_mysql_connectivity.php');
+	echo"reportPrevPage##";
+	include_once('Hierarchy.php');		
+	include_once('util_session_variable.php');		
+	include_once('util_php_mysql_connectivity.php');
 	$root=$_SESSION['root'];  
 	$js_function_name="report_select_by_entity";
-	$file_name="src/php/action_report_station_list.php";
+	$file_name="src/php/report_assigned_vehicle_option.php";
 	$filename1=$_POST['filename']; 
 	$title1=$_POST['title'];
-  //echo "filename1=".$filename1." title=".$title1; 
+  //echo "filename1=".$filename1." title=".$title1;
+
   echo'<form name="report1">
 			<div class="report_div_height"></div>
-			<center><div class="report_title"><b>'.$title1.'</b></div></center>';  
-  include_once('tree_hierarchy_information.php');	include_once('report_radio_account.php');
+				<center>
+					<div class="report_title"><b>'.$title1.'</b></div>
+				</center>';  
+				include_once('tree_hierarchy_information.php');	
+				include_once('report_radio_account.php');
 	echo'<center>
 			<table border=0 cellspacing=0 cellpadding=0 class="module_left_menu">
 				<tr>

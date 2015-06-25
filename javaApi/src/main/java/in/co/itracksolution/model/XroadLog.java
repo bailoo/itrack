@@ -10,12 +10,12 @@ public class XroadLog {
 	
 	public static final String TABLE_NAME = "xroadlog";
 	
-	public SpeedAlert()
+	public XroadLog()
 	{
 		super();
 	}
 	
-	public SpeedAlert(String imei, String date, Date dTime, Date sTime, String xRoadId, String xRoadCode, String xRoadName, int haltDuration, float speed, String location, String latitude, String longitude, Date logTime ) 
+	public XroadLog(String imei, String date, Date dTime, Date sTime, String xRoadId, String xRoadCode, String xRoadName, int haltDuration, float speed, String location, String latitude, String longitude, Date logTime ) 
 	{
 		super();
 		this.imei = imei;
@@ -25,7 +25,7 @@ public class XroadLog {
 		this.xRoadId = xRoadId;
 		this.xRoadCode = xRoadCode;
 		this.xRoadName = xRoadName;
-		this.haltduration = haltduration;
+		this.haltDuration = haltDuration;
 		this.speed = speed;
 		this.location = location;
 		this.latitude = latitude;
@@ -33,7 +33,7 @@ public class XroadLog {
 		this.logTime = logTime;
 	}
 
-	public SpeedAlert(SpeedAlert f)
+	public XroadLog(XroadLog f)
 	{
 		this.imei = f.imei;
 		this.date = f.date;
@@ -42,7 +42,7 @@ public class XroadLog {
 		this.xRoadId = f.xRoadId;
 		this.xRoadCode = f.xRoadCode;
 		this.xRoadName = f.xRoadName;
-		this.haltduration = f.haltduration;
+		this.haltDuration = f.haltDuration;
 		this.speed = f.speed;
 		this.location = f.location;
 		this.latitude = f.latitude;
@@ -74,25 +74,25 @@ public class XroadLog {
 	public void setSTime(Date serverTime) {
 		this.sTime = serverTime;
 	}
-	public float getxRoadId() {
+	public String getxRoadId() {
 		return xRoadId;
 	}
 	public void setxRoadId(String xRoadId) {
 		this.xRoadId = xRoadId;
 	} 
-	public float getxRoadCode() {
+	public String getxRoadCode() {
 		return xRoadCode;
 	}
 	public void setxRoadCode(String xRoadCode) {
 		this.xRoadCode = xRoadCode;
 	} 
-	public float getxRoadName() {
+	public String getxRoadName() {
 		return xRoadName;
 	}
 	public void setxRoadName(String xRoadName) {
 		this.xRoadName = xRoadName;
 	} 
-	public float getHaltDuration() {
+	public int getHaltDuration() {
 		return haltDuration;
 	}
 	public void setHaltDuration(int haltDuration) {
@@ -104,26 +104,26 @@ public class XroadLog {
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	} 
-	public float getLocation() {
+	public String getLocation() {
 		return location;
 	}
 	public void setLocation(String location) {
 		this.location = location ;
 	} 
-	public float getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 	public void setLatitude(String latitude) {
 		this.latitude= latitude;
 	} 
-	public float getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
 	public void setLongitude(String longitude) {
 		this.longitude= longitude;
 	} 
-	public float getLogTime() {
-		return LogTime;
+	public Date getLogTime() {
+		return logTime;
 	}
 	public void setLogTime(Date logTime ) {
 		this.logTime = logTime;

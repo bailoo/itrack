@@ -27,10 +27,12 @@ if(($unique_page_name=='index.php') || ($unique_page_name=='login.php') )
 }
 else
 {
+//echo "<br>ACC=".$account_id;
 	//echo "in else";
 	session_start();	
 	if(!$_SESSION)
 	{
+//echo $unique_page_name;
 		if(($unique_page_name!='logout.php') && ($unique_page_name=="manage.php" || $unique_page_name=="home.php" || $unique_page_name=="report.php" || $unique_page_name=="help.php"|| $unique_page_name=="live.php"|| $unique_page_name=="setting.php"))
 		{
 			//echo "in if";
@@ -40,7 +42,7 @@ else
 		}
 		else if($unique_page_name!='logout.php')
 		{
-			//echo "in if";
+			//echo "in else";
 			echo"<center>
 					<table style='color:red;size:14px;'>
 						<tr>

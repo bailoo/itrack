@@ -13,6 +13,7 @@ include_once("markers.php");?>
 	var timer;
 	var TryCnt;
 	var label_type = "<?php echo $report_type; ?>";
+	var customerMarkers=new Array();
 	//alert(label_type);
 	var mining_user_type1 = "<?php echo $mining_user_type; ?>";
 	var account_id_session = "<?php echo $account_id; ?>";
@@ -26,6 +27,7 @@ include_once("markers.php");?>
 	var station_customer=new Array();
 	var customer_station_no=new Array();
 	var type_customer=new Array();
+	var lineColor=new Array('#000099','#311919','#CC6633','#FF3366','#999900')
 
 	var station_name_customer = new Array();
 	var station_lat_customer = new Array();
@@ -1265,7 +1267,7 @@ function getStation1(select_value)
 
 
 	/// **** FUNCTION STATION CLOSED 
-	var customerMarkers=new Array();
+	
 	function runScriptEnter_station(value) 
 	{
 		//alert("value="+value);
@@ -1519,7 +1521,7 @@ function getStation1(select_value)
 	function showRouteCustomerLine()
 	{
 		//alert("value="+value);
-		var customerFileArr=new Array();
+		var customerFileArr=Object();
 		var bname = navigator.appName;	
 		var xml_data_this;
 		var xmlObjThis = null; 			
@@ -2065,17 +2067,14 @@ function getStation1(select_value)
 			(
 				marker, 'click', infoCallbackRoute(routeNumberTmp,routeStationNoTmp,routeCustomerNoTmp,routeTypeTmp,routeLatTmp,routeLngTmp,marker)
 			);
-			var tmpCRNo=routeCustomerNoTmp+routeNumberTmp;	
-			//alert("routeCustomerNoTmp="+routeCustomerNoTmp);
+			var tmpCRNo=routeCustomerNoTmp+routeNumberTmp;			
 			if(customerFileArr[tmpCRNo]==undefined)
 			{
 				customerMarkers.push(marker);			
 			}
 			else
 			{
-				
 				var routeDetail=customerFileArr[tmpCRNo].split(",");
-				//alert("datetime="+routeDetail[4]);
 				f_vehicle_name[tmpCnt]=routeDetail[0];
 				f_customer_no[tmpCnt]=routeDetail[1];
 				f_route_no[tmpCnt]=routeDetail[2];
@@ -2141,7 +2140,6 @@ function getStation1(select_value)
 		
 		for(var i=0;i<f_found_lat.length;i++)
 		{
-			//alert("ad_dt="+f_ad_at[i]+"f_customer_no="+f_customer_no[i]);
 			//icon='images/customer'+inci+'.png';
 			position=new google.maps.LatLng(f_found_lat[i], f_found_lng[i]);
 			var marker = new google.maps.Marker
@@ -2159,11 +2157,11 @@ function getStation1(select_value)
 				var line = new google.maps.Polyline
 				({
 					path: [new google.maps.LatLng(f_found_lat[i], f_found_lng[i]),new google.maps.LatLng(f_found_lat[i-1], f_found_lng[i-1])],
-					strokeColor: '#ff0000',
+					strokeColor: lineColor[inci],
 					strokeOpacity: 0.5,
 					strokeWeight: 1.5
 				});
-			
+				customerMarkers.push(marker);
 				customerMarkers.push(line);						
 				line.setMap(map_canvas);
 		}
@@ -2237,9 +2235,18 @@ function getStation1(select_value)
 		var title;
 		//alert("plotRoute");
 		var latlngbounds = new google.maps.LatLngBounds();
+		 var imageAnchor = {
+				url: 'images/customer'+inci+'.png',
+				// This marker is 20 pixels wide by 32 pixels tall.
+				size: new google.maps.Size(20, 32),
+				// The origin for this image is 0,0.
+				origin: new google.maps.Point(0,0),
+				// The anchor for this image is the base of the flagpole at 0,32.
+				anchor: new google.maps.Point(14, 22)
+			  };
 		for(var i=0;i<rFoundLat.length;i++)
 		{
-			icon='images/customer'+inci+'.png';
+			//icon='images/customer'+inci+'.png';
 			routeLatTmp=rFoundLat[i];
 			routeLngTmp=rFoundLng[i];
 			
@@ -2256,7 +2263,7 @@ function getStation1(select_value)
 			
 			var marker = new google.maps.Marker
 			({
-				position: position,	 map: map_canvas, icon: icon, title:title
+				position: position,	 map: map_canvas, icon: imageAnchor, title:title
 			});
 			
 			latlngbounds.extend(position);
