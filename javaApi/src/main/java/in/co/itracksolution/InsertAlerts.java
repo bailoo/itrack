@@ -110,7 +110,7 @@ public class InsertAlerts {
 		String roadId = "MG Road";
 		
 		InsertAlerts st = new InsertAlerts();
-		//st.insertSpeedAlert(imei, dtime, stime, speed, location, latitude, longitude, roadId);
+		st.insertSpeedAlert(imei, dtime, stime, speed, location, latitude, longitude, roadId);
 		st.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
 		st.close();
 	
