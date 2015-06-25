@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TreeMap;
@@ -60,16 +61,19 @@ public class SampleFullDataQuery
 	public static void main(String[] args) 
 	{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		TimeZone tz = TimeZone.getTimeZone("Asia/Kolkata");
+		sdf.setTimeZone(tz);	
+
 		SampleFullDataQuery st = new SampleFullDataQuery();
 			
 		FullDataDao dao = new FullDataDao(st.conn.getSession());
 		
 		String imei = "865733021562939"; //Make sure this imei exists
-		String startDateTime = "2015-06-14 13:19:13";
-		String endDateTime = "2015-06-14 13:20:30";
+		String startDateTime = "2015-06-13 02:37:48";
+		String endDateTime = "2015-06-15 10:00:10";
 		//true for dtime, false for stime
 		Boolean deviceTime = true;	// true for device time index, otherwise server time
-		Boolean orderAsc = false;	// true for ascending , otherwise descending (default) 
+		Boolean orderAsc = true;	// true for ascending , otherwise descending (default) 
 		ArrayList<FullData> fullDataList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, deviceTime, orderAsc);
 
 		for (FullData fullData : fullDataList)
