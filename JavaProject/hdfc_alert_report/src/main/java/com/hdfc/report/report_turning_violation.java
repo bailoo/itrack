@@ -24,6 +24,7 @@ public class report_turning_violation {
     public static ArrayList<Float> turningAngle = new ArrayList<Float>();
     public static ArrayList<Double> turningLatitude = new ArrayList<Double>();
     public static ArrayList<Double> turningLongitude = new ArrayList<Double>();
+    public static ArrayList<String> latLngObj = new ArrayList<String>();
     public static ArrayList<String> locationCode = new ArrayList<String>();
     public static ArrayList<Integer> roadID = new ArrayList<Integer>();
   
@@ -111,7 +112,9 @@ public class report_turning_violation {
 						turningSpeed.add(speed_middle);
 						turningAngle.add((float)angle);
 						turningLatitude.add(lat_middle);
-						turningLongitude.add(lng_middle);					
+						turningLongitude.add(lng_middle);
+						//tmpobj = turningLatitude+","+turningLongitude;
+						//latLngObj.add(tmpobj);
 					}					
 					
 					lat_start = lat_middle;
