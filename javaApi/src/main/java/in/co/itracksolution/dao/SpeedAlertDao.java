@@ -1,4 +1,4 @@
-package in.co.itracksolution.AlertsDao;
+package in.co.itracksolution.dao;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
-import in.co.itracksolution.AlertsModel.SpeedAlert;
+import in.co.itracksolution.model.SpeedAlert;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -23,7 +23,7 @@ import com.google.common.collect.Lists;
 
 public class SpeedAlertDao {
 
-	protected PreparedStatement insertStatement, deleteStatement, getSpeedAlertByDateStatement, getSpeedAlertByDateRoadIdStatement, getSpeedAlertByDateTimeStatement, getSpeedAlertByDateTimeRoadIdStatement;
+	protected PreparedStatement insertStatement, deleteStatement, getSpeedAlertByDateStatement, getSpeedAlertByDateInStatement, getSpeedAlertByDateRoadIdStatement, getSpeedAlertByDateTimeStatement, getSpeedAlertByDateTimeRoadIdStatement;
 	protected Session session;
 	 
 	public SpeedAlertDao(Session session) {
@@ -36,6 +36,7 @@ public class SpeedAlertDao {
 		insertStatement = session.prepare(getInsertStatement());
 		deleteStatement = session.prepare(getDeleteStatement());
 		getSpeedAlertByDateStatement = session.prepare(getGetSpeedAlertByDateStatement());
+		getSpeedAlertByDateInStatement = session.prepare(getGetSpeedAlertByDateInStatement());
 		getSpeedAlertByDateRoadIdStatement = session.prepare(getGetSpeedAlertByDateRoadIdStatement());
 		getSpeedAlertByDateTimeStatement = session.prepare(getGetSpeedAlertByDateTimeStatement());
 		getSpeedAlertByDateTimeRoadIdStatement = session.prepare(getGetSpeedAlertByDateTimeRoadIdStatement());
@@ -43,7 +44,7 @@ public class SpeedAlertDao {
 
 	protected String getInsertStatement(){
 		return "INSERT INTO "+SpeedAlert.TABLE_NAME+
-				" (imei, date, dtime, stime, speed, location, lattitude, longitude, roadId, logtime)"
+				" (imei, date, dtime, stime, speed, location, latitude, longitude, roadId, logtime)"
 				+ " VALUES ("+
 				"?,?,?,?,?,?,?,?,?,?);";
 	}
@@ -54,11 +55,15 @@ public class SpeedAlertDao {
 	}
 
 	protected String getGetSpeedAlertByDateStatement(){
+		return "SELECT * FROM "+SpeedAlert.TABLE_NAME+" WHERE imei = ? AND date = ?;";
+	}
+
+	protected String getGetSpeedAlertByDateInStatement(){
 		return "SELECT * FROM "+SpeedAlert.TABLE_NAME+" WHERE imei = ? AND date IN ?;";
 	}
 
 	protected String getGetSpeedAlertByDateRoadIdStatement(){
-		return "SELECT * FROM "+SpeedAlert.TABLE_NAME+" WHERE imei = ? AND date IN ? AND roadid IN ?;";
+		return "SELECT * FROM "+SpeedAlert.TABLE_NAME+" WHERE imei = ? AND date = ? AND roadid = ?;";
 	}
 
 	protected String getGetSpeedAlertByDateTimeStatement(){
@@ -66,7 +71,7 @@ public class SpeedAlertDao {
 	}
 	
 	protected String getGetSpeedAlertByDateTimeRoadIdStatement(){
-		return "SELECT * FROM "+SpeedAlert.TABLE_NAME+" WHERE imei = ? AND date IN ? AND roadid IN ? AND dtime >= ? AND dtime <= ? ;";
+		return "SELECT * FROM "+SpeedAlert.TABLE_NAME+" WHERE imei = ? AND date = ? AND roadid = ? AND dtime >= ? AND dtime <= ? ;";
 	}
 	
 	public void insert(SpeedAlert data){
@@ -78,7 +83,7 @@ public class SpeedAlertDao {
 				data.getSTime(),
 				data.getSpeed(),
 				data.getLocation(),
-				data.getLattitude(),
+				data.getLatitude(),
 				data.getLongitude(),
 				data.getRoadId(),
 				data.getLogTime()
@@ -91,7 +96,7 @@ public class SpeedAlertDao {
 		session.execute(boundStatement.bind(data.getImei(), data.getDate(), data.getDTime()));
 	}
 	
-	private ArrayList<speedAlert> getSpeedAlertList(List<Row> rowList)
+	private ArrayList<SpeedAlert> getSpeedAlertList(List<Row> rowList)
 	{
 		ArrayList<SpeedAlert> speedAlertList = new ArrayList<SpeedAlert>();
 		SpeedAlert speedAlert = new SpeedAlert();
@@ -102,12 +107,12 @@ public class SpeedAlertDao {
 			speedAlert.setDate(row.getString("date"));
 			speedAlert.setDTime(row.getDate("dtime"));
 			speedAlert.setSTime(row.getDate("stime"));
-			speedAlert.setSpeed(row.getSpeed("speed"));
-			speedAlert.setLocation(row.getLocation("location"));
-			speedAlert.setLattitude(row.getLattitude("lattitude"));
-			speedAlert.setLongitude(row.getLongitude("longitude"));
-			speedAlert.setRoadId(row.getRoadId("roadid"));
-			speedAlert.setLogTime(row.getLogTime("logtime"));
+			speedAlert.setSpeed(row.getFloat("speed"));
+			speedAlert.setLocation(row.getString("location"));
+			speedAlert.setLatitude(row.getString("latitude"));
+			speedAlert.setLongitude(row.getString("longitude"));
+			speedAlert.setRoadId(row.getString("roadid"));
+			speedAlert.setLogTime(row.getDate("logtime"));
 	
 			/* now add speedAlert object to the list */		
 			speedAlertList.add(new SpeedAlert(speedAlert));
@@ -118,7 +123,7 @@ public class SpeedAlertDao {
 
 	private ArrayList getDateList(String startDateTime, String endDateTime)
 	{
-		int days = 1;
+		ArrayList dateList = new ArrayList();
 		LocalDate sDate = new LocalDate();
 		LocalDate eDate = new LocalDate();
 		try {	
@@ -129,38 +134,56 @@ public class SpeedAlertDao {
 			e.printStackTrace();
 		}
 
-		days = Days.daysBetween(sDate, eDate).getDays();
-		for (int i=0; i<days+1; i++)
+		int days = Days.daysBetween(sDate, eDate).getDays();
+		for (int i=days; i>=0; i--)
 		{
 			LocalDate d = sDate.plusDays(i);
 			dateList.add(d.toString("yyyy-MM-dd"));
 		}	
 
 		//System.out.println(dateList);
-
+		return dateList;
 	}
 
-	public ArrayList<SpeedAlert> getSpeedAlert(String imei, String date, boolean orderAsc)
+	public ArrayList<SpeedAlert> getSpeedAlertByDate(String imei, String date, Boolean orderAsc)
 	{
+		ArrayList<SpeedAlert> speedAlertList = new ArrayList<SpeedAlert>();
+	
 		BoundStatement boundStatement = new BoundStatement(getSpeedAlertByDateStatement);
 		ResultSet rs = session.execute(boundStatement.bind(imei, date));
 		List<Row> rowList = rs.all();
 		List<Row> rowListOrdered = (orderAsc)?Lists.reverse(rowList):rowList;
-	
-		ArrayList<SpeedAlert> speedAlertList = new ArrayList<SpeedAlert>();
 		speedAlertList =  getSpeedAlertList(rowListOrdered);
-
 		return speedAlertList;
 	}
+
+
+	/* overloaded function with starting and ending date */
 	
-	public ArrayList<SpeedAlert> getSpeedAlert(String imei, String startDateTime, String endDateTime, Boolean orderAsc)
+	public ArrayList<SpeedAlert> getSpeedAlertByDate(String imei, String startDate, String endDate, Boolean orderAsc)
 	{
-		BoundStatement boundStatement = new BoundStatement(getSpeedAlertByDateTimeStatement);
+		ArrayList<SpeedAlert> speedAlertList = new ArrayList<SpeedAlert>();
 		ArrayList dateList = new ArrayList();
-		dateList = getDateList(startDateTime, endDateTime)
+	
+		BoundStatement boundStatement = new BoundStatement(getSpeedAlertByDateInStatement);
+		dateList = getDateList(startDate, endDate);
+		ResultSet rs = session.execute(boundStatement.bind(imei, dateList));
+		List<Row> rowList = rs.all();
+		List<Row> rowListOrdered = (orderAsc)?Lists.reverse(rowList):rowList;
+		speedAlertList =  getSpeedAlertList(rowListOrdered);
+		return speedAlertList;
+	}
+
+	public ArrayList<SpeedAlert> getSpeedAlertByDateTime(String imei, String startDateTime, String endDateTime, Boolean orderAsc)
+	{
+		ArrayList<SpeedAlert> speedAlertList = new ArrayList<SpeedAlert>();
+		ArrayList dateList = new ArrayList();
+
+		BoundStatement boundStatement = new BoundStatement(getSpeedAlertByDateTimeStatement);
+		dateList = getDateList(startDateTime, endDateTime);
 
 		long sEpoch=0, eEpoch=0;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
 		try {	
 			sEpoch = sdf.parse(startDateTime+"+0530").getTime();
 			eEpoch = sdf.parse(endDateTime+"+0530").getTime();
@@ -173,38 +196,10 @@ public class SpeedAlertDao {
 		//System.out.println("sDateTime = "+sdf.format(sDateTime));
 		//System.out.println("eDateTime = "+sdf.format(eDateTime));
 	
-		private ArrayList getDateList(String startDateTime, String endDateTime)
-
 		ResultSet rs = session.execute(boundStatement.bind(imei, dateList, sDateTime, eDateTime));
 		List<Row> rowList = rs.all();
-	
-		SpeedAlert speedAlert = new SpeedAlert();
-		String[] tokens = null ;
-		ArrayList<SpeedAlert> speedAlertList = new ArrayList<SpeedAlert>();
-
-		String data;
-		final String DELIMITER = ";";
 		List<Row> rowListOrdered = (orderAsc)?Lists.reverse(rowList):rowList;
-		for (Row row : rowListOrdered)
-		{
-			speedAlert.setImei(row.getString("imei"));
-			speedAlert.setDTime(row.getDate("dtime"));
-			speedAlert.setSTime(row.getDate("stime"));
-			
-			data = row.getString("data");
-			//System.out.println("dtime = "+speedAlert.getDTime());
-			tokens = data.split(DELIMITER);
-		
-			TreeMap pMap1 = new TreeMap();
-			int i = 0;
-			for(String token : tokens)
-			{
-				pMap1.put(speedAlert.fullParams[i++], token);
-			}
-			speedAlert.setPMap(pMap1);
-			speedAlertList.add(new SpeedAlert(speedAlert));
-		}
-
+		speedAlertList =  getSpeedAlertList(rowListOrdered);
 		return speedAlertList;
 	}
 }

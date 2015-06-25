@@ -1,4 +1,4 @@
-package in.co.itracksolution.AlertModel;
+package in.co.itracksolution.model;
 
 import java.util.Date;
 
