@@ -45,10 +45,10 @@ public class mysql_handler {
 	      conn.stmt.close();
 	      }catch(SQLException se2){}
 	    	  
-	 	  init.vehicle_id.add(10);
+	 	  /*init.vehicle_id.add(10);
 	 	  init.vehicle_name.add("test_hdfc1");
 	 	  init.max_speed.add(30.0f);
-	 	  init.device_imei_no.add("865733021569231");
+	 	  init.device_imei_no.add("865733021569231");*/
 	 	  /*
 	 	  init.vehicle_id.add(20);
 	 	  init.vehicle_name.add("test_hdfc2");
