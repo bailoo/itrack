@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,12 +46,20 @@ public class TEST {
 		//validate_lat_lng("23.169054, 80.714108");
 //		get_max();
 		
-		double lat_start = 29.94744;
+		/*double lat_start = 29.94744;
 		double lng_start = 78.16192;
 		double lat_middle = 29.94721;
 		double lng_middle = 78.16219;
 		double lat_end = 29.947;
-		double lng_end = 78.16244;
+		double lng_end = 78.16244;*/
+		
+		double lat_start = 28.58896;
+		double lng_start = 77.37513;
+		double lat_middle = 28.58878;
+		double lng_middle = 77.37482;
+		double lat_end = 28.58978;
+		double lng_end = 77.37419;
+
 		float angle = get_turning_angle(lat_start, lng_start, lat_middle, lng_middle, lat_end, lng_end);
 		System.out.println("Angle="+angle);
 		
@@ -189,4 +198,13 @@ public class TEST {
 		int angle = (int) Math.toDegrees(Math.acos(cosTheata));
 		System.out.println("(ANGLE) Math.toDegrees(Math.acos(cosTheata)) " + angle);	
 	}*/
+	
+	private static Date addMinutesToDate(int minutes, Date beforeTime){
+	    long ONE_MINUTE_IN_MILLIS = 60000;//millisecs
+
+	    long curTimeInMs = beforeTime.getTime();
+	    Date afterAddingMins = new Date(curTimeInMs + (minutes * ONE_MINUTE_IN_MILLIS));
+	    return afterAddingMins;
+	}
+	
 }	

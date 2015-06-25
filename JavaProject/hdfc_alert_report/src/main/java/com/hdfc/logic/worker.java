@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.TreeMap;
 
 import com.datastax.driver.core.ResultSet;
@@ -29,7 +30,9 @@ public class worker {
 	public static ArrayList<String> vehicle_name = new ArrayList<String>();
 	public static ArrayList<Float> max_speed = new ArrayList<Float>();
 	public static ArrayList<String> device_imei_no = new ArrayList<String>();
-	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");	
+	public static TimeZone tz = TimeZone.getTimeZone("Asia/Kolkata");	
+	
 	//SampleFullDataQuery st = new SampleFullDataQuery();
 	public static pull_full_data_cassandra fd = new pull_full_data_cassandra();
 	public static FullData data = new FullData();			
@@ -47,11 +50,12 @@ public class worker {
 	//##############################
 
 	public worker() {
-		
+		//sdf.setTimeZone(tz);
 	}
 	
 	public static void process_data(int account_id) {				
 		//init init_var = new init();
+		sdf.setTimeZone(tz);
 		connection conn = new connection();
 		mysql_handler mh = new mysql_handler();
 		mysql_handler.getVehicleInformation(conn, account_id);
@@ -62,12 +66,12 @@ public class worker {
 		
 		//previous_date1 = "2015-06-14 13:19:35";
 		//previous_date2 = "2015-06-14 13:20:08";	
-		previous_date1 = "2015-06-14 09:30:15";
-		previous_date2 = "2015-06-14 09:30:37";
-//		previous_date1 = "2015-04-26 00:00:00";
-//		previous_date2 = "2015-06-15 23:59:00";		
+//		previous_date1 = "2015-06-13 00:00:00";
+//		previous_date2 = "2015-06-15 23:30:37";
+		previous_date1 = "2015-04-26 00:00:00";
+		previous_date2 = "2015-06-15 23:59:00";
 				
-		System.out.println("AftergetVehicleInfo="+init.device_imei_no.size());
+		System.out.println("SizeIMEI="+init.device_imei_no.size());
 		for(int i=0;i<(init.device_imei_no.size());i++) {			
 			
 			//####### TEMPORARY
@@ -93,7 +97,7 @@ public class worker {
 			
 			//System.out.println("Device="+init.device_imei_no.get(i));
 			pull_and_process_data(init.vehicle_name.get(i), init.max_speed.get(i), init.device_imei_no.get(i), previous_date1, previous_date2);
-			
+			System.out.println("Pullprocess completed..");
 			//### PUSH ::DISTANCE REPORT :: ARRAYLIST TO CASSANDRA
 			/*report_distance.VehicleID.get(x);
 			report_distance.StartTime.add(x);
@@ -114,6 +118,7 @@ public class worker {
 			//###### TEMPORARY WRITE
 			//System.out.println("CALL="+i);
 			write_to_database(init.device_imei_no.get(i));
+			System.out.println("Processed IMEI:"+init.device_imei_no.get(i)+" -"+i);
 		}
 		
 		fd.close();
@@ -121,7 +126,7 @@ public class worker {
 	}
 	
 	public static void pull_and_process_data(String vehicle_name, Float max_speed, String imei, String startDateTime, String endDateTime) {				
-		System.out.println("In PullProcess");
+		
 		String device_time ="", sts ="", lat_str ="", lng_str ="";
 		double lat=0.0, lng=0.0, speed =0.0;
 
@@ -143,8 +148,9 @@ public class worker {
 		ArrayList<FullData> fullDataList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, deviceTime, orderAsc);
 
 		String tmp_lat ="", tmp_lng="";
-		int data_size = fullDataList.size();
+		int data_size = fullDataList.size();		
 		int record_count =1;
+		//System.out.println("DataSize="+data_size);
 		
 		for (FullData fullData : fullDataList)
 		{
@@ -179,7 +185,7 @@ public class worker {
 				System.out.print("f: "+pMap1.get("f")+" ");
 				System.out.println();*/	
 				
-				System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
+				//System.out.println("device time: "+sdf.format(fullData.getDTime())+" ,lat="+tmp_lat+" ,tmp_lng="+tmp_lng);
 				device_time = sdf.format(fullData.getDTime());
 				sts = sdf.format(fullData.getSTime());
 				tmp_lat = tmp_lat.substring(0,tmp_lat.length()-1);
@@ -220,8 +226,8 @@ public class worker {
 	public static void write_to_database(String imei) {
 		
 		//String filename= "D:\\itrack_vts/hdfc_alert_report/"+imei+".csv";
-		String filename= "/mnt/hdfc_report/"+imei+".csv";
-		line = "DeviceTime,ServerTime,Speed,Angle,Latitude,Longitude\n";
+		String filename= "/mnt/hdfc_report/csv/"+imei+".csv";
+		line = "DeviceTime,ServerTime,Speed (Km/hr),Angle (Deg),Latitude,Longitude\n";
 		try {
 			fw = new FileWriter(filename,true);
 		} catch (IOException e3) {
@@ -229,7 +235,7 @@ public class worker {
 			e3.printStackTrace();
 		} //the true will append the new data	
 		
-		System.out.println("Size="+report_turning_violation.IMEI_No.size());
+		//System.out.println("Size="+report_turning_violation.IMEI_No.size());
 		if(report_turning_violation.IMEI_No.size() > 0) {
 			for(int i=0;i<report_turning_violation.IMEI_No.size();i++) {
 				
