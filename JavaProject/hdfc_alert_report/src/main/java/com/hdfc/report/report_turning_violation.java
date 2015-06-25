@@ -34,10 +34,10 @@ public class report_turning_violation {
 		if(device_time!=null) {	
 			//System.out.println(" imei="+imei+" device_time="+device_time+" startdate="+startdate+" enddate="+enddate+" interval="+interval+" lat="+lat+" lng="+lng+" speed="+speed+" data_size="+data_size+" record_count="+record_count);
 			try{
-				xml_date_latest_sec = utility_class.get_seconds(xml_date_latest);
+				//xml_date_latest_sec = utility_class.get_seconds(xml_date_latest);
 				//System.out.println("xml_date_latest_sec="+xml_date_latest_sec);
 				device_time_sec = utility_class.get_seconds(device_time);
-				//System.out.println("device_time_sec="+device_time_sec);
+				//System.out.print("device_time_sec="+device_time_sec);
 				startdate_sec = utility_class.get_seconds(startdate);
 				//System.out.println("startdate_sec="+startdate_sec);
 				enddate_sec = utility_class.get_seconds(enddate);
@@ -45,13 +45,14 @@ public class report_turning_violation {
 			}catch(Exception ed) {System.out.println(ed.getMessage());}
 			//System.out.println("ValidDeviceTime Found2");
 			
-			if( (device_time_sec >= startdate_sec) && (device_time_sec <= enddate_sec) && (device_time_sec >= xml_date_latest_sec) && (device_time!="-") ) {
-				xml_date_latest = device_time;
+			System.out.println("BeforeValid="+device_time+" ,startdate="+startdate+" ,enddate="+enddate+" ,xml_date_latest="+xml_date_latest);
+			
+			if( (device_time_sec >= startdate_sec) && (device_time_sec <= enddate_sec) ) {
 				  				
-				//System.out.println("start_flag="+start_flag);
+				System.out.println("Valid="+device_time);
 				
 				if(start_flag==0){	//START POINT
-					System.out.println("IMEI_START="+imei);
+					//System.out.println("IMEI_START="+imei);
 					start_flag = 1;
 												
 					lat_start = lat;						
@@ -62,7 +63,7 @@ public class report_turning_violation {
 				}
 				else if((start_flag==1) && (middle_flag==0)){	//MIDDLE POINT
 
-					System.out.println("IMEI_MIDDLE="+imei);
+					//System.out.println("IMEI_MIDDLE="+imei);
 					middle_flag = 1;
 												
 					lat_middle = lat;						
@@ -94,7 +95,7 @@ public class report_turning_violation {
 					
 					angle = get_turning_angle(lat_start, lng_start, lat_middle, lng_middle, lat_end, lng_end);
 					//###############################
-					//System.out.println("Angle="+angle+",lat_start="+lat_start+",lng_start="+lng_start+",lat_middle="+lat_middle+" ,lng_middle="+lng_middle+",lat_end="+lat_end+",lng_end="+lng_end);
+					System.out.println("Angle="+angle+",lat_start="+lat_start+",lng_start="+lng_start+",lat_middle="+lat_middle+" ,lng_middle="+lng_middle+",lat_end="+lat_end+",lng_end="+lng_end);
 					
 					//if(angle > 30) {
 					if( (angle > 30.0f) && (speed>1.0) ) 

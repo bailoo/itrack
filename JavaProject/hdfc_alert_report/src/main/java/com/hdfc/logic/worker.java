@@ -50,11 +50,12 @@ public class worker {
 	//##############################
 
 	public worker() {
-		sdf.setTimeZone(tz);
+		//sdf.setTimeZone(tz);
 	}
 	
 	public static void process_data(int account_id) {				
 		//init init_var = new init();
+		sdf.setTimeZone(tz);
 		connection conn = new connection();
 		mysql_handler mh = new mysql_handler();
 		mysql_handler.getVehicleInformation(conn, account_id);
@@ -65,10 +66,10 @@ public class worker {
 		
 		//previous_date1 = "2015-06-14 13:19:35";
 		//previous_date2 = "2015-06-14 13:20:08";	
-		previous_date1 = "2015-06-14 09:30:15";
-		previous_date2 = "2015-06-14 09:30:37";
-//		previous_date1 = "2015-04-26 00:00:00";
-//		previous_date2 = "2015-06-15 23:59:00";		
+		previous_date1 = "2015-06-13 00:00:00";
+		previous_date2 = "2015-06-15 23:30:37";
+		//previous_date1 = "2015-04-26 00:00:00";
+		//previous_date2 = "2015-06-15 23:59:00";
 				
 		System.out.println("AftergetVehicleInfo="+init.device_imei_no.size());
 		for(int i=0;i<(init.device_imei_no.size());i++) {			
@@ -94,7 +95,7 @@ public class worker {
 			report_turning_violation.start_flag = 0;
 			report_turning_violation.middle_flag = 0;
 			
-			//System.out.println("Device="+init.device_imei_no.get(i));
+			System.out.println("Device="+init.device_imei_no.get(i));
 			pull_and_process_data(init.vehicle_name.get(i), init.max_speed.get(i), init.device_imei_no.get(i), previous_date1, previous_date2);
 			
 			//### PUSH ::DISTANCE REPORT :: ARRAYLIST TO CASSANDRA
@@ -140,7 +141,7 @@ public class worker {
 		String endDateTime = "2015-01-01 15:00:00";*/
 				
 		Boolean deviceTime = true;	// true for device time index, otherwise server time
-		Boolean orderAsc = true;	// true for ascending , otherwise descending (default) 
+		Boolean orderAsc = false;	// true for ascending , otherwise descending (default) 
 
 
 		ArrayList<FullData> fullDataList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, deviceTime, orderAsc);
@@ -182,7 +183,7 @@ public class worker {
 				System.out.print("f: "+pMap1.get("f")+" ");
 				System.out.println();*/	
 				
-				System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
+				System.out.println("device time: "+sdf.format(fullData.getDTime())+" ,lat="+tmp_lat+" ,tmp_lng="+tmp_lng);
 				device_time = sdf.format(fullData.getDTime());
 				sts = sdf.format(fullData.getSTime());
 				tmp_lat = tmp_lat.substring(0,tmp_lat.length()-1);
@@ -223,7 +224,7 @@ public class worker {
 	public static void write_to_database(String imei) {
 		
 		//String filename= "D:\\itrack_vts/hdfc_alert_report/"+imei+".csv";
-		String filename= "/mnt/hdfc_report/"+imei+".csv";
+		String filename= "/mnt/hdfc_report/csv/"+imei+".csv";
 		line = "DeviceTime,ServerTime,Speed,Angle,Latitude,Longitude\n";
 		try {
 			fw = new FileWriter(filename,true);
