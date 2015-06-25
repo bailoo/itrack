@@ -1,19 +1,30 @@
 <?php
 $sheet1_row = 2;
 $sheet2_row = 2;
-//$userdates = array();
-function get_halt_xml_data($startdate, $enddate, $read_excel_path)
+
+/*if($DEBUG_OFFLINE)
 {
+	$userdates = array();
+}*/
+function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $time2_ev, $shift_1, $difftime)
+{
+	echo "\nInAction";
+	//echo "\nEnddate	=".$enddate." ,time1_ev=".$time1_ev." ,time2_ev=".$time2_ev;	
+	//$date_curr = explode(' ',$enddate);
+	//$date_curr_tmp = $date_curr[0]." 03:00:00";
+
+
 	global $va,$vb,$vc,$vd,$ve,$vf,$vg,$vh,$vi,$vj,$vk,$vl,$vm,$vn,$vo,$vp,$vq,$vr,$vs,$vt,$vu,$vv,$vw,$vx,$vy,$vz,$vaa,$vab;
 	global $old_xml_date;
-	
-	echo "\nSD=".$startdate." ,ED=".$enddate;
+	global $DEBUG_OFFLINE;
+	echo "\nSD=".$startdate." ,ED=".$enddate." ,Time1=".$time1_ev;
 	global $Vehicle;			//SENT FILE
 	global $SNo;
 	global $StationNo;
 	global $Type;
 	global $RouteNo;
 	global $ReportShift;
+	global $HourBand;
 	global $ArrivalDate;
 	global $ArrivalTime;
 	global $DepartureDate;
@@ -36,6 +47,24 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 	global $DistVar;
 	global $IMEI;
 	global $RouteType;	
+	global $NO_GPS;
+	//global $PlantIn;
+	
+	/*global $PlantLat;
+	global $PlantLng;*/
+	global $PlantCoord;
+	global $PlantDistVar;
+	global $Status;
+	global $SecondaryVehicle;
+	
+	global $PlantInDate;
+	global $PlantInTime;
+	global $PlantOutDate;
+	global $PlantOutTime;	
+
+	global $PlantOutScheduleTime;
+	global $PlantOutDelay;
+	
 	global $objPHPExcel_1;
 	
 	global $last_vehicle_name;
@@ -49,15 +78,6 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 	global $RouteType_CI;
 	global $ArrivalTime_CI;
 	global $TransporterI_CI;
-	
-	//######### MEAN TIME VARIABLES
-	global $Vehicle_MeanTime;
-	global $ColumnCount_MeantTime;		
-	global $meantime_lat;
-	global $meantime_lng;
-	global $meantime_halt_start;
-	global $meantime_halt_end;
-	global $meantime_halt_dur;	
 
 	$current_halt_time =0;
 	$objPHPExcel_1 = null;	
@@ -66,12 +86,12 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 	$objPHPExcel_1 = PHPExcel_IOFactory::load($read_excel_path);
 	//echo "\nDebug2:".$read_excel_path;
 	//##### REMOVE EXTRA SHEETS
-	$objPHPExcel_1->removeSheetByIndex(3);
-	$objPHPExcel_1->removeSheetByIndex(2);
+$objPHPExcel_1->removeSheetByIndex(2);
+$objPHPExcel_1->removeSheetByIndex(1);
 	
 	//echo date('H:i:s') , " Write to Excel2007 format" , EOL;
-	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel_1, 'Excel2007');
-	$objWriter->save($read_excel_path);
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel_1, 'Excel2007');
+$objWriter->save($read_excel_path);
 	echo date('H:i:s') , " File written to " , $read_excel_path , EOL;
 		
 	//###### RELOAD SHEET
@@ -89,28 +109,28 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 	));
 	
 	$objPHPExcel_1->createSheet();
-	$objPHPExcel_1->setActiveSheetIndex(2)->setTitle('Route Completed');
+	$objPHPExcel_1->setActiveSheetIndex(1)->setTitle('Route Completed');
 		
 	$objPHPExcel_1->createSheet();
-	$objPHPExcel_1->setActiveSheetIndex(3)->setTitle('Route Pending');		
+	$objPHPExcel_1->setActiveSheetIndex(2)->setTitle('Route Pending');		
 	echo "\nSecond tab";
 	$row =1;
 	//###### HEADER
 	$col_tmp = 'A'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Vehicle");
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Vehicle");
+	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'B'.$row;					
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Route"); 					
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Route"); 					
+	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'C'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "CustomerCompleted(All)");
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "CustomerCompleted(All)");
+	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'D'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Transporter(I)");
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Transporter(I)");
+	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'E'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "RouteType");
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);	
+	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "RouteType");
+	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);	
 	$row++;						
 	//#### SECOND TAB CLOSED ##################################################################	
 	
@@ -119,23 +139,27 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 	$row =1;
 	//####### DEFINE HEADER
 	$col_tmp = 'A'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , "Vehicle");
-	$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Vehicle");
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'B'.$row;					
-	$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , "Route"); 			
-	$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($header_font);	
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Route"); 			
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);	
 	$col_tmp = 'C'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , "Customer Completed");
-	$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Customer Completed");
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'D'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , "Customer Incompleted");					
-	$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Customer Incompleted");					
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'E'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , "Transporter(I)");					
-	$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Transporter(I)");					
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'F'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , "RouteType");					
-	$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($header_font);		
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "RouteType");					
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);		
+	$col_tmp = 'G'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Remark");
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+ 
 	$row++;	
 	//######## EXTRA SHEET CLOSED
 		
@@ -143,10 +167,25 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 	echo "\nSizeVehicle=".sizeof($Vehicle);	
 	for($i=0;$i<sizeof($Vehicle);$i++)
 	{		
+		$lat_ref = 0.0;$lng_ref = 0.0;$lat_ref1 = 0.0;$lng_ref1 = 0.0;$lat_cr =0.0;$lng_cr =0.0;
+		/*$plant_lat_local[$Vehicle[$i]][$RouteNo[$i]] = $PlantLat[$i];
+		$plant_lng_local[$Vehicle[$i]][$RouteNo[$i]] = $PlantLng[$i];*/
+		$plant_coord_local[$Vehicle[$i]][$RouteNo[$i]] = $PlantCoord[$i];
+		$plant_distvar_local[$Vehicle[$i]][$RouteNo[$i]] = $PlantDistVar[$i];		
+		$plant_status_local[$Vehicle[$i]][$RouteNo[$i]] = $Status[$i];
+		
+		$plant_indate_local[$Vehicle[$i]][$RouteNo[$i]] = $PlantInDate[$i];
+		$plant_outdate_local[$Vehicle[$i]][$RouteNo[$i]] = $PlantOutDate[$i];
+
+		$plant_intime_local[$Vehicle[$i]][$RouteNo[$i]] = $PlantInTime[$i];
+		$plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]] = $PlantOutTime[$i];				
+
+		//echo "\nPlantLatLocal=".$plant_lat_local[$Vehicle[$i]][$RouteNo[$i]];		
 		//$userdates = array();
 		$nodata = true;
+		$nodata_last = true;
 		$nogps = true;
-		//echo "<br>Vehicle=".$i.",".$Vehicle[$i];
+		echo "<br>Vehicle=".$i.",".$Vehicle[$i];
 		$row = $i+2;
 		//###### GET LAST HALT TIME
 		$vehicle_serial = $IMEI[$i];
@@ -186,8 +225,14 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 		//$startdate = "2013-05-12 16:51:49";
 		//$enddate = "2013-05-12 21:24:04";	
 		
-		//$abspath = "D:\\test_app";
-		$abspath = "/var/www/html/vts/beta/src/php";
+		if($DEBUG_OFFLINE)
+		{
+			$abspath = "D:\\test_app";
+		}
+		else
+		{
+			$abspath = "/var/www/html/vts/beta/src/php";
+		}
 		include_once($abspath."/util.hr_min_sec.php");
 		//echo "\nHALT function before1";
 		global $customer_visited;
@@ -269,10 +314,18 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 		$timeto = $date_2[1];
 		$cum_dist = 0;
 		//echo "\nTEST3";
-		//global $userdates;
-		//$userdates = array();
-		get_All_Dates($datefrom, $dateto, &$userdates);
-		//get_All_Dates($datefrom, $dateto);
+		
+		/*if($DEBUG_OFFLINE)
+		{
+			global $userdates;
+			$userdates = array();
+			get_All_Dates($datefrom, $dateto);
+		}
+		else
+		{*/
+			get_All_Dates($datefrom, $dateto, &$userdates);
+		//}
+		//
 		//date_default_timezone_set("Asia/Calcutta");
 		$current_datetime = date("Y-m-d H:i:s");
 		$current_date = date("Y-m-d");
@@ -280,8 +333,14 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 		$date_size = sizeof($userdates);
 		$substr_count =0;
 		
-		//$back_dir = "D:\\itrack_vts";
-		$back_dir = "/var/www/html/itrack_vts";
+		if($DEBUG_OFFLINE)
+		{
+			$back_dir = "D:\\itrack_vts";
+		}
+		else
+		{
+			$back_dir = "/var/www/html/itrack_vts";
+		}
 		//$back_dir_current = "/mnt/volume3";
 		//$back_dir_sorted = "/mnt/volume4";
 		$AddEntryinrReport = false;
@@ -289,8 +348,14 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 		//echo "\nTEST4";
 		
 		//echo "\nDateSize=".$date_size;
-		//include("D:\\test_app/common_xml_path.php");
-		include("/var/www/html/vts/beta/src/php/common_xml_path.php");
+		if($DEBUG_OFFLINE)
+		{
+			include("D:\\test_app/common_xml_path.php");
+		}
+		else
+		{
+			include("/var/www/html/vts/beta/src/php/common_xml_path.php");
+		}
 		for($d=0;$d<=($date_size-1);$d++)
 		{	
 			$xml_current = $xml_data."/".$userdates[$d]."/".$vehicle_serial.".xml";
@@ -305,34 +370,43 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 				$CurrentFile = 0;
 			}		
 			//echo "\nxml_file=".$xml_file;	
-			
+		
+		   $sts_date_sel = array();
+		   $xml_date_sel = array();
+		   $lat_sel = array();
+		   $lng_sel = array();
+		   $speed_sel = array();
+	
 			//######### STORE MEANINGFUL DATA BETWEEN TWO STS DATES
 			if (file_exists($xml_file)) 
-			{			
+			{	
+				//echo "\nExist1";
+				$nodata=false;		
 				$t=time();
 				//echo "t=".$t."<br>";
 				$xml_original_tmp = $back_dir."/xml_tmp/original_xml/tmp".$vehicle_serial."_".$t."_".$d.".xml";
 				copy($xml_file,$xml_original_tmp);
 
-				//$total_lines = count(file($xml_original_tmp));		      
+				$total_lines = count(file($xml_original_tmp));		      
 				//echo "\nTotalLines=".$total_lines;
 				$xml = @fopen($xml_original_tmp, "r") or $fexist = 0;  
 				
 				if (file_exists($xml_original_tmp)) 
 				{
+					//echo "\nOriginalFileExists";
 					//$vserial_sel[] = array(); 					
-					$sts_date_sel = array();
+					/*$sts_date_sel = array();
 					$xml_date_sel = array();				
 					$lat_sel = array(); 					
 					$lng_sel = array(); 					
-					$speed_sel = array();
+					$speed_sel = array();*/
 									
 					//SWITCH MASTER VARIABLES
 					set_master_variable($userdates[$d]);
 					
 					while(!feof($xml))          // WHILE LINE != NULL
 					{
-						//echo "\nline";
+						//echo "\n".$line;
 						//########## STORE VEHICLE COUNTER						
 						//echo "\nDepartureTime IS NULL";
 						$DataValid = 0;			
@@ -378,14 +452,14 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 							$xml_date = $datetime;								
 						}       
 
-						 //echo "\nXML_DATE=".$xml_date." ,DataValid=".$DataValid." ,vehicle_serial=".$vehicle_serial;   
-
+						//echo "\nXML_DATE=".$xml_date." ,DataValid=".$DataValid." ,vehicle_serial=".$vehicle_serial;   
 						if($sts_date!=null)
 						{								
-							//echo "\nStartDate=".$startdate." ,EndDate=".$enddate;
+							//echo "\nSTS=".$sts_date." ,Startdate=".$startdate." ,EndDate=".$enddate." ,DataValid=".$DataValid;
 							//if(($xml_date >= $startdate && $xml_date <= $enddate) && ($xml_date!="-") && ($DataValid==1) )
-							if(($sts_date >= $startdate && $sts_date <= $enddate) && ($sts_date!="-") && ($DataValid==1) )
+							if((strtotime($sts_date) >= strtotime($startdate) && strtotime($sts_date) <= strtotime($enddate)) && ($sts_date!="-") && ($DataValid==1) )
 							{
+								//echo "\nFound";
 								$status = preg_match('/'.$vd.'="[^" ]+/', $line, $lat_tmp);
 								if($status==0)
 								{
@@ -407,6 +481,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 								}
 
 								//$vserial_sel[] = $vehicle_serial; 
+								//echo "\nAfter XMLPARAM,".$sts_date." ,xml_date=".$xml_date;
 								$sts_date_sel[] = $sts_date;
 								$xml_date_sel[] = $xml_date;
 								$lat_tmp1 = explode("=",$lat_tmp[0]);							
@@ -422,6 +497,9 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 					fclose($xml);   					
 				}
 			}
+		//}  // CLOSED- DATE FOR LOOP
+
+		//unlink($xml_original_tmp);
 			
 			//###### SORT THE ARRAYS
 			for($x = 1; $x < sizeof($xml_date_sel); $x++) 
@@ -440,7 +518,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 				{
 					$date_tmp1 = $xml_date_sel[$z];						
 
-					if ($date_tmp1 >$value)
+					if (strtotime($date_tmp1) > strtotime($value))
 					{
 						$xml_date_sel[$z + 1] = $xml_date_sel[$z];
 						$sts_date_sel[$z + 1] = $sts_date_sel[$z];
@@ -481,180 +559,310 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 				//echo "\nFile Exist";
 				$halt_once = false;
 				
+				$p_in = false;					
+				$p_out = false;
+					
 				for($y=0;$y<sizeof($xml_date_sel);$y++)          // WHILE LINE != NULL
 				{
-					//echo "\nline";
-					//########## STORE VEHICLE COUNTER																	  										
-					$datetime = $xml_date_sel[$y];	
-					if((strtotime($datetime) > strtotime($startdate)) && (strtotime($datetime) < strtotime($enddate)))
-					{
-					$nodata = false;
+					//echo "\nXML_DATE_SEL=".$datetime." ,time1=".$time1_ev." ,enddate=".$enddate;
+					//########## STORE VEHICLE COUNTER																	  					
+					$nodata = false;															 							
+					//echo "\nNodata2=".$nodata;
+
+					$datetime = $xml_date_sel[$y];
 					
-					if($firstdata_flag==0)
-					{							
-						$halt_flag = 0;
-						$firstdata_flag = 1;
-
-						//$vehicleserial_tmp1 = explode("=",$vehicleserial_tmp[0]);
-						//$vserial = preg_replace('/"/', '', $vehicleserial_tmp1[1]);						
-						$vserial = $vehicle_serial; 												
-						$lat_ref = $lat_sel[$y];						
-						$lng_ref = $lng_sel[$y];
-					
-						if($lat_ref!="" && $lng_ref!="")
+					if((strtotime($datetime) > strtotime($time1_ev)) && (strtotime($datetime) < strtotime($enddate)))
+					{		
+						$nodata_last = false;
+						
+						//echo "\nStatus=".$plant_status_local[$Vehicle[$i]][$RouteNo[$i]]." ,lat=".$plant_lat_local[$Vehicle[$i]][$RouteNo[$i]]." ,lng=".$plant_lng_local[$Vehicle[$i]][$RouteNo[$i]];						
+						$plant_valid = false;
+						//echo "\nPLANT_STATUS=".$plant_status_local[$Vehicle[$i]][$RouteNo[$i]];
+	
+						if($plant_status_local[$Vehicle[$i]][$RouteNo[$i]]==0)
 						{
-							$nogps = false;
+							//echo "\nPlantZero";
+							//check(plantcord,current cord);
+							$total_coords = explode('#',$plant_coord_local[$Vehicle[$i]][$RouteNo[$i]]);
+							$tmp_radius = explode('#',$plant_distvar_local[$Vehicle[$i]][$RouteNo[$i]]);
+							
+							for($p=0;$p<sizeof($total_coords);$p++)
+							{
+								$tmp_coord = explode(',',$total_coords[$p]);
+								
+								//echo "\nplant_coord[0]=".$tmp_coord[0].", plan_coord[1]=".$tmp_coord[1]." ## lat_sel[y]=".$lat_sel[$y]." ,lng_sel[y]=".$lng_sel[$y];
+								/*if($DEBUG_OFFLINE)
+								{
+									$distance_plant = calculate_distance(trim($tmp_coord[0]), $lat_sel[$y], trim($tmp_coord[1]), $lng_sel[$y]);
+								}
+								else
+								{*/
+									calculate_distance(trim($tmp_coord[0]), $lat_sel[$y], trim($tmp_coord[1]), $lng_sel[$y], &$distance_plant);
+								//}							
+								//echo "\nPlantLat=".$plant_lat_local[$Vehicle[$i]][$RouteNo[$i]]." ,PlantLng=".$plant_lng_local[$Vehicle[$i]][$RouteNo[$i]]." ,LatSel=".$lat_sel[$y]." ,LngSel=".$lng_sel[$y];
+								//echo "\nDistance1=".$distance_plant." ,tmp_radius[p]=".$tmp_radius[$p];
+								if($distance_plant < $tmp_radius[$p])
+								{
+									//echo "\nIN:PLANT-1:".$datetime;
+									//$plant_status_local[$Vehicle[$i]][$RouteNo[$i]] = 1;
+									//echo "<br>PlantINTimePrev=".$plant_intime_local[$Vehicle[$i]][$RouteNo[$i]];
+									if($plant_intime_local[$Vehicle[$i]][$RouteNo[$i]]=="")
+									{
+										//echo "\nIN:Plant2=".$datetime;
+										//if( ($shift_1=="ZPMM") || (($shift_1=="ZPME") && ($plant_time_ev=="currentday")) || (($shift_1=="ZPME") && ($plant_time_ev=="nextday") && (strtotime($datetime) < strtotime($date_curr_tmp))))
+										//echo "\nSHIFT=".$shift_1." ,DiffTime=".$difftime;
+
+										if( (($shift_1=="ZBVM") && ($difftime>10800 && $difftime<43200)) || ( ($shift_1=="ZBVE") && ($difftime>43200 || $difftime<10800) )) 
+									//if( (($shift_1=="ZPMM") && ($difftime>10800 && $difftime<43200)) || ($shift_1=="ZPME"))
+{
+											//echo "\nIN PlantMain";
+											$plant_intime_local[$Vehicle[$i]][$RouteNo[$i]] = $datetime;
+											$plant_status_local[$Vehicle[$i]][$RouteNo[$i]] = 1;
+											$p_in = true;
+										}
+									}
+									
+									$plant_valid = true;
+									break;
+								}								
+							}
+							
+							//## CHECK SECONDARY VEHICLS
+							for($s=0;$s<sizeof($SecondaryVehicle);$s++)
+							{
+								if(trim($Vehicle[$i]) == trim($SecondaryVehicle[$s]))
+								{
+									$plant_status_local[$Vehicle[$i]][$RouteNo[$i]] = 2;
+									$plant_valid = true;
+									break;
+								}
+							}
+							
+							if(!$plant_valid)
+							{
+								//echo "\nContinue";
+								$nogps = false;
+								continue;
+							}
 						}
-						$datetime_ref = $datetime;	
-						$cum_dist = 0;			
+						else if($plant_status_local[$Vehicle[$i]][$RouteNo[$i]]==1)
+						{			
+							$plant_in_datetime = $plant_indate_local[$Vehicle[$i]][$RouteNo[$i]]." ".$plant_intime_local[$Vehicle[$i]][$RouteNo[$i]];
+							$plant_out_datetime = $plant_outdate_local[$Vehicle[$i]][$RouteNo[$i]]." ".$plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]];										
+							
+							if( (($plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]]=="") && ($plant_intime_local[$Vehicle[$i]][$RouteNo[$i]]!="")) && (strtotime($datetime) > strtotime($plant_in_datetime)))
+							{		
+								//echo "\nPlantIntime".$plant_in_datetime;
+								//echo "\nPlant One";
+								$total_coords = explode('#',$plant_coord_local[$Vehicle[$i]][$RouteNo[$i]]);
+								$tmp_radius = explode('#',$plant_distvar_local[$Vehicle[$i]][$RouteNo[$i]]);
+								
+								for($p=0;$p<sizeof($total_coords);$p++)
+								{
+									$tmp_coord = explode(',',$total_coords[$p]);
+									
+									//echo "\nplant_coord[0]=".$tmp_coord[0].", plan_coord[1]=".$tmp_coord[1]." ## lat_sel[y]=".$lat_sel[$y]." ,lng_sel[y]=".$lng_sel[$y];
+									/*if($DEBUG_OFFLINE)
+									{
+										$distance_plant = calculate_distance(trim($tmp_coord[0]), $lat_sel[$y], trim($tmp_coord[1]), $lng_sel[$y]);
+									}
+									else
+									{*/
+										calculate_distance(trim($tmp_coord[0]), $lat_sel[$y], trim($tmp_coord[1]), $lng_sel[$y], &$distance_plant);
+									//}
+									
+									//echo "\nPlantLat=".$plant_lat_local[$Vehicle[$i]][$RouteNo[$i]]." ,PlantLng=".$plant_lng_local[$Vehicle[$i]][$RouteNo[$i]]." ,LatSel=".$lat_sel[$y]." ,LngSel=".$lng_sel[$y];
+									//echo "\nVehicle=".$Vehicle[$i]." ,Distance1=".$distance_plant." ,tmp_radius[p]=".$tmp_radius[$p];
+									if($distance_plant > $tmp_radius[$p])
+									{
+										//echo "\nOUT-Plant2:".$datetime." ,plant_indate=".$plant_in_datetime;
+	
 
-						//###### FOR IRREGULAR DATA FILTER CODE
-						$last_time1 = $datetime;
-						$latlast = $lat_ref;
-						$lnglast =  $lng_ref;
-						//////##############################
-						//$date_secs1 = strtotime($datetime_ref);							
-						//$date_secs1 = (double)($date_secs1 + $interval);      	
-					}                 	
-					else
-					{    								
-						//echo "<br>Next";               
-						//GET NEXT RECO
-						$lat_cr = $lat_sel[$y];																												
-						$lng_cr = $lng_sel[$y];
-						$datetime_cr = $datetime;																		
-						$date_secs2 = strtotime($datetime_cr);	
-						calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, &$distance);
-						//$distance = calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr);
-						//if(($distance > 0.0100) || ($f== $total_lines-2) )
-						//echo "\nF=".$f." ,total_lines=".$total_lines;										
-																							
-						//###### FOR IRREGULAR DATA FILTER CODE
-						$tmp_time_diff1 = (double)(strtotime($datetime) - strtotime($last_time1)) / 3600;
-
-						calculate_distance($latlast, $lat_cr, $lnglast, $lng_cr, &$distance1);
-						//$distance1 = calculate_distance($latlast, $lat_cr, $lnglast, $lng_cr);
-						if($tmp_time_diff1>0)
+// if( ($shift_1=="ZPMM") || (($shift_1=="ZPME") && ($plant_time_ev=="currentday")) || (($shift_1=="ZPME") && ($plant_time_ev=="nextday") && (strtotime($datetime) < strtotime($date_curr_tmp))))											
+if( (($shift_1=="ZBVM") && ($difftime>10800 && $difftime<43200)) || ( ($shift_1=="ZBVE") && ($difftime>43200 || $difftime<10800) ))
+//if( (($shift_1=="ZPMM") && ($difftime>10800 && $difftime<43200)) || ($shift_1=="ZPME") )
+ 			
 						{
-							$tmp_speed = ((double) ($distance1)) / $tmp_time_diff1;
-							//if($tmp_speed==0) echo "\nDistance1=".$distance1." ,tmp_time_diff1=".$tmp_time_diff1." ,latlast=".$latlast." ,lnglast=".$lnglast." ,lat_cr=".$lat_cr." ,lng_cr=".$lng_cr;
-							$last_time1 = $datetime;
-							$latlast = $lat_cr;
-							$lnglast =  $lng_cr;
-						}
-						$tmp_time_diff = ((double)( strtotime($datetime) - strtotime($last_time) )) / 3600;
-						//#######################################
-											
-						//if (($halt_flag == 1) && ($distance > 0.100))
-						{								
-							//echo "\n\nIF HALT, datetime=".$datetime." ,ArrivalTime=".$datetime_ref." ,DepartureTime=".$datetime_cr;
-							$arrivale_time = $datetime_ref;
-							$starttime = strtotime($datetime_ref);										  
-							$stoptime = strtotime($datetime_cr);
-							$depature_time=$datetime_cr;
-																	
-							$halt_dur = ($stoptime - $starttime);		//THIS IS USED AT RUNTIME, COMMENT HERE LATER
-							$hms_2 = secondsToTime($halt_dur);
-							$hrs_min = $hms_2[h].":".$hms_2[m].":".$hms_2[s];
-							
-							$AddEntryinrReport=true;    
-							//check for all vehicles with j as i to jcnt and check for customer where arrival is not there
-							
-							for($k=$i;$k<$j;$k++)
-							{
-								//echo "\nArrivalTime[$k]=".$ArrivalTime[$k]." ,DepartureTime[$k]=".$DepartureTime[$k];
-								if(($ArrivalTime[$k]!="") && ($DepartureTime[$k] == ""))
-								{															
-									$arrtime_str = $ArrivalDate[$k]." ".$ArrivalTime[$k];
-									$deptime = strtotime($depature_time);
-									$arrtime = strtotime($arrtime_str);
-									$halt_dur = ($deptime - $arrtime);		//THIS IS USED AT RUNTIME, COMMENT HERE LATER
-									$hms_2 = secondsToTime($halt_dur);
-									$hrs_min = $hms_2[h].":".$hms_2[m].":".$hms_2[s];
-									//echo "\nDepartureFound";
-									update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k],$k,$StationNo[$k],$Lat[$k],$Lng[$k],$ScheduleTime[$k],$DistVar[$k],$Remark[$k],$startdate,$enddate,$lat_cr, $lng_cr, $lat_cr, $lng_cr,$arrivale_time,$depature_time,$RouteNo[$k],$hrs_min,$Type[$k],2);
-								}
-							}													
-							
-							$last_halt_time_excel = 0;
-							//$halt_flag = 0;
-						}
-						if(($distance <= 0.100) && ($halt_flag == 0) && ( (strtotime($datetime_cr)-strtotime($datetime_ref))<($interval-$last_halt_time_excel)) )
-						{							
-							$current_halt_time = $current_halt_time + (strtotime($datetime_cr)-strtotime($datetime_ref));
-							//echo "<br>HaltContinued:".$current_halt_time;
-						}									
-						else if(($distance <= 0.100) && ($halt_flag == 0) && ( (strtotime($datetime_cr)-strtotime($datetime_ref))>($interval-$last_halt_time_excel)) )    // IF VEHICLE STOPS FOR 2 MINS 
-						{							
-							for($k=$i;$k<$j;$k++)
-							{
-								if($ArrivalTime[$k]=="")
-								{																														
-									update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k],$k,$StationNo[$k],$Lat[$k],$Lng[$k],$ScheduleTime[$k],$DistVar[$k],$Remark[$k],$startdate,$enddate,$lat_ref1, $lng_ref1, $lat_cr, $lng_cr,$datetime_ref,$depature_time,$RouteNo[$k],$hrs_min,$Type[$k],1);
-								}
-							}												
-							$current_halt_time = 0;
-							$halt_once =1;
-							//echo "\nHALT FLAG SET, datetime=".$datetime;
-							$halt_flag = 1;
-							$lat_ref1 = $lat_cr;
-							$lng_ref1 = $lng_cr;
-							$datetime_ref = $datetime_cr;
-							//echo "<br>HaltOver:".$current_halt_time;							
-						}
-						else if ($distance > 0.100)
-						{									
-							if($halt_flag)
-							{							
-							//######## STORE MEANTIME HALT
-							$starttime_x = strtotime($datetime_ref);										  
-							$stoptime_x = strtotime($datetime_cr);
-							$arrtime_x = $datetime_ref;
-							$depttime_x = $datetime_cr;
-																	
-							$halt_dur_x = ($stoptime_x - $starttime_x);		//THIS IS USED AT RUNTIME, COMMENT HERE LATER
-							$hms_2_x = secondsToTime($halt_dur_x);
-							$hrs_min_x = $hms_2[h].":".$hms_2[m].":".$hms_2[s];
-							
-							//echo "\nVehicle1=".$Vehicle[$i]." ,hrs_min_x=".$hrs_min_x." ,arrival_x=".$arrtime_x." ,dept_x=".$depttime_x;
-							if(($stoptime_x > $starttime_x) && ($halt_dur_x > 900))	//15 min halt
-							{
-								//echo "\nVehicle2=".$Vehicle[$i]." ,haltdur_x=".$halt_dur_x." ,arrival_x=".$arrtime_x." ,dept_x=".$depttime_x;
+											//echo "\nOutPlantMain";
 
-								$meantime_lat[$Vehicle[$i]][] = $lat_ref;
-								$meantime_lng[$Vehicle[$i]][] = $lng_ref;
-								$meantime_halt_start[$Vehicle[$i]][] = $arrtime_x;
-								$meantime_halt_end[$Vehicle[$i]][] = $depttime_x;
-								$meantime_halt_dur[$Vehicle[$i]][] = $hrs_min_x;
-							}							
-							////###### MEAN TIME HALT CLOSED						
-							}	
+											$plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]] = $datetime;
+
+											$p_out = true;
+											break;
+										 }
+									}		
+																			
+								}
+							}
+						}
+			
+						if($firstdata_flag==0)
+						{							
+							$halt_flag = 0;
+							$firstdata_flag = 1;
+
+							//$vehicleserial_tmp1 = explode("=",$vehicleserial_tmp[0]);
+							//$vserial = preg_replace('/"/', '', $vehicleserial_tmp1[1]);						
+							$vserial = $vehicle_serial; 												
+							$lat_ref = $lat_sel[$y];						
+							$lng_ref = $lng_sel[$y];
+						
+							if($lat_ref!="" && $lng_ref!="")
+							{
+								$nogps = false;
+							}
+							$datetime_ref = $datetime;	
+							$cum_dist = 0;			
+
 							//###### FOR IRREGULAR DATA FILTER CODE
-							if($tmp_speed<500.0 && $tmp_time_diff>0.0)
-							{																											
-								$cum_dist = $cum_dist + $distance;						                          
-								//echo "\nTmp_speed=".$tmp_speed." ,tmp_time_diff=".$tmp_time_diff." ,cum_dist=".$cum_dist;
-								//echo "<br>dist greater than 0.025: dist=".$total_dist." time2=".$time2;											
-								$last_time = $datetime;
-								$datetime_ref= $datetime_cr;	
+							$last_time1 = $datetime;
+							$latlast = $lat_ref;
+							$lnglast =  $lng_ref;
+							//////##############################
+							//$date_secs1 = strtotime($datetime_ref);							
+							//$date_secs1 = (double)($date_secs1 + $interval);      	
+						}                 	
+						else
+						{    								
+							//echo "<br>Next";               
+							//GET NEXT RECO
+							$lat_cr = $lat_sel[$y];																												
+							$lng_cr = $lng_sel[$y];
+							$datetime_cr = $datetime;																		
+							$date_secs2 = strtotime($datetime_cr);	
+							
+							/*if($DEBUG_OFFLINE)
+							{
+								$distance = calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr);
+							}
+							else
+							{*/
+								calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, &$distance);
+							//}
+							
+							//if(($distance > 0.0100) || ($f== $total_lines-2) )
+							//echo "\nF=".$f." ,total_lines=".$total_lines;										
+																								
+							//###### FOR IRREGULAR DATA FILTER CODE
+							$tmp_time_diff1 = (double)(strtotime($datetime) - strtotime($last_time1)) / 3600;
 
-								//$lat_ref = $lat_cr;
-								//$lng_ref = $lng_cr;																					
-								//#######################################																						
-							}	
-							$lat_ref = $lat_cr;
-							$lng_ref = $lng_cr;
-							$datetime_ref= $datetime_cr;    //modified   				
-							$halt_flag = 0;			//modified										
-						}									
-					}  //else closed
-				   }
+							/*if($DEBUG_OFFLINE)
+							{
+								$distance1 = calculate_distance($latlast, $lat_cr, $lnglast, $lng_cr);
+							}
+							else
+							{*/
+								calculate_distance($latlast, $lat_cr, $lnglast, $lng_cr, &$distance1);
+							//}
+							//echo "<br>Distance=".$distance1;
+							
+							if($tmp_time_diff1>0)
+							{
+								$tmp_speed = ((double) ($distance1)) / $tmp_time_diff1;
+								//if($tmp_speed==0) echo "\nDistance1=".$distance1." ,tmp_time_diff1=".$tmp_time_diff1." ,latlast=".$latlast." ,lnglast=".$lnglast." ,lat_cr=".$lat_cr." ,lng_cr=".$lng_cr;
+								$last_time1 = $datetime;
+								$latlast = $lat_cr;
+								$lnglast =  $lng_cr;
+							}
+							$tmp_time_diff = ((double)( strtotime($datetime) - strtotime($last_time) )) / 3600;
+							//#######################################
+												
+							//if (($halt_flag == 1) && ($distance > 0.100))
+							{								
+								//echo "\n\nIF HALT, datetime=".$datetime." ,ArrivalTime=".$datetime_ref." ,DepartureTime=".$datetime_cr;
+								$arrivale_time = $datetime_ref;
+								$starttime = strtotime($datetime_ref);										  
+								$stoptime = strtotime($datetime_cr);
+								$depature_time=$datetime_cr;
+																		
+								$halt_dur = ($stoptime - $starttime);		//THIS IS USED AT RUNTIME, COMMENT HERE LATER
+								$hms_2 = secondsToTime($halt_dur);
+								$hrs_min = $hms_2[h].":".$hms_2[m].":".$hms_2[s];
+								
+								$AddEntryinrReport=true;    
+								//check for all vehicles with j as i to jcnt and check for customer where arrival is not there
+								
+								for($k=$i;$k<$j;$k++)
+								{
+									
+									if(($PlantInTime[$k]=="") || ($PlantOutTime[$k]==""))
+									{
+										//UPDATE PLANT
+	                                    update_plant($k, $objPHPExcel_1, $read_excel_path, $p_in,$plant_intime_local[$Vehicle[$i]][$RouteNo[$i]],$p_out,$plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]], $startdate, $enddate);
+									}
+
+									//echo "\nArrivalTime[$k]=".$ArrivalTime[$k]." ,DepartureTime[$k]=".$DepartureTime[$k];
+									if(($ArrivalTime[$k]!="") && ($DepartureTime[$k] == ""))
+									{															
+										$arrtime_str = $ArrivalDate[$k]." ".$ArrivalTime[$k];
+										$deptime = strtotime($depature_time);
+										$arrtime = strtotime($arrtime_str);
+										$halt_dur = ($deptime - $arrtime);		//THIS IS USED AT RUNTIME, COMMENT HERE LATER
+										$hms_2 = secondsToTime($halt_dur);
+										$hrs_min = $hms_2[h].":".$hms_2[m].":".$hms_2[s];
+										//echo "\nDepartureFound:Time=".$datetime;
+											
+										update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k],$k,$StationNo[$k],$Lat[$k],$Lng[$k],$ScheduleTime[$k],$DistVar[$k],$Remark[$k],$startdate,$enddate,$lat_cr, $lng_cr, $lat_cr, $lng_cr,$arrivale_time,$depature_time,$RouteNo[$k],$hrs_min,$Type[$k],$plant_status_local[$Vehicle[$i]][$RouteNo[$i]],2,$p_in,$plant_intime_local[$Vehicle[$i]][$RouteNo[$i]],$p_out,$plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]]);
+																				
+									}
+								}													
+								
+								$last_halt_time_excel = 0;
+								$halt_flag = 0;
+							}
+							if(($distance <= 0.100) && ($halt_flag == 0) && ( (strtotime($datetime_cr)-strtotime($datetime_ref))<($interval-$last_halt_time_excel)) )
+							{							
+								$current_halt_time = $current_halt_time + (strtotime($datetime_cr)-strtotime($datetime_ref));
+								//echo "<br>HaltContinued:".$current_halt_time;
+							}									
+							//else if(($distance <= 0.100) && ($halt_flag == 0) && ( (strtotime($datetime_cr)-strtotime($datetime_ref))>($interval-$last_halt_time_excel)) )    // IF VEHICLE STOPS FOR 2 MINS 
+							else if((($distance <= 0.100) && ($halt_flag == 0) && ( (strtotime($datetime_cr)-strtotime($datetime_ref))>($interval-$last_halt_time_excel))) || ($speed_sel[$y]<5.0))
+							{
+								for($k=$i;$k<$j;$k++)
+								{									
+									if($ArrivalTime[$k]=="")
+									{											
+										//echo "\nArrivalFound:".$Vehicle[$k]." ,Station=".$StationNo[$k];
+										update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k],$k,$StationNo[$k],$Lat[$k],$Lng[$k],$ScheduleTime[$k],$DistVar[$k],$Remark[$k],$startdate,$enddate,$lat_ref1, $lng_ref1, $lat_cr, $lng_cr,$datetime_ref,$depature_time,$RouteNo[$k],$hrs_min,$Type[$k],$plant_status_local[$Vehicle[$i]][$RouteNo[$i]],1,$p_in,$plant_intime_local[$Vehicle[$i]][$RouteNo[$i]],$p_out,$plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]]);										
+									}
+								}												
+								$current_halt_time = 0;
+								$halt_once =1;
+								//echo "\nHALT FLAG SET, datetime=".$datetime;
+								$halt_flag = 1;
+								$lat_ref1 = $lat_cr;
+								$lng_ref1 = $lng_cr;
+								$datetime_ref = $datetime_cr;
+								//echo "<br>HaltOver:".$current_halt_time;							
+							}
+							else if ($distance > 0.100)
+							{									
+								//###### FOR IRREGULAR DATA FILTER CODE
+								if($tmp_speed<500.0 && $tmp_time_diff>0.0)
+								{																											
+									$cum_dist = $cum_dist + $distance;						                          
+									//echo "\nTmp_speed=".$tmp_speed." ,tmp_time_diff=".$tmp_time_diff." ,cum_dist=".$cum_dist;
+									//echo "<br>dist greater than 0.025: dist=".$total_dist." time2=".$time2;											
+									$last_time = $datetime;
+									$datetime_ref= $datetime_cr;	
+
+									//$lat_ref = $lat_cr;
+									//$lng_ref = $lng_cr;																					
+									//#######################################																						
+								}	
+								$lat_ref = $lat_cr;
+								$lng_ref = $lng_cr;
+								$datetime_ref= $datetime_cr;    //modified   				
+								$halt_flag = 0;			//modified										
+							}									
+						}  //else closed
+					}
 						$f++;
 				}   // CLOSED- SORTED DATA FOR LOOP
 				
 			} // if original_tmp closed 
 				//echo "vehicle_name=".$vname."csv_string_halt==".$csv_string_halt."<br>";			         
-			//	unlink($xml_original_tmp);
+				//unlink($xml_original_tmp);
 		}  // CLOSED- DATE FOR LOOP
 				
 		//### STORE LAST HALT TIME OF VEHICLE		
@@ -662,15 +870,28 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 		$last_halt_time_new[] =$current_halt_time;	
 		//echo "<br>CurrentHaltTime:".$Vehicle[$i]." :".$current_halt_time;
 		
+
+		//echo "\nNoData=".$nodata." ,Vehicle=".$Vehicle[$i];
+
 		$msg = "";
 		if($nodata)
 		{
 			$msg = "INACTIVE";
 		}
-		else if($nogps)
+		else if(!$nogps)			//GPS FOUND
 		{
-			$msg = "NOGPS";
+			update_nogps($objPHPExcel_1, "0", $i);
+			$NO_GPS[$i] = "0";
+			$msg = "";
 		}
+		else if(($NO_GPS[$i]=="") && ($nogps))		//FIRST TIME : GPS NOT FOUND
+		{
+			update_nogps($objPHPExcel_1, "1", $i);
+			$NO_GPS[$i] = "1";
+			$msg = "NO GPS";
+		}
+	
+		$Remark[$i] = $msg;
 		update_remark($objPHPExcel_1, $msg, $i);
 		
 		//######### UPDATE EXTRA SHEETS
@@ -818,7 +1039,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 	//echo "<br>SizeRouteTotal:Final=".sizeof($RouteTotal);
 	for($i=0;$i<sizeof($RouteTotal);$i++)
 	{	
-		$vehicle_str=""; $customer_completed_str=""; $customer_incompleted_str="";
+		$vehicle_str=""; $remark_str=""; $customer_completed_str=""; $customer_incompleted_str="";
 				
 		$size_customer=0;
 		$size_customer = sizeof($CustomerTotal[$RouteTotal[$i]]);
@@ -874,15 +1095,35 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 		
 		$size_vehicle = 0;
 		$size_vehicle = sizeof($VehicleTotal[$RouteTotal[$i]]);
+
+		$no_remark = true;
 		for($j=0;$j<$size_vehicle;$j++)
 		{
 			$vehicle_str.= $VehicleTotal[$RouteTotal[$i]][$j]."/";
+
+			//### GET SELECTED REMARK
+			$remark_final = "-";
+			for($v=0;$v<sizeof($Remark);$v++)
+			{
+				if((trim($Vehicle[$v]) == trim($VehicleTotal[$RouteTotal[$i]][$j])) && ($Remark[$v]!=""))
+				{
+					$remark_final = $Remark[$v];
+					$no_remark = false;		
+					break;
+				}
+			}
+			$remark_str.= $remark_final."/";
 		}
 		
+		if($no_remark)
+		{
+			$remark_str = "";
+		}
 		//echo "<br>vehicle_str=".$vehicle_str;
 		//echo "<br>customer_completed_str=".$customer_completed_str;
 		//echo "<br>customer_incompleted_str=".$customer_incompleted_str;
 		if($vehicle_str!="") {$vehicle_str = substr($vehicle_str, 0, -1);}
+		if($remark_str!="") {$remark_str = substr($remark_str, 0, -1);}
 		if($customer_completed_str!="") {$customer_completed_str = substr($customer_completed_str, 0, -1);}
 		if($customer_incompleted_str!="") {$customer_incompleted_str = substr($customer_incompleted_str, 0, -1);}
 		//######## FILL COMPLETED /INCOMPLETED SHEET
@@ -896,15 +1137,15 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 		{
 			//echo "<br>ONE";
 			$col_tmp = 'A'.$sheet1_row;
-			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $vehicle_str);
+			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $vehicle_str);
 			$col_tmp = 'B'.$sheet1_row;					
-			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $RouteTotal[$i]); 					
+			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $RouteTotal[$i]); 					
 			$col_tmp = 'C'.$sheet1_row;
-			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $customer_completed_str);
+			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $customer_completed_str);
 			$col_tmp = 'D'.$sheet1_row;
-			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $TransporterITotal[$RouteTotal[$i]]);
+			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $TransporterITotal[$RouteTotal[$i]]);
 			$col_tmp = 'E'.$sheet1_row;
-			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $RouteTypeTotal[$RouteTotal[$i]]);
+			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $RouteTypeTotal[$RouteTotal[$i]]);
 			$sheet1_row++;
 		}
 		//########## FILL SHEET3
@@ -912,17 +1153,19 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 		{
 			//echo "<br>TWO";
 			$col_tmp = 'A'.$sheet2_row;
-			$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , $vehicle_str);
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $vehicle_str);
 			$col_tmp = 'B'.$sheet2_row;					
-			$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , $RouteTotal[$i]); 					
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $RouteTotal[$i]); 					
 			$col_tmp = 'C'.$sheet2_row;
-			$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , $customer_completed_str);
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $customer_completed_str);
 			$col_tmp = 'D'.$sheet2_row;
-			$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , $customer_incompleted_str);					
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $customer_incompleted_str);					
 			$col_tmp = 'E'.$sheet2_row;
-			$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , $TransporterITotal[$RouteTotal[$i]]);	
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $TransporterITotal[$RouteTotal[$i]]);	
 			$col_tmp = 'F'.$sheet2_row;
-			$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , $RouteTypeTotal[$RouteTotal[$i]]);			
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $RouteTypeTotal[$RouteTotal[$i]]);			
+			$col_tmp = 'G'.$sheet2_row;
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $remark_str);
 			$sheet2_row++;
 		}
 	}
@@ -947,17 +1190,15 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 	{		
 		//echo "<br>RED_ROUTE=".$RedRoute[$m];
 		$col_tmp = 'B'.$sheet2_row;
-		$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , $RedRoute[$m]);
-		$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($styleFontRed);			
+		$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $RedRoute[$m]);
+		$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($styleFontRed);			
 		$col_tmp = 'D'.$sheet2_row;
-		$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , $RedCustomer[$m]);
-		$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($styleFontRed);		
+		$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $RedCustomer[$m]);
+		$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($styleFontRed);		
 		$sheet2_row++;		
 	}
 	//echo "\nCSV_STRING_HALT=".$csv_string_halt;
 	//####### UPDATE EXTRA SHEET	
-	//###### ADD MEAN HALT SHEET
-	add_mean_halt_sheet();
 	
 	//echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel_1, 'Excel2007');
@@ -968,10 +1209,15 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 }	
 
 //######## UPDATE VEHICLE
-function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $StationNo, $Lat, $Lng, $ScheduleTime, $DistVar, $Remark, $startdate,$enddate, $lat_ref1, $lng_ref1, $lat_cr, $lng_cr, $arrivale_time,$depature_time, $RouteNo, $hrs_min, $Type, $status_entered)
+function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $StationNo, $Lat, $Lng, $ScheduleTime, $DistVar, $Remark, $startdate,$enddate, $lat_ref1, $lng_ref1, $lat_cr, $lng_cr, $arrivale_time,$depature_time, $RouteNo, $hrs_min, $Type, $plant_status, $status_entered, $p_in,$plant_indatetime,$p_out,$plant_outdatetime)
 {										
+	//echo "\nPlantStatus=".$plant_status;
 	//echo "\nUPDATE VEHICLE::".$read_excel_path.", ".$Vehicle.", ".$k.", ".$StationNo.", ".$Lat.", ".$Lng.", ".$ScheduleTime.", ".$DistVar.", ".$Remark.", ".$startdate.", ".$enddate.", ".$status_entered;	
+	global $ScheduleDate;
+	global $DEBUG_OFFLINE;
 	global $unchanged;
+        global $ArrivalDate;
+        global $DepartureDate;
 	global $ArrivalTime;
 	global $DepartureTime;
 	
@@ -998,11 +1244,22 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 	if( ($lat_g!="") && ($lng_g!="") && ($StationNo!="") )
 	{
 		//echo "\nDIST::datetime=".$datetime." ,op_date1=".$op_date1." ,op_date2=".$op_date2." \ndistance=".$distance;
-		calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, &$distance_station1);
-		calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, &$distance_station2);
+		/*if($StationNo=="71762")
+		{
+			echo "\nlat_ref1=".$lat_ref1.",lng_ref1=".$lng_ref1
+		}*/
 		
-		//$distance_station1=calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g);
-		//$distance_station2=calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g);		
+		/*if($DEBUG_OFFLINE)
+		{		
+			//$distance_station1=calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g);
+			//$distance_station2=calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g);
+		}
+		else
+		{*/
+			calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, &$distance_station1);
+			calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, &$distance_station2);
+		//}
+		
 		
 		if($distance_station1<$distance_station2)
 		{
@@ -1014,10 +1271,20 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 		}		
 		//echo "\nVehicle entered in station=CustomerNo=".$StationNo." ,arrivale_time=".$arrivale_time." ,lat_ref1=".$lat_ref1." ,lng_ref1=".$lng_ref1." ,lat_cr=".$lat_cr." ,lng_cr=".$lng_cr."dist=".$distance_station.", distvar=".$DistVar;  
 		//echo "\n1=CustomerNo=".$StationNo." ,arrivale_time=".$arrivale_time." ,lat_ref1=".$lat_ref1." ,lng_ref1=".$lng_ref1." ,lat_cr=".$lat_cr." ,lng_cr=".$lng_cr."dist=".$distance_station.", distvar=".$DistVar;  
-		//echo "\ndistance_station=".$distance_station.", distance_variable=".$DistVar;
+		/*if($status_entered==2)
+		{
+			if($StationNo=="70803")
+			{
+				echo "\nlat_ref1=".$lat_ref1.",lng_ref1=".$lng_ref1
+				echo "\nlat_cr=".$lat_cr.",lng_cr=".$lng_ref1;;	
+				echo "\ndistance_station=".$distance_station.", distance_variable=".$DistVar;
+			}
+		}*/
+		
 		if($distance_station < $DistVar)
 		{			
-			$station_no = $StationNo;																								
+			$station_no = $StationNo;	
+			//echo "\nAtStation:".$station_no." ,distance_station=".$distance_station;
 			//$customer_visited[] = $station_no;
 			//$customer_type[] = $Type[$i];
 			$entered_station = 1;
@@ -1048,57 +1315,78 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 	$valid_halt = false;												
 	$route_no="";
 		
-	$schedule_in_time_tmp = $ScheduleTime;							
+	//$schedule_in_time_tmp = $ScheduleTime;							
 	//echo "\nSchedule Matched";												  
-	$start_date_tmp = explode(" ",$startdate);
-	$end_date_tmp = explode(" ",$enddate);
+	//$start_date_tmp = explode(" ",$startdate);
+	//$end_date_tmp = explode(" ",$enddate);	
+	//$schedule_in_time = $schedule_in_time_tmp;
+	//$tmp_time_input = $start_date_tmp[0]." ".$start_date_tmp[1];
+	//$tmp_time_schedule = $start_date_tmp[0]." ".$schedule_in_time;
 	
-	$schedule_in_time = $schedule_in_time_tmp;
-	$tmp_time_input = $start_date_tmp[0]." ".$start_date_tmp[1];
-	$tmp_time_schedule = $start_date_tmp[0]." ".$schedule_in_time;
-	
-	$tmp_input = strtotime($tmp_time_input);
-	$tmp_schedule = strtotime($tmp_time_schedule);
+	//$tmp_input = strtotime($tmp_time_input);
+	//$tmp_schedule = strtotime($tmp_time_schedule);
 
 	$final_date = "";
-	if($tmp_input <= $tmp_schedule)
+	/*if($tmp_input <= $tmp_schedule)
 	{
 		$final_date = $start_date_tmp[0];
 	}								
 	else
 	{
 		$final_date = $end_date_tmp[0];
+	}*/
+	/*
+	$cdate = date('Y-m-d');
+	$pdate = date('Y-m-d', strtotime($date .' -1 day'));	
+	//$cdate = '2014-08-28';
+	//$pdate = '2014-08-27';
+	$cdatetime1 = strtotime(date('00:00:00'));
+	$cdatetime2 = strtotime(date($ScheduleTime));
+	$cdatetime3 = strtotime(date('H:i:s'));
+	$difftime = $cdatetime2 - $cdatetime1;
+	$difftime_c = $cdatetime3 - $cdatetime1;
+
+	if( ($difftime > 43200) && ($difftime_c > 43200) )		//## > 12 PM current day, else prev day
+	{
+		$final_date = $cdate;
 	}
+	else
+	{
+		$final_date = $pdate;
+	}*/	
 	
 	//echo "\nScheduleInTime=".$schedule_in_time;	
-	$in_time_str_excel = $final_date." ".$schedule_in_time_tmp;
+	//$in_time_str_excel = $final_date." ".$ScheduleTime;
+	$in_time_str_excel = $ScheduleDate[$k]." ".$ScheduleTime;
 	$in_time_str = $arrivale_time;														
 	
-	if($schedule_in_time!="")
+	//echo "<br>ArrivalTime=".$arrivale_time." ,ScheduleTime=".$in_time_str_excel;	
+	if($ScheduleTime!="")
 	{
 		$time1 = strtotime($in_time_str) - strtotime($in_time_str_excel);	
 		//echo "\nin_time_str=".$in_time_str." ,in_time_str_excel=".$in_time_str_excel." ,DiffTime=".$time1;
 		
-		if($time1>0)
+		/*if($time1>0)
 		{															
-			$hms_3 = secondsToTime($time1);
-			$time_delay = $hms_3[h].":".$hms_3[m].":".$hms_3[s];
+			//$hms_3 = secondsToTime($time1);
+			//$time_delay = $hms_3[h].":".$hms_3[m].":".$hms_3[s];
+			$time_delay = $time1/60;
 		}
 		else
 		{
-			//time_delay = "00:00:00";
-			$time1 = abs($time1);
-			$hms_4 = secondsToTime($time1);								
-			$time_delay = $hms_4[h].":".$hms_4[m].":".$hms_4[s];
-			$time_delay = "-".$time_delay;																					
-		}
+			//$time1 = abs($time1);
+			//$hms_4 = secondsToTime($time1);								
+			//$time_delay = $hms_4[h].":".$hms_4[m].":".$hms_4[s];
+			//$time_delay = "-".$time_delay;		
+			$time_delay = "-".$time1/60;																			
+		}*/
+		$time_delay = $time1/60;
 	}																																	
 	
-	if($schedule_in_time=="")
+	/*if($schedule_in_time=="")
 	{
 		$schedule_in_time = "-";
-	}
-	
+	}*/	
 	if($time_delay=="")
 	{
 		$time_delay = "-";
@@ -1131,83 +1419,97 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 	{
 		//echo "\nEnteredStation";
 		//##UPDATE ARRIVAL																																			
-		//echo "\nIF ARRIVAL NULL, arrival_time1[0]=".$arrival_time1[0]." ,arrival_time1[1]=".$arrival_time1[1]." row=".$row;
-		//echo "\ndepature_time1".$depature_time1[0]." ,depature_time1[1]=".$depature_time1[1];
-		//echo "\nhrs_min".$hrs_min." ,time_delay=".$time_delay;
-		//echo "\nobjPHPExcel_1=".$objPHPExcel_1;				
-		$col_tmp = 'G'.$row;
+		$hour_band=explode(':',$arrival_time1[1]);
+		$col_tmp = 'H'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $hour_band[0]);
+
+		$col_tmp = 'I'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $arrival_time1[0]);
 
-		$col_tmp = 'H'.$row;
+		$col_tmp = 'J'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $arrival_time1[1]);
-
-		//$col_tmp = 'I'.$row;
-		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $depature_time1[0]);
-
-		//$col_tmp = 'J'.$row;
-		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $depature_time1[1]);
 		
-		$col_tmp = 'L'.$row;
-		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $time_delay);		
+		$col_tmp = 'O'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , round($time_delay,2));		
 
 		//$col_tmp = 'M'.$row;
 		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $hrs_min);			
 
-		$col_tmp = 'O'.$row;
+		$col_tmp = 'AJ'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time1[0]);
 
-		$col_tmp = 'P'.$row;
+		$col_tmp = 'AK'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time1[1]);
 
-		$col_tmp = 'Q'.$row;
+		$col_tmp = 'AL'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time2[0]);
 
-		$col_tmp = 'R'.$row;
+		$col_tmp = 'AM'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time2[1]);
 			
+		$ArrivalDate[$k] = $arrival_time1[0];		
 		$ArrivalTime[$k] = $arrival_time1[1];				
-		$unchanged = false;				
+		$unchanged = false;		
+
+		//echo "\nEntered=".$plant_status;
 		//###############																						
 	}
 	if(($status_entered==2)	&& ($entered_station==0))//####### CHECK FOR DEPARTURE
 	{
 		//echo "\nDepartureWrite";
 		//##UPDATE DEPARTURE
-		$col_tmp = 'I'.$row;
+		$col_tmp = 'K'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $depature_time1[0]);
 
-		$col_tmp = 'J'.$row;
+		$col_tmp = 'L'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $depature_time1[1]);
-		
-		//$col_tmp = 'L'.$row;
-		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $time_delay);	
-
-		$col_tmp = 'M'.$row;
-		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $hrs_min);			
-
-		$col_tmp = 'O'.$row;
-		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time1[0]);
 
 		$col_tmp = 'P'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $hrs_min);			
+
+		$col_tmp = 'AJ'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time1[0]);
+
+		$col_tmp = 'AK'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time1[1]);
 
-		$col_tmp = 'Q'.$row;
+		$col_tmp = 'AL'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time2[0]);
 
-		$col_tmp = 'R'.$row;
+		$col_tmp = 'AM'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time2[1]);
 
-		//$col_tmp = 'S'.$row;
-		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $transporter_name_master);
-
-		//$col_tmp = 'T'.$row;
-		//$plant = "-";
-		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant);		
+		$DepartureDate[$k] = $depature_time1[0];
 		$DepartureTime[$k] = $depature_time1[1];
 		
 		$unchanged = false;
 		//echo "\nIF ARRIVAL NOT NULL";												
 	}
+
+	$col_tmp = 'AI'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_status);
+	
+	/*//### PLANT IN,OUT TIME	
+	if($p_in)
+	{
+		//echo "<br>PLANT_IN_TIME_UPDATE";
+		$plant_in_time = explode(' ',$plant_indatetime);
+		$col_tmp = 'AF'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_in_time[0]);
+
+		$col_tmp = 'AG'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_in_time[1]);
+	}
+	else if($p_out)
+	{
+		$plant_out_time = explode(' ',$plant_outdatetime);
+		$col_tmp = 'AH'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_out_time[0]);
+
+		$col_tmp = 'AI'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_out_time[1]);
+	}
+	//########## PLANT IN OUT TIME CLOSED*/
 	
 	$prev_vehicle = $vname;
 	//echo "\nSerial=".$sno;
@@ -1218,6 +1520,66 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 	//$entered_station = 0;                            							
 }
 ////### UPDATE HALT CLOSED
+
+function update_plant($k, $objPHPExcel_1, $read_excel_path, $p_in,$plant_indatetime,$p_out,$plant_outdatetime, $startdate, $enddate)
+{
+	global $PlantOutScheduleDate;
+	global $PlantOutScheduleTime;
+	global $PlantOutDelay;
+	
+	//### PLANT IN,OUT TIME
+	global $PlantInTime;
+	global $PlantOutTime;
+	$time_delay ="-";
+	
+	$row = $k+2;
+	//echo "\nPlantSchedule1=".$PlantOutScheduleTime[$k]." ,k=".$k." ,row=".$row;
+
+	if(($p_in) && ($PlantInTime[$k]==""))
+    {
+		//echo "\nPLANT_IN";
+		$plant_in_time = explode(' ',$plant_indatetime);
+		$col_tmp = 'R'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_in_time[0]);
+
+		$col_tmp = 'S'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_in_time[1]);
+		$PlantInTime[$k] = $plant_in_time[1];
+    }
+	if(($p_out) && ($PlantOutTime[$k]==""))
+	{
+		//echo "\nPlantOut";
+		$plant_out_time = explode(' ',$plant_outdatetime);
+		$col_tmp = 'T'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_out_time[0]);
+
+		$col_tmp = 'U'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_out_time[1]);
+
+		$PlantOutTime[$k] = $plant_out_time[1];
+		//########## PLANT IN OUT TIME CLOSED		
+
+		/*$final_date = "";		
+		//echo "\nScheduleInTime=".$schedule_in_time;	
+		$out_time_str_excel = $final_date." ".$PlantOutScheduleTime[$k];*/		
+		$out_time_str_excel = $PlantOutScheduleDate[$k]." ".$PlantOutScheduleTime[$k];
+		$out_time_str = $plant_outdatetime;														
+		
+		//echo "\nPlantSchedule2=".$PlantOutScheduleTime[$k]." ,k=".$k." ,row=".$row;
+		if($PlantOutScheduleTime[$k]!="")
+		{
+			$time1 = strtotime($out_time_str) - strtotime($out_time_str_excel);	
+			
+			$time_delay = $time1/60;
+		
+			$col_tmp = 'X'.$row;
+			$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , round($time_delay,2));
+			$PlantOutDelay[$k] = $time_delay;		
+		}																																						
+		//### PLANT DELAY CLOSED		
+	}        
+}
+
 /*
 function update_extra_sheets($objPHPExcel_1,$i,$Vehicle,$RouteNo,$customer_visited_unique,$customer_unvisited_unique, $TransporterI, $RouteType)
 {
@@ -1292,19 +1654,29 @@ function update_extra_sheets($objPHPExcel_1,$i,$Vehicle,$RouteNo,$customer_visit
 	//#### EXTRA TAB CLOSED ###########	
 }*/
 
+function update_nogps($objPHPExcel_1, $msg, $i)
+{										
+	//echo "\nInUpdateRemark";
+	$row = $i+2;
+	$col_tmp = 'AB'.$row;
+
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $msg);
+}
+
 function update_remark($objPHPExcel_1, $msg, $i)
 {										
 	//echo "\nInUpdateRemark";
 	$row = $i+2;
-	$col_tmp = 'N'.$row;
+	$col_tmp = 'Q'.$row;
 
-	$halt_in_cell = "H".$row;
+	$halt_in_cell = 'I'.$row;
 	$halt_in = $objPHPExcel_1->getActiveSheet(0)->getCell($halt_in_cell)->getValue();
 
 	if($halt_in!="")
 	{
 		$msg = "";
 	}
+
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $msg);	
 }
 
@@ -1368,65 +1740,4 @@ function sort_all_routes()
 	}
 }	
 
-
-function add_mean_halt_sheet()
-{
-	include_once("/var/www/html/vts/beta/src/php/get_location_lp_track_report_2.php");
-	include_once("/var/www/html/vts/beta/src/php/select_landmark_report.php");
-
-	global $objPHPExcel_1;
-
-	global $Vehicle_MeanTime;
-	global $ColumnCount_MeantTime;		
-	global $meantime_lat;
-	global $meantime_lng;
-	global $meantime_halt_start;
-	global $meantime_halt_end;
-	global $meantime_halt_dur;
-
-	//echo "<br>sizeof(Vehicle)=".sizeof($Vehicle_MeanTime)."<br>";
-	$row=1;
-	for($i=0;$i<sizeof($Vehicle_MeanTime);$i++)
-	{
-		$size_columns = 0;
-		$size_halt = sizeof($meantime_lat[$Vehicle_MeanTime[$i]]);
-		$size_columns = $ColumnCount_MeantTime[$i];
-		if($size_columns=="") { $size_columns=0;}
-		
-		//echo "\nVehicleMeanTime=".$Vehicle_MeanTime[$i]." ,SizeHalt=".$size_halt." ,columnCount=".$size_columns;
-		
-		for($j=0;$j<$size_halt;$j++)
-		{		
-			//$c=$j+1;	
-			$col_tmp = $size_columns + $j +1;			
-			//echo "<br>ColTmp=".$col_tmp;
-			//$placename1="Kanpur";
-			$meantime_lat[$Vehicle_MeanTime[$i]][$j] = substr($meantime_lat[$Vehicle_MeanTime[$i]][$j], 0, -1);
-			$meantime_lng[$Vehicle_MeanTime[$i]][$j] = substr($meantime_lng[$Vehicle_MeanTime[$i]][$j], 0, -1);
-
-			$landmark = "";
-			get_landmark($meantime_lat[$Vehicle_MeanTime[$i]][$j],$meantime_lng[$Vehicle_MeanTime[$i]][$j],&$landmark);
-			if($landmark!="")
-			{
-				//echo "\nLNMRK2=".$landmark;
-				$placename1 = $landmark;
-			}
-			else
-			{
-				get_report_location($meantime_lat[$Vehicle_MeanTime[$i]][$j],$meantime_lng[$Vehicle_MeanTime[$i]][$j],&$placename1);
-				//echo "\nPLB1=".$placename1;
-				$placename1 = preg_replace('/भारत गणराज्य/', '' , $placename1);
-				$placename1 = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '' , $placename1);
-			}
-			//echo "\nPLB2=".$placename1;	
-			$gps_tmp = $placename1.":(".$meantime_lat[$Vehicle_MeanTime[$i]][$j].",".$meantime_lng[$Vehicle_MeanTime[$i]][$j].")";
-			$time_tmp = "-[From Time =>".$meantime_halt_start[$Vehicle_MeanTime[$i]][$j]." to ".$meantime_halt_end[$Vehicle_MeanTime[$i]][$j]." ], Duration-".$meantime_halt_dur[$Vehicle_MeanTime[$i]][$j];
-			$location_tmp = $gps_tmp.$time_tmp;
-			//echo "<br>Location=".$location_tmp;			
-			$objPHPExcel_1->setActiveSheetIndex(1)->SetCellValueByColumnAndRow($col_tmp,$row,$location_tmp);
-					
-		}
-		$row++;		
-	}
-}	
 ?>

@@ -284,13 +284,13 @@ function create_violated_hrly_excel($read_excel_path)
 				//$msg_bs_tmp.= "<br><font color='blue' size=1><Strong>BaseStation Dept Violation:</strong></font><font color='red' size=1><Strong>Vehicle:</Strong>".$VehicleName[$i]." ,<Strong>Delay:</Strong>".$DelayBSDept[$i]." ,<Strong>DeptTime:</Strong>".$ActualBSDeptTime[$i]." ,<Strong>From BaseStation:</Strong>".$BaseStation[$i]."</font>";
 				//$msg_bs_tmp.= "<br><font color='purple' size=1>*VEHICLE:</font><font color='blue' size=1>".$VehicleName[$i]."</font> <font color='red' size=1>Delayed in Departure From Base Location :</font><font color='blue' size=1>".$BaseStation[$i]."</font><font color='red' size=1>,DEPT-TIME:</font><font color='blue' size=1>".$ActualBSDeptTime[$i]."</font>";
 				$bs_tmp = '
-				<TR> <TD style="color:purple;font-size:14px;font-weight:bold;" align="left">Vehicle:</TD>
-					<TD style="color:blue;font-size:14px;" align="left">'.$VehicleName[$i].'</TD>
+				<TR><TD style="color:purple;font-size:14px;font-weight:bold;" align="left">Vehicle:</TD>
+					<TD style="color:blue;font-size:14px;" align="left">#'.$VehicleName[$i].'#</TD>
 					<TD style="color:red;font-size:14px;" align="left">Delayed in Departure From Base Location :</TD>
 					<TD style="color:blue;font-size:14px;" align="left">'.$BaseStation[$i].'</TD>
 					 <TD style="color:red;font-size:14px;" align="left">,DEPT-TIME:</TD>
 					 <TD style="color:blue;font-size:14px;" align="left">'.$ActualBSDeptTime[$i].'</TD>
-				</TR>';
+				</TR>@';
 				$msg_bs_tmp.= $bs_tmp;
 			}								
 		}

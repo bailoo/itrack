@@ -142,4 +142,43 @@ function read_sent_file($read_excel_path)
 	//#### READ FIRST TAB CLOSED ################################################		
 }
 
+
+//###########
+function read_sub_vehicles($read_excel_path)
+{
+	global $SubVehicles;
+	
+	echo "\nREAD_SENT_FILE";
+	//echo "\nPath=".$path;
+	//######### SENT FILE NAME CLOSED 			
+	$objPHPExcel_1 = null;
+	$objPHPExcel_1 = PHPExcel_IOFactory::load($read_excel_path);	
+
+	$cellIterator = null;
+	$column = null;
+	$row = null;
+
+	//################ FIRST TAB ############################################
+	$read_completed = false;
+	foreach ($objPHPExcel_1->setActiveSheetIndex(0)->getRowIterator() as $row) 
+	{
+		$cellIterator = $row->getCellIterator();
+		$cellIterator->setIterateOnlyExistingCells(false);
+		$i=0;
+		foreach ($cellIterator as $cell) 
+		{
+			$column = $cell->getColumn();
+			$row = $cell->getRow();
+			//if($row > $sheet2_row_count)				
+			
+			$tmp_val="A".$row;
+			$vehicleNameSub=$objPHPExcel_1->getActiveSheet()->getCell($tmp_val)->getValue();
+			$SubVehicles[$vehicleNameSub] =$vehicleNameSub;
+			break;	
+		}
+	}
+	//print_r($SubVehicles);
+	//#### READ FIRST TAB CLOSED ################################################		
+}
+
 ?>

@@ -59,7 +59,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 			$row++;
 			$num = count($data);
 			//echo "\nData Read ".$num." ".$row;
-			if(($num<4) || ($row==1))
+			if(($num<5) || ($row==1))
 			{
 				continue;
 			}
@@ -75,8 +75,8 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 			}*/
 												
 			$route_str = explode("/",$data[3]);
-			$route_type_str = explode("/",$data[4]);
-			$transporter_str = explode("/",$data[2]);	
+			$route_type_str = explode("/","-");
+			$transporter_str = explode("/",$data[4]);	
 
 			//######## GET ALL ROUTES						
 			//$route_all_str = explode("/",$data[3]);
@@ -92,19 +92,19 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 														
 			$size_route_str = 0;
 			$size_route_str = sizeof($route_str);
-			//echo "<br>size_rdb1=".$size_rdb1;
+			//echo "\nsize_rdb1=".$size_rdb1;
 			for($j=0;$j<$size_route_str;$j++)
 			{
 				$route_match=false;
 				$size_rdb2 =0;
 				$size_rdb2 = sizeof($route_name_rdb);
-				//echo "<br>size_rdb2=".$size_rdb2;
+				//echo "\nsize_rdb2=".$size_rdb2;
 				for($i=0;$i<$size_rdb2;$i++)
 				{
 					$route_name_rdb_1 = explode('/',$route_name_rdb[$i]);					
 					$size_rdb3 = 0;
 					$size_rdb3 = sizeof($route_name_rdb_1);
-					//echo "<br>size_rdb3=".$size_rdb3;
+					//echo "\nsize_rdb3=".$size_rdb3;
 					for($k=0;$k<$size_rdb3;$k++)
 					{
 						$route_name_rdb_3="";
@@ -129,6 +129,8 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 						}*/
 						$pre_match = false;
 						//echo "\nroute_type_param=".$route_type_param;
+
+						//echo "\nRouteNameRDB=".$route_name_rdb_3." , RouteStr=".$route_str[$j]." RoutePARAM=".$route_type_param;
 						if($route_type_param=="CASH")
 						{
 							if((trim($route_name_rdb_3) == trim($route_str[$j])) && ((strpos($route_type_str[$j],$route_type_param) !== false)) )
@@ -148,12 +150,13 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 						}
 						else if((trim($route_name_rdb_3) == trim($route_str[$j])) && ($route_type_param=="ALL"))
 						{
-							//echo "\nALL1";
+							echo "\nALL1";
 							$pre_match = true;
 						}
 											
 						if($pre_match)
 						{
+							//echo "\nROUTE MATCH";
 							/*$found_route=false;
 							
 							if(sizeof($route_total)>0)
@@ -221,7 +224,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 					//######### CUSTOMER
 					$query2 = "SELECT DISTINCT station_id,type,customer_no,station_coord,distance_variable FROM station WHERE ".
 					"user_account_id='$account_id' AND (customer_no IN(".$customer_input_string.") OR ".$customer_input_string2.") AND type='0' AND status=1";
-					//echo "<br>Query=".$query2;
+					//echo "\nQuery=".$query2;
 					$result2 = mysql_query($query2,$DbConnection); 
 					//$num2=mysql_num_rows($result2);
 					//echo "<br>Num=".$num2;

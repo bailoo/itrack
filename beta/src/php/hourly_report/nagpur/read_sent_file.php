@@ -28,15 +28,7 @@ function read_sent_file($read_excel_path)
 	global $DistVar;
 	global $IMEI;
 	global $RouteType;
-	
-	global $Vehicle_MeanTime;
-	global $ColumnCount_MeantTime;	
-	global $meantime_lat;
-	global $meantime_lng;
-	global $meantime_halt_start;
-	global $meantime_halt_end;
-	global $meantime_halt_dur;	
-	
+	global $NO_GPS;	
 	/*//####################
 	global $Vehicle_CI;
 	global $StationNo_CI;
@@ -188,6 +180,9 @@ function read_sent_file($read_excel_path)
 					$tmp_val="Z".$row;
 					$RouteType[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
 
+					$tmp_val="AA".$row;
+					$NO_GPS[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();					
+
 					//echo "\nRow=".$row." read";
 					break;
 				}				
@@ -200,93 +195,6 @@ function read_sent_file($read_excel_path)
 	}	
 	//#### READ FIRST TAB CLOSED ################################################	
 
-	//#### READ MEANTIME HALT -SECOND TAB  ################################################	
-	$cellIterator = null;
-	$column = null;
-	$row = null;
-	
-	//################ FIRST TAB ############################################
-	$read_completed = false;
-	$read_red = false;
-	foreach ($objPHPExcel_1->setActiveSheetIndex(1)->getRowIterator() as $row) 
-	{
-		$cellIterator = $row->getCellIterator();
-		$cellIterator->setIterateOnlyExistingCells(false);
-		$i=0;
-		
-		/*$lastColumn = $objPHPExcel_1->setActiveSheetIndex(1)->getHighestColumn($row);
-		$lastColumn++;
-		$c_count = 0;
-		for ($column = 'A'; $column != $lastColumn; $column++) {
-			//$cell = $objPHPExcel_1->setActiveSheetIndex(0)->getCell($column.$row);
-			//echo "<br>Cell=".$cell;
-			//  Do what you want with the cell
-			$c_count++;
-		}*/		
-		
-
-		$vehicle_tmp = "";
-		$c=0;
-		foreach ($cellIterator as $cell) 
-		{			
-			//if (!is_null($cell)) 
-			//{
-				$column = $cell->getColumn();
-				$row = $cell->getRow();
-				//if($row > $sheet2_row_count)				
-				
-				//$tmp_val="A".$row;
-				//$vehicle_tmp = $objPHPExcel_1->getActiveSheet()->getCell($tmp_val)->getValue();
-				//echo "<br>VehicleTmp=".$vehicle_tmp;
-
-				/*if($vehicle_tmp=="")
-				{
-					$read_completed = true;
-					break;
-				}*/
-				
-				if($row>1)
-				{
-					//echo "\nRecord:".$row;
-					//$value_tmp = $objPHPExcel_1->getActiveSheet()->getCellByColumnAndRow($c,$row)->getValue();
-					//echo "ValueTmp=".$value_tmp;
-					if($c==0)
-					{
-				                $tmp_val="A".$row;
-		                                $vehicle_tmp = $objPHPExcel_1->getActiveSheet()->getCell($tmp_val)->getValue();
-    
-                                                if($vehicle_tmp=="")
-                                                {
-                                                        $read_completed = true;
-                                                }
-
-	            		                //echo "<br>VehicleTmp=".$vehicle_tmp;
-
-						//$Vehicle_MeanTime[] = $value_tmp; 
-					}
-					else if($c>0)
-					{
-						$value_tmp = $objPHPExcel_1->getActiveSheet()->getCellByColumnAndRow($c,$row)->getValue();
-					
-						if($value_tmp!="")
-						{
-							$c++;
-						}
-						//echo "\nRow=".$row." read";
-					}
-				}				
-			//}
-		}
-
-		echo "\nVehicleTmp=".$vehicle_tmp." ,CountC=".$c;
-		$Vehicle_MeanTime[] = $vehicle_tmp;
-		$ColumnCount_MeantTime[] = $c;
-
-		if($read_completed)
-		{
-			break;
-		}
-	}
 	//######### SORT WITH RESPECT TO ROUTES ###########################
 	/*$Vehicle_CI = $Vehicle;
 	$StationNo_CI = $StationNo;

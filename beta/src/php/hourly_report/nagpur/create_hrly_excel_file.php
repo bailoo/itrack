@@ -39,14 +39,11 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 
 	$objPHPExcel_1->setActiveSheetIndex(0)->setTitle('Halt Report');
 
-        $objPHPExcel_1->createSheet();
-        $objPHPExcel_1->setActiveSheetIndex(1)->setTitle('MeanTime Halt');
-
 	$objPHPExcel_1->createSheet();
-	$objPHPExcel_1->setActiveSheetIndex(2)->setTitle('Route Completed');
+	$objPHPExcel_1->setActiveSheetIndex(1)->setTitle('Route Completed');
 	
 	$objPHPExcel_1->createSheet();
-	$objPHPExcel_1->setActiveSheetIndex(3)->setTitle('Route Pending');	
+	$objPHPExcel_1->setActiveSheetIndex(2)->setTitle('Route Pending');	
 
 	$cellIterator = null;
 	$column = null;
@@ -151,9 +148,12 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 	$col_tmp = 'Z'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "RouteType");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);	
+	$col_tmp = 'AA'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "NO GPS");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$row++;
 		
-	echo "\nSizeRoute=".sizeof($route_name_rdb);
+	//echo "\nSizeRoute=".sizeof($route_name_rdb);
 	
 	for($i=0;$i<sizeof($route_name_rdb);$i++)
 	{
@@ -230,7 +230,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 							
 			if($pre_match)
 			{						
-				//echo "<BR>CreateHrly ".$i." ".$vehicle_imei_rdb[$i];
+				echo "<BR>CreateHrly ".$i." ".$vehicle_imei_rdb[$i];
 				for($j=0;$j<sizeof($customer_sel[$route_name_rdb_3]);$j++)				
 				//echo "\nSizeCustomerSel=".sizeof($customer_sel[$vehicle_imei_rdb[$i]]);
 				//for($j=0;$j<sizeof($customer_sel[$vehicle_imei_rdb[$i]]);$j++)
@@ -244,7 +244,8 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 					$col_tmp = 'C'.$row;
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $customer_sel[$route_name_rdb_3][$j]);
 					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $customer_sel[$vehicle_imei_rdb[$i]][$j]);
-					
+				
+					echo "\nCust=".$customer_sel[$route_name_rdb_3][$j];	
 					$col_tmp = 'D'.$row;
 					if($type[$route_name_rdb_3][$j]==1)
 					//if($type[$vehicle_imei_rdb[$i]][$j]==1)
@@ -318,6 +319,10 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 					
 					$col_tmp = 'Z'.$row;
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $route_type_rdb[$i]);						
+
+					$col_tmp = 'AA'.$row;
+					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "");
+
 					$row++;
 					$sno++;
 				}
@@ -438,72 +443,49 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 	//if($row > $sheet2_row_count)
 	echo "\nSecond tab";
 	$row =1;
+	//###### HEADER
 	$col_tmp = 'A'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Vehicle");
 	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
-
-	for($m=1;$m<50;$m++)
-	{
-		$loc_tmp = "Location-".$m;
-		//$col_tmp = 'B'.$row;					
-		$objPHPExcel_1->setActiveSheetIndex(1)->SetCellValueByColumnAndRow($m, $row, $loc_tmp);
-		$objPHPExcel_1->getActiveSheet(1)->getStyleByColumnAndRow($m,$row)->applyFromArray($header_font);
-	}
-
-	$row++;
-	for($i=0;$i<sizeof($vehicle_name_rdb);$i++)
-	{
-		echo "\nCreating:Vehicle=".$vehicle_name_rdb[$i];
-		$col_tmp = 'A'.$row;
-		$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp, $vehicle_name_rdb[$i]);
-		$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);		
-		$row++;
-	}	
-	echo "\nThird tab";
-	$row =1;
-	//###### HEADER
-	$col_tmp = 'A'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Vehicle");
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'B'.$row;					
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Route"); 					
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Route"); 					
+	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'C'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "CustomerCompleted(All)");
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "CustomerCompleted(All)");
+	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'D'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Transporter(I)");
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Transporter(I)");
+	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'E'.$row;					
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "RouteType"); 					
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "RouteType"); 					
+	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
 
 	$row++;
 						
 	//#### SECOND TAB CLOSED ##################################################################
 	
 	//############################### THIRD TAB ###############################################
-	echo "\nFourth tab";
+	echo "\nThird tab";
 	$row =1;
 	//####### DEFINE HEADER
 	$col_tmp = 'A'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , "Vehicle");
-	$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Vehicle");
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'B'.$row;					
-	$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , "Route"); 			
-	$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($header_font);	
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Route"); 			
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);	
 	$col_tmp = 'C'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , "Customer Completed");
-	$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Customer Completed");
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'D'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , "Customer Incompleted");					
-	$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Customer Incompleted");					
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'E'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , "Transporter(I)");					
-	$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Transporter(I)");					
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'F'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(3)->setCellValue($col_tmp , "RouteType");					
-	$objPHPExcel_1->getActiveSheet(3)->getStyle($col_tmp)->applyFromArray($header_font);		
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "RouteType");					
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);		
 	$row++;		
 		
 	//#### THIRD TAB CLOSED ########################################

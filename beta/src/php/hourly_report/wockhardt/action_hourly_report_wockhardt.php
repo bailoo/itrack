@@ -11,6 +11,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 	global $old_xml_date;
 	
 	global $village_violate_msg;
+	global $sub_village_violate_msg;
 	global $villag_flag;
 	global $violate_flag;	//#### GLOBAL VIOLATE FLAG
 	
@@ -40,6 +41,8 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 	global $IMEI;	
 	global $Remark;
 	global $objPHPExcel_1;
+	global $SubVehicles;
+	
 	
 	global $last_vehicle_name;
 	global $last_halt_time;
@@ -784,6 +787,14 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path)
 		
 				if($local_violate_flag)
 				{
+					if($SubVehicles[$vehicle_name_violate]!="")
+					{ 
+						$sub_village_violate_msg.='<TR> 
+							<TD style="color:black;font-size:14px;font-weight:bold;" align="left">Vehicle:</TD>
+							<TD style="color:blue;font-size:14px;" align="left">'.$vehicle_name_violate.'</TD>
+							<TD style="color:red;font-size:14px;" align="left">Violated the Specified Route</TD>							
+						</TR>';					
+					}
 					//echo "<br>Violated";
 					//$village_violate_msg.= "<br><font color='purple' size='1'>*Vehicle:</font><font color='blue' size='1'>".$vehicle_name_violate."</font><font color='purple' size='1'> Violated the Specified Location</font>";
 					$v_msg = 

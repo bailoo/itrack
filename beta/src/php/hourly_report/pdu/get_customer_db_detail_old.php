@@ -9,6 +9,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 	global $all_routes;
 	global $all_customers;
 	global $customer_sel;
+	global $customer_name_sel;
 	global $plant_sel;
 	global $transporter_sel;
 	global $station_id;
@@ -35,17 +36,17 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 	//echo "\nSizeExpectedCustomer=".sizeof($expected_customer_csv)." ,SizeExpectedTime=".sizeof($expected_time_csv);
 			
 	//##### READ MAIN MASTER FILE
-	if($shift_time=="ZPMM")
+	/*if($shift_time=="ZPMM")
 	{
 		echo "\nMor:Master";
 		//$path = "D:\\test_app/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
-		$path = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master/morning_plant_customer#1#12.csv";
-	}
-	else if($shift_time=="ZPME")
+		$path = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
+	}*/
+	if($shift_time=="ZPME")
 	{
 		echo "\nEv:Master";
 		//$path = "D:\\test_app/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";
-		$path = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master/evening_plant_customer#1#11.csv";
+		$path = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master/vehicle_customer#1#7.csv";
 	}
 	
 	//echo "\npath=".$path;
@@ -219,7 +220,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 					$customer_input_string2 = " customer_no like '".$data[0]."@%'";
 
 					//######### CUSTOMER
-					$query2 = "SELECT DISTINCT station_id,type,customer_no,station_coord,distance_variable FROM station WHERE ".
+					$query2 = "SELECT DISTINCT station_id,type,customer_no,station_name,station_coord,distance_variable FROM station WHERE ".
 					"user_account_id='$account_id' AND (customer_no IN(".$customer_input_string.") OR ".$customer_input_string2.") AND type='0' AND status=1";
 					//echo "<br>Query=".$query2;
 					$result2 = mysql_query($query2,$DbConnection); 
@@ -231,6 +232,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 						//$customer_sel[$route_sel][]=$data[0];
 						$expected_time_sel[$route_sel][] = $expected_time_tmp;
 						$customer_sel[$route_sel][]=$row2->customer_no;
+						$customer_name_sel[$route_sel][]=$row2->station_name;						
 						$plant_tmp = implode('/',array_unique(explode('/', $data[1])));
 						$plant_sel[$route_sel][] = $plant_tmp;
 						//$transporter_sel[$route_sel][]=$data[2];
@@ -243,7 +245,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 					}
 					
 					//######### PLANT
-					$query2 = "SELECT DISTINCT station_id,type,customer_no,station_coord,distance_variable FROM station WHERE ".
+					$query2 = "SELECT DISTINCT station_id,type,customer_no,station_name,station_coord,distance_variable FROM station WHERE ".
 					"user_account_id='$account_id' AND (customer_no IN(".$customer_input_string.") OR ".$customer_input_string2.") AND type='1' AND status=1";
 					//echo "\nQuery=".$query2;
 					$result2 = mysql_query($query2,$DbConnection);
@@ -253,6 +255,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 						//$customer_sel[$route_sel][]=$data[0];
 						$expected_time_sel[$route_sel][] = $expected_time_tmp;
 						$customer_sel[$route_sel][]=$row2->customer_no;
+						$customer_name_sel[$route_sel][]=$row2->station_name;
 						$plant_tmp = implode('/',array_unique(explode('/', $data[1])));
 						$plant_sel[$route_sel][] = $plant_tmp;
 						$transporter_sel[$route_sel][]=$data[2];
@@ -266,8 +269,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 				//######## STORE CUSTOMERS CLOSED				
 			}
 			$count++;
-		}
-		
+		}		
 		//echo "\nCount=".$count;
 		fclose($handle);
 	}
@@ -281,13 +283,13 @@ function read_all_routes($account_id,$shift_time)
 	//##### READ MAIN MASTER FILE
 	if($shift_time=="ZPMM")
 	{
-		$path = "D:\\test_app/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
-		//$path = "/var/www/html/vts/beta/src/php/hourly_report/delhi/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
+		//$path = "D:\\test_app/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
+		$path = "/var/www/html/vts/beta/src/php/hourly_report/delhi/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
 	}
 	else if($shift_time=="ZPME")
 	{
-		$path = "D:\\test_app/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";
-		//$path = "/var/www/html/vts/beta/src/php/hourly_report/delhi/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";
+		//$path = "D:\\test_app/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";
+		$path = "/var/www/html/vts/beta/src/php/hourly_report/delhi/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";
 	}
 	
 	//echo "\npath=".$path;

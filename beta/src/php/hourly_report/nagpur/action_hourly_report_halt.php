@@ -2,26 +2,18 @@
 $sheet1_row = 2;
 $sheet2_row = 2;
 //$userdates = array();
-$halt_out_flag1 = false;
-$halt_in_flag1 = false;
-
-$min_temp1=0;
-$min_datetime1="";
-$max_temp1=0;
-$max_datetime1="";
-
-function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temperature_path, $time1_ev, $time2_ev)
+function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $time2_ev)
 {
-	echo "\nEnddate	=".$enddate." ,time1_ev=".$time1_ev." ,time2_ev=".$time2_ev;
+echo "\nEnddate	=".$enddate." ,time1_ev=".$time1_ev." ,time2_ev=".$time2_ev;
 	global $va,$vb,$vc,$vd,$ve,$vf,$vg,$vh,$vi,$vj,$vk,$vl,$vm,$vn,$vo,$vp,$vq,$vr,$vs,$vt,$vu,$vv,$vw,$vx,$vy,$vz,$vaa,$vab;
 	global $old_xml_date;
 	
-	echo "\nSD=".$startdate." ,ED=".$enddate;
+	echo "\nSD=".$startdate." ,ED=".$enddate."\n";
 	global $Vehicle;			//SENT FILE
 	global $SNo;
 	global $StationNo;
 	global $Type;
-	//global $RouteNo;
+	global $RouteNo;
 	global $ReportShift;
 	global $ArrivalDate;
 	global $ArrivalTime;
@@ -30,16 +22,6 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 	global $ScheduleTime;
 	global $Delay;
 	global $HaltDuration;
-	
-	global $InTemp;
-	global $OutTemp;	
-	global $MinTemp;
-	global $MinTempDate;
-	global $MinTempTime;
-	global $MaxTemp;
-	global $MaxTempDate;
-	global $MaxTempTime;
-	
 	global $Remark;
 	global $ReportDate1;
 	global $ReportTime1;
@@ -58,7 +40,6 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 	global $NO_GPS;
 
 	global $objPHPExcel_1;
-	global $objPHPExcel_2;
 	
 	global $last_vehicle_name;
 	global $last_halt_time;
@@ -71,23 +52,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 	global $RouteType_CI;
 	global $ArrivalTime_CI;
 	global $TransporterI_CI;
-	
-	//##### GET TEMPERATURE
-	global $LastTempVehicle;	
-	global $LastMinTemp;
-	global $LastMinDate;
-	global $LastMinTime;
-	global $LastMaxTemp;
-	global $LastMaxDate;
-	global $LastMaxTime;
 
-	global $halt_out_flag1;
-	global $halt_in_flag1;
-	global $min_temp1;
-	global $min_datetime1;
-	global $max_temp1;
-	global $max_datetime1;
-	
 	$current_halt_time =0;
 	$objPHPExcel_1 = null;	
 	//$objPHPExcel_1 = new PHPExcel();
@@ -107,12 +72,8 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 	$objPHPExcel_1 = null;
 	$objPHPExcel_1 = PHPExcel_IOFactory::load($read_excel_path);
 	
-	//####### TEMPERATURE WRITER
-	$objPHPExcel_2 = null;		
-	$objPHPExcel_2 = PHPExcel_IOFactory::load($min_max_temperature_path);	
-	//####### TEMPERATURE CLOSED
-	
-	//####### RECREATE EXTRA SHEETS #####################	
+	//####### RECREATE EXTRA SHEETS #####################
+	//###################################################	
 	$header_font = array(
 	'font'  => array(
 	'bold'  => true,
@@ -122,22 +83,28 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 	));
 	
 	$objPHPExcel_1->createSheet();
-	$objPHPExcel_1->setActiveSheetIndex(1)->setTitle('Customer Completed');
+	$objPHPExcel_1->setActiveSheetIndex(1)->setTitle('Route Completed');
 		
 	$objPHPExcel_1->createSheet();
-	$objPHPExcel_1->setActiveSheetIndex(2)->setTitle('Customer Pending');		
+	$objPHPExcel_1->setActiveSheetIndex(2)->setTitle('Route Pending');		
 	echo "\nSecond tab";
 	$row =1;
 	//###### HEADER
 	$col_tmp = 'A'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Vehicle");
 	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'B'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "CustomerCompleted(All)");
+	$col_tmp = 'B'.$row;					
+	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Route"); 					
 	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'C'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "CustomerCompleted(All)");
+	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
+	$col_tmp = 'D'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Transporter(I)");
 	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
+	$col_tmp = 'E'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "RouteType");
+	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);	
 	$row++;						
 	//#### SECOND TAB CLOSED ##################################################################	
 	
@@ -148,32 +115,32 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 	$col_tmp = 'A'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Vehicle");
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'B'.$row;
+	$col_tmp = 'B'.$row;					
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Route"); 			
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);	
+	$col_tmp = 'C'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Customer Completed");
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'C'.$row;
+	$col_tmp = 'D'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Customer Incompleted");					
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'D'.$row;
+	$col_tmp = 'E'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Transporter(I)");					
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+	$col_tmp = 'F'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "RouteType");					
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);		
+        $col_tmp = 'G'.$row;
+        $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Remark");
+        $objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+ 
 	$row++;	
 	//######## EXTRA SHEET CLOSED
 		
 	//echo "\nSD=".$startdate." ,ED=".$enddate." ,read_excel_path=".$read_excel_path." ,VehicleSize=".sizeof($Vehicle);
 	echo "\nSizeVehicle=".sizeof($Vehicle);	
-	$v=0;
 	for($i=0;$i<sizeof($Vehicle);$i++)
-	{	
-		$lat_ref = 0.0;$lng_ref = 0.0;$lat_ref1 = 0.0;$lng_ref1 = 0.0;$lat_cr =0.0;$lng_cr =0.0;	
-		//echo "<br>LAST1=".$LastMinTemp[$v];
-		//$temperature="";
-		$io = get_io($IMEI[$i],'temperature');
-		//echo "<br>IO=".$io;
-		$min_temp1 = 0; $min_datetime1="";
-		$max_temp1 = 0; $max_datetime1="";
-		$halt_in_flag1 = false;
-		$halt_out_flag1 = false;
+	{		
 		//$userdates = array();
 		$nodata = true;
 		$nodata_last = true;
@@ -198,8 +165,8 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 		}
 		
 		//echo "1\n";
-		//get jcnt		
-		$j=$i;		
+		//get jcnt
+		$j=$i;
 		while($Vehicle[$j]==$Vehicle[$i])
 		{
 			$j++;	//J LIMIT
@@ -248,7 +215,10 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 		$report_date2 = $date_tmp2[0];
 		$report_time2 = $date_tmp2[1];
 
-		//echo "\nReportDate1=".$date_tmp1;		
+		//echo "\nReportDate1=".$date_tmp1;
+		//echo "3\n";
+		//$abspath = "D:\\test_app";
+		//include_once($abspath."/get_location_lp_track_report.php");		
 		global $DbConnection;
 		global $account_id;
 		global $geo_id1;
@@ -264,6 +234,14 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 		global $station_coord;
 		global $distance_variable;
 		global $google_location;
+
+		/*for($k=0;$k<sizeof($station_coord);$k++)       //INITIALISE VARIABLES
+		{    
+			$halt_flag[$k] = 0;
+			$firstdata_flag_halt[$k] = 0; 
+			$substr_count[$k] =0;  
+			//$total_halt_time[$k] = 0;
+		}*/
 		
 		//$interval=$user_interval*60;
 		//echo "interval=".$interval."<br>";
@@ -274,7 +252,6 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 		$LastLat = 0.0;
 		$LastLong = 0.0;
 		$firstData = 0;
-		$first_temp = true;
 		$distance =0.0;
 		$linetowrite="";
 		$firstdata_flag =0;
@@ -331,7 +308,6 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 			//######### STORE MEANINGFUL DATA BETWEEN TWO STS DATES
 			if (file_exists($xml_file)) 
 			{	
-				//echo "<br>FileExists1";
 				$nodata=false;		
 				$t=time();
 				//echo "t=".$t."<br>";
@@ -344,14 +320,12 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 				
 				if (file_exists($xml_original_tmp)) 
 				{
-					//echo "<br>FileExists2";
 					//$vserial_sel[] = array(); 					
 					$sts_date_sel = array();
 					$xml_date_sel = array();				
 					$lat_sel = array(); 					
 					$lng_sel = array(); 					
 					$speed_sel = array();
-					$temp_sel = array();
 									
 					//SWITCH MASTER VARIABLES
 					set_master_variable($userdates[$d]);
@@ -431,41 +405,6 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 									//echo "\nStatus3";
 									continue;
 								}
-								if($io=='io1')
-								{
-									$io='i';
-								}
-								if($io=='io2')
-								{
-									$io='j';
-								}
-								if($io=='io3')
-								{
-									$io='k';
-								}
-								if($io=='io4')
-								{
-									$io='l';
-								}
-								if($io=='io5')
-								{
-									$io='m';
-								}
-								if($io=='io6')
-								{
-									$io='n';
-								}
-								if($io=='io7')
-								{
-									$io='o';
-								}
-								if($io=='io8')
-								{
-									$io='p';
-								}
-								
-								$status = preg_match('/'.$io.'=\"[^"]+/', $line, $temperature_count_tmp);
-								//echo "<br>Status=".$status." io=".$io;
 
 								//$vserial_sel[] = $vehicle_serial; 
 								$sts_date_sel[] = $sts_date;
@@ -475,9 +414,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 								$lng_tmp1 = explode("=",$lng_tmp[0]);
 								$lng_sel[] = preg_replace('/"/', '', $lng_tmp1[1]);
 								$speed_tmp1 = explode("=",$speed_tmp[0]);
-								$speed_sel[] = preg_replace('/"/', '', $speed_tmp1[1]);								
-								$temperature_count1 = explode("=",$temperature_count_tmp[0]);
-								$temp_sel[] = preg_replace('/"/', '', $temperature_count1[1]);								
+								$speed_sel[] = preg_replace('/"/', '', $speed_tmp1[1]);
 							}
 						}						
 					}
@@ -496,7 +433,6 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 				$tmp_lat = $lat_sel[$x];
 				$tmp_lng = $lng_sel[$x];
 				$tmp_speed = $speed_sel[$x];
-				$tmp_temperature = $temp_sel[$x];			
 									
 				$z = $x - 1;
 				$done = false;
@@ -511,7 +447,6 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 						$lat_sel[$z + 1] = $lat_sel[$z];
 						$lng_sel[$z + 1] = $lng_sel[$z];
 						$speed_sel[$z + 1] = $speed_sel[$z];
-						$temp_sel[$z + 1] = $temp_sel[$z];
 						
 						$z = $z - 1;
 						if ($z < 0)
@@ -528,8 +463,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 				$sts_date_sel[$z + 1] = $tmp_sts;
 				$lat_sel[$z + 1] = $tmp_lat;
 				$lng_sel[$z + 1] = $tmp_lng;
-				$speed_sel[$z + 1] = $tmp_speed;
-				$temp_sel[$z + 1] = $tmp_temperature;	
+				$speed_sel[$z + 1] = $tmp_speed;							   
 			}			
 			//###### SORTING CLOSED
 			
@@ -544,7 +478,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 				
 			if (sizeof($xml_date_sel)>0) 
 			{      
-				//echo "\nFile Exist";
+				echo "\nFile Exist";
 				$halt_once = false;
 				
 				for($y=0;$y<sizeof($xml_date_sel);$y++)          // WHILE LINE != NULL
@@ -556,20 +490,11 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 					
 					if((strtotime($datetime) > strtotime($time1_ev)) && (strtotime($datetime) < strtotime($enddate)))
 					{		
-						$nodata_last = false;			
-						$temperature = $temp_sel[$y];						
-						if($temperature>=-30 && $temperature<=70)
-						{
-							$temperature = $temp_sel[$y];
-							//echo "<br>Temperature=".$temperature;
-						}
-						else
-						{
-							$temperature = 0.0;
-						}
-						
+						$nodata_last = false;
+			
 						if($firstdata_flag==0)
 						{							
+							//echo "\nFirstFlag";
 							$halt_flag = 0;
 							$firstdata_flag = 1;
 
@@ -592,76 +517,16 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 							$lnglast =  $lng_ref;
 							//////##############################
 							//$date_secs1 = strtotime($datetime_ref);							
-							//$date_secs1 = (double)($date_secs1 + $interval);
-							//echo "<br>TemperatureM=".$temperature;
-							/*$min_temp1 = $temperature; 
-							$min_datetime1 = $datetime;
-							$max_temp1 = $temperature;
-							$max_datetime1 = $datetime;				
-								
-                                                        $tmpPrev=$temperature;
-                                                        $dateTimePrev=strtotime($datetime);*/																
+							//$date_secs1 = (double)($date_secs1 + $interval);      	
 						}                 	
 						else
 						{    								
-
-                                                     	$tmpNext=$temperature;
-                                                        $dateTimeNext=strtotime($datetime);
-                                                        $tmpDiff=$tmpNext-$tmpPrev;
-                                                        $tmpFlag=1;
-                                                        if((($dateTimeNext-$dateTimePrev)<60) && (abs($tmpDiff)>10))
-                                                        {
-                                                           $tmpFlag=0;
-                                                        }
-
-							if($tmpFlag==1)
-                                                        {
-
-                                                           $temperature = preg_replace('/[^0-9-]/s', '.', $temperature);
-	                                                   $temperaturetmp=substr_count($temperature, '.');
-                                                           if($temperaturetmp<=1)
-                                                            {
-									
-								if($first_temp)
-								{
-									$min_temp1 = $temperature;
-                                                        		$min_datetime1 = $datetime;
-	                                                        	$max_temp1 = $temperature;
-	                                                        	$max_datetime1 = $datetime;
-									$first_temp = true;
-								}
-								else
-								{
-
-
-
-									if( ($halt_out_flag1 && !$halt_in_flag1) || (!$halt_out_flag1 && !$halt_in_flag1) ) //#### IF -MINIMUM ONE HALT OUT OCCURED ||
-									{																			//###  IF -NO HALT IN AND OUT OCCURED
-								
-
-										if($temperature < $min_temp1)
-										{									
-											$min_temp1 = $temperature;
-											$min_datetime1 = $datetime;
-											//echo "<br>temperatureMin=".$temperature." ,min_temp1=".$min_temp1;
-										}		
-										if($temperature > $max_temp1)
-										{									
-											$max_temp1 = $temperature;
-											$max_datetime1 = $datetime;
-											//echo "<br>temperatureMax=".$temperature." ,min_temp1=".$max_temp1;
-										}
-									}
-								}
-							}
-							}							
-							//echo "<br>Next";
+							//echo "<br>Next";               
 							//GET NEXT RECO
-							$lat_cr = $lat_sel[$y];																					
+							$lat_cr = $lat_sel[$y];																												
 							$lng_cr = $lng_sel[$y];
 							$datetime_cr = $datetime;																		
-							
-							$date_secs2 = strtotime($datetime_cr);
+							$date_secs2 = strtotime($datetime_cr);	
 							calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, &$distance);
 							//$distance = calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr);
 							//if(($distance > 0.0100) || ($f== $total_lines-2) )
@@ -684,10 +549,10 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 							//#######################################
 												
 							//if (($halt_flag == 1) && ($distance > 0.100))
-							{		
+							{								
 								//echo "\n\nIF HALT, datetime=".$datetime." ,ArrivalTime=".$datetime_ref." ,DepartureTime=".$datetime_cr;
 								$arrivale_time = $datetime_ref;
-								$starttime = strtotime($datetime_ref);
+								$starttime = strtotime($datetime_ref);										  
 								$stoptime = strtotime($datetime_cr);
 								$depature_time=$datetime_cr;
 																		
@@ -701,9 +566,8 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 								for($k=$i;$k<$j;$k++)
 								{
 									//echo "\nArrivalTime[$k]=".$ArrivalTime[$k]." ,DepartureTime[$k]=".$DepartureTime[$k];
-									if(($ArrivalTime[$k]!="") && ($DepartureTime[$k] == "")) //DEPARTURE
+									if(($ArrivalTime[$k]!="") && ($DepartureTime[$k] == ""))
 									{															
-										//echo "<br>DepartureFound:temperature=".$temperature;
 										$arrtime_str = $ArrivalDate[$k]." ".$ArrivalTime[$k];
 										$deptime = strtotime($depature_time);
 										$arrtime = strtotime($arrtime_str);
@@ -711,16 +575,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 										$hms_2 = secondsToTime($halt_dur);
 										$hrs_min = $hms_2[h].":".$hms_2[m].":".$hms_2[s];
 										//echo "\nDepartureFound";
-																			
-										update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k],$k,$StationNo[$k],$Lat[$k],$Lng[$k],$ScheduleTime[$k],$DistVar[$k],$Remark[$k],$startdate,$enddate,$lat_cr, $lng_cr, $lat_cr, $lng_cr,$arrivale_time,$depature_time,$hrs_min,$Type[$k],2,$temperature);
-										//$halt_out_flag1 = true;
-										//$halt_in_flag1 = false;
-										
-										//###### UPDATE TEMPERATURE ON EVERY DEPARTURE
-										/*$min_temp1 = $temperature; 
-										$min_datetime1 = $datetime;
-										$max_temp1 = $temperature;
-										$max_datetime1 = $datetime;*/
+										update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k],$k,$StationNo[$k],$Lat[$k],$Lng[$k],$ScheduleTime[$k],$DistVar[$k],$Remark[$k],$startdate,$enddate,$lat_cr, $lng_cr, $lat_cr, $lng_cr,$arrivale_time,$depature_time,$RouteNo[$k],$hrs_min,$Type[$k],2);
 									}
 								}													
 								
@@ -732,31 +587,17 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 								$current_halt_time = $current_halt_time + (strtotime($datetime_cr)-strtotime($datetime_ref));
 								//echo "<br>HaltContinued:".$current_halt_time;
 							}									
-							//else if(($distance <= 0.100) && ($halt_flag == 0) && ( (strtotime($datetime_cr)-strtotime($datetime_ref))>($interval-$last_halt_time_excel)) )    // IF VEHICLE STOPS FOR 2 MINS 
+						//	else if(($distance <= 0.100) && ($halt_flag == 0) && ( (strtotime($datetime_cr)-strtotime($datetime_ref))>($interval-$last_halt_time_excel)) )    // IF VEHICLE STOPS FOR 2 MINS 
+						
 							else if((($distance <= 0.100) && ($halt_flag == 0) && ( (strtotime($datetime_cr)-strtotime($datetime_ref))>($interval-$last_halt_time_excel))) || ($speed_sel[$y]<5.0))
-							{							
+
+	{							
 								for($k=$i;$k<$j;$k++)
 								{
-									if($ArrivalTime[$k]=="") //ARRIVAL
-									{																						
-										//echo "<br>LastMinTempA[v]=".$LastMinTemp[$v];
-										if($LastMinTemp[$v]!="")	//##### READ LAST TEMPERATURE FROM FILE
-										{
-											$min_temp1 = $LastMinTemp[$v];											
-											$min_datetime1 = $LastMinDate[$v]." ".$LastMinTime[$v];
-											$max_temp1 = $LastMaxTemp[$v];
-											$max_datetime1 = $LastMaxDate[$v]." ".$LastMaxTime[$v];											
-										}
-										/*else if($halt_out_flag1) 	//##### READ IF -NOT IN FILE AND NOT HALT OUT OCCURED
-										{
-											$min_temp1 = $temperature;											
-											$min_datetime1 = $datetime;
-											$max_temp1 = $temperature;
-											$max_datetime1 = $datetime;										
-										}*/										
-										//echo "<br>MIN_TEMP2=".$min_temp1." ,maxtemp=".$max_temp1;										
-										//echo "<br>ArrivalFound";
-										update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k],$k,$StationNo[$k],$Lat[$k],$Lng[$k],$ScheduleTime[$k],$DistVar[$k],$Remark[$k],$startdate,$enddate,$lat_ref1, $lng_ref1, $lat_cr, $lng_cr,$datetime_ref,$depature_time,$hrs_min,$Type[$k],1,$temperature);
+									if($ArrivalTime[$k]=="")
+									{	
+										//echo "\nArrivalFound";																													
+										update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k],$k,$StationNo[$k],$Lat[$k],$Lng[$k],$ScheduleTime[$k],$DistVar[$k],$Remark[$k],$startdate,$enddate,$lat_ref1, $lng_ref1, $lat_cr, $lng_cr,$datetime_ref,$depature_time,$RouteNo[$k],$hrs_min,$Type[$k],1);
 									}
 								}												
 								$current_halt_time = 0;
@@ -839,77 +680,221 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 			//{
 				$Vehicle_CI[] = $Vehicle[$k];
 				$StationNo_CI[] = $StationNo[$k];
-				//$RouteNo_CI[] = $RouteNo[$k];
-				//$RouteType_CI[] = $RouteType[$k];
+				$RouteNo_CI[] = $RouteNo[$k];
+				$RouteType_CI[] = $RouteType[$k];
 				//echo "<br>RouteStore=".$RouteNo[$k];
 				$ArrivalTime_CI[] = $ArrivalTime[$k];	
 				$TransporterI_CI[] = $TransporterI[$k];
 			//}
 		}
 				
-		//################ UPDATE LAST MIN MAX TEMP
-		//echo "<br>TEMP_MAIN=".$temperature." ,datetime=".$datetime." ,LastMinTemp=".$LastMinTemp[$v];
-		//echo "<br>MinTemp1=".$min_temp1." ,max_temp1=".$max_temp1;
-		
-		//####### UPDATE CONDITIONS
-		//### 1. IF OUT && NOT IN
-		//### 2. IF NO OUT && NO IN && EXIST IN FILE
-		//### 3. IF IN && NO OUT - MAKE IT BLANK
-		
-		if( ($halt_out_flag1 && !$halt_in_flag1) || ((!$halt_in_flag1 && !$halt_out_flag1) && ($LastMinTemp[$v]!="")) )
-		{
-			echo "<br>IN TEMPERATURE FILE UPDATE::NO HALT IN AND OUT";
-			update_last_temperature($min_temp1, $min_datetime1, $max_temp1, $max_datetime1, $v);
-		}
-		else if($halt_in_flag1 && !$halt_out_flag1)
-		{
-			echo "<br>IN TEMPERATURE FILE UPDATE::BLANK, HALT IN NO HALT OUT";
-			$min_temp1="";
-			$min_datetime1="";
-			$max_temp1="";
-			$max_datetime1="";
-			update_last_temperature($min_temp1, $min_datetime1, $max_temp1, $max_datetime1, $v);
-		}
-		//#########################################
-		
 		if($j>$i)
 		{
 			$i=$j-1;
 		}
-		$v++;
 		
 	} //##### EXCEL VEHICLE LOOP CLOSED			
 	
 	
 	//######### CALL SORT ROUTES FUNCTION
-	sort_all_vehicle();
+	sort_all_routes();
+	
+	//######## CI LOGIC
+	/*$Vehicle_CI = $Vehicle;
+	$StationNo_CI = $StationNo;
+	$RouteNo_CI = $RouteNo;
+	$ArrivalTime_CI = $ArrivalTime;*/
+
+	//######## AFTER ALL ROUTES SORTING
 	//echo "<br>Size:RouteNo_CI=".sizeof($RouteNo_CI);
 
+	$t=0;
+	$size=0;
+	$match=false;
+	for($i=0;$i<sizeof($RouteNo_CI);$i++)
+	{	
+		$j=$i;
+		
+		//echo "<br>MAIN::i=".$i." ,j=".$j." ,RouteNo_CI[$i]=".$RouteNo_CI[$i];		
+		while($RouteNo_CI[$j]==$RouteNo_CI[$i])
+		{
+			//echo "<br>BEFORE:".$t;
+			//echo "<br>ROUTE::i=".$i." ,j=".$j." ,VehicleCI[$j]=".$Vehicle_CI[$j]." ,RouteNo_CI[$j]=".$RouteNo_CI[$j]." ,RouteNo_CI[$i]=".$RouteNo_CI[$i];;
+			if($ArrivalTime_CI[$j]!="")
+			{			
+				//echo "<br>Arrival Found";
+				$RouteFill[$RouteNo_CI[$j]][] = $StationNo_CI[$j];			
+			}			
+			//####### GET THE UNIQUE TOTAL VEHICLE TOTAL
+			if(sizeof($VehicleTotal[$RouteNo_CI[$j]])==0)
+			{
+				//echo "<br>IF IN:i=".$i." ,j=".$j;
+				$VehicleTotal[$RouteNo_CI[$j]][] = $Vehicle_CI[$j];
+				$t++;
+			}
+			else
+			{
+				$size=sizeof($VehicleTotal[$RouteNo_CI[$j]]);
+				//echo "<br>SizeOfVehicleTotal=".sizeof($VehicleTotal[$RouteNo_CI[$j]]);				
+				$match=false;
+				for($k=0;$k<$size;$k++)
+				{
+					//echo "<br>Vehicle_CI[j]=".$Vehicle_CI[$j]." ,VehicleTotal=".$VehicleTotal[$RouteNo_CI[$j]][$k];
+					if(($Vehicle_CI[$j])==($VehicleTotal[$RouteNo_CI[$j]][$k]))
+					{
+						//echo "<br>Add-Vehicle";
+						$match=true;
+						break;
+					}
+					
+				}
+				if(!$match)
+				{
+					//echo "<br>Vehicle_CI MatchFalse=".$Vehicle_CI[$j];
+					$VehicleTotal[$RouteNo_CI[$j]][] = $Vehicle_CI[$j];
+				}
+				//####### GET THE UNIQUE TOTAL CUSTOMER_TOTAL
+				//echo "<br>Else:i=".$i." ,j=".$j." ,SizeOfCustomerTotal=".sizeof($CustomerTotal[$RouteNo_CI[$j]]);
+			}
+
+			$t=0;
+			$size=0;
+			if(sizeof($CustomerTotal[$RouteNo_CI[$j]])==0)
+			{
+				$CustomerTotal[$RouteNo_CI[$j]][] = $StationNo_CI[$j];
+				$t++;
+			}
+			else
+			{
+				$size=sizeof($CustomerTotal[$RouteNo_CI[$j]]);
+				$match=false;
+				for($k=0;$k<$size;$k++)
+				{
+					//echo "<br>StationNo_CI[$j]=".$StationNo_CI[$j]." ,CustomerTotal[$RouteNo_CI[$j]][$k]=".$CustomerTotal[$RouteNo_CI[$j]][$k];
+					if(trim($StationNo_CI[$j])==trim($CustomerTotal[$RouteNo_CI[$j]][$k]))
+					{
+						$match=true;
+						break;
+						//echo "<br>Add-Customer:".$t;
+						//$t++;
+						
+					}
+				}
+				if(!$match)
+				{
+					$CustomerTotal[$RouteNo_CI[$j]][] = $StationNo_CI[$j];
+				}
+			}
+			$j++;	//J LIMIT
+			
+			//echo "<br>AFTER-1:".$t;			
+		}
+		
+		//####### GET THE ROUTE TOTAL				
+		$RouteTotal[] = $RouteNo_CI[$i];
+		$RouteTypeTotal[$RouteNo_CI[$i]] = $RouteType_CI[$i];
+		$TransporterITotal[$RouteNo_CI[$i]] = $TransporterI_CI[$i];	
+		//echo "<br>RouteType=".$RouteTypeTotal[$RouteNo_CI[$i]]." ,TPT=".$TransporterITotal[$RouteNo_CI[$i]];
+		
+		if($j>$i)
+		{
+			$i=$j-1;
+		}
+		//echo "<br>AFTER-2:".$t;		
+	}
+	
+	//echo "<br>T=".$t;
 	//###### WRITE TO EXCEL : COMPLETED/INCOMPLETED CUSTOMERS
 	global $sheet1_row;
 	global $sheet2_row;
 	//echo "<br>SizeRouteTotal:Final=".sizeof($RouteTotal);
-	
-	for($i=0;$i<sizeof($Vehicle_CI);$i++)
-	{
+	for($i=0;$i<sizeof($RouteTotal);$i++)
+	{	
 		$vehicle_str=""; $remark_str=""; $customer_completed_str=""; $customer_incompleted_str="";
-
-		$j=$i;
-		while($Vehicle_CI[$j]==$Vehicle_CI[$i])
+				
+		$size_customer=0;
+		$size_customer = sizeof($CustomerTotal[$RouteTotal[$i]]);
+		//echo "<br>SizeCustomerTotal:Final=".$size_customer;
+		for($j=0;$j<$size_customer;$j++)
 		{
-			if($ArrivalTime_CI[$j]!="")
+			$complete=false;
+			$size_route_fill = 0;
+			$size_route_fill = sizeof($RouteFill[$RouteTotal[$i]]);
+			//echo "<br>Size:RouteFill=".$size;
+
+			$cust_total="";
+			if(strpos($CustomerTotal[$RouteTotal[$i]][$j],'@') !== false)
 			{
-				$customer_completed_str.=$StationNo_CI[$j].",";
+				$cust_total_tmp = explode('@',$CustomerTotal[$RouteTotal[$i]][$j]);
+				//$cust_total = $cust_total_tmp[1];
+				$cust_total = $cust_total_tmp[0];
 			}
-			else if($ArrivalTime_CI[$j]=="")
+			else
 			{
-				$customer_incompleted_str.= $StationNo_CI[$j].",";
-			}		
-			$j++;	//J LIMIT
-		}	
+				$cust_total = $CustomerTotal[$RouteTotal[$i]][$j];
+			}					
+			
+			for($k=0;$k<$size_route_fill;$k++)	//k=customer
+			{
+				$cust_arrived="";
+				//if(strpos($CustomerTotal[$RouteTotal[$i]][$j],'@') !== false)
+				if(strpos($RouteFill[$RouteTotal[$i]][$k],'@') !== false)
+				{
+					$cust_arrived_tmp = explode('@',$RouteFill[$RouteTotal[$i]][$k]);
+					//$cust_arrived = $cust_arrived_tmp[1];
+					$cust_arrived = $cust_arrived_tmp[0];
+				}
+				else
+				{
+					$cust_arrived = $RouteFill[$RouteTotal[$i]][$k];
+				}						
+				//echo "<br>Customer1=".$cust_arrived." ,Customer2=".$cust_total;
+				if(trim($cust_arrived) == trim($cust_total) )	//MATCH CUSTOMER
+				{					
+					//echo "<br>Completed:".$cust_total;
+					$customer_completed_str.= $cust_total.",";
+					$complete=true;
+					break;
+				}
+			}
+			if(!$complete)
+			{				
+				//echo "<br>InCompleted:".$cust_total;
+				$customer_incompleted_str.= $cust_total.",";
+			}
+		}		
 		
-		if($vehicle_str!="") {$vehicle_str = substr($Vehicle_CI[$i], 0, -1);}
-		//if($remark_str!="") {$remark_str = substr($remark_str, 0, -1);}
+		$size_vehicle = 0;
+		$size_vehicle = sizeof($VehicleTotal[$RouteTotal[$i]]);
+
+		$no_remark = true;
+		for($j=0;$j<$size_vehicle;$j++)
+		{
+			$vehicle_str.= $VehicleTotal[$RouteTotal[$i]][$j]."/";
+
+			//### GET SELECTED REMARK
+			$remark_final = "-";
+			for($v=0;$v<sizeof($Remark);$v++)
+			{
+				if((trim($Vehicle[$v]) == trim($vehicle_2)) && ($Remark[$v]!=""))
+				{
+					$remark_final = $Remark[$v];
+					$no_remark = false;		
+					break;
+				}
+			}
+			$remark_str.= $remark_final."/";
+		}
+		
+		if($no_remark)
+		{
+			$remark_str = "";
+		}
+		//echo "<br>vehicle_str=".$vehicle_str;
+		//echo "<br>customer_completed_str=".$customer_completed_str;
+		//echo "<br>customer_incompleted_str=".$customer_incompleted_str;
+		if($vehicle_str!="") {$vehicle_str = substr($vehicle_str, 0, -1);}
+		if($remark_str!="") {$remark_str = substr($remark_str, 0, -1);}
 		if($customer_completed_str!="") {$customer_completed_str = substr($customer_completed_str, 0, -1);}
 		if($customer_incompleted_str!="") {$customer_incompleted_str = substr($customer_incompleted_str, 0, -1);}
 		//######## FILL COMPLETED /INCOMPLETED SHEET
@@ -923,11 +908,15 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 		{
 			//echo "<br>ONE";
 			$col_tmp = 'A'.$sheet1_row;
-			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $Vehicle_CI[$i]);
-			$col_tmp = 'B'.$sheet1_row;
-			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $customer_completed_str);
+			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $vehicle_str);
+			$col_tmp = 'B'.$sheet1_row;					
+			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $RouteTotal[$i]); 					
 			$col_tmp = 'C'.$sheet1_row;
-			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $TransporterI_CI[$i]);			
+			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $customer_completed_str);
+			$col_tmp = 'D'.$sheet1_row;
+			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $TransporterITotal[$RouteTotal[$i]]);
+			$col_tmp = 'E'.$sheet1_row;
+			$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $RouteTypeTotal[$RouteTotal[$i]]);
 			$sheet1_row++;
 		}
 		//########## FILL SHEET3
@@ -935,39 +924,63 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $min_max_temp
 		{
 			//echo "<br>TWO";
 			$col_tmp = 'A'.$sheet2_row;
-			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $Vehicle_CI[$i]);
-			$col_tmp = 'B'.$sheet2_row;
-			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $customer_completed_str);
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $vehicle_str);
+			$col_tmp = 'B'.$sheet2_row;					
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $RouteTotal[$i]); 					
 			$col_tmp = 'C'.$sheet2_row;
-			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $customer_incompleted_str);					
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $customer_completed_str);
 			$col_tmp = 'D'.$sheet2_row;
-			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $TransporterI_CI[$i]);	
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $customer_incompleted_str);					
+			$col_tmp = 'E'.$sheet2_row;
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $TransporterITotal[$RouteTotal[$i]]);	
+			$col_tmp = 'F'.$sheet2_row;
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $RouteTypeTotal[$RouteTotal[$i]]);			
+			$col_tmp = 'G'.$sheet2_row;
+			$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $remark_str);
 			$sheet2_row++;
 		}
-		
-		if($j>$i)
-		{
-			$i=$j-1;
-		}		
 	}
 	//####### WRITE TO EXCEL :COMPLETED/INCOMPLETED CLOSED ##############
+	
+	//############# UPDATE NOT FOUND RED-ROUTE
+	global $RedRoute;
+	global $RedCustomer;
+	$styleFontRed = array(
+	'font'  => array(
+		'bold'  => true,
+		'color' => array('rgb' => 'FF0000'), //RED
+		'size'  => 10
+		//'name'  => 'Verdana'
+	));	
+
+	$sheet2_row++;
+	//####### ADD THE NOT ADDED ROUTE FROM FIRST SHEET
 	$customer_str="";
-	//echo "\nSizeRedRoute=".sizeof($RedRoute);	
+	//echo "\nSizeRedRoute=".sizeof($RedRoute);
+	for($m=0;$m<sizeof($RedRoute);$m++)
+	{		
+		//echo "<br>RED_ROUTE=".$RedRoute[$m];
+		$col_tmp = 'B'.$sheet2_row;
+		$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $RedRoute[$m]);
+		$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($styleFontRed);			
+		$col_tmp = 'D'.$sheet2_row;
+		$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $RedCustomer[$m]);
+		$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($styleFontRed);		
+		$sheet2_row++;		
+	}
+	//echo "\nCSV_STRING_HALT=".$csv_string_halt;
+	//####### UPDATE EXTRA SHEET	
+	
 	//echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel_1, 'Excel2007');
 	$objWriter->save($read_excel_path);
 	echo date('H:i:s') , " File written to " , $read_excel_path , EOL;
 	
-	//####### SAVE TEMPERATURE WRITER
-	$objWriter2 = PHPExcel_IOFactory::createWriter($objPHPExcel_2, 'Excel2007');
-	$objWriter2->save($min_max_temperature_path);
-	echo date('H:i:s') , " File written to " , $min_max_temperature_path , EOL;	
-	
 	echo "\nHALT CLCLOSED";
 }	
 
 //######## UPDATE VEHICLE
-function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $StationNo, $Lat, $Lng, $ScheduleTime, $DistVar, $Remark, $startdate,$enddate, $lat_ref1, $lng_ref1, $lat_cr, $lng_cr, $arrivale_time,$depature_time, $hrs_min, $Type, $status_entered,$temperature)
+function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $StationNo, $Lat, $Lng, $ScheduleTime, $DistVar, $Remark, $startdate,$enddate, $lat_ref1, $lng_ref1, $lat_cr, $lng_cr, $arrivale_time,$depature_time, $RouteNo, $hrs_min, $Type, $status_entered)
 {										
 	//echo "\nUPDATE VEHICLE::".$read_excel_path.", ".$Vehicle.", ".$k.", ".$StationNo.", ".$Lat.", ".$Lng.", ".$ScheduleTime.", ".$DistVar.", ".$Remark.", ".$startdate.", ".$enddate.", ".$status_entered;	
 	global $unchanged;
@@ -977,13 +990,6 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 	global $transporter_m;
 	global $vehicle_m;
 
-	global $halt_out_flag1;
-	global $halt_in_flag1;
-
-	global $min_temp1;
-	global $min_datetime1;
-	global $max_temp1;
-	global $max_datetime1;	
 	//#######################	
 	$place = "-";												
 	$station_no = "-";
@@ -1004,12 +1010,14 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 	if( ($lat_g!="") && ($lng_g!="") && ($StationNo!="") )
 	{
 		//echo "\nDIST::datetime=".$datetime." ,op_date1=".$op_date1." ,op_date2=".$op_date2." \ndistance=".$distance;
+
+		//echo "\nLatRef1=".$lat_ref1." ,LngRef1=".$lng_ref1." :LatCr=".$lat_cr." ,LngCr=".$lng_cr." ,LatG=".$lat_g." ,LngG=".$lng_g;
 		calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, &$distance_station1);
 		calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, &$distance_station2);
 		
-		//$distance_station1 = calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g);
-		//$distance_station2 = calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g);		
-				
+		//$distance_station1=calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g);
+		//$distance_station2=calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g);		
+		
 		if($distance_station1<$distance_station2)
 		{
 			$distance_station=$distance_station1;
@@ -1017,10 +1025,13 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 		else
 		{
 			$distance_station=$distance_station2;
-		}	
+		}		
+		//echo "\nVehicle entered in station=CustomerNo=".$StationNo." ,arrivale_time=".$arrivale_time." ,lat_ref1=".$lat_ref1." ,lng_ref1=".$lng_ref1." ,lat_cr=".$lat_cr." ,lng_cr=".$lng_cr."dist=".$distance_station.", distvar=".$DistVar;  
+		//echo "\n1=CustomerNo=".$StationNo." ,arrivale_time=".$arrivale_time." ,lat_ref1=".$lat_ref1." ,lng_ref1=".$lng_ref1." ,lat_cr=".$lat_cr." ,lng_cr=".$lng_cr."dist=".$distance_station.", distvar=".$DistVar;  
 		//echo "\ndistance_station=".$distance_station.", distance_variable=".$DistVar;
 		if($distance_station < $DistVar)
 		{			
+			//echo "\nEntered";
 			$station_no = $StationNo;																								
 			//$customer_visited[] = $station_no;
 			//$customer_type[] = $Type[$i];
@@ -1107,6 +1118,10 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 	{
 		$time_delay = "-";
 	}	
+	if($route_no=="")
+	{
+		$route_no="-";
+	}
 	if($hrs_min=="")
 	{
 		$hrs_min = "-";
@@ -1129,120 +1144,83 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 	
 	if(($status_entered==1)	&& ($entered_station==1))//###### CHECK FOR ALL (ARRIVAL AND DEPARTURE)
 	{
-		//$temperature,$datetime,$min_temp1,$min_datetime1,$max_temp1,$max_datetime1
-		$min_date = explode(' ',$min_datetime1);
-		$max_date = explode(' ',$max_datetime1);
-		
-		$col_tmp = 'F'.$row;
+		//echo "\nEnteredStation";
+		//##UPDATE ARRIVAL																																			
+		//echo "\nIF ARRIVAL NULL, arrival_time1[0]=".$arrival_time1[0]." ,arrival_time1[1]=".$arrival_time1[1]." row=".$row;
+		//echo "\ndepature_time1".$depature_time1[0]." ,depature_time1[1]=".$depature_time1[1];
+		//echo "\nhrs_min".$hrs_min." ,time_delay=".$time_delay;
+		//echo "\nobjPHPExcel_1=".$objPHPExcel_1;				
+		$col_tmp = 'G'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $arrival_time1[0]);
 
-		$col_tmp = 'G'.$row;
+		$col_tmp = 'H'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $arrival_time1[1]);
+
+		//$col_tmp = 'I'.$row;
+		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $depature_time1[0]);
+
+		//$col_tmp = 'J'.$row;
+		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $depature_time1[1]);
 		
-		//####### TEMPERATURE UPDATE
-		$col_tmp = 'K'.$row;			//IN TEMP
-		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $temperature);
-		//$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+		$col_tmp = 'L'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $time_delay);		
 
-		if($min_temp1!="")
-		{
-			$col_tmp = 'M'.$row;
-			$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $min_temp1);
-			//$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+		//$col_tmp = 'M'.$row;
+		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $hrs_min);			
 
-			$col_tmp = 'N'.$row;
-			$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $min_date[0]);
-			//$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-
-			$col_tmp = 'O'.$row;
-			$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $min_date[1]);
-			//$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-		}
-		
-		if($max_temp1!="")
-		{
-			$col_tmp = 'P'.$row;
-			$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $max_temp1);
-			//$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-
-			$col_tmp = 'Q'.$row;
-			$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $max_date[0]);
-			//$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-			
-			$col_tmp = 'R'.$row;
-			$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $max_date[1]);
-		}
-		//$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);		
-		//#########################
-		//$col_tmp = 'L'.$row;
-		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $time_delay);		
-
-		$col_tmp = 'T'.$row;
+		$col_tmp = 'O'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time1[0]);
 
-		$col_tmp = 'U'.$row;
+		$col_tmp = 'P'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time1[1]);
 
-		$col_tmp = 'V'.$row;
+		$col_tmp = 'Q'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time2[0]);
 
-		$col_tmp = 'W'.$row;
+		$col_tmp = 'R'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time2[1]);
 			
 		$ArrivalTime[$k] = $arrival_time1[1];				
-		$unchanged = false;			
-
-		//###### TEMPERATURE FLAG
-		$halt_in_flag1 = true;
-		$halt_out_flag1 = false;		
+		$unchanged = false;				
 		//###############																						
 	}
 	if(($status_entered==2)	&& ($entered_station==0))//####### CHECK FOR DEPARTURE
 	{
-		//$temperature,$datetime,$min_temp1,$min_datetime1,$max_temp1,$max_datetime1
-		//$min_date = explode(' ',$min_datetime1);
-		//$max_date = explode(' ',$max_datetime1);
-		
 		//echo "\nDepartureWrite";
 		//##UPDATE DEPARTURE
-		$col_tmp = 'H'.$row;
+		$col_tmp = 'I'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $depature_time1[0]);
 
-		$col_tmp = 'I'.$row;
+		$col_tmp = 'J'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $depature_time1[1]);
 		
-		$col_tmp = 'J'.$row;
+		//$col_tmp = 'L'.$row;
+		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $time_delay);	
+
+		$col_tmp = 'M'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $hrs_min);			
 
-		//####### TEMPERATURE UPDATE
-		$col_tmp = 'L'.$row;			//## ONLY UPDATE OUT TEMP IN CASE OF DEPARTURE
-		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $temperature);
-		//$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);	
-		//#########################
-		
-		$col_tmp = 'T'.$row;
+		$col_tmp = 'O'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time1[0]);
 
-		$col_tmp = 'U'.$row;
+		$col_tmp = 'P'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time1[1]);
 
-		$col_tmp = 'V'.$row;
+		$col_tmp = 'Q'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time2[0]);
 
-		$col_tmp = 'W'.$row;
+		$col_tmp = 'R'.$row;
 		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $report_time2[1]);
 
+		//$col_tmp = 'S'.$row;
+		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $transporter_name_master);
+
+		//$col_tmp = 'T'.$row;
+		//$plant = "-";
+		//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant);		
 		$DepartureTime[$k] = $depature_time1[1];
 		
 		$unchanged = false;
-		
-		//### RESET TEMPERATURE FLAG
-		$halt_out_flag1 = true;
-		$halt_in_flag1 = false;
-		$min_temp1 = $temperature; 
-		$min_datetime1 = $datetime;
-		$max_temp1 = $temperature;
-		$max_datetime1 = $datetime;
 		//echo "\nIF ARRIVAL NOT NULL";												
 	}
 	
@@ -1254,12 +1232,86 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 	//break;                            											
 	//$entered_station = 0;                            							
 }
+////### UPDATE HALT CLOSED
+/*
+function update_extra_sheets($objPHPExcel_1,$i,$Vehicle,$RouteNo,$customer_visited_unique,$customer_unvisited_unique, $TransporterI, $RouteType)
+{
+	//echo "\nVehicle=".$Vehicle." ,Route=".$RouteNo." ,sizeCV=".sizeof($customer_visited)." ,sizeCU=".sizeof($customer_unvisited);
+	global $sheet1_row;
+	global $sheet2_row;
+
+	//echo "\nInUpdateExtraSheet";	
+	$row1=2;
+	$row2=2;
+
+	$all_completed = false;
+	$valid_match = false;		
+	$customer_all_str = "";
+	$customer_visited_str = "";
+	$customer_unvisited_str = "";
+	$vehicle_name_rdb1 = $vehicle_excel[$j];
+	$route_name_rdb1 = $route_excel[$j];		
+	
+	foreach($customer_visited_unique as $array_key1 => $array_value_1)		//##### TOTAL CUSTOMER VISITED
+	{							
+		$customer_visited_str = $customer_visited_str.$array_value_1.",";
+	}
+	if($customer_visited_str!="") { $customer_visited_str = substr($customer_visited_str, 0, -1);}
+	
+	foreach($customer_unvisited_unique as $array_key2 => $array_value_2)		//##### TOTAL CUSTOMER VISITED
+	{							
+		$customer_unvisited_str = $customer_unvisited_str.$array_value_2.",";
+	}
+	if($customer_unvisited_str!="") { $customer_unvisited_str = substr($customer_unvisited_str, 0, -1);}
+
+	//####### UPDATE SHEET2 : ALL VISITED
+	//echo "\ncustomer_visited_str=".$customer_visited_str." ,customer_unvisited_str=".$customer_unvisited_str;		
+	if((sizeof($customer_visited_unique)>0) && (sizeof($customer_unvisited_unique)==0))
+	{
+		//echo "\nValidSheet2";
+		//######### FILL SHEET2
+		$col_tmp = 'A'.$sheet1_row;
+		$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $Vehicle);
+		$col_tmp = 'B'.$sheet1_row;					
+		$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $RouteNo); 					
+		$col_tmp = 'C'.$sheet1_row;
+		$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $customer_visited_str);
+		$col_tmp = 'D'.$sheet1_row;
+		$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $TransporterI);
+		$col_tmp = 'E'.$sheet1_row;
+		$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , $RouteType);
+		$sheet1_row++;
+	}
+	//####### UPDATE SHEET3 : PARTIAL VISITED
+	if( (sizeof($customer_unvisited_unique)>0) && ($customer_unvisited_str!=""))
+	{
+		//echo "\nValidSheet3";
+		//######### FILL SHEET3
+		if($customer_completed!="") { $customer_completed = substr($customer_completed, 0, -1);}
+		if($customer_incompleted!="") { $customer_incompleted = substr($customer_incompleted, 0, -1);}
+		
+		$col_tmp = 'A'.$sheet2_row;
+		$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $Vehicle);
+		$col_tmp = 'B'.$sheet2_row;					
+		$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $RouteNo); 					
+		$col_tmp = 'C'.$sheet2_row;
+		$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $customer_visited_str);
+		$col_tmp = 'D'.$sheet2_row;
+		$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $customer_unvisited_str);					
+		$col_tmp = 'E'.$sheet2_row;
+		$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $TransporterI);	
+		$col_tmp = 'F'.$sheet2_row;
+		$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , $RouteType);			
+		$sheet2_row++;	
+	}
+	//#### EXTRA TAB CLOSED ###########	
+}*/
 
 function update_nogps($objPHPExcel_1, $msg, $i)
 {										
 	//echo "\nInUpdateRemark";
 	$row = $i+2;
-	$col_tmp = 'AD'.$row;
+	$col_tmp = 'AA'.$row;
 
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $msg);	
 }
@@ -1268,9 +1320,9 @@ function update_remark($objPHPExcel_1, $msg, $i)
 {										
 	//echo "\nInUpdateRemark";
 	$row = $i+2;
-	$col_tmp = 'S'.$row;
+	$col_tmp = 'N'.$row;
 
-	$halt_in_cell = 'G'.$row;
+	$halt_in_cell = 'H'.$row;
 	$halt_in = $objPHPExcel_1->getActiveSheet(0)->getCell($halt_in_cell)->getValue();
 
 	if($halt_in!="")
@@ -1281,39 +1333,13 @@ function update_remark($objPHPExcel_1, $msg, $i)
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $msg);	
 }
 
-function update_last_temperature($LastMinTemp, $LastMinDateTime, $LastMaxTemp, $LastMaxDateTime, $i)
-{											
-	global $objPHPExcel_2;
-	//echo "<br>LastMinTemp=".$LastMinTemp." ,LastMinDateTime=".$LastMinDateTime;
-	
-	$last_min_date_str = explode(' ',$LastMinDateTime);
-	$last_max_date_str = explode(' ',$LastMaxDateTime);
-	
-	$row = $i+2;
-	$col_tmp = 'B'.$row;
-	$objPHPExcel_2->setActiveSheetIndex(0)->setCellValue($col_tmp , $LastMinTemp);
-
-	$col_tmp = 'C'.$row;
-	$objPHPExcel_2->setActiveSheetIndex(0)->setCellValue($col_tmp , $last_min_date_str[0]);	
-
-	$col_tmp = 'D'.$row;
-	$objPHPExcel_2->setActiveSheetIndex(0)->setCellValue($col_tmp , $last_min_date_str[1]);	
-
-	$col_tmp = 'E'.$row;
-	$objPHPExcel_2->setActiveSheetIndex(0)->setCellValue($col_tmp , $LastMaxTemp);	
-
-	$col_tmp = 'F'.$row;
-	$objPHPExcel_2->setActiveSheetIndex(0)->setCellValue($col_tmp , $last_max_date_str[0]);	
-
-	$col_tmp = 'G'.$row;
-	$objPHPExcel_2->setActiveSheetIndex(0)->setCellValue($col_tmp , $last_max_date_str[1]);	
-}
-
-//######### SORT WITH RESPECT TO CUSTOMERS ###########################
-function sort_all_vehicle()
+//######### SORT WITH RESPECT TO ROUTES ###########################
+function sort_all_routes()
 {
 	global $Vehicle_CI;
 	global $StationNo_CI;
+	global $RouteNo_CI;
+	global $RouteType_CI;
 	global $ArrivalTime_CI;
 	global $TransporterI_CI;
 	
@@ -1321,10 +1347,12 @@ function sort_all_vehicle()
 	{
 		echo "<br>Vehicle:BEFORE_SORT=".$Vehicle_CI[$x];
 	}*/
-	for($x = 1; $x < sizeof($Vehicle_CI); $x++) 
+	for($x = 1; $x < sizeof($RouteNo_CI); $x++) 
 	{
 		$tmp_vehicle_ci = $Vehicle_CI[$x];
 		$tmp_station_ci = trim($StationNo_CI[$x]);
+		$tmp_route_ci = $RouteNo_CI[$x];
+		$tmp_routetype_ci = $RouteType_CI[$x];
 		$tmp_arrival_ci = $ArrivalTime_CI[$x];
 		$tmp_transporter_ci = $TransporterI_CI[$x];			
 		///////////      				
@@ -1333,12 +1361,14 @@ function sort_all_vehicle()
 		$done = false;
 		while($done == false)
 		{
-			$vehicle_tmp1 = $Vehicle_CI[$z];			
+			$route_tmp1 = $RouteNo_CI[$z];			
 			//echo "<br>RouteTmp1=".$route_tmp1." ,tmp_route_ci=".$tmp_route_ci;
-			if (trim($vehicle_tmp1) > trim($tmp_vehicle_ci))
+			if (trim($route_tmp1) > trim($tmp_route_ci))
 			{
 				$Vehicle_CI[$z + 1] = $Vehicle_CI[$z];
 				$StationNo_CI[$z + 1] = trim($StationNo_CI[$z]);				
+				$RouteNo_CI[$z + 1] = trim($RouteNo_CI[$z]);
+				$RouteType_CI[$z + 1] = $RouteType_CI[$z];
 				$ArrivalTime_CI[$z + 1] = $ArrivalTime_CI[$z];
 				$TransporterI_CI[$z + 1] = $TransporterI_CI[$z];				
 				//////////////////
@@ -1356,6 +1386,8 @@ function sort_all_vehicle()
 
 		$Vehicle_CI[$z + 1] = $tmp_vehicle_ci;
 		$StationNo_CI[$z + 1] = $tmp_station_ci;		
+		$RouteNo_CI[$z + 1] = $tmp_route_ci;
+		$RouteType_CI[$z + 1] = $tmp_routetype_ci;
 		$ArrivalTime_CI[$z + 1] = $tmp_arrival_ci;
 		$TransporterI_CI[$z + 1] = $tmp_transporter_ci;			
 	}
