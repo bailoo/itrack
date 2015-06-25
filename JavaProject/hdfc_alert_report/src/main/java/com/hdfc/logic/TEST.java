@@ -46,12 +46,20 @@ public class TEST {
 		//validate_lat_lng("23.169054, 80.714108");
 //		get_max();
 		
-		double lat_start = 29.94744;
+		/*double lat_start = 29.94744;
 		double lng_start = 78.16192;
 		double lat_middle = 29.94721;
 		double lng_middle = 78.16219;
 		double lat_end = 29.947;
-		double lng_end = 78.16244;
+		double lng_end = 78.16244;*/
+		
+		double lat_start = 28.58896;
+		double lng_start = 77.37513;
+		double lat_middle = 28.58878;
+		double lng_middle = 77.37482;
+		double lat_end = 28.58978;
+		double lng_end = 77.37419;
+
 		float angle = get_turning_angle(lat_start, lng_start, lat_middle, lng_middle, lat_end, lng_end);
 		System.out.println("Angle="+angle);
 		

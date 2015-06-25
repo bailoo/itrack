@@ -45,11 +45,11 @@ public class report_turning_violation {
 			}catch(Exception ed) {System.out.println(ed.getMessage());}
 			//System.out.println("ValidDeviceTime Found2");
 			
-			System.out.println("BeforeValid="+device_time+" ,startdate="+startdate+" ,enddate="+enddate+" ,xml_date_latest="+xml_date_latest);
+			//System.out.println("BeforeValid="+device_time+" ,startdate="+startdate+" ,enddate="+enddate+" ,xml_date_latest="+xml_date_latest);
 			
 			if( (device_time_sec >= startdate_sec) && (device_time_sec <= enddate_sec) ) {
 				  				
-				System.out.println("Valid="+device_time);
+				//System.out.println("Valid="+device_time);
 				
 				if(start_flag==0){	//START POINT
 					//System.out.println("IMEI_START="+imei);
@@ -95,13 +95,16 @@ public class report_turning_violation {
 					
 					angle = get_turning_angle(lat_start, lng_start, lat_middle, lng_middle, lat_end, lng_end);
 					//###############################
-					System.out.println("Angle="+angle+",lat_start="+lat_start+",lng_start="+lng_start+",lat_middle="+lat_middle+" ,lng_middle="+lng_middle+",lat_end="+lat_end+",lng_end="+lng_end);
+					//System.out.println("Angle="+angle+",lat_start="+lat_start+",lng_start="+lng_start+",lat_middle="+lat_middle+" ,lng_middle="+lng_middle+",lat_end="+lat_end+",lng_end="+lng_end);
 					
 					//if(angle > 30) {
-					if( (angle > 30.0f) && (speed>1.0) ) 
-					{
+					if(angle > 90.0f) {
+						angle = (180 - angle);
+					}
+					
+					if( (angle > 30.0f) && (speed>1.0) ) {
 						
-						System.out.println("Angle Found="+angle+" ,DeviceTime="+device_time);
+						//System.out.println("Angle Found="+angle+" ,DeviceTime="+device_time);
 						IMEI_No.add(imei);
 						turningDeviceTime.add(devicetime_middle);
 						turningServerTime.add(sts_middle);
@@ -109,7 +112,7 @@ public class report_turning_violation {
 						turningAngle.add((float)angle);
 						turningLatitude.add(lat_middle);
 						turningLongitude.add(lng_middle);					
-					}
+					}					
 					
 					lat_start = lat_middle;
 					lng_start = lng_middle;

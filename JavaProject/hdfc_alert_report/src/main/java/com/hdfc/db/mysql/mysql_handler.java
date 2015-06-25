@@ -15,7 +15,7 @@ public class mysql_handler {
 	   //int vehicle_id = 0;
 	   //float max_speed = 0.0f;
 	   //String device_imei_no ="", vehicle_name="";
-	    /*try{
+	    try{
 	      //STEP 2: Register JDBC driver
 
 	      //STEP 4: Execute a query
@@ -43,12 +43,12 @@ public class mysql_handler {
 	      //STEP 6: Clean-up environment
 	      rs.close();
 	      conn.stmt.close();
-	      }catch(SQLException se2){}*/
+	      }catch(SQLException se2){}
 	    	  
 	 	  init.vehicle_id.add(10);
 	 	  init.vehicle_name.add("test_hdfc1");
 	 	  init.max_speed.add(30.0f);
-	 	  init.device_imei_no.add("865733021562939");
+	 	  init.device_imei_no.add("865733021569231");
 	 	  /*
 	 	  init.vehicle_id.add(20);
 	 	  init.vehicle_name.add("test_hdfc2");
