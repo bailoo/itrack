@@ -104,7 +104,7 @@ function show_option_with_value(type, option)      // type="manage/report/settin
           var result1=result.split("##");  
          //alert("Rizwan:"+result1[0]);
           
-          if(result1[0]=="map_show_vehicle" || result1[0]=="live_show_vehicle")
+          if(result1[0].trim()=="map_show_vehicle" || result1[0].trim()=="live_show_vehicle")
           {
             //alert("map show vehicle");  
             //alert("result="+result1[1]);			
@@ -115,7 +115,7 @@ function show_option_with_value(type, option)      // type="manage/report/settin
               document.getElementById('loading_live').style.display = 'none';
             } */           
             //else
-            if(result1[0]=="map_show_vehicle")
+            if(result1[0].trim()=="map_show_vehicle")
             {
               /*var display_mode=document.thisform.mode;
               for(var i=0;i<display_mode.length;i++)
@@ -142,7 +142,7 @@ function show_option_with_value(type, option)      // type="manage/report/settin
               document.getElementById('show_vehicle').innerHTML = result1[1];
             }*/						  
           }         
-      		else if(result1[0]=="map_selection_information")
+      		else if(result1[0].trim()=="map_selection_information")
       		{  
       		  //alert("result="+result1[1]);
       			//document.getElementById("all_vehicle_1").style.display="none"; 
@@ -152,7 +152,7 @@ function show_option_with_value(type, option)      // type="manage/report/settin
       		  document.getElementById('selection_information').style.display ="";              
       		  document.getElementById('selection_information').innerHTML = result1[1];                           
       		} 
-		  else if(result1[0]=="manage_selection_information")
+		  else if(result1[0].trim()=="manage_selection_information")
           {  
             //alert("result="+result1[1]);
     			  document.getElementById("all_vehicle_1").style.display="none"; 
