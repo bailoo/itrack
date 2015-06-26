@@ -33,6 +33,7 @@ $vsize=count($vserial);
 
 $date1 = $_POST['start_date'];
 $date2 = $_POST['end_date'];
+
 $date1 = str_replace("/","-",$date1);
 $date2 = str_replace("/","-",$date2);
 $date_1 = explode(" ",$date1);

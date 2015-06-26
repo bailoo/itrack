@@ -78,6 +78,8 @@ var angle_prev = new Array();
 var trail_flag = false;
 var route_div_flag = 0;
 
+var http_request_this=false;
+
 function select_all_routes()
 {	
 	var obj1 = document.forms[0];
@@ -221,10 +223,10 @@ function show_all_routes()
 		
 function show_live_vehicles()
 {
-  var display_type="single";
+	var display_type="single";
 	var poststr = "display_type1=" + encodeURI(display_type);      
 	//alert(poststr);
-  makePOSTRequest('src/php/module_live_vehicles.php', poststr);
+	makePOSTRequest('src/php/module_live_vehicles.php', poststr);
 }
 
 function show_live_vehicles_hide_div()
@@ -1110,7 +1112,7 @@ function Load_MovingData_Map(startdate,enddate,pt_for_zoom,zoom_level,status)
         makePOSTRequestMap('src/php/get_filtered_xml_live.php', poststr);
         
 		    //makePOSTRequestMap('src/php/get_filtered_xml.php', poststr);			
-			  thisdest = "../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
+			  thisdest = "../../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
         TryCnt =0;
         clearTimeout(timer);
         timer = setTimeout('displayInfo_live()',1000);        
@@ -1138,7 +1140,7 @@ function Load_MovingData_Text(startdate,enddate,pt_for_zoom,zoom_level,status,js
         if(imei_tmp!=null)
         {  
             var date = new Date();        
-            var dest = "../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
+            var dest = "../../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
             dmode = 1; 
             thisdest = dest; 
 			if(jsActionNo=='js1')
@@ -2233,7 +2235,7 @@ function Prev_PlotLastMarkerWithAddress(vIcon, lat, lng, mcounter, imei, vehicle
 			
 		if(flag_new == 1)
 		{*/
-			//Load_Data2(route,lat,lng,vehiclename);
+			Load_Data2(route,lat,lng,vehiclename);
 			imei_clicked.push(imei);
 		//}
 		
@@ -2636,12 +2638,11 @@ function PlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed
 	//}
 	//else
 	//{
+       // alert("str="+str);
 		var strURL="src/php/select_landmark_marker.php?content="+str;
 	//}
-        
 
 	var req = getXMLHTTP();
-      
 	req.open("GET", strURL, false); //third parameter is set to false here
 	req.send(null);
 	var landmark = req.responseText;
@@ -2676,7 +2677,7 @@ function PlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed
   	 //alert(tab_str);
     	//var tab1 = new GInfoWindowTab("Info", '<div id="tab1" class="bubble" style="height:150px;" align=left><table cellpadding=0 cellspacing=0><tr><td><font size=2 color=#000000>Vehicle</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>IMEI</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+imei + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>Speed</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+speed+' kmph</font></td></tr><tr><td><font size=2 color=#000000>Date & Time</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+datetime+' '+'&nbsp;&nbsp;</font></td></tr> <tr><td><font size=2 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+place+'</font></td></tr><tr><td colspan=3><font color=blue size=2>( '+point.lat()+', '+point.lng()+' )</font></td></tr></table></div>');
   	                       
-      day_max_speed = day_max_speed.trim();
+      day_max_speed = trim(day_max_speed);
       day_max_speed = Math.round(day_max_speed*100)/100 + " kmph";
 	  
 	  // if(label_type!="Person")
@@ -3051,16 +3052,21 @@ function mapIWClose()
 
 function getXMLHTTP()
 {
-	http_request=false;
+    //alert("test");
+	http_request_this=false;
+        //alert("test1");
 	if (window.XMLHttpRequest)
 	{
-		http_request = new XMLHttpRequest();
+		http_request_this = new XMLHttpRequest();
+               // alert("test2");
 	} 
 	else if (window.ActiveXObject) 
 	{
-		http_request = new ActiveXObject("Microsoft.XMLHTTP");
+		http_request_this = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-	return http_request;
+        //alert("test3");
+	return http_request_this;
+         //alert("test4");
 }
 
 
@@ -3288,7 +3294,7 @@ function checkbox_selection(obj)
        if (http_request.status == 200) 
        {
           result = http_request.responseText;
-          //alert(result);
+          //alert("result="+result);
        }
     }
   } 
@@ -3405,7 +3411,7 @@ function Load_Data2(route,lat,lng,vehiclename)
 		{
 			var date = new Date();
 			// COPY ORIGINAL XML FILE        
-			var dest2 = "../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
+			var dest2 = "../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
 			//alert("dest2="+dest2);
 			//var dest2 = "src/php/xml_tmp/filtered_xml/tmp_1296469048456.xml";
 			thisdest2 = dest2;

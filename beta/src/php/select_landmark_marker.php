@@ -1,13 +1,15 @@
 <?php
-	include_once('util_session_variable.php');
-  include_once('util_php_mysql_connectivity.php');
-  include_once('calculate_distance.php');
+    //include_once('util_session_variable.php');
+    include_once('util_php_mysql_connectivity.php');
+    include_once('calculate_distance.php');
 
-	$content = $_GET['content'];
-	
-	$string = explode(",", $content);
-	$lat1 = $string[0];
-	$lng1 = $string[1];
+    $content = $_GET['content'];
+
+    $string = explode(",", $content);
+    $lat1 = $string[0];
+    $lng1 = $string[1];
+    
+    //echo "lat=".$lat1."lng1=".$lng1."<br>";
 
 	//echo "<br>place=".$placename[$i]."<br>";
 
@@ -49,8 +51,8 @@
 	}
 	$query1 = "SELECT distance_variable FROM account_detail WHERE account_id='$account_id'";
 	$result1 = mysql_query($query1,$DbConnection); 	
-	$Row1=mysql_fetch_row($result1);
-	$distance_variable1=$Row1[0];
+	$Row1=mysql_fetch_object($result1);
+	$distance_variable1=$Row1->distance_variable;
 	$placename2="";
 	if(($lowest_dist <=$distance_variable1) && ($placename1!=""))
 	{
@@ -59,6 +61,6 @@
 	}
     
 	echo $placename2;	
-	//$distance1=round($distance,4);
+	//$distance1=round($distance,4);*/
 	
 ?>

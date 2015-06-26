@@ -33,12 +33,13 @@
 	$sortBy="h"; /////// device date time	
 	$firstDataFlag=0;
 	$endDateTS=strtotime($date2);
-	$dataCnt=0;
+	
 	$parameterizeData=new parameterizeData();
 	$parameterizeData->batteryVoltage='r';
 	
 for($i=0;$i<$vsize;$i++)
 {	
+	$dataCnt=0;
 	$LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
 	//echo "lastSortedDate=".$LastSortedDate."<br>";
 	$SortedDataObject=new data();
@@ -70,9 +71,9 @@ for($i=0;$i<$vsize;$i++)
 	//echo "<br><br>";
 	//var_dump($SortedDataObject);
 	
-	
 	$vehicle_info=get_vehicle_info($root,$vserial[$i]);
 	$vehicle_detail_local=explode(",",$vehicle_info);
+	$finalVNameArr[$i]=$vehicle_detail_local[0];
 	//echo '<br><br>';
 	//print_r($vehicle_detail_local);
 	
@@ -81,10 +82,10 @@ for($i=0;$i<$vsize;$i++)
 		$prevSortedSize=sizeof($SortedDataObject->dateFrom);
 		for($obi=0;$obi<$prevSortedSize;$obi++)
 		{
-			$finalVNameArr[$dataCnt]=$vehicle_detail_local[0]; // store vehicle name
-			$finalVSerialArr[$dataCnt]=$vserial[$i];
-			$finalDatetimeArr[$dataCnt]=$sortObjTmp->deviceDatetime[$obi];
-			$finalbatteryVoltageArr[$dataCnt]=$sortObjTmp->batteryVoltageData[$obi];
+			$finalVNameArr[$i][$dataCnt]=$vehicle_detail_local[0]; // store vehicle name
+			$finalVSerialArr[$i][$dataCnt]=$vserial[$i];
+			$finalDatetimeArr[$i][$dataCnt]=$sortObjTmp->deviceDatetime[$obi];
+			$finalbatteryVoltageArr[$i][$dataCnt]=$sortObjTmp->batteryVoltageData[$obi];
 			$dataCnt++;
 		}
 	}
@@ -100,99 +101,184 @@ for($i=0;$i<$vsize;$i++)
 		
 		for($obi=0;$obi<$sortedSize;$obi++)
 		{
-			$finalVNameArr[$dataCnt]=$vehicle_detail_local[0]; // store vehicle name
-			$finalVSerialArr[$dataCnt]=$vserial[$i];
-			$finalDateTimeArr[$dataCnt]=$sortObjTmp->deviceDatetime[$obi];
-			$finalIODataArr[$dataCnt]=$sortObjTmp->batteryVoltageData[$obi];
+			$finalVNameArr[$i][$dataCnt]=$vehicle_detail_local[0]; // store vehicle name
+			$finalVSerialArr[$i][$dataCnt]=$vserial[$i];
+			$finalDateTimeArr[$i][$dataCnt]=$sortObjTmp->deviceDatetime[$obi];
+			$finalIODataArr[$i][$dataCnt]=$sortObjTmp->batteryVoltageData[$obi];
 			$dataCnt++;
 		}
 	}
 	$sortObjTmp=null;
 	$UnsortedDataObject =null;
-	$SortedDataObject=null;
-	$parameterizeData=null;
+	$SortedDataObject=null;	
 }
+$parameterizeData=null;
 //print_r($finalVNameArr);
+$o_cassandra->close();
+for($i=0;$i<$vsize;$i++)
+{
+	$fix_tmp = 1;
+	$xml_date_latest="1900-00-00 00:00:00";
+	$CurrentLat = 0.0;
+	$CurrentLong = 0.0;
+	$LastLat = 0.0;
+	$LastLong = 0.0;
+	$firstData = 0;
+	$distance =0.0;
+	$j = 0;
+	$total_dist = 0.0;
+	$firstdata_flag =0;
+	$innerSize=sizeof($finalDateTimeArr[$i]);
+	for($j=0;$j<$innerSize;$j++)
+	{
+		$supv = $finalIODataArr[$i][$j];
+		$datetime = $finalDateTimeArr[$i][$j];
+		if($firstdata_flag==0)
+		{					
+			$firstdata_flag = 1;
+			$interval = (double)$userInterval*60;
+			$time1 = $datetime;					
+			$date_secs1 = strtotime($time1);
+			$date_secs1 = (double)($date_secs1 + $interval); 
+			$date_secs2 = 0; 
+			
+			$imei[]	=$vserial[$i];
+			$vname[]=$finalVNameArr[$i];
+			$datetimeDisplay[]=$time1;
+			$supVoltageDisplay[]=$supv;
+		} 
+		else
+		{                           					
+			// echo "<br>Total lines orig=".$total_lines." ,c=".$c;
+			$time2 = $datetime;											
+			$date_secs2 = strtotime($time2);	
+			//echo "<br>Next".$date_secs2;
+			if($date_secs2 >= $date_secs1)
+			{	                                  						
+				$imei[]	=$vserial[$i];
+				$vname[]=$finalVNameArr[$i];
+				$datetimeDisplay[]=$time2;
+				$supVoltageDisplay[]=$supv;				
+			}  //if datesec2 
+		}   // else closed 
+	}
+}
 
- $j=-1;
- $reportTitle="Battery Voltage";
-echo'<form  name="text_data_report" method="post" target="_blank">'.
-		report_title($reportTitle." Report",$date1,$date2).'
-			<center>
-				<div style="overflow: auto;height: 300px; width: 620px;">';
-					$reportSize=sizeof($finalVNameArr);
-					for($i=0;$i<$reportSize;$i++)
-					{								              
-						if(($i===0) || (($i>0) && ($finalVSerialArr[$i-1] != $finalVSerialArr[$i])) )
-						{
-							$k=0;                                              
-							$j++;
-							$sno = 1;					
-							$csvtitle1=$reportTitle." Report :- ".$finalVNameArr[$i]." (".$finalVSerialArr[$i]." )  DateTime :".$date1." - ".$date2." )";
-							echo"<input TYPE=\"hidden\" VALUE=\"$csvtitle1\" NAME=\"title[$x]\">";
-							$csv_string = $csv_string.$csvtitle1."\n";
-							$csv_string = $csv_string."SNo,DateTime,Battery Voltage\n";
-							$title='Battery Voltage : '.$finalVNameArr[$i]." &nbsp;
-							
-							<font color=red>
-								(".$finalVSerialArr[$i].")
-							</font>";
-							echo'<table align="center">
-									<tr>
-										<td class="text" align="center">
-											<b>'.$title.'</b> 
-											<div style="height:8px;"></div>
-										</td>
-									</tr>
-								</table>
-								<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
-									<tr>
-										<td class="text" align="left">
-											<b>SNo</b>
-										</td>
-										<td class="text" align="left">
-											<b>DateTime</b>
-										</td>			
-										<td class="text" align="left">
-											<b>'.$reportTitle.'</b>
-										</td>								
-									</tr>';  								
-						}                                                                        		
-					  
-								echo'<tr>
-										<td class="text" align="left" width="4%">
-											<b>'.$sno.'</b>
-										</td>';
-									echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$j][$k][Sno]\">";
-									$csv_string = $csv_string.','.$sno;
-				
-								echo'<td class="text" align="left">
-										'.$finalDateTimeArr[$i].'
-									</td>';
-									echo"<input TYPE=\"hidden\" VALUE=\"$finalDateTimeArr[$i]\" NAME=\"temp[$j][$k][Date Time]\">";
-									$csv_string = $csv_string.','.$finalDateTimeArr[$i];
-								echo'<td class="text" align="left">
-										'.round($finalIODataArr[$i],2).'
-									</td>';
-									echo"<input TYPE=\"hidden\" VALUE=\"$finalIODataArr[$i]\" NAME=\"temp[$j][$k][".$reportTitle."]\">";
-									$csv_string = $csv_string.','.$finalIODataArr[$i];
-							echo'</tr>';
-							$csv_string=$csv_string."\n";
-							//echo "imeiFirst=".$imei[$i+1]."imeiSecond=".$imei[$i]."<br>";
-							if(($i>0) && ($finalVSerialArr[$i+1] != $finalVSerialArr[$i]) )
-							{	
-							echo '</table>';
-							} 
-							$k++;
-							$sno++;				
-					}
-  echo "</div>
-  </center>"; 
-	echo'<input TYPE="hidden" VALUE="full data" NAME="csv_type">';
-	echo'<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">';                 
-	echo'<br><center>
-	<input type="button" onclick="javascript:report_pdf_csv(\'src/php/report_getpdf_type4.php?size='.$vsize.'\');" value="Get PDF" class="noprint">&nbsp;
-	<input type="button" onclick="javascript:report_pdf_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
-	<!--<input type="button" value="Print it" onclick="window.print()" class="noprint">&nbsp;-->
-	</form>';
+echo'<center><br>';
+report_title("Battery Voltage Report",$date1,$date2);
+echo'<div style="overflow: auto;height: 300px; width: 620px;" align="center">';	
+	$j=-1;
+	$k=0;			 
+	for($i=0;$i<sizeof($imei);$i++)
+	{								              
+		if(($i===0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )
+		{
+			$k=0;                                              
+			$j++;      
+			$sno = 1;
+			$title='Battery Voltage : '.$vname[$i]." &nbsp;<font color=red>(".$imei[$i].")</font>";
+			$vname1[$j][$k] = $vname[$i];
+			$imei1[$j][$k] = $imei[$i];       
+			echo'
+			<br>
+			<table align="center">
+				<tr>
+					<td class="text" align="center"><b>'.$title.'</b> <div style="height:8px;"></div></td>
+				</tr>
+			</table>
+			<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
+				<tr>
+					<td class="text" align="left"><b>SNo</b></td>
+					<td class="text" align="left"><b>DateTime</b></td>			
+					<td class="text" align="left"><b>Battery Voltage</b></td>								
+				</tr>';  								
+		}                                                                        		
+	              
+		echo'<tr><td class="text" align="left" width="4%"><b>'.$sno.'</b></td>';        												
+		echo'<td class="text" align="left">'.$datetimeDisplay[$i].'</td>';				
+		echo'<td class="text" align="left">'.round($supVoltageDisplay[$i],2).'</td>';					
+		echo'</tr>';	          		
+		//echo "<br>arr_time1[$j][$k]main=".$arr_time1[$j][$k];
+    
+		$datetime1[$j][$k] = $datetimeDisplay[$i];										
+		$supv1[$j][$k] = round($supVoltageDisplay[$i],2);       			    				  				
+	
+		if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
+		{
+			echo '<tr style="height:20px;background-color:lightgrey">
+			<td class="text"><strong><strong>&nbsp;</td>
+			<td class="text"><strong></strong></td>	
+			<td class="text"><strong></strong></td>';									
+
+			echo'<td class="text"><font color="red"><strong></strong></font></td>';
+			echo'</tr>'; 
+			echo '</table>';
+			$no_of_data[$j] = $k;
+		} 
+		$k++;   
+		$sno++;                       							  		
+	}
+  echo'</div>
+	<form method = "post" target="_blank">';
+	$csv_string = "";
+	for($x=0;$x<=$j;$x++)
+	{								
+		$title = $vname1[$x][0]." (".$imei1[$x][0]."): Battery Voltage- From DateTime : ".$date1."-".$date2." (interval:".$user_interval." mins)";
+		$csv_string = $csv_string.$title."\n";
+		$csv_string = $csv_string."SNo,DateTime,Battery Voltage\n";
+		echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title[$x]\">";
+		$sno=0;
+		for($y=0;$y<=$no_of_data[$x];$y++)
+		{
+			//$k=$j-1;
+			$sno++;                    
+			$datetmp1 = $datetime1[$x][$y];									
+			$supvtmp = $supv1[$x][$y];			
+			//echo "dt=".$datetmp1;								
+			echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$x][$y][SNo]\">";
+			echo"<input TYPE=\"hidden\" VALUE=\"$datetmp1\" NAME=\"temp[$x][$y][DateTime]\">";
+			echo"<input TYPE=\"hidden\" VALUE=\"$supvtmp\" NAME=\"temp[$x][$y][Battery Voltage]\">";
+			$csv_string = $csv_string.$sno.','.$datetmp1.','.$supvtmp."\n";      																	
+		}
+		echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][SNo]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][DateTime]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][Battery Voltage]\">";
+		$m = $y+1;								
+	}																						
+      
+  echo'	
+    <table align="center">
+		<tr>
+			<td>';
+      
+				if(sizeof($imei)==0)
+				{						
+					print"<center><FONT color=\"Red\" size=2><strong>No Battery Voltage Record Found</strong></font></center>";
+					//echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=HaltReport.php\">";
+					echo'<br><br>';
+				}	
+				else
+				{
+					echo'<input TYPE="hidden" VALUE="Battery" NAME="csv_type">
+					<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">';                 
+					echo'<br>
+						<center>
+							<input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type4.php?size='.$vsize.'\');" value="Get PDF" class="noprint">
+							&nbsp;<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
+							<!--<input type="button" value="Print it" onclick="window.print()" class="noprint">-->&nbsp;
+						</center>';      
+				}
+                  
+      echo'</td>		
+		</tr>
+	</table>
+	<br>
+</form>';
+	echo'</center>
+	<center>		
+		<a href="javascript:showReportPrevPageNew();" class="back_css">
+			&nbsp;<b>Back</b>
+		</a>
+	</center>';	
+//////// read filtered code
 ?>

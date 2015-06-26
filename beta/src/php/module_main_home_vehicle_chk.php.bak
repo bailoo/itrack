@@ -257,7 +257,7 @@ $o_cassandra->close();
                             //$st_results = getCurrentDateTime($o_cassandra,$vehicle_imei,$sortFetchData);
                             //var_dump($st_results);
                             //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-                            if($logResult!='')
+                            if ($logResult!='')
                             {
                                 $vehicle_active_flag=1;
                                 /*$active_vehicle_imei=get_active_imeino($vehicle_imei,$DbConnection);
@@ -353,10 +353,6 @@ $o_cassandra->close();
         global $vehicleid;
         global $vehicle_cnt;
         global $today_date2;
-        global $o_cassandra;
-        //var_dump($o_cassandra);
-        global $logDate;
-    
     
         if($type=="group")
         {
@@ -389,10 +385,8 @@ $o_cassandra->close();
                         {
                             $vehicleid[$vehicle_cnt]=$vehicle_id;
                             $vehicle_cnt++;
-                            $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
-                            //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-                            //if (file_exists($xml_current))
-                            if($logResult!='')
+                            $xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
+                            if (file_exists($xml_current))
                             {
                                 $green_cnt1++; 
                                 //$green_cnt1=$green_cnt;     		
