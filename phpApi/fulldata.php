@@ -17,7 +17,11 @@
 	
 	$deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
 	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
-	$st_results = getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc);
+	//$st_results = getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc);
+
+	$date = '2015-06-14';
+	$st_results = getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc);
+
 
 	//$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
 	print_r($st_results);
