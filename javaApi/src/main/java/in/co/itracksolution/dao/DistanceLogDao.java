@@ -42,7 +42,7 @@ public class DistanceLogDao {
 
 	protected String getInsertStatement(){
 		return "INSERT INTO "+DistanceLog.TABLE_NAME+
-				" (imei, date, starttime, enstarttime, avgspeed, distance, maxspeed, logtime)"
+				" (imei, date, starttime, endtime, avgspeed, distance, maxspeed, logtime)"
 				+ " VALUES ("+
 				"?,?,?,?,?,?,?,?);";
 	}

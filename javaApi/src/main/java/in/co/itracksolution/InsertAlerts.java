@@ -30,7 +30,7 @@ public class InsertAlerts {
 		
 			if (inputStream != null) {
 				prop.load(inputStream);
-				conn = new CassandraConn(prop.getProperty("nodes"), prop.getProperty("keyspace"));
+				conn = new CassandraConn(prop.getProperty("nodes"), prop.getProperty("keyspace"), prop.getProperty("username"), prop.getProperty("password"));
 			
 			} else {
 				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
@@ -130,12 +130,12 @@ public class InsertAlerts {
 		String imei = "123456";
 		String dtime = "2015-06-15 20:17:18";
 		String stime = "2015-06-15 20:17:38";
-		String starttime = "2015-06-25 10:17:18";
-		String endtime = "2015-06-25 13:17:38";
+		String starttime = "2015-06-26 13:27:18";
+		String endtime = "2015-06-26 16:37:38";
 		float speed = (float)20.1;
-		float avgspeed = (float)30.1;
-		float maxspeed = (float)60.1;
-		float distance = (float)209.4;
+		float avgspeed = (float)34.1;
+		float maxspeed = (float)55.1;
+		float distance = (float)169.4;
 		float angle = (float)60.3;
 		String location = "Chandni Chowk";
 		String latitude = "23.4568N";
