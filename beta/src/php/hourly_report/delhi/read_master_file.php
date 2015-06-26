@@ -106,11 +106,13 @@ function read_expected_time($account_id, $shift) {
 
 function read_transporter($account_id, $shift) {
     global $DEBUG_OFFLINE;
+    global $DEBUG_ONLINE;
     global $transporter_m;
     global $vehicle_m;
 
     if ($DEBUG_OFFLINE) {
         //$dir="D:\\test_app/gps_report/".$account_id."/master";
+    } else if($DEBUG_ONLINE) { 
         $dir = "/var/www/html/vts/test/src/php/gps_report/" . $account_id . "/master";
     } else {
         $dir = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master";
