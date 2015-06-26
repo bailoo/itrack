@@ -78,7 +78,6 @@ CREATE TABLE lastlog(
       avgspeed float,
       distance float,
       maxspeed float,
-      alerttime timestamp,
       logtime timestamp,
       PRIMARY KEY ((imei, date), starttime))
       WITH CLUSTERING ORDER BY (starttime DESC);
@@ -117,7 +116,6 @@ CREATE TABLE lastlog(
       avgspeed float,
       distance float,
       maxspeed float,
-      alerttime timestamp,
       logtime timestamp,
       PRIMARY KEY ((imei, date), starttime))
       WITH CLUSTERING ORDER BY (starttime DESC);
@@ -138,7 +136,6 @@ CREATE TABLE lastlog(
       avgspeed float,
       distance float,
       maxspeed float,
-      alerttime timestamp,
       logtime timestamp,
       PRIMARY KEY ((imei, date), starttime))
       WITH CLUSTERING ORDER BY (starttime DESC);
