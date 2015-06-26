@@ -4,7 +4,7 @@ set_time_limit(360000);
 //error_reporting(E_ALL);
 //ini_set('display_errors', TRUE);
 $DEBUG_OFFLINE = false;
-$DEBUG_ONLINE = false;
+$DEBUG_ONLINE = true;
 $CREATE_MASTER = false;
 $isReport = true;
 //$HOST = "111.118.181.156";
@@ -93,7 +93,7 @@ include_once("update_last_halt_time.php");
 include_once("update_last_processed_time.php");
 include_once("delete_file.php");
 
-$sent_root_path = $abspath . "/hourly_report/" . $user_name . "/sent_file";
+$sent_root_path = $abspath . "/test_hourly_report/" . $user_name . "/sent_file";
 echo "\nSent_RootPath=" . $sent_root_path;
 
 $evening_sent_file_path1 = $sent_root_path . "/HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_MUMBAI.xlsx";
