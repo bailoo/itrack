@@ -30,8 +30,8 @@ function get_route_db_detail($shift) {
             }
         }
     } else if ($shift == "ZPMM") {
-        $query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_mor FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_mor='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND route_assignment2.status=1 Order By route_assignment2.route_name_mor DESC limit 2";
-        //echo "<br>MOR:".$query;
+        $query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_mor FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_mor='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND route_assignment2.status=1 Order By route_assignment2.route_name_mor DESC";
+        echo "<br>MOR:".$query;
         $result = mysql_query($query, $DbConnection);
         while ($row = mysql_fetch_object($result)) {
             //$remark_rdb[] = $row->remark_mor;

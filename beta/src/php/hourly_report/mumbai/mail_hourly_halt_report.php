@@ -3,8 +3,8 @@
 set_time_limit(360000);
 //error_reporting(E_ALL);
 //ini_set('display_errors', TRUE);
-$DEBUG_OFFLINE = true;
-$DEBUG_ONLINE = false;
+$DEBUG_OFFLINE = false;
+$DEBUG_ONLINE = true;
 $CREATE_MASTER = true;
 $isReport = true;
 //$HOST = "111.118.181.156";
@@ -108,13 +108,19 @@ $evening_last_halt_time_path1 = $sent_root_path . "/evening_last_halt_time_1.xls
 $evening_last_halt_time_path2 = $sent_root_path . "/evening_last_halt_time_2.xlsx";
 $morning_last_halt_time_path = $sent_root_path . "/morning_last_halt_time.xlsx";
 
-//echo "TEST2";
+echo "\nD10";
 include_once("get_customer_db_detail.php");
+echo "\nD11";
 include_once("get_route_db_detail.php");
+echo "\nD12";
 //include_once("process_data.php");
+$shift_ev1 = false;
+$shift_ev2 = false;
+$shift_mor = false;
 
 if ($DEBUG_OFFLINE || $DEBUG_ONLINE) {
-    $date = '2015-06-17';
+    $shift_ev1 = true;
+    $date = '2015-06-26';
     $cdate = $date;
     $cdatetime = $cdate . " 10:00:00";
     $pdate = date('Y-m-d', strtotime($date . ' -1 day'));
@@ -161,10 +167,6 @@ if ($DEBUG_OFFLINE || $DEBUG_ONLINE) {
 $unchanged = true;
 //######## MAKE TWO SHIFTS
 
-$shift_ev1 = false;
-$shift_ev2 = false;
-$shift_mor = false;
-
 //## MAKE START AND END TIME TO ELIMINATE OLD DATES
 
 /*
@@ -183,25 +185,26 @@ if ($difftime > 72000) {
     $time1 = $pdate . " 08:00:00";
 }
 
-
 //############## CHECK VALID SHIFT #############################
 //echo "\ncurrent_time=".$current_time.",shift_ev_date1=".$shift_ev_date1.", shift_ev_date2=".$shift_ev_date2;
 //######## CHECK EVENING SHIFT1 ###########
 
-if ((($current_time > $shift_ev_date1) && ($current_time > $shift_ev_date2) && ($current_time >= $ev_run_start_time1) ) || (($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4))) {
-    $shift_ev1 = true;
-    echo "\nEv-Shift";
-} else {
-    //## DELETE EVENING FILE -IF SHIFT IS OVER
-    echo "\nDEL-EV:SHIFT1 FILES";
-    $shift = "ev";
-    if (file_exists($evening_sent_file_path1))
-        delete_file($evening_sent_file_path1);
-    if (file_exists($evening_last_processed_time_path1))
-        delete_file($evening_last_processed_time_path1);
-    if (file_exists($evening_last_halt_time_path1))
-        delete_file($evening_last_halt_time_path1);
-}
+if (!$DEBUG_OFFLINE && !$DEBUG_ONLINE) {
+    if ((($current_time > $shift_ev_date1) && ($current_time > $shift_ev_date2) && ($current_time >= $ev_run_start_time1) ) || (($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4))) {
+        $shift_ev1 = true;
+        echo "\nEv-Shift";
+    } else {
+        //## DELETE EVENING FILE -IF SHIFT IS OVER
+        echo "\nDEL-EV:SHIFT1 FILES";
+        $shift = "ev";
+        if (file_exists($evening_sent_file_path1))
+            delete_file($evening_sent_file_path1);
+        if (file_exists($evening_last_processed_time_path1))
+            delete_file($evening_last_processed_time_path1);
+        if (file_exists($evening_last_halt_time_path1))
+            delete_file($evening_last_halt_time_path1);
+    }
+}    
 
 //####### CHECK FOR ALREADY OPENED FILE/INSTANCE 
 if ($shift_ev1) {
