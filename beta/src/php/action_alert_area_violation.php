@@ -46,7 +46,7 @@ $userInterval = $_POST['user_interval'];
 $sortBy='h';
 $firstDataFlag=0;
 $endDateTS=strtotime($date2);
-//$dataCnt=0;	
+
 
 $requiredData="All";
 
@@ -131,8 +131,8 @@ for($i=0;$i<$vsize;$i++)
 	$UnsortedDataObject =null;
 		
 }
+$o_cassandra->close();
 $parameterizeData=null;	
-	
 	
 for($i=0;$i<$vsize;$i++)
 {	
@@ -176,17 +176,19 @@ for($i=0;$i<$vsize;$i++)
 		{                
 			check_with_range($finalLatitudeArr[$i][$j], $finalLongitudeArr[$i][$j], $geo_coord, &$status_geo);                                
 			//echo "<br><br>lat=".$lat.",lng=".$lng." <br> ,status=".$status;  
-			if($status_geo==false && $outflag==0)
+			if(($status_geo==false ) || ($status_geo==''))
 			{
-			  $outflag = 1; 
-			  $time1 = $finalDateTimeArr[$i][$j];   							
-			  $starttime = strtotime($time1);
-			  
-			  $lat1 = $finalLatitudeArr[$i][$j]; 
-			  $lng1 = $finalLongitudeArr[$i][$j];                 
+			  	if($outflag==0)
+				{
+					$outflag = 1; 
+					$time1 = $finalDateTimeArr[$i][$j];   							
+					$starttime = strtotime($time1);			  
+					$lat1 = $finalLatitudeArr[$i][$j]; 
+					$lng1 = $finalLongitudeArr[$i][$j];
+				}                 
 			}  
 
-			else if( ($status_geo==true && $outflag==1) || ($j==$innerSize-2) )
+			else if( ($status_geo==true && $outflag==1))
 			{
 				$outflag = 0; 
 				$time2 = $finalDateTimeArr[$i][$j];   							
@@ -212,6 +214,16 @@ for($i=0;$i<$vsize;$i++)
 			}
 		} // if geo_coord!="" closed
 		
+	}
+	if($outflag==1)
+	{
+		$imei_report[]= $vserial[$i];
+		$vname_report[] = $finalVNameArr[$i];
+		$lat_report[] = $lat1;
+		$lng_report[] = $lng1;
+		$datefrom_report[] = $time1;
+		$dateto_report[] = $time2;
+		$duration_report[] = $duration;	
 	}
 }
 include("map_window/mapwindow_jsmodule.php");		
@@ -415,6 +427,11 @@ else
 }
 echo '</form>';
 
-echo '</center>';
+echo '</center>
+	<center>		
+		<a href="javascript:showReportPrevPageNew();" class="back_css">
+			&nbsp;<b>Back</b>
+		</a>
+	</center>';
 ?>
 					
