@@ -1,8 +1,9 @@
 <?php
-function create_hrly_excel($read_excel_path, $shift, $route_type_param)
+function create_hrly_excel($read_excel_path, $min_max_temp_path, $shift, $route_type_param)
 {
 	echo "\nInCreateHrly";
 	global $customer_sel;
+	global $customer_name_sel;
 	global $plant_sel;
 	global $transporter_sel;
 	global $expected_time_sel;
@@ -11,6 +12,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 	global $station_coord;
 	global $distance_variable;	
 	global $vehicle_name_rdb;				//##### VEHICLE ROUTE -DB DETAIL
+	global $customer_name_rdb;
 	global $vehicle_imei_rdb;
 	global $route_name_rdb;
 	global $remark_rdb;
@@ -21,7 +23,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 	global $relative_route_input;
 	
 	global $transporter_m;
-	global $vehicle_m;	
+	global $vehicle_m;
 	
 	global $route_type_rdb;
 	//######### SENT FILE NAME CLOSED 			
@@ -80,362 +82,177 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "StationNo");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'D'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Type");
-	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "StationName");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);	
 	$col_tmp = 'E'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "RouteNo");
-	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Type");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);	
 	$col_tmp = 'F'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ReportShift");
-	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'G'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ArrivalDate");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'H'.$row;
+	$col_tmp = 'G'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ArrivalTime");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'I'.$row;
+	$col_tmp = 'H'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "DepartureDate");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'J'.$row;
+	$col_tmp = 'I'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "DepartureTime");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'K'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ScheduleTime");
-	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'L'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Delay (Mins)");
-	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'M'.$row;
+	$col_tmp = 'J'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "HaltDuration");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'N'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Remark");
+	$col_tmp = 'K'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "IN-Temperature");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+	$col_tmp = 'L'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "OUT-Temperature");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);	
+	$col_tmp = 'M'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Min-Temperature");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+	$col_tmp = 'N'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Min-TemperatureDate");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'O'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ReportDate1");
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Min-TemperatureTime");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'P'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ReportTime1");
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Max-Temperature");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'Q'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ReportDate2");
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Max-TemperatureDate");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'R'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ReportTime2");
-	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Max-TemperatureTime");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);	
 	$col_tmp = 'S'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Transporter(M)");
-	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Remark");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);	
 	$col_tmp = 'T'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Transporter(I)");
-	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);	
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ReportDate1");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'U'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Plant");
-	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);	
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ReportTime1");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'V'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Latitude");
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ReportDate2");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'W'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Longitude");
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ReportTime2");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'X'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "DistVar");
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Transporter(M)");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'Y'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Transporter(I)");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);	
+	$col_tmp = 'Z'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Latitude");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+	$col_tmp = 'AA'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Longitude");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+	$col_tmp = 'AB'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "DistVar");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+	$col_tmp = 'AC'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "IMEI");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'Z'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "RouteType");
-	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);	
-	$col_tmp = 'AA'.$row;
+	$col_tmp = 'AD'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "NO GPS");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$row++;
 		
-	echo "\nSizeRoute=".sizeof($route_name_rdb);
+	//echo "\nSizeRoute=".sizeof($customer_name_rdb);
 	
-	for($i=0;$i<sizeof($route_name_rdb);$i++)
+	$vehicle_name_rdb_tmp = array_unique($vehicle_name_rdb);
+	$vehicle_name_rdb1 = array();
+
+	foreach($vehicle_name_rdb_tmp as $vrd1)
+	{	
+		$vehicle_name_rdb1[] = $vrd1;
+	}
+	
+	//echo "\nSizeOf_Vehicle=".sizeof($vehicle_name_rdb1);
+	for($i=0;$i<sizeof($vehicle_name_rdb1);$i++)
 	{
 		$sno=1;
 		//if((strpos($route_type_rdb[$i],$route_type_param) !== false) || ($route_type_param=="ALL"))
-		$route_name_rdb_1 = explode('/',$route_name_rdb[$i]);
-
-		$size_rdb1 = 0;
-		$size_rdb1 = sizeof($route_name_rdb_1);
-		//echo "<br>size_rdb1=".sizeof($route_name_rdb_1);
-		/*if($size_rdb1>1)
-		{
-			echo "<br>RouteNameRDBSize2=".sizeof($route_name_rdb_1);
-		}*/		
-		for($k=0;$k<sizeof($route_name_rdb_1);$k++)
-		{
-			$route_name_rdb_3="";
-			if(strpos($route_name_rdb_1[$k],'@') !== false)
-			{
-				$route_name_rdb_2 = explode('@',$route_name_rdb_1[$k]);
-				$route_name_rdb_3 = $route_name_rdb_2[1];
-			}
-			else
-			{
-				$route_name_rdb_3 = $route_name_rdb_1[$k];
-			}			
-			
-			//echo "<br>route_name_rdb_3=".$route_name_rdb_3;
-			$pre_match = false;
-			if($route_type_param=="CASH")
-			{
-				if(strpos($route_type_rdb[$i],$route_type_param) !== false)
-				{
-					//echo "\nCASH2";
-					$pre_match = true;
-				}
-			}
-			else if($route_type_param=="FOCAL")
-			{
-				$tmp_type="CASH";
-				if(strpos($route_type_rdb[$i],$tmp_type) === false)
-				{
-					//echo "\nFOCAL2";
-					$pre_match = true;
-				}
-			}
-			else if($route_type_param=="ALL")
-			{
-				//echo "\nALL2";
-				$pre_match = true;
-			}
-			
-			/*$found_route=false;
-			
-			if(sizeof($route_total)>0)
-			{								
-				for($r=0;$r<sizeof($route_total);$r++)
-				{
-					if(trim($route_total[$r])==trim($route_name_rdb_3))
-					{
-						$found_route=true;
-					}
-				}
-				if(!$found_route)
-				{
-					$route_total[] = $route_name_rdb_3;
-				}
-			}
-			else
-			{
-				$route_total[] = $route_name_rdb_3;
-				$found_route = false;
-			}*/
-							
-			if($pre_match)
-			{						
-				//echo "<BR>CreateHrly ".$i." ".$vehicle_imei_rdb[$i];
-				for($j=0;$j<sizeof($customer_sel[$route_name_rdb_3]);$j++)				
-				//echo "\nSizeCustomerSel=".sizeof($customer_sel[$vehicle_imei_rdb[$i]]);
-				//for($j=0;$j<sizeof($customer_sel[$vehicle_imei_rdb[$i]]);$j++)
-				{
-					$col_tmp = 'A'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $vehicle_name_rdb[$i]);
-					
-					$col_tmp = 'B'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $sno);
-					
-					$col_tmp = 'C'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $customer_sel[$route_name_rdb_3][$j]);
-					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $customer_sel[$vehicle_imei_rdb[$i]][$j]);
-					
-					$col_tmp = 'D'.$row;
-					if($type[$route_name_rdb_3][$j]==1)
-					//if($type[$vehicle_imei_rdb[$i]][$j]==1)
-					{
-						$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Plant");
-					}
-					else
-					{
-						$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Customer");
-					}
-					
-					$col_tmp = 'E'.$row;
-					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $route_name_rdb_1[$k]);
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $route_name_rdb_3);					
-					
-					$col_tmp = 'F'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $shift);
-
-					//echo "\nExpectedTimeSel=".$expected_time_sel[$route_name_rdb_3][$j];
-					$col_tmp = 'K'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $expected_time_sel[$route_name_rdb_3][$j]);
-					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $expected_time_sel[$vehicle_imei_rdb[$i]][$j]);
-
-					$col_tmp = 'N'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $remark_rdb[$i]);
-					
-					//echo "\nSizeTransporter=".sizeof($transporter_m);
-					$transporter_name_master = "";
-					for($n=0;$n<sizeof($transporter_m);$n++)
-					{
-						if($vehicle_name_rdb[$i] == $vehicle_m[$n])
-						{
-							//echo "\nTransporter Matched";
-							$transporter_name_master = $transporter_m[$n];
-							break;                                  
-						}
-					}			
-					$col_tmp = 'S'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $transporter_name_master);
-					
-					$col_tmp = 'T'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $transporter_sel[$route_name_rdb_3][$j]);
-					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $transporter_sel[$vehicle_imei_rdb[$i]][$j]);					
-					
-					//$col_tmp = 'L'.$row;
-					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $shift);			
-
-					$coord_str = explode(",",$station_coord[$route_name_rdb_3][$j]);
-					//$coord_str = explode(",",$station_coord[$vehicle_imei_rdb[$i]][$j]);
-					
-					$col_tmp = 'U'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_sel[$route_name_rdb_3][$j]);
-					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_sel[$vehicle_imei_rdb[$i]][$j]);
-					
-					$col_tmp = 'V'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $coord_str[0]);
-					
-					$col_tmp = 'W'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $coord_str[1]);
-					
-					$col_tmp = 'X'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $distance_variable[$route_name_rdb_3][$j]);
-					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $distance_variable[$vehicle_imei_rdb[$i]][$j]);
-					
-					//echo "<BR>A_CreateHrly ".$i." ".$vehicle_imei_rdb[$i];
-					$col_tmp = 'Y'.$row;
-					
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValueExplicit($col_tmp, $vehicle_imei_rdb[$i], PHPExcel_Cell_DataType::TYPE_STRING);
-					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $vehicle_imei_rdb[$i]);
-					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $vehicle_imei_rdb[$i]);
-					
-					$col_tmp = 'Z'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $route_type_rdb[$i]);						
-
-					$col_tmp = 'AA'.$row;
-					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "");
-
-					$row++;
-					$sno++;
-				}
-			}
-		}
-	}
-	
-	//if($route_type_param!="ALL")
-	//{
-		$col_tmp = 'A'.$row;
-		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , ":");
-	//}
-	//####### INSERT UNMATCHED ROUTES
-	$row++;
-	//echo "\nSizeAllRoute2=".sizeof($all_routes);
-	$result_all_routes = array_unique($all_routes);	
-	//foreach($all_routes as $array_key => $array_value)	
-	foreach($result_all_routes as $array_key => $array_value)	
-    {
-        $found = false;		
-		//echo "<br>RouteNameRDB=".sizeof($route_name_rdb);
-		for($j=0;$j<sizeof($route_name_rdb);$j++)
-		{
-			//if( (trim($array_value)== trim($route_name_rdb[$j])) || (trim($route_type_rdb[$i])==trim($route_type_param)) || (trim($route_type_param)=="ALL") )
-			//if( (trim($array_value)== trim($route_name_rdb[$j])) && ((strpos($route_type_rdb[$j],$route_type_param) !== false) || ($route_type_param=="ALL") ) )
-
-			$route_name_rdb_1 = explode('/',$route_name_rdb[$j]);
-			//echo "<br>Route_name_rdb=".sizeof($route_name_rdb_1);
-			
-			for($k=0;$k<sizeof($route_name_rdb_1);$k++)
-			{
-				$route_name_rdb_3="";
-				if(strpos($route_name_rdb_1[$k],'@') !== false)
-				{
-					$route_name_rdb_2 = explode('@',$route_name_rdb_1[$k]);
-					$route_name_rdb_3 = $route_name_rdb_2[1];
-				}
-				else
-				{
-					$route_name_rdb_3 = $route_name_rdb_1[$k];
-				}		
+		//$customer_name_rdb_1 = explode('/',$customer_name_rdb[$i]);
+		//$size_rdb1 = 0;
+		//$size_rdb1 = sizeof($customer_sel[$vehicle_name_rdb]);		
+		//echo "\nVehicle=".$vehicle_name_rdb1[$i];
+		//echo "\nSizeCustomer=".sizeof($customer_sel[$vehicle_name_rdb1[$i]]);
+		for($k=0;$k<sizeof($customer_sel[$vehicle_name_rdb1[$i]]);$k++)
+		{			
+			$customer_name_rdb_3 = trim($customer_sel[$vehicle_name_rdb1[$i]][$k]);	
+			//echo "\nOne";
+			//echo "<br>sizeTransporter=".sizeof($transporter_sel[$customer_name_rdb_3]);						
+			//for($j=0;$j<sizeof($transporter_sel[$customer_name_rdb_3]);$j++)				
+			//{
+				$col_tmp = 'A'.$row;
+				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $vehicle_name_rdb1[$i]);
 				
-				//echo "<br>RouteNameRDb=".$route_name_rdb_3;
-				$pre_match = false;
-				if($route_type_param=="CASH")
-				{
-					//if((trim($array_value)== trim($route_name_rdb[$j])) && (strpos($route_type_rdb[$i],$route_type_param) !== false))
-					if((trim($array_value)== trim($route_name_rdb_3)) && (strpos($route_type_rdb[$j],$route_type_param) !== false))
-					{
-						//echo "\nCASH2";
-						$pre_match = true;					
-					}
-				}
-				else if($route_type_param=="FOCAL")
-				{
-					$tmp_type="CASH";
-					//if((trim($array_value)== trim($route_name_rdb[$j])) && (strpos($route_type_rdb[$i],$tmp_type) === false))
-					if((trim($array_value)== trim($route_name_rdb_3)) && (strpos($route_type_rdb[$j],$tmp_type) === false))
-					{
-						//echo "\nFOCAL2";
-						$pre_match = true;						
-					}
-				}
-				//else if((trim($array_value)== trim($route_name_rdb[$j])) && ($route_type_param=="ALL"))
-				else if((trim($array_value)== trim($route_name_rdb_3)) && ($route_type_param=="ALL"))
-				{
-					//echo "\nALL2";
-					$pre_match = true;					
-				}
-				if($pre_match)
-				{
-					//echo "\nUnMatched Route=".$all_routes[$i];
-					$found = true;
-					break;
-				}
-			}				
-		}
-		if(!$found)
-		{
-			$customer_str="";
-			for($i=0;$i<sizeof($all_customers);$i++)
-			{
-				$tmp_customer_arr = explode(":",$all_customers[$i]);
-				if(trim($tmp_customer_arr[0])==trim($array_value))	//IF ROUTE MATCHED
-				{
-					//$relative_customer = $all_customers[$array_key];
-					$customer_str.= $tmp_customer_arr[1].",";
-				}
-			}
-			$customer_str = substr($customer_str, 0, -1);			
-			$col_tmp = 'A'.$row;
-			$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $array_value);
-			$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($styleFontRed);
-			$col_tmp = 'B'.$row;
-			$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $customer_str);
-			$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($styleFontRed);
-			$row++;			
-		}		
-	}
-	
-	/*for($i=0;$i<sizeof($all_routes);$i++)
-	{
-		for($j=0;$j<sizeof($route_name_rdb);$j++)
-		{
-			if( trim($all_routes[$i])!= trim($route_name_rdb[$j]) )
-			{
-				//echo "\nUnMatched Route=".$all_routes[$i];
+				$col_tmp = 'B'.$row;
+				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $sno);
+														
+				$col_tmp = 'C'.$row;
+				//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $route_name_rdb_1[$k]);
+				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $customer_name_rdb_3);
+
+				$col_tmp = 'D'.$row;
+				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $customer_name_sel[$vehicle_name_rdb1[$i]][$k]);													
+				if($type[$vehicle_name_rdb1[$i]][$k]==0) { $typ_tmp="Customer"; }
+				else if($type[$vehicle_name_rdb1[$i]][$k]==1) { $typ_tmp="Plant"; }
+				
 				$col_tmp = 'E'.$row;
-				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $all_routes[$i]);
-				$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($styleFontRed);
+				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $typ_tmp);
+								
+				//echo "\nSizeTransporter=".sizeof($transporter_m);
+				$transporter_name_master = "";
+				for($n=0;$n<sizeof($transporter_m);$n++)
+				{
+					if($vehicle_name_rdb[$i] == $vehicle_m[$n])
+					{
+						//echo "\nTransporter Matched";
+						$transporter_name_master = $transporter_m[$n];
+						break;                                  
+					}
+				}	
+				//echo "\nThree";				
+				$col_tmp = 'X'.$row;
+				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $transporter_name_master);
+				
+				$col_tmp = 'Y'.$row;
+				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $transporter_sel[$vehicle_name_rdb1[$i]][$k]);															
+				
+				//echo "\nvehicle_name_rdb[i]=".$vehicle_name_rdb1[$i]." ,Customer=".$customer_name_rdb_3." ,StationCoord=".$station_coord[$vehicle_name_rdb1[$i]][$k];
+				$coord_str = explode(',',$station_coord[$vehicle_name_rdb1[$i]][$k]);
+				
+				$col_tmp = 'Z'.$row;
+				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , trim($coord_str[0]));
+				
+				$col_tmp = 'AA'.$row;
+				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , trim($coord_str[1]));
+				
+				$col_tmp = 'AB'.$row;
+				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $distance_variable[$vehicle_name_rdb1[$i]][$k]);
+				//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $distance_variable[$vehicle_imei_rdb[$i]][$j]);
+				
+				//echo "<BR>A_CreateHrly ".$i." ".$vehicle_imei_rdb[$i];
+				$col_tmp = 'AC'.$row;
+				
+				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValueExplicit($col_tmp, $vehicle_imei_rdb[$vehicle_name_rdb1[$i]], PHPExcel_Cell_DataType::TYPE_STRING);
+				
+				$col_tmp = 'AD'.$row;
+				$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "");
+
 				$row++;
-			}
+				$sno++;
+			//}
 		}
-	}*/		
+	}
 	//#### FIRST TAB CLOSED ###################################################################
 	
 	//####################### SECOND TAB ######################################################
@@ -446,19 +263,12 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 	$col_tmp = 'A'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Vehicle");
 	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'B'.$row;					
-	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Route"); 					
-	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'C'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "CustomerCompleted(All)");
 	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'D'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Transporter(I)");
 	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'E'.$row;					
-	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "RouteType"); 					
-	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
-
 	$row++;
 						
 	//#### SECOND TAB CLOSED ##################################################################
@@ -470,9 +280,6 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 	$col_tmp = 'A'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Vehicle");
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'B'.$row;					
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Route"); 			
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);	
 	$col_tmp = 'C'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Customer Completed");
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
@@ -482,18 +289,76 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 	$col_tmp = 'E'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Transporter(I)");					
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'F'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "RouteType");					
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);		
 	$row++;		
 		
 	//#### THIRD TAB CLOSED ########################################
-	
+
 	//#### WRITE FINAL XLSX
 	echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel_1, 'Excel2007');
 	$objWriter->save($read_excel_path);
-	echo date('H:i:s') , " File written to " , $read_excel_path , EOL;		
-}
+	echo date('H:i:s') , " File written to " , $read_excel_path , EOL;
+
+	//##### CREATE VEHICLE OUT_TEMPERATURE FILE
+	//######### SENT FILE NAME CLOSED 			
+	$objPHPExcel_1 = null;
+	$objPHPExcel_1 = new PHPExcel();
+
+	$cellIterator = null;
+	$column = null;
+	$row = 1;
+		
+	//echo "\nSizeRoute=".sizeof($route_name_rdb);	
+	$col_tmp = 'A'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "Vehicle");
+
+	$col_tmp = 'B'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "MinTemp");
+				
+	$col_tmp = 'C'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "MinTempDate");
+	
+	$col_tmp = 'D'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "MinTempTime");
+
+	$col_tmp = 'E'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "MaxTemp");
+
+	$col_tmp = 'F'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "MaxTempDate");
+
+	$col_tmp = 'G'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "MaxTempTime");
+	$row++;
+	
+	for($i=0;$i<sizeof($vehicle_name_rdb1);$i++)
+	{		
+		$col_tmp = 'A'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $vehicle_name_rdb1[$i]);
+					
+		$col_tmp = 'B'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, "");
+
+		$col_tmp = 'C'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, "");	
+
+		$col_tmp = 'D'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, "");
+
+		$col_tmp = 'E'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, "");	
+
+		$col_tmp = 'F'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, "");		
+		$row++;
+	}	
+	
+	//#### WRITE FINAL XLSX
+	echo date('H:i:s') , " Write to Excel2007 format" , EOL;
+	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel_1, 'Excel2007');
+	$objWriter->save($min_max_temp_path);
+	echo date('H:i:s') , " File written to " , $min_max_temp_path , EOL;	
+
+} //FUNCTION CLOSED
 
 ?>

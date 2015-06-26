@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 function get_route_db_detail($shift)
 {
 	global $DbConnection;
@@ -10,10 +10,12 @@ function get_route_db_detail($shift)
 
 	if($shift == "ZPME")
 	{
-		//$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_ev FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_ev='') AND route_assignment2.vehicle_name LIKE CONCAT(vehicle.vehicle_name) AND route_assignment2.status=1 Order By route_assignment2.route_name_ev DESC";	
-		$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_ev FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_ev='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND route_assignment2.status=1 Order By route_assignment2.route_name_ev DESC";	
-		//$query = "SELECT DISTINCT vehicle_name,route_name_ev,remark_ev FROM route_assignment2 WHERE user_account_id='$account_id' AND NOT(route_name_ev='') AND status=1 AND route_name_ev='206013' OR route_name_ev='226573' Order By route_name_ev DESC";	
-		//echo "EV:".$query;
+		//echo "EV:".$query;		  
+		$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_ev FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_ev='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND route_assignment2.status=1 Order By route_assignment2.route_name_ev DESC";
+		//$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_ev FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_ev='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND route_assignment2.status=1 AND route_assignment2.vehicle_name IN('UP14ET1519','UP16CT3727','DL1LM6380','DL1M6530','HR45A6102','HR55U6870') Order By route_assignment2.route_name_ev DESC";		
+                /*$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_ev FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_ev='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND vehicle.vehicle_name='UP13D2186' AND route_assignment2.status=1 Order By route_assignment2.route_name_ev DESC";*/
+
+		//echo "<br>".$query;
 		$result = mysql_query($query,$DbConnection); 
 
 		while($row = mysql_fetch_object($result))
@@ -35,14 +37,10 @@ function get_route_db_detail($shift)
 		} 
 	}	
 	else if($shift == "ZPMM")
-	{		
-		//$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_mor FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_mor='') AND route_assignment2.vehicle_name LIKE CONCAT(vehicle.vehicle_name) AND route_assignment2.status=1 Order By route_assignment2.route_name_mor DESC";				
-		$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_mor FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_mor='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND route_assignment2.status=1 Order By route_assignment2.route_name_mor DESC";				
-//		$query = "SELECT DISTINCT route_assignment3.vehicle_name,route_assignment3.route_name_mor FROM route_assignment3,vehicle WHERE route_assignment3.user_account_id='$account_id' AND NOT(route_assignment3.route_name_mor='') AND route_assignment3.vehicle_name IN('DL1LT1405','DL1LT1595') AND route_assignment3.vehicle_name=vehicle.vehicle_name AND route_assignment3.status=1 Order By route_assignment3.route_name_mor DESC";				
-		//$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_mor FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_mor='') AND route_assignment2.vehicle_name IN('HR61A6121','DL1LS4308','DL1LG6582') AND route_assignment2.vehicle_name LIKE CONCAT(vehicle.vehicle_name) AND route_assignment2.status=1 Order By route_assignment2.route_name_mor DESC";				
-		//$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_mor FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_mor='') AND route_assignment2.vehicle_name IN('DL1LS4308') AND route_assignment2.vehicle_name LIKE CONCAT(vehicle.vehicle_name) AND route_assignment2.status=1 Order By route_assignment2.route_name_mor DESC";				
-		//$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_mor FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_mor='') AND route_assignment2.vehicle_name LIKE CONCAT(vehicle.vehicle_name) AND route_assignment2.status=1 Order By route_assignment2.route_name_mor DESC limit 5";				
-		//echo "<br>MOR:".$query;
+	{						
+		$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_mor FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_mor='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND route_assignment2.status=1 Order By route_assignment2.route_name_mor DESC";			//echo "<br>MOR:".$query;
+/*$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_mor FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_mor='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND route_assignment2.status=1 AND route_name_mor='201003' Order By route_assignment2.route_name_mor DESC";*/
+		//echo "\n".$query;
 		$result = mysql_query($query,$DbConnection); 
 		while($row = mysql_fetch_object($result))
 		{

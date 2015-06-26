@@ -29,7 +29,7 @@ public class pull_device_last_data {
 		
 			if (inputStream != null) {
 				prop.load(inputStream);
-				conn = new CassandraConn(prop.getProperty("nodes"), prop.getProperty("keyspace"));
+				conn = new CassandraConn(prop.getProperty("nodes"), prop.getProperty("keyspace"), prop.getProperty("username"), prop.getProperty("password"));
 			
 			} else {
 				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");

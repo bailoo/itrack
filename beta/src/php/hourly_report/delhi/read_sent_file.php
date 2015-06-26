@@ -7,10 +7,12 @@ function read_sent_file($read_excel_path)
 	global $Type;
 	global $RouteNo;
 	global $ReportShift;
+	global $HourBand;
 	global $ArrivalDate;
 	global $ArrivalTime;
 	global $DepartureDate;
 	global $DepartureTime;
+	global $ScheduleDate;
 	global $ScheduleTime;
 	global $Delay;
 	global $HaltDuration;
@@ -28,7 +30,22 @@ function read_sent_file($read_excel_path)
 	global $DistVar;
 	global $IMEI;
 	global $RouteType;
-	global $NO_GPS;	
+	global $NO_GPS;
+	global $VisitStatus;
+
+	//global $PlantLat;
+	//global $PlantLng;
+	global $PlantCoord;
+	global $PlantDistVar;
+	global $Status;
+	global $PlantInDate;
+	global $PlantInTime;
+	global $PlantOutDate;
+	global $PlantOutTime;
+	
+	global $PlantOutScheduleDate;
+	global $PlantOutScheduleTime;
+	global $PlantOutDelay;
 	/*//####################
 	global $Vehicle_CI;
 	global $StationNo_CI;
@@ -37,7 +54,8 @@ function read_sent_file($read_excel_path)
 	//####################*/	
 
 	global $RedRoute;
-	global $RedCustomer;	
+	global $RedCustomer;
+	global $unmapped_customers;
 	
 	echo "\nREAD_SENT_FILE";
 	//echo "\nPath=".$path;
@@ -112,78 +130,129 @@ function read_sent_file($read_excel_path)
 
 					$tmp_val="F".$row;
 					$ReportShift[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
-					
+
 					$tmp_val="G".$row;
+					$Plant[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					
+					$tmp_val="H".$row;
+					$HourBand[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					
+					$tmp_val="I".$row;
 					$ArrivalDate[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'YYYY-mm-dd');					
 
-					$tmp_val="H".$row;
+					$tmp_val="J".$row;
 					$arrival_tmp = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
 
 					$ArrivalTime[] = $arrival_tmp;
 					
-					$tmp_val="I".$row;
+					$tmp_val="K".$row;
 					$DepartureDate[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'YYYY-mm-dd');					
 
-					$tmp_val="J".$row;
+					$tmp_val="L".$row;
 					$DepartureTime[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
 
-					$tmp_val="K".$row;
-					$ScheduleTime[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
-
-					$tmp_val="L".$row;
-					$Delay[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
-
 					$tmp_val="M".$row;
-					$HaltDuration[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
+					$ScheduleDate[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'YYYY-mm-dd');					
 
 					$tmp_val="N".$row;
-					$Remark[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					$ScheduleTime[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
 
 					$tmp_val="O".$row;
-					$ReportDate1[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'YYYY-mm-dd');					
+					$Delay[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
 
 					$tmp_val="P".$row;
-					$ReportTime1[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
-					
-					$tmp_val="Q".$row;
-					$ReportDate2[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'YYYY-mm-dd');					
+					$HaltDuration[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
 
+					$tmp_val="Q".$row;
+					$Remark[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					
 					$tmp_val="R".$row;
-					$ReportTime2[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
+					$PlantInDate[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'YYYY-mm-dd');					
 
 					$tmp_val="S".$row;
-					$TransporterM[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
-					
+					$PlantInTime[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
+
 					$tmp_val="T".$row;
-					$TransporterI[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();					
+					$PlantOutDate[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'YYYY-mm-dd');					
 
 					$tmp_val="U".$row;
-					$Plant[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					$PlantOutTime[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');
 
-					//$tmp_val="U".$row;
-					//$Km[] = $objPHPExcel_1->getActiveSheet()->getCell($tmp_val)->getValue();
-					
 					$tmp_val="V".$row;
-					$Lat[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					$PlantOutScheduleDate[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'YYYY-mm-dd');					
 					
 					$tmp_val="W".$row;
-					$Lng[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
-					
+					$PlantOutScheduleTime[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
+
 					$tmp_val="X".$row;
-					$DistVar[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					$PlantOutDelay[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
 					
 					$tmp_val="Y".$row;
-					$imei_tmp = $objPHPExcel_1->getActiveSheet()->getCell($tmp_val)->getValue();
-					$imei_tmp = number_format($imei_tmp,0,'','');
-					$IMEI[] = $imei_tmp;
+					$TransporterM[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
 					
 					$tmp_val="Z".$row;
-					$RouteType[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					$TransporterI[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();					
 
 					$tmp_val="AA".$row;
-					$NO_GPS[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();					
+					$RouteType[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
 
-					//echo "\nRow=".$row." read";
+					$tmp_val="AB".$row;
+					$NO_GPS[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+
+					$tmp_val="AC".$row;
+					$Lat[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					
+					$tmp_val="AD".$row;
+					$Lng[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					
+					$tmp_val="AE".$row;
+					$DistVar[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					
+					$tmp_val="AF".$row;
+					$imei_tmp = $objPHPExcel_1->getActiveSheet()->getCell($tmp_val)->getValue();
+					$imei_tmp = number_format($imei_tmp,0,'','');
+					$IMEI[] = $imei_tmp;					
+
+					$tmp_val="AG".$row;
+					$PlantCoord[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();					
+
+					$tmp_val="AH".$row;
+					$PlantDistVar[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();					
+
+					$tmp_val="AI".$row;
+					$Status[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();					
+										
+					$tmp_val="AJ".$row;
+					$ReportDate1[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'YYYY-mm-dd');					
+
+					$tmp_val="AK".$row;
+					$ReportTime1[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
+					
+					$tmp_val="AL".$row;
+					$ReportDate2[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'YYYY-mm-dd');					
+
+					$tmp_val="AM".$row;
+					$ReportTime2[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
+	
+					$pos_c = strpos($station_tmp, "@");
+					if($pos_c !== false)
+					{
+						//echo "\nNegative Found";
+						$customer_at_the_rate1 = explode("@", $station_tmp);											
+					}
+					else
+					{
+						$customer_at_the_rate1[0] = $station_tmp;
+					}
+					//echo "<br>CustomerRead=".$customer_at_the_rate1[0];
+					$tmp_val="AN".$row;
+					//$VisitStatus[trim($vehicle_tmp)][trim($customer_at_the_rate1[0])] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					//$VisitStatus[trim($route_tmp)][trim($customer_at_the_rate1[0])] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					$status_pink = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					if($status_pink=="1")
+					{
+						$VisitStatus[trim($route_tmp)][trim($customer_at_the_rate1[0])] = $status_pink;
+					}
 					break;
 				}				
 			//}		
@@ -195,6 +264,28 @@ function read_sent_file($read_excel_path)
 	}	
 	//#### READ FIRST TAB CLOSED ################################################	
 
+
+	//################  READ THIRD SHEET ###################################
+	$column = null;
+	$row = null;
+	foreach ($objPHPExcel_1->setActiveSheetIndex(2)->getRowIterator() as $row) 
+	{
+		$cellIterator = $row->getCellIterator();
+		$cellIterator->setIterateOnlyExistingCells(false);
+		$i=0;
+		foreach ($cellIterator as $cell) 
+		{
+			$column = $cell->getColumn();
+			$row = $cell->getRow();
+			//if($row > $sheet2_row_count)				
+			
+			$tmp_val="A".$row;
+			$route_tmp = $objPHPExcel_1->getActiveSheet(2)->getCell($tmp_val)->getValue();
+			
+			$tmp_val="E".$row;
+			$unmapped_customers[$route_tmp] = $objPHPExcel_1->getActiveSheet(2)->getCell($tmp_val)->getValue();
+		}
+	}
 	//######### SORT WITH RESPECT TO ROUTES ###########################
 	/*$Vehicle_CI = $Vehicle;
 	$StationNo_CI = $StationNo;

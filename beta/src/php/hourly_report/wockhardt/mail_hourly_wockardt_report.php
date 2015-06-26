@@ -9,6 +9,7 @@ $DBASE = "iespl_vts_beta";
 $USER = "root";
 $PASSWD = "mysql";
 $account_id = "226";
+$sub_account_id = "395";
 if($account_id == "226") $user_name = "wockhardt";
 echo "\nDBASE=".$DBASE." ,User=".$USER." ,PASS=".$PASSWD;
 $DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server is down. Please try after few minutes.");
@@ -64,6 +65,8 @@ $sent_violated_path = $sent_violated_root_path."/HOURLY_MAIL_VTS_REPORT_WOCKHARD
 
 $last_processed_time_path = $sent_root_path."/last_processed_time.xlsx";
 $last_halt_time_path = $sent_root_path."/last_halt_time.xlsx";
+
+$sent_sub_vehicle_path = $sent_root_path."/sub_account_vehicle_list.xlsx";
 
 echo "TEST2";
 include_once("get_village_db_detail.php");
@@ -224,6 +227,8 @@ $VLHaltViolation = array();
 $TotalDistanceTravelled = array();	
 $IMEI = array();	
 $Remark = array();
+$SubVehicles = array();	//READ EVERYTIME
+$sub_account_vehicles = array(); //DB TO FILE
 
 $last_vehicle_name = array();		//LAST PROCESSED FILE
 $last_halt_time = array();
@@ -238,14 +243,20 @@ $csv_string_halt_final = "";
 
 $total_route = array();
 $total_customer = array();
+
 //$type_arr = array();
 
 $violate_flag = true;
+
 $village_violate_msg = "";
+$sub_village_violate_msg="";
+
 $villag_flag = false;
 
 $message1 = "";
 $message2 = "";
+$message3 = "";
+$message4 = "";
 //#################### IF SHIFT MORNING #########################
 //$valid_shift = true; //comment
 if($valid_shift)
@@ -277,6 +288,10 @@ if($valid_shift)
 		echo "\n1";
 		get_village_db_detail();
 		echo "\n2";
+		
+		//######## CREATE VEHICLE FILE
+		create_hrly_sub_vehicles($sent_sub_vehicle_path);
+		
 		$objPHPExcel_1 = null;
 		create_hrly_excel($sent_file_path, $Last_Time, $current_time);
 		create_last_halt_time($last_halt_time_path);		
@@ -285,6 +300,7 @@ if($valid_shift)
 
 	$objPHPExcel_1 = null;	
 	read_sent_file($sent_file_path);
+	read_sub_vehicles($sent_sub_vehicle_path);
 	echo "\nAfter ReadSentFile";
 	get_halt_xml_data($Last_Time,$current_time, $sent_file_path);
 	echo "\nAfter Data Process";
@@ -327,33 +343,16 @@ if($valid_shift)
 	read_violated_records($sent_file_path);
 	create_violated_hrly_excel_msg($sent_violated_path);		
 	
-	//############ SEND EMAIL ##############
-	//$to = 'rizwan@iembsys.com';	
-	$to = 'nghamande@wockhardtfoundation.org,asomvanshi@wockhardtfoundation.org,jdsouza@wockhardtfoundation.org,snangare@wockhardtfoundation.org';	
-	//$to = 'hourlyreport4@gmail.com';
-	//$to = 'nghamande@wockhardtfoundation.org';
+	//############ SEND EMAIL -ALL USERS ##############
+	//$to = 'asomvanshi@wockhardtfoundation.org,snangare@wockhardtfoundation.org,nbandikallu@wockhardtfoundation.org,viswabakthi@gmail.com,aloks@wockhardtfoundation.org';
+	//$to = 'shams.parwez@iembsys.com';
+	$to = 'asomvanshi@wockhardtfoundation.org,snangare@wockhardtfoundation.org,nbandikallu@wockhardtfoundation.org';
 	$time_1 = date('Y-m-d H:i:s');
 	$time_2 = strtotime($time_1);
 	//$message = "";
 		
-	/*
-	$subject = "WOCKHARDT_VIOLATION_ALERT_VTS_".$time_1."_".$time_2;
-	//$message = "WOCKHARDT_VIOLATION_ALERT_VTS_".$msg."_".$time_1."_".$time_2."<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
-	$message .= "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
-	$random_hash = md5(date('r', time()));  
-	$headers = "From: support@iembsys.co.in\r\n";
-	$headers .= "Cc: hourlyreport4@gmail.com";
-	//pass: 8090025844  
-	//$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com,support1@iembsys.com,support2@iembsys.com";
-	//$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com";
-	$headers .= "\r\nContent-Type: multipart/mixed; boundary=\"PHP-mixed-".$random_hash."\""; 
-	//$filename_title = "HOURLY_MAIL_VTS_REPORT_WOCKHARDT_".$msg."_".$time_1."_".$time_2.".xlsx";
-	//$file_path = $sent_violated_path;
-	//echo "\nFILE PATH:Mor=".$file_path;
-	include("send_mail_api.php");	
-	*/
-	echo "\nmessage1=".$message1;
-	echo "\nmessage2=".$message2;
+	//echo "\nmessage1=".$message1;
+	//echo "\nmessage2=".$message2;
 	if($message1!="")
 	{
 		$current_time = date('Y-m-d H:i:s');
@@ -382,7 +381,49 @@ if($valid_shift)
 		$headers .= "\r\nContent-Type: text/html; charset=iso-8859-1; boundary=\"PHP-mixed-".$random_hash."\""; 
 		mail($to, $subject, $message2, $headers);
 	}	
-	//######################################		
+	//######################################
+
+
+	//###### MAIL SUB ACCOUNT VEHICLES ALERT TO DIFFERENT EMAIL_ID
+	//############ SEND EMAIL ##############
+	//$to = 'asomvanshi@wockhardtfoundation.org,snangare@wockhardtfoundation.org,ceo@wockhardtfoundation.org,nbandikallu@wockhardtfoundation.org';
+	$to = 'ceo@wockhardtfoundation.org,viswabakthi@gmail.com,aloks@wockhardtfoundation.org';
+	$time_1 = date('Y-m-d H:i:s');
+	$time_2 = strtotime($time_1);
+	//$message = "";
+		
+	//echo "\nmessage3=".$message3;
+	//echo "\nmessage4=".$message4;
+	if($message3!="")
+	{
+		$current_time = date('Y-m-d H:i:s');
+		$current_date = date('Y-m-d');
+		$date_s = $current_date." 08:00:00";
+		$date_e = $current_date." 10:00:00";
+		
+		if( ($current_time > $date_s) && ($current_time < $date_e) )
+		{
+			$subject = "WOCKHARDT_BS_DELAYED_ALERT_VTS_".$time_1."_".$time_2;
+			$message3 .= "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
+			$random_hash = md5(date('r', time()));
+			$headers = "From: support@iembsys.co.in\r\n";
+			$headers .= "Cc: hourlyreport4@gmail.com";
+			$headers .= "\r\nContent-Type: text/html; charset=iso-8859-1; boundary=\"PHP-mixed-".$random_hash."\""; 
+			mail($to, $subject, $message3, $headers);
+		}
+	}
+	if($message4!="")
+	{
+		$subject = "WOCKHARDT_VIOLATION_ALERT_VTS_".$time_1."_".$time_2;
+		$message4 .= "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
+		$random_hash = md5(date('r', time()));
+		$headers = "From: support@iembsys.co.in\r\n";
+		$headers .= "Cc: hourlyreport4@gmail.com";
+		$headers .= "\r\nContent-Type: text/html; charset=iso-8859-1; boundary=\"PHP-mixed-".$random_hash."\""; 
+		mail($to, $subject, $message4, $headers);
+	}	
+	//######################################	
+	
 }
 		
 //######### SHIFT EVENING CLOSED 

@@ -19,7 +19,7 @@ function update_last_processed_time($last_processed_time_path, $current_time)
 	$column = null;
 	$row = 1;
 
-	foreach ($objPHPExcel_1->setActiveSheetIndex(0)->getRowIterator() as $row) 
+	/*foreach ($objPHPExcel_1->setActiveSheetIndex(0)->getRowIterator() as $row) 
 	{
 		$cellIterator = $row->getCellIterator();
 		$cellIterator->setIterateOnlyExistingCells(false);
@@ -39,8 +39,13 @@ function update_last_processed_time($last_processed_time_path, $current_time)
 				break;						
 			}		
 		}
-	}	
+	}*/	
 	
+        $last_processed_time_excel = PHPExcel_Style_NumberFormat::toFormattedString($current_time, 'YYYY-mm-dd hh:mm:ss');
+        $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue('A1' , $last_processed_time_excel);
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue("B1" , '');
+
+
 	//echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel_1, 'Excel2007');
 	$objWriter->save($last_processed_time_path);
