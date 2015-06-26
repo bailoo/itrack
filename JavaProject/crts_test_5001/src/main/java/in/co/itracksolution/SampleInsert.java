@@ -28,7 +28,7 @@ public class SampleInsert {
 		
 			if (inputStream != null) {
 				prop.load(inputStream);
-				conn = new CassandraConn(prop.getProperty("nodes"), prop.getProperty("keyspace"));
+				conn = new CassandraConn(prop.getProperty("nodes"), prop.getProperty("keyspace"), prop.getProperty("username"), prop.getProperty("password"));
 			
 			} else {
 				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
@@ -91,7 +91,7 @@ public class SampleInsert {
 		
 		/* Full Data ('a','b','c','d','e','f','g','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz'); */
 		String imei = "123456";
-		String dtime = "2015-06-15 20:17:20";
+		String dtime = "2015-06-15 20:17:18";
 		String fullData = "N;v1.45C;1;46.25148;39.86157;0.06;2;5;3;5;6;6;3;5;0;12.88;abcd;1;0;0;1;0;0;1;0;0";
 		st.insertFulldata(imei, dtime, fullData);
 	
