@@ -3,9 +3,9 @@
 set_time_limit(360000);
 //error_reporting(E_ALL);
 //ini_set('display_errors', TRUE);
-$DEBUG_OFFLINE = false;
+$DEBUG_OFFLINE = true;
 $DEBUG_ONLINE = false;
-$CREATE_MASTER = false;
+$CREATE_MASTER = true;
 $isReport = true;
 //$HOST = "111.118.181.156";
 $DBASE = "iespl_vts_beta";
@@ -41,8 +41,6 @@ if ($DEBUG_OFFLINE) {
     $abspath = "/var/www/html/vts/beta/src/php";
 }
 echo "<br>ABSPAth=" . $abspath;
-include_once($abspath . "/common_xml_element.php");
-//include_once($abspath."/get_all_dates_between.php");
 
 //echo "\nD1";
 include_once($abspath . '/xmlParameters.php');
@@ -50,11 +48,6 @@ include_once($abspath . '/xmlParameters.php');
 include_once($abspath . '/parameterizeData.php');
 //echo "\nD3";
 include_once($abspath . '/data.php');
-/*if (file_exists($tmp)) {
-    echo "File Exists1";
-} else {
-    "Does not exist";
-}*/
 //echo "\nD4";
 include_once($abspath . '/sortXmlData.php');
 //echo "\nD5:" . $abspath;
@@ -72,8 +65,7 @@ include_once($abspath . "/user_type_setting.php");
 //require_once $abspath."/excel_lib/class.writeexcel_worksheet.inc.php";
 include_once($abspath . "/util.hr_min_sec.php");
 //echo "<br>D7";
-if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun.php"))
-    ;
+if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun.php"));
 include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
 //echo "<br>D8";
 //include_once($abspath."/hourly_report/".$user_name."/get_master_detail.php");

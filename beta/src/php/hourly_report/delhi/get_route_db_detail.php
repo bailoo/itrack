@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 function get_route_db_detail($shift)
 {
 	global $DbConnection;
