@@ -23,7 +23,7 @@ public class CassandraConn {
 	      return this.session;
 	   }
 	   
-	   public CassandraConn(String node, String keyspace) {
+	   public CassandraConn(String node, String keyspace, String username, String password) {
 		   
 		  PoolingOptions pools = new PoolingOptions();
 	      pools.setMaxSimultaneousRequestsPerConnectionThreshold(HostDistance.LOCAL, maxRequestPerConnection);
@@ -37,6 +37,7 @@ public class CassandraConn {
 	      cluster = Cluster.builder()
 	            .addContactPoint(node)
 	            .withPoolingOptions(pools)
+		.withCredentials(username, password)
                 .withSocketOptions(new SocketOptions().setTcpNoDelay(true))
                 .build();
 	      
