@@ -27,7 +27,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="org.slf4j.log4j12-1.6.4.jar"/>
 	<classpathentry kind="lib" path="E:/ESSENTIALS/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="E:/ESSENTIALS/com.mysql.jdbc_5.1.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
