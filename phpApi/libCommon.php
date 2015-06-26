@@ -1,5 +1,14 @@
 <?php
 
+//$s_server_host     = '52.74.33.255';
+$s_server_host     = '127.0.0.1';    // Localhost
+$i_server_port     = 9042; 
+$s_server_username = 'bailoo';  // We don't have username
+$s_server_password = 'neon04$';  // We don't have password
+$s_server_keyspace = 'gps';  
+
+$TZ='0530';	// Asia/Kolkata
+
 
 /***
 * Returns the list of dates for different days 
