@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Date;
@@ -742,12 +743,15 @@ public class RequestHandler {
 		
 		System.out.println("In LastTime="+imei);
 		//### PULL check if record already exists 
+		TreeMap pMap = null;
 		try{
 			TransactionServer.data.setImei(imei);
 			lastData = TransactionServer.dao.selectByImei(TransactionServer.data.getImei());
+			pMap = new TreeMap();
+			pMap = lastData.getPMap();
 			
 			cass_imei = lastData.getImei();
-			cass_date = (String) lastData.pMap.get("h");
+			cass_date = (String) pMap.get("h");
 			cass_date_obj = (Date) sdf.parse(cass_date);
 			last_device_millis = cass_date_obj.getTime();
 			
@@ -810,12 +814,12 @@ public class RequestHandler {
 					xml_day_max_speed_time = ;
 					xml_last_halt_time = ;*/	
 					
-					cass_lat = (String) lastData.pMap.get("d");
-					cass_lng = (String) lastData.pMap.get("e");
+					cass_lat = (String) pMap.get("d");
+					cass_lng = (String) pMap.get("e");
 					//cass_date = (String) lastData.pMap.get("h");
-					cass_day_max_speed = (String) lastData.pMap.get("s");
-					cass_day_max_speed_time = (String) lastData.pMap.get("t");
-					cass_last_halt_time = (String) lastData.pMap.get("u");
+					cass_day_max_speed = (String) pMap.get("s");
+					cass_day_max_speed_time = (String) pMap.get("t");
+					cass_last_halt_time = (String) pMap.get("u");
 										
 					System.out.println("CassLat="+cass_lat+" ,cass_lng="+cass_lng+" ,cass_date="+cass_date+" ,daymaxspd="+cass_day_max_speed+" ,ass_day_max_speed_time="+cass_day_max_speed_time+" ,cass_last_halt_time="+cass_last_halt_time);
 					/*System.out.print("imei: "+lastData.getImei()+" ");
