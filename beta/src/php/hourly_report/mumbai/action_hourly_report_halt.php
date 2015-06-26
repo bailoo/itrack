@@ -299,7 +299,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     $o_cassandra->close();
     //###### CASSANDRA BLOCK1 CLOSED
     //######### MUMBAI REPORT BLOCK
-    echo "\nSIZE2=" . sizeof($Vehicle);
+    //echo "\nSIZE2=" . sizeof($Vehicle);
     for ($i = 0; $i < sizeof($Vehicle); $i++) {
         //$userdates = array();
         $nodata = true;

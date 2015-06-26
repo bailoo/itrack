@@ -44,24 +44,22 @@ echo "<br>ABSPAth=" . $abspath;
 include_once($abspath . "/common_xml_element.php");
 //include_once($abspath."/get_all_dates_between.php");
 
-echo "\nD1";
+//echo "\nD1";
 include_once($abspath . '/xmlParameters.php');
-echo "\nD2";
+//echo "\nD2";
 include_once($abspath . '/parameterizeData.php');
-echo "\nD3";
+//echo "\nD3";
 include_once($abspath . '/data.php');
-if (file_exists($tmp)) {
+/*if (file_exists($tmp)) {
     echo "File Exists1";
 } else {
     "Does not exist";
-}
-echo "\nD4";
+}*/
+//echo "\nD4";
 include_once($abspath . '/sortXmlData.php');
-echo "\nD5:" . $abspath;
-
+//echo "\nD5:" . $abspath;
 //$tmp = $abspath.'/getXmlData.php';
 //if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
-
 include_once($abspath . '/getXmlData.php');
 echo "\nD6";
 //include_once($abspath."/sort_xml.php");
@@ -73,11 +71,11 @@ include_once($abspath . "/user_type_setting.php");
 //require_once $abspath."/excel_lib/class.writeexcel_workbook.inc.php";
 //require_once $abspath."/excel_lib/class.writeexcel_worksheet.inc.php";
 include_once($abspath . "/util.hr_min_sec.php");
-echo "<br>D7";
+//echo "<br>D7";
 if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun.php"))
     ;
 include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
-echo "<br>D8";
+//echo "<br>D8";
 //include_once($abspath."/hourly_report/".$user_name."/get_master_detail.php");
 //### IMPORT XLSX LIBRARY
 //ini_set('display_startup_errors', TRUE);
