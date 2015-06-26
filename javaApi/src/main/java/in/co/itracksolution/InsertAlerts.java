@@ -3,8 +3,10 @@ package in.co.itracksolution;
 import in.co.itracksolution.db.CassandraConn;
 import in.co.itracksolution.model.SpeedAlert;
 import in.co.itracksolution.model.TurnAlert;
+import in.co.itracksolution.model.DistanceLog;
 import in.co.itracksolution.dao.SpeedAlertDao;
 import in.co.itracksolution.dao.TurnAlertDao;
+import in.co.itracksolution.dao.DistanceLogDao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -69,6 +71,32 @@ public class InsertAlerts {
 		ops.insert(speedAlert);
 		System.out.println("Inserted SpeedAlert with imei: "+imei);
 	}
+
+	public void insertDistanceLog(String imei, String starttime, String endtime, float avgspeed, float distance, float maxspeed) 
+	{
+		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
+		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
+		//Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
+		//now.setTimeZone(IST);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
+		
+		String date = starttime.substring(0,10);
+		Date starttimeObj = new Date();	
+		Date endtimeObj = new Date();	
+		try { 
+			starttimeObj = sdf.parse(starttime);
+			endtimeObj = sdf.parse(endtime);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		DistanceLog distanceLog = new DistanceLog(imei, date, starttimeObj, endtimeObj, avgspeed, distance, maxspeed, now.getTime());
+		DistanceLogDao ops = new DistanceLogDao(conn.getSession());
+		ops.insert(distanceLog);
+		System.out.println("Inserted DistanceLog with imei: "+imei);
+	}
 	
 	public void insertTurnAlert(String imei, String dtime, String stime, float speed, float angle, String location, String latitude, String longitude, String roadId ) 
 	{
@@ -102,7 +130,12 @@ public class InsertAlerts {
 		String imei = "123456";
 		String dtime = "2015-06-15 20:17:18";
 		String stime = "2015-06-15 20:17:38";
+		String starttime = "2015-06-25 10:17:18";
+		String endtime = "2015-06-25 13:17:38";
 		float speed = (float)20.1;
+		float avgspeed = (float)30.1;
+		float maxspeed = (float)60.1;
+		float distance = (float)209.4;
 		float angle = (float)60.3;
 		String location = "Chandni Chowk";
 		String latitude = "23.4568N";
@@ -111,7 +144,8 @@ public class InsertAlerts {
 		
 		InsertAlerts st = new InsertAlerts();
 		//st.insertSpeedAlert(imei, dtime, stime, speed, location, latitude, longitude, roadId);
-		st.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
+		//st.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
+		st.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
 		st.close();
 	
 		System.out.println("The End");
