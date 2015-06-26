@@ -1,6 +1,7 @@
 <?php
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
+include_once('coreDb.php');
 //echo "vehicleSerial=".$vehicleserial."<br>";
 $vehicleserial_1=explode(":",$vehicleserial);
 $consignment_type_str1=explode(",",$consignment_type_str);
@@ -10,21 +11,18 @@ if($consignment_type_str1[0]=="live" && $consignment_type_str1[1]=="expired")
 { 
     for($i=0;$i<sizeof($vehicleserial_1);$i++)
     {
-       $Query="SELECT  device_imei_no,vehicle_name,from_place,to_place,consignee_name,start_date,end_date,docket_no FROM consignment_info".
-               " WHERE device_imei_no='$vehicleserial_1[$i]' AND '$start_date' >=  start_date AND status=1";
-       //echo "QueryAll=".$Query."<br>";
-       $Result=  mysql_query($Query,$DbConnection);   
-       while($Row =  mysql_fetch_object($Result))
-       {       
-            $docket_no[]= $Row->docket_no;
-            $device_imei_no[]= $Row->device_imei_no;
-            $vehicle_name[]= $Row->vehicle_name;
-            $from_place[]= $Row->from_place;
-            $to_place[]= $Row->to_place;
-            $consignee_name[]= $Row->consignee_name;
-            $start_date_1[]= $Row->start_date;
-            $end_date_1[]= $Row->end_date;
-       }
+		$cDataArr=getConsignmentInfoParamDetail($vehicleserial_1[$i],$start_date,1,$DbConnection);
+		foreach($cDataArr as $cValue)
+		{       
+			$docket_no[]= $cValue['docket_no'];
+			$device_imei_no[]= $cValue['device_imei_no'];
+			$vehicle_name[]= $cValue['vehicle_name'];
+			$from_place[]= $cValue['from_place'];
+			$to_place[]= $cValue['to_place'];
+			$consignee_name[]= $cValue['consignee_name'];
+			$start_date_1[]= $cValue['start_date'];
+			$end_date_1[]= $cValue['end_date'];
+		}
     } 
     //echo "count_arr111=<br>";
 }
@@ -32,40 +30,36 @@ else if($consignment_type_str1[0]=="live")
 {
     for($i=0;$i<sizeof($vehicleserial_1);$i++)
     {
-       $Query="SELECT  device_imei_no,vehicle_name,from_place,to_place,consignee_name,start_date,end_date,docket_no FROM consignment_info".
-              " WHERE device_imei_no='$vehicleserial_1[$i]' AND '$start_date' >= start_date AND '$end_date'<= end_date AND status=1";     
-       $Result=  mysql_query($Query,$DbConnection);   
-       while($Row =  mysql_fetch_object($Result))
-       {            
-            $docket_no[]= $Row->docket_no;
-            $device_imei_no[]= $Row->device_imei_no;
-            $vehicle_name[]= $Row->vehicle_name;
-            $from_place[]= $Row->from_place;
-            $to_place[]= $Row->to_place;
-            $consignee_name[]= $Row->consignee_name;
-            $start_date_1[]= $Row->start_date;
-            $end_date_1[]= $Row->end_date;
-       }
-    } 
+		$cDataSDEDArr=getConsignmentInfoParamSDEDDetail($vehicleserial_1[$i],$start_date,$end_date,1,$DbConnection);
+		foreach($cDataSDEDArr as $cSDEDValue)
+		{       
+			$docket_no[]= $cSDEDValue['docket_no'];
+			$device_imei_no[]= $cSDEDValue['device_imei_no'];
+			$vehicle_name[]= $cSDEDValue['vehicle_name'];
+			$from_place[]= $cSDEDValue['from_place'];
+			$to_place[]= $cSDEDValue['to_place'];
+			$consignee_name[]= $cSDEDValue['consignee_name'];
+			$start_date_1[]= $cSDEDValue['start_date'];
+			$end_date_1[]= $cSDEDValue['end_date'];
+		}    
+	}		
 }
 else   ///// for expired docket no ///
 {    
     for($i=0;$i<sizeof($vehicleserial_1);$i++)
     {
-       $Query="SELECT  device_imei_no,vehicle_name,from_place,to_place,consignee_name,start_date,end_date,docket_no FROM consignment_info".
-         " WHERE device_imei_no='$vehicleserial_1[$i]' AND '$start_date' >= start_date AND '$end_date'>= end_date AND status=1";      
-       $Result=  mysql_query($Query,$DbConnection);   
-       while($Row =  mysql_fetch_object($Result))
-       {            
-            $docket_no[]= $Row->docket_no;
-            $device_imei_no[]= $Row->device_imei_no;
-            $vehicle_name[]= $Row->vehicle_name;
-            $from_place[]= $Row->from_place;
-            $to_place[]= $Row->to_place;
-            $consignee_name[]= $Row->consignee_name;
-             $start_date_1[]= $Row->start_date;
-            $end_date_1[]= $Row->end_date;
-       }
+       $cDataSDEDArr=getConsignmentInfoParamSDEDDetail($vehicleserial_1[$i],$start_date,$end_date,1,$DbConnection);
+		foreach($cDataSDEDArr as $cSDEDValue)
+		{       
+			$docket_no[]= $cSDEDValue['docket_no'];
+			$device_imei_no[]= $cSDEDValue['device_imei_no'];
+			$vehicle_name[]= $cSDEDValue['vehicle_name'];
+			$from_place[]= $cSDEDValue['from_place'];
+			$to_place[]= $cSDEDValue['to_place'];
+			$consignee_name[]= $cSDEDValue['consignee_name'];
+			$start_date_1[]= $cSDEDValue['start_date'];
+			$end_date_1[]= $cSDEDValue['end_date'];
+		} 
     } 
 }
 $count_arr=count($docket_no);

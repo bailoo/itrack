@@ -4,6 +4,8 @@ function create_violated_hrly_excel_msg($read_excel_path)
 	global $village_violate_msg;
 	global $message1;
 	global $message2;
+	global $message3;
+	global $message4;
 	echo "\nInCreateFinal :ViolatedHrlyExcel";
 	global $VehicleName;
 	global $SNo;
@@ -33,6 +35,8 @@ function create_violated_hrly_excel_msg($read_excel_path)
 	global $ReportRunTime2;		
 	global $Remark;
 	global $objPHPExcel_1;
+	global $SubVehicles;
+	global $sub_village_violate_msg;	
 	
 	$run_time1 = explode(' ',$time1);
 	$run_time2 = explode(' ',$time2);
@@ -163,6 +167,8 @@ function create_violated_hrly_excel_msg($read_excel_path)
 	//echo "\nSizeRoute=".sizeof($route_name_rdb);	
 	$msg_bs_tmp = "";
 	$msg_vl_tmp = "";
+	$msg_sub_bs_tmp = "";
+
 	
 	//$result_all_routes = array_unique($all_routes);	
 	
@@ -297,13 +303,26 @@ function create_violated_hrly_excel_msg($read_excel_path)
 				echo "<br>FALSE OCCURED";
 				//$msg_bs_tmp.= "<br><font color='blue' size=1><Strong>BaseStation Dept Violation:</strong></font><font color='red' size=1><Strong>Vehicle:</Strong>".$VehicleName[$i]." ,<Strong>Delay:</Strong>".$DelayBSDept[$i]." ,<Strong>DeptTime:</Strong>".$ActualBSDeptTime[$i]." ,<Strong>From BaseStation:</Strong>".$BaseStation[$i]."</font>";
 				//$msg_bs_tmp.= "<br><font color='purple' size=1>*VEHICLE:</font><font color='blue' size=1>".$VehicleName[$i]."</font> <font color='red' size=1>Delayed in Departure From Base Location :</font><font color='blue' size=1>".$BaseStation[$i]."</font><font color='red' size=1>,DEPT-TIME:</font><font color='blue' size=1>".$ActualBSDeptTime[$i]."</font>";
+				if($SubVehicles[$VehicleName[$i]]!="")
+				{
+					$msg_sub_bs_tmp.='<TR>
+					<TD style="color:purple;font-size:14px;font-weight:bold;" align="left">Vehicle:</TD>
+					<TD style="color:blue;font-size:14px;" align="left">'.$SubVehicles[$VehicleName[$i]].'</TD>
+					<TD style="color:red;font-size:14px;" align="left">Delayed in Departure From Base Location :</TD>
+					<TD style="color:blue;font-size:14px;" align="left">'.$BaseStation[$i].'</TD>
+					<TD style="color:red;font-size:14px;" align="left">,DEPT-TIME:</TD>
+					<TD style="color:blue;font-size:14px;" align="left">'.$ActualBSDeptTime[$i].'</TD>
+				</TR>';
+				}
+			
 				$bs_tmp = '
-				<TR> <TD style="color:purple;font-size:14px;font-weight:bold;" align="left">Vehicle:</TD>
+				<TR>
+					<TD style="color:purple;font-size:14px;font-weight:bold;" align="left">Vehicle:</TD>
 					<TD style="color:blue;font-size:14px;" align="left">'.$VehicleName[$i].'</TD>
 					<TD style="color:red;font-size:14px;" align="left">Delayed in Departure From Base Location :</TD>
 					<TD style="color:blue;font-size:14px;" align="left">'.$BaseStation[$i].'</TD>
-					 <TD style="color:red;font-size:14px;" align="left">,DEPT-TIME:</TD>
-					 <TD style="color:blue;font-size:14px;" align="left">'.$ActualBSDeptTime[$i].'</TD>
+					<TD style="color:red;font-size:14px;" align="left">,DEPT-TIME:</TD>
+					<TD style="color:blue;font-size:14px;" align="left">'.$ActualBSDeptTime[$i].'</TD>
 				</TR>';
 				$msg_bs_tmp.= $bs_tmp;
 			}								
@@ -354,7 +373,6 @@ function create_violated_hrly_excel_msg($read_excel_path)
 		}*/		
 	}
 	
-	echo "\nmsg_bs_tmp=".$msg_bs_tmp." ,village_violate_msg=".$village_violate_msg;
 		
 	if($msg_bs_tmp!="")
 	{	
@@ -369,6 +387,22 @@ function create_violated_hrly_excel_msg($read_excel_path)
 		$message2.= $village_violate_msg;
 		$message2.= '</TABLE>';
 	}
+	
+	if($msg_sub_bs_tmp!="")
+	{	
+		$message3.= '<TABLE BORDER=1 CELLPADDING=3 CELLSPACING=1 RULES=ROWS FRAME=BOX><TR><TD align="left" colspan="6" style="color:black;font-size:17px;font-weight:bold;">*BASE LOCATION DEPARTURE VIOLATION</TD></TR>';
+		$message3.= $msg_sub_bs_tmp;
+		$message3.= '</TABLE>';
+	}
+	
+	if($sub_village_violate_msg!="")
+	{
+		$message4.= '<TABLE BORDER=1 CELLPADDING=3 CELLSPACING=1 RULES=ROWS FRAME=BOX><TR><TD align="left" colspan="3" style="color:black;font-size:17px;font-weight:bold;">*VILLAGE ROUTE VIOLATION ALERT</TD></TR>';
+		$message4.= $sub_village_violate_msg;
+		$message4.= '</TABLE>';
+	}
+	
+
 	
 	/*
 	//####### INSERT UNMATCHED ROUTES

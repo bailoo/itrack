@@ -274,6 +274,46 @@ function getVehicleNumRow($post_vehicle_name,$status,$DbConnection)
 	return $count;
 }
 
+function getDistanceMailData($DbConnection)
+{
+	$Query = "SELECT DISTINCT vehicle.vehicle_id,vehicle.vehicle_name FROM ".
+			"alert,vehicle,vehicle_assignment,alert_assignment WHERE ".
+			"vehicle.vehicle_id = vehicle_assignment.vehicle_id AND ".         
+			"vehicle_assignment.vehicle_id = alert_assignment.vehicle_id AND ".
+			"vehicle_assignment.vehicle_id = alert_assignment.vehicle_id AND ".            
+			"alert.alert_id = alert_assignment.alert_id AND ".
+			"alert.alert_name = 'report' AND ".                         
+			"vehicle_assignment.status=1 AND ".
+			"alert_assignment.status=1";
+	//echo $query_assignment."\n";
+	$Result = mysql_query($Query,$DbConnection);
+	while($Row = mysql_fetch_object($Result))
+	{
+		$data[]=array(
+						'vehicle_id'=>$Row->vehicle_id,
+						'vehicle_name'=>$Row->vehicle_name,
+					);
+	}
+	return $data;
+}
+
+function getHourlyDistance($accId,$status,$DbConnection)
+{
+	$Query = "SELECT DISTINCT vehicle.vehicle_name,vehicle_assignment.device_imei_no FROM vehicle,vehicle_grouping,vehicle_assignment".
+		" WHERE vehicle.vehicle_id=vehicle_assignment.vehicle_id AND vehicle_grouping.vehicle_id=vehicle.vehicle_id".
+		" AND vehicle.status=$status AND vehicle_assignment.status=$status AND vehicle_grouping.status=$status AND vehicle_grouping.".
+		"account_id=$accId";
+	$Result=mysql_query($Query,$DbConnection);
+	while($Row=mysql_fetch_object($resultVD))
+	{
+		$data[]=array(
+						'device_imei_no'=>$Row->device_imei_no,
+						'vehicle_name'=>$Row->vehicle_name,
+					);
+	}
+	return $data;
+}
+
 function getVehicleNumRowNew($post_vehicle_name,$status,$DbConnection)
 {
 	$query = "SELECT vehicle_name FROM vehicle USE INDEX(vname_status) WHERE vehicle_name='$post_vehicle_name' and status=$status limit 1";
@@ -978,6 +1018,49 @@ function getVehicleDetailForAlert($vehicle_id_str,$status,$DbConnection)
 		$data[]=array('vehicle_name'=>$row_vname->vehicle_name);
 	}
 	return $data;	
+}
+
+function getConsignmentInfoParamDetail($vSerial,$startDate,$status,$DbConnection)
+{
+	$Query="SELECT  device_imei_no,vehicle_name,from_place,to_place,consignee_name,start_date,end_date,docket_no ".
+	"FROM consignment_info WHERE device_imei_no='$vSerial' AND '$startDate' >=  start_date AND status=$status";
+	//echo "QueryAll=".$Query."<br>";
+	$Result=  mysql_query($Query,$DbConnection); 
+	while($Row = mysql_fetch_object($Result))
+	{ 
+		$data[]=array(	
+						'docket_no'=>$Row->docket_no,
+						'device_imei_no'=>$Row->device_imei_no,
+						'vehicle_name'=>$Row->vehicle_name,
+						'from_place'=>$Row->from_place,
+						'to_place'=>$Row->to_place,
+						'consignee_name'=>$Row->consignee_name,
+						'start_date'=>$Row->start_date,
+						'end_date'=>$Row->end_date
+					);
+	}
+	return $data;
+}
+
+function getConsignmentInfoParamSDEDDetail($vSerial,$startDate,$endtDate,$status,$DbConnection)
+{
+	$Query="SELECT  device_imei_no,vehicle_name,from_place,to_place,consignee_name,start_date,end_date,docket_no FROM consignment_info".
+              " WHERE device_imei_no='$vSerial' AND '$startDate' >= start_date AND '$endtDate'<= end_date AND status=$status";     
+   $Result=  mysql_query($Query,$DbConnection);  
+	while($Row = mysql_fetch_object($Result))
+	{ 
+		$data[]=array(	
+						'docket_no'=>$Row->docket_no,
+						'device_imei_no'=>$Row->device_imei_no,
+						'vehicle_name'=>$Row->vehicle_name,
+						'from_place'=>$Row->from_place,
+						'to_place'=>$Row->to_place,
+						'consignee_name'=>$Row->consignee_name,
+						'start_date'=>$Row->start_date,
+						'end_date'=>$Row->end_date
+					);
+	}
+	return $data;
 }
 
 function getLandmarkDetail($post_account_id,$status,$DbConnection)

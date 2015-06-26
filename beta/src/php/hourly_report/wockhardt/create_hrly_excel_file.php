@@ -18,6 +18,7 @@ function create_hrly_excel($read_excel_path, $time1, $time2)
 	global $base_station_id;
 	global $base_station_name;
 	global $base_station_coord;
+		
 	//global $base_station_expected_deptime;
 	//global $base_station_expected_arrtime;
 	global $objPHPExcel_1;
@@ -209,76 +210,59 @@ function create_hrly_excel($read_excel_path, $time1, $time2)
 		}
 	}
 	
-	/*
-	//####### INSERT UNMATCHED ROUTES
-	$row++;
-	//echo "\nSizeAllRoute2=".sizeof($all_routes);
-	$result_all_routes = array_unique($all_routes);
-	foreach($result_all_routes as $array_key => $array_value)
-    {
-        $found = false;
-		for($j=0;$j<sizeof($route_name_rdb);$j++)
-		{
-			if( trim($array_value)== trim($route_name_rdb[$j]) )
-			{
-				//echo "\nUnMatched Route=".$all_routes[$i];
-				$found = true;
-			}
-		}		
-		if(!$found)
-		{
-			$col_tmp = 'E'.$row;
-			$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $array_value);
-			$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($styleFontRed);
-			$row++;		
-		}
-	}
-	*/	
-	//#### FIRST TAB CLOSED ###################################################################
-	/*
-	//####################### SECOND TAB ######################################################
-	//if($row > $sheet2_row_count)
-	echo "\nSecond tab";
-	$row =1;
-	//###### HEADER
-	$col_tmp = 'A'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Vehicle");
-	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'B'.$row;					
-	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "Route"); 					
-	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'C'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(1)->setCellValue($col_tmp , "CustomerCompleted(All)");
-	$objPHPExcel_1->getActiveSheet(1)->getStyle($col_tmp)->applyFromArray($header_font);
-	$row++;
-						
-	//#### SECOND TAB CLOSED ##################################################################
-	
-	//############################### THIRD TAB ###############################################
-	echo "\nThird tab";
-	$row =1;
-	//####### DEFINE HEADER
-	$col_tmp = 'A'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Vehicle");
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'B'.$row;					
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Route"); 			
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);	
-	$col_tmp = 'C'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Customer Completed");
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'D'.$row;
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Customer Incompleted");					
-	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
-	$row++;				
-	//#### THIRD TAB CLOSED ########################################
-	*/
-	
 	//#### WRITE FINAL XLSX
 	echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel_1, 'Excel2007');
 	$objWriter->save($read_excel_path);
 	echo date('H:i:s') , " File written to " , $read_excel_path , EOL;		
+}
+
+//######## SUB VEHICLES FUNCTION
+function create_hrly_sub_vehicles($read_excel_path)
+{
+	echo "\nInCreateHrly:Sub account vehicles";
+	global $sub_account_vehicles;
+	
+	$objPHPExcel_1 = null;
+	$objPHPExcel_1 = new PHPExcel();
+	//echo "\nobjPHPExcel_1=".$objPHPExcel_1;
+	/*if (file_exists($read_excel_path))
+	{		
+		$objPHPExcel_1 = new PHPExcel();  //write new file
+	}
+	else
+	{
+		$objPHPExcel_1 = PHPExcel_IOFactory::load($read_excel_path);
+	}*/	
+
+	$objPHPExcel_1->setActiveSheetIndex(0)->setTitle('sub_account_vehicles');
+
+	$cellIterator = null;
+	$column = null;
+	$row = null;
+	echo "\n1";
+	//################ FIRST TAB ############################################
+	//#######################################################################
+	$row=1;
+	
+	//###### FILL THE HEADER
+	$col_tmp = 'A'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "VehicleName");
+	//$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+	$row++;
+		
+	//echo "\nSizeRoute=".sizeof($route_name_rdb);	
+	for($i=0;$i<sizeof($sub_account_vehicles);$i++)
+	{
+		$col_tmp = 'A'.$row;
+		$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $sub_account_vehicles[$i]);
+		$row++;						
+	}
+	//#### WRITE FINAL XLSX
+	//echo date('H:i:s') , " Write to Excel2007 format" , EOL;
+	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel_1, 'Excel2007');
+	$objWriter->save($read_excel_path);
+	//echo date('H:i:s') , " File written to " , $read_excel_path , EOL;	
 }
 
 ?>

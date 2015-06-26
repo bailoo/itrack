@@ -160,6 +160,37 @@ function logParser($st_results, $dataType, $orderAsc)
 * 
 * @param object $o_cassandra	Cassandra object 
 * @param string $imei		IMEI
+* @param string $date		YYYY-MM-DD
+* 
+* @return array 	Results of the query 
+*/
+function getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc)
+{
+
+	global $TZ;
+
+	$table = ($deviceTime)?'log1':'log2';
+	$qtime = ($deviceTime)?'dtime':'stime';
+
+	$s_cql2 = "SELECT * FROM $table
+		WHERE
+		imei = '$imei'
+		AND
+		date = '$date'
+		;";
+	$st_results = $o_cassandra->query($s_cql2);
+
+	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
+	$st_obj = logParser($st_results, $dataType, $orderAsc);
+		
+	return $st_obj;
+}
+
+/***
+* Runs CQL query on Cassandra datastore
+* 
+* @param object $o_cassandra	Cassandra object 
+* @param string $imei		IMEI
 * @param string $datetime1	YYYY-MM-DD HH:MM:SS
 * @param string $datetime2	YYYY-MM-DD HH:MM:SS
 * 
