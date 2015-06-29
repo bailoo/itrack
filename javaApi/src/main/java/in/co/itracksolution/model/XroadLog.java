@@ -74,22 +74,22 @@ public class XroadLog {
 	public void setSTime(Date serverTime) {
 		this.sTime = serverTime;
 	}
-	public String getxRoadId() {
+	public String getXroadId() {
 		return xRoadId;
 	}
-	public void setxRoadId(String xRoadId) {
+	public void setXroadId(String xRoadId) {
 		this.xRoadId = xRoadId;
 	} 
-	public String getxRoadCode() {
+	public String getXroadCode() {
 		return xRoadCode;
 	}
-	public void setxRoadCode(String xRoadCode) {
+	public void setXroadCode(String xRoadCode) {
 		this.xRoadCode = xRoadCode;
 	} 
-	public String getxRoadName() {
+	public String getXroadName() {
 		return xRoadName;
 	}
-	public void setxRoadName(String xRoadName) {
+	public void setXroadName(String xRoadName) {
 		this.xRoadName = xRoadName;
 	} 
 	public int getHaltDuration() {

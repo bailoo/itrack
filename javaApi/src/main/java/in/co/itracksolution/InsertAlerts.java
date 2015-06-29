@@ -1,14 +1,16 @@
 package in.co.itracksolution;
 
 import in.co.itracksolution.db.CassandraConn;
-import in.co.itracksolution.model.SpeedAlert;
+import in.co.itracksolution.model.XroadLog;
 import in.co.itracksolution.model.TurnAlert;
 import in.co.itracksolution.model.DistanceLog;
 import in.co.itracksolution.model.NightLog;
-import in.co.itracksolution.dao.SpeedAlertDao;
+import in.co.itracksolution.model.XroadLog;
+import in.co.itracksolution.dao.XroadLogDao;
 import in.co.itracksolution.dao.TurnAlertDao;
 import in.co.itracksolution.dao.DistanceLogDao;
 import in.co.itracksolution.dao.NightLogDao;
+import in.co.itracksolution.dao.XroadLogDao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -56,6 +58,7 @@ public class InsertAlerts {
 		String starttime = "2015-06-29 12:27:18";
 		String endtime = "2015-06-29 15:37:38";
 		int duration = (int)84;
+		int haltduration = (int)34;
 		float speed = (float)30.1;
 		float avgspeed = (float)44.1;
 		float maxspeed = (float)75.1;
@@ -71,10 +74,13 @@ public class InsertAlerts {
 		String endlatitude = "22.1568N";
 		String endlongitude = "79.88434E";
 		String roadId = "Shahjahan Road";
+		String xroadid = "1234";
+		String xroadcode = "KMC";
+		String xroadname = "K M Chowk";
 		
 		InsertAlerts st = new InsertAlerts();
-		//SpeedAlertDao speedAlertDao = new SpeedAlertDao(st.conn.getSession());
-		//speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, location, latitude, longitude, roadId);
+		//XroadLogDao xroadLogDao = new XroadLogDao(st.conn.getSession());
+		//xroadLogDao.insertXroadLog(imei, dtime, stime, speed, location, latitude, longitude, roadId);
 		
 		//TurnAlertDao turnAlertDao = new TurnAlertDao(st.conn.getSession());
 		//turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
@@ -82,8 +88,12 @@ public class InsertAlerts {
 		//DistanceLogDao distanceLogDao = new DistanceLogDao(st.conn.getSession());
 		//distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
 
-		NightLogDao nightLogDao = new NightLogDao(st.conn.getSession());
-		nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed);
+		//NightLogDao nightLogDao = new NightLogDao(st.conn.getSession());
+		//nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed);
+
+		XroadLogDao xroadLogDao = new XroadLogDao(st.conn.getSession());
+		xroadLogDao.insertXroadLog(imei, dtime, stime, xroadid, xroadcode, xroadname, haltduration, speed, location, latitude, longitude);
+
 		st.close();
 	
 		System.out.println("The End");
