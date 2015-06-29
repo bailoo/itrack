@@ -3,6 +3,8 @@ package in.co.itracksolution.dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.TimeZone;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -211,8 +213,7 @@ public class DistanceLogDao {
 		}
 	
 		DistanceLog distanceLog = new DistanceLog(imei, date, starttimeObj, endtimeObj, avgspeed, distance, maxspeed, now.getTime());
-		DistanceLogDao ops = new DistanceLogDao(conn.getSession());
-		ops.insert(distanceLog);
+		insert(distanceLog);
 		System.out.println("Inserted DistanceLog with imei: "+imei);
 	}
 	

@@ -66,12 +66,14 @@ public class InsertAlerts {
 		String roadId = "Shahjahan Road";
 		
 		InsertAlerts st = new InsertAlerts();
-		SpeedAlertDao speedAlertDao = new SpeedAlertDao(st.conn.getSession());
-		speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, location, latitude, longitude, roadId);
+		//SpeedAlertDao speedAlertDao = new SpeedAlertDao(st.conn.getSession());
+		//speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, location, latitude, longitude, roadId);
 		
-		TurnAlertDao turnAlertDao = new TurnAlertDao(st.conn.getSession());
-		turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
-		//dao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
+		//TurnAlertDao turnAlertDao = new TurnAlertDao(st.conn.getSession());
+		//turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
+		
+		DistanceLogDao distanceLogDao = new DistanceLogDao(st.conn.getSession());
+		distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
 		st.close();
 	
 		System.out.println("The End");
