@@ -188,4 +188,32 @@ public class DistanceLogDao {
 		distanceLogList =  getDistanceLogList(rowListOrdered);
 		return distanceLogList;
 	}
+
+
+	public void insertDistanceLog(String imei, String starttime, String endtime, float avgspeed, float distance, float maxspeed) 
+	{
+		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
+		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
+		//Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
+		//now.setTimeZone(IST);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
+		
+		String date = starttime.substring(0,10);
+		Date starttimeObj = new Date();	
+		Date endtimeObj = new Date();	
+		try { 
+			starttimeObj = sdf.parse(starttime);
+			endtimeObj = sdf.parse(endtime);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		DistanceLog distanceLog = new DistanceLog(imei, date, starttimeObj, endtimeObj, avgspeed, distance, maxspeed, now.getTime());
+		DistanceLogDao ops = new DistanceLogDao(conn.getSession());
+		ops.insert(distanceLog);
+		System.out.println("Inserted DistanceLog with imei: "+imei);
+	}
+	
 }

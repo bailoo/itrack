@@ -204,4 +204,32 @@ public class TurnAlertDao {
 		turnAlertList =  getTurnAlertList(rowListOrdered);
 		return turnAlertList;
 	}
+
+	public void insertTurnAlert(String imei, String dtime, String stime, float speed, float angle, String location, String latitude, String longitude, String roadId ) 
+	{
+		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
+		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
+		//Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
+		//now.setTimeZone(IST);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
+		
+		String date = dtime.substring(0,10);
+		Date dtimeObj = new Date();	
+		Date stimeObj = new Date();	
+		try { 
+			dtimeObj = sdf.parse(dtime);
+			stimeObj = sdf.parse(stime);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		TurnAlert turnAlert = new TurnAlert(imei, date, dtimeObj, stimeObj, speed, angle, location, latitude, longitude, roadId, now.getTime());
+		TurnAlertDao ops = new TurnAlertDao(conn.getSession());
+		ops.insert(turnAlert);
+		System.out.println("Inserted TurnAlert with imei: "+imei);
+	}
+	
+	
 }

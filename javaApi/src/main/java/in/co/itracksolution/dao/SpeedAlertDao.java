@@ -202,4 +202,31 @@ public class SpeedAlertDao {
 		speedAlertList =  getSpeedAlertList(rowListOrdered);
 		return speedAlertList;
 	}
+
+	public void insertSpeedAlert(String imei, String dtime, String stime, float speed, String location, String latitude, String longitude, String roadId ) 
+	{
+		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
+		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
+		//Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
+		//now.setTimeZone(IST);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
+		
+		String date = dtime.substring(0,10);
+		Date dtimeObj = new Date();	
+		Date stimeObj = new Date();	
+		try { 
+			dtimeObj = sdf.parse(dtime);
+			stimeObj = sdf.parse(stime);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		SpeedAlert speedAlert = new SpeedAlert(imei, date, dtimeObj, stimeObj, speed, location, latitude, longitude, roadId, now.getTime());
+		SpeedAlertDao ops = new SpeedAlertDao(conn.getSession());
+		ops.insert(speedAlert);
+		System.out.println("Inserted SpeedAlert with imei: "+imei);
+	}
+
 }

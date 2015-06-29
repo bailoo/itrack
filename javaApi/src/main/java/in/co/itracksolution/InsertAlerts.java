@@ -4,9 +4,11 @@ import in.co.itracksolution.db.CassandraConn;
 import in.co.itracksolution.model.SpeedAlert;
 import in.co.itracksolution.model.TurnAlert;
 import in.co.itracksolution.model.DistanceLog;
+import in.co.itracksolution.model.NightLog;
 import in.co.itracksolution.dao.SpeedAlertDao;
 import in.co.itracksolution.dao.TurnAlertDao;
 import in.co.itracksolution.dao.DistanceLogDao;
+import in.co.itracksolution.dao.NightLogDao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -46,85 +48,6 @@ public class InsertAlerts {
 			conn.close();
 	}
 
-	public void insertSpeedAlert(String imei, String dtime, String stime, float speed, String location, String latitude, String longitude, String roadId ) 
-	{
-		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
-		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
-		//Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
-		//now.setTimeZone(IST);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
-		
-		String date = dtime.substring(0,10);
-		Date dtimeObj = new Date();	
-		Date stimeObj = new Date();	
-		try { 
-			dtimeObj = sdf.parse(dtime);
-			stimeObj = sdf.parse(stime);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	
-		SpeedAlert speedAlert = new SpeedAlert(imei, date, dtimeObj, stimeObj, speed, location, latitude, longitude, roadId, now.getTime());
-		SpeedAlertDao ops = new SpeedAlertDao(conn.getSession());
-		ops.insert(speedAlert);
-		System.out.println("Inserted SpeedAlert with imei: "+imei);
-	}
-
-	public void insertDistanceLog(String imei, String starttime, String endtime, float avgspeed, float distance, float maxspeed) 
-	{
-		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
-		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
-		//Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
-		//now.setTimeZone(IST);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
-		
-		String date = starttime.substring(0,10);
-		Date starttimeObj = new Date();	
-		Date endtimeObj = new Date();	
-		try { 
-			starttimeObj = sdf.parse(starttime);
-			endtimeObj = sdf.parse(endtime);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	
-		DistanceLog distanceLog = new DistanceLog(imei, date, starttimeObj, endtimeObj, avgspeed, distance, maxspeed, now.getTime());
-		DistanceLogDao ops = new DistanceLogDao(conn.getSession());
-		ops.insert(distanceLog);
-		System.out.println("Inserted DistanceLog with imei: "+imei);
-	}
-	
-	public void insertTurnAlert(String imei, String dtime, String stime, float speed, float angle, String location, String latitude, String longitude, String roadId ) 
-	{
-		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
-		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
-		//Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
-		//now.setTimeZone(IST);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
-		
-		String date = dtime.substring(0,10);
-		Date dtimeObj = new Date();	
-		Date stimeObj = new Date();	
-		try { 
-			dtimeObj = sdf.parse(dtime);
-			stimeObj = sdf.parse(stime);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	
-		TurnAlert turnAlert = new TurnAlert(imei, date, dtimeObj, stimeObj, speed, angle, location, latitude, longitude, roadId, now.getTime());
-		TurnAlertDao ops = new TurnAlertDao(conn.getSession());
-		ops.insert(turnAlert);
-		System.out.println("Inserted TurnAlert with imei: "+imei);
-	}
-	
-	
 	public static void main(String[] args) 
 	{
 		String imei = "123456";
