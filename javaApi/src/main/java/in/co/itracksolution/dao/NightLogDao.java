@@ -3,6 +3,8 @@ package in.co.itracksolution.dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.TimeZone;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -76,6 +78,7 @@ public class NightLogDao {
 				data.getEndLatitude(),
 				data.getEndLongitude(),
 				data.getEndLocation(),
+				data.getDuration(),
 				data.getAvgSpeed(),
 				data.getDistance(),
 				data.getMaxSpeed(),
@@ -106,6 +109,7 @@ public class NightLogDao {
 			nightLog.setEndLatitude(row.getString("endlatitude"));
 			nightLog.setEndLongitude(row.getString("endlongitude"));
 			nightLog.setEndLocation(row.getString("endlocation"));
+			nightLog.setDuration(row.getInt("duration"));
 			nightLog.setAvgSpeed(row.getFloat("avgspeed"));
 			nightLog.setDistance(row.getFloat("distance"));
 			nightLog.setMaxSpeed(row.getFloat("maxspeed"));
@@ -194,9 +198,40 @@ public class NightLogDao {
 		//System.out.println("eDateTime = "+sdf.format(eDateTime));
 	
 		ResultSet rs = session.execute(boundStatement.bind(imei, dateList, sDateTime, eDateTime));
-		List<Row> rowList = rs.all();
+		List<Row> rowList = new ArrayList<Row>(); 
+		/* keep only those rows that satisfy endtime <= given endDateTime */
+		for (Row row : rs.all())
+			if ( row.getDate("endtime").before(eDateTime) )
+				rowList.add(row);	
+						
 		List<Row> rowListOrdered = (orderAsc)?Lists.reverse(rowList):rowList;
 		nightLogList =  getNightLogList(rowListOrdered);
 		return nightLogList;
 	}
+
+	public void insertNightLog(String imei, String starttime, String startlatitude, String startlongitude, String startlocation, String endtime, String endlatitude, String endlongitude, String endlocation, int duration, float avgspeed, float distance, float maxspeed) 
+	{
+		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
+		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
+		//Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
+		//now.setTimeZone(IST);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
+		
+		String date = starttime.substring(0,10);
+		Date starttimeObj = new Date();	
+		Date endtimeObj = new Date();	
+		try { 
+			starttimeObj = sdf.parse(starttime);
+			endtimeObj = sdf.parse(endtime);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		NightLog nightLog = new NightLog(imei, date, starttimeObj, startlatitude, startlongitude, startlocation, endtimeObj, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed, now.getTime());
+		insert(nightLog);
+		System.out.println("Inserted NightLog with imei: "+imei);
+	}
+	
 }

@@ -51,10 +51,11 @@ public class InsertAlerts {
 	public static void main(String[] args) 
 	{
 		String imei = "123456";
-		String dtime = "2015-06-29 15:17:18";
-		String stime = "2015-06-29 13:17:38";
-		String starttime = "2015-06-29 13:27:18";
-		String endtime = "2015-06-29 18:37:38";
+		String dtime = "2015-06-29 12:17:18";
+		String stime = "2015-06-29 12:17:38";
+		String starttime = "2015-06-29 12:27:18";
+		String endtime = "2015-06-29 15:37:38";
+		int duration = (int)84;
 		float speed = (float)30.1;
 		float avgspeed = (float)44.1;
 		float maxspeed = (float)75.1;
@@ -63,6 +64,12 @@ public class InsertAlerts {
 		String location = "Dwarka Mor";
 		String latitude = "21.4568N";
 		String longitude = "82.22434E";
+		String startlocation = "Dwarka Mor";
+		String startlatitude = "20.4568N";
+		String startlongitude = "85.23234E";
+		String endlocation = "C R Park";
+		String endlatitude = "22.1568N";
+		String endlongitude = "79.88434E";
 		String roadId = "Shahjahan Road";
 		
 		InsertAlerts st = new InsertAlerts();
@@ -72,8 +79,11 @@ public class InsertAlerts {
 		//TurnAlertDao turnAlertDao = new TurnAlertDao(st.conn.getSession());
 		//turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
 		
-		DistanceLogDao distanceLogDao = new DistanceLogDao(st.conn.getSession());
-		distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
+		//DistanceLogDao distanceLogDao = new DistanceLogDao(st.conn.getSession());
+		//distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
+
+		NightLogDao nightLogDao = new NightLogDao(st.conn.getSession());
+		nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed);
 		st.close();
 	
 		System.out.println("The End");
