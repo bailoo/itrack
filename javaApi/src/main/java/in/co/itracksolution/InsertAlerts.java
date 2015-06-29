@@ -51,9 +51,9 @@ public class InsertAlerts {
 	public static void main(String[] args) 
 	{
 		String imei = "123456";
-		String dtime = "2015-06-29 13:17:18";
+		String dtime = "2015-06-29 15:17:18";
 		String stime = "2015-06-29 13:17:38";
-		String starttime = "2015-06-29 12:27:18";
+		String starttime = "2015-06-29 13:27:18";
 		String endtime = "2015-06-29 18:37:38";
 		float speed = (float)30.1;
 		float avgspeed = (float)44.1;

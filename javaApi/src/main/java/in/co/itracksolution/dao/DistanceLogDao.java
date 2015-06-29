@@ -147,6 +147,7 @@ public class DistanceLogDao {
 
 
 	/* overloaded function with starting and ending date */
+	/* WARNING: giving more than 5 days will be very SLOW */
 	
 	public ArrayList<DistanceLog> getDistanceLogByDate(String imei, String startDate, String endDate, Boolean orderAsc)
 	{
@@ -185,7 +186,12 @@ public class DistanceLogDao {
 		//System.out.println("eDateTime = "+sdf.format(eDateTime));
 	
 		ResultSet rs = session.execute(boundStatement.bind(imei, dateList, sDateTime, eDateTime));
-		List<Row> rowList = rs.all();
+		List<Row> rowList = new ArrayList<Row>(); 
+		/* keep only those rows that satisfy endtime <= given endDateTime */
+		for (Row row : rs.all())
+			if ( row.getDate("endtime").before(eDateTime) )
+				rowList.add(row);	
+						
 		List<Row> rowListOrdered = (orderAsc)?Lists.reverse(rowList):rowList;
 		distanceLogList =  getDistanceLogList(rowListOrdered);
 		return distanceLogList;

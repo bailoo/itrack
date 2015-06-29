@@ -68,8 +68,8 @@ public class GetDistanceLog
 		DistanceLogDao dao = new DistanceLogDao(st.conn.getSession());
 		
 		String imei = "123456"; //Make sure this imei exists
-		String startDateTime = "2015-06-25 10:00:00";
-		String endDateTime = "2015-06-25 11:00:00";
+		String startDateTime = "2015-06-29 10:00:00";
+		String endDateTime = "2015-06-29 16:00:00";
 		Boolean orderAsc = false;	// true for ascending , otherwise descending (default) 
 		ArrayList<DistanceLog> distanceLogList = dao.getDistanceLogByDateTime(imei, startDateTime, endDateTime, orderAsc);
 
