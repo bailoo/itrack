@@ -3,6 +3,8 @@ package in.co.itracksolution.dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.TimeZone;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -226,8 +228,7 @@ public class TurnAlertDao {
 		}
 	
 		TurnAlert turnAlert = new TurnAlert(imei, date, dtimeObj, stimeObj, speed, angle, location, latitude, longitude, roadId, now.getTime());
-		TurnAlertDao ops = new TurnAlertDao(conn.getSession());
-		ops.insert(turnAlert);
+		insert(turnAlert);
 		System.out.println("Inserted TurnAlert with imei: "+imei);
 	}
 	

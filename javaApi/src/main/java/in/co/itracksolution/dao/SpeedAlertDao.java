@@ -3,6 +3,8 @@ package in.co.itracksolution.dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.TimeZone;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -224,8 +226,7 @@ public class SpeedAlertDao {
 		}
 	
 		SpeedAlert speedAlert = new SpeedAlert(imei, date, dtimeObj, stimeObj, speed, location, latitude, longitude, roadId, now.getTime());
-		SpeedAlertDao ops = new SpeedAlertDao(conn.getSession());
-		ops.insert(speedAlert);
+		insert(speedAlert);
 		System.out.println("Inserted SpeedAlert with imei: "+imei);
 	}
 

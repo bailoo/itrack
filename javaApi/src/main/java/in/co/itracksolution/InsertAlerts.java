@@ -51,24 +51,27 @@ public class InsertAlerts {
 	public static void main(String[] args) 
 	{
 		String imei = "123456";
-		String dtime = "2015-06-15 20:17:18";
-		String stime = "2015-06-15 20:17:38";
-		String starttime = "2015-06-26 13:27:18";
-		String endtime = "2015-06-26 16:37:38";
-		float speed = (float)20.1;
-		float avgspeed = (float)34.1;
-		float maxspeed = (float)55.1;
-		float distance = (float)169.4;
-		float angle = (float)60.3;
-		String location = "Chandni Chowk";
-		String latitude = "23.4568N";
-		String longitude = "79.22434E";
-		String roadId = "MG Road";
+		String dtime = "2015-06-29 13:17:18";
+		String stime = "2015-06-29 13:17:38";
+		String starttime = "2015-06-29 12:27:18";
+		String endtime = "2015-06-29 18:37:38";
+		float speed = (float)30.1;
+		float avgspeed = (float)44.1;
+		float maxspeed = (float)75.1;
+		float distance = (float)369.4;
+		float angle = (float)35.3;
+		String location = "Dwarka Mor";
+		String latitude = "21.4568N";
+		String longitude = "82.22434E";
+		String roadId = "Shahjahan Road";
 		
 		InsertAlerts st = new InsertAlerts();
-		//st.insertSpeedAlert(imei, dtime, stime, speed, location, latitude, longitude, roadId);
-		//st.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
-		st.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
+		SpeedAlertDao speedAlertDao = new SpeedAlertDao(st.conn.getSession());
+		speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, location, latitude, longitude, roadId);
+		
+		TurnAlertDao turnAlertDao = new TurnAlertDao(st.conn.getSession());
+		turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
+		//dao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
 		st.close();
 	
 		System.out.println("The End");
