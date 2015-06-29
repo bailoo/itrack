@@ -1,11 +1,12 @@
 <?php
-	include_once('Hierarchy.php');
+	//include_once('Hierarchy.php');
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');
 	//require 'PHPMailer_5.2.4/class.phpmailer.php';
 	include_once("util_account_detail.php");
 	
-	$root = $_SESSION['root'];
+	//$root = $_SESSION['root'];
+        include_once('coreDb.php');
 	$DEBUG=0; 
 	//$account_id_local=explode(",",$account_id_local);
     //$vehicle_imei_name=explode("@",$vehicle_imei_name);	
@@ -87,27 +88,25 @@
 				{
 					$sno_id1 =$offset_sno_id[$i];
 					
-					/*
-					$QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',transporter_account_id='$transporter',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',
-					fat_kg = '$fat_kg',snf_kg='$snf_kg',milk_age='$milk_age',dispatch_time='$dispatch_time',target_time='$target_time',validity_time='$validity_time',plant='$plant',chilling_plant='$chillplant',
-					tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',edit_id='$account_id',parent_account_id='$account_id',edit_date='$date',invoice_status=5,status=1 WHERE sno='$sno_id1' "; */
 					if($transporter==$account_id)
 					{
-						$QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',transporter_account_id='$transporter',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',
+                                                $ResultUpdate=updateInvoiceMdrmTP($lorry_no,$transporter,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$sno_id1,$DbConnection);
+						/*$QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',transporter_account_id='$transporter',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',
 						fat_kg = '$fat_kg',snf_kg='$snf_kg',milk_age='$milk_age',dispatch_time='$dispatch_time',target_time='$target_time',validity_time='$validity_time',plant='$plant',chilling_plant='$chillplant',
-						tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',edit_id='$account_id', edit_date='$date',invoice_status=5,status=1 WHERE sno='$sno_id1' "; 
+						tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',edit_id='$account_id', edit_date='$date',invoice_status=5,status=1 WHERE sno='$sno_id1' "; */
 					}
 					else
 					{
-						$QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',transporter_account_id='$transporter',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',
+                                                $ResultUpdate=updateInvoiceMdrm($lorry_no,$transporter,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$sno_id1,$DbConnection);
+						/*$QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',transporter_account_id='$transporter',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',
 						fat_kg = '$fat_kg',snf_kg='$snf_kg',milk_age='$milk_age',dispatch_time='$dispatch_time',target_time='$target_time',validity_time='$validity_time',plant='$plant',chilling_plant='$chillplant',
-						tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',edit_id='$account_id',parent_account_id='$account_id',edit_date='$date',invoice_status=5,status=1 WHERE sno='$sno_id1' "; 
+						tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',edit_id='$account_id',parent_account_id='$account_id',edit_date='$date',invoice_status=5,status=1 WHERE sno='$sno_id1' "; */
 					}
 					
 					
 					
 					//echo "Query=".$Query."<br>";
-					$ResultUpdate=mysql_query($QueryUpdate,$DbConnection);
+					//$ResultUpdate=mysql_query($QueryUpdate,$DbConnection);
 					$message_web_transfer = "<center>
 									<br>
 										<FONT color=\"green\">
@@ -117,12 +116,15 @@
 				}
 				else
 				{
+                                        /*
 					$Query="INSERT INTO `invoice_mdrm`(lorry_no,transporter_account_id,email,mobile,qty_kg,fat_percentage,snf_percentage,fat_kg,snf_kg,milk_age,dispatch_time,target_time,validity_time,plant,chilling_plant,tanker_type,driver_name,driver_mobile,parent_account_id,create_id,create_date,invoice_status,status) VALUES('".
 						"$lorry_no','$transporter','$email','$mobile',".
 						"'$qty_kg','$fat_per','$snf_per','$fat_kg','$snf_kg','$milk_age','$dispatch_time','$target_time','$validity_time','$plant','$chillplant','$tanker_type','$driver_name','$driver_mobile','$account_id','$account_id','$date',5,1)";  
 					//echo "Query=".$Query."<br>";
 					if($DEBUG) print_query($Query);
 					$Result=mysql_query($Query,$DbConnection);
+                                        */
+                                        $Result=insertInvoiceMdrm($lorry_no,$transporter,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$DbConnection);
 				
 					if($Result)
 					{			
@@ -165,19 +167,24 @@
 							
 				if($docket_flag=="1")
 				{
-					$query1="SELECT MAX(sno) as max_count from invoice_mdrm where parent_account_id=$account_id";
+					/*
+                                        $query1="SELECT MAX(sno) as max_count from invoice_mdrm where parent_account_id=$account_id";
 					//echo"query=".$query1."<br>";
 					if($DEBUG) print_query($query1);
 					$result1=mysql_query($query1,$DbConnection);
 					$max_no = mysql_fetch_object($result1);
 					$max_no1=$max_no->max_count;
+                                        */
+                                        $max_no1=getMaxCountInvoiceMdrm($account_id,$DbConnection);
 					$max_no1 = preg_replace("/[^0-9]/", '', $max_no1);          
 					//echo "max_no1=".$max_no1."<br>";
-					
+					/*
 					$query_userid = "SELECT user_id FROM account WHERE account_id='$account_id' AND status=1";
 					$result_userid = mysql_query($query_userid,$DbConnection);
 					$row_userid = mysql_fetch_object($result_userid);
 					$userid = $row_userid->user_id;
+                                        */
+                                        $userid =getUserID($account_id,1,$DbConnection);
 
 					if($max_no1=="")
 					{
@@ -205,27 +212,34 @@
 				{
 					$sno_id1 =$offset_sno_id[$i];
 					
-					$QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',vehicle_no='$vehicle_no',transporter_account_id='$transporter',docket_no='$dock_no',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',
+					/*$QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',vehicle_no='$vehicle_no',transporter_account_id='$transporter',docket_no='$dock_no',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',
 					fat_kg = '$fat_kg',snf_kg='$snf_kg',milk_age='$milk_age',dispatch_time='$dispatch_time',target_time='$target_time',validity_time='$validity_time',plant='$plant',chilling_plant='$chillplant',
 					tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',parent_account_id='$account_id',edit_id='$account_id',edit_date='$date',invoice_status=1,status=1 WHERE sno='$sno_id1' ";  
 					
 					//echo "Query=".$Query."<br>";
 					$ResultUpdate=mysql_query($QueryUpdate,$DbConnection);
+                                        */
+                                         $ResultUpdate=updateInvoiceMdrmVehicle($lorry_no,$vehicle_no,$transporter,$dock_no,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$sno_id1,$DbConnection);
 					/*if($Result )
 					{*/			
 						//Insert Docket number to track
 						if($dock_no!=""){
+                                                        /*
 							$QueryVehicle="SELECT vehicle_id from vehicle where vehicle_name='$vehicle_no' and status=1 ";
 							$result_Vehicle = mysql_query($QueryVehicle,$DbConnection);
 							$row_Vehicle = mysql_fetch_object($result_Vehicle);
-							$vehicle_id = $row_Vehicle->vehicle_id;
-							$QueryVehicleIMEI="SELECT device_imei_no from vehicle_assignment where vehicle_id='$vehicle_id' and status=1 ";
+							$vehicle_id = $row_Vehicle->vehicle_id;*/
+                                                        $vehicle_id =getVehicleId($vehicle_no,1,$DbConnection);
+                                                        
+							/*$QueryVehicleIMEI="SELECT device_imei_no from vehicle_assignment where vehicle_id='$vehicle_id' and status=1 ";
 							$result_VehicleIMEI = mysql_query($QueryVehicleIMEI,$DbConnection);
 							$row_VehicleIMEI = mysql_fetch_object($result_VehicleIMEI);
-							$vehicle_IMEI = $row_VehicleIMEI->device_imei_no;
+							$vehicle_IMEI = $row_VehicleIMEI->device_imei_no;*/
+                                                        $vehicle_IMEI =getVADeviceImeiNo($vehicle_id,1,$DbConnection);
 
-							$QueryDocket="INSERT INTO consignment_info (account_id,device_imei_no,vehicle_name,consignee_name,start_date,end_date,docket_no,create_id,create_date,status) VALUES('$account_id','$vehicle_IMEI','$vehicle_no','$customer','$dispatch_time','$validity_time','$dock_no','$account_id','$date',1)";
-							$ResultDOCKET=mysql_query($QueryDocket,$DbConnection);
+							/*$QueryDocket="INSERT INTO consignment_info (account_id,device_imei_no,vehicle_name,consignee_name,start_date,end_date,docket_no,create_id,create_date,status) VALUES('$account_id','$vehicle_IMEI','$vehicle_no','$customer','$dispatch_time','$validity_time','$dock_no','$account_id','$date',1)";
+							$ResultDOCKET=mysql_query($QueryDocket,$DbConnection);*/
+                                                        $ResultDOCKET=insertConsignmetInfoDoct($account_id,$vehicle_IMEI,$vehicle_no,$customer,$dispatch_time,$validity_time,$dock_no,$account_id,$date,$DbConnection);
 						}
 					
 						$message_web = "<center>
@@ -236,12 +250,13 @@
 									</center>";
 										
 						//SEND EMAIL
-						$query_userid = "SELECT user_id FROM account WHERE account_id='$account_id' AND status=1";
+						/*$query_userid = "SELECT user_id FROM account WHERE account_id='$account_id' AND status=1";
 						$result_userid = mysql_query($query_userid,$DbConnection);
 						if($row = mysql_fetch_object($result_userid))
 						{
 							$user_id = $row->user_id;
-						}
+						}*/
+                                                $user_id =getUserID($account_id,1,$DbConnection);
 						
 						$csv_string = $csv_string.$user_id.','.$dock_no.','.$lorry_no.','.$vehicle_no.','.$email.','.$mobile.','.$qty_kg.','.$fat_per.','.$snf_per.','.$fat_kg.','.$snf_kg.','.$milk_age.','.$dispatch_time.','.$target_time.','.$plant.','.$driver_name.','.$driver_mobile.','.$chillplant.','.$tanker_type."\n";										
 						$csv_write_flag=1;
@@ -257,28 +272,33 @@
 					}*/
 				}
 				else
-				{
+				{       /*
 					$Query="INSERT INTO `invoice_mdrm`(lorry_no,vehicle_no,transporter_account_id,email,mobile,qty_kg,fat_percentage,snf_percentage,fat_kg,snf_kg,milk_age,docket_no,dispatch_time,target_time,validity_time,plant,chilling_plant,tanker_type,driver_name,driver_mobile,parent_account_id,create_id,create_date,invoice_status,status) VALUES('".
 						"$lorry_no','$vehicle_no','$transporter','$email','$mobile',".
 						"'$qty_kg','$fat_per','$snf_per','$fat_kg','$snf_kg','$milk_age','$dock_no','$dispatch_time','$target_time','$validity_time','$plant','$chillplant','$tanker_type','$driver_name','$driver_mobile','$account_id','$account_id','$date',1,1)";  
 					//echo "Query=".$Query."<br>";
 					if($DEBUG) print_query($Query);
 					$Result=mysql_query($Query,$DbConnection);
+                                        */
+                                        $Result=insertInvoiceMdrmVehicle($lorry_no,$vehicle_no,$transporter,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dock_no,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$DbConnection);
 					if($Result )
 					{			
 						//Insert Docket number to track
 						if($dock_no!=""){
-							$QueryVehicle="SELECT vehicle_id from vehicle where vehicle_name='$vehicle_no' and status=1 ";
+							/*$QueryVehicle="SELECT vehicle_id from vehicle where vehicle_name='$vehicle_no' and status=1 ";
 							$result_Vehicle = mysql_query($QueryVehicle,$DbConnection);
 							$row_Vehicle = mysql_fetch_object($result_Vehicle);
-							$vehicle_id = $row_Vehicle->vehicle_id;
-							$QueryVehicleIMEI="SELECT device_imei_no from vehicle_assignment where vehicle_id='$vehicle_id' and status=1 ";
+							$vehicle_id = $row_Vehicle->vehicle_id;*/
+                                                        $vehicle_id =getVehicleId($vehicle_no,1,$DbConnection);
+							/*$QueryVehicleIMEI="SELECT device_imei_no from vehicle_assignment where vehicle_id='$vehicle_id' and status=1 ";
 							$result_VehicleIMEI = mysql_query($QueryVehicleIMEI,$DbConnection);
 							$row_VehicleIMEI = mysql_fetch_object($result_VehicleIMEI);
-							$vehicle_IMEI = $row_VehicleIMEI->device_imei_no;
-
+							$vehicle_IMEI = $row_VehicleIMEI->device_imei_no;*/
+                                                        $vehicle_IMEI =getVADeviceImeiNo($vehicle_id,1,$DbConnection);
+                                                        /*
 							$QueryDocket="INSERT INTO consignment_info (account_id,device_imei_no,vehicle_name,consignee_name,start_date,end_date,docket_no,create_id,create_date,status) VALUES('$account_id','$vehicle_IMEI','$vehicle_no','$customer','$dispatch_time','$validity_time','$dock_no','$account_id','$date',1)";
-							$ResultDOCKET=mysql_query($QueryDocket,$DbConnection);
+							$ResultDOCKET=mysql_query($QueryDocket,$DbConnection);*/
+                                                        $ResultDOCKET=insertConsignmetInfoDoct($account_id,$vehicle_IMEI,$vehicle_no,$customer,$dispatch_time,$validity_time,$dock_no,$account_id,$date,$DbConnection);
 						}
 					
 						$message_web = "<center>
@@ -289,13 +309,14 @@
 									</center>";
 										
 						//SEND EMAIL
+                                                /*
 						$query_userid = "SELECT user_id FROM account WHERE account_id='$account_id' AND status=1";
 						$result_userid = mysql_query($query_userid,$DbConnection);
 						if($row = mysql_fetch_object($result_userid))
 						{
 							$user_id = $row->user_id;
-						}
-						
+						}*/
+						$user_id =getUserID($account_id,1,$DbConnection);
 						$csv_string = $csv_string.$user_id.','.$dock_no.','.$lorry_no.','.$vehicle_no.','.$email.','.$mobile.','.$qty_kg.','.$fat_per.','.$snf_per.','.$fat_kg.','.$snf_kg.','.$milk_age.','.$dispatch_time.','.$target_time.','.$plant.','.$driver_name.','.$driver_mobile.','.$chillplant.','.$tanker_type."\n";										
 						$csv_write_flag=1;
 						//################################//
@@ -399,53 +420,63 @@
 				if($unload_accepttime_serials[$cnt]=="" || $unload_accepttime_serials[$cnt]==null){
 					if($approval_serials[$cnt]=="approved")
 					{
-									/*$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',edit_id='$account_id',parent_account_id='$account_id' ,plant_acceptance_time='$date',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',
+									/*--old$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',edit_id='$account_id',parent_account_id='$account_id' ,plant_acceptance_time='$date',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',
 									fat_per_ft='$fat_per_ft_serials[$cnt]',snf_per_ft='$snf_per_ft_serials[$cnt]',testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
 						temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
 						mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',
 						snf_per_rt='$snf_per_rt_serials[$cnt]' , adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";*/
-						$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',plant_acceptance_time='$date',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',
+						/*
+                                                 $query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',plant_acceptance_time='$date',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',
 									fat_per_ft='$fat_per_ft_serials[$cnt]',snf_per_ft='$snf_per_ft_serials[$cnt]',testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
 						temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
 						mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',
 						snf_per_rt='$snf_per_rt_serials[$cnt]' , adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";
 						//echo "1a=". $query_update;
-						$result_update = mysql_query($query_update,$DbConnection);	
+						$result_update = mysql_query($query_update,$DbConnection);*/
+                                              
+                                               $result_update= updateInvoiceMdrmApproved($plant_serials[$cnt],$date,$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
 					}
 					else
 					{
 						if($flag_add==1)
 						{
-										/*$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',edit_id='$account_id',parent_account_id='$account_id' ,unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',
+										/*--old--$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',edit_id='$account_id',parent_account_id='$account_id' ,unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',
 										fat_per_ft='$fat_per_ft_serials[$cnt]',snf_per_ft='$snf_per_ft_serials[$cnt]',testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
 							temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
 							mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',
 							snf_per_rt='$snf_per_rt_serials[$cnt]' , adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";*/
 							//echo "2a=". $query_update;
-								$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',
+							/*	$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',
 										fat_per_ft='$fat_per_ft_serials[$cnt]',snf_per_ft='$snf_per_ft_serials[$cnt]',testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
 							temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
 							mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',
 							snf_per_rt='$snf_per_rt_serials[$cnt]' , adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";
-							$result_update = mysql_query($query_update,$DbConnection);	
+							$result_update = mysql_query($query_update,$DbConnection);
+                                                        */
+                                                        $result_update = updateInvoiceMdrmNoApproved_flag_add($plant_serials[$cnt],$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
 						}
 						else if($snf_per_rt_serials[$cnt]!="" && $fat_per_rt_serials[$cnt]!="")
 						{
-							$query_update = "UPDATE invoice_mdrm SET testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
+                                                        /*
+                                                        $query_update = "UPDATE invoice_mdrm SET testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
 							temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
 							mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',snf_per_rt='$snf_per_rt_serials[$cnt]' ,adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";
 							
 							//echo "3a=". $query_update;
-							$result_update = mysql_query($query_update,$DbConnection);	
+							$result_update = mysql_query($query_update,$DbConnection);
+                                                        */
+                                                        $result_update = updateInvoiceMdrmTest($testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
 						}
 						else if($edit_close_chk_serials[$cnt]=="1")
 						{
-							$query_update = "UPDATE invoice_mdrm SET testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
+                                                        /*
+                                                        $query_update = "UPDATE invoice_mdrm SET testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
 							temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
 							mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',snf_per_rt='$snf_per_rt_serials[$cnt]' ,adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";
 							
 							//echo "3a=". $query_update;
-							$result_update = mysql_query($query_update,$DbConnection);	
+							$result_update = mysql_query($query_update,$DbConnection);*/
+                                                        $result_update = updateInvoiceMdrmTest($testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
 						}
 						
 					}
@@ -454,21 +485,23 @@
 				{
 				//echo "in";
 					if($approval_serials[$cnt]=="approved")
-					{				/*
+					{				/*--old--
 									$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',edit_id='$account_id',parent_account_id='$account_id' ,plant_acceptance_time='$date',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',unload_accept_time='$unload_accepttime_serials[$cnt]' ,
 									fat_per_ft='$fat_per_ft_serials[$cnt]',snf_per_ft='$snf_per_ft_serials[$cnt]',testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
 						temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
 						mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',
 						snf_per_rt='$snf_per_rt_serials[$cnt]',adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";*/
 						
-						
+						/*
 							$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',plant_acceptance_time='$date',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',unload_accept_time='$unload_accepttime_serials[$cnt]' ,
 									fat_per_ft='$fat_per_ft_serials[$cnt]',snf_per_ft='$snf_per_ft_serials[$cnt]',testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
 						temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
 						mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',
 						snf_per_rt='$snf_per_rt_serials[$cnt]',adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";
 						//echo "1b=". $query_update;
-						$result_update = mysql_query($query_update,$DbConnection);	
+						$result_update = mysql_query($query_update,$DbConnection);
+                                                */
+                                                $result_update =updateInvoiceMdrmApprovedUnload($plant_serials[$cnt],$date,$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials,$unload_accepttime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$sno,$DbConnection);
 					}
 					else
 					{
@@ -479,30 +512,34 @@
 						temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
 						mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',
 						snf_per_rt='$snf_per_rt_serials[$cnt]',adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date'	WHERE sno='$sno'";*/
-							$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',unload_accept_time='$unload_accepttime_serials[$cnt]',unload_accept_time='$unload_accepttime_serials[$cnt]',
+						/*	$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',unload_accept_time='$unload_accepttime_serials[$cnt]',unload_accept_time='$unload_accepttime_serials[$cnt]',
 									fat_per_ft='$fat_per_ft_serials[$cnt]',snf_per_ft='$snf_per_ft_serials[$cnt]',testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
 						temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
 						mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',
 						snf_per_rt='$snf_per_rt_serials[$cnt]',adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date'	WHERE sno='$sno'";
 						//echo "2b=". $query_update;
-						$result_update = mysql_query($query_update,$DbConnection);	
+						$result_update = mysql_query($query_update,$DbConnection);
+                                                */
+                                                $result_update =updateInvoiceMdrmNoApprovedUnload_flag_add($plant_serials[$cnt],$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials,$unload_accepttime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$sno,$date,$DbConnection);
 						}
 						else if($snf_per_rt_serials[$cnt]!="" && $fat_per_rt_serials[$cnt]!="")
 						{
-							$query_update = "UPDATE invoice_mdrm SET testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
+							/*$query_update = "UPDATE invoice_mdrm SET testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
 							temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
 							mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',snf_per_rt='$snf_per_rt_serials[$cnt]',adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";
 							//echo "3b=". $query_update;
-							$result_update = mysql_query($query_update,$DbConnection);	
+							$result_update = mysql_query($query_update,$DbConnection);*/
+                                                         $result_update = updateInvoiceMdrmTest($testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
 						}
 						else if($edit_close_chk_serials[$cnt]=="1")
 						{
-							$query_update = "UPDATE invoice_mdrm SET testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
+							/*$query_update = "UPDATE invoice_mdrm SET testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
 							temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
 							mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',snf_per_rt='$snf_per_rt_serials[$cnt]' ,adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";
 							
 							//echo "3a=". $query_update;
-							$result_update = mysql_query($query_update,$DbConnection);	
+							$result_update = mysql_query($query_update,$DbConnection);*/
+                                                         $result_update = updateInvoiceMdrmTest($testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
 						}
 					}
 				}
@@ -512,9 +549,12 @@
 				//updating plant
 				if($plant_serials[$cnt]!=$plant_pre_serials[$cnt])
 				{
+                                    /*
 					$query_update_plant = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
-					$result_update_plant = mysql_query($query_update_plant,$DbConnection);	
+					$result_update_plant = mysql_query($query_update_plant,$DbConnection);                                      
 					//echo $query_update_plant;
+                                        */
+                                     $result_update_plant = updateInvoiceMdrmNext($plant_serials[$cnt],$account_id,$date,$sno,$DbConnection);
 				}
 			
 			$cnt++;			
@@ -566,9 +606,11 @@
 				{
 					//$query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_id='$account_id',edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
 					//requirement from yp sing not to save userid 
-					$query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
+					/*$query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
 					//echo $query_update;		
-					$result_update = mysql_query($query_update,$DbConnection);							
+					$result_update = mysql_query($query_update,$DbConnection);
+                                        */
+                                        $query_update =updateInvoiceMdrmClose($date,$closetime,$sno,$DbConnection);
 				}
 				$flag_close=0;
 			}
@@ -578,18 +620,10 @@
 		foreach($delete_serials as $sno)
 		{
 			//$docket_no = $inv['DOCKET_NO'];
-			$query_update = "UPDATE invoice_mdrm SET invoice_status=0,edit_id='$account_id',edit_date='$date' ,system_time='$date' WHERE sno='$sno'";
-			/*if($unload_accepttime_serials[$cnt]=="" || $unload_accepttime_serials[$cnt]==null)
-			{
-				$query_update = "UPDATE invoice_mdrm SET invoice_status=0,edit_id='$account_id',edit_date='$date' ,system_time='$date' ,unload_estimated_time='$unload_estimatetime_serials[$cnt]' WHERE sno='$sno'";
-			}
-			else
-			{
-				$query_update = "UPDATE invoice_mdrm SET invoice_status=0,edit_id='$account_id',edit_date='$date' ,system_time='$date' ,unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_accept_time='$unload_accepttime_serials[$cnt]' WHERE sno='$sno'";
-			}
+			/*$query_update = "UPDATE invoice_mdrm SET invoice_status=0,edit_id='$account_id',edit_date='$date' ,system_time='$date' WHERE sno='$sno'";
 			
-			echo "D=".$query_update;*/
-			$result_update = mysql_query($query_update,$DbConnection);	
+			$result_update = mysql_query($query_update,$DbConnection);*/
+                        $result_update =deleteInvoiceMdrm($account_id,$date,$sno,$DbConnection);
 			$cnt++;			
 		}
 		

@@ -15,7 +15,8 @@
 		{
 			foreach($thp as $row)
 			{
-				$tid=$row['tid'];
+			
+                                $tid=$row['tid'];
 				$tuser_id=$row['tuser_id'];
 				$tname=$row['tname'];
 				 

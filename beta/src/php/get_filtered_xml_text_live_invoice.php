@@ -33,12 +33,19 @@ $vname1 ="";
 $liveXmlData="";
 for($i=0;$i<sizeof($vserial_arr);$i++)
 {
-	$query_vehicle = "SELECT vehicle_assignment.device_imei_no, vehicle.vehicle_name, vehicle.vehicle_type FROM vehicle_assignment, vehicle WHERE  vehicle_assignment.device_imei_no = '$vserial_arr[$i]' AND vehicle.status =1 AND vehicle.vehicle_id = vehicle_assignment.vehicle_id AND vehicle_assignment.status=1";
+	/*$query_vehicle = "SELECT vehicle_assignment.device_imei_no, vehicle.vehicle_name, vehicle.vehicle_type FROM vehicle_assignment, vehicle WHERE  vehicle_assignment.device_imei_no = '$vserial_arr[$i]' AND vehicle.status =1 AND vehicle.vehicle_id = vehicle_assignment.vehicle_id AND vehicle_assignment.status=1";
 	//echo $query_vehicle."<br>";
 	$resultvehicle=mysql_query($query_vehicle,$DbConnection);
 	$rowv=mysql_fetch_object($resultvehicle);
 	$vehicle_name=$rowv->vehicle_name;
 	$vtype=$rowv->vehicle_type;
+        */
+        $resultvehicle=getVehicleAndTypeFromVserial($vserial,$DbConnection);
+        foreach($resultvehicle as $rowv ) //because it return single
+        {
+            $vehicle_name=$rowv['vehicle_name'];
+            $vtype=$rowv['vehicle_type'];
+        }
 	$imei = $vserial_arr[$i];
 	
 	$dispatch_time=$vdispatch_time_arr[$i];
@@ -359,13 +366,16 @@ for($n=0;$n<sizeof($lineF);$n++)
 //print_r($day_max_speed_time_arr);
 //print_r($vehilce_status_arr);
 //$vehilce_status_arr
-
+/*
 $query1="SELECT user_type_id FROM account_feature WHERE account_id='$account_id'";
 if($DEBUG){print $query1;}
 $result1=mysql_query($query1,$DbConnection);
 $row1=mysql_fetch_object($result1);
 //echo "usrtyoe=".$row1->user_type_id;
-$user_type_id=substr($row1->user_type_id,-1);
+*/
+$user_type_id=getUserTypeIdAccountFeature($accountId,$DbConnection);
+//$user_type_id=substr($row1->user_type_id,-1);
+$user_type_id=substr($user_type_id,-1);
 if($user_type_id=="6")
 {
 	$type="P";		//15

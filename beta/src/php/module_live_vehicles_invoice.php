@@ -45,63 +45,69 @@
 			//echo $dispatch_time;
 			$target_time=$vehicle_name_info[2];
 			$plant_number=$vehicle_name_info[3];
-			
+			/*
 			$query_vehicle = "SELECT vehicle_assignment.device_imei_no, vehicle.vehicle_id FROM vehicle_assignment, vehicle WHERE  vehicle.vehicle_name = '$vehicle_name' AND vehicle.status =1 AND vehicle.vehicle_id = vehicle_assignment.vehicle_id AND vehicle_assignment.status=1";
 			//echo $query_vehicle."<br>";
 			$resultvehicle=mysql_query($query_vehicle,$DbConnection);
-			if(mysql_num_rows($resultvehicle) >0)
+                        */
+                        $resultvehicle=getVehicleAndImeiFromName($vehicle_name,$DbConnection);
+			//if(mysql_num_rows($resultvehicle) >0)
+                        if(count($resultvehicle) >0)
 			{		
-				$rowv=mysql_fetch_object($resultvehicle);
-				$vehicle_id=$rowv->vehicle_id;
-				$vehicle_imei=$rowv->device_imei_no;
-				
-				$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-				//echo $xml_current;
-				if (file_exists($xml_current))
-				{			
-				 $color="green";
-				 //$vehicle_name_arr[$color][] =$vehicle_name; 
-				 //$imei_arr[$color][$vehicle_name]=$vehicle_imei;
-				 	echo '
-				  <tr>
-					<td align="left">
-					<span id="vcheckbox">
-						<INPUT TYPE="checkbox" name="live_vehicles[]" VALUE="'.$vehicle_imei.'" checked >
-						<input type="hidden"  name="dispatch_time[]" value="'.$dispatch_time.'">
-						<input type="hidden"  name="target_time[]" value="'.$target_time.'">
-						<input type="hidden"  name="plant_number[]" value="'.$plant_number.'">
-					</span>          
-								
-					</td>
-					<td>
-					  <font color="'.$color.'">'.$vehicle_name.'</font>
-					</td>
-				  </tr>
-				  ';
-				}
-				else
-				{
-					$color="gray";				      					  
-					//$vehicle_name_arr[$color][] =$vehicle_name; 
-					//$imei_arr[$color][$vehicle_name]=$vehicle_imei;
-					echo '
-				  <tr>
-					<td align="left">
-					<span id="vcheckbox">
-						<INPUT TYPE="checkbox"  name="live_vehicles[]" VALUE="'.$vehicle_imei.'" checked >
-						<input type="hidden" name="dispatch_time[]" value="'.$dispatch_time.'">
-						<input type="hidden" name="target_time[]" value="'.$target_time.'">
-						<input type="hidden"  name="plant_number[]" value="'.$plant_number.'">
-					</span>          
-								
-					</td>
-					<td>
-					  <font color="'.$color.'">'.$vehicle_name.'</font>
-					</td>
-				  </tr>
-				  ';
-				}
-			
+				//$rowv=mysql_fetch_object($resultvehicle);
+				//$vehicle_id=$rowv->vehicle_id;
+				//$vehicle_imei=$rowv->device_imei_no;
+                                foreach($resultvehicle as $rowv)
+                                {
+                                    $vehicle_id=$rowv['vehicle_id'];
+                                    $vehicle_imei=$rowv['device_imei_no'];
+                                    $xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
+                                    //echo $xml_current;
+                                    if (file_exists($xml_current))
+                                    {			
+                                     $color="green";
+                                     //$vehicle_name_arr[$color][] =$vehicle_name; 
+                                     //$imei_arr[$color][$vehicle_name]=$vehicle_imei;
+                                            echo '
+                                      <tr>
+                                            <td align="left">
+                                            <span id="vcheckbox">
+                                                    <INPUT TYPE="checkbox" name="live_vehicles[]" VALUE="'.$vehicle_imei.'" checked >
+                                                    <input type="hidden"  name="dispatch_time[]" value="'.$dispatch_time.'">
+                                                    <input type="hidden"  name="target_time[]" value="'.$target_time.'">
+                                                    <input type="hidden"  name="plant_number[]" value="'.$plant_number.'">
+                                            </span>          
+
+                                            </td>
+                                            <td>
+                                              <font color="'.$color.'">'.$vehicle_name.'</font>
+                                            </td>
+                                      </tr>
+                                      ';
+                                    }
+                                    else
+                                    {
+                                            $color="gray";				      					  
+                                            //$vehicle_name_arr[$color][] =$vehicle_name; 
+                                            //$imei_arr[$color][$vehicle_name]=$vehicle_imei;
+                                            echo '
+                                      <tr>
+                                            <td align="left">
+                                            <span id="vcheckbox">
+                                                    <INPUT TYPE="checkbox"  name="live_vehicles[]" VALUE="'.$vehicle_imei.'" checked >
+                                                    <input type="hidden" name="dispatch_time[]" value="'.$dispatch_time.'">
+                                                    <input type="hidden" name="target_time[]" value="'.$target_time.'">
+                                                    <input type="hidden"  name="plant_number[]" value="'.$plant_number.'">
+                                            </span>          
+
+                                            </td>
+                                            <td>
+                                              <font color="'.$color.'">'.$vehicle_name.'</font>
+                                            </td>
+                                      </tr>
+                                      ';
+                                    }
+                             }
 			}
 		}
 		/*$m=0;

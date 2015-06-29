@@ -26,17 +26,21 @@
 		//echo"account_id_substation=".$account_id_substation."<br>";
 		for($i=0;$i<$plant_size;$i++)
 		{		
-			//echo "account_status=".$account_status."<br>"."account_id=".$account_id_local."<br>";
+			/*
+                        //echo "account_status=".$account_status."<br>"."account_id=".$account_id_local."<br>";
 			$query ="SELECT	* FROM plant_user_assignment WHERE plant_customer_no='$plant_id_main[$i]' AND account_id='$account_id_substation' AND status=1";
 			//echo "query=".$query."<br>";
 			$result = mysql_query($query, $DbConnection);
-			$numrows = mysql_num_rows($result);	
+			$numrows = mysql_num_rows($result);
+                        */
+                       $numrows= getNumRowPlanUserAssingment($plant_id_main[$i],$account_id_substation,$DbConnection);
 
 			if($numrows==0)
 			{
-				$query = "INSERT INTO plant_user_assignment (plant_customer_no,account_id,status,create_id,create_date) VALUES('$plant_id_main[$i]',$account_id_substation,1,$account_id,'$date')";
+				/*$query = "INSERT INTO plant_user_assignment (plant_customer_no,account_id,status,create_id,create_date) VALUES('$plant_id_main[$i]',$account_id_substation,1,$account_id,'$date')";
 				//echo "query_insert=".$query."<br>";
-				$result = mysql_query($query, $DbConnection);
+				$result = mysql_query($query, $DbConnection);*/
+                                $result =insertPlantUserAssingment($plant_id_main[$i],$account_id_substation,$account_id,$date,$DbConnection);
 				if($result)
 				{$message="Assigned action performed successfully";}
 				else
@@ -62,10 +66,11 @@
 		//echo"account_id_substation=".$account_id_substation."<br>";
 		for($i=0;$i<$plant_size;$i++)
 		{		
-			//echo "account_status=".$account_status."<br>"."account_id=".$account_id_local."<br>";
+			/*//echo "account_status=".$account_status."<br>"."account_id=".$account_id_local."<br>";
 			$query = "UPDATE plant_user_assignment SET status=0,edit_date='$date' WHERE sno='$plant_id_main[$i]' AND account_id='$account_id_substation'";			
 			//echo $query;
-			$result = mysql_query($query, $DbConnection);
+			$result = mysql_query($query, $DbConnection);*/
+                        $result = updatePlantUserAssingmnet($date,$plant_id_main[$i],$account_id_substation,$DbConnection);
 						
 		}
 		
