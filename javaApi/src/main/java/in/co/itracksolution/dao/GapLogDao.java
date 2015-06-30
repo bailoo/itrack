@@ -44,9 +44,9 @@ public class GapLogDao {
 
 	protected String getInsertStatement(){
 		return "INSERT INTO "+GapLog.TABLE_NAME+
-				" (imei, date, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation, logtime)"
+				" (imei, date, type, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, logtime)"
 				+ " VALUES ("+
-				"?,?,?,?,?,?,?,?,?,?,?);";
+				"?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 	}
 	
 	protected String getDeleteStatement(){
@@ -70,14 +70,17 @@ public class GapLogDao {
 		session.execute(boundStatement.bind(
 				data.getImei(),
 				data.getDate(),
+				data.getType(),
 				data.getStartTime(),
 				data.getStartLatitude(),
 				data.getStartLongitude(),
-				data.getStartLocation(),
+				data.getStartLocationId(),
+				data.getStartLocationName(),
 				data.getEndTime(),
 				data.getEndLatitude(),
 				data.getEndLongitude(),
-				data.getEndLocation(),
+				data.getEndLocationId(),
+				data.getEndLocationName(),
 				data.getLogTime()
 				));
 	}
@@ -97,14 +100,17 @@ public class GapLogDao {
 		{
 			gapLog.setImei(row.getString("imei"));
 			gapLog.setDate(row.getString("date"));
+			gapLog.setType(row.getString("type"));
 			gapLog.setStartTime(row.getDate("starttime"));
 			gapLog.setStartLatitude(row.getString("startlatitude"));
 			gapLog.setStartLongitude(row.getString("startlongitude"));
-			gapLog.setStartLocation(row.getString("startlocation"));
+			gapLog.setStartLocationId(row.getString("startlocationid"));
+			gapLog.setStartLocationName(row.getString("startlocationname"));
 			gapLog.setEndTime(row.getDate("endtime"));
 			gapLog.setEndLatitude(row.getString("endlatitude"));
 			gapLog.setEndLongitude(row.getString("endlongitude"));
-			gapLog.setEndLocation(row.getString("endlocation"));
+			gapLog.setEndLocationId(row.getString("endlocationid"));
+			gapLog.setEndLocationName(row.getString("endlocationname"));
 			gapLog.setLogTime(row.getDate("logtime"));
 	
 			/* now add gapLog object to the list */		
@@ -201,7 +207,7 @@ public class GapLogDao {
 		return gapLogList;
 	}
 
-	public void insertGapLog(String imei, String starttime, String startlatitude, String startlongitude, String startlocation, String endtime, String endlatitude, String endlongitude, String endlocation) 
+	public void insertGapLog(String imei, String type, String starttime, String startlatitude, String startlongitude, String startlocationid, String startlocationname, String endtime, String endlatitude, String endlongitude, String endlocationid, String endlocationname) 
 	{
 		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
 		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
@@ -221,7 +227,7 @@ public class GapLogDao {
 			e.printStackTrace();
 		}
 	
-		GapLog gapLog = new GapLog(imei, date, starttimeObj, startlatitude, startlongitude, startlocation, endtimeObj, endlatitude, endlongitude, endlocation, now.getTime());
+		GapLog gapLog = new GapLog(imei, date, type, starttimeObj, startlatitude, startlongitude, startlocationid, startlocationname, endtimeObj, endlatitude, endlongitude, endlocationid, endlocationname, now.getTime());
 		insert(gapLog);
 		System.out.println("Inserted GapLog with imei: "+imei);
 	}

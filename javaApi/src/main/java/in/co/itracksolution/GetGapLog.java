@@ -76,14 +76,17 @@ public class GetGapLog
 		for (GapLog gapLog : gapLogList)
 		{
 			System.out.print("imei: "+gapLog.getImei()+" ");
+			System.out.print("type: "+gapLog.getType()+" ");
 			System.out.print("start time: "+sdf.format(gapLog.getStartTime())+" ");
 			System.out.print("start latitude: "+gapLog.getStartLatitude()+" ");
 			System.out.print("start longitude: "+gapLog.getStartLongitude()+" ");
-			System.out.print("start location: "+gapLog.getStartLocation()+" ");
+			System.out.print("start location id: "+gapLog.getStartLocationId()+" ");
+			System.out.print("start location name: "+gapLog.getStartLocationName()+" ");
 			System.out.print("end time: "+sdf.format(gapLog.getEndTime())+" ");
 			System.out.print("end latitude: "+gapLog.getEndLatitude()+" ");
 			System.out.print("end longitude: "+gapLog.getEndLongitude()+" ");
-			System.out.print("end location: "+gapLog.getEndLocation()+" ");
+			System.out.print("end location id: "+gapLog.getEndLocationId()+" ");
+			System.out.print("end location name: "+gapLog.getEndLocationName()+" ");
 			System.out.print("logTime: "+sdf.format(gapLog.getLogTime())+" ");
 			System.out.println();
 		}

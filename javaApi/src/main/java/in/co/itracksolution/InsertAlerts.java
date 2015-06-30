@@ -59,6 +59,7 @@ public class InsertAlerts {
 	public static void main(String[] args) 
 	{
 		String imei = "123456";
+		String type = "nogps";
 		String dtime = "2015-06-29 12:17:18";
 		String stime = "2015-06-29 12:17:38";
 		String starttime = "2015-06-29 12:27:18";
@@ -99,11 +100,11 @@ public class InsertAlerts {
 		//DistanceLogDao distanceLogDao = new DistanceLogDao(st.conn.getSession());
 		//distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
 
-		NightLogDao nightLogDao = new NightLogDao(st.conn.getSession());
-		nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
+		//NightLogDao nightLogDao = new NightLogDao(st.conn.getSession());
+		//nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
 
-		//GapLogDao gapLogDao = new GapLogDao(st.conn.getSession());
-		//gapLogDao.insertGapLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation);
+		GapLogDao gapLogDao = new GapLogDao(st.conn.getSession());
+		gapLogDao.insertGapLog(imei, type, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname);
 
 		//TravelLogDao travelLogDao = new TravelLogDao(st.conn.getSession());
 		//travelLogDao.insertTravelLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
