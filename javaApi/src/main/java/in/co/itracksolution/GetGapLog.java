@@ -1,8 +1,8 @@
 package in.co.itracksolution;
 
 import in.co.itracksolution.db.CassandraConn;
-import in.co.itracksolution.dao.SpeedAlertDao;
-import in.co.itracksolution.model.SpeedAlert;
+import in.co.itracksolution.dao.GapLogDao;
+import in.co.itracksolution.model.GapLog;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,12 +18,12 @@ import java.text.SimpleDateFormat;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.ResultSet;
 
-public class GetSpeedAlert 
+public class GetGapLog 
 {
 
 	CassandraConn conn;
 	
-	public GetSpeedAlert()
+	public GetGapLog()
 	{
 		String propFileName = "config.properties";
 		Properties prop = new Properties();
@@ -45,7 +45,7 @@ public class GetSpeedAlert
 		}
 	}
 	
-	public void deleteSpeedAlert()
+	public void deleteGapLog()
 	{
 		
 	}
@@ -63,29 +63,31 @@ public class GetSpeedAlert
 		TimeZone tz = TimeZone.getTimeZone("Asia/Kolkata");
 		sdf.setTimeZone(tz);	
 
-		GetSpeedAlert st = new GetSpeedAlert();
+		GetGapLog st = new GetGapLog();
 			
-		SpeedAlertDao dao = new SpeedAlertDao(st.conn.getSession());
+		GapLogDao dao = new GapLogDao(st.conn.getSession());
 		
 		String imei = "123456"; //Make sure this imei exists
-		String startDateTime = "2015-06-29 12:17:00";
-		String endDateTime = "2015-06-29 20:18:00";
+		String startDateTime = "2015-06-29 10:00:00";
+		String endDateTime = "2015-06-29 16:00:00";
 		Boolean orderAsc = false;	// true for ascending , otherwise descending (default) 
-		ArrayList<SpeedAlert> speedAlertList = dao.getSpeedAlertByDateTime(imei, startDateTime, endDateTime, orderAsc);
+		ArrayList<GapLog> gapLogList = dao.getGapLogByDateTime(imei, startDateTime, endDateTime, orderAsc);
 
-		for (SpeedAlert speedAlert : speedAlertList)
+		for (GapLog gapLog : gapLogList)
 		{
-			System.out.print("imei: "+speedAlert.getImei()+" ");
-			System.out.print("device time: "+sdf.format(speedAlert.getDTime())+" ");
-			System.out.print("server time: "+sdf.format(speedAlert.getSTime())+" ");
-			System.out.print("speed: "+speedAlert.getSpeed()+" ");
-			System.out.print("location id: "+speedAlert.getLocationId()+" ");
-			System.out.print("location name: "+speedAlert.getLocationName()+" ");
-			System.out.print("latitude: "+speedAlert.getLatitude()+" ");
-			System.out.print("longitude: "+speedAlert.getLongitude()+" ");
-			System.out.print("roadId: "+speedAlert.getRoadId()+" ");
-			System.out.print("roadName: "+speedAlert.getRoadName()+" ");
-			System.out.print("logTime: "+sdf.format(speedAlert.getLogTime())+" ");
+			System.out.print("imei: "+gapLog.getImei()+" ");
+			System.out.print("type: "+gapLog.getType()+" ");
+			System.out.print("start time: "+sdf.format(gapLog.getStartTime())+" ");
+			System.out.print("start latitude: "+gapLog.getStartLatitude()+" ");
+			System.out.print("start longitude: "+gapLog.getStartLongitude()+" ");
+			System.out.print("start location id: "+gapLog.getStartLocationId()+" ");
+			System.out.print("start location name: "+gapLog.getStartLocationName()+" ");
+			System.out.print("end time: "+sdf.format(gapLog.getEndTime())+" ");
+			System.out.print("end latitude: "+gapLog.getEndLatitude()+" ");
+			System.out.print("end longitude: "+gapLog.getEndLongitude()+" ");
+			System.out.print("end location id: "+gapLog.getEndLocationId()+" ");
+			System.out.print("end location name: "+gapLog.getEndLocationName()+" ");
+			System.out.print("logTime: "+sdf.format(gapLog.getLogTime())+" ");
 			System.out.println();
 		}
 

@@ -1,8 +1,8 @@
 package in.co.itracksolution;
 
 import in.co.itracksolution.db.CassandraConn;
-import in.co.itracksolution.dao.SpeedAlertDao;
-import in.co.itracksolution.model.SpeedAlert;
+import in.co.itracksolution.dao.DistanceLogDao;
+import in.co.itracksolution.model.DistanceLog;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,12 +18,12 @@ import java.text.SimpleDateFormat;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.ResultSet;
 
-public class GetSpeedAlert 
+public class GetDistanceLog 
 {
 
 	CassandraConn conn;
 	
-	public GetSpeedAlert()
+	public GetDistanceLog()
 	{
 		String propFileName = "config.properties";
 		Properties prop = new Properties();
@@ -45,7 +45,7 @@ public class GetSpeedAlert
 		}
 	}
 	
-	public void deleteSpeedAlert()
+	public void deleteDistanceLog()
 	{
 		
 	}
@@ -63,29 +63,25 @@ public class GetSpeedAlert
 		TimeZone tz = TimeZone.getTimeZone("Asia/Kolkata");
 		sdf.setTimeZone(tz);	
 
-		GetSpeedAlert st = new GetSpeedAlert();
+		GetDistanceLog st = new GetDistanceLog();
 			
-		SpeedAlertDao dao = new SpeedAlertDao(st.conn.getSession());
+		DistanceLogDao dao = new DistanceLogDao(st.conn.getSession());
 		
 		String imei = "123456"; //Make sure this imei exists
-		String startDateTime = "2015-06-29 12:17:00";
-		String endDateTime = "2015-06-29 20:18:00";
+		String startDateTime = "2015-06-29 10:00:00";
+		String endDateTime = "2015-06-29 16:00:00";
 		Boolean orderAsc = false;	// true for ascending , otherwise descending (default) 
-		ArrayList<SpeedAlert> speedAlertList = dao.getSpeedAlertByDateTime(imei, startDateTime, endDateTime, orderAsc);
+		ArrayList<DistanceLog> distanceLogList = dao.getDistanceLogByDateTime(imei, startDateTime, endDateTime, orderAsc);
 
-		for (SpeedAlert speedAlert : speedAlertList)
+		for (DistanceLog distanceLog : distanceLogList)
 		{
-			System.out.print("imei: "+speedAlert.getImei()+" ");
-			System.out.print("device time: "+sdf.format(speedAlert.getDTime())+" ");
-			System.out.print("server time: "+sdf.format(speedAlert.getSTime())+" ");
-			System.out.print("speed: "+speedAlert.getSpeed()+" ");
-			System.out.print("location id: "+speedAlert.getLocationId()+" ");
-			System.out.print("location name: "+speedAlert.getLocationName()+" ");
-			System.out.print("latitude: "+speedAlert.getLatitude()+" ");
-			System.out.print("longitude: "+speedAlert.getLongitude()+" ");
-			System.out.print("roadId: "+speedAlert.getRoadId()+" ");
-			System.out.print("roadName: "+speedAlert.getRoadName()+" ");
-			System.out.print("logTime: "+sdf.format(speedAlert.getLogTime())+" ");
+			System.out.print("imei: "+distanceLog.getImei()+" ");
+			System.out.print("device time: "+sdf.format(distanceLog.getStartTime())+" ");
+			System.out.print("server time: "+sdf.format(distanceLog.getEndTime())+" ");
+			System.out.print("avg speed: "+distanceLog.getAvgSpeed()+" ");
+			System.out.print("distance: "+distanceLog.getDistance()+" ");
+			System.out.print("max speed: "+distanceLog.getMaxSpeed()+" ");
+			System.out.print("logTime: "+sdf.format(distanceLog.getLogTime())+" ");
 			System.out.println();
 		}
 

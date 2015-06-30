@@ -7,7 +7,7 @@ public class DistanceLog {
   	private float avgSpeed, distance, maxSpeed;
 	private Date startTime, endTime, logTime;
 	
-	public static final String TABLE_NAME = "speedlog";
+	public static final String TABLE_NAME = "distancelog";
 	
 	public DistanceLog()
 	{
