@@ -23,7 +23,7 @@
 				<br>
 				<table border=0 cellspacing=0 cellpadding=0 class='module_left_menu' align='center'>
 					";
-												
+					/*							
 					$query="SELECT * from polyline where user_account_id='$common_id1' AND status='1'";
 					//echo "query=".$query."<br>";
 					$result=mysql_query($query,$DbConnection);
@@ -34,7 +34,7 @@
 						{									
 							$polyline_id=$row->polyline_id;
 							$polyline_name=$row->polyline_name;
-						echo"<tr>
+                                                        echo"<tr>
 								<td>
 									&nbsp<INPUT TYPE='radio' name='polyline_id' VALUE='$polyline_id'>
 									<font color='blue' size='2'>".$polyline_name."&nbsp;&nbsp;&nbsp;</font>"."												
@@ -45,7 +45,26 @@
 					else
 					{
 						echo"<font color='blue' size='2'>NO POLYLINE/ROUTE FOUND IN THIS ACCOUNT</font>";
-					}
+					}*/
+                                        $row_data=getDetailAllPolyline($common_id1,$DbConnection);
+                                        if(count($row_data)>0)
+                                        {
+                                            foreach($row_data as $row)
+                                            {
+                                                $polyline_id=$row['polyline_id'];
+                                                $polyline_name=$row['polyline_name'];
+                                                 echo"<tr>
+                                                        <td>
+                                                                &nbsp<INPUT TYPE='radio' name='polyline_id' VALUE='$polyline_id'>
+                                                                <font color='blue' size='2'>".$polyline_name."&nbsp;&nbsp;&nbsp;</font>"."												
+                                                        </td>																														
+                                                </tr>";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            echo"<font color='blue' size='2'>NO POLYLINE/ROUTE FOUND IN THIS ACCOUNT</font>";
+                                        }
 						echo"</td>";
 					echo"</tr>";
 			echo'</table>
@@ -125,10 +144,11 @@
 								$vehicleid[$vehicle_cnt]=$vehicle_id;
 								$vehicle_cnt++;
 								$td_cnt++;
-								$query="SELECT vehicle_id FROM polyline_assignment WHERE vehicle_id='$vehicle_id' AND status='1'";
+								/*$query="SELECT vehicle_id FROM polyline_assignment WHERE vehicle_id='$vehicle_id' AND status='1'";
 								//echo "query=".$query;
 								$result=mysql_query($query,$DbConnection);
-								$num_rows=mysql_num_rows($result);
+								$num_rows=mysql_num_rows($result);*/
+                                                                $num_rows=PolylineAssignVehilce($vehicle_id,$DbConnection);
 								if($num_rows==0)
 								{							
 									common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name,$AccountNode->data->AccountGroupName);

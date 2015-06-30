@@ -12,7 +12,7 @@ function read_expected_time($account_id, $shift) {
     global $expected_plant_outtime;
 
     if ($DEBUG_OFFLINE) {
-        //$dir="D:\\test_app/gps_report/".$account_id."/master";
+        $dir="C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master";
     }else if($DEBUG_ONLINE){
         $dir = "/var/www/html/vts/test/src/php/gps_report/" . $account_id . "/master";
     } else {
@@ -111,7 +111,7 @@ function read_transporter($account_id, $shift) {
     global $vehicle_m;
 
     if ($DEBUG_OFFLINE) {
-        //$dir="D:\\test_app/gps_report/".$account_id."/master";
+        $dir="C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master";
     } else if($DEBUG_ONLINE) { 
         $dir = "/var/www/html/vts/test/src/php/gps_report/" . $account_id . "/master";
     } else {

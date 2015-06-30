@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include_once('Hierarchy.php');
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
@@ -11,16 +11,19 @@ echo "deassign_substation_plant##";
 $DEBUG=0;
 //$common_id1 = $account_id;	
 $common_id1 = $_POST['local_account_id'];
-
-	$query="SELECT * FROM plant_user_assignment WHERE account_id='$common_id1' AND status=1";
-	//echo $query;
+/*
+  $query="SELECT * FROM plant_user_assignment WHERE account_id='$common_id1' AND status=1";
+  //echo $query;
   if($DEBUG==1){echo "query=".$query;}
   
 	$result=mysql_query($query,$DbConnection);
 	$numrows = mysql_num_rows($result);
 	
 	if($numrows > 0)
-	{
+	{*/
+   $numdata=getDetailAllPUAD($common_id1,$DbConnection);
+   if(count($numdata)>0)
+   {
 	echo'<br>
 		<input type="hidden" id="common_id">
 		<input type="hidden" id="action_name" value="plant">
@@ -50,17 +53,23 @@ $common_id1 = $_POST['local_account_id'];
 					</tr>";
 					$final_plant_list=array();
 					$final_plant_name_list=array();
-					while($row=mysql_fetch_object($result))
+					//while($row=mysql_fetch_object($result))
+                                        foreach($numdata as $row)
 					{
 						//echo $row->customer_no;
-						$final_plant_list[]=$row->plant_customer_no;
+						/*$final_plant_list[]=$row->plant_customer_no;
 						$final_plant_sno[]=$row->sno;
-						$plantcust=$row->plant_customer_no;
-						$query_plant = "SELECT station_name FROM station WHERE type=1 AND user_account_id='$account_id' AND status=1 AND customer_no='$plantcust'";
+						$plantcust=$row->plant_customer_no;*/
+                                                $final_plant_list[]=$row['plant_customer_no'];
+						$final_plant_sno[]=$row['sno'];
+						$plantcust=$row['plant_customer_no'];
+						/*$query_plant = "SELECT station_name FROM station WHERE type=1 AND user_account_id='$account_id' AND status=1 AND customer_no='$plantcust'";
 						//echo $query_plant;
 						$result_query = mysql_query($query_plant,$DbConnection);
 						$row_plant=mysql_fetch_row($result_query);
 						$final_plant_name_list[]=$row_plant[0];
+                                                */
+                                                $final_plant_name_list[]=getStationAr($account_id,$plantcust,$DbConnection);
 						echo $row_plant->station_name;
 					}
 					$td_cnt=1;

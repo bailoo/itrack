@@ -5,9 +5,9 @@ set_time_limit(360000);
 date_default_timezone_set("Asia/Kolkata");
 //### DEBUG BOOLEAN
 global $DEBUG_OFFLINE;
-$DEBUG_OFFLINE = false;
+$DEBUG_OFFLINE = true;
 $DEBUG_ONLINE = false;
-$CREATE_MASTER = false;
+$CREATE_MASTER = true;
 $MAIN_DEBUG = false;
 //#################
 
@@ -140,8 +140,8 @@ include_once("get_route_db_detail.php");
 //$pdate = date('Y-m-d', strtotime($date .' -1 day'));
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-03-23');
-    $date = date('2015-03-24');
+    $pdate = date('2015-06-25');
+    $date = date('2015-06-26');
 } else {
     $date = date('Y-m-d');
 }
@@ -178,8 +178,8 @@ $mor_run_start_time = $date . " 10:00:00";
 //$mor_run_start_time = $date." 06:00:00";
 
 if ($MAIN_DEBUG) {
-    $shift_ev1 = false;
-    $shift_ev2 = true;
+    $shift_ev1 = true;
+    $shift_ev2 = false;
     $shift_mor = false;
 } else {
     $shift_ev1 = false;
@@ -202,7 +202,7 @@ $cdatetime1 = strtotime(date('00:00:00'));
 $cdatetime2 = strtotime(date('H:i:s'));
 $difftime = $cdatetime2 - $cdatetime1;
 //$difftime = 7200;	//EVENING COMMENT IT LATER
-//$difftime = 36000;	//MORNING
+$difftime = 36000;	//MORNING
 
 if ($MAIN_DEBUG) {
     $time1 = $pdate . " 12:00:00";
@@ -466,33 +466,35 @@ if ($shift_mor) {
         //read_all_routes($account_id,"ZPMM");
         $Last_Time = $last_time_processed;
     } else {
-        //echo "\nElse:UpdateLastTime";
+        echo "\nElse:UpdateLastTime";
         $Last_Time = $shift_mor_date1;
         //$Last_Time = "2013-10-07 19:00:00";
     }
 
     if (!file_exists($morning_sent_file_path)) {
-        //echo "\nCreateFile:Morning";
+        echo "\nCreateFile:Morning";
         $morning_last_processed_time = "";
 
         get_route_db_detail("ZPMM");
-        //echo "\nSizeRoute=".sizeof($route_name_rdb);
+        echo "\nSizeRoute=".sizeof($route_name_rdb);
         get_customer_db_detail($account_id, "ZPMM", $route_type);
-        //echo "\nSizeAllRoutes=".sizeof($all_routes);
+        echo "\nSizeAllRoutes=".sizeof($all_routes);
         $objPHPExcel_1 = null;
         create_hrly_excel($morning_sent_file_path, "ZPMM", $route_type, $mor_run_start_time);
-        //echo "\nAfter CreateHrly";
+        echo "\nAfter CreateHrly";
         create_last_halt_time($morning_last_halt_time_path);
-        //echo "\nAfter LastHalt";
+        echo "\nAfter LastHalt";
         $objPHPExcel_1 = null;
         create_secondary_vehicles($morning_sv_file_path, "ZPMM", $route_type);
     }
 
+    echo "\nAfter ReadSentFile2";
     $objPHPExcel_1 = null;
     read_sent_file($morning_sent_file_path);
+    echo "\nAfter ReadSentFile2";
     $objPHPExcel_1 = null;
     read_secondary_vehicles($morning_sv_file_path);
-    //echo "\nAfter ReadSentFile";
+    echo "\nAfter ReadSentFile3";
     if (!$CREATE_MASTER) {
         get_halt_xml_data($Last_Time, $current_time, $morning_sent_file_path, $shift_mor_date1, $shift_mor_date2, "ZPMM", $difftime);
         //echo "\nAfter Data Process";

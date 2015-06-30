@@ -32,7 +32,7 @@
 		<style type="text/css">
 		@import url("http://www.google.com/uds/css/gsearch.css");
 		@import url("http://www.google.com/uds/solutions/localsearch/gmlocalsearch.css");
-		}
+	
 		</style>
 		<?php
 		include_once("main_google_key.php");
@@ -103,7 +103,9 @@
 				newwindow_reporttitle("Halt Report",$param1,$param2);
 		echo "</center>";
 		echo'<div style="overflow: auto;height: 450px;" align="center">';  
-		$alt ="-";		
+		$alt ="-";
+                //error_reporting(-1);
+//ini_set('display_errors', 'On');
 	for($i=0;$i<(sizeof($imei)-1);$i++)
 	{				
 		/*echo "<br>a".$i."=".$vname[$i];
@@ -207,7 +209,7 @@
 		$alt1 = "-";		 
 		$landmark="";
 		//echo "before_landmark=".$landmark."<br>".$lt1.",".$lng1."<br>";
-		get_landmark($lt1,$lng1,&$landmark);    // CALL LANDMARK FUNCTION
+		get_landmark($lt1,$lng1,$landmark);    // CALL LANDMARK FUNCTION
 		//echo "<br>after_landmark=".$landmark."<br>";
 		$place = $landmark;
 

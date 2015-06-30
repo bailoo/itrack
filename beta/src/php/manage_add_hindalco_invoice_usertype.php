@@ -11,25 +11,29 @@
 	
 	//*****************************************Getting Admin Account ID and Current UserID*******************************************//	
 	global $parent_admin_id;
-	$query_account_admin_id="SELECT account_admin_id FROM account_detail WHERE account_id='$account_id'";
+	/*$query_account_admin_id="SELECT account_admin_id FROM account_detail WHERE account_id='$account_id'";
 	//echo $query_account_admin_id;
 	$result_account_admin_id = mysql_query($query_account_admin_id, $DbConnection);
-	$row_account_admin_id =mysql_fetch_object($result_account_admin_id);
-	
+	$row_account_admin_id =mysql_fetch_object($result_account_admin_id);*/
+        $row_account_admin_id=getAcccountAdminIdAdminId($account_id,$DbConnection);
+        $accountadminid=$row_account_admin_id[0];
+	/*
 	$query_admin_id="SELECT account_id FROM account_detail WHERE admin_id='$row_account_admin_id->account_admin_id'";
 	//echo $query_admin_id;
 	$result_admin_id = mysql_query($query_admin_id, $DbConnection);
 	$row_admin_id =mysql_fetch_object($result_admin_id);
 	$parent_admin_id=$row_admin_id->account_id;
-	
-	
+	*/
+	$parent_admin_id=$getAccountIdByAdminId($accountadminid,$DbConnection);
 	
 	global $user_name;
-	$query="SELECT user_id from account where account_id='$account_id'";
+	/*$query="SELECT user_id from account where account_id='$account_id'";
 	$result=mysql_query($query,$DbConnection);
 	$row=mysql_fetch_object($result);
-	$user_name=$row->user_id;
-	
+	$user_name=$row->user_id;*/
+	$row=uidgidAccount($account_id,$DbConnection);
+        $user_name=$row[0];
+        
 	$vehicle_list=array();
 	get_user_vehicle($root,$account_id);
 	//print_r($vehicle_list);
@@ -66,17 +70,18 @@
 	if($hindalco_account){
 		foreach($hindalco_account as $ha)
 		{
-			
+			/*
 			$query_product_type = "SELECT name FROM product_type WHERE account_id='$ha' AND status=1";
-				$result_query = mysql_query($query_product_type,$DbConnection);
-				while($row=mysql_fetch_object($result_query))
-				{		
-					$final_product_type_list[]=$row->name;
-					
-				}
+                        $result_query = mysql_query($query_product_type,$DbConnection);
+                        while($row=mysql_fetch_object($result_query))
+                        {		
+                                $final_product_type_list[]=$row->name;
+
+                        }*/
+                        $final_product_type_list=getProductNameProductType($ha,$DbConnection);
 				
 			if($ha!=$account_id)
-			{	$query_v1 = "SELECT vehicle_id FROM vehicle_grouping WHERE account_id='$ha' AND status=1";
+			{	/*$query_v1 = "SELECT vehicle_id FROM vehicle_grouping WHERE account_id='$ha' AND status=1";
 				//echo $query_v1."<br>";
 				$result_query1 = mysql_query($query_v1,$DbConnection);
 				while($row1=mysql_fetch_object($result_query1))
@@ -84,7 +89,8 @@
 				
 					$final_other_vehicle_list1[]=$row1->vehicle_id;
 					
-				}
+				}*/
+                            $final_other_vehicle_list1=getVehicleIdByAccountId($ha,$DbConnection);
 			}
 		}
 		
@@ -93,11 +99,13 @@
 	
 	if(sizeof($final_other_vehicle_list1)>0){
 		foreach($final_other_vehicle_list1 as $fl){
-			$query_v1 = "SELECT vehicle_name FROM vehicle WHERE vehicle_id='$fl' AND status=1";
+			/*$query_v1 = "SELECT vehicle_name FROM vehicle WHERE vehicle_id='$fl' AND status=1";
 			//echo $query_v1."<br>";
 			$result_query2 = mysql_query($query_v1,$DbConnection);
 			$row_all_vehicle =mysql_fetch_object($result_query2);
 			$final_other_vehicle_list[]=$row_all_vehicle->vehicle_name;
+                        */
+                        $final_other_vehicle_list[]=getVehicleNameByVid($fl,1,$DbConnection);
 		}
 		
 	}
@@ -232,26 +240,31 @@
 		global $parent_account_ids;	 
 		global $acc_size;			
 			
-		$query = "SELECT account_admin_id FROM account_detail WHERE account_id='$account_id_local1'";	
+		/*$query = "SELECT account_admin_id FROM account_detail WHERE account_id='$account_id_local1'";	
 		//echo $query;
 		$result=mysql_query($query,$DbConnection);
 		$row=mysql_fetch_row($result);
-		$admin_id=$row[0];
-			
-		$query1 = "SELECT account_id FROM account_detail WHERE admin_id='$admin_id'";
+		$admin_id=$row[0];*/
+		$row=  getAcccountAdminIdAdminId($account_id_local1,$DbConnection);
+                $admin_id=$row[0];
+                
+		/*$query1 = "SELECT account_id FROM account_detail WHERE admin_id='$admin_id'";
 		//echo "<br>".$query;	
 		$result=mysql_query($query1,$DbConnection);
 		$row1=mysql_fetch_row($result);
 		$function_account_id=$row1[0];
-		//echo "account_id=".$function_account_id.'<br>';
-			
+		//echo "account_id=".$function_account_id.'<br>';*/
+		$row1=getAccountIdByAdminId($admin_id,$DbConnection);
+                $function_account_id=$row1;
+                /*
 		$queryType="SELECT user_type from account WHERE account_id='$function_account_id'";
 		//echo "<br>".$queryType;
 		$resultType=mysql_query($queryType,$DbConnection);
 		$rowType=mysql_fetch_row($resultType);
 		$function_account_type=$rowType[0];
-		//echo "userType=".$function_account_type."<br>";
-		
+		//echo "userType=".$function_account_type."<br>";*/
+		$utype=getUserTypeAccount($function_account_id,$DbConnection);
+                $function_account_type=$utype;
 		if($function_account_type!='hindalco_invoice')
 		{
 			$parent_account_ids[]=$function_account_id;
