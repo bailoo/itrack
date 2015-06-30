@@ -3,8 +3,20 @@ package in.co.itracksolution;
 import in.co.itracksolution.db.CassandraConn;
 import in.co.itracksolution.model.SpeedAlert;
 import in.co.itracksolution.model.TurnAlert;
+import in.co.itracksolution.model.XroadLog;
+import in.co.itracksolution.model.DistanceLog;
+import in.co.itracksolution.model.NightLog;
+import in.co.itracksolution.model.GapLog;
+import in.co.itracksolution.model.TravelLog;
+import in.co.itracksolution.model.XroadLog;
 import in.co.itracksolution.dao.SpeedAlertDao;
 import in.co.itracksolution.dao.TurnAlertDao;
+import in.co.itracksolution.dao.XroadLogDao;
+import in.co.itracksolution.dao.DistanceLogDao;
+import in.co.itracksolution.dao.NightLogDao;
+import in.co.itracksolution.dao.GapLogDao;
+import in.co.itracksolution.dao.TravelLogDao;
+import in.co.itracksolution.dao.XroadLogDao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,6 +27,8 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.Calendar;
 import java.util.Properties;
+
+import com.datastax.driver.core.Session;
 
 public class InsertAlerts {
 	CassandraConn conn;
@@ -44,90 +58,73 @@ public class InsertAlerts {
 			conn.close();
 	}
 
-	public void insertSpeedAlert(String imei, String dtime, String stime, float speed, String location, String latitude, String longitude, String roadId ) 
+	public static void main(String[] args) 
 	{
-		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
-		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
-		//Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
-		//now.setTimeZone(IST);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
+		String imei = "123456";
+		String type = "nogps";
+		/*String dtime = "2015-06-30 12:17:18";
+		String stime = "2015-06-30 12:17:38";
+		String starttime = "2015-06-30 12:27:18";
+		String endtime = "2015-06-30 15:37:38";*/
+		int duration = (int)84;
+		int haltduration = (int)34;
+		float speed = (float)30.1;
+		float avgspeed = (float)44.1;
+		float maxspeed = (float)75.1;
+		float distance = (float)369.4;
+		float angle = (float)35.3;
+		String locationId = "98765";
+		String locationName = "Dwarka Mor2";
+		String latitude = "21.4568N";
+		String longitude = "82.22434E";
+		String startlocationid = "54321";
+		String startlocationname = "Dwarka Mor2";
+		String startlatitude = "20.4668N";
+		String startlongitude = "85.23234E";
+		String endlocationid = "6543";
+		String endlocationname = "C R Park2";
+		String endlatitude = "22.4568N";
+		String endlongitude = "79.88434E";
+		String roadId = "4321";
+		String roadName = "Shahjahan Road2";
 		
-		String date = dtime.substring(0,10);
-		Date dtimeObj = new Date();	
-		Date stimeObj = new Date();	
-		try { 
-			dtimeObj = sdf.parse(dtime);
-			stimeObj = sdf.parse(stime);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	
-		SpeedAlert speedAlert = new SpeedAlert(imei, date, dtimeObj, stimeObj, speed, location, latitude, longitude, roadId, now.getTime());
-		SpeedAlertDao ops = new SpeedAlertDao(conn.getSession());
-		ops.insert(speedAlert);
-		System.out.println("Inserted SpeedAlert with imei: "+imei);
-	}
-	
-	public void insertTurnAlert(String imei, String dtime, String stime, float speed, float angle, String location, String latitude, String longitude, String roadId ) 
-	{
-		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
-		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
-		//Calendar now = Calendar.getInstance(IST); //gets a calendar using time zone and locale
-		//now.setTimeZone(IST);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
+		InsertAlerts st = new InsertAlerts();
+		Session session = st.conn.getSession();
+
 		
-		String date = dtime.substring(0,10);
-		Date dtimeObj = new Date();	
-		Date stimeObj = new Date();	
-		try { 
-			dtimeObj = sdf.parse(dtime);
-			stimeObj = sdf.parse(stime);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		for(int i=0;i<55;i++) {
+			String c = "";
+			if(i<10) { c+="0"+i;} else {c=Integer.toString(i);} 
+			String dtime = "2015-06-30 12:"+c+":18";
+			String stime = "2015-06-30 12:"+c+":38";
+			String starttime = "2015-06-30 12:"+c+":18";
+			String endtime = "2015-06-30 15:"+c+":38";
+			
+			SpeedAlertDao speedAlertDao = new SpeedAlertDao(session);
+			speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, locationId, locationName, latitude, longitude, roadId, roadName);
+			
+			TurnAlertDao turnAlertDao = new TurnAlertDao(session);
+			turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, locationId, locationName, latitude, longitude, roadId, roadName);
+			
+			XroadLogDao xroadLogDao = new XroadLogDao(session);
+			xroadLogDao.insertXroadLog(imei, dtime, stime, roadId, roadName, haltduration, speed, locationId, locationName, latitude, longitude);
+			
+			DistanceLogDao distanceLogDao = new DistanceLogDao(session);
+			distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
 	
-		TurnAlert turnAlert = new TurnAlert(imei, date, dtimeObj, stimeObj, speed, angle, location, latitude, longitude, roadId, now.getTime());
-		TurnAlertDao ops = new TurnAlertDao(conn.getSession());
-		ops.insert(turnAlert);
-		System.out.println("Inserted TurnAlert with imei: "+imei);
-	}
+			NightLogDao nightLogDao = new NightLogDao(session);
+			nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
 	
+			GapLogDao gapLogDao = new GapLogDao(session);
+			gapLogDao.insertGapLog(imei, type, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname);
 	
-	public static void main(String[] args)
-	{
-		for(int i=1;i<58;i++) {
-			String min = "";
-			if(i<10){ 
-				min = "0"+Integer.valueOf(i).toString();
-			}else {
-				min = Integer.valueOf(i).toString();
-			}
-			
-			String imei = "123456";
-			//String dtime = "2015-06-15 20:17:21";
-			//String stime = "2015-06-15 20:17:21";
-			
-			String dtime = "2015-06-15 00:"+min+":21";
-			String stime = "2015-06-15 20:"+min+":21";
-			
-			float speed = (float)20.1;
-			float angle = (float)60.3;
-			String location = "Chandni Chowk";
-			String latitude = "23.4568N";
-			String longitude = "79.22434E";
-			String roadId = "MG Road";
-			
-			InsertAlerts st = new InsertAlerts();
-	//		st.insertSpeedAlert(imei, dtime, stime, speed, location, latitude, longitude, roadId);
-			st.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
-			st.close();
-		
-			System.out.println("The End");
+			TravelLogDao travelLogDao = new TravelLogDao(session);
+			travelLogDao.insertTravelLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
 		}
+
+		st.close();
+	
+		System.out.println("The End");
 	}
 		
 	

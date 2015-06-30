@@ -68,8 +68,8 @@ public class GetTurnAlert
 		TurnAlertDao dao = new TurnAlertDao(st.conn.getSession());
 		
 		String imei = "123456"; //Make sure this imei exists
-		String startDateTime = "2015-06-15 00:00:00";
-		String endDateTime = "2015-06-15 21:18:00";
+		String startDateTime = "2015-06-30 10:17:00";
+		String endDateTime = "2015-06-30 20:18:00";
 		Boolean orderAsc = false;	// true for ascending , otherwise descending (default) 
 		ArrayList<TurnAlert> turnAlertList = dao.getTurnAlertByDateTime(imei, startDateTime, endDateTime, orderAsc);
 
@@ -80,10 +80,12 @@ public class GetTurnAlert
 			System.out.print("server time: "+sdf.format(turnAlert.getSTime())+" ");
 			System.out.print("speed: "+turnAlert.getSpeed()+" ");
 			System.out.print("angle: "+turnAlert.getAngle()+" ");
-			System.out.print("location: "+turnAlert.getLocation()+" ");
+			System.out.print("location id: "+turnAlert.getLocationId()+" ");
+			System.out.print("location name: "+turnAlert.getLocationName()+" ");
 			System.out.print("latitude: "+turnAlert.getLatitude()+" ");
 			System.out.print("longitude: "+turnAlert.getLongitude()+" ");
 			System.out.print("roadId: "+turnAlert.getRoadId()+" ");
+			System.out.print("roadName: "+turnAlert.getRoadName()+" ");
 			System.out.print("logTime: "+sdf.format(turnAlert.getLogTime())+" ");
 			System.out.println();
 		}

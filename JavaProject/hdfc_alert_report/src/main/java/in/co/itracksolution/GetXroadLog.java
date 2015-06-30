@@ -1,8 +1,8 @@
 package in.co.itracksolution;
 
 import in.co.itracksolution.db.CassandraConn;
-import in.co.itracksolution.dao.SpeedAlertDao;
-import in.co.itracksolution.model.SpeedAlert;
+import in.co.itracksolution.dao.XroadLogDao;
+import in.co.itracksolution.model.XroadLog;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,12 +18,12 @@ import java.text.SimpleDateFormat;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.ResultSet;
 
-public class GetSpeedAlert 
+public class GetXroadLog 
 {
 
 	CassandraConn conn;
 	
-	public GetSpeedAlert()
+	public GetXroadLog()
 	{
 		String propFileName = "config.properties";
 		Properties prop = new Properties();
@@ -45,7 +45,7 @@ public class GetSpeedAlert
 		}
 	}
 	
-	public void deleteSpeedAlert()
+	public void deleteXroadLog()
 	{
 		
 	}
@@ -63,29 +63,30 @@ public class GetSpeedAlert
 		TimeZone tz = TimeZone.getTimeZone("Asia/Kolkata");
 		sdf.setTimeZone(tz);	
 
-		GetSpeedAlert st = new GetSpeedAlert();
+		GetXroadLog st = new GetXroadLog();
 			
-		SpeedAlertDao dao = new SpeedAlertDao(st.conn.getSession());
+		XroadLogDao dao = new XroadLogDao(st.conn.getSession());
 		
 		String imei = "123456"; //Make sure this imei exists
-		String startDateTime = "2015-06-30 12:17:00";
-		String endDateTime = "2015-06-30 20:18:00";
+		String startDateTime = "2015-06-30 10:17:00";
+		String endDateTime = "2015-06-30 16:18:00";
 		Boolean orderAsc = false;	// true for ascending , otherwise descending (default) 
-		ArrayList<SpeedAlert> speedAlertList = dao.getSpeedAlertByDateTime(imei, startDateTime, endDateTime, orderAsc);
+		ArrayList<XroadLog> xroadLogList = dao.getXroadLogByDateTime(imei, startDateTime, endDateTime, orderAsc);
 
-		for (SpeedAlert speedAlert : speedAlertList)
+		for (XroadLog xroadLog : xroadLogList)
 		{
-			System.out.print("imei: "+speedAlert.getImei()+" ");
-			System.out.print("device time: "+sdf.format(speedAlert.getDTime())+" ");
-			System.out.print("server time: "+sdf.format(speedAlert.getSTime())+" ");
-			System.out.print("speed: "+speedAlert.getSpeed()+" ");
-			System.out.print("location id: "+speedAlert.getLocationId()+" ");
-			System.out.print("location name: "+speedAlert.getLocationName()+" ");
-			System.out.print("latitude: "+speedAlert.getLatitude()+" ");
-			System.out.print("longitude: "+speedAlert.getLongitude()+" ");
-			System.out.print("roadId: "+speedAlert.getRoadId()+" ");
-			System.out.print("roadName: "+speedAlert.getRoadName()+" ");
-			System.out.print("logTime: "+sdf.format(speedAlert.getLogTime())+" ");
+			System.out.print("imei: "+xroadLog.getImei()+" ");
+			System.out.print("device time: "+sdf.format(xroadLog.getDTime())+" ");
+			System.out.print("server time: "+sdf.format(xroadLog.getSTime())+" ");
+			System.out.print("road id: "+xroadLog.getRoadId()+" ");
+			System.out.print("road name: "+xroadLog.getRoadName()+" ");
+			System.out.print("halt duration: "+xroadLog.getHaltDuration()+" ");
+			System.out.print("speed: "+xroadLog.getSpeed()+" ");
+			System.out.print("location id: "+xroadLog.getLocationId()+" ");
+			System.out.print("location name: "+xroadLog.getLocationName()+" ");
+			System.out.print("latitude: "+xroadLog.getLatitude()+" ");
+			System.out.print("longitude: "+xroadLog.getLongitude()+" ");
+			System.out.print("logTime: "+sdf.format(xroadLog.getLogTime())+" ");
 			System.out.println();
 		}
 
