@@ -6,7 +6,7 @@
         include('util_calculate_distance_js.php');			
 		echo"<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places'></script>";
 		echo'<script type="text/javascript" src="src/js/markerwithlabel.js"></script>';
-		include('googleMapApi.php');     
+		include('googleMapApi.php');   
 		
 		include('manage_js_css.php'); 
 		//echo $user_type;

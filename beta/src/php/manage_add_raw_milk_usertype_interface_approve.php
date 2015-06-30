@@ -3,11 +3,11 @@
 <script src="src/js/jquery-ui.js"></script>
 
 <input type="hidden" name="tnum"  id="tnum" value="0">
-<table  border="1" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse"   width="1290px" >
+<table  border="1" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse"   width="1390px" >
 <tr style="background-color:silver;">
 	<!--style="width:30px;font-size: 10px"-->
-	<td style="width:3%;font-size: 11px" >SL</td>
-	<td style="width:6.5%;font-size: 11px" >LR.No.</td>
+	<td style="width:3%;font-size: 11px">SL</td>
+	<td style="width:6.5%;font-size: 11px">LR.No.</td>
 	<td style="width:6.5%;font-size: 11px">Vehicle No.</td>	
 	<td style="width:6.5%;font-size: 11px">Transporter</td>
 	<td style="width:6.5%;font-size: 11px">Email</td>
@@ -25,19 +25,19 @@
 	<td style="width:6.5%;font-size: 11px" >Plant</td>
 	<td style="width:6.5%;font-size: 11px" >ChillingPlant</td>
 	<td style="width:6.5%;font-size: 11px">TankerType</td>
-	<!--<td style="width:6.5%;font-size: 11px" >Action</td> -->
+	<td style="width:6.5%;font-size: 11px" >Action</td> 
 </tr>
 
 <tr>
-	<td colspan="19">
-		<table width=1290px >
+	<td colspan="20">
+		<table width=1390px >
 			<tr>
 				<td><input type="text" name="num" id="num:0" value="0" style="width:30px;" readonly />
 				<input type="hidden" name="sno_id" id="sno_id:0" value=""  />
 				</td>
-				<td><input type="text" name="lrno" id="lrno:0" value="" style="width:70px;" placeholder="LRNO"  /></td>
+				<td><input type="text" name="lrno" id="lrno:0" value="" style="width:70px;" placeholder="LRNO" onkeyup="javascript:alphanumeric_ucase(this.value,this.id);" onblur="javascript:invoice_lorry_unique_pre(this.value,this.id);" /></td>
 				<!--<input type="text" name="vehno" id="vehno0" value="" style="width:80px;" placeholder="VEHICLENO"  autocomplete="off" class="ui-autocomplete-input" onkeydown="dk(this.id);" />-->
-				<td><input type="text" name="vehno" id="vehno:0" value="" style="width:70px;" placeholder="VEHICLENO" onclick="javascript:show_vehicle_list(this.id)" onfocus="javascript:show_vehicle_list(this.id)" readonly /></td>
+				<td><input type="text" name="vehno" id="vehno:0" value="" style="width:70px;" placeholder="VEHICLENO" onclick="javascript:show_vehicle_list(this.id)" onfocus="javascript:show_vehicle_list(this.id)"  onblur="javascript:invoice_lorry_unique(this.id,this.value);" readonly /></td>
 				<td>					
 					<select name="transporter" id="transporter:0" style="width:70px;">
 						<?php							
@@ -121,8 +121,8 @@
 		
 				<input type="hidden" name="docketflag" id="docketflag:0" value="1" style="width:70px;"  />	
 		
-				<input type="hidden" style="width:70px;"  id="addfield1" onclick="javascript:addfield();" value="ADD"  />
-				<!--<td><input type="button" style="width:70px;"  id="addfield1" onclick="javascript:addfield();" value="ADD"  /></td>-->
+				<!--<input type="hidden" style="width:70px;"  id="addfield1" onclick="javascript:addfield();" value="ADD"  />-->
+				<td><input type="button" style="width:70px;"  id="addfield1" onclick="javascript:addfield();" value="ADD"  /></td>
 				
 			</tr>
 		</table>
@@ -136,9 +136,9 @@
 
 <div id="readroot" name="readroot" style="display:none;">
 	<input name="num" id="num:" value="" style="width:30px;" readonly /><input type="hidden" name="sno_id" id="sno_id:" value=""  />
-	<input type="text" name="lrno" id="lrno:" value="" style="width:70px;" placeholder="LRNO" />
+	<input type="text" name="lrno" id="lrno:" value="" style="width:70px;" placeholder="LRNO" onkeyup="javascript:alphanumeric_ucase(this.value,this.id);" onblur="javascript:invoice_lorry_unique_pre(this.value,this.id);" />
 	<!--<input type="text" name="vehno" id="vehno" value="" style="width:80px;" placeholder="VEHICLENO"  autocomplete="off" class="ui-autocomplete-input" onkeydown="dk(this.id);" />-->
-	<input type="text" name="vehno" id="vehno:" value="" style="width:70px;" placeholder="VEHICLENO" onclick="javascript:show_vehicle_list(this.id)" onfocus="javascript:show_vehicle_list(this.id)" readonly />
+	<input type="text" name="vehno" id="vehno:" value="" style="width:70px;" placeholder="VEHICLENO" onclick="javascript:show_vehicle_list(this.id)" onfocus="javascript:show_vehicle_list(this.id)" onblur="javascript:invoice_lorry_unique(this.id,this.value);" readonly />
 	<select name="transporter" id="transporter:" style="width:70px;">
 		<?php							
 			echo $option_transporter;							
@@ -214,8 +214,19 @@
 </tr>
 </div>
 
-
-
+<?php
+	$final_lorry="";
+	if(count($final_lorry_list)>0)
+	{
+		foreach($final_lorry_list as $fl)
+		{
+			$final_lorry .=$fl.",";
+		}
+		$final_lorry = substr($final_lorry, 0, -1);
+		$final_lorry=str_replace(' ','%20',$final_lorry);
+	}
+	echo"<input type='hidden' name='final_lrno' id='final_lrno' value=$final_lorry  />";
+?>
 
 <input type="hidden" name="offset_lrno" id="offset_lrno"  />
 <input type="hidden" name="offset_vehno" id="offset_vehno"  />

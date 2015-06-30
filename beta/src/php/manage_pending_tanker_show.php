@@ -34,33 +34,52 @@
 	include_once("util_account_detail.php");	
 	
 	global $parent_admin_id;
+        /*
 	$query_account_admin_id="SELECT account_admin_id FROM account_detail WHERE account_id='$account_id'";
 	//echo $query_account_admin_id;
 	$result_account_admin_id = mysql_query($query_account_admin_id, $DbConnection);
 	$row_account_admin_id =mysql_fetch_object($result_account_admin_id);
-	
+        */
+        $aaid= getAccountAdminId($account_id,$DbConnection);
+	/*
 	$query_admin_id="SELECT account_id FROM account_detail WHERE admin_id='$row_account_admin_id->account_admin_id'";
 	//echo $query_admin_id;
 	$result_admin_id = mysql_query($query_admin_id, $DbConnection);
 	$row_admin_id =mysql_fetch_object($result_admin_id);
 	$parent_admin_id=$row_admin_id->account_id;
+        */
+        $parent_admin_id=getAccountIdByAdminId($aaid,$DbConnection);
 	
 	//echo $parent_admin_id;
 	$vehicle_list=array();
 	$vehicle_id_list=array();
-	$QueryALLVehicle="SELECT vehicle.vehicle_name , vehicle_assignment.device_imei_no ,vehicle.vehicle_id FROM vehicle,vehicle_grouping,vehicle_assignment WHERE vehicle_grouping.account_id=$parent_admin_id and vehicle_grouping.vehicle_id=vehicle.vehicle_id and vehicle_grouping.status=1 AND vehicle.status=1 AND vehicle_assignment.vehicle_id=vehicle.vehicle_id AND vehicle_assignment.status=1";
+        
+        
+        $String_Vehicle="";$v_name="";$String_Vehicle_not="";
+	/*$QueryALLVehicle="SELECT vehicle.vehicle_name , vehicle_assignment.device_imei_no ,vehicle.vehicle_id FROM vehicle,vehicle_grouping,vehicle_assignment WHERE vehicle_grouping.account_id=$parent_admin_id and vehicle_grouping.vehicle_id=vehicle.vehicle_id and vehicle_grouping.status=1 AND vehicle.status=1 AND vehicle_assignment.vehicle_id=vehicle.vehicle_id AND vehicle_assignment.status=1";
 	$resultALLVehicle = mysql_query($QueryALLVehicle,$DbConnection);
-	$String_Vehicle="";$v_name="";$String_Vehicle_not="";
-	
-	while($rowALLVehicle=mysql_fetch_object($resultALLVehicle))
-	{
-		$vehicle_list[]=$rowALLVehicle->vehicle_name;
-		$vehicle_id_list[]=trim($rowALLVehicle->vehicle_id);
-		//$String_Vehicle.=" pending_plant_tanker.vehicle_id=".$rowALLVehicle->vehicle_id." OR ";
-		$String_Vehicle.=" pending_plant_tanker.vehicle_name='".$rowALLVehicle->vehicle_name."' OR ";
-		$String_Vehicle_not.=" pending_plant_tanker.vehicle_name !='".$rowALLVehicle->vehicle_name."' AND ";
-		$v_name.=trim($rowALLVehicle->vehicle_name).",";
-	}
+        while($rowALLVehicle=mysql_fetch_object($resultALLVehicle))                 
+            {
+                    $vehicle_list[]=$rowALLVehicle->vehicle_name;
+                    $vehicle_id_list[]=trim($rowALLVehicle->vehicle_id);
+                    //$String_Vehicle.=" pending_plant_tanker.vehicle_id=".$rowALLVehicle->vehicle_id." OR ";
+                    $String_Vehicle.=" pending_plant_tanker.vehicle_name='".$rowALLVehicle->vehicle_name."' OR ";
+                    $String_Vehicle_not.=" pending_plant_tanker.vehicle_name !='".$rowALLVehicle->vehicle_name."' AND ";
+                    $v_name.=trim($rowALLVehicle->vehicle_name).",";
+            }
+	*/
+	$rowALLVehicleA=getAllGPSVehicle($parent_admin_id,$DbConnection);
+        if(count($rowALLVehicleA)>0)
+        {          
+            foreach($rowALLVehicleA as $rowALLVehicle)        
+            {
+                    $vehicle_list[]=$rowALLVehicle['vehicle_list'];
+                    $vehicle_id_list[]=$rowALLVehicle['vehicle_id_list'];                    
+                    $String_Vehicle.=" pending_plant_tanker.vehicle_name='".$rowALLVehicle['vehicle_list']."' OR ";
+                    $String_Vehicle_not.=" pending_plant_tanker.vehicle_name !='".$rowALLVehicle['vehicle_list']."' AND ";
+                    $v_name.=trim($rowALLVehicle['vehicle_list']).",";
+            }
+        }
 	if($String_Vehicle!="")
 	{
 		$String_Vehicle = substr($String_Vehicle, 0, -3);
@@ -70,6 +89,7 @@
 	$v_name=str_replace(' ','%20',$v_name);
 	$v_name_from_db="";
 	//for gps vehicle
+       /*
 	$QueryRemarks="SELECT pending_plant_tanker.*,account.user_id from pending_plant_tanker,account WHERE ($String_Vehicle) AND  pending_plant_tanker.status=1 AND account.status=1 AND pending_plant_tanker.edit_id=account.account_id AND pending_plant_tanker.pending_status=1";
 	//echo $QueryRemarks;
 	$resultRemarks = mysql_query($QueryRemarks,$DbConnection);
@@ -81,8 +101,11 @@
 		$final_data[$rowRemarks->vehicle_name]=$rowRemarks->sno."###".$rowRemarks->vehicle_name."###".$rowRemarks->remarks."###".$rowRemarks->pending_status."###".$rowRemarks->edit_date."###".$rowRemarks->user_id."###".$rowRemarks->gps."###".$rowRemarks->edit_id;
 		$v_name_from_db.=trim($rowRemarks->vehicle_name).",";		
 	}
-	
+	*/
+        list($final_data,$v_name_from_db)= getPendingPlantGPSTanker($String_Vehicle,$DbConnection);
 	//for non gps vehicle
+        
+        /*
 	$QueryRemarksNONGPS="SELECT pending_plant_tanker.*,account.user_id from pending_plant_tanker,account WHERE  ($String_Vehicle_not) AND  pending_plant_tanker.status=1 AND account.status=1 AND pending_plant_tanker.edit_id=account.account_id AND pending_plant_tanker.gps=0 AND pending_plant_tanker.pending_status=1 ";
 	//echo $QueryRemarksNONGPS;
 	$resultRemarksNONGPS = mysql_query($QueryRemarksNONGPS,$DbConnection);
@@ -93,7 +116,8 @@
 		$final_dataNONGPS[]=$rowRemarksNONGPS->sno."###".$rowRemarksNONGPS->vehicle_name."###".$rowRemarksNONGPS->remarks."###".$rowRemarksNONGPS->pending_status."###".$rowRemarksNONGPS->edit_date."###".$rowRemarksNONGPS->user_id."###".$rowRemarksNONGPS->gps."###".$rowRemarksNONGPS->edit_id;
 		//$String_Account.=" account.account_id=".$rowRemarks->edit_id." OR ";
 		$v_name_from_db.=trim($rowRemarksNONGPS->vehicle_name).",";	
-	}
+	}*/
+        list($final_dataNONGPS,$v_name_from_db)= getPendingPlantNonGPSTanker($String_Vehicle_not,$DbConnection);
 	
 	$v_name_from_db= substr($v_name_from_db, 0, -1);
 	$v_name_from_db=str_replace(' ','%20',$v_name_from_db);

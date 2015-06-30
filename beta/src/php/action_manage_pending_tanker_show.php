@@ -21,12 +21,17 @@
 			//echo $vid."=>". $type_new_old[$cnt]."<br>";
 			if($type_new_old[$cnt]=="1") 
 			{
-				//$Query_FINDING="SELECT * from pending_plant_tanker WHERE vehicle_id='$vid' and status=1 ";
+				/*
+                                //$Query_FINDING="SELECT * from pending_plant_tanker WHERE vehicle_id='$vid' and status=1 ";
 				$Query_FINDING="SELECT * from pending_plant_tanker WHERE vehicle_name='$vname[$cnt]' and status=1 ";
 				//echo $Query_FINDING;
 				$result_FINDING = mysql_query($Query_FINDING,$DbConnection);
 				$vidno = mysql_fetch_object($result_FINDING);
-				$max_no1=$vidno->vehicle_id;				
+				$max_no1=$vidno->vehicle_id;
+                                */
+                                $max_no1=getPendingPlantTankerVID($vname[$cnt],$DbConnection);
+                               
+                                
 				if($max_no1!='')
 				{
 					if($vid=='N_'.$vname[$cnt])
@@ -37,9 +42,13 @@
 					{
 						$gps=1;//gps status ok
 					}
-					$query_update = "UPDATE pending_plant_tanker SET pending_status=1,create_id='$account_id',edit_id='$account_id',edit_date='$date' ,create_date='$date',remarks='$remarks[$cnt]',vehicle_id='$vid', gps='$gps' WHERE vehicle_name='$vname[$cnt]' AND status=1 ";
+                                        
+                                        $result_update=UpdatePendingPlantTanker($account_id,$date,$remarks[$cnt],$vid,$gps,$vname[$cnt],$DbConnection);
+					/*
+                                        $query_update = "UPDATE pending_plant_tanker SET pending_status=1,create_id='$account_id',edit_id='$account_id',edit_date='$date' ,create_date='$date',remarks='$remarks[$cnt]',vehicle_id='$vid', gps='$gps' WHERE vehicle_name='$vname[$cnt]' AND status=1 ";
 					//echo "1a=". $query_update;
-					$result_update = mysql_query($query_update,$DbConnection);	
+					$result_update = mysql_query($query_update,$DbConnection);
+                                        */
 				}
 				else
 				{
@@ -51,20 +60,30 @@
 					{
 						$gps=1;//gps status ok
 					}
-				$Query="INSERT INTO `pending_plant_tanker`(pending_status,create_id,edit_id,edit_date,create_date,remarks,vehicle_id,vehicle_name,status,gps) VALUES(1,'$account_id','$account_id','$date',".
+                                        
+                                       
+                                        /*
+                                        $Query="INSERT INTO `pending_plant_tanker`(pending_status,create_id,edit_id,edit_date,create_date,remarks,vehicle_id,vehicle_name,status,gps) VALUES(1,'$account_id','$account_id','$date',".
 						"'$date','$remarks[$cnt]','$vid','$vname[$cnt]',1,'$gps')";  
-				//echo $Query;
+                                        //echo $Query;
 					$Result=mysql_query($Query,$DbConnection);
+                                        */
+                                        $Result=InsertPendingPlantTanker($account_id,$date,$remarks[$cnt],$vid,$vname[$cnt],$gps,$DbConnection);
 				}
 			}
 			else
 			{
 				if($update_status[$cnt]=="0" && $vid_update_pre[$cnt]!=$update_status[$cnt] )
 				{
-					//$query_update = "UPDATE pending_plant_tanker SET pending_status=0,create_id='$account_id',edit_id='$account_id',edit_date='$date' ,create_date='$date',remarks='$remarks[$cnt]' WHERE vehicle_id='$vid' AND status=1 ";
-					$query_update = "UPDATE pending_plant_tanker SET pending_status=0,create_id='$account_id',edit_id='$account_id',edit_date='$date' ,create_date='$date',remarks='$remarks[$cnt]' WHERE vehicle_name='$vname[$cnt]' AND status=1 ";
-							//echo "1a=". $query_update;
-							$result_update = mysql_query($query_update,$DbConnection);	
+					
+                                        /*
+                                        //$query_update = "UPDATE pending_plant_tanker SET pending_status=0,create_id='$account_id',edit_id='$account_id',edit_date='$date' ,create_date='$date',remarks='$remarks[$cnt]' WHERE vehicle_id='$vid' AND status=1 ";
+					$query_update = "UPDATE pending_plant_tanker SET pending_status=0,create_id='$account_id',edit_id='$account_id',edit_date='$date' ,create_date='$date',remarks='$remarks[$cnt]' WHERE vehicle_name='$vname[$cnt]' AND status=1 ";                                        
+                                         //echo "1a=". $query_update;
+                                        $result_update = mysql_query($query_update,$DbConnection);	
+                                         
+                                         */
+                                         $result_update =UpdatePendingPlantTankerClose($account_id,$date,$remarks[$cnt],$vname[$cnt],$DbConnection);
 				}
 				else if($update_status[$cnt]=="1"  && $vid_update_pre[$cnt]!=$update_status[$cnt] )
 				{
@@ -76,10 +95,15 @@
 					{
 						$gps=1;//gps status ok
 					}
-					//$query_update = "UPDATE pending_plant_tanker SET pending_status=1,create_id='$account_id',edit_id='$account_id',edit_date='$date' ,create_date='$date',remarks='$remarks[$cnt]' WHERE vehicle_id='$vid' AND status=1 ";
+                                        
+                                        $result_update =UpdatePendingPlantTankerOpen($account_id,$date,$remarks[$cnt],$vid,$gps,$vname[$cnt],$DbConnection);
+                                        
+					/*
+                                        //$query_update = "UPDATE pending_plant_tanker SET pending_status=1,create_id='$account_id',edit_id='$account_id',edit_date='$date' ,create_date='$date',remarks='$remarks[$cnt]' WHERE vehicle_id='$vid' AND status=1 ";
 					$query_update = "UPDATE pending_plant_tanker SET pending_status=1,create_id='$account_id',edit_id='$account_id',edit_date='$date' ,create_date='$date',remarks='$remarks[$cnt]' ,vehicle_id='$vid', gps='$gps' WHERE vehicle_name='$vname[$cnt]' AND status=1 ";
 							//echo "1a=". $query_update;
-							$result_update = mysql_query($query_update,$DbConnection);	
+							$result_update = mysql_query($query_update,$DbConnection);
+                                                        */
 				}
 			}
 			$cnt++;
