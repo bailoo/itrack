@@ -44,9 +44,9 @@ public class TravelLogDao {
 
 	protected String getInsertStatement(){
 		return "INSERT INTO "+TravelLog.TABLE_NAME+
-				" (imei, date, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed, logtime)"
+				" (imei, date, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed, logtime)"
 				+ " VALUES ("+
-				"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 	}
 	
 	protected String getDeleteStatement(){
@@ -73,11 +73,13 @@ public class TravelLogDao {
 				data.getStartTime(),
 				data.getStartLatitude(),
 				data.getStartLongitude(),
-				data.getStartLocation(),
+				data.getStartLocationId(),
+				data.getStartLocationName(),
 				data.getEndTime(),
 				data.getEndLatitude(),
 				data.getEndLongitude(),
-				data.getEndLocation(),
+				data.getEndLocationId(),
+				data.getEndLocationName(),
 				data.getDuration(),
 				data.getAvgSpeed(),
 				data.getDistance(),
@@ -104,11 +106,13 @@ public class TravelLogDao {
 			travelLog.setStartTime(row.getDate("starttime"));
 			travelLog.setStartLatitude(row.getString("startlatitude"));
 			travelLog.setStartLongitude(row.getString("startlongitude"));
-			travelLog.setStartLocation(row.getString("startlocation"));
+			travelLog.setStartLocationId(row.getString("startlocationid"));
+			travelLog.setStartLocationName(row.getString("startlocationname"));
 			travelLog.setEndTime(row.getDate("endtime"));
 			travelLog.setEndLatitude(row.getString("endlatitude"));
 			travelLog.setEndLongitude(row.getString("endlongitude"));
-			travelLog.setEndLocation(row.getString("endlocation"));
+			travelLog.setEndLocationId(row.getString("endlocationid"));
+			travelLog.setEndLocationName(row.getString("endlocationname"));
 			travelLog.setDuration(row.getInt("duration"));
 			travelLog.setAvgSpeed(row.getFloat("avgspeed"));
 			travelLog.setDistance(row.getFloat("distance"));
@@ -209,7 +213,7 @@ public class TravelLogDao {
 		return travelLogList;
 	}
 
-	public void insertTravelLog(String imei, String starttime, String startlatitude, String startlongitude, String startlocation, String endtime, String endlatitude, String endlongitude, String endlocation, int duration, float avgspeed, float distance, float maxspeed) 
+	public void insertTravelLog(String imei, String starttime, String startlatitude, String startlongitude, String startlocationid, String startlocationname, String endtime, String endlatitude, String endlongitude, String endlocationid, String endlocationname, int duration, float avgspeed, float distance, float maxspeed) 
 	{
 		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
 		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
@@ -229,7 +233,7 @@ public class TravelLogDao {
 			e.printStackTrace();
 		}
 	
-		TravelLog travelLog = new TravelLog(imei, date, starttimeObj, startlatitude, startlongitude, startlocation, endtimeObj, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed, now.getTime());
+		TravelLog travelLog = new TravelLog(imei, date, starttimeObj, startlatitude, startlongitude, startlocationid, startlocationname, endtimeObj, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed, now.getTime());
 		insert(travelLog);
 		System.out.println("Inserted TravelLog with imei: "+imei);
 	}

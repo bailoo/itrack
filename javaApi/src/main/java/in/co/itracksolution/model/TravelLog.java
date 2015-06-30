@@ -3,7 +3,7 @@ package in.co.itracksolution.model;
 import java.util.Date;
 
 public class TravelLog {
-	private String imei, date, startLatitude, startLongitude, startLocation, endLatitude, endLongitude, endLocation; 
+	private String imei, date, startLatitude, startLongitude, startLocationId, startLocationName, endLatitude, endLongitude, endLocationId, endLocationName; 
 	private int duration;
   	private float avgSpeed, distance, maxSpeed;
 	private Date startTime, endTime, logTime;
@@ -15,19 +15,21 @@ public class TravelLog {
 		super();
 	}
 	
-	public TravelLog(String imei, String date, Date startTime, String startLatitude, String startLongitude, String startLocation, Date endTime, String endLatitude, String endLongitude, String endLocation, int duration, float avgSpeed, float distance, float maxSpeed, Date logTime ) 
+	public TravelLog(String imei, String date, Date startTime, String startLatitude, String startLongitude, String startLocationId, String startLocationName, Date endTime, String endLatitude, String endLongitude, String endLocationId, String endLocationName, int duration, float avgSpeed, float distance, float maxSpeed, Date logTime ) 
 	{
 		super();
 		this.imei 		= imei;
 		this.date 		= date;
 		this.startTime 		= startTime;
-		this.startLatitude 	= startLatitude ;
-		this.startLongitude 	= startLongitude ;
-		this.startLocation 	= startLocation ;
+		this.startLatitude 	= startLatitude;
+		this.startLongitude 	= startLongitude;
+		this.startLocationId 	= startLocationId;
+		this.startLocationName 	= startLocationName;
 		this.endTime 		= endTime;
 		this.endLatitude 	= endLatitude;
 		this.endLongitude 	= endLongitude;
-		this.endLocation 	= endLocation;
+		this.endLocationId 	= endLocationId;
+		this.endLocationName 	= endLocationName;
 		this.duration 		= duration;
 		this.avgSpeed 		= avgSpeed;
 		this.distance 		= distance;
@@ -42,10 +44,12 @@ public class TravelLog {
 		this.startTime 		= f.startTime;
 		this.startLatitude 	= f.startLatitude ;
 		this.startLongitude 	= f.startLongitude ;
-		this.startLocation 	= f.startLocation ;
+		this.startLocationId 	= f.startLocationId;
+		this.startLocationName 	= f.startLocationName;
 		this.endLatitude 	= f.endLatitude;
 		this.endLongitude 	= f.endLongitude;
-		this.endLocation 	= f.endLocation;
+		this.endLocationId 	= f.endLocationId;
+		this.endLocationName 	= f.endLocationName;
 		this.endTime 		= f.endTime;
 		this.duration 		= f.duration;
 		this.avgSpeed 		= f.avgSpeed;
@@ -84,11 +88,17 @@ public class TravelLog {
 	public void setStartLongitude(String startLongitude) {
 		this.startLongitude= startLongitude;
 	} 
-	public String getStartLocation() {
-		return startLocation;
+	public String getStartLocationId() {
+		return startLocationId;
 	}
-	public void setStartLocation(String startLocation) {
-		this.startLocation = startLocation ;
+	public void setStartLocationId(String startLocationId) {
+		this.startLocationId = startLocationId;
+	} 
+	public String getStartLocationName() {
+		return startLocationName;
+	}
+	public void setStartLocationName(String startLocationName) {
+		this.startLocationName = startLocationName;
 	} 
 	public Date getEndTime() {
 		return endTime;
@@ -108,11 +118,17 @@ public class TravelLog {
 	public void setEndLongitude(String endLongitude) {
 		this.endLongitude= endLongitude;
 	} 
-	public String getEndLocation() {
-		return endLocation;
+	public String getEndLocationId() {
+		return endLocationId;
 	}
-	public void setEndLocation(String endLocation) {
-		this.endLocation = endLocation ;
+	public void setEndLocationId(String endLocationId) {
+		this.endLocationId = endLocationId;
+	} 
+	public String getEndLocationName() {
+		return endLocationName;
+	}
+	public void setEndLocationName(String endLocationName) {
+		this.endLocationName = endLocationName;
 	} 
 	public int getDuration() {
 		return duration;

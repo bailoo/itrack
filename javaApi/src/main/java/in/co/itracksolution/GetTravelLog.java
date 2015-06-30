@@ -79,11 +79,13 @@ public class GetTravelLog
 			System.out.print("start time: "+sdf.format(travelLog.getStartTime())+" ");
 			System.out.print("start latitude: "+travelLog.getStartLatitude()+" ");
 			System.out.print("start longitude: "+travelLog.getStartLongitude()+" ");
-			System.out.print("start location: "+travelLog.getStartLocation()+" ");
+			System.out.print("start location id: "+travelLog.getStartLocationId()+" ");
+			System.out.print("start location name: "+travelLog.getStartLocationName()+" ");
 			System.out.print("end time: "+sdf.format(travelLog.getEndTime())+" ");
 			System.out.print("end latitude: "+travelLog.getEndLatitude()+" ");
 			System.out.print("end longitude: "+travelLog.getEndLongitude()+" ");
-			System.out.print("end location: "+travelLog.getEndLocation()+" ");
+			System.out.print("end location id: "+travelLog.getEndLocationId()+" ");
+			System.out.print("end location name: "+travelLog.getEndLocationName()+" ");
 			System.out.print("duration: "+travelLog.getDuration()+" ");
 			System.out.print("avg speed: "+travelLog.getAvgSpeed()+" ");
 			System.out.print("distance: "+travelLog.getDistance()+" ");
