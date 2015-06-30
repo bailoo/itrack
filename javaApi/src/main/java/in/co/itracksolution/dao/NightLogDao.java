@@ -44,9 +44,9 @@ public class NightLogDao {
 
 	protected String getInsertStatement(){
 		return "INSERT INTO "+NightLog.TABLE_NAME+
-				" (imei, date, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed, logtime)"
+				" (imei, date, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed, logtime)"
 				+ " VALUES ("+
-				"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 	}
 	
 	protected String getDeleteStatement(){
@@ -73,11 +73,13 @@ public class NightLogDao {
 				data.getStartTime(),
 				data.getStartLatitude(),
 				data.getStartLongitude(),
-				data.getStartLocation(),
+				data.getStartLocationId(),
+				data.getStartLocationName(),
 				data.getEndTime(),
 				data.getEndLatitude(),
 				data.getEndLongitude(),
-				data.getEndLocation(),
+				data.getEndLocationId(),
+				data.getEndLocationName(),
 				data.getDuration(),
 				data.getAvgSpeed(),
 				data.getDistance(),
@@ -104,11 +106,13 @@ public class NightLogDao {
 			nightLog.setStartTime(row.getDate("starttime"));
 			nightLog.setStartLatitude(row.getString("startlatitude"));
 			nightLog.setStartLongitude(row.getString("startlongitude"));
-			nightLog.setStartLocation(row.getString("startlocation"));
+			nightLog.setStartLocationId(row.getString("startlocationid"));
+			nightLog.setStartLocationName(row.getString("startlocationname"));
 			nightLog.setEndTime(row.getDate("endtime"));
 			nightLog.setEndLatitude(row.getString("endlatitude"));
 			nightLog.setEndLongitude(row.getString("endlongitude"));
-			nightLog.setEndLocation(row.getString("endlocation"));
+			nightLog.setEndLocationId(row.getString("endlocationid"));
+			nightLog.setEndLocationName(row.getString("endlocationname"));
 			nightLog.setDuration(row.getInt("duration"));
 			nightLog.setAvgSpeed(row.getFloat("avgspeed"));
 			nightLog.setDistance(row.getFloat("distance"));
@@ -209,7 +213,7 @@ public class NightLogDao {
 		return nightLogList;
 	}
 
-	public void insertNightLog(String imei, String starttime, String startlatitude, String startlongitude, String startlocation, String endtime, String endlatitude, String endlongitude, String endlocation, int duration, float avgspeed, float distance, float maxspeed) 
+	public void insertNightLog(String imei, String starttime, String startlatitude, String startlongitude, String startlocationid, String startlocationname, String endtime, String endlatitude, String endlongitude, String endlocationid, String endlocationname, int duration, float avgspeed, float distance, float maxspeed) 
 	{
 		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
 		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
@@ -229,7 +233,7 @@ public class NightLogDao {
 			e.printStackTrace();
 		}
 	
-		NightLog nightLog = new NightLog(imei, date, starttimeObj, startlatitude, startlongitude, startlocation, endtimeObj, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed, now.getTime());
+		NightLog nightLog = new NightLog(imei, date, starttimeObj, startlatitude, startlongitude, startlocationid, startlocationname, endtimeObj, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed, now.getTime());
 		insert(nightLog);
 		System.out.println("Inserted NightLog with imei: "+imei);
 	}

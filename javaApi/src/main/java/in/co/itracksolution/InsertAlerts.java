@@ -99,14 +99,14 @@ public class InsertAlerts {
 		//DistanceLogDao distanceLogDao = new DistanceLogDao(st.conn.getSession());
 		//distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
 
-		//NightLogDao nightLogDao = new NightLogDao(st.conn.getSession());
-		//nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed);
+		NightLogDao nightLogDao = new NightLogDao(st.conn.getSession());
+		nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
 
 		//GapLogDao gapLogDao = new GapLogDao(st.conn.getSession());
 		//gapLogDao.insertGapLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation);
 
-		TravelLogDao travelLogDao = new TravelLogDao(st.conn.getSession());
-		travelLogDao.insertTravelLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
+		//TravelLogDao travelLogDao = new TravelLogDao(st.conn.getSession());
+		//travelLogDao.insertTravelLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
 
 		st.close();
 	

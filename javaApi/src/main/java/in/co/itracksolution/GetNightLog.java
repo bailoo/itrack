@@ -79,11 +79,13 @@ public class GetNightLog
 			System.out.print("start time: "+sdf.format(nightLog.getStartTime())+" ");
 			System.out.print("start latitude: "+nightLog.getStartLatitude()+" ");
 			System.out.print("start longitude: "+nightLog.getStartLongitude()+" ");
-			System.out.print("start location: "+nightLog.getStartLocation()+" ");
+			System.out.print("start location id: "+nightLog.getStartLocationId()+" ");
+			System.out.print("start location name: "+nightLog.getStartLocationName()+" ");
 			System.out.print("end time: "+sdf.format(nightLog.getEndTime())+" ");
 			System.out.print("end latitude: "+nightLog.getEndLatitude()+" ");
 			System.out.print("end longitude: "+nightLog.getEndLongitude()+" ");
-			System.out.print("end location: "+nightLog.getEndLocation()+" ");
+			System.out.print("end location id: "+nightLog.getEndLocationId()+" ");
+			System.out.print("end location name: "+nightLog.getEndLocationName()+" ");
 			System.out.print("duration: "+nightLog.getDuration()+" ");
 			System.out.print("avg speed: "+nightLog.getAvgSpeed()+" ");
 			System.out.print("distance: "+nightLog.getDistance()+" ");
