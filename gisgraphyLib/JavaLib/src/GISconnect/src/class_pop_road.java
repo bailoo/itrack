@@ -45,7 +45,7 @@ public class class_pop_road {
 				Statement stmt = connection.createStatement();
 				 //Execute the SQL statement and get the results in a Resultset
 				String query="SELECT id, name, astext(location) as lnglat,gid, isin,CAST (st_distance_sphere(shape, st_setsrid(st_makepoint("+lng+","+lat+"),4326)) AS INT) AS d FROM openstreetmap WHERE st_distance_sphere(shape, st_setsrid(st_makepoint("+lng+","+lat+"),4326))<="+radius+" ORDER BY shape <-> st_setsrid(st_makepoint("+lng+","+lat+"), 4326)  LIMIT 1";
-			   System.out.println(query);
+			   //System.out.println(query);
 				ResultSet rs1 = stmt.executeQuery(query);
 			    // Iterate through the ResultSet, displaying two values
 			    // for each row using the getString method
@@ -102,19 +102,31 @@ public class class_pop_road {
 					lng=data.getLng();								
 			
 					//Execute the SQL statement and get the results in a Resultset
-					String query="SELECT id, name, astext(location) as lnglat,gid, isin,CAST (st_distance_sphere(shape, st_setsrid(st_makepoint("+lng+","+lat+"),4326)) AS INT) AS d FROM openstreetmap WHERE st_distance_sphere(shape, st_setsrid(st_makepoint("+lng+","+lat+"),4326))<="+radius+" ORDER BY shape <-> st_setsrid(st_makepoint("+lng+","+lat+"), 4326)  LIMIT 1";
-					System.out.println(query);
+					//String query="SELECT id, name, astext(location) as lnglat,gid, isin,CAST (st_distance_sphere(shape, st_setsrid(st_makepoint("+lng+","+lat+"),4326)) AS INT) AS d FROM openstreetmap WHERE st_distance_sphere(shape, st_setsrid(st_makepoint("+lng+","+lat+"),4326))<="+radius+" ORDER BY shape <-> st_setsrid(st_makepoint("+lng+","+lat+"), 4326)  LIMIT 1";
+					String query="SELECT id, name, astext(location) as lnglat,gid, isin,CAST (st_distance_sphere(shape, st_setsrid(st_makepoint("+lng+","+lat+"),4326)) AS INT) AS d FROM openstreetmap WHERE name!='' ORDER BY shape <-> st_setsrid(st_makepoint("+lng+","+lat+"), 4326)  LIMIT 1";
+					//System.out.println(query);
 					ResultSet rs1 = stmt.executeQuery(query);
 					// Iterate through the ResultSet, displaying two values
 					// for each row using the getString method
-			 
+					String get_radius="";
 					while (rs1.next()){
 						//System.out.println("Name= " + rs.getString("name") + " Code= " + rs.getString("featureId"));
+						get_radius=rs1.getString("d");
 						road_name=rs1.getString("name");
 						road_code=rs1.getString("gid");
 						road_name=road_name+" ,"+rs1.getString("isin");
-						LatLng item = new LatLng(lat, lng, road_name, road_code);
-						latlngData.add(item);
+						//LatLng item = new LatLng(lat, lng, road_name, road_code);
+						//latlngData.add(item);
+						if(Double.parseDouble(get_radius) <= radius)
+						{
+							LatLng item = new LatLng(lat, lng, road_name, road_code);
+							latlngData.add(item);
+						}
+						else
+						{
+							LatLng item = new LatLng(lat, lng, "-", "-");
+							latlngData.add(item);
+						}
 					}
 				}
 			} catch (SQLException e) {
