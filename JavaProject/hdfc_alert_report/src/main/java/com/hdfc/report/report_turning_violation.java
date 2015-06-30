@@ -2,6 +2,7 @@ package com.hdfc.report;
 
 import java.util.ArrayList;
 
+import com.hdfc.db.gis.LatLng;
 import com.hdfc.utils.utility_class;
 
 public class report_turning_violation {
@@ -24,7 +25,7 @@ public class report_turning_violation {
     public static ArrayList<Float> turningAngle = new ArrayList<Float>();
     public static ArrayList<Double> turningLatitude = new ArrayList<Double>();
     public static ArrayList<Double> turningLongitude = new ArrayList<Double>();
-    public static ArrayList<String> latLngObj = new ArrayList<String>();
+    public static ArrayList<LatLng> latLngObj = new ArrayList<LatLng>();
     public static ArrayList<String> locationCode = new ArrayList<String>();
     public static ArrayList<Integer> roadID = new ArrayList<Integer>();
   
@@ -113,9 +114,10 @@ public class report_turning_violation {
 						turningAngle.add((float)angle);
 						turningLatitude.add(lat_middle);
 						turningLongitude.add(lng_middle);
-						//tmpobj = turningLatitude+","+turningLongitude;
-						//latLngObj.add(tmpobj);
-					}					
+						
+						LatLng tmpobj = new LatLng(Double.toString(lat_middle), Double.toString(lng_middle),"","");
+						latLngObj.add(tmpobj);
+					}				
 					
 					lat_start = lat_middle;
 					lng_start = lng_middle;

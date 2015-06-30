@@ -97,24 +97,37 @@ public class InsertAlerts {
 	}
 	
 	
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
-		String imei = "123456";
-		String dtime = "2015-06-15 20:17:18";
-		String stime = "2015-06-15 20:17:38";
-		float speed = (float)20.1;
-		float angle = (float)60.3;
-		String location = "Chandni Chowk";
-		String latitude = "23.4568N";
-		String longitude = "79.22434E";
-		String roadId = "MG Road";
+		for(int i=1;i<58;i++) {
+			String min = "";
+			if(i<10){ 
+				min = "0"+Integer.valueOf(i).toString();
+			}else {
+				min = Integer.valueOf(i).toString();
+			}
+			
+			String imei = "123456";
+			//String dtime = "2015-06-15 20:17:21";
+			//String stime = "2015-06-15 20:17:21";
+			
+			String dtime = "2015-06-15 00:"+min+":21";
+			String stime = "2015-06-15 20:"+min+":21";
+			
+			float speed = (float)20.1;
+			float angle = (float)60.3;
+			String location = "Chandni Chowk";
+			String latitude = "23.4568N";
+			String longitude = "79.22434E";
+			String roadId = "MG Road";
+			
+			InsertAlerts st = new InsertAlerts();
+	//		st.insertSpeedAlert(imei, dtime, stime, speed, location, latitude, longitude, roadId);
+			st.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
+			st.close();
 		
-		InsertAlerts st = new InsertAlerts();
-		st.insertSpeedAlert(imei, dtime, stime, speed, location, latitude, longitude, roadId);
-		st.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
-		st.close();
-	
-		System.out.println("The End");
+			System.out.println("The End");
+		}
 	}
 		
 	
