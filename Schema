@@ -43,10 +43,12 @@ CREATE TABLE lastlog(
       dtime timestamp,
       stime timestamp,
       speed float,
-      location ascii,
+      locationid ascii,
+      locationname ascii,
       latitude ascii,
       longitude ascii,
       roadid ascii,
+      roadname ascii,
       logtime timestamp,
       PRIMARY KEY ((imei, date), dtime))
       WITH CLUSTERING ORDER BY (dtime DESC);
@@ -60,15 +62,16 @@ CREATE TABLE lastlog(
       stime timestamp,
       speed float,
       angle float,
-      location ascii,
+      locationid ascii,
+      locationname ascii,
       latitude ascii,
       longitude ascii,
       roadid ascii,
+      roadname ascii,
       logtime timestamp,
       PRIMARY KEY ((imei, date), dtime))
       WITH CLUSTERING ORDER BY (dtime DESC);
     create index turnalert_roadid on turnalert(roadid);
-
 
     CREATE TABLE distancelog(
       imei ascii,
@@ -77,7 +80,7 @@ CREATE TABLE lastlog(
       endtime timestamp,
       avgspeed float,
       distance float,
-      maxspeed float,
+      maxspeed float, 
       logtime timestamp,
       PRIMARY KEY ((imei, date), starttime))
       WITH CLUSTERING ORDER BY (starttime DESC);
@@ -88,12 +91,12 @@ CREATE TABLE lastlog(
       date ascii,
       dtime timestamp,
       stime timestamp,
-      xroadid ascii,
-      xroadcode ascii,
-      xroadname ascii,
+      roadid ascii,
+      roadname ascii,
       haltduration int,
       speed float,
-      location ascii,
+      locationid ascii,
+      locationname ascii,
       latitude ascii,
       longitude ascii,
       logtime timestamp,
@@ -107,11 +110,13 @@ CREATE TABLE lastlog(
       starttime timestamp,
       startlatitude ascii,
       startlongitude ascii,
-      startlocation ascii,
+      startlocationid ascii,
+      startlocationname ascii,
       endtime timestamp,
       endlatitude ascii,
       endlongitude ascii,
-      endlocation ascii,
+      endlocationid ascii,
+      endlocationname ascii,
       duration int,
       avgspeed float,
       distance float,
@@ -127,11 +132,13 @@ CREATE TABLE lastlog(
       starttime timestamp,
       startlatitude ascii,
       startlongitude ascii,
-      startlocation ascii,
+      startlocationid ascii,
+      startlocationname ascii,
       endtime timestamp,
       endlatitude ascii,
       endlongitude ascii,
-      endlocation ascii,
+      endlocationid ascii,
+      endlocationname ascii,
       duration int,
       avgspeed float,
       distance float,
@@ -149,13 +156,13 @@ CREATE TABLE lastlog(
       starttime timestamp,
       startlatitude ascii,
       startlongitude ascii,
-      startlocation ascii,
+      startlocationid ascii,
+      startlocationname ascii,
       endtime timestamp,
       endlatitude ascii,
       endlongitude ascii,
-      endlocation ascii,
+      endlocationid ascii,
+      endlocationname ascii,
       logtime timestamp,
       PRIMARY KEY ((imei, date), starttime))
       WITH CLUSTERING ORDER BY (starttime DESC);
-
-
