@@ -111,6 +111,7 @@ function GetAccountInfo($accountID,$status,$DbC)
 {
 	$query="SELECT user_type,status FROM account USE INDEX(accountid_status) WHERE account_id='$accountID' AND status=$status";
 	$result=mysql_query($query,$DbC);
+
 	$row=mysql_fetch_row($result);
 	return $row;	
 }
@@ -1399,11 +1400,21 @@ function deleteInvoiceHindalco($account_id,$date,$sno,$DbConnection)
 /***********************************Invoice Mdrm********************************************************/
 function getMaxCountInvoiceMdrm($account_id,$DbConnection)
 {
-	$query1="SELECT MAX(sno) as max_count from invoice_mdrm USE INDEX(inmd_paid) where parent_account_id=$account_id";
+	
+        $query1="SELECT MAX(sno) as max_count from invoice_mdrm USE INDEX(inmd_paid) where parent_account_id=$account_id";
 	$result1=mysql_query($query1,$DbConnection);
 	$max_no = mysql_fetch_object($result1);
 	$max_no1=$max_no->max_count;
 	return $max_no1;
+}
+
+function updateInvoiceMdrmTP($lorry_no,$transporter,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$sno_id1,$DbConnection)
+{
+        $QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',transporter_account_id='$transporter',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',
+				fat_kg = '$fat_kg',snf_kg='$snf_kg',milk_age='$milk_age',dispatch_time='$dispatch_time',target_time='$target_time',validity_time='$validity_time',plant='$plant',chilling_plant='$chillplant',
+				tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',edit_id='$account_id', edit_date='$date',invoice_status=5,status=1 WHERE sno='$sno_id1' "; 
+        $ResultUpdate=mysql_query($QueryUpdate,$DbConnection);
+	return $ResultUpdate;
 }
 
 function updateInvoiceMdrm($lorry_no,$transporter,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$sno_id1,$DbConnection)
@@ -1424,6 +1435,7 @@ function insertInvoiceMdrm($lorry_no,$transporter,$email,$mobile,$qty_kg,$fat_pe
 }
 function insertInvoiceMdrmVehicle($lorry_no,$vehicle_no,$transporter,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dock_no,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$DbConnection)
 {
+  
  $Query="INSERT INTO `invoice_mdrm`(lorry_no,vehicle_no,transporter_account_id,email,mobile,qty_kg,fat_percentage,snf_percentage,fat_kg,snf_kg,milk_age,docket_no,dispatch_time,target_time,validity_time,plant,chilling_plant,tanker_type,driver_name,driver_mobile,parent_account_id,create_id,create_date,invoice_status,status) VALUES('".
 		"$lorry_no','$vehicle_no','$transporter','$email','$mobile',".
 		"'$qty_kg','$fat_per','$snf_per','$fat_kg','$snf_kg','$milk_age','$dock_no','$dispatch_time','$target_time','$validity_time','$plant','$chillplant','$tanker_type','$driver_name','$driver_mobile','$account_id','$account_id','$date',1,1)";  
@@ -1432,14 +1444,18 @@ function insertInvoiceMdrmVehicle($lorry_no,$vehicle_no,$transporter,$email,$mob
 }
 function updateInvoiceMdrmVehicle($lorry_no,$vehicle_no,$transporter,$dock_no,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$sno_id1,$DbConnection)
 {
+        
 	$QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',vehicle_no='$vehicle_no',transporter_account_id='$transporter',docket_no='$dock_no',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',
 				fat_kg = '$fat_kg',snf_kg='$snf_kg',milk_age='$milk_age',dispatch_time='$dispatch_time',target_time='$target_time',validity_time='$validity_time',plant='$plant',chilling_plant='$chillplant',
 				tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',parent_account_id='$account_id',edit_id='$account_id',edit_date='$date',invoice_status=1,status=1 WHERE sno='$sno_id1' ";  
 				$ResultUpdate=mysql_query($QueryUpdate,$DbConnection);
 				return $ResultUpdate;
 }
+
+//==need to del==
 function updateInvoiceMdrmAccept($plant_serials,$account_id,$date,$unload_estimatetime_serials,$unload_estimatedatetime_serials,$fat_per_ft_serials,$snf_per_ft_serials,$testing_status_serials,$qty_ct_serials,$temp_ct_serials,$acidity_ct_serials,$mbrt_min_ct_serials,$mbrt_br_ct_serials,$mbrt_rm_ct_serials,$protien_per_ct_serials,$sodium_ct_serials,$fat_per_rt_serials,$snf_per_rt_serials,$adultration_ct_serials,$otheradultration_ct_serials,$sno,$DbConnection)
 {
+    
   $query_update = "UPDATE invoice_mdrm SET plant='$plant_serials',edit_id='$account_id',edit_date='$date' ,plant_acceptance_time='$date',unload_estimated_time='$unload_estimatetime_serials',unload_estimated_datetime='$unload_estimatedatetime_serials',
 					fat_per_ft='$fat_per_ft_serials',snf_per_ft='$snf_per_ft_serials',testing_status='$testing_status_serials',qty_ct='$qty_ct_serials',
 					temp_ct='$temp_ct_serials',acidity_ct='$acidity_ct_serials',mbrt_min_ct='$mbrt_min_ct_serials',mbrt_br_ct='$mbrt_br_ct_serials',
@@ -1448,6 +1464,19 @@ function updateInvoiceMdrmAccept($plant_serials,$account_id,$date,$unload_estima
 					$result_update = mysql_query($query_update,$DbConnection);
                     return $result_update;					
 }
+//========================
+function updateInvoiceMdrmApproved($plant_serials,$date,$unload_estimatetime_serials,$unload_estimatedatetime_serials,$fat_per_ft_serials,$snf_per_ft_serials,$testing_status_serials,$qty_ct_serials,$temp_ct_serials,$acidity_ct_serials,$mbrt_min_ct_serials,$mbrt_br_ct_serials,$mbrt_rm_ct_serials,$protien_per_ct_serials,$sodium_ct_serials,$fat_per_rt_serials,$snf_per_rt_serials,$adultration_ct_serials,$otheradultration_ct_serials,$date,$sno,$DbConnection)
+{
+    $query_update = "UPDATE invoice_mdrm SET plant='$plant_serials',plant_acceptance_time='$date',unload_estimated_time='$unload_estimatetime_serials',unload_estimated_datetime='$unload_estimatedatetime_serials',
+									fat_per_ft='$fat_per_ft_serials',snf_per_ft='$snf_per_ft_serials',testing_status='$testing_status_serials',qty_ct='$qty_ct_serials',
+						temp_ct='$temp_ct_serials',acidity_ct='$acidity_ct_serials',mbrt_min_ct='$mbrt_min_ct_serials',mbrt_br_ct='$mbrt_br_ct_serials',
+						mbrt_rm_ct='$mbrt_rm_ct_serials',protien_per_ct='$protien_per_ct_serials',sodium_ct='$sodium_ct_serials',fat_per_rt='$fat_per_rt_serials',
+						snf_per_rt='$snf_per_rt_serials' , adultration_ct='$adultration_ct_serials' , otheradultration_ct='$otheradultration_ct_serials' ,edit_date='$date' WHERE sno='$sno'";
+						//echo "1a=". $query_update;
+						$result_update = mysql_query($query_update,$DbConnection);
+    return $result_update;
+}
+//==need to del==
 function updateInvoiceMdrmNoAccept($plant_serials,$account_id,$date,$unload_estimatetime_serials,$unload_estimatedatetime_serials,$fat_per_ft_serials,$snf_per_ft_serials,$testing_status_serials,$qty_ct_serials,$temp_ct_serials,$acidity_ct_serials,$mbrt_min_ct_serials,$mbrt_br_ct_serials,$mbrt_rm_ct_serials,$protien_per_ct_serials,$sodium_ct_serials,$fat_per_rt_serials,$snf_per_rt_serials,$adultration_ct_serials,$otheradultration_ct_serials,$sno,$DbConnection)
 {
   $query_update = "UPDATE invoice_mdrm SET plant='$plant_serials',edit_id='$account_id',edit_date='$date' ,unload_estimated_time='$unload_estimatetime_serials',unload_estimated_datetime='$unload_estimatedatetime_serials',
@@ -1458,6 +1487,19 @@ function updateInvoiceMdrmNoAccept($plant_serials,$account_id,$date,$unload_esti
 					$result_update = mysql_query($query_update,$DbConnection);
                     return $result_update;					
 }
+//=============
+function updateInvoiceMdrmNoApproved_flag_add($plant_serials,$unload_estimatetime_serials,$unload_estimatedatetime_serials,$fat_per_ft_serials,$snf_per_ft_serials,$testing_status_serials,$qty_ct_serials,$temp_ct_serials,$acidity_ct_serials,$mbrt_min_ct_serials,$mbrt_br_ct_serials,$mbrt_rm_ct_serials,$protien_per_ct_serials,$sodium_ct_serials,$fat_per_rt_serials,$snf_per_rt_serials,$adultration_ct_serials,$otheradultration_ct_serials,$date,$sno,$DbConnection)
+{
+     $query_update = "UPDATE invoice_mdrm SET plant='$plant_serials',unload_estimated_time='$unload_estimatetime_serials',unload_estimated_datetime='$unload_estimatedatetime_serials',
+									fat_per_ft='$fat_per_ft_serials',snf_per_ft='$snf_per_ft_serials',testing_status='$testing_status_serials',qty_ct='$qty_ct_serials',
+						temp_ct='$temp_ct_serials',acidity_ct='$acidity_ct_serials',mbrt_min_ct='$mbrt_min_ct_serials',mbrt_br_ct='$mbrt_br_ct_serials',
+						mbrt_rm_ct='$mbrt_rm_ct_serials',protien_per_ct='$protien_per_ct_serials',sodium_ct='$sodium_ct_serials',fat_per_rt='$fat_per_rt_serials',
+						snf_per_rt='$snf_per_rt_serials' , adultration_ct='$adultration_ct_serials' , otheradultration_ct='$otheradultration_ct_serials' ,edit_date='$date' WHERE sno='$sno'";
+						//echo "1a=". $query_update;
+						$result_update = mysql_query($query_update,$DbConnection);
+    return $result_update;
+} 
+//==need to del=====
 function updateInvoiceMdrmAcceptUnload($plant_serials,$account_id,$date,$unload_estimatetime_serials,$unload_estimatedatetime_serials,$unload_accepttime_serials,$fat_per_ft_serials,$snf_per_ft_serials,$testing_status_serials,$qty_ct_serials,$temp_ct_serials,$acidity_ct_serials,$mbrt_min_ct_serials,$mbrt_br_ct_serials,$mbrt_rm_ct_serials,$protien_per_ct_serials,$sodium_ct_serials,$fat_per_rt_serials,$snf_per_rt_serials,$adultration_ct_serials,$otheradultration_ct_serials,$sno,$DbConnection)
 {
   $query_update = "UPDATE invoice_mdrm SET plant='$plant_serials',edit_id='$account_id',edit_date='$date' ,plant_acceptance_time='$date',unload_estimated_time='$unload_estimatetime_serials',unload_estimated_datetime='$unload_estimatedatetime_serials',unload_accept_time='$unload_accepttime_serials' ,
@@ -1468,6 +1510,19 @@ function updateInvoiceMdrmAcceptUnload($plant_serials,$account_id,$date,$unload_
 				$result_update = mysql_query($query_update,$DbConnection);
                 return $result_update;
 }
+//======================
+function updateInvoiceMdrmApprovedUnload($plant_serials,$date,$unload_estimatetime_serials,$unload_estimatedatetime_serials,$unload_accepttime_serials,$fat_per_ft_serials,$snf_per_ft_serials,$testing_status_serials,$qty_ct_serials,$temp_ct_serials,$acidity_ct_serials,$mbrt_min_ct_serials,$mbrt_br_ct_serials,$mbrt_rm_ct_serials,$protien_per_ct_serials,$sodium_ct_serials,$fat_per_rt_serials,$snf_per_rt_serials,$adultration_ct_serials,$otheradultration_ct_serials,$sno,$DbConnection)
+{
+    $query_update = "UPDATE invoice_mdrm SET plant='$plant_serials',plant_acceptance_time='$date',unload_estimated_time='$unload_estimatetime_serials',unload_estimated_datetime='$unload_estimatedatetime_serials',unload_accept_time='$unload_accepttime_serials' ,
+									fat_per_ft='$fat_per_ft_serials',snf_per_ft='$snf_per_ft_serials',testing_status='$testing_status_serials',qty_ct='$qty_ct_serials',
+						temp_ct='$temp_ct_serials',acidity_ct='$acidity_ct_serials',mbrt_min_ct='$mbrt_min_ct_serials',mbrt_br_ct='$mbrt_br_ct_serials',
+						mbrt_rm_ct='$mbrt_rm_ct_serials',protien_per_ct='$protien_per_ct_serials',sodium_ct='$sodium_ct_serials',fat_per_rt='$fat_per_rt_serials',
+						snf_per_rt='$snf_per_rt_serials',adultration_ct='$adultration_ct_serials' , otheradultration_ct='$otheradultration_ct_serials' ,edit_date='$date' WHERE sno='$sno'";
+						//echo "1b=". $query_update;
+						$result_update = mysql_query($query_update,$DbConnection);
+                                             return $result_update;
+}       
+//===need to del
 function updateInvoiceMdrmNoAcceptUnload($plant_serials,$account_id,$date,$unload_estimatetime_serials,$unload_estimatedatetime_serials,$unload_accepttime_serials,$fat_per_ft_serials,$snf_per_ft_serials,$testing_status_serials,$qty_ct_serials,$temp_ct_serials,$acidity_ct_serials,$mbrt_min_ct_serials,$mbrt_br_ct_serials,$mbrt_rm_ct_serials,$protien_per_ct_serials,$sodium_ct_serials,$fat_per_rt_serials,$snf_per_rt_serials,$adultration_ct_serials,$otheradultration_ct_serials,$sno,$DbConnection)
 {
   $query_update = "UPDATE invoice_mdrm SET plant='$plant_serials',edit_id='$account_id',edit_date='$date' ,unload_estimated_time='$unload_estimatetime_serials',unload_estimated_datetime='$unload_estimatedatetime_serials',unload_accept_time='$unload_accepttime_serials' ,
@@ -1478,9 +1533,21 @@ function updateInvoiceMdrmNoAcceptUnload($plant_serials,$account_id,$date,$unloa
 				$result_update = mysql_query($query_update,$DbConnection);
                 return $result_update;
 }
+//=============
+function updateInvoiceMdrmNoApprovedUnload_flag_add($plant_serials,$unload_estimatetime_serials,$unload_estimatedatetime_serials,$unload_accepttime_serials,$fat_per_ft_serials,$snf_per_ft_serials,$testing_status_serials,$qty_ct_serials,$temp_ct_serials,$acidity_ct_serials,$mbrt_min_ct_serials,$mbrt_br_ct_serials,$mbrt_rm_ct_serials,$protien_per_ct_serials,$sodium_ct_serials,$fat_per_rt_serials,$snf_per_rt_serials,$adultration_ct_serials,$otheradultration_ct_serials,$sno,$date,$DbConnection)
+{
+    $query_update = "UPDATE invoice_mdrm SET plant='$plant_serials',unload_estimated_time='$unload_estimatetime_serials',unload_estimated_datetime='$unload_estimatedatetime_serials',unload_accept_time='$unload_accepttime_serials' ,
+									fat_per_ft='$fat_per_ft_serials',snf_per_ft='$snf_per_ft_serials',testing_status='$testing_status_serials',qty_ct='$qty_ct_serials',
+						temp_ct='$temp_ct_serials',acidity_ct='$acidity_ct_serials',mbrt_min_ct='$mbrt_min_ct_serials',mbrt_br_ct='$mbrt_br_ct_serials',
+						mbrt_rm_ct='$mbrt_rm_ct_serials',protien_per_ct='$protien_per_ct_serials',sodium_ct='$sodium_ct_serials',fat_per_rt='$fat_per_rt_serials',
+						snf_per_rt='$snf_per_rt_serials',adultration_ct='$adultration_ct_serials' , otheradultration_ct='$otheradultration_ct_serials' ,edit_date='$date' WHERE sno='$sno'";
+						//echo "1b=". $query_update;
+						$result_update = mysql_query($query_update,$DbConnection);
+                                             return $result_update;
+} 
 function updateInvoiceMdrmTest($testing_status_serials,$qty_ct_serials,$temp_ct_serials,$acidity_ct_serials,$mbrt_min_ct_serials,$mbrt_br_ct_serials,$mbrt_rm_ct_serials,$protien_per_ct_serials,$sodium_ct_serials,$fat_per_rt_serials,$snf_per_rt_serials,$adultration_ct_serials,$otheradultration_ct_serials,$date,$sno,$DbConnection)
 {
-  $query_update = "UPDATE invoice_mdrm SET testing_status='$testing_status_serials',qty_ct='$qty_ct_serials',
+    $query_update = "UPDATE invoice_mdrm SET testing_status='$testing_status_serials',qty_ct='$qty_ct_serials',
 				temp_ct='$temp_ct_serials',acidity_ct='$acidity_ct_serials',mbrt_min_ct='$mbrt_min_ct_serials',mbrt_br_ct='$mbrt_br_ct_serials',
 				mbrt_rm_ct='$mbrt_rm_ct_serials',protien_per_ct='$protien_per_ct_serials',sodium_ct='$sodium_ct_serials',
 				fat_per_rt='$fat_per_rt_serials',snf_per_rt='$snf_per_rt_serials' ,adultration_ct='$adultration_ct_serials' , otheradultration_ct='$otheradultration_ct_serials' ,edit_date='$date' WHERE sno='$sno'";
@@ -1488,14 +1555,15 @@ function updateInvoiceMdrmTest($testing_status_serials,$qty_ct_serials,$temp_ct_
 				return $result_update;
 }
 function updateInvoiceMdrmNext($plant_serials,$account_id,$date,$sno,$DbConnection)
-{
-	 $query_update_plant = "UPDATE invoice_mdrm SET plant='$plant_serials',edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
+{         
+	 $query_update_plant = "UPDATE invoice_mdrm SET plant='$plant_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
 	 $result_update_plant = mysql_query($query_update_plant,$DbConnection);	
 	 return $result_update_plant;
 }
-function updateInvoiceMdrmClose($account_id,$date,$closetime,$sno,$DbConnection)
+function updateInvoiceMdrmClose($date,$closetime,$sno,$DbConnection)
 {
-	$query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_id='$account_id',edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
+    
+    $query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
 	//echo $query_update;		
 	$result_update = mysql_query($query_update,$DbConnection);	
 	return $result_update; 
@@ -2511,7 +2579,7 @@ function getTpaUidNameAr($account_id,$DbConnection)
 	}
 	else
 	{
-		$data[]=array();
+		$data=array();
 		return $data;
 	}
 }
@@ -2526,7 +2594,7 @@ function getTpaUidNameAr($account_id,$DbConnection)
 		//echo $row->customer_no;
 		$final_chillplant_list[]=$rowchill->customer_no;
 		$final_chillplant_name_list[]=$rowchill->station_name;
-		$dataCNS[]=array('final_chillplant_list'=>$row->customer_no,'final_chillplant_name_list'=>$row->station_name);
+		$dataCNS[]=array('final_chillplant_list'=>$rowchill->customer_no,'final_chillplant_name_list'=>$rowchill->station_name);
 	}
 	return $dataCNS;
  }
@@ -2923,6 +2991,7 @@ function getDetailAllMileStone($groupo_id_local,$DbConnection)
 /********************************************manage Edit Delete PolyLine*******************************************************/
  function getDetailAllPolyline($common_id1,$DbConnection)
  {
+    $data=array();
     $query="select * FROM polyline USE INDEX(polyline_uaid_status) WHERE user_account_id='$common_id1' and status='1'";	
     $result=mysql_query($query,$DbConnection);            							
     while($row=mysql_fetch_object($result))
@@ -3587,6 +3656,7 @@ function getDetailAllCustomerNoStationNameStation($account_id,$DbConnection)
 {
 	$query_plant = "SELECT customer_no,station_name FROM station USE INDEX(stn_type_uaid_status) WHERE type=1 AND user_account_id='$account_id' AND status=1";
 	$result_query = mysql_query($query_plant,$DbConnection);
+    $data=array();
 	while($row=mysql_fetch_object($result_query))
 	{
 		//$final_plant_list=$row->customer_no;
@@ -3631,7 +3701,7 @@ function getDetailAllInvoiceMdrm($tid_p,$sno_p,$DbConnection)
 		$tankertype =  $rowPending->tanker_type;
 		$sno_id = $rowPending->sno;*/
 		
-		$data[]=array('LRNO'=>$rowPending->lorry_no,'Vehicle'=>$rowPending->vehicle_no,'Transporter'=>$rowPending->transporter_account_id,'emailid'=>$rowPending->email,'mobileno'=>$rowPending->mobile,'drivername'=>$rowPending->driver_name,'drivermobile'=>$rowPending->driver_mobile,'qty'=>$rowPending->qty_kg,'fat_per'=>$rowPending->fat_percentage,'snf_per'=>$rowPending->snf_percentage,'fat_kg'=>$rowPending->fat_kg,'snf_kg'=>$rowPending->snf_kg,'milk_age'=>$rowPending->milk_age,'disp_time'=>$rowPending->dispatch_time,'target_time'=>$row->target_time, 'plant'=>$rowPending->plant,'chillplant'=>$row->chilling_plant,'tankertype'=>$rowPending->tanker_type,'sno_id'=>$rowPending->sno);	
+		$data[]=array('LRNO'=>$rowPending->lorry_no,'Vehicle'=>$rowPending->vehicle_no,'Transporter'=>$rowPending->transporter_account_id,'emailid'=>$rowPending->email,'mobileno'=>$rowPending->mobile,'drivername'=>$rowPending->driver_name,'drivermobile'=>$rowPending->driver_mobile,'qty'=>$rowPending->qty_kg,'fat_per'=>$rowPending->fat_percentage,'snf_per'=>$rowPending->snf_percentage,'fat_kg'=>$rowPending->fat_kg,'snf_kg'=>$rowPending->snf_kg,'milk_age'=>$rowPending->milk_age,'disp_time'=>$rowPending->dispatch_time,'target_time'=>$rowPending->target_time, 'plant'=>$rowPending->plant,'chillplant'=>$rowPending->chilling_plant,'tankertype'=>$rowPending->tanker_type,'sno_id'=>$rowPending->sno);	
 	}
 	return $data;
  
@@ -3639,7 +3709,8 @@ function getDetailAllInvoiceMdrm($tid_p,$sno_p,$DbConnection)
 function getDetailAllInvoiceMdrmNext($DbConnection)
 {
 	$queryPending = "SELECT * FROM invoice_mdrm USE INDEX(inmd_status_istatus) WHERE status=1 AND invoice_status=5";
-	$resultPending = mysql_query($queryPending,$DbConnection);
+	//echo $queryPending;
+        $resultPending = mysql_query($queryPending,$DbConnection);
 	while($rowPending = mysql_fetch_object($resultPending))
 	{
 		/*$LRNO = $rowPending->lorry_no;
@@ -3662,7 +3733,7 @@ function getDetailAllInvoiceMdrmNext($DbConnection)
 		$tankertype =  $rowPending->tanker_type;
 		$sno_id = $rowPending->sno;*/
 		
-		$data[]=array('LRNO'=>$rowPending->lorry_no,'Vehicle'=>$rowPending->vehicle_no,'Transporter'=>$rowPending->transporter_account_id,'emailid'=>$rowPending->email,'mobileno'=>$rowPending->mobile,'drivername'=>$rowPending->driver_name,'drivermobile'=>$rowPending->driver_mobile,'qty'=>$rowPending->qty_kg,'fat_per'=>$rowPending->fat_percentage,'snf_per'=>$rowPending->snf_percentage,'fat_kg'=>$rowPending->fat_kg,'snf_kg'=>$rowPending->snf_kg,'milk_age'=>$rowPending->milk_age,'disp_time'=>$rowPending->dispatch_time,'target_time'=>$row->target_time, 'plant'=>$rowPending->plant,'chillplant'=>$row->chilling_plant,'tankertype'=>$rowPending->tanker_type,'sno_id'=>$rowPending->sno);	
+		$data[]=array('LRNO'=>$rowPending->lorry_no,'Vehicle'=>$rowPending->vehicle_no,'Transporter'=>$rowPending->transporter_account_id,'emailid'=>$rowPending->email,'mobileno'=>$rowPending->mobile,'drivername'=>$rowPending->driver_name,'drivermobile'=>$rowPending->driver_mobile,'qty'=>$rowPending->qty_kg,'fat_per'=>$rowPending->fat_percentage,'snf_per'=>$rowPending->snf_percentage,'fat_kg'=>$rowPending->fat_kg,'snf_kg'=>$rowPending->snf_kg,'milk_age'=>$rowPending->milk_age,'disp_time'=>$rowPending->dispatch_time,'target_time'=>$rowPending->target_time, 'plant'=>$rowPending->plant,'chillplant'=>$rowPending->chilling_plant,'tankertype'=>$rowPending->tanker_type,'sno_id'=>$rowPending->sno);	
 	}
 	return $data;
  
@@ -3721,7 +3792,7 @@ function getDetailAllInvoiceMdrmNextAP($account_id,$DbConnection)
 		$tankertype =  $rowPending->tanker_type;
 		$sno_id = $rowPending->sno;*/
 		
-		$data[]=array('LRNO'=>$rowPending->lorry_no,'Vehicle'=>$rowPending->vehicle_no,'Transporter'=>$rowPending->transporter_account_id,'emailid'=>$rowPending->email,'mobileno'=>$rowPending->mobile,'drivername'=>$rowPending->driver_name,'drivermobile'=>$rowPending->driver_mobile,'qty'=>$rowPending->qty_kg,'fat_per'=>$rowPending->fat_percentage,'snf_per'=>$rowPending->snf_percentage,'fat_kg'=>$rowPending->fat_kg,'snf_kg'=>$rowPending->snf_kg,'milk_age'=>$rowPending->milk_age,'disp_time'=>$rowPending->dispatch_time,'target_time'=>$row->target_time, 'plant'=>$rowPending->plant,'chillplant'=>$row->chilling_plant,'tankertype'=>$rowPending->tanker_type,'sno_id'=>$rowPending->sno);	
+		$data[]=array('LRNO'=>$rowPending->lorry_no,'Vehicle'=>$rowPending->vehicle_no,'Transporter'=>$rowPending->transporter_account_id,'emailid'=>$rowPending->email,'mobileno'=>$rowPending->mobile,'drivername'=>$rowPending->driver_name,'drivermobile'=>$rowPending->driver_mobile,'qty'=>$rowPending->qty_kg,'fat_per'=>$rowPending->fat_percentage,'snf_per'=>$rowPending->snf_percentage,'fat_kg'=>$rowPending->fat_kg,'snf_kg'=>$rowPending->snf_kg,'milk_age'=>$rowPending->milk_age,'disp_time'=>$rowPending->dispatch_time,'target_time'=>$rowPending->target_time, 'plant'=>$rowPending->plant,'chillplant'=>$rowPending->chilling_plant,'tankertype'=>$rowPending->tanker_type,'sno_id'=>$rowPending->sno);	
 	}
 	return $data;
  
@@ -3741,19 +3812,20 @@ function getDetailAdminIDArray($child_acc,$DbConnection)
 }
 function getDetailAllPUA($account_id,$DbConnection)
 {
+        $data=array();
 	$query_plant="SELECT * FROM plant_user_assignment USE INDEX(puass_accid_status) WHERE status=1 AND  account_id='$account_id'";
 	//echo "query=".$query_plant."<br>";
 	$result_plant = mysql_query($query_plant,$DbConnection);
 	while($row_plant = mysql_fetch_object($result_plant))
 	{
 		//$plant_customer_no=$row_plant->plant_customer_no;
-		$data[]=array('plant_customer_no '=>$row_plant->plant_customer_no);	
+		$data[]=array('plant_customer_no'=>$row_plant->plant_customer_no);	
 	}
 	return $data;
 }
 function getDetailAllInvoiceMdrmAP1($plant_in,$DbConnection)
 {
-		$queryPending = "SELECT * FROM invoice_mdrm INDEX(inmd_status_istatus) WHERE status=1 AND invoice_status=5 AND (vehicle_no is NULL OR vehicle_no='')".
+		$queryPending = "SELECT * FROM invoice_mdrm USE INDEX(inmd_status_istatus) WHERE status=1 AND invoice_status=5 AND (vehicle_no is NULL OR vehicle_no='')".
 		" AND ($plant_in)";
 		//echo $queryPending;
 		$resultPending = mysql_query($queryPending,$DbConnection);
@@ -3779,20 +3851,22 @@ function getDetailAllInvoiceMdrmAP1($plant_in,$DbConnection)
 			$tankertype =  $rowPending->tanker_type;
 			$sno_id = $rowPending->sno;*/
 			
-			$data[]=array('LRNO'=>$rowPending->lorry_no,'Vehicle'=>$rowPending->vehicle_no,'Transporter'=>$rowPending->transporter_account_id,'emailid'=>$rowPending->email,'mobileno'=>$rowPending->mobile,'drivername'=>$rowPending->driver_name,'drivermobile'=>$rowPending->driver_mobile,'qty'=>$rowPending->qty_kg,'fat_per'=>$rowPending->fat_percentage,'snf_per'=>$rowPending->snf_percentage,'fat_kg'=>$rowPending->fat_kg,'snf_kg'=>$rowPending->snf_kg,'milk_age'=>$rowPending->milk_age,'disp_time'=>$rowPending->dispatch_time,'target_time'=>$row->target_time, 'plant'=>$rowPending->plant,'chillplant'=>$row->chilling_plant,'tankertype'=>$rowPending->tanker_type,'sno_id'=>$rowPending->sno);	
+			$data[]=array('LRNO'=>$rowPending->lorry_no,'Vehicle'=>$rowPending->vehicle_no,'Transporter'=>$rowPending->transporter_account_id,'emailid'=>$rowPending->email,'mobileno'=>$rowPending->mobile,'drivername'=>$rowPending->driver_name,'drivermobile'=>$rowPending->driver_mobile,'qty'=>$rowPending->qty_kg,'fat_per'=>$rowPending->fat_percentage,'snf_per'=>$rowPending->snf_percentage,'fat_kg'=>$rowPending->fat_kg,'snf_kg'=>$rowPending->snf_kg,'milk_age'=>$rowPending->milk_age,'disp_time'=>$rowPending->dispatch_time,'target_time'=>$rowPending->target_time, 'plant'=>$rowPending->plant,'chillplant'=>$rowPending->chilling_plant,'tankertype'=>$rowPending->tanker_type,'sno_id'=>$rowPending->sno);	
 		}
 		return $data;
 		
 }
 function getDetailAllAccountIdAccountAdIdAccount($admin_id,$DbConnection)
 {
+    $data=array();
+    
     $query = "SELECT account_id FROM account_detail USE INDEX(ad_acamdid) where account_admin_id='$admin_id'";
     //echo "<br>CHILD_ACC=".$query;
     $result = mysql_query($query,$DbConnection);
     while($row = mysql_fetch_object($result))
     {
             //$child_acc = $row->account_id;
-            $data[]=array('child_acc '=>$row->account_id);	
+            $data[]=array('child_acc'=>$row->account_id);	
     }
     return $data;
 }
@@ -4063,6 +4137,434 @@ function uidgidAccount($account_id_local,$DbConnection)
 	}
 	
 }
+//==========From Taseen===================================//
+function getAcccountAccountId($account_admin_id,$DbConnection)
+{
+        $query_admin_id="SELECT account_id FROM account_detail USE INDEX(ad_account_id) WHERE admin_id='$account_admin_id'";        
+	//echo $query_account_admin_id;
+        $result_admin_id = mysql_query($query_admin_id, $DbConnection);	
+	$row=mysql_fetch_row($result_admin_id);
+	return $row;
+}
+function lorrylistAll($DbConnection)
+{
+        $final_lorry_list=array();
+	$query_lorry_open = "SELECT lorry_no FROM invoice_mdrm WHERE invoice_status=1  AND status=1";	
+	$result_lorry_open = mysql_query($query_lorry_open,$DbConnection);
+        $num_rows=mysql_num_rows($result_lorry_open);
+        if($num_rows>0)
+	{
+            while($row_lorry_open=mysql_fetch_object($result_lorry_open))
+            {
+                    $final_lorry_list[]=$row_lorry_open->lorry_no;					
+            }
+            return $final_lorry_list;
+        }
+        else
+        {
+            return $final_lorry_list; 
+        }
+   
+}
+
+function lorrylistTransporterAll($self_child_transporter_id,$DbConnection)
+{
+        $final_lorry_list=array();
+        $query_lorry_open = "SELECT lorry_no FROM invoice_mdrm WHERE invoice_status=1 AND transporter_account_id IN($self_child_transporter_id) AND status=1";
+        //echo "QLO=".$query_lorry_open;
+        $result_lorry_open = mysql_query($query_lorry_open,$DbConnection);
+         $num_rows=mysql_num_rows($result_lorry_open);
+        if($num_rows>0)
+	{
+            while($row_lorry_open=mysql_fetch_object($result_lorry_open))
+            {
+                    $final_lorry_list[]=$row_lorry_open->lorry_no;					
+            }
+             return $final_lorry_list;
+        }
+        else
+        {
+            return $final_lorry_list; 
+        }
+	
+   
+}
+
+function lorrylistPlantAll($self_child_plantno,$DbConnection)
+{
+        $final_lorry_list=array();
+        $query_lorry_open = "SELECT lorry_no FROM invoice_mdrm WHERE invoice_status=1 AND plant IN($self_child_plantno) AND status=1";
+        //echo "QLO=".$query_lorry_open;
+        $result_lorry_open = mysql_query($query_lorry_open,$DbConnection);
+        $num_rows=mysql_num_rows($result_lorry_open);
+        if($num_rows>0)
+	{
+            while($row_lorry_open=mysql_fetch_object($result_lorry_open))
+            {
+                    $final_lorry_list[]=$row_lorry_open->lorry_no;					
+            }
+             return $final_lorry_list;
+        }
+        else
+        {
+            return $final_lorry_list; 
+        }
+	
+   
+}
+
+function getAllGPSVehicle($parent_admin_id,$DbConnection)
+{
+    $QueryALLVehicle="SELECT vehicle.vehicle_name , vehicle_assignment.device_imei_no ,vehicle.vehicle_id FROM vehicle,vehicle_grouping,vehicle_assignment WHERE vehicle_grouping.account_id=$parent_admin_id and vehicle_grouping.vehicle_id=vehicle.vehicle_id and vehicle_grouping.status=1 AND vehicle.status=1 AND vehicle_assignment.vehicle_id=vehicle.vehicle_id AND vehicle_assignment.status=1";
+    //echo $QueryALLVehicle; 
+    $resultALLVehicle = mysql_query($QueryALLVehicle,$DbConnection);
+    $num_rows=mysql_num_rows($resultALLVehicle);
+    $data=array();
+    if($num_rows>0)
+    {
+        while($rowALLVehicle=mysql_fetch_object($resultALLVehicle))
+        {                   
+            $data[]=array('vehicle_list'=>$rowALLVehicle->vehicle_name,'$vehicle_id_list'=>trim($rowALLVehicle->vehicle_id)); 
+        } 
+         return $data; 
+    }
+    else
+    {
+        return $data; 
+    }
+}
+ function getPendingPlantGPSTanker($String_Vehicle,$DbConnection)
+{
+    $QueryRemarks="SELECT pending_plant_tanker.*,account.user_id from pending_plant_tanker,account WHERE ($String_Vehicle) AND  pending_plant_tanker.status=1 AND account.status=1 AND pending_plant_tanker.edit_id=account.account_id AND pending_plant_tanker.pending_status=1";
+    $resultRemarks = mysql_query($QueryRemarks,$DbConnection);
+    $num_rows=mysql_num_rows($resultRemarks);
+    $final_data=array();$v_name_from_db="";
+    if($num_rows>0)
+    {
+        while($rowRemarks=mysql_fetch_object($resultRemarks))
+        {
+            $final_data[$rowRemarks->vehicle_name]=$rowRemarks->sno."###".$rowRemarks->vehicle_name."###".$rowRemarks->remarks."###".$rowRemarks->pending_status."###".$rowRemarks->edit_date."###".$rowRemarks->user_id."###".$rowRemarks->gps."###".$rowRemarks->edit_id;
+            $v_name_from_db.=trim($rowRemarks->vehicle_name).",";	
+        }
+        return array($final_data,$v_name_from_db);
+    }
+    else
+    {
+       return array($final_data,$v_name_from_db); 
+    }
+}
+function getPendingPlantNonGPSTanker($String_Vehicle_not,$DbConnection)
+{
+     $QueryRemarksNONGPS="SELECT pending_plant_tanker.*,account.user_id from pending_plant_tanker,account WHERE  ($String_Vehicle_not) AND  pending_plant_tanker.status=1 AND account.status=1 AND pending_plant_tanker.edit_id=account.account_id AND pending_plant_tanker.gps=0 AND pending_plant_tanker.pending_status=1 ";
+    //echo $QueryRemarksNONGPS;
+    $resultRemarksNONGPS = mysql_query($QueryRemarksNONGPS,$DbConnection);
+    $num_rows=mysql_num_rows($resultRemarksNONGPS);
+    $final_dataNONGPS=array();$v_name_from_db="";
+    if($num_rows>0)
+    {
+        while($rowRemarksNONGPS=mysql_fetch_object($resultRemarksNONGPS))
+        {
+            $final_dataNONGPS[]=$rowRemarksNONGPS->sno."###".$rowRemarksNONGPS->vehicle_name."###".$rowRemarksNONGPS->remarks."###".$rowRemarksNONGPS->pending_status."###".$rowRemarksNONGPS->edit_date."###".$rowRemarksNONGPS->user_id."###".$rowRemarksNONGPS->gps."###".$rowRemarksNONGPS->edit_id;                   
+            $v_name_from_db.=trim($rowRemarksNONGPS->vehicle_name).",";	
+        }
+        return array($final_dataNONGPS,$v_name_from_db);
+    }
+    else
+    {
+       return array($final_dataNONGPS,$v_name_from_db);
+    }
+}
+
+ function getPendingPlantTankerVID($vname,$DbConnection)
+{
+    $Query_FINDING="SELECT * from pending_plant_tanker WHERE vehicle_name='$vname[$cnt]' and status=1 ";
+    //echo $Query_FINDING;
+    $result_FINDING = mysql_query($Query_FINDING,$DbConnection);
+    $num_rows=mysql_num_rows($result_FINDING);
+    if($num_rows>0)
+    {
+        $vidno = mysql_fetch_object($result_FINDING);
+        $max_no1=$vidno->vehicle_id;
+    }
+    else
+    {
+        $max_no1="";
+    }
+    return $max_no1;
+}
+
+function UpdatePendingPlantTanker($account_id,$date,$remarks,$vid,$gps,$vname,$DbConnection)
+{
+    $query_update = "UPDATE pending_plant_tanker SET pending_status=1,create_id='$account_id',edit_id='$account_id',edit_date='$date' ,create_date='$date',remarks='$remarks',vehicle_id='$vid', gps='$gps' WHERE vehicle_name='$vname' AND status=1 ";
+    //echo "1a=". $query_update;
+    $result_update = mysql_query($query_update,$DbConnection);
+    return $result_update;
+}
+ function InsertPendingPlantTanker($account_id,$date,$remarks,$vid,$vname,$gps,$DbConnection)
+{
+    $Query="INSERT INTO `pending_plant_tanker`(pending_status,create_id,edit_id,edit_date,create_date,remarks,vehicle_id,vehicle_name,status,gps) VALUES(1,'$account_id','$account_id','$date',".
+        "'$date','$remarks','$vid','$vname',1,'$gps')";  
+    //echo $Query;
+    $Result=mysql_query($Query,$DbConnection);
+    return $Result;
+}
+function UpdatePendingPlantTankerClose($account_id,$date,$remarks,$vname,$DbConnection)
+{
+   $query_update = "UPDATE pending_plant_tanker SET pending_status=0,create_id='$account_id',edit_id='$account_id',edit_date='$date' ,create_date='$date',remarks='$remarks' WHERE vehicle_name='$vname' AND status=1 ";                                        
+     //echo "1a=". $query_update;
+    $result_update = mysql_query($query_update,$DbConnection);	
+    return $result_update;
+}
+function  UpdatePendingPlantTankerOpen($account_id,$date,$remarks,$vid,$gps,$vname,$DbConnection)
+{
+  $query_update = "UPDATE pending_plant_tanker SET pending_status=1,create_id='$account_id',edit_id='$account_id',edit_date='$date' ,create_date='$date',remarks='$remarks' ,vehicle_id='$vid', gps='$gps' WHERE vehicle_name='$vname' AND status=1 ";
+                //echo "1a=". $query_update;
+                $result_update = mysql_query($query_update,$DbConnection);  
+                 return $result_update;
+
+}
+
+function getDetailSelfChildCustomerNoStationNameStation($parent_admin_id,$account_id,$DbConnection)
+{
+	/*$query_plant = "SELECT customer_no,station_name FROM station USE INDEX(stn_type_uaid_status) WHERE type=1 AND user_account_id='$account_id' AND status=1";
+	$result_query = mysql_query($query_plant,$DbConnection);
+	$data=array();
+        while($row=mysql_fetch_object($result_query))
+	{
+		//$final_plant_list=$row->customer_no;
+		//$final_plant_name_list=$row->station_name;
+		
+		$data[]=array('final_plant_list'=>$row->customer_no,'final_plant_name_list'=>$row->station_name);	
+	}
+	return $data;*/
+        $self_child_plantno="";
+        $query_plant = "SELECT station.customer_no,station.station_name ,plant_user_assignment.plant_customer_no FROM station,plant_user_assignment WHERE station.type=1 AND station.user_account_id='$parent_admin_id' AND  station.status=1 AND plant_user_assignment.plant_customer_no= station.customer_no and plant_user_assignment.account_id='$account_id' AND plant_user_assignment.status=1";
+        //echo $query_plant;
+        $result_query = mysql_query($query_plant,$DbConnection);
+        while($row=mysql_fetch_object($result_query))
+        {
+                //echo $row->customer_no;
+                //$final_plant_list[]=$row->customer_no;
+                //$final_plant_name_list[]=$row->station_name;
+               // $self_child_plantno.="'$row->customer_no'".',';
+                $data[]=array('final_plant_list'=>$row->customer_no,'final_plant_name_list'=>$row->station_name);
+        }
+       return $data;
+        
+}
+
+function PolylineAssignVehilce($vehicle_id,$DbConnection)
+{
+	$query="SELECT vehicle_id FROM polyline_assignment WHERE vehicle_id='$vehicle_id' AND status='1'";
+        //echo "query=".$query;
+        $result=mysql_query($query,$DbConnection);
+        $num_rows=mysql_num_rows($result);
+	return $num_rows;
+}
+
+function getPolylineName($common_id1,$DbConnection)
+{
+        $data=array();
+	$query ="SELECT polyline_id,polyline_name from polyline WHERE user_account_id=$common_id1 AND status=1";
+	//echo "query=".$query;
+	$result = mysql_query($query, $DbConnection);
+	$num_rows=mysql_num_rows($result);
+        if($num_rows>0)
+	{
+           while($row=mysql_fetch_object($result))
+	   {
+                $polyline_id=$row->polyline_id;
+                $polyline_name=$row->polyline_name;
+                $data[]=array('polyline_id'=>$polyline_id,'polyline_name'=>$polyline_name);
+            }
+            return $data;
+        }
+        else
+        {
+            return $data;
+        }
+	
+}
+ function getVehicleIdPolylineassignment($polyline_id,$DbConnection)
+ {
+    $data=array();
+     $query="SELECT vehicle_id,vehicle_name from vehicle WHERE vehicle_id IN (SELECT vehicle_id from polyline_assignment WHERE polyline_id='$polyline_id' AND status=1) AND status=1";
+    //echo "query=".$query."<br>";
+    $result_1 = mysql_query($query, $DbConnection);
+    $num_rows_1=mysql_num_rows($result_1);
+    if($num_rows_1>0)
+     {
+        while($row_1=mysql_fetch_object($result_1))
+    
+        {
+             		
+            $data[]=array('vehicle_id'=>$row_1->vehicle_id,'vehicle_name'=>$row_1->vehicle_name);
+        }
+     }
+     return $data;
+ }
+ 
+ function getDetailAllPUAD($account_id,$DbConnection)
+{
+        $data=array();
+	$query_plant="SELECT * FROM plant_user_assignment USE INDEX(puass_accid_status) WHERE status=1 AND  account_id='$account_id'";
+	//echo "query=".$query_plant."<br>";
+	$result_plant = mysql_query($query_plant,$DbConnection);
+	while($row_plant = mysql_fetch_object($result_plant))
+	{
+		
+		$data[]=array('plant_customer_no'=>$row_plant->plant_customer_no,'sno'=>$row_plant->sno,'plant_customer_no'=>$row_plant->plant_customer_no);	
+	}
+	return $data;
+}
+
+function getStationAr($account_id,$plantcust,$DbConnection)
+{
+   $query_plant = "SELECT station_name FROM station WHERE type=1 AND user_account_id='$account_id' AND status=1 AND customer_no='$plantcust'";
+    //echo $query_plant;
+    $result_query = mysql_query($query_plant,$DbConnection);
+    $row_plant=mysql_fetch_row($result_query);
+   
+    return  $row_plant[0];
+}
+
+function getCustomerNoStationConditionStr($conditionStr,$DbConnection)
+{
+    $query_plant = "SELECT customer_no,station_name FROM station WHERE type=1 AND ($conditionStr) AND status=1";
+    $result_query = mysql_query($query_plant,$DbConnection);    
+    while($row=mysql_fetch_object($result_query))
+    {
+            //echo $row->customer_no;
+            $final_plant_list[]=$row->customer_no;
+            $final_plant_name_list[]=$row->station_name;
+            $dataCNS[]=array('final_plant_list'=>$row->customer_no,'final_plant_name_list'=>$row->station_name);
+    }
+    return $dataCNS;
+}
+
+function getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$order,$user_type,$DbConnection)
+{
+	if($user_type=="plant_raw_milk")
+	{
+		$plant_in=$conditionStr;
+		if($condition=='datebetweenonly_alldata') //$condition="datebetweenonly_alldata";$orderA="";$user_type="plant_raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type);
+		{
+			
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate' AND ($plant_in)";
+		}
+		else if($condition=='invoicestatus_alldataNoDate')  //$condition="invoicestatus_alldataNoDate";$orderA="1";$user_type="plant_raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type);
+		{
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							AND ($plant_in) AND invoice_mdrm.invoice_status=$order";
+		}
+		else //datebetween_invoicestatus //$condition="datebetween_invoicestatus";$orderA=$order;$user_type="plant_raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type);
+		{
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate' AND ($plant_in) AND invoice_mdrm.invoice_status='$order'";                                    
+		}
+	}
+	if($user_type=="raw_milk")
+	{
+		if($condition=='datebetweenonly_alldata') //$condition="datebetweenonly_alldata";$orderA="";$user_type="raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type);
+		{
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+						account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+						AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate' AND ($conditionStr) AND invoice_mdrm.invoice_status!=5";
+					
+		}
+		else if($condition=='invoicestatus_alldataNoDate') //$condition="invoicestatus_alldataNoDate";$orderA="1";$user_type="raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type);
+		{
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							 AND ($conditionStr) AND invoice_mdrm.invoice_status=1";
+		}
+		else //datebetween_invoicestatus //$condition="datebetween_invoicestatus";$orderA=$order;$user_type="raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type);
+		{
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate' AND ($conditionStr) AND invoice_mdrm.invoice_status='$order'";                                  
+		}
+	}
+	else //user_type=admin
+	{
+		if($condition=='datebetweenonly_alldata') //$condition="datebetweenonly_alldata";$orderA="";$user_type="admin";$conditionStr=""; getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type);
+		{
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+						account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1 
+						AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate'";
+			//echo $query;		
+		}
+		else if($condition=='invoicestatus_alldataNoDate') //$condition="invoicestatus_alldataNoDate";$orderA="1";$user_type="admin";$conditionStr=""; getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type);
+		{
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							AND invoice_mdrm.invoice_status=1 ";
+		}
+		else //datebetween_invoicestatus //$condition="datebetween_invoicestatus";$orderA=$order;$user_type="admin";$conditionStr="";  getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type);
+		{
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							AND invoice_mdrm.invoice_status='$order' AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate'";
+							//echo"Test";                                  
+		}
+	}
+	$result = mysql_query($query,$DbConnection);	
+	//return $result;
+        $data_invoice=array();
+	while($row_select = mysql_fetch_object($result))
+	{
+		$data_invoice[]=array('uid'=>$row_select->uid,'nme'=>$row_select->nme,'sno'=>$row_select->sno,'invoice_status'=>$row_select->invoice_status,'unload_accept_time'=>$row_select->unload_accept_time,'create_date'=>$row_select->create_date,'transporter_account_id'=>$row_select->transporter_account_id,'create_id'=>$row_select->create_id,'qty_kg'=>$row_select->qty_kg,'plant_acceptance_time'=>$row_select->plant_acceptance_time,'system_time'=>$row_select->system_time,'close_type'=>$row_select->close_type,'milk_age'=>$row_select->milk_age,'dispatch_time'=>$row_select->dispatch_time,'unload_estimated_time'=>$row_select->unload_estimated_time,'lorry_no'=>$row_select->lorry_no,'target_time'=>$row_select->target_time,'vehicle_no'=>$row_select->vehicle_no,'plant'=>$row_select->plant,'tanker_type'=>$row_select->tanker_type,'docket_no'=>$row_select->docket_no,'email'=>$row_select->email,'mobile'=>$row_select->mobile,'fat_percentage'=>$row_select->fat_percentage,'snf_percentage'=>$row_select->snf_percentage,'fat_kg'=>$row_select->fat_kg,'snf_kg'=>$row_select->snf_kg,'driver_name'=>$row_select->driver_name,'driver_mobile'=>$row_select->driver_mobile,'validity_time'=>$row_select->validity_time,'chilling_plant'=>$row_select->chilling_plant,'unload_estimated_datetime'=>$row_select->unload_estimated_datetime,'fat_per_ft'=>$row_select->fat_per_ft,'snf_per_ft'=>$row_select->snf_per_ft,'qty_ct'=>$row_select->qty_ct,'temp_ct'=>$row_select->temp_ct,'acidity_ct'=>$row_select->acidity_ct,'mbrt_min_ct'=>$row_select->mbrt_min_ct,'mbrt_rm_ct'=>$row_select->mbrt_rm_ct,'mbrt_br_ct'=>$row_select->mbrt_br_ct,'protien_per_ct'=>$row_select->protien_per_ct,'sodium_ct'=>$row_select->sodium_ct,'testing_status'=>$row_select->testing_status,'fat_per_rt'=>$row_select->fat_per_rt,'snf_per_rt'=>$row_select->snf_per_rt,'adultration_ct'=>$row_select->adultration_ct,'otheradultration_ct'=>$row_select->otheradultration_ct);
+
+	}
+        return $data_invoice;
+}
+
+function getAccountAndDetail($account_id,$DbConnection)
+{
+    $query_tid = "SELECT account.user_id as uid,account_detail.name as nme FROM account ,account_detail USE INDEX(ad_account_id) WHERE account.account_id=$account_id AND account.status=1 AND account_detail.account_id=account.account_id ";
+        $result_tid = mysql_query($query_tid, $DbConnection);
+        $row_tid = mysql_fetch_object($result_tid);
+        $user_Tid = $row_tid->uid;
+        return $user_Tid;
+}
+
+function getVehicleAndImeiFromName($vehicle_name,$DbConnection)
+{
+    $data=array();
+    $query_vehicle = "SELECT vehicle_assignment.device_imei_no, vehicle.vehicle_id FROM vehicle_assignment, vehicle WHERE  vehicle.vehicle_name = '$vehicle_name' AND vehicle.status =1 AND vehicle.vehicle_id = vehicle_assignment.vehicle_id AND vehicle_assignment.status=1";
+    //echo $query_vehicle."<br>";
+    $resultvehicle=mysql_query($query_vehicle,$DbConnection);
+    if(mysql_num_rows($resultvehicle) >0)
+    {		
+            $rowv=mysql_fetch_object($resultvehicle);
+            //$vehicle_id=$rowv->vehicle_id;
+            //$vehicle_imei=$rowv->device_imei_no;
+            $data[]=array('vehicle_id'=>$rowv->vehicle_id,'device_imei_no'=>$rowv->device_imei_no);
+    }
+    return $data;
+}
+
+function getVehicleAndTypeFromVserial($vserial,$DbConnection)
+{
+    $data=array();
+    $query_vehicle = "SELECT vehicle_assignment.device_imei_no, vehicle.vehicle_name, vehicle.vehicle_type FROM vehicle_assignment, vehicle WHERE  vehicle_assignment.device_imei_no = '$vserial' AND vehicle.status =1 AND vehicle.vehicle_id = vehicle_assignment.vehicle_id AND vehicle_assignment.status=1";
+	//echo $query_vehicle."<br>";
+	$resultvehicle=mysql_query($query_vehicle,$DbConnection);
+        if(mysql_num_rows($resultvehicle) >0)
+        {
+            $rowv=mysql_fetch_object($resultvehicle);
+            $vehicle_name=$rowv->vehicle_name;
+            $vtype=$rowv->vehicle_type;
+            $data[]=array('vehicle_type'=>$rowv->vehicle_type,'vehicle_name'=>$rowv->vehicle_name);
+        }
+    return $data;
+}
+
+//========================================================//
 //////////// end of hierarchy class ////////
 ///////////// end of excalation ////////////
 

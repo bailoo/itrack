@@ -3,7 +3,7 @@ package in.co.itracksolution.model;
 import java.util.Date;
 
 public class GapLog {
-	private String imei, date, startLatitude, startLongitude, startLocation, endLatitude, endLongitude, endLocation; 
+	private String imei, date, type, startLatitude, startLongitude, startLocationId, startLocationName, endLatitude, endLongitude, endLocationId, endLocationName; 
 	private Date startTime, endTime, logTime;
 	
 	public static final String TABLE_NAME = "gaplog";
@@ -13,19 +13,22 @@ public class GapLog {
 		super();
 	}
 	
-	public GapLog(String imei, String date, Date startTime, String startLatitude, String startLongitude, String startLocation, String endLatitude, String endLongitude, String endLocation, Date endTime, Date logTime ) 
+	public GapLog(String imei, String date, String type, Date startTime, String startLatitude, String startLongitude, String startLocationId, String startLocationName, Date endTime, String endLatitude, String endLongitude, String endLocationId, String endLocationName, Date logTime ) 
 	{
 		super();
 		this.imei 		= imei;
 		this.date 		= date;
+		this.type 		= type;
 		this.startTime 		= startTime;
-		this.startLatitude 	= startLatitude ;
-		this.startLongitude 	= startLongitude ;
-		this.startLocation 	= startLocation ;
+		this.startLatitude 	= startLatitude;
+		this.startLongitude 	= startLongitude;
+		this.startLocationId 	= startLocationId;
+		this.startLocationName 	= startLocationName;
 		this.endTime 		= endTime;
 		this.endLatitude 	= endLatitude;
 		this.endLongitude 	= endLongitude;
-		this.endLocation 	= endLocation;
+		this.endLocationId 	= endLocationId;
+		this.endLocationName 	= endLocationName;
 		this.logTime 		= logTime;
 	}
 
@@ -33,14 +36,17 @@ public class GapLog {
 	{
 		this.imei 		= f.imei;
 		this.date 		= f.date;
+		this.type 		= f.type;
 		this.startTime 		= f.startTime;
 		this.startLatitude 	= f.startLatitude ;
 		this.startLongitude 	= f.startLongitude ;
-		this.startLocation 	= f.startLocation ;
+		this.startLocationId 	= f.startLocationId;
+		this.startLocationName 	= f.startLocationName;
 		this.endLatitude 	= f.endLatitude;
 		this.endLongitude 	= f.endLongitude;
-		this.endLocation 	= f.endLocation;
 		this.endTime 		= f.endTime;
+		this.endLocationId 	= f.endLocationId;
+		this.endLocationName 	= f.endLocationName;
 		this.logTime 		= f.logTime;
 	}
 
@@ -55,6 +61,12 @@ public class GapLog {
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	public Date getStartTime() {
 		return startTime;
@@ -74,11 +86,17 @@ public class GapLog {
 	public void setStartLongitude(String startLongitude) {
 		this.startLongitude= startLongitude;
 	} 
-	public String getStartLocation() {
-		return startLocation;
+	public String getStartLocationId() {
+		return startLocationId;
 	}
-	public void setStartLocation(String startLocation) {
-		this.startLocation = startLocation ;
+	public void setStartLocationId(String startLocationId) {
+		this.startLocationId = startLocationId;
+	} 
+	public String getStartLocationName() {
+		return startLocationName;
+	}
+	public void setStartLocationName(String startLocationName) {
+		this.startLocationName = startLocationName;
 	} 
 	public Date getEndTime() {
 		return endTime;
@@ -98,11 +116,17 @@ public class GapLog {
 	public void setEndLongitude(String endLongitude) {
 		this.endLongitude= endLongitude;
 	} 
-	public String getEndLocation() {
-		return endLocation;
+	public String getEndLocationId() {
+		return endLocationId;
 	}
-	public void setEndLocation(String endLocation) {
-		this.endLocation = endLocation ;
+	public void setEndLocationId(String endLocationId) {
+		this.endLocationId = endLocationId;
+	} 
+	public String getEndLocationName() {
+		return endLocationName;
+	}
+	public void setEndLocationName(String endLocationName) {
+		this.endLocationName = endLocationName;
 	} 
 	public Date getLogTime() {
 		return logTime;

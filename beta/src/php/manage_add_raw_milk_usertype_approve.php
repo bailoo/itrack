@@ -11,13 +11,29 @@
 	//echo 'payas='.$account_id;
 	//*****************************************Getting Admin Account ID and Current UserID*******************************************//	
 	global $parent_admin_id;
-	
-	$row_account_admin_id =getAccountAdminId($account_id,$DbConnection); 	
-	$parent_admin_id=getAccountIdByAdminId($row_account_admin_id,$DbConnection);;
+        /* 
+	$query_account_admin_id="SELECT account_admin_id FROM account_detail WHERE account_id='$account_id'";
+	//echo $query_account_admin_id;
+	$result_account_admin_id = mysql_query($query_account_admin_id, $DbConnection);
+	$row_account_admin_id =mysql_fetch_object($result_account_admin_id);
+        */
+        $row_account_admin_id =getAccountAdminId($account_id,$DbConnection);
+	/*
+	$query_admin_id="SELECT account_id FROM account_detail WHERE admin_id='$row_account_admin_id->account_admin_id'";
+	//echo $query_admin_id;
+	$result_admin_id = mysql_query($query_admin_id, $DbConnection);
+	$row_admin_id =mysql_fetch_object($result_admin_id);
+	$parent_admin_id=$row_admin_id->account_id;*/
+        $parent_admin_id=getAccountIdByAdminId($row_account_admin_id,$DbConnection);
 	
 	global $user_name;
-	
-	$user_name=getUserID($account_id,1,$DbConnection);;
+	/*
+        $query="SELECT user_id from account where account_id='$account_id'";
+	$result=mysql_query($query,$DbConnection);
+	$row=mysql_fetch_object($result);
+	$user_name=$row->user_id;
+        */
+        $user_name=getUserID($account_id,1,$DbConnection);
 	
 	$vehicle_list=array();
 	get_user_vehicle($root,$account_id);
@@ -53,7 +69,7 @@
     $final_chillplant_name_list[0]="";
 	
 	
-	
+	$final_lorry_list=array();
 	if($user_type=="raw_milk"){		
 		$raw_milk_account = assign_to_till_root($account_id);
 		
@@ -65,6 +81,15 @@
 		    foreach($raw_milk_account as $rma)
 			{
 				//plant
+				/*$query_plant = "SELECT customer_no,station_name FROM station WHERE type=1 AND user_account_id='$rma' AND status=1";
+				$result_query = mysql_query($query_plant,$DbConnection);
+				while($row=mysql_fetch_object($result_query))
+				{
+					//echo $row->customer_no;
+					$final_plant_list[]=$row->customer_no;
+					$final_plant_name_list[]=$row->station_name;
+				}*/
+				//plant
 				$DataPlant = getDetailAllCustomerNoStationNameStation($rma,$DbConnection);
 				foreach($DataPlant as $dt)
 				{
@@ -73,14 +98,31 @@
 					
 				}
 				
-				
 			}
 			
 		}
 	}
 	else
 	{
-		//plant
+		/*//plant
+		$query_plant = "SELECT customer_no,station_name FROM station WHERE type=1 AND user_account_id='$parent_admin_id' AND status=1";
+		$result_query = mysql_query($query_plant,$DbConnection);
+		while($row=mysql_fetch_object($result_query))
+		{
+			//echo $row->customer_no;
+			$final_plant_list[]=$row->customer_no;
+			$final_plant_name_list[]=$row->station_name;
+		}
+		//chilling plant
+		$query_chillplant = "SELECT customer_no,station_name FROM station WHERE type=2 AND user_account_id='$parent_admin_id' AND status=1";
+		$result_chillquery = mysql_query($query_chillplant,$DbConnection);
+		while($rowchill=mysql_fetch_object($result_chillquery))
+		{
+			//echo $row->customer_no;
+			$final_chillplant_list[]=$rowchill->customer_no;
+			$final_chillplant_name_list[]=$rowchill->station_name;
+		}*/
+               //plant
 		
 		$DataPlantP = getDetailAllCustomerNoStationNameStation($parent_admin_id,$DbConnection);
 		foreach($DataPlantP as $dt)
@@ -90,8 +132,7 @@
 			
 		}
 		
-		//chilling plant
-		
+		//chilling plant		
 		$dataChil = getCustomerNoStationNext($parent_admin_id,$DbConnection);
 		foreach($dataChil as $dt)
 		{
@@ -99,12 +140,27 @@
 			$final_chillplant_list[]=$dt['final_chillplant_list'];
 			$final_chillplant_name_list[]=$dt['final_chillplant_name_list'];
 		}
-		
 	}	/*******************************************************************************************************************************/
 	
-	//default chilling plant
-	$default_customer_no=getCustomerNoTCPA($account_id,$DbConnection);;
 	
+	
+	//default chilling plant
+	/*$default_customer_no="";
+	$query_default_chillplant = "SELECT customer_no FROM transporter_chilling_plant_assignment WHERE account_id='$account_id' AND status=1";
+	//echo $query_default_chillplant."<br>";
+	$result_default_chillquery = mysql_query($query_default_chillplant,$DbConnection);
+	$numrows_default_chillquery  = mysql_num_rows($result_default_chillquery);	
+	if($numrows_default_chillquery!=0)
+	{
+		$row=mysql_fetch_object($result_default_chillquery);
+		$default_customer_no = $row->customer_no;
+		//echo "RM=".$default_customer_no;
+	}
+	else{
+		$default_customer_no ="";
+	}
+        */
+        $default_customer_no=getCustomerNoTCPA($account_id,$DbConnection);;
 	global $self_child_transporter_id;
 	$self_child_transporter_id="";
 	global $option_transporter;
@@ -128,7 +184,11 @@
 		//echo "account_id=".$account_id_local."group_id=".$group_id_local."<br>";
 		$account_name=$AccountNode->data->AccountName;
 		$ChildCount=$AccountNode->ChildCnt;		
-		$rowType=getUsertypeUserIDAccount($account_id_local,$DbConnection);
+		/*$queryType="SELECT user_type,user_id from account WHERE account_id='$account_id_local'";
+		//echo "<br>".$queryType;
+		$resultType=mysql_query($queryType,$DbConnection);
+		$rowType=mysql_fetch_row($resultType);*/
+                $rowType=getUsertypeUserIDAccount($account_id_local,$DbConnection);
 		$function_account_type=$rowType[0];
 		$user_id1=$rowType[1];
 		//echo "userType=".$function_account_type."<br>";
@@ -152,7 +212,14 @@
 	if($user_type=="raw_milk")
 	{
 		$default_customer_no_supplier=array();
-
+		/*$query_default_chillplant_supplier = "SELECT customer_no FROM transporter_chilling_plant_assignment WHERE account_id IN($self_child_transporter_id) AND status=1";
+		//echo $query_default_chillplant_supplier."<br>";
+		$query_default_chillplant_supplier = mysql_query($query_default_chillplant_supplier,$DbConnection);
+		while($rowchillA=mysql_fetch_object($query_default_chillplant_supplier))
+		{
+			$default_customer_no_supplier[] = $rowchillA->customer_no;
+			
+		}*/               
 		$dataCN = getDetailAllCustomerNoTCPA($self_child_transporter_id,$DbConnection);
 		foreach($dataCN as $dt)
 		{
@@ -160,13 +227,23 @@
 			$default_customer_no_supplier[] = $dt['default_customer_no_supplier'];
 			
 		}
+                
 		$conditionStr="";
 		foreach($default_customer_no_supplier as $crma)
 		{
 			$conditionStr=$conditionStr." station.customer_no='$crma' OR ";
 		}
 		$conditionStr=substr($conditionStr,0,-3);
-		//chill plant
+		/*//chill plant
+		$query_chillplant = "SELECT customer_no,station_name FROM station WHERE type=2 AND ($conditionStr) AND status=1";
+		//echo $query_chillplant;
+		$result_chillquery = mysql_query($query_chillplant,$DbConnection);
+		while($rowchill=mysql_fetch_object($result_chillquery))
+		{
+			$final_chillplant_list[]=$rowchill->customer_no;
+			$final_chillplant_name_list[]=$rowchill->station_name;
+		}*/
+                //chill plant
 		
 		$dataCNN = getCustomerNoCustNameStation($conditionStr,$DbConnection);
 		foreach($dataCNN as $dt)
@@ -174,7 +251,19 @@
 			$final_chillplant_list[]=$dt['final_chillplant_list'];
 			$final_chillplant_name_list[]=$dt['final_chillplant_name_list'];
 		}
+		
+		//getting invoice lorry number of only open for desired transporter
+		/*$query_lorry_open = "SELECT lorry_no FROM invoice_mdrm WHERE invoice_status=1 AND transporter_account_id IN($self_child_transporter_id) AND status=1";
+		//echo "QLO=".$query_lorry_open;
+		$result_lorry_open = mysql_query($query_lorry_open,$DbConnection);
+		while($row_lorry_open=mysql_fetch_object($result_lorry_open))
+		{
+			$final_lorry_list[]=$row_lorry_open->lorry_no;					
+		}*/
+                $final_lorry_list=lorrylistTransporterAll($self_child_transporter_id,$DbConnection);
+		//=================================================================
 	}
+	//print_r($final_lorry_list);
 	
 	
 	function read_sent_db($account_id)
@@ -186,33 +275,55 @@
 	
 		//------fetching from database----------//
 		global $DbConnection;
-		$queryPending = "SELECT * FROM invoice_mdrm WHERE status=1 AND invoice_status=5 AND (vehicle_no is NULL OR vehicle_no='') ".
-		"AND transporter_account_id IN ($account_id) ";
+                
+		/*$queryPending = "SELECT * FROM invoice_mdrm WHERE status=1 AND invoice_status=5 AND (vehicle_no is NULL OR vehicle_no='') AND transporter_account_id IN ($account_id) ";
 		//echo $queryPending;
-		$dataInv = getDetailAllInvoiceMdrmNextAP($account_id,$DbConnection);
-		foreach($dataInv as $dt)
-		{			
-			$LRNO[] = $dt['LRNO'];
-			$Vehicle[] = $dt['Vehicle'];
-			$Transporter[] =  $dt['Transporter'];
-			$emailid[] = $dt['emailid'];
-			$mobileno[] =$dt['mobileno'];
-			$drivername[] = $dt['drivername'];
-			$drivermobile[] = $dt['drivermobile'];
-			$qty[] = $dt['qty'];
-			$fat_per[] = $dt['fat_per'];
-			$snf_per[] = $dt['snf_per'];
-			$fat_kg[] = $dt['fat_kg'];
-			$snf_kg[] = $dt['snf_kg'];
-			$milk_age[] = $dt['milk_age'];
-			$disp_time[] = $dt['disp_time'];
-			$target_time[] = $dt['target_time'];
-			$plant[] = $dt['plant'];
-			$chillplant = $dt['chillplant'];
-			$tankertype[] = $dt['tankertype'];
-			$sno_id[] = $dt['sno_id'];
+		$resultPending = mysql_query($queryPending,$DbConnection);
+		while($rowPending = mysql_fetch_object($resultPending))
+		{
+			$LRNO[] = $rowPending->lorry_no;
+			$Vehicle[] = $rowPending->vehicle_no;
+			$Transporter[] =  $rowPending->transporter_account_id;
+			$emailid[] = $rowPending->email;
+			$mobileno[] = $rowPending->mobile;
+			$drivername[] = $rowPending->driver_name;
+			$drivermobile[] = $rowPending->driver_mobile;
+			$qty[] = $rowPending->qty_kg;
+			$fat_per[] = $rowPending->fat_percentage;
+			$snf_per[] = $rowPending->snf_percentage;
+			$fat_kg[] = $rowPending->fat_kg;
+			$snf_kg[] = $rowPending->snf_kg;
+			$milk_age[] = $rowPending->milk_age;
+			$disp_time[] = $rowPending->dispatch_time;
+			$target_time[] = $rowPending->target_time;
+			$plant[] = $rowPending->plant;
+			$chillplant[] = $rowPending->chilling_plant;
+			$tankertype[] =  $rowPending->tanker_type;
+			$sno_id[] = $rowPending->sno;
+		}*/
+		 $rowPending_data=getDetailAllInvoiceMdrmNextAP($account_id,$DbConnection);
+                 foreach($rowPending_data as $rowPending )
+		{
+			$LRNO[] = $rowPending['LRNO'];
+			$Vehicle[] = $rowPending['Vehicle'];
+			$Transporter[] =  $rowPending['Transporter'];
+			$emailid[] = $rowPending['emailid'];
+			$mobileno[] = $rowPending['mobileno'];
+			$drivername[] = $rowPending['drivername'];
+			$drivermobile[] = $rowPending['drivermobile'];
+			$qty[] = $rowPending['qty'];
+			$fat_per[] = $rowPending['fat_per'];
+			$snf_per[] = $rowPending['snf_per'];
+			$fat_kg[] = $rowPending['fat_kg'];
+			$snf_kg[] = $rowPending['snf_kg'];
+			$milk_age[] = $rowPending['milk_age'];
+			$disp_time[] = $rowPending['disp_time'];
+			$target_time[] = $rowPending['target_time'];
+			$plant[] = $rowPending['plant'];
+			$chillplant[] = $rowPending['chillplant'];
+			$tankertype[] =  $rowPending['tankertype'];
+			$sno_id[] =$rowPending['sno_id'];
 		}
-		 
 		//---------------------------------------//
 
 	}
@@ -283,6 +394,7 @@
 				";
 					
 					//include('manage_add_raw_milk_usertype_interface.php');
+					
 					include('manage_add_raw_milk_usertype_interface_approve.php');
 					
 						
@@ -443,7 +555,7 @@
     <input type="hidden" id="tmp_serial"/>
 	<script>
 	//alert(tot_loop);
-	if(tot_loop > 0)
+	/*if(tot_loop > 0)
 	{
 		
 		document.getElementById("enter_button").disabled=false;
@@ -453,7 +565,7 @@
 	{
 		//alert("0");
 		document.getElementById("enter_button").disabled=true;
-	}
+	}*/
 	</script>
 	</form>';
 	
@@ -511,13 +623,32 @@
 		global $parent_account_ids;	 
 		global $acc_size;			
 			
-		
-		$admin_id=getAccountAdminId($account_id_local1,$DbConnection);			
-		
-		$function_account_id=getAccountIdByAdminId($admin_id,$DbConnection);		
-	
-		$function_account_type=getUserTypeAccount($function_account_id,$DbConnection);
-		
+		/*$query = "SELECT account_admin_id FROM account_detail WHERE account_id='$account_id_local1'";	
+		//echo $query;
+		$result=mysql_query($query,$DbConnection);
+		$row=mysql_fetch_row($result);
+		$admin_id=$row[0];*/
+                $row=  getAcccountAdminIdAdminId($account_id_local1,$DbConnection);
+                $admin_id=$row[0];
+			
+		/*$query1 = "SELECT account_id FROM account_detail WHERE admin_id='$admin_id'";
+		//echo "<br>".$query;	
+		$result=mysql_query($query1,$DbConnection);
+		$row1=mysql_fetch_row($result);
+		$function_account_id=$row1[0];*/
+                $row1=getAccountIdByAdminId($admin_id,$DbConnection);
+                $function_account_id=$row1;
+		//echo "account_id=".$function_account_id.'<br>';
+		//echo "IN=".	$function_account_id;
+		/*$queryType="SELECT user_type from account WHERE account_id='$function_account_id'";
+		//echo "<br>".$queryType;
+		$resultType=mysql_query($queryType,$DbConnection);
+		$rowType=mysql_fetch_row($resultType);
+		$function_account_type=$rowType[0];
+		//echo "userType=".$function_account_type."<br>";*/
+		$utype=getUserTypeAccount($function_account_id,$DbConnection);
+                $function_account_type=$utype;
+                
 		if($function_account_type!='raw_milk')
 		{
 			$parent_account_ids[]=$function_account_id;

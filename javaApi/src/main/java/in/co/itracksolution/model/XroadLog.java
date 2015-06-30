@@ -3,7 +3,7 @@ package in.co.itracksolution.model;
 import java.util.Date;
 
 public class XroadLog {
-	private String imei, date, xRoadId, xRoadCode, xRoadName, location, latitude, longitude; 
+	private String imei, date, roadId, roadName, locationId, locationName, latitude, longitude; 
   	private float speed;
 	private int haltDuration;
 	private Date dTime, sTime, logTime;
@@ -15,39 +15,39 @@ public class XroadLog {
 		super();
 	}
 	
-	public XroadLog(String imei, String date, Date dTime, Date sTime, String xRoadId, String xRoadCode, String xRoadName, int haltDuration, float speed, String location, String latitude, String longitude, Date logTime ) 
+	public XroadLog(String imei, String date, Date dTime, Date sTime, String roadId, String roadName, int haltDuration, float speed, String locationId, String locationName, String latitude, String longitude, Date logTime ) 
 	{
 		super();
-		this.imei = imei;
-		this.date = date;
-		this.dTime = dTime;
-		this.sTime = sTime;
-		this.xRoadId = xRoadId;
-		this.xRoadCode = xRoadCode;
-		this.xRoadName = xRoadName;
-		this.haltDuration = haltDuration;
-		this.speed = speed;
-		this.location = location;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.logTime = logTime;
+		this.imei 		= imei;
+		this.date 		= date;
+		this.dTime 		= dTime;
+		this.sTime 		= sTime;
+		this.roadId 		= roadId;
+		this.roadName 		= roadName;
+		this.haltDuration 	= haltDuration;
+		this.speed 		= speed;
+		this.locationId 	= locationId;
+		this.locationName 	= locationName;
+		this.latitude 		= latitude;
+		this.longitude 		= longitude;
+		this.logTime 		= logTime;
 	}
 
 	public XroadLog(XroadLog f)
 	{
-		this.imei = f.imei;
-		this.date = f.date;
-		this.dTime = f.dTime;
-		this.sTime = f.sTime;
-		this.xRoadId = f.xRoadId;
-		this.xRoadCode = f.xRoadCode;
-		this.xRoadName = f.xRoadName;
-		this.haltDuration = f.haltDuration;
-		this.speed = f.speed;
-		this.location = f.location;
-		this.latitude = f.latitude;
-		this.longitude = f.longitude;
-		this.logTime = f.logTime;
+		this.imei 		= f.imei;
+		this.date 		= f.date;
+		this.dTime 		= f.dTime;
+		this.sTime 		= f.sTime;
+		this.roadId 		= f.roadId;
+		this.roadName 		= f.roadName;
+		this.haltDuration 	= f.haltDuration;
+		this.speed 		= f.speed;
+		this.locationId 	= f.locationId;
+		this.locationName 	= f.locationName;
+		this.latitude 		= f.latitude;
+		this.longitude 		= f.longitude;
+		this.logTime 		= f.logTime;
 	}
 
 	public String getImei() {
@@ -74,23 +74,17 @@ public class XroadLog {
 	public void setSTime(Date serverTime) {
 		this.sTime = serverTime;
 	}
-	public String getxRoadId() {
-		return xRoadId;
+	public String getRoadId() {
+		return roadId;
 	}
-	public void setxRoadId(String xRoadId) {
-		this.xRoadId = xRoadId;
+	public void setRoadId(String roadId) {
+		this.roadId = roadId;
 	} 
-	public String getxRoadCode() {
-		return xRoadCode;
+	public String getRoadName() {
+		return roadName;
 	}
-	public void setxRoadCode(String xRoadCode) {
-		this.xRoadCode = xRoadCode;
-	} 
-	public String getxRoadName() {
-		return xRoadName;
-	}
-	public void setxRoadName(String xRoadName) {
-		this.xRoadName = xRoadName;
+	public void setRoadName(String roadName) {
+		this.roadName = roadName;
 	} 
 	public int getHaltDuration() {
 		return haltDuration;
@@ -104,11 +98,17 @@ public class XroadLog {
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	} 
-	public String getLocation() {
-		return location;
+	public String getLocationId() {
+		return locationId;
 	}
-	public void setLocation(String location) {
-		this.location = location ;
+	public void setLocationId(String locationId) {
+		this.locationId = locationId;
+	} 
+	public String getLocationName() {
+		return locationName;
+	}
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
 	} 
 	public String getLatitude() {
 		return latitude;

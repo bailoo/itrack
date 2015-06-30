@@ -23,15 +23,21 @@
 	
 	
 	//chilling plant
-	$query_chillplant = "SELECT customer_no,station_name FROM station WHERE type=2 AND user_account_id='$account_id' AND status=1";
+	/*$query_chillplant = "SELECT customer_no,station_name FROM station WHERE type=2 AND user_account_id='$account_id' AND status=1";
 	$result_chillquery = mysql_query($query_chillplant,$DbConnection);
 	while($rowchill=mysql_fetch_object($result_chillquery))
 	{
 		//echo $row->customer_no;
 		$final_chillplant_list[]=$rowchill->customer_no;
 		$final_chillplant_name_list[]=$rowchill->station_name;
+	}*/
+        $datarowchill=getCustomerNoStationNext($account_id,$DbConnection);
+	foreach($datarowchill as $rowchill)
+	{
+		//echo $row->customer_no;
+		$final_chillplant_list[]=$rowchill['final_chillplant_list'];
+		$final_chillplant_name_list[]=$rowchill['final_chillplant_name_list'];
 	}
-	
 	
 		echo '<br><br><br>';
 		$flag_substation = 0;
@@ -52,15 +58,15 @@
 				$flag_hindalco_invoice = 1;
 			}
 		}		
-
+                /*
 		$query_parent_admin = "SELECT admin_id FROM account_detail WHERE account_id='$account_id'";
 		$result_admin = mysql_query($query_parent_admin,$DbConnection);
 		$row_admin = mysql_fetch_object($result_admin);
-		$admin_id1 = $row_admin->admin_id;
-
+		$admin_id1 = $row_admin->admin_id;*/
+                $admin_id1 =getAdminId($accountId,$DbConnection);
 		
 		
-	 if($flag_raw_milk ) //else if($flag_raw_milk || $flag_hindalco_invoice)
+                if($flag_raw_milk ) //else if($flag_raw_milk || $flag_hindalco_invoice)
 		{
 			//$query = "SELECT account_id,user_id FROM account WHERE user_type='raw_milk' AND status=1";
 

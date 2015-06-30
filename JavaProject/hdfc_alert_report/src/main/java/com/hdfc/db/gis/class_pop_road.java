@@ -32,8 +32,8 @@ public class class_pop_road {
 		//System.out.println("PostgreSQL JDBC Driver Registered!");
 		Connection connection=null;
 		try{
-			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/gisgraphy","postgres","neon04$");
-			//connection = DriverManager.getConnection("jdbc:postgresql://52.74.144.159:5432/gisgraphy","postgres","neon04$");
+			//connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/gisgraphy","postgres","neon04$");
+			connection = DriverManager.getConnection("jdbc:postgresql://52.74.144.159:5432/gisgraphy","postgres","neon04$");
 		}catch(SQLException e){
 			//System.out.println("Connection Failed!Check output console");
 			e.printStackTrace();
@@ -46,7 +46,7 @@ public class class_pop_road {
 				Statement stmt = connection.createStatement();
 				 //Execute the SQL statement and get the results in a Resultset
 				String query="SELECT id, name, astext(location) as lnglat,gid, isin,CAST (st_distance_sphere(shape, st_setsrid(st_makepoint("+lng+","+lat+"),4326)) AS INT) AS d FROM openstreetmap WHERE st_distance_sphere(shape, st_setsrid(st_makepoint("+lng+","+lat+"),4326))<="+radius+" ORDER BY shape <-> st_setsrid(st_makepoint("+lng+","+lat+"), 4326)  LIMIT 1";
-			   System.out.println(query);
+			   //System.out.println(query);
 				ResultSet rs1 = stmt.executeQuery(query);
 			    // Iterate through the ResultSet, displaying two values
 			    // for each row using the getString method
@@ -70,7 +70,7 @@ public class class_pop_road {
 		}
 	}
 	//========pop by latlng array
-	class_pop_road(ArrayList<LatLng> latlngArray,int radius){
+	public class_pop_road(ArrayList<LatLng> latlngArray,int radius){
 			
 		try{
 			Class.forName("org.postgresql.Driver");
@@ -104,7 +104,7 @@ public class class_pop_road {
 			
 					//Execute the SQL statement and get the results in a Resultset
 					String query="SELECT id, name, astext(location) as lnglat,gid, isin,CAST (st_distance_sphere(shape, st_setsrid(st_makepoint("+lng+","+lat+"),4326)) AS INT) AS d FROM openstreetmap WHERE st_distance_sphere(shape, st_setsrid(st_makepoint("+lng+","+lat+"),4326))<="+radius+" ORDER BY shape <-> st_setsrid(st_makepoint("+lng+","+lat+"), 4326)  LIMIT 1";
-					System.out.println(query);
+					//System.out.println(query);
 					ResultSet rs1 = stmt.executeQuery(query);
 					// Iterate through the ResultSet, displaying two values
 					// for each row using the getString method

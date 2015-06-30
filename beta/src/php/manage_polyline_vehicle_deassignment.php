@@ -4,16 +4,18 @@
 
 	$DEBUG=0; 
 	$common_id1=$_POST['common_id'];
-	$query ="SELECT polyline_id,polyline_name from polyline WHERE user_account_id=$common_id1 AND status=1";
+        
+	/*$query ="SELECT polyline_id,polyline_name from polyline WHERE user_account_id=$common_id1 AND status=1";
 	//echo "query=".$query;
 	$result = mysql_query($query, $DbConnection);
-	$num_rows=mysql_num_rows($result);
-
+	$num_rows=mysql_num_rows($result);*/
+        $num_data=getPolylineName($common_id1,$DbConnection);
 
 	$vehicle_cnt=0;
 	$polyline_cnt=0;
 	$no_vehice_cnt=0; //////// in case of no one vehicle exist in geofence
 	$flag=1;
+        /*
 	if($num_rows>0)
 	{
 		while($row=mysql_fetch_object($result))
@@ -47,8 +49,37 @@
 	else
 	{
 		$flag=0;
-	}
-	
+	}*/
+	if(count($num_data)>0)
+        {
+            foreach($num_data as $row)
+            {
+                $polyline_id=$row['polyline_id'];
+		$polyline_name=$row['polyline_name'];
+                $num_data1=$getVehicleIdPolylineassignment($polyline_id,$DbConnection);
+                if(count($num_data1)>0)
+                {
+                    foreach($num_data1 as $row_1)
+                    {				
+                            $vehicle_id[$polyline_cnt][$vehicle_cnt]=$row_1['vehicle_id'];
+                            $vehicle_name[$polyline_cnt][$vehicle_cnt]=$row_1['vehicle_name'];
+                            $polyline_id1[$polyline_cnt]=$polyline_id;
+                            $polyline_name1[$polyline_cnt]=$polyline_name;					
+                            $vehicle_cnt++;
+                    }  
+                }
+                else
+                {
+                    $polyline_name2[$no_vehice_cnt]=$polyline_name;
+		    $no_vehice_cnt++;
+                }
+                 $polyline_cnt++;
+            }
+        }
+        else
+        {
+           $flag=0; 
+        }
 	echo'<br><form name="manage1"> 
 			<center> 	
 				<fieldset class="manage_fieldset">

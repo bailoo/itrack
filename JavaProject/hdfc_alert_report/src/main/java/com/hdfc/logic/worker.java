@@ -15,6 +15,8 @@ import java.util.TreeMap;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
+import com.hdfc.db.gis.LatLng;
+import com.hdfc.db.gis.class_pop_road;
 import com.hdfc.db.mysql.connection;
 import com.hdfc.db.mysql.mysql_handler;
 import com.hdfc.init.init;
@@ -66,10 +68,10 @@ public class worker {
 		
 		//previous_date1 = "2015-06-14 13:19:35";
 		//previous_date2 = "2015-06-14 13:20:08";	
-//		previous_date1 = "2015-06-13 00:00:00";
-//		previous_date2 = "2015-06-15 23:30:37";
-		previous_date1 = "2015-04-26 00:00:00";
-		previous_date2 = "2015-06-15 23:59:00";
+		previous_date1 = "2015-06-14 00:00:00";
+		previous_date2 = "2015-06-15 23:30:37";
+//		previous_date1 = "2015-04-26 00:00:00";
+//		previous_date2 = "2015-06-15 23:59:00";
 				
 		System.out.println("SizeIMEI="+init.device_imei_no.size());
 		for(int i=0;i<(init.device_imei_no.size());i++) {			
@@ -225,6 +227,21 @@ public class worker {
 	
 	public static void write_to_database(String imei) {
 		
+		int rad=2000;//meter
+		System.out.println("Road VIA latlng Array ");
+		class_pop_road rd_lat_lng= new class_pop_road(report_turning_violation.latLngObj,rad);		
+		
+		ArrayList<LatLng>  data = rd_lat_lng.getLatlngData();
+		
+		for(LatLng obj1 : data){
+			System.out.println("Lat : "+obj1.getLat());
+			System.out.println("lng : "+obj1.getLng());
+			System.out.println("location : "+obj1.getLocation());
+			System.out.println("locationCode : "+obj1.getLocationCode());
+			report_turning_violation.locationCode.add(obj1.getLocation());
+			//report_turning_violation.roadID.add();
+		}		
+		
 		//String filename= "D:\\itrack_vts/hdfc_alert_report/"+imei+".csv";
 		String filename= "/mnt/hdfc_report/csv/"+imei+".csv";
 		line = "DeviceTime,ServerTime,Speed (Km/hr),Angle (Deg),Latitude,Longitude\n";
@@ -233,7 +250,7 @@ public class worker {
 		} catch (IOException e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
-		} //the true will append the new data	
+		} //the true will append the new data
 		
 		//System.out.println("Size="+report_turning_violation.IMEI_No.size());
 		if(report_turning_violation.IMEI_No.size() > 0) {
