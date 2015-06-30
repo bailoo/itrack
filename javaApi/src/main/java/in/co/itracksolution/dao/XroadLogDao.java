@@ -44,7 +44,7 @@ public class XroadLogDao {
 
 	protected String getInsertStatement(){
 		return "INSERT INTO "+XroadLog.TABLE_NAME+
-				" (imei, date, dtime, stime, xroadid, xroadcode, xroadname, haltduration, speed, location, latitude, longitude, logtime)"
+				" (imei, date, dtime, stime, roadid, roadname, haltduration, speed, locationid, locationname, latitude, longitude, logtime)"
 				+ " VALUES ("+
 				"?,?,?,?,?,?,?,?,?,?,?,?,?);";
 	}
@@ -73,12 +73,12 @@ public class XroadLogDao {
 				data.getDate(),
 				data.getDTime(),
 				data.getSTime(),
-				data.getXroadId(),
-				data.getXroadCode(),
-				data.getXroadName(),
+				data.getRoadId(),
+				data.getRoadName(),
 				data.getHaltDuration(),
 				data.getSpeed(),
-				data.getLocation(),
+				data.getLocationId(),
+				data.getLocationName(),
 				data.getLatitude(),
 				data.getLongitude(),
 				data.getLogTime()
@@ -102,12 +102,12 @@ public class XroadLogDao {
 			xroadLog.setDate(row.getString("date"));
 			xroadLog.setDTime(row.getDate("dtime"));
 			xroadLog.setSTime(row.getDate("stime"));
-			xroadLog.setXroadId(row.getString("xroadid"));
-			xroadLog.setXroadCode(row.getString("xroadcode"));
-			xroadLog.setXroadName(row.getString("xroadname"));
+			xroadLog.setRoadId(row.getString("roadid"));
+			xroadLog.setRoadName(row.getString("roadname"));
 			xroadLog.setHaltDuration(row.getInt("haltduration"));
 			xroadLog.setSpeed(row.getFloat("speed"));
-			xroadLog.setLocation(row.getString("location"));
+			xroadLog.setLocationId(row.getString("locationid"));
+			xroadLog.setLocationName(row.getString("locationname"));
 			xroadLog.setLatitude(row.getString("latitude"));
 			xroadLog.setLongitude(row.getString("longitude"));
 			xroadLog.setLogTime(row.getDate("logtime"));
@@ -201,7 +201,7 @@ public class XroadLogDao {
 		return xroadLogList;
 	}
 
-	public void insertXroadLog(String imei, String dtime, String stime, String xroadid, String xroadcode, String xroadname, int haltduration, float speed, String location, String latitude, String longitude) 
+	public void insertXroadLog(String imei, String dtime, String stime, String roadId, String roadName, int haltduration, float speed, String locationId, String locationName, String latitude, String longitude) 
 	{
 		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
 		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
@@ -221,7 +221,7 @@ public class XroadLogDao {
 			e.printStackTrace();
 		}
 	
-		XroadLog xroadLog = new XroadLog(imei, date, dtimeObj, stimeObj, xroadid, xroadcode, xroadname, haltduration, speed, location, latitude, longitude, now.getTime());
+		XroadLog xroadLog = new XroadLog(imei, date, dtimeObj, stimeObj, roadId, roadName, haltduration, speed, locationId, locationName, latitude, longitude, now.getTime());
 		insert(xroadLog);
 		System.out.println("Inserted XroadLog with imei: "+imei);
 	}

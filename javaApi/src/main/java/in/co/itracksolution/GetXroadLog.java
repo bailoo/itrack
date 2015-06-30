@@ -78,12 +78,12 @@ public class GetXroadLog
 			System.out.print("imei: "+xroadLog.getImei()+" ");
 			System.out.print("device time: "+sdf.format(xroadLog.getDTime())+" ");
 			System.out.print("server time: "+sdf.format(xroadLog.getSTime())+" ");
-			System.out.print("xroad id: "+xroadLog.getXroadId()+" ");
-			System.out.print("xroad code: "+xroadLog.getXroadCode()+" ");
-			System.out.print("xroad name: "+xroadLog.getXroadName()+" ");
+			System.out.print("road id: "+xroadLog.getRoadId()+" ");
+			System.out.print("road name: "+xroadLog.getRoadName()+" ");
 			System.out.print("halt duration: "+xroadLog.getHaltDuration()+" ");
 			System.out.print("speed: "+xroadLog.getSpeed()+" ");
-			System.out.print("location: "+xroadLog.getLocation()+" ");
+			System.out.print("location id: "+xroadLog.getLocationId()+" ");
+			System.out.print("location name: "+xroadLog.getLocationName()+" ");
 			System.out.print("latitude: "+xroadLog.getLatitude()+" ");
 			System.out.print("longitude: "+xroadLog.getLongitude()+" ");
 			System.out.print("logTime: "+sdf.format(xroadLog.getLogTime())+" ");
