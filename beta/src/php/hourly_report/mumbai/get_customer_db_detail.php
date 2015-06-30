@@ -88,7 +88,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param)
 
                     $route_str = explode("/",$data[3]);
                     $route_type_str = explode("/","-");
-                    $transporter_str = explode("/",$data[4]);	
+                    $transporter_str = explode("/",$data[2]);	
 
                     //######## GET ALL ROUTES						
                     //$route_all_str = explode("/",$data[3]);
