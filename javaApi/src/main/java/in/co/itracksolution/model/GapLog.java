@@ -13,7 +13,7 @@ public class GapLog {
 		super();
 	}
 	
-	public GapLog(String imei, String date, Date startTime, String startLatitude, String startLongitude, String startLocation, String endLatitude, String endLongitude, String endLocation, Date endTime, Date logTime ) 
+	public GapLog(String imei, String date, Date startTime, String startLatitude, String startLongitude, String startLocation, Date endTime, String endLatitude, String endLongitude, String endLocation, Date logTime ) 
 	{
 		super();
 		this.imei 		= imei;

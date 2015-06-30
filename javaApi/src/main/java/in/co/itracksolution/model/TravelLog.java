@@ -15,7 +15,7 @@ public class TravelLog {
 		super();
 	}
 	
-	public TravelLog(String imei, String date, Date startTime, String startLatitude, String startLongitude, String startLocation, String endLatitude, String endLongitude, String endLocation, Date endTime, int duration, float avgSpeed, float distance, float maxSpeed, Date logTime ) 
+	public TravelLog(String imei, String date, Date startTime, String startLatitude, String startLongitude, String startLocation, Date endTime, String endLatitude, String endLongitude, String endLocation, int duration, float avgSpeed, float distance, float maxSpeed, Date logTime ) 
 	{
 		super();
 		this.imei 		= imei;

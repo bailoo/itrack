@@ -5,11 +5,15 @@ import in.co.itracksolution.model.XroadLog;
 import in.co.itracksolution.model.TurnAlert;
 import in.co.itracksolution.model.DistanceLog;
 import in.co.itracksolution.model.NightLog;
+import in.co.itracksolution.model.GapLog;
+import in.co.itracksolution.model.TravelLog;
 import in.co.itracksolution.model.XroadLog;
 import in.co.itracksolution.dao.XroadLogDao;
 import in.co.itracksolution.dao.TurnAlertDao;
 import in.co.itracksolution.dao.DistanceLogDao;
 import in.co.itracksolution.dao.NightLogDao;
+import in.co.itracksolution.dao.GapLogDao;
+import in.co.itracksolution.dao.TravelLogDao;
 import in.co.itracksolution.dao.XroadLogDao;
 
 import java.io.FileNotFoundException;
@@ -91,8 +95,14 @@ public class InsertAlerts {
 		//NightLogDao nightLogDao = new NightLogDao(st.conn.getSession());
 		//nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed);
 
-		XroadLogDao xroadLogDao = new XroadLogDao(st.conn.getSession());
-		xroadLogDao.insertXroadLog(imei, dtime, stime, xroadid, xroadcode, xroadname, haltduration, speed, location, latitude, longitude);
+		//XroadLogDao xroadLogDao = new XroadLogDao(st.conn.getSession());
+		//xroadLogDao.insertXroadLog(imei, dtime, stime, xroadid, xroadcode, xroadname, haltduration, speed, location, latitude, longitude);
+
+		GapLogDao gapLogDao = new GapLogDao(st.conn.getSession());
+		gapLogDao.insertGapLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation);
+
+		TravelLogDao travelLogDao = new TravelLogDao(st.conn.getSession());
+		travelLogDao.insertTravelLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed);
 
 		st.close();
 	
