@@ -85,14 +85,14 @@ public class InsertAlerts {
 		
 		InsertAlerts st = new InsertAlerts();
 
-		SpeedAlertDao speedAlertDao = new SpeedAlertDao(st.conn.getSession());
-		speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, locationId, locationName, latitude, longitude, roadId, roadName);
+		//SpeedAlertDao speedAlertDao = new SpeedAlertDao(st.conn.getSession());
+		//speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, locationId, locationName, latitude, longitude, roadId, roadName);
+		
+		TurnAlertDao turnAlertDao = new TurnAlertDao(st.conn.getSession());
+		turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, locationId, locationName, latitude, longitude, roadId, roadName);
 		
 		//XroadLogDao xroadLogDao = new XroadLogDao(st.conn.getSession());
 		//xroadLogDao.insertXroadLog(imei, dtime, stime, speed, location, latitude, longitude, roadId);
-		
-		//TurnAlertDao turnAlertDao = new TurnAlertDao(st.conn.getSession());
-		//turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, location, latitude, longitude, roadId);
 		
 		//DistanceLogDao distanceLogDao = new DistanceLogDao(st.conn.getSession());
 		//distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 

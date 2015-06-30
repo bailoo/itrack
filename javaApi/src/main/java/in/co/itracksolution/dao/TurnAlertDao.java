@@ -46,9 +46,9 @@ public class TurnAlertDao {
 
 	protected String getInsertStatement(){
 		return "INSERT INTO "+TurnAlert.TABLE_NAME+
-				" (imei, date, dtime, stime, speed, angle, location, latitude, longitude, roadid, logtime)"
+				" (imei, date, dtime, stime, speed, angle, locationid, locationname, latitude, longitude, roadid, roadname, logtime)"
 				+ " VALUES ("+
-				"?,?,?,?,?,?,?,?,?,?,?);";
+				"?,?,?,?,?,?,?,?,?,?,?,?,?);";
 	}
 	
 	
@@ -85,10 +85,12 @@ public class TurnAlertDao {
 				data.getSTime(),
 				data.getSpeed(),
 				data.getAngle(),
-				data.getLocation(),
+				data.getLocationId(),
+				data.getLocationName(),
 				data.getLatitude(),
 				data.getLongitude(),
 				data.getRoadId(),
+				data.getRoadName(),
 				data.getLogTime()
 				));
 	}
@@ -112,10 +114,12 @@ public class TurnAlertDao {
 			turnAlert.setSTime(row.getDate("stime"));
 			turnAlert.setSpeed(row.getFloat("speed"));
 			turnAlert.setAngle(row.getFloat("angle"));
-			turnAlert.setLocation(row.getString("location"));
+			turnAlert.setLocationId(row.getString("locationid"));
+			turnAlert.setLocationName(row.getString("locationname"));
 			turnAlert.setLatitude(row.getString("latitude"));
 			turnAlert.setLongitude(row.getString("longitude"));
 			turnAlert.setRoadId(row.getString("roadid"));
+			turnAlert.setRoadName(row.getString("roadname"));
 			turnAlert.setLogTime(row.getDate("logtime"));
 	
 			/* now add turnAlert object to the list */		
@@ -207,7 +211,7 @@ public class TurnAlertDao {
 		return turnAlertList;
 	}
 
-	public void insertTurnAlert(String imei, String dtime, String stime, float speed, float angle, String location, String latitude, String longitude, String roadId ) 
+	public void insertTurnAlert(String imei, String dtime, String stime, float speed, float angle, String locationId, String locationName, String latitude, String longitude, String roadId , String roadName ) 
 	{
 		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
 		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
@@ -227,7 +231,7 @@ public class TurnAlertDao {
 			e.printStackTrace();
 		}
 	
-		TurnAlert turnAlert = new TurnAlert(imei, date, dtimeObj, stimeObj, speed, angle, location, latitude, longitude, roadId, now.getTime());
+		TurnAlert turnAlert = new TurnAlert(imei, date, dtimeObj, stimeObj, speed, angle, locationId, locationName, latitude, longitude, roadId, roadName, now.getTime());
 		insert(turnAlert);
 		System.out.println("Inserted TurnAlert with imei: "+imei);
 	}
