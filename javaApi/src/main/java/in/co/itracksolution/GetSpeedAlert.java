@@ -68,8 +68,8 @@ public class GetSpeedAlert
 		SpeedAlertDao dao = new SpeedAlertDao(st.conn.getSession());
 		
 		String imei = "123456"; //Make sure this imei exists
-		String startDateTime = "2015-06-15 20:17:00";
-		String endDateTime = "2015-06-15 20:18:00";
+		String startDateTime = "2015-06-29 12:17:00";
+		String endDateTime = "2015-06-29 20:18:00";
 		Boolean orderAsc = false;	// true for ascending , otherwise descending (default) 
 		ArrayList<SpeedAlert> speedAlertList = dao.getSpeedAlertByDateTime(imei, startDateTime, endDateTime, orderAsc);
 
@@ -79,10 +79,12 @@ public class GetSpeedAlert
 			System.out.print("device time: "+sdf.format(speedAlert.getDTime())+" ");
 			System.out.print("server time: "+sdf.format(speedAlert.getSTime())+" ");
 			System.out.print("speed: "+speedAlert.getSpeed()+" ");
-			System.out.print("location: "+speedAlert.getLocation()+" ");
+			System.out.print("location id: "+speedAlert.getLocationId()+" ");
+			System.out.print("location name: "+speedAlert.getLocationName()+" ");
 			System.out.print("latitude: "+speedAlert.getLatitude()+" ");
 			System.out.print("longitude: "+speedAlert.getLongitude()+" ");
 			System.out.print("roadId: "+speedAlert.getRoadId()+" ");
+			System.out.print("roadName: "+speedAlert.getRoadName()+" ");
 			System.out.print("logTime: "+sdf.format(speedAlert.getLogTime())+" ");
 			System.out.println();
 		}

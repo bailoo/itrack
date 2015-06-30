@@ -1,15 +1,17 @@
 package in.co.itracksolution;
 
 import in.co.itracksolution.db.CassandraConn;
-import in.co.itracksolution.model.XroadLog;
+import in.co.itracksolution.model.SpeedAlert;
 import in.co.itracksolution.model.TurnAlert;
+import in.co.itracksolution.model.XroadLog;
 import in.co.itracksolution.model.DistanceLog;
 import in.co.itracksolution.model.NightLog;
 import in.co.itracksolution.model.GapLog;
 import in.co.itracksolution.model.TravelLog;
 import in.co.itracksolution.model.XroadLog;
-import in.co.itracksolution.dao.XroadLogDao;
+import in.co.itracksolution.dao.SpeedAlertDao;
 import in.co.itracksolution.dao.TurnAlertDao;
+import in.co.itracksolution.dao.XroadLogDao;
 import in.co.itracksolution.dao.DistanceLogDao;
 import in.co.itracksolution.dao.NightLogDao;
 import in.co.itracksolution.dao.GapLogDao;
@@ -68,7 +70,8 @@ public class InsertAlerts {
 		float maxspeed = (float)75.1;
 		float distance = (float)369.4;
 		float angle = (float)35.3;
-		String location = "Dwarka Mor";
+		String locationId = "98765";
+		String locationName = "Dwarka Mor";
 		String latitude = "21.4568N";
 		String longitude = "82.22434E";
 		String startlocation = "Dwarka Mor";
@@ -77,12 +80,14 @@ public class InsertAlerts {
 		String endlocation = "C R Park";
 		String endlatitude = "22.1568N";
 		String endlongitude = "79.88434E";
-		String roadId = "Shahjahan Road";
-		String xroadid = "1234";
-		String xroadcode = "KMC";
-		String xroadname = "K M Chowk";
+		String roadId = "4321";
+		String roadName = "Shahjahan Road";
 		
 		InsertAlerts st = new InsertAlerts();
+
+		SpeedAlertDao speedAlertDao = new SpeedAlertDao(st.conn.getSession());
+		speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, locationId, locationName, latitude, longitude, roadId, roadName);
+		
 		//XroadLogDao xroadLogDao = new XroadLogDao(st.conn.getSession());
 		//xroadLogDao.insertXroadLog(imei, dtime, stime, speed, location, latitude, longitude, roadId);
 		
@@ -98,11 +103,11 @@ public class InsertAlerts {
 		//XroadLogDao xroadLogDao = new XroadLogDao(st.conn.getSession());
 		//xroadLogDao.insertXroadLog(imei, dtime, stime, xroadid, xroadcode, xroadname, haltduration, speed, location, latitude, longitude);
 
-		GapLogDao gapLogDao = new GapLogDao(st.conn.getSession());
-		gapLogDao.insertGapLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation);
+		//GapLogDao gapLogDao = new GapLogDao(st.conn.getSession());
+		//gapLogDao.insertGapLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation);
 
-		TravelLogDao travelLogDao = new TravelLogDao(st.conn.getSession());
-		travelLogDao.insertTravelLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed);
+		//TravelLogDao travelLogDao = new TravelLogDao(st.conn.getSession());
+		//travelLogDao.insertTravelLog(imei, starttime, startlatitude, startlongitude, startlocation, endtime, endlatitude, endlongitude, endlocation, duration, avgspeed, distance, maxspeed);
 
 		st.close();
 	

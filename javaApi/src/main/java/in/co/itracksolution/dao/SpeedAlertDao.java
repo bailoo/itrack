@@ -46,9 +46,9 @@ public class SpeedAlertDao {
 
 	protected String getInsertStatement(){
 		return "INSERT INTO "+SpeedAlert.TABLE_NAME+
-				" (imei, date, dtime, stime, speed, location, latitude, longitude, roadId, logtime)"
+				" (imei, date, dtime, stime, speed, locationid, locationname, latitude, longitude, roadid, roadname, logtime)"
 				+ " VALUES ("+
-				"?,?,?,?,?,?,?,?,?,?);";
+				"?,?,?,?,?,?,?,?,?,?,?,?);";
 	}
 	
 	
@@ -84,10 +84,12 @@ public class SpeedAlertDao {
 				data.getDTime(),
 				data.getSTime(),
 				data.getSpeed(),
-				data.getLocation(),
+				data.getLocationId(),
+				data.getLocationName(),
 				data.getLatitude(),
 				data.getLongitude(),
 				data.getRoadId(),
+				data.getRoadName(),
 				data.getLogTime()
 				));
 	}
@@ -110,10 +112,12 @@ public class SpeedAlertDao {
 			speedAlert.setDTime(row.getDate("dtime"));
 			speedAlert.setSTime(row.getDate("stime"));
 			speedAlert.setSpeed(row.getFloat("speed"));
-			speedAlert.setLocation(row.getString("location"));
+			speedAlert.setLocationId(row.getString("locationid"));
+			speedAlert.setLocationName(row.getString("locationname"));
 			speedAlert.setLatitude(row.getString("latitude"));
 			speedAlert.setLongitude(row.getString("longitude"));
 			speedAlert.setRoadId(row.getString("roadid"));
+			speedAlert.setRoadName(row.getString("roadname"));
 			speedAlert.setLogTime(row.getDate("logtime"));
 	
 			/* now add speedAlert object to the list */		
@@ -205,7 +209,7 @@ public class SpeedAlertDao {
 		return speedAlertList;
 	}
 
-	public void insertSpeedAlert(String imei, String dtime, String stime, float speed, String location, String latitude, String longitude, String roadId ) 
+	public void insertSpeedAlert(String imei, String dtime, String stime, float speed, String locationId, String locationName, String latitude, String longitude, String roadId, String roadName ) 
 	{
 		//TimeZone IST = TimeZone.getTimeZone("Asia/Kolkata");
 		Calendar now = Calendar.getInstance(); //gets a calendar using time zone and locale
@@ -225,7 +229,7 @@ public class SpeedAlertDao {
 			e.printStackTrace();
 		}
 	
-		SpeedAlert speedAlert = new SpeedAlert(imei, date, dtimeObj, stimeObj, speed, location, latitude, longitude, roadId, now.getTime());
+		SpeedAlert speedAlert = new SpeedAlert(imei, date, dtimeObj, stimeObj, speed, locationId, locationName, latitude, longitude, roadId, roadName, now.getTime());
 		insert(speedAlert);
 		System.out.println("Inserted SpeedAlert with imei: "+imei);
 	}
