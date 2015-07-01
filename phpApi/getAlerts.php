@@ -12,15 +12,16 @@
 	$minSpeed = 20;
 	$maxSpeed = 40;
 	$imei = '123456';
+	$roadId = NULL;
 	
-	$st_results = getSpeedAlerts($o_cassandra, $imei, $startTime, $endTime, $minSpeed, $maxSpeed);
+	$st_results = getSpeedAlerts($o_cassandra, $imei, $startTime, $endTime, $minSpeed, $maxSpeed, $roadId);
 	print "Speed Alerts\n";
 	print_r($st_results);
 	print "\n";
 
 	$minAngle = 30;
 	$maxAngle = 150;
-	$st_results = getTurnAlerts($o_cassandra, $imei, $startTime, $endTime, $minSpeed, $maxSpeed, $minAngle, $maxAngle);
+	$st_results = getTurnAlerts($o_cassandra, $imei, $startTime, $endTime, $minSpeed, $maxSpeed, $minAngle, $maxAngle, $roadId);
 	print "Turn Alerts\n";
 	print_r($st_results);
 	print "\n";

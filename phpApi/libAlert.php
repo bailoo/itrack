@@ -4,7 +4,7 @@ require_once 'libCommon.php';
 
 
 /***
-* Returns Speed Violations for given imei, dtimes, minspeed, maxspeed
+* Returns Speed Violations for given imei, dtimes, minspeed, maxspeed, roadId
 * 
 * @param object $o_cassandra	Cassandra object 
 * @param string $imei		IMEI
@@ -12,12 +12,12 @@ require_once 'libCommon.php';
 * @param string $dTime2		YYYY-MM-DD HH:mm:SS
 * @param int $minSpeed 		40	
 * @param int $maxSpeed 		80	
+* @param array $roadId		{ 'rd1', 'rd2', 'rd3' }
 * 
 * @return object 	Results of the query 
 */
-function getSpeedAlerts($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpeed)
+function getSpeedAlerts($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpeed, $roadId)
 {
-
 	global $TZ;
 
 	$dateList = getDateList($dTime1,$dTime2);
@@ -54,6 +54,8 @@ function getSpeedAlerts($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSp
 */
 function getTurnAlerts($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpeed, $minAngle, $maxAngle, $roadId)
 {
+	global $TZ;
+
 	$dateList = getDateList($dTime1,$dTime2);
 	$s_cql = "SELECT * FROM turnalert
 		WHERE
@@ -64,12 +66,10 @@ function getTurnAlerts($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpe
 		dtime >= '$dTime1+$TZ'
 		AND
 		dtime <= '$dTime2+$TZ'
-		AND
-		roadid IN '$roadId'
 		;";
 	$st_results = $o_cassandra->query($s_cql);
-	$filter_res = filter($st_results,$minSpeed, $maxSpeed, $minAngle, $maxAngle);
-	return $filter_res;
+	//$filter_res = filter($st_results,$minSpeed, $maxSpeed, $minAngle, $maxAngle);
+	return $st_results;
 }
 
 /***
@@ -82,18 +82,20 @@ function getTurnAlerts($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpe
 * 
 * @return object 	Results of the query 
 */
-function getDistanceLog($o_cassandra, $imei, $startTime1, $startTime2)
+function getDistanceLog($o_cassandra, $imei, $startTime, $endTime)
 {
-	$dateList = getDateList($dTime1,$dTime2);
+	global $TZ;
+
+	$dateList = getDateList($startTime, $endTime);
 	$s_cql = "SELECT * FROM distancelog 
 		WHERE
 		imei = '$imei'
 		AND
 		date IN $dateList
 		AND
-		dtime >= '$dTime1+$TZ'
+		starttime >= '$startTime+$TZ'
 		AND
-		dtime <= '$dTime2+$TZ'
+		starttime <= '$endTime+$TZ'
 		;";
 	$st_results = $o_cassandra->query($s_cql);
 	return $st_results;
@@ -117,7 +119,9 @@ function getDistanceLog($o_cassandra, $imei, $startTime1, $startTime2)
 */
 function getxRoadLog($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpeed, $minHalt, $maxHalt, $xRoadId)
 {
-	$dateList = getDateList($dTime1,$dTime2);
+	global $TZ;
+
+	$dateList = getDateList($dTime1, $dTime2);
 	$s_cql = "SELECT * FROM xroadlog 
 		WHERE
 		imei = '$imei'
@@ -127,12 +131,10 @@ function getxRoadLog($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpeed
 		dtime >= '$dTime1+$TZ'
 		AND
 		dtime <= '$dTime2+$TZ'
-		AND
-		xroadid IN '$xRoadId'
 		;";
 	$st_results = $o_cassandra->query($s_cql);
-	$filter_res = filter($st_results,$minSpeed, $maxSpeed, $minHalt, $maxHalt);
-	return $filter_res;
+	//$filter_res = filter($st_results,$minSpeed, $maxSpeed, $minHalt, $maxHalt);
+	return $st_results;
 
 }
 
@@ -151,20 +153,22 @@ function getxRoadLog($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpeed
 */
 function getTravelLog($o_cassandra, $imei, $startTime, $endTime, $minDuration, $maxDuration)
 {
-	$dateList = getDateList($dTime1,$dTime2);
+	global $TZ;
+
+	$dateList = getDateList($startTime, $endTime);
 	$s_cql = "SELECT * FROM travellog 
 		WHERE
 		imei = '$imei'
 		AND
 		date IN $dateList
 		AND
-		dtime >= '$dTime1+$TZ'
+		starttime >= '$startTime+$TZ'
 		AND
-		dtime <= '$dTime2+$TZ'
+		starttime <= '$endTime+$TZ'
 		;";
 	$st_results = $o_cassandra->query($s_cql);
-	$filter_res = filter($st_results,$minSpeed, $maxSpeed, $minDuration, $maxDuration);
-	return $filter_res;
+	//$filter_res = filter($st_results,$minSpeed, $maxSpeed, $minDuration, $maxDuration);
+	return $st_results;
 
 }
 
@@ -183,20 +187,22 @@ function getTravelLog($o_cassandra, $imei, $startTime, $endTime, $minDuration, $
 */
 function getNightLog($o_cassandra, $imei, $startTime, $endTime, $minDuration, $maxDuration)
 {
-	$dateList = getDateList($dTime1,$dTime2);
+	global $TZ;
+
+	$dateList = getDateList($startTime, $endTime);
 	$s_cql = "SELECT * FROM nightlog 
 		WHERE
 		imei = '$imei'
 		AND
 		date IN $dateList
 		AND
-		dtime >= '$dTime1+$TZ'
+		starttime >= '$startTime+$TZ'
 		AND
-		dtime <= '$dTime2+$TZ'
+		starttime <= '$endTime+$TZ'
 		;";
 	$st_results = $o_cassandra->query($s_cql);
-	$filter_res = filter($st_results,$minSpeed, $maxSpeed, $minDuration, $maxDuration);
-	return $filter_res;
+	//$filter_res = filter($st_results,$minSpeed, $maxSpeed, $minDuration, $maxDuration);
+	return $st_results;
 
 }
 
@@ -215,16 +221,18 @@ function getNightLog($o_cassandra, $imei, $startTime, $endTime, $minDuration, $m
 */
 function getGapLog($o_cassandra, $imei, $startTime, $endTime)
 {
-	$dateList = getDateList($dTime1,$dTime2);
+	global $TZ;
+
+	$dateList = getDateList($startTime, $endTime);
 	$s_cql = "SELECT * FROM gaplog 
 		WHERE
 		imei = '$imei'
 		AND
 		date IN $dateList
 		AND
-		dtime >= '$dTime1+$TZ'
+		starttime >= '$startTime+$TZ'
 		AND
-		dtime <= '$dTime2+$TZ'
+		starttime <= '$endTime+$TZ'
 		;";
 	$st_results = $o_cassandra->query($s_cql);
 	return $st_results;
