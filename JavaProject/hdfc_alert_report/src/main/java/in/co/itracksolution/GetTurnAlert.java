@@ -67,9 +67,9 @@ public class GetTurnAlert
 			
 		TurnAlertDao dao = new TurnAlertDao(st.conn.getSession());
 		
-		String imei = "123456"; //Make sure this imei exists
-		String startDateTime = "2015-06-30 10:17:00";
-		String endDateTime = "2015-06-30 20:18:00";
+		String imei = "865733021563051"; //Make sure this imei exists
+		String startDateTime = "2015-06-14 00:00:00";
+		String endDateTime = "2015-06-15 23:18:00";
 		Boolean orderAsc = false;	// true for ascending , otherwise descending (default) 
 		ArrayList<TurnAlert> turnAlertList = dao.getTurnAlertByDateTime(imei, startDateTime, endDateTime, orderAsc);
 
