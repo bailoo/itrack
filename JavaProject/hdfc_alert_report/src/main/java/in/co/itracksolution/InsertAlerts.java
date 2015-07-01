@@ -31,10 +31,11 @@ import java.util.Properties;
 import com.datastax.driver.core.Session;
 
 public class InsertAlerts {
-	CassandraConn conn;
+	public CassandraConn conn;
 	
 	public InsertAlerts(){
 		String propFileName = "config.properties";
+		//String propFileName = "resources/config.properties";
 		Properties prop = new Properties();
 		
 		try {
