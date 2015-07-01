@@ -1,9 +1,8 @@
 package com.hdfc.report;
-
 import java.util.ArrayList;
 
-import com.hdfc.db.gis.class_pop_junction;
 import com.hdfc.utils.utility_class;
+import com.iespl.gisgraphy.class_pop_junction;
 
 public class report_chauraha {
 

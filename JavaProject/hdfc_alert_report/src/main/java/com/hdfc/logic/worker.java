@@ -17,8 +17,6 @@ import java.util.TreeMap;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
-import com.hdfc.db.gis.LatLng;
-import com.hdfc.db.gis.class_pop_road;
 import com.hdfc.db.mysql.connection;
 import com.hdfc.db.mysql.mysql_handler;
 import com.hdfc.init.init;
@@ -27,6 +25,8 @@ import com.hdfc.report.report_distance;
 import com.hdfc.report.report_travel;
 import com.hdfc.report.report_turning_violation;
 import com.hdfc.utils.utility_class;
+import com.iespl.gisgraphy.LatLng;
+import com.iespl.gisgraphy.class_pop_road;
 
 public class worker {
 	
@@ -234,21 +234,21 @@ public class worker {
 	public static void write_to_database(String imei, Session session) {
 		
 		//########## GIS
-		/*int rad=200;//meter
+		int rad=200;//meter
 		System.out.println("Road VIA latlng Array ");
 		class_pop_road rd_lat_lng= new class_pop_road(report_turning_violation.latLngObj,rad);		
 		
 		ArrayList<LatLng>  data = rd_lat_lng.getLatlngData();
 		
-		for(LatLng obj1 : data){*/
+		for(LatLng obj1 : data){
 			/*System.out.println("Lat : "+obj1.getLat());
 			System.out.println("lng : "+obj1.getLng());
 			System.out.println("location : "+obj1.getLocation());
 			System.out.println("locationCode : "+obj1.getLocationCode());*/
-			/*report_turning_violation.roadID.add(obj1.getLocationCode());
+			report_turning_violation.roadID.add(obj1.getLocationCode());
 			report_turning_violation.roadName.add(obj1.getLocation());
 			//report_turning_violation.roadID.add();
-		}*/
+		}
 		//#############
 		
 		/*//String filename= "D:\\itrack_vts/hdfc_alert_report/"+imei+".csv";

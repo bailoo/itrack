@@ -2,8 +2,8 @@ package com.hdfc.report;
 
 import java.util.ArrayList;
 
-import com.hdfc.db.gis.LatLng;
 import com.hdfc.utils.utility_class;
+import com.iespl.gisgraphy.LatLng;
 
 public class report_turning_violation {
 
@@ -117,7 +117,7 @@ public class report_turning_violation {
 						turningLatitude.add(lat_middle);
 						turningLongitude.add(lng_middle);
 						
-						LatLng tmpobj = new LatLng(Double.toString(lat_middle), Double.toString(lng_middle),"","");
+						LatLng tmpobj = new LatLng(Double.toString(lat_middle), Double.toString(lng_middle),"","","");
 						latLngObj.add(tmpobj);
 					}				
 					
