@@ -30,5 +30,6 @@
 	<classpathentry kind="lib" path="E:/ESSENTIALS/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="E:/ESSENTIALS/com.mysql.jdbc_5.1.5.jar"/>
 	<classpathentry kind="lib" path="D:/ECLIPSE_WORKSPACE/gis_connect/libs/postgresql-9.4-1201.jdbc4.jar"/>
+	<classpathentry kind="lib" path="E:/ESSENTIALS/libCassandra-0.0.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
