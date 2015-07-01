@@ -1,8 +1,10 @@
 package com.hdfc.logic;
 
+import in.co.itracksolution.InsertAlerts;
 import in.co.itracksolution.SampleFullDataQuery;
 import in.co.itracksolution.pull_full_data_cassandra;
 import in.co.itracksolution.dao.FullDataDao;
+import in.co.itracksolution.dao.TurnAlertDao;
 import in.co.itracksolution.model.FullData;
 
 import java.io.FileWriter;
@@ -15,6 +17,7 @@ import java.util.TreeMap;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
+import com.datastax.driver.core.Session;
 import com.hdfc.db.gis.LatLng;
 import com.hdfc.db.gis.class_pop_road;
 import com.hdfc.db.mysql.connection;
@@ -40,27 +43,30 @@ public class worker {
 	public static FullData data = new FullData();			
 	public static FullDataDao dao = new FullDataDao(fd.conn.getSession());
 	
+	public static InsertAlerts st = new InsertAlerts();
+	public static Session session = st.conn.getSession();	
+	
 	public static String previous_date1 ="", previous_date2 ="";
 	public static double interval=3600.0; //in secs : 1 hour 
 	
 	//####### TEMPORARY FILE WRITE
 	public static FileWriter fw = null;
-	public static String tDeviceTime ="", tServerTime ="", q=",", line="";
-	public static double tSpeed =0.0;
-	public static float tAngle =0.f;
-	public static double tLatitude=0.0, tLongitude=0.0;
+	public static String dtime ="", stime ="", latitude="", longitude="", roadId="", roadName="", locationId="", locationName="", q=",", line="";
+	public static float speed =0.0f, angle =0.0f;	
 	//##############################
 
 	public worker() {
 		//sdf.setTimeZone(tz);
 	}
 	
-	public static void process_data(int account_id) {				
-		//init init_var = new init();
-		sdf.setTimeZone(tz);
-		connection conn = new connection();
+	public static void process_data(int account_id) {
+		
+		//###### MYSQL CONN
+		connection sql_con = new connection();
 		mysql_handler mh = new mysql_handler();
-		mysql_handler.getVehicleInformation(conn, account_id);
+		mysql_handler.getVehicleInformation(sql_con, account_id);
+		
+		sdf.setTimeZone(tz);
 		//System.out.println("AftergetVehicleInfo");
 		String previous_day = utility_class.getYesterdayDateString();
 //		previous_date1 = previous_day+" 00:00:00";
@@ -119,11 +125,12 @@ public class worker {
 		    report_distance.AlertTime.clear();*/
 			//###### TEMPORARY WRITE
 			//System.out.println("CALL="+i);
-			write_to_database(init.device_imei_no.get(i));
+			write_to_database(init.device_imei_no.get(i), session);
 			System.out.println("Processed IMEI:"+init.device_imei_no.get(i)+" -"+i);
 		}
 		
 		fd.close();
+		st.close();
 		//System.out.println("Point3");
 	}
 	
@@ -225,24 +232,27 @@ public class worker {
 		//CHECK AND PUSH
 	}*/
 	
-	public static void write_to_database(String imei) {
+	public static void write_to_database(String imei, Session session) {
 		
-		int rad=2000;//meter
+		//########## GIS
+		/*int rad=2000;//meter
 		System.out.println("Road VIA latlng Array ");
 		class_pop_road rd_lat_lng= new class_pop_road(report_turning_violation.latLngObj,rad);		
 		
 		ArrayList<LatLng>  data = rd_lat_lng.getLatlngData();
 		
-		for(LatLng obj1 : data){
-			System.out.println("Lat : "+obj1.getLat());
+		for(LatLng obj1 : data){*/
+			/*System.out.println("Lat : "+obj1.getLat());
 			System.out.println("lng : "+obj1.getLng());
 			System.out.println("location : "+obj1.getLocation());
-			System.out.println("locationCode : "+obj1.getLocationCode());
-			report_turning_violation.locationCode.add(obj1.getLocation());
+			System.out.println("locationCode : "+obj1.getLocationCode());*/
+			/*report_turning_violation.roadID.add(obj1.getLocationCode());
+			report_turning_violation.roadName.add(obj1.getLocation());
 			//report_turning_violation.roadID.add();
-		}		
+		}*/
+		//#############
 		
-		//String filename= "D:\\itrack_vts/hdfc_alert_report/"+imei+".csv";
+		/*//String filename= "D:\\itrack_vts/hdfc_alert_report/"+imei+".csv";
 		String filename= "/mnt/hdfc_report/csv/"+imei+".csv";
 		line = "DeviceTime,ServerTime,Speed (Km/hr),Angle (Deg),Latitude,Longitude\n";
 		try {
@@ -250,39 +260,50 @@ public class worker {
 		} catch (IOException e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
-		} //the true will append the new data
+		} //the true will append the new data*/
 		
 		//System.out.println("Size="+report_turning_violation.IMEI_No.size());
 		if(report_turning_violation.IMEI_No.size() > 0) {
+			
+			TurnAlertDao turnAlertDao = new TurnAlertDao(session);
+			
 			for(int i=0;i<report_turning_violation.IMEI_No.size();i++) {
 				
-				tDeviceTime = report_turning_violation.turningDeviceTime.get(i);
-				tServerTime = report_turning_violation.turningServerTime.get(i);
-				tSpeed = report_turning_violation.turningSpeed.get(i);
-				tAngle = report_turning_violation.turningAngle.get(i);
-				tLatitude = report_turning_violation.turningLatitude.get(i);
-				tLongitude = report_turning_violation.turningLongitude.get(i);						
+				dtime = report_turning_violation.turningDeviceTime.get(i);
+				stime = report_turning_violation.turningServerTime.get(i);
+				speed = (float)((double)Double.valueOf(report_turning_violation.turningSpeed.get(i)));
+				angle = report_turning_violation.turningAngle.get(i);
+				locationId = "";
+				locationName = "";
+				latitude = report_turning_violation.turningLatitude.get(i).toString();
+				longitude = report_turning_violation.turningLongitude.get(i).toString();
+				//roadId = report_turning_violation.roadID.get(i);		
+				//roadName = report_turning_violation.roadName.get(i);
 				
-				line += tDeviceTime+q+tServerTime+q+tSpeed+q+tAngle+q+tLatitude+q+tLongitude+"\n";
+				roadId = "test_RoadId";		
+				roadName = "test_RoadName";				
+				
+				//line += tDeviceTime+q+tServerTime+q+tSpeed+q+tAngle+q+tLatitude+q+tLongitude+"\n";				
+				turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, locationId, locationName, latitude, longitude, roadId, roadName);
 				//System.out.println("filename="+filename+" ,line="+line);
 			}
 		    
-			try {
+			/*try {
 				fw.write(line);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}//appends the string to the file
+			}//appends the string to the file*/
 		}
 	    
 		System.out.println("Write to Alert");
 		
-	    try {
+	    /*try {
 			fw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 }

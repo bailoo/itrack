@@ -31,11 +31,10 @@ import java.util.Properties;
 import com.datastax.driver.core.Session;
 
 public class InsertAlerts {
-	public CassandraConn conn;
+	CassandraConn conn;
 	
 	public InsertAlerts(){
 		String propFileName = "config.properties";
-		//String propFileName = "resources/config.properties";
 		Properties prop = new Properties();
 		
 		try {
@@ -92,14 +91,7 @@ public class InsertAlerts {
 		InsertAlerts st = new InsertAlerts();
 		Session session = st.conn.getSession();
 
-		SpeedAlertDao speedAlertDao = new SpeedAlertDao(session);
-		TurnAlertDao turnAlertDao = new TurnAlertDao(session);
-		XroadLogDao xroadLogDao = new XroadLogDao(session);
-		DistanceLogDao distanceLogDao = new DistanceLogDao(session);
-		NightLogDao nightLogDao = new NightLogDao(session);
-		GapLogDao gapLogDao = new GapLogDao(session);
-		TravelLogDao travelLogDao = new TravelLogDao(session);
-
+		
 		for(int i=0;i<55;i++) {
 			String c = "";
 			if(i<10) { c+="0"+i;} else {c=Integer.toString(i);} 
@@ -107,13 +99,26 @@ public class InsertAlerts {
 			String stime = "2015-06-30 12:"+c+":38";
 			String starttime = "2015-06-30 12:"+c+":18";
 			String endtime = "2015-06-30 15:"+c+":38";
-					
-			speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, locationId, locationName, latitude, longitude, roadId, roadName);		
-			turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, locationId, locationName, latitude, longitude, roadId, roadName);			
-			xroadLogDao.insertXroadLog(imei, dtime, stime, roadId, roadName, haltduration, speed, locationId, locationName, latitude, longitude);			
-			distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 	
-			nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);	
-			gapLogDao.insertGapLog(imei, type, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname);	
+			
+			SpeedAlertDao speedAlertDao = new SpeedAlertDao(session);
+			speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, locationId, locationName, latitude, longitude, roadId, roadName);
+			
+			TurnAlertDao turnAlertDao = new TurnAlertDao(session);
+			turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, locationId, locationName, latitude, longitude, roadId, roadName);
+			
+			XroadLogDao xroadLogDao = new XroadLogDao(session);
+			xroadLogDao.insertXroadLog(imei, dtime, stime, roadId, roadName, haltduration, speed, locationId, locationName, latitude, longitude);
+			
+			DistanceLogDao distanceLogDao = new DistanceLogDao(session);
+			distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
+	
+			NightLogDao nightLogDao = new NightLogDao(session);
+			nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
+	
+			GapLogDao gapLogDao = new GapLogDao(session);
+			gapLogDao.insertGapLog(imei, type, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname);
+	
+			TravelLogDao travelLogDao = new TravelLogDao(session);
 			travelLogDao.insertTravelLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
 		}
 

@@ -1,8 +1,8 @@
 package in.co.itracksolution;
 
+import in.co.itracksolution.dao.FullDataDao;
 import in.co.itracksolution.db.CassandraConn;
-import in.co.itracksolution.dao.TurnAlertDao;
-import in.co.itracksolution.model.TurnAlert;
+import in.co.itracksolution.model.FullData;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.text.SimpleDateFormat;
@@ -18,12 +19,12 @@ import java.text.SimpleDateFormat;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.ResultSet;
 
-public class GetTurnAlert 
+public class SampleFullDataQuery 
 {
 
 	CassandraConn conn;
 	
-	public GetTurnAlert()
+	public SampleFullDataQuery()
 	{
 		String propFileName = "config.properties";
 		Properties prop = new Properties();
@@ -45,7 +46,7 @@ public class GetTurnAlert
 		}
 	}
 	
-	public void deleteTurnAlert()
+	public void deleteFullData()
 	{
 		
 	}
@@ -63,28 +64,31 @@ public class GetTurnAlert
 		TimeZone tz = TimeZone.getTimeZone("Asia/Kolkata");
 		sdf.setTimeZone(tz);	
 
-		GetTurnAlert st = new GetTurnAlert();
+		SampleFullDataQuery st = new SampleFullDataQuery();
 			
-		TurnAlertDao dao = new TurnAlertDao(st.conn.getSession());
+		FullDataDao dao = new FullDataDao(st.conn.getSession());
 		
-		String imei = "123456"; //Make sure this imei exists
-		String startDateTime = "2015-06-15 00:00:00";
-		String endDateTime = "2015-06-15 21:18:00";
-		Boolean orderAsc = false;	// true for ascending , otherwise descending (default) 
-		ArrayList<TurnAlert> turnAlertList = dao.getTurnAlertByDateTime(imei, startDateTime, endDateTime, orderAsc);
+		String imei = "865733021562939"; //Make sure this imei exists
+		String startDateTime = "2015-06-14 23:59:45";
+		String endDateTime = "2015-06-15 00:00:10";
+		//true for dtime, false for stime
+		Boolean deviceTime = true;	// true for device time index, otherwise server time
+		Boolean orderAsc = true;	// true for ascending , otherwise descending (default) 
+		ArrayList<FullData> fullDataList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, deviceTime, orderAsc);
 
-		for (TurnAlert turnAlert : turnAlertList)
+		for (FullData fullData : fullDataList)
 		{
-			System.out.print("imei: "+turnAlert.getImei()+" ");
-			System.out.print("device time: "+sdf.format(turnAlert.getDTime())+" ");
-			System.out.print("server time: "+sdf.format(turnAlert.getSTime())+" ");
-			System.out.print("speed: "+turnAlert.getSpeed()+" ");
-			System.out.print("angle: "+turnAlert.getAngle()+" ");
-			System.out.print("location: "+turnAlert.getLocation()+" ");
-			System.out.print("latitude: "+turnAlert.getLatitude()+" ");
-			System.out.print("longitude: "+turnAlert.getLongitude()+" ");
-			System.out.print("roadId: "+turnAlert.getRoadId()+" ");
-			System.out.print("logTime: "+sdf.format(turnAlert.getLogTime())+" ");
+			System.out.print("imei: "+fullData.getImei()+" ");
+			System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
+			System.out.print("server time: "+sdf.format(fullData.getSTime())+" ");
+			TreeMap pMap1 = new TreeMap();
+			pMap1 = fullData.getPMap(); 
+			System.out.print("a: "+pMap1.get("a")+" ");
+			System.out.print("b: "+pMap1.get("b")+" ");
+			System.out.print("c: "+pMap1.get("c")+" ");
+			System.out.print("d: "+pMap1.get("d")+" ");
+			System.out.print("e: "+pMap1.get("e")+" ");
+			System.out.print("f: "+pMap1.get("f")+" ");
 			System.out.println();
 		}
 
