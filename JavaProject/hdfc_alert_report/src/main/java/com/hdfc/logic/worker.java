@@ -1,7 +1,6 @@
 package com.hdfc.logic;
 
-import in.co.itracksolution.InsertAlerts;
-import in.co.itracksolution.SampleFullDataQuery;
+import in.co.itracksolution.InsertVehicleAlerts;
 import in.co.itracksolution.pull_full_data_cassandra;
 import in.co.itracksolution.dao.FullDataDao;
 import in.co.itracksolution.dao.TurnAlertDao;
@@ -43,7 +42,7 @@ public class worker {
 	public static FullData data = new FullData();			
 	public static FullDataDao dao = new FullDataDao(fd.conn.getSession());
 	
-	public static InsertAlerts st = new InsertAlerts();
+	public static InsertVehicleAlerts st = new InsertVehicleAlerts();
 	public static Session session = st.conn.getSession();	
 	
 	public static String previous_date1 ="", previous_date2 ="";
@@ -235,7 +234,7 @@ public class worker {
 	public static void write_to_database(String imei, Session session) {
 		
 		//########## GIS
-		/*int rad=2000;//meter
+		/*int rad=200;//meter
 		System.out.println("Road VIA latlng Array ");
 		class_pop_road rd_lat_lng= new class_pop_road(report_turning_violation.latLngObj,rad);		
 		

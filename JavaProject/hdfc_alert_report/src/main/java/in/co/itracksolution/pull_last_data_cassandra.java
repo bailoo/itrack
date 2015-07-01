@@ -59,7 +59,7 @@ public class pull_last_data_cassandra {
 
 		LastData data = new LastData();
 		
-		SampleLastDataQuery st = new SampleLastDataQuery();
+		pull_last_data_cassandra st = new pull_last_data_cassandra();
 		
 		data.setImei("865733021570015");
 		LastDataDao dao = new LastDataDao(st.conn.getSession());
