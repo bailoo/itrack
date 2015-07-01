@@ -29,13 +29,22 @@
 	$dateto = $date_2[0];
 	
 	$userInterval = $_POST['user_interval'];
-
-	$sortBy=$dataBy;
+if($getDataBy==1)
+{
+	$sortBy="g";
+}
+ else 
+{
+  $sortBy="h";  
+ }
+ //echo "sortBy=".$sortBy."<br>";
 	$firstDataFlag=0;
 	$endDateTS=strtotime($date2);
 	$dataCnt=0;	
 	
 	$parameterizeData=new parameterizeData();
+        get_All_Dates($datefrom, $dateto, $userdates);    
+        $date_size = sizeof($userdates); 
 	for($i=0;$i<$vsize;$i++)
 	{
 		$vehicle_info=get_vehicle_info($root,$vserial[$i]);
@@ -57,216 +66,317 @@
 		//echo "tmpio=".$parameterizeData->temperature."<br>";
 		if($ioFoundFlag==1)
 		{
-			//echo "temperature=".$parameterizeData->temperature."<br>";
-			
-			$LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
-			$SortedDataObject=new data();
-			$UnSortedDataObject=new data();
-			if(($LastSortedDate+24*60*60)>=$endDateTS) //All sorted data
-			{	
-				//echo "in if1";
-				$type="sorted";
-				readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-			}
-			else if($LastSortedDate==null) //All Unsorted data
+                    $CurrentLat = 0.0;
+                    $CurrentLong = 0.0;
+                    $LastLat = 0.0;
+                    $LastLong = 0.0;
+                    $firstData = 0;
+                    $distance =0.0;
+                    $firstdata_flag =0;
+                    
+                     for($di=0;$di<=($date_size-1);$di++)
+                     {  
+                        $SortedDataObject=new data();
+                        readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject); 
+                        if($sortBy=="h")  /// for device datetime
 			{
-				//echo "in if2";
-				$type="unSorted";
-				readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-			}
-			else //Partially Sorted data
+                            if(count($SortedDataObject->deviceDatetime)>0)
+                            {
+                                //echo "in if 1<br>";
+                                $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+                                for($obi=0;$obi<$prevSortedSize;$obi++)
+                                {
+                                    $datetime=$SortedDataObject->deviceDatetime[$obi];
+                                    $temperature = $SortedDataObject->temperatureIOData[$obi]; 					  
+                                    if($firstdata_flag==0)
+                                    {					
+                                        $firstdata_flag = 1;
+                                        $interval = (double)$userInterval*60;	     
+                                        $time1 = $datetime;					
+                                        $date_secs1 = strtotime($time1);					
+                                        //echo "<br>DateSec1 before=".$date_secs1." time_int=".$interval;
+                                        $date_secs1 = (double)($date_secs1 + $interval); 
+                                        $date_secs2 = 0; 
+                                        $tmpPrev=$temperature;
+                                        $dateTimePrev=strtotime($datetime);
+                                    }
+                                    else
+                                    {                           					
+                                        $time2 = $datetime;											
+                                        $date_secs2 = strtotime($time2);
+                                        $tmpNext=$temperature;
+                                        $dateTimeNext=strtotime($datetime);
+                                        $tmpDiff=$tmpNext-$tmpPrev;
+                                        $tmpFlag=1;
+                                        if((($dateTimeNext-$dateTimePrev)<60) && (abs($tmpDiff)>10))
+                                        {
+                                            $tmpFlag=0;
+                                        }
+
+                                        if(($date_secs2 >= $date_secs1) && $tmpFlag==1)
+                                        {
+                                            //echo "time1=".$time1." time2=".$time2." tmpDiff=".$tmpDiff." tmpNext=".$tmpNext." tmpPrev=".$tmpPrev." datediff=".($dateTimeNext-$dateTimePrev)."<br>";
+                                            if($temperature>=-30 && $temperature<=70)
+                                            {
+                                                //echo "temperature1=".$temperature." doublet=".(double)$temperature."<br>";
+                                                $temperature = preg_replace('/[^0-9-]/s', '.', $temperature);
+                                                $temperaturetmp=substr_count($temperature, '.');
+                                                if($temperaturetmp<=1)
+                                                {
+                                                    $imei[]=$vserial[$i];
+                                                    $vname[]=$vehicle_detail_local[0];
+                                                    $dateFromDisplay[]=$time1;
+                                                    $dateTodisplay[]=$time2;
+                                                    $temperatureDisplay[]=$temperature;
+                                                    
+                                                    $time1 = $datetime;
+                                                    $date_secs1 = strtotime($time1);
+                                                    $date_secs1 = (double)($date_secs1 + $interval);
+                                                }
+                                            }     															
+                                        }  //if datesec2 
+                                        $tmpPrev=$tmpNext;
+                                        $dateTimePrev=$dateTimeNext;
+
+                                    }   // else closed 
+                                }
+                                $SortedDataObject=null;	
+                            }
+                        } 
+                        if($sortBy=="g")  /// for device datetime
 			{
-				$LastSDate=date("Y-m-d",$LastSortedDate+24*60*60);
-				//echo "in else";
-				$type="sorted";					
-				readFileXml($vserial[$i],$date1,$date2,$datefrom,$LastSDate,$userInterval,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-			
-				$type="unSorted";
-				readFileXml($vserial[$i],$date1,$date2,$LastSDate,$dateto,$userInterval,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-			}
-			//var_dump($UnSortedDataObject);
-			//var_dump($SortedDataObject);
-			//echo "databy=".$dataBy."<br>";
-			if($dataBy=="h")  /// for device datetime
-			{
-				if(count($SortedDataObject->deviceDatetime)>0)
-				{
-					//echo "in if 1<br>";
-					$prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
-					for($obi=0;$obi<$prevSortedSize;$obi++)
-					{
-						$finalVNameArr[$dataCnt]=$vehicle_detail_local[0]; // store vehicle name
-						$finalVSerialArr[$dataCnt]=$vserial[$i];
-						$finalDateTimeArr[$dataCnt]=$SortedDataObject->deviceDatetime[$obi];				
-						$finalIODataArr[$dataCnt]=$SortedDataObject->temperatureIOData[$obi];
-						$dataCnt++;
-					}
-				}
-				if(count($UnSortedDataObject->deviceDatetime)>0)
-				{
-					//echo "in if 2<br>";
-					//var_dump($UnSortedDataObject);
-					$sortObjTmp=sortData($UnSortedDataObject,$sortBy,$parameterizeData);
-					//var_dump($sortObjTmp);
-					$sortedSize=sizeof($sortObjTmp->deviceDatetime);
-					for($obi=0;$obi<$sortedSize;$obi++)
-					{
-						$finalVNameArr[$dataCnt]=$vehicle_detail_local[0]; // store vehicle name
-						$finalVSerialArr[$dataCnt]=$vserial[$i];
-						$finalDateTimeArr[$dataCnt]=$sortObjTmp->deviceDatetime[$obi];					
-						$finalIODataArr[$dataCnt]=$sortObjTmp->temperatureIOData[$obi];
-						$dataCnt++;
-					}
-				}
-			}
-			else if($dataBy=="g") /// for server date time
-			{
-				if(count($SortedDataObject->serverDatetime)>0)
-				{
-					$sortObjTmp=sortData($SortedDataObject,$sortBy,$parameterizeData);
-					//var_dump($sortObjTmp);
-					$sortedSize=sizeof($sortObjTmp->serverDatetime);
-					for($obi=0;$obi<$sortedSize;$obi++)
-					{
-						$finalVNameArr[$dataCnt]=$vehicle_detail_local[0]; // store vehicle name
-						$finalVSerialArr[$dataCnt]=$vserial[$i];
-						$finalDateTimeArr[$dataCnt]=$sortObjTmp->serverDatetime[$obi];				
-						$finalIODataArr[$dataCnt]=$sortObjTmp->temperatureIOData[$obi];
-						$dataCnt++;
-					}
-				}
-				//var_dump($UnSortedDataObject);
-				if(count($UnSortedDataObject->serverDatetime)>0)
-				{
-					$unSortedSize=sizeof($UnSortedDataObject->serverDatetime);
-					for($obi=0;$obi<$unSortedSize;$obi++)
-					{
-						$finalVNameArr[$dataCnt]=$vehicle_detail_local[0]; // store vehicle name
-						$finalVSerialArr[$dataCnt]=$vserial[$i];
-						$finalDateTimeArr[$dataCnt]=$UnSortedDataObject->serverDatetime[$obi];
-						$finalIODataArr[$dataCnt]=$UnSortedDataObject->temperatureIOData[$obi];
-						$dataCnt++;
-					}
-				
-				}
-				$SortedDataObject=null;			
-				$sortObjTmp=null;
-				$UnsortedDataObject =null;
-			}
+                            if(count($SortedDataObject->serverDatetime)>0)
+                            {
+                                $sortObjTmp=sortData($SortedDataObject,$sortBy,$parameterizeData);
+                                //var_dump($sortObjTmp);
+                                $sortedSize=sizeof($sortObjTmp->serverDatetime);
+                                for($obi=0;$obi<$sortedSize;$obi++)
+                                {
+                                    $datetime=$sortObjTmp->serverDatetime[$obi];
+                                    $temperature = $SortedDataObject->temperatureIOData[$obi]; 					  
+                                    if($firstdata_flag==0)
+                                    {					
+                                        $firstdata_flag = 1;
+                                        $interval = (double)$userInterval*60;	     
+                                        $time1 = $datetime;					
+                                        $date_secs1 = strtotime($time1);					
+                                        //echo "<br>DateSec1 before=".$date_secs1." time_int=".$interval;
+                                        $date_secs1 = (double)($date_secs1 + $interval); 
+                                        $date_secs2 = 0; 
+                                        $tmpPrev=$temperature;
+                                        $dateTimePrev=strtotime($datetime);
+                                    }
+                                    else
+                                    {                           					
+                                        $time2 = $datetime;											
+                                        $date_secs2 = strtotime($time2);
+                                        $tmpNext=$temperature;
+                                        $dateTimeNext=strtotime($datetime);
+                                        $tmpDiff=$tmpNext-$tmpPrev;
+                                        $tmpFlag=1;
+                                        if((($dateTimeNext-$dateTimePrev)<60) && (abs($tmpDiff)>10))
+                                        {
+                                            $tmpFlag=0;
+                                        }
+
+                                        if(($date_secs2 >= $date_secs1) && $tmpFlag==1)
+                                        {
+                                            //echo "time1=".$time1." time2=".$time2." tmpDiff=".$tmpDiff." tmpNext=".$tmpNext." tmpPrev=".$tmpPrev." datediff=".($dateTimeNext-$dateTimePrev)."<br>";
+                                            if($temperature>=-30 && $temperature<=70)
+                                            {
+                                                //echo "temperature1=".$temperature." doublet=".(double)$temperature."<br>";
+                                                $temperature = preg_replace('/[^0-9-]/s', '.', $temperature);
+                                                $temperaturetmp=substr_count($temperature, '.');
+                                                if($temperaturetmp<=1)
+                                                {
+                                                    $imei[]=$vserial[$i];
+                                                    $vname[]=$vehicle_detail_local[0];
+                                                    $dateFromDisplay[]=$time1;
+                                                    $dateTodisplay[]=$time2;
+                                                    $temperatureDisplay[]=$temperature; 
+                                                    $time1 = $datetime;
+                                                    $date_secs1 = strtotime($time1);
+                                                    $date_secs1 = (double)($date_secs1 + $interval);
+                                                }
+                                            }     															
+                                        }  //if datesec2 
+                                        $tmpPrev=$tmpNext;
+                                        $dateTimePrev=$dateTimeNext;
+
+                                    }   // else closed 
+                                }
+                                $SortedDataObject=null;	
+                            }
+                        }                      
+                     }			
 		}
 		else
 		{
-			$SortedDataObject=null;			
-			$sortObjTmp=null;
-			$UnsortedDataObject =null;
+                    $SortedDataObject=null;		
 		}
 	}
-$reportTitle="Temperature";
-	//print_r($finalVNameArr);
-if($ioFoundFlag==0)
-{
-	print"<br><center><FONT color=\"Red\" size=2><strong>No Temperature Record Found For Selected Vehicle</strong></font></center>";
-}
-else if(count($finalVNameArr)>0)
-{
-echo'<form  name="text_data_report" method="post" target="_blank">'.
-		report_title($reportTitle." Report",$date1,$date2).'
-			<center>
-				<div style="overflow: auto;height: 300px; width: 620px;">';
-					$j=-1;
+        $o_cassandra->close();
+        //print_r($finalSpeedArr);
+        $parameterizeData=null;
+
+echo '<center>';
+
+	  
+  echo'<br>';
+  report_title("Temperature Report",$date1,$date2);
+  
+	echo'<div style="overflow: auto;height: 300px; width: 620px;" align="center">';
+
+  $j=-1;
+  $k=0;
+    $datefrom1=array();
+     $dateto1=array();
+     $temperature1=array();			             
+  for($i=0;$i<sizeof($imei);$i++)
+	{								              
+    if(($i==0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )
+    {
+      $k=0;                                              
+      $j++;
+      $sum_dist =0;
+      $total_distance[$j] =0;
+      
+      $sno = 1;
+      $title='Temperature Report : '.$vname[$i]." &nbsp;<font color=red>(".$imei[$i].")</font>";
+      $vname1[$j][$k] = $vname[$i];
+      $imei1[$j][$k] = $imei[$i];   
+      //echo  "vname1=".$vname1[$j][$k]." j=".$j." k=".$k;
+      
+      echo'
+      <br><table align="center">
+      <tr>
+      	<td class="text" align="center"><b>'.$title.'</b> <div style="height:8px;"></div></td>
+      </tr>
+      </table>
+      <table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
+      <tr>
+			<td class="text" align="left"><b>SNo</b></td>
+			<td class="text" align="left"><b>Start Time</b></td>
+			<td class="text" align="left"><b>End Time</b></td>
+			<td class="text" align="left"><b>Temperature</b></td>								
+      </tr>';  								
+    }                                                                        		
 		
-					$reportSize=sizeof($finalVNameArr);
-					for($i=0;$i<$reportSize;$i++)
-					{								              
-						if(($i===0) || (($i>0) && ($finalVSerialArr[$i-1] != $finalVSerialArr[$i])) )
-						{
-							$k=0;                                              
-							$j++;
-							$sno = 1;
-							$csvtitle1=$reportTitle." Report :- ".$finalVNameArr[$i]." 
-										(".$finalVSerialArr[$i]." )  DateTime :".$date1." - ".$date2." )";
-							echo"<input TYPE=\"hidden\" VALUE=\"$csvtitle1\" NAME=\"title[$x]\">";
-							$csv_string = $csv_string.$csvtitle1."\n";
-							$csv_string = $csv_string."SNo,DateTime,".$reportTitle."\n";
-							$title=$finalVNameArr[$i]." &nbsp;
-							
-							<font color=red>
-								(".$finalVSerialArr[$i].")
-							</font>";
-							echo'<br>
-								<table align="center">
-									<tr>
-										<td class="text" align="center">
-											<b>'.$title.'</b> 
-											<div style="height:8px;">
-											</div>
-										</td>
-									</tr>
-								</table>
-								<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
-									<tr>
-										<td class="text" align="left">
-											<b>SNo</b>
-										</td>
-										<td class="text" align="left">
-											<b>Start Time</b>
-										</td>										
-										<td class="text" align="left">
-											<b>'.$reportTitle.'</b>
-										</td>								
-									</tr>';  								
-						}
-						if($i>0)
-						{
-							$timeDiff=strtotime($finalDateTimeArr[$i])-strtotime($finalDateTimeArr[$i-1]);
-							$tmpDiff=$finalIODataArr[$i]-$finalIODataArr[$i-1];
-						}
-						//echo "timeDiff=".$timeDiff." tmpDiff=".$tmpDiff." finalIODataArr=".$finalIODataArr[$i]."<br>";
-						if(((!($timeDiff<60) && !(abs($tmpDiff)>10)) && ($finalIODataArr[$i]>=-30 && $finalIODataArr[$i]<=70)) || ($i==0))
-						{
-						echo'<tr>
-								<td class="text" align="left" width="4%">
-									<b>'.$sno.'</b>
-								</td>';
-							echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$j][$k][Sno]\">";
-								$csv_string = $csv_string.','.$sno;
-								echo'<td class="text" align="left">
-									'.$finalDateTimeArr[$i].'
-								</td>';
-							echo"<input TYPE=\"hidden\" VALUE=\"$finalDateTimeArr[$i]\" NAME=\"temp[$j][$k][Date From]\">";
-								$csv_string = $csv_string.','.$finalDateTimeArr[$i];
-							
-								$tmpValue=ltrim ($finalIODataArr[$i],'.');
-							echo'<td class="text" align="left">
-									'.$tmpValue.'
-								</td>';	
-								
-							echo"<input TYPE=\"hidden\" VALUE=\"$tmpValue\" NAME=\"temp[$j][$k][$reportTitle]\">";
-								$csv_string = $csv_string.','.$tmpValue;								
-						echo'</tr>';
-						$k++;   
-						$sno++; 
-						}
-						$csv_string=$csv_string."\n";
-						if(($i>0) && ($finalVSerialArr[$i+1] != $finalVSerialArr[$i]) )
-						{	
-							echo '</table>';
-						}	                      							  		
-					}
-			echo "</div>
-		</center>"; 
-	echo'<input TYPE="hidden" VALUE="full data" NAME="csv_type">
-		<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">
-		<br><center>
-		<input type="button" onclick="javascript:report_pdf_csv(\'src/php/report_getpdf_type4.php?size='.$vsize.'\');" value="Get PDF" class="noprint">&nbsp;
-		<input type="button" onclick="javascript:report_pdf_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
-		<!--<input type="button" value="Print it" onclick="window.print()" class="noprint">&nbsp;-->
-	</form>';						
-}
-else
-{
-	print"<center><FONT color=\"Red\" size=2><strong>No Temperature Record Found</strong></font></center>";
-}
+    //$sum_dist = $sum_dist + $distance[$i];
+	              
+    echo'<tr><td class="text" align="left" width="4%"><b>'.$sno.'</b></td>';        												
+		echo'<td class="text" align="left">'.$dateFromDisplay[$i].'</td>';		
+    echo'<td class="text" align="left">'.$dateTodisplay[$i].'</td>';	
+/*$temperaturethis=preg_replace("/&#?[A-Za-z]+;/i",".",$temperature[$i]);	
+$temperaturethis1=iconv('UTF-8', 'UTF-8//IGNORE', $temperaturethis);
+$ftemperature=substr_replace($temperaturethis1, '.', 2, -1);*/
+		echo'<td class="text" align="left">'.ltrim ($temperatureDisplay[$i],'.').'</td>';					
+		echo'</tr>';	          		
+		//echo "<br>arr_time1[$j][$k]main=".$arr_time1[$j][$k];
+   
+    $datefrom1[$j][$k] = $dateFromDisplay[$i];	
+    $dateto1[$j][$k] = $dateTodisplay[$i];										
+    //$temperature1[$j][$k] = round($distance[$i],2); 
+    //$temperature1[$j][$k] = $ftemperature;  
+$temperature1[$j][$k] = $temperatureDisplay[$i];       			    				  					
+	
+	  if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
+    {
+      /*echo '<tr style="height:20px;background-color:lightgrey">
+      <td class="text"><strong>Total<strong>&nbsp;</td>
+			<td class="text"><strong>'.$date1.'</strong></td>	
+      <td class="text"><strong>'.$date2.'</strong></td>';									
+      
+			if($k>0)
+			{
+				//echo  "<br>sum_avgspeed=".$sum_avgspeed."<br>";
+        $total_distance[$j] = round($sum_dist,2);
+        //echo  "<br>total_avgspeed[$j]=".$total_avgspeed[$j]."<br>";
+			}
+													
+			echo'<td class="text"><font color="red"><strong>'.round($total_distance[$j],2).'</strong></font></td>';
+			echo'</tr>';*/ 
+      echo '</table>';
+      
+      $no_of_data[$j] = $k;
+		}  
+		
+    $k++;   
+    $sno++;                       							  		
+ }
+ 
+  echo "</div>";     
+
+	echo'<form method = "post" target="_blank">';
+	
+  $csv_string = "";
+	
+  for($x=0;$x<=$j;$x++)
+	{								
+		$title = $vname1[$x][0]." (".$imei1[$x][0]."): Temperature Report- From DateTime : ".$date1."-".$date2;
+		$csv_string = $csv_string.$title."\n";
+    $csv_string = $csv_string."SNo,Start Time,End Time,Temperature\n";
+    echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title[$x]\">";
+		
+		$sno=0;
+		for($y=0;$y<=$no_of_data[$x];$y++)
+		{
+			//$k=$j-1;
+			$sno++;
+                    
+      $datetmp1 = $datefrom1[$x][$y];	
+			$datetmp2 = $dateto1[$x][$y];										
+			$temperature_tmp = ltrim($temperature1[$x][$y],'.');
+			
+			//echo "dt=".$datetmp1;								
+			echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$x][$y][SNo]\">";
+			echo"<input TYPE=\"hidden\" VALUE=\"$datetmp1\" NAME=\"temp[$x][$y][DateTime From]\">";
+			echo"<input TYPE=\"hidden\" VALUE=\"$datetmp2\" NAME=\"temp[$x][$y][DateTime To]\">";
+			echo"<input TYPE=\"hidden\" VALUE=\"$temperature_tmp\" NAME=\"temp[$x][$y][Temperature]\">";
+      
+      $csv_string = $csv_string.$sno.','.$datetmp1.','.$datetmp2.','.$temperature_tmp."\n";      																	
+		}		
+
+		/*echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][SNo]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][DateTime From]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][DateTime To]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][Distance (km)]\">";									
+		
+		$m = $y+1;								
+		
+		echo"<input TYPE=\"hidden\" VALUE=\"Total\" NAME=\"temp[$x][$m][SNo]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$date1\" NAME=\"temp[$x][$m][DateTime From]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$date2\" NAME=\"temp[$x][$m][DateTime To]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$total_distance[$x]\" NAME=\"temp[$x][$m][Distance (km)]\">";	*/																																									
+	}																						
+
+      
+  echo'	
+    <table align="center">
+		<tr>
+			<td>';
+      
+  		if(sizeof($imei)==0)
+  		{						
+  			print"<center><FONT color=\"Red\" size=2><strong>No Temperature Record Found</strong></font></center>";
+  			//echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=HaltReport.php\">";
+  			echo'<br><br>';
+  		}	
+  		else
+  		{
+        echo'<input TYPE="hidden" VALUE="temperature" NAME="csv_type">';
+        echo'<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">';                 
+        echo'<br><center><input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type4.php?size='.$vsize.'\');" value="Get PDF" class="noprint">&nbsp;<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
+        <!--<input type="button" value="Print it" onclick="window.print()" class="noprint">-->&nbsp;';      
+      }
+                  
+      echo'</td>		
+    </tr>
+		</table>
+		</form>
+ ';				 
+					 	
+echo '</center>';	
 echo'<center>		
 		<a href="javascript:showReportPrevPageNew();" class="back_css">
 			&nbsp;<b>Back</b>

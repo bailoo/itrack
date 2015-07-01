@@ -3,7 +3,7 @@
 	include_once('Hierarchy.php');	
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');
-	
+	include_once('coreDb.php');
 	$account_id_local1 = $_POST['account_id_local'];
 	//echo $account_id_local1;
 	
@@ -12,12 +12,12 @@
 	$option_str = $_POST['option']; 
 	$option1 = explode(':',$option_str);
 	$size_option = sizeof($option1);	
-	
+	$deviceDataArr=getDeviceImeiNoAr($account_id_local1,$DbConnection);
 	$query = "SELECT DISTINCT device_imei_no FROM device_assignment WHERE account_id='$account_id_local1' AND status=1";
 	$result = mysql_query($query,$DbConnection);
-	while($row=mysql_fetch_object($result))
+	foreach($deviceDataArr as $dValye)
 	{
-		$device[] = $row->device_imei_no;
+		$device[] = $dValye['device_imei_no'];
 	}
 		 
 	$dsize = sizeof($device);

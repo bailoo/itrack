@@ -1,168 +1,115 @@
 <?php
-	//error_reporting(-1);
-	//ini_set('display_errors', 'On');
-	set_time_limit(300);	
-	date_default_timezone_set("Asia/Kolkata");
-	include_once("main_vehicle_information_1.php");
-	include_once('Hierarchy.php');
-	$root=$_SESSION["root"];
-	include_once('util_session_variable.php');
-	include_once('xmlParameters.php');
-	include_once("report_title.php");
-	include_once('parameterizeData.php');
-	include_once('data.php');
-	include_once("sortXmlData.php");
-	include_once("getXmlData.php");
-	$DEBUG = 0;
-	$device_str = $_POST['vehicleserial'];
-	//echo "<br>devicestr=".$device_str;
-	$vserial = explode(':',$device_str);
-	$vsize=count($vserial);
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
+set_time_limit(300);	
+date_default_timezone_set("Asia/Kolkata");
+include_once("main_vehicle_information_1.php");
+include_once('Hierarchy.php');
+$root=$_SESSION["root"];
+include_once('util_session_variable.php');
+include_once('xmlParameters.php');
+include_once("report_title.php");
+include_once('parameterizeData.php');
+include_once('data.php');
+include_once("sortXmlData.php");
+include_once("getXmlData.php");
+$DEBUG = 0;
+$device_str = $_POST['vehicleserial'];
+//echo "<br>devicestr=".$device_str;
+$vserial = explode(':',$device_str);
+$vsize=count($vserial);
 
-	$date1 = $_POST['start_date'];
-	$date2 = $_POST['end_date'];
-	$date1 = str_replace("/","-",$date1);
-	$date2 = str_replace("/","-",$date2);
-	$date_1 = explode(" ",$date1);
-	$date_2 = explode(" ",$date2);
-	$datefrom = $date_1[0];
-	$dateto = $date_2[0];
-	$userInterval = $_POST['user_interval'];
+$date1 = $_POST['start_date'];
+$date2 = $_POST['end_date'];
+$date1 = str_replace("/","-",$date1);
+$date2 = str_replace("/","-",$date2);
+$date_1 = explode(" ",$date1);
+$date_2 = explode(" ",$date2);
+$datefrom = $date_1[0];
+$dateto = $date_2[0];
+$userInterval = $_POST['user_interval'];
 
-	
-	$sortBy="h"; /////// device date time	
-	$firstDataFlag=0;
-	$endDateTS=strtotime($date2);
-	
-	$parameterizeData=new parameterizeData();
-	$parameterizeData->batteryVoltage='r';
-	
-for($i=0;$i<$vsize;$i++)
-{	
-	$dataCnt=0;
-	$LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
-	//echo "lastSortedDate=".$LastSortedDate."<br>";
-	$SortedDataObject=new data();
-	$UnSortedDataObject=new data();
-	//echo "in for";
-	if(($LastSortedDate+24*60*60)>=$endDateTS) //All sorted data
-	{	
-		//echo "in if1";
-		$type="sorted";
-		readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-	}
-	else if($LastSortedDate==null) //All Unsorted data
-	{
-		//echo "in if2";
-		$type="unSorted";
-		readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-	}
-	else //Partially Sorted data
-	{
-		$LastSDate=date("Y-m-d",$LastSortedDate+24*60*60);
-		//echo "in else";
-		$type="sorted";					
-		readFileXml($vserial[$i],$date1,$date2,$datefrom,$LastSDate,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-	
-		$type="unSorted";
-		readFileXml($vserial[$i],$date1,$date2,$LastSDate,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-	}
-	//var_dump($UnSortedDataObject);
-	//echo "<br><br>";
-	//var_dump($SortedDataObject);
-	
-	$vehicle_info=get_vehicle_info($root,$vserial[$i]);
-	$vehicle_detail_local=explode(",",$vehicle_info);
-	$finalVNameArr[$i]=$vehicle_detail_local[0];
-	//echo '<br><br>';
-	//print_r($vehicle_detail_local);
-	
-	if(count($SortedDataObject->deviceDatetime)>0)
-	{
-		$prevSortedSize=sizeof($SortedDataObject->dateFrom);
-		for($obi=0;$obi<$prevSortedSize;$obi++)
-		{
-			$finalVNameArr[$i][$dataCnt]=$vehicle_detail_local[0]; // store vehicle name
-			$finalVSerialArr[$i][$dataCnt]=$vserial[$i];
-			$finalDatetimeArr[$i][$dataCnt]=$sortObjTmp->deviceDatetime[$obi];
-			$finalbatteryVoltageArr[$i][$dataCnt]=$sortObjTmp->batteryVoltageData[$obi];
-			$dataCnt++;
-		}
-	}
-	
-	if(count($UnSortedDataObject->deviceDatetime)>0)
-	{
-		//echo "<br><br>In if";
-		$sortObjTmp=sortData($UnSortedDataObject,$sortBy,$parameterizeData);
-		//echo "<br><br>";
-		
-		//var_dump($sortObjTmp);
-		$sortedSize=sizeof($sortObjTmp->deviceDatetime);
-		
-		for($obi=0;$obi<$sortedSize;$obi++)
-		{
-			$finalVNameArr[$i][$dataCnt]=$vehicle_detail_local[0]; // store vehicle name
-			$finalVSerialArr[$i][$dataCnt]=$vserial[$i];
-			$finalDateTimeArr[$i][$dataCnt]=$sortObjTmp->deviceDatetime[$obi];
-			$finalIODataArr[$i][$dataCnt]=$sortObjTmp->batteryVoltageData[$obi];
-			$dataCnt++;
-		}
-	}
-	$sortObjTmp=null;
-	$UnsortedDataObject =null;
-	$SortedDataObject=null;	
-}
-$parameterizeData=null;
-//print_r($finalVNameArr);
-$o_cassandra->close();
+
+$sortBy="h"; /////// device date time	
+$firstDataFlag=0;
+$endDateTS=strtotime($date2);
+
+$parameterizeData=new parameterizeData();
+$parameterizeData->batteryVoltage='r';
+
+get_All_Dates($datefrom, $dateto, $userdates);    
+$date_size = sizeof($userdates);	
+
 for($i=0;$i<$vsize;$i++)
 {
-	$fix_tmp = 1;
-	$xml_date_latest="1900-00-00 00:00:00";
-	$CurrentLat = 0.0;
-	$CurrentLong = 0.0;
-	$LastLat = 0.0;
-	$LastLong = 0.0;
-	$firstData = 0;
-	$distance =0.0;
-	$j = 0;
-	$total_dist = 0.0;
-	$firstdata_flag =0;
-	$innerSize=sizeof($finalDateTimeArr[$i]);
-	for($j=0;$j<$innerSize;$j++)
-	{
-		$supv = $finalIODataArr[$i][$j];
-		$datetime = $finalDateTimeArr[$i][$j];
-		if($firstdata_flag==0)
-		{					
-			$firstdata_flag = 1;
-			$interval = (double)$userInterval*60;
-			$time1 = $datetime;					
-			$date_secs1 = strtotime($time1);
-			$date_secs1 = (double)($date_secs1 + $interval); 
-			$date_secs2 = 0; 
-			
-			$imei[]	=$vserial[$i];
-			$vname[]=$finalVNameArr[$i];
-			$datetimeDisplay[]=$time1;
-			$supVoltageDisplay[]=$supv;
-		} 
-		else
-		{                           					
-			// echo "<br>Total lines orig=".$total_lines." ,c=".$c;
-			$time2 = $datetime;											
-			$date_secs2 = strtotime($time2);	
-			//echo "<br>Next".$date_secs2;
-			if($date_secs2 >= $date_secs1)
-			{	                                  						
-				$imei[]	=$vserial[$i];
-				$vname[]=$finalVNameArr[$i];
-				$datetimeDisplay[]=$time2;
-				$supVoltageDisplay[]=$supv;				
-			}  //if datesec2 
-		}   // else closed 
+    $vehicle_info=get_vehicle_info($root,$vserial[$i]);
+    $vehicle_detail_local=explode(",",$vehicle_info);
+    
+    $CurrentLat = 0.0;
+    $CurrentLong = 0.0;
+    $LastLat = 0.0;
+    $LastLong = 0.0;
+    $firstData = 0;
+    $distance =0.0;
+    $total_dist = 0.0;
+    $firstdata_flag =0;
+    
+    for($di=0;$di<=($date_size-1);$di++)
+    {
+        $SortedDataObject=new data();
+        readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+        //var_dump($SortedDataObject);
+        if(count($SortedDataObject->deviceDatetime)>0)
+	{            
+            $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+            for($obi=0;$obi<$prevSortedSize;$obi++)
+            {
+                $supv = $SortedDataObject->batteryVoltageData[$obi];
+                $datetime = $SortedDataObject->deviceDatetime[$obi];
+                //echo "battery_voltage=".$supv."<br>";
+                //echo "battery_voltage=".$datetime."<br>";
+                if($firstdata_flag==0)
+                {					
+                    $firstdata_flag = 1;
+                    $interval = (double)$userInterval*60;
+                    $time1 = $datetime;					
+                    $date_secs1 = strtotime($time1);
+                    $date_secs1 = (double)($date_secs1 + $interval); 
+                    $date_secs2 = 0; 
+
+                    $imei[]=$vserial[$i];
+                    $vname[]=$vehicle_detail_local[0];
+                    $datetimeDisplay[]=$time1;
+                    $supVoltageDisplay[]=$supv;
+                } 
+                else
+                {                           					
+                    // echo "<br>Total lines orig=".$total_lines." ,c=".$c;
+                    $time2 = $datetime;											
+                    $date_secs2 = strtotime($time2);	
+                    //echo "<br>Next".$date_secs2;
+                    if($date_secs2 >= $date_secs1)
+                    {	                                  						
+                        $imei[]	=$vserial[$i];
+                        $vname[]=$vehicle_detail_local[0];
+                        $datetimeDisplay[]=$time2;
+                        $supVoltageDisplay[]=$supv;
+                        
+                        $time1 = $datetime;
+                        $date_secs1 = strtotime($time1);
+                        $date_secs1 = (double)($date_secs1 + $interval);
+                    }  //if datesec2 
+                }   // else closed 
+            }
+            $SortedDataObject=null;	
 	}
+    }
+	
 }
+$parameterizeData=null;
+$o_cassandra->close();
+
+//print_r($imei);
 
 echo'<center><br>';
 report_title("Battery Voltage Report",$date1,$date2);

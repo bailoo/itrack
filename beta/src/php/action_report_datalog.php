@@ -70,173 +70,51 @@ if($account_id=="1594")
 	$parameterizeData->byParam = 'bz';
 }
 
-$finalVNameArr=array();
-$finalVTypeArr=array();
+
+get_All_Dates($datefrom, $dateto, $userdates);    
+$date_size = sizeof($userdates);
 
 for($i=0;$i<$vsize;$i++)
 {
-	$dataCnt=0;
-	//echo "vs=".$vserial[$i]."<br>";
-	$vehicle_info=get_vehicle_info($root,$vserial[$i]);
-	$vehicle_detail_local=explode(",",$vehicle_info);
-	$finalVNameArr[$i]=$vehicle_detail_local[0];
-	$finalVTypeArr[$i]=$vehicle_detail_local[1];
-	//echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
-		
-	$LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
-	$SortedDataObject=new data();
-	$UnSortedDataObject=new data();
-	
-	if(($LastSortedDate+24*60*60)>=$endDateTS) //All sorted data
-	{	
-		//echo "in if1";
-		$type="sorted";
-		readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-	}
-	else if($LastSortedDate==null) //All Unsorted data
-	{
-		//echo "in if2";
-		$type="unSorted";
-		readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-	}
-	else //Partially Sorted data
-	{
-		$LastSDate=date("Y-m-d",$LastSortedDate+24*60*60);
-		//echo "in else";
-		$type="sorted";					
-		readFileXml($vserial[$i],$date1,$date2,$datefrom,$LastSDate,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-	
-		$type="unSorted";
-		readFileXml($vserial[$i],$date1,$date2,$LastSDate,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-	}
-
-	/*echo "udt1=".$UnSortedDataObject->deviceDatetime[0]."<br>";
-	echo "udt2=".$UnSortedDataObject->deviceDatetime[1]."<br>";	
-	echo "udt1=".$UnSortedDataObject->speedData[0]."<br>";
-	echo "udt2=".$UnSortedDataObject->speedData[1]."<br>";*/
-	
-	/*echo "sodt1=".$SortedDataObject->deviceDatetime[0]."<br>";
-	echo "sodt2=".$SortedDataObject->deviceDatetime[1]."<br>";	
-	echo "sodt1=".$SortedDataObject->speedData[0]."<br>";
-	echo "sodt2=".$SortedDataObject->speedData[1]."<br>";
-	echo "<br><br>";*/
-	
-	if(count($SortedDataObject->deviceDatetime)>0)
-	{
-		//echo "in sorted=".$SortedDataObject->deviceDatetime."<br><br><br><br><br><br>";
-		$prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
-		for($obi=0;$obi<$prevSortedSize;$obi++)
-		{			
-			$finalDateTimeArr[$i][$dataCnt]=$SortedDataObject->deviceDatetime[$obi];
-			$finalSDateTimeArr[$i][$dataCnt]=$SortedDataObject->serverDatetime[$obi];
-			$finalLatitudeArr[$i][$dataCnt]=$SortedDataObject->latitudeData[$obi];
-			$finalLongitudeArr[$i][$dataCnt]=$SortedDataObject->longitudeData[$obi];
-			$finalSpeedArr[$i][$dataCnt]=$SortedDataObject->speedData[$obi];
-			$finalMTArr[$i][$dataCnt]=$SortedDataObject->messageTypeData[$obi];
-			$finalVerArr[$i][$dataCnt]=$SortedDataObject->versionData[$obi];
-			$finalFixArr[$i][$dataCnt]=$SortedDataObject->fixData[$obi];
-			$finalCNArr[$i][$dataCnt]=$SortedDataObject->cellNameData[$obi];
-			$finalSSArr[$i][$dataCnt]=$SortedDataObject->sigStrData[$obi];
-			$finalSVArr[$i][$dataCnt]=$SortedDataObject->supVoltageData[$obi];
-			$finalio8Arr[$i][$dataCnt]=$SortedDataObject->io8Data[$obi];
-			if($account_id=="1594")
-			{
-				$finalaxParamArr[$i][$dataCnt] = $SortedDataObject->axParamData[$obi];
-				$finalayParamArr[$i][$dataCnt] = $SortedDataObject->ayParamData[$obi];
-				$finalazParamArr[$i][$dataCnt] = $SortedDataObject->azParamData[$obi];
-				$finalmxParamArr[$i][$dataCnt] = $SortedDataObject->mxParamData[$obi];
-				$finalmyParamArr[$i][$dataCnt] = $SortedDataObject->myParamData[$obi];
-				$finalmzParamArr[$i][$dataCnt] = $SortedDataObject->mzParamData[$obi];
-				$finalbxParamArr[$i][$dataCnt] = $SortedDataObject->bxParamData[$obi];
-				$finalbyParamArr[$i][$dataCnt] = $SortedDataObject->byParamData[$obi];
-				$finalbzParamArr[$i][$dataCnt] = $SortedDataObject->bzParamData[$obi];				
-			}
-			$dataCnt++;
-		}
-	}
-	if(count($UnSortedDataObject->deviceDatetime)>0)
-	{
-		//$sortObjTmp=sortData($UnSortedDataObject,$sortBy,$parameterizeData);
-		//var_dump($sortObjTmp);
-		/*echo"sdt1=".$sortObjTmp->deviceDatetime[0]."<br>";
-		echo "sdt2=".$sortObjTmp->deviceDatetime[1]."<br>";	
-		echo "ss1=".$sortObjTmp->speedData[0]."<br>";
-		echo "ss2=".$sortObjTmp->speedData[1]."<br>";
-		echo "<br><br>";*/
-		//$sortedSize=sizeof($sortObjTmp->deviceDatetime);
-		$unSortedSize=sizeof($UnSortedDataObject->deviceDatetime);
-		for($obi=0;$obi<$unSortedSize;$obi++)
-		{				
-			$finalDateTimeArr[$i][$dataCnt]=$UnSortedDataObject->deviceDatetime[$obi];
-			$finalSDateTimeArr[$i][$dataCnt]=$UnSortedDataObject->serverDatetime[$obi];				
-			$finalLatitudeArr[$i][$dataCnt]=$UnSortedDataObject->latitudeData[$obi];
-			$finalLongitudeArr[$i][$dataCnt]=$UnSortedDataObject->longitudeData[$obi];	
-			$finalSpeedArr[$i][$dataCnt]=$UnSortedDataObject->speedData[$obi];
-			$finalMTArr[$i][$dataCnt]=$UnSortedDataObject->messageTypeData[$obi];
-			$finalVerArr[$i][$dataCnt]=$UnSortedDataObject->versionData[$obi];
-			$finalFixArr[$i][$dataCnt]=$UnSortedDataObject->fixData[$obi];
-			$finalCNArr[$i][$dataCnt]=$UnSortedDataObject->cellNameData[$obi];
-			$finalSSArr[$i][$dataCnt]=$UnSortedDataObject->sigStrData[$obi];
-			$finalSVArr[$i][$dataCnt]=$UnSortedDataObject->supVoltageData[$obi];
-			$finalio8Arr[$i][$dataCnt]=$UnSortedDataObject->io8Data[$obi];
-			if($account_id=="1594")
-			{
-				$finalaxParamArr[$i][$dataCnt] = $UnSortedDataObject->axParamData[$obi];
-				$finalayParamArr[$i][$dataCnt] = $UnSortedDataObject->ayParamData[$obi];
-				$finalazParamArr[$i][$dataCnt] = $UnSortedDataObject->azParamData[$obi];
-				$finalmxParamArr[$i][$dataCnt] = $UnSortedDataObject->mxParamData[$obi];
-				$finalmyParamArr[$i][$dataCnt] = $UnSortedDataObject->myParamData[$obi];
-				$finalmzParamArr[$i][$dataCnt] = $UnSortedDataObject->mzParamData[$obi];
-				$finalbxParamArr[$i][$dataCnt] = $UnSortedDataObject->bxParamData[$obi];
-				$finalbyParamArr[$i][$dataCnt] = $UnSortedDataObject->byParamData[$obi];
-				$finalbzParamArr[$i][$dataCnt] = $UnSortedDataObject->bzParamData[$obi];			
-			}
-			$dataCnt++;				
-		}
-	}
-	$innerSize=sizeof($finalDateTimeArr[$i]);
-	//echo"size=".$innerSize."<br>";
-	$SortedDataObject=null;			
-	$sortObjTmp=null;
-	$UnsortedDataObject =null;
-}
-$parameterizeData=null;	
-
-for($i=0;$i<$vsize;$i++)
-{
-	$fix_tmp = 1;
-	$distance =0.0;	
-	$firstdata_flag =0;		
-	$flag =0;
-	$rec_count =0;
-	$innerSize=0;
-	$innerSize=sizeof($finalDateTimeArr[$i]);
-	//echo "innerSize=".$innerSize."<br>";
-	
-	for($j=0;$j<$innerSize;$j++)
-	{
-		/*if( ($flag == 1) && ($rec!="all") )
-		{
-			break;   // BREAK LOOP AFTER TAKING ONE DAY RECORDS- LAST 30/100/ALL
-		}*/	
+    $vehicle_info=get_vehicle_info($root,$vserial[$i]);
+    $vehicle_detail_local=explode(",",$vehicle_info);
+    $finalVNameArr[$i]=$vehicle_detail_local[0];
+    $finalVTypeArr[$i]=$vehicle_detail_local[1];
+    //echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
+    $SortedDataObject=new data();
+    $distance =0.0;	
+    $firstdata_flag =0;		
+    $flag =0;
+    $rec_count =0;
+    for($di=0;$di<=($date_size-1);$di++)
+    {
+        $SortedDataObject=new data();
+        readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+        if(count($SortedDataObject->deviceDatetime)>0)
+        {
+                //echo "in sorted=".$SortedDataObject->deviceDatetime."<br><br><br><br><br><br>";
+            $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+            //echo "prevSortedSize=".$prevSortedSize."<br>";
+            for($obi=0;$obi<$prevSortedSize;$obi++)
+            {
 		$format =2;
-		$limit0 = ($innerSize+1)-10;
-		$limit1 = ($innerSize+1)-30;
-		$limit2 = ($innerSize+1)-100;
+		$limit0 = ($prevSortedSize+1)-10;
+		$limit1 = ($prevSortedSize+1)-30;
+		$limit2 = ($prevSortedSize+1)-100;
 		$rec_count++;
-		//echo "rec_count=".$rec_count." limit1=".$limit1." innerSize=".$innerSize."<br>";		
+		//echo "rec_count=".$rec_count." limit1=".$limit1." innerSize=".$prevSortedSize."<br>";		
 		//echo "<br>flag=".$flag." ,rec_count=".$rec_count." ,limit=".$limit1." rec=".$rec." id=".$id." strlen=".strlen($line);
-		if( ( ($rec_count == $limit1) || ($innerSize<30) ) && ($rec=="30") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
+		if( ( ($rec_count == $limit1) || ($prevSortedSize<30) ) && ($rec=="30") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
 		{                   
 			//echo "<br>in 30 ,rec_count=".$rec_count;
 			$flag =1;
 		}
-		else if( ( ($rec_count == $limit2) || ($innerSize<100) )  && ($rec=="100") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
+		else if( ( ($rec_count == $limit2) || ($prevSortedSize<100) )  && ($rec=="100") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
 		{
 			//echo "<br>in 100";
 			$flag =1;
 		}
-		else if( ( ($rec_count == $limit0) || ($innerSize<10) )  && ($rec=="10") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
+		else if( ( ($rec_count == $limit0) || ($prevSortedSize<10) )  && ($rec=="10") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
 		{
 			//echo "<br>in 10";
 			$flag =1;
@@ -249,59 +127,46 @@ for($i=0;$i<$vsize;$i++)
 		//echo "flag=".$flag."<br>";
 		if($flag == 1)
 		{	
-			//echo "in flag=".$flag."<br>";
-			// $linetowrite = "\n< marker sts=\"".$sts."\" msgtype=\"".$msgtype."\" ver=\"".$ver."\" fix=\"".$fix."\" imei=\"".$vehicleserial."\" vname=\"".$vname."\" userid=\"".$user_id."\" datetime=\"".$datetime."\" lat=\"".$lat."\" lng=\"".$lng."\" alt=\"".$alt."\" speed=\"".$speed."\" fuel=\"".$fuel."\" vehicletype=\"".$vehicletype."\" no_of_sat=\"".$no_of_sat."\" cellname=\"".$cellname."\" distance=\"".$distance."\" io8=\"".$io8."\" sig_str=\"".$sig_str."\" sup_v=\"".$sup_v."\" speed_a=\"".$speed_a."\" geo_in_a=\"".$geo_in_a."\" geo_out_a=\"".$geo_out_a."\" stop_a=\"".$stop_a."\" move_a=\"".$move_a."\" lowv_a=\"".$lowv_a."\" />";						          					                    
-			//echo "wrote<br>";
-			if($account_id=='1594')
-			{
-				$sts[]=$finalSDateTimeArr[$i][$j];
-				$msgtype[]=$finalMTArr[$i][$j];
-				$ver[]=$finalVerArr[$i][$j];
-				$fix[]=$finalFixArr[$i][$j];
-				$imei[]=$vserial[$i];
-				$vname[]=$finalVNameArr[$i];
-				$vtype[]=$finalVTypeArr[$i];
-				$userid[]=$user_id;
-				$datetime[]=$finalDateTimeArr[$i][$j];
-				$lat[]=$finalLatitudeArr[$i][$j];
-				$lng[]=$finalLongitudeArr[$i][$j];
-				$speed[]=$finalSpeedArr[$i][$j];
-				$cellname[]=$finalCNArr[$i][$j];
-				$io8[]=$finalio8Arr[$i][$j];
-				$sig_str[]=$finalSSArr[$i][$j];
-				$sup_v[]=$finalSVArr[$i][$j];
-				$ax[]=$finalaxParamArr[$i][$j];
-				$ay[]=$finalayParamArr[$i][$j];
-				$az[]=$finalazParamArr[$i][$j];
-				$mx[]=$finalmxParamArr[$i][$j];
-				$my[]=$finalmyParamArr[$i][$j];
-				$mz[]=$finalmzParamArr[$i][$j];
-				$bx[]=$finalbxParamArr[$i][$j];
-				$by[]=$finalbyParamArr[$i][$j];
-				$bz[]=$finalbzParamArr[$i][$j];	
-			}
-			else
-			{
-				$sts[]=$finalSDateTimeArr[$i][$j];
-				$msgtype[]=$finalMTArr[$i][$j];
-				$ver[]=$finalVerArr[$i][$j];
-				$fix[]=$finalFixArr[$i][$j];
-				$imei[]=$vserial[$i];
-				$vname[]=$finalVNameArr[$i];
-				$vtype[]=$finalVTypeArr[$i];
-				$userid[]=$user_id;
-				$datetime[]=$finalDateTimeArr[$i][$j];
-				$lat[]=$finalLatitudeArr[$i][$j];
-				$lng[]=$finalLongitudeArr[$i][$j];
-				$speed[]=$finalSpeedArr[$i][$j];
-				$cellname[]=$finalCNArr[$i][$j];
-				$io8[]=$finalio8Arr[$i][$j];
-				$sig_str[]=$finalSSArr[$i][$j];
-				$sup_v[]=$finalSVArr[$i][$j];
-			}
+                    //echo "in flag=".$flag."<br>";
+                    // $linetowrite = "\n< marker sts=\"".$sts."\" msgtype=\"".$msgtype."\" ver=\"".$ver."\" fix=\"".$fix."\" imei=\"".$vehicleserial."\" vname=\"".$vname."\" userid=\"".$user_id."\" datetime=\"".$datetime."\" lat=\"".$lat."\" lng=\"".$lng."\" alt=\"".$alt."\" speed=\"".$speed."\" fuel=\"".$fuel."\" vehicletype=\"".$vehicletype."\" no_of_sat=\"".$no_of_sat."\" cellname=\"".$cellname."\" distance=\"".$distance."\" io8=\"".$io8."\" sig_str=\"".$sig_str."\" sup_v=\"".$sup_v."\" speed_a=\"".$speed_a."\" geo_in_a=\"".$geo_in_a."\" geo_out_a=\"".$geo_out_a."\" stop_a=\"".$stop_a."\" move_a=\"".$move_a."\" lowv_a=\"".$lowv_a."\" />";						          					                    
+                    //echo "wrote<br>";
+                    $sts[]=$SortedDataObject->serverDatetime[$obi];
+                    $msgtype[]=$SortedDataObject->messageTypeData[$obi];
+                    $ver[]=$SortedDataObject->versionData[$obi];
+                    $fix[]=$SortedDataObject->fixData[$obi];
+                    $imei[]=$vserial[$i];
+                    $vname[]=$$vehicle_detail_local[0];
+                    $vtype[]=$vehicle_detail_local[1];
+                    $userid[]=$user_id;
+                    $datetime[]=$SortedDataObject->deviceDatetime[$obi];
+                    $lat[]=$SortedDataObject->latitudeData[$obi];
+                    $lng[]=$SortedDataObject->longitudeData[$obi];
+                    $speed[]=$SortedDataObject->speedData[$obi];
+                    $cellname[]=$SortedDataObject->cellNameData[$obi];
+                    $io8[]=$SortedDataObject->io8Data[$obi];
+                    $sig_str[]=$SortedDataObject->sigStrData[$obi];
+                    $sup_v[]=$SortedDataObject->supVoltageData[$obi];                    
+                    if($account_id=='1594')
+                    {                      
+                        $ax[]=$SortedDataObject->axParamData[$obi];
+                        $ay[]=$SortedDataObject->ayParamData[$obi];
+                        $az[]=$SortedDataObject->azParamData[$obi];
+                        $mx[]= $SortedDataObject->mxParamData[$obi];
+                        $my[]=$SortedDataObject->myParamData[$obi];
+                        $mz[]=$SortedDataObject->mzParamData[$obi];
+                        $bx[]= $SortedDataObject->bxParamData[$obi];
+                        $by[]=$SortedDataObject->byParamData[$obi];
+                        $bz[]=$SortedDataObject->bzParamData[$obi];	
+                    }
 		}
-	}
+         
+            }
+        }            
+    }
+    $SortedDataObject=null;	
 }
+$parameterizeData=null;	
+
 
 	echo '<center>';
 	echo '<div style="width:1025px;height:600px;overflow:auto;" align="center">';

@@ -28,7 +28,7 @@
 								<div style="overflow: auto;height: 150px; width: 650px;" align="center">
 									<table border=0 cellspacing=0 cellpadding=0 align="center" width="100%">';						
 						
-										 echo'<tr><td height="10px" align="center" colspan="6" class=\'text\'>&nbsp;<input type=\'checkbox\' name=\'all\' value=\'1\' onClick=\'javascript:select_all_vehicle(this.form);\'>&nbsp;&nbsp;Select All</td></tr>';                 
+										// echo'<tr><td height="10px" align="center" colspan="6" class=\'text\'>&nbsp;<input type=\'checkbox\' name=\'all\' value=\'1\' onClick=\'javascript:select_all_vehicle(this.form);\'>&nbsp;&nbsp;Select All</td></tr>';                 
 						 $function_string($account_id_local1,$options_value1);
 																				
 										echo'

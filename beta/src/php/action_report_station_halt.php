@@ -1,15 +1,14 @@
 <?php	
     include_once('util_session_variable.php');
     include_once('util_php_mysql_connectivity.php');
+     include_once('coreDb.php');
     set_time_limit(1000);   
     include_once("report_title.php");  
-    include("user_type_setting.php");	
-	
-	define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
-	//date_default_timezone_set('Europe/London');
-	require_once 'PHPExcel/Cell/AdvancedValueBinder.php';
-	require_once 'PHPExcel/IOFactory.php';
-    
+    include("user_type_setting.php");
+    define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
+    //date_default_timezone_set('Europe/London');
+    require_once 'PHPExcel/Cell/AdvancedValueBinder.php';
+    require_once 'PHPExcel/IOFactory.php';
     $station_str_tmp = $_POST['station_str'];
     //echo "station=".$station_str_tmp."<br>";
     $station_str_tmp1 = explode('@',$station_str_tmp);
@@ -17,22 +16,19 @@
     $vstr_arr = explode('@',$vstr);
     $date1 = str_replace("/","-",$start_date);
     $date2 = str_replace("/","-",$end_date);
-
     $aryRange_1=createDateRangeArray($date1, $date2);
-   // print_r($aryRange_1);  
-	?>	
+    // print_r($aryRange_1);  
+?>	
      <html>
-            <title>
-              Supply Timing Report  
-            </title>
+        <title>
+            Supply Timing Report  
+        </title>
         <head>
             
         </head>
         <body>
 <?php
-		$Query="SELECT format_id FROM account_report_format WHERE account_id='$account_id' AND status=1";
-		$Result=mysql_query($Query,$DbConnection);
-		$Row=mysql_fetch_row($Result);
+    $Row=getFormatIdToARF($account_id,1,$DbConnection);  // ARF=>account_report_format table
 	//echo "in if";
     echo'<form method = "post" target="_blank">';
       	//echo "<br>pl=".$pdf_place_ref;
