@@ -319,4 +319,8 @@ public class class_pop_junction {
 		values.add(final_data);
 		return values;
 	}
+	
+	public static void main(String args[]) {
+		
+	}
 }
