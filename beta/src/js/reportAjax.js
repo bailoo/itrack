@@ -154,11 +154,12 @@ function show_option_with_value(type, option)      // type="manage/report/settin
 					} 
 					else 
 					{
-						hideManageLoadingMessage();
-						document.getElementById('reportPrevPage').style.display="none";
-						document.getElementById('rightMenu').style.display="";
-						document.getElementById('bodyspan').style.display="";
-						document.getElementById('bodyspan').innerHTML =result;
+                                            //alert("result="+result);
+                                            hideManageLoadingMessage();
+                                            document.getElementById('reportPrevPage').style.display="none";
+                                            document.getElementById('rightMenu').style.display="";
+                                            document.getElementById('bodyspan').style.display="";
+                                            document.getElementById('bodyspan').innerHTML =result;
 					}                  
 				}
 				else 
