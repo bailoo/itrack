@@ -28,7 +28,7 @@ $app->get('/getlog/:imei/:dtime1/:dtime2/', function ($imei, $dtime1, $dtime2) {
 
 	//$st_results = getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc);
 	//$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
-	print_r($st_results);
+	print json_encode($st_results);
 	$o_cassandra->close();
 
 });
