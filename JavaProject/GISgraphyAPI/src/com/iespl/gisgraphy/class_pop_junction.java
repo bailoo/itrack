@@ -320,7 +320,4 @@ public class class_pop_junction {
 		return values;
 	}
 	
-	public static void main(String args[]) {
-		
-	}
 }
