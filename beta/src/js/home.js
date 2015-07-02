@@ -706,129 +706,126 @@ function show_report_1(responce)
 	}
 	function show_current_last_data()
 	{
-		imei_iotype_arr.length=0;	   		
-		var display_mode=document.thisform.mode;   /////// 1=last_postoin  and 2=track 		
-		var imeino1;
-		var vid;
-		var text_report_io_element="";
-		vid = "";	
-		for(i=0;i<display_mode.length;i++)
-		{
-			if(display_mode[i].checked)
-			{
-				var mode=display_mode[i].value;
-				if(mode == 1)
-				{  
-					imeino1=document.thisform.elements['vehicleserial[]'];
-				}
-				else if(mode == 2)
-				{
-					imeino1=document.thisform.vehicleserial_radio; 
-				}
-			}
-		}
-		var num1=0; 
-		if(mode==1)               // LAST POSITION
-		{
-			if(imeino1.length!=undefined)
-			{
-				for(i=0;i<imeino1.length;i++)
-				{
-					if(imeino1[i].checked)
-					{						
-						var value_tmp=imeino1[i].value;
-						var vid_local=value_tmp.split("*");
-						if(vid_local[1]!="tmp_str")
-						{
-							imei_iotype_arr[vid_local[0]]=vid_local[1];				
-						}
-						text_report_io_element=text_report_io_element+vid_local[1]+",";	
-						//alert("text_report_io_element="+text_report_io_element+"vid_local="+vid_local[1]);
-						vid=vid+vid_local[0]+",";
-						num1 = 1;
-					}
-				}
-			}
-			else
-			{
-				if(imeino1.checked)
-				{
-					var value_tmp=imeino1.value;					
-					var vid_local=value_tmp.split("*");
-					if(vid_local[1]!="tmp_str")
-					{
-						imei_iotype_arr[vid_local[0]]=vid_local[1];				
-					}
-					text_report_io_element=text_report_io_element+vid_local[1]+",";				
-					vid=vid+vid_local[0]+",";
-					num1 = 1;
-				}
-			}
-			if(num1==0)
-			{
-				alert("Please Select At Least One Vehicle");							
-				return false;  			
-			}
-			var strIOElement = text_report_io_element.length;
-				text_report_io_element = text_report_io_element.slice(0,strIOElement-1);
-			var strLen = vid.length;
-			vid = vid.slice(0,strLen-1);				
-		}
-		else if(mode==2)        // TRACK
-		{
-			if(imeino1.length!=undefined)
-			{      
-				for(i=0;i<imeino1.length;i++)
-				{
-					if(imeino1[i].checked)
-					{
-					
-						var vid_local=(imeino1[i].value).split("*");							
-						text_report_io_element=vid_local[1];						
-						vid =  vid + vid_local[0];							
-						num1 = 1;
-					}
-				}
-			}
-			else
-			{
-				if(imeino1.checked)
-				{
-					var vid_local=(imeino1.value).split("*");
-					if(vid_local[1]!="tmp_str")
-					{
-						imei_iotype_arr[vid_local[0]]=vid_local[1];	
-					}
-					text_report_io_element=vid_local[1];						
-					vid =  vid + vid_local[0];			
-					num1 = 1;
-				}        
-			}      
-			if(num1==0)
-			{
-				alert("Please Select At Least One Vehicle");							
-				return false;  			
-			}              	 
-		}	
-		var date = new Date();
-		var dest = "../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
-		if(document.thisform.location.checked==true)
-		{
-			var data_with_location="1";					
-		}
-		else
-		{
-			var data_with_location="0";
-		}	
-		//alert("dest="+dest);
-		document.cldr.xml_file.value=dest;
-		document.cldr.vserial.value=vid;					
-		document.cldr.text_report_io_element.value=text_report_io_element;		
-		document.cldr.dwt.value=data_with_location;
-		document.cldr.submit();
-		/*document.cldr.action="src/php/cld_prev?tmpval1="+vid+"&tmpval2="+text_report_io_element+"&ltmpval3="+data_with_location+"&ltmpval4="+dest;
-		document.cldr.target="_blank";
-		document.cldr.submit();*/	
+            imei_iotype_arr.length=0;	   		
+            var display_mode=document.thisform.mode;   /////// 1=last_postoin  and 2=track 		
+            var imeino1;
+            var vid;
+            var text_report_io_element="";
+            vid = "";	
+            for(i=0;i<display_mode.length;i++)
+            {
+                if(display_mode[i].checked)
+                {
+                    var mode=display_mode[i].value;
+                    if(mode == 1)
+                    {  
+                        imeino1=document.thisform.elements['vehicleserial[]'];
+                    }
+                    else if(mode == 2)
+                    {
+                        imeino1=document.thisform.vehicleserial_radio; 
+                    }
+                }
+            }
+            var num1=0; 
+            if(mode==1)               // LAST POSITION
+            {
+                if(imeino1.length!=undefined)
+                {
+                    for(i=0;i<imeino1.length;i++)
+                    {
+                        if(imeino1[i].checked)
+                        {						
+                            var value_tmp=imeino1[i].value;
+                            var vid_local=value_tmp.split("*");
+                            if(vid_local[1]!="tmp_str")
+                            {
+                                imei_iotype_arr[vid_local[0]]=vid_local[1];				
+                            }
+                            text_report_io_element=text_report_io_element+vid_local[1]+",";	
+                            //alert("text_report_io_element="+text_report_io_element+"vid_local="+vid_local[1]);
+                            vid=vid+vid_local[0]+",";
+                            num1 = 1;
+                        }
+                    }
+                }
+                else
+                {
+                    if(imeino1.checked)
+                    {
+                        var value_tmp=imeino1.value;					
+                        var vid_local=value_tmp.split("*");
+                        if(vid_local[1]!="tmp_str")
+                        {
+                            imei_iotype_arr[vid_local[0]]=vid_local[1];				
+                        }
+                        text_report_io_element=text_report_io_element+vid_local[1]+",";				
+                        vid=vid+vid_local[0]+",";
+                        num1 = 1;
+                    }
+                }
+                if(num1==0)
+                {
+                    alert("Please Select At Least One Vehicle");							
+                    return false;  			
+                }
+                var strIOElement = text_report_io_element.length;
+                text_report_io_element = text_report_io_element.slice(0,strIOElement-1);
+                var strLen = vid.length;
+                vid = vid.slice(0,strLen-1);				
+            }
+            else if(mode==2)        // TRACK
+            {
+                if(imeino1.length!=undefined)
+                {      
+                    for(i=0;i<imeino1.length;i++)
+                    {
+                        if(imeino1[i].checked)
+                        {
+                            var vid_local=(imeino1[i].value).split("*");							
+                            text_report_io_element=vid_local[1];						
+                            vid =  vid + vid_local[0];							
+                            num1 = 1;
+                        }
+                    }
+                }
+                else
+                {
+                    if(imeino1.checked)
+                    {
+                        var vid_local=(imeino1.value).split("*");
+                        if(vid_local[1]!="tmp_str")
+                        {
+                            imei_iotype_arr[vid_local[0]]=vid_local[1];	
+                        }
+                        text_report_io_element=vid_local[1];						
+                        vid =  vid + vid_local[0];			
+                        num1 = 1;
+                    }        
+                }      
+                if(num1==0)
+                {
+                    alert("Please Select At Least One Vehicle");							
+                    return false;  			
+                }              	 
+            }	
+		
+            if(document.thisform.location.checked==true)
+            {
+                var data_with_location="1";					
+            }
+            else
+            {
+                var data_with_location="0";
+            }	
+            //alert("dest="+dest);		
+            document.cldr.vserial.value=vid;					
+            document.cldr.text_report_io_element.value=text_report_io_element;		
+            document.cldr.dwt.value=data_with_location;
+            document.cldr.submit();
+            /*document.cldr.action="src/php/cld_prev?tmpval1="+vid+"&tmpval2="+text_report_io_element+"&ltmpval3="+data_with_location+"&ltmpval4="+dest;
+            document.cldr.target="_blank";
+            document.cldr.submit();*/	
 	}
 
 	function close_vehicle_display_option()

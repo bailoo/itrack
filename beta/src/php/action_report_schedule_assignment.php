@@ -26,20 +26,18 @@ if($vsize>0)
 }
 $vid_local=substr($vid_local,0,-1);
 	
-      
-      $Query="SELECT * FROM schedule_assignment WHERE vehicle_id IN (".$vid_local.") AND date_from >= '$date1' AND date_to <= '$date2' AND status=1";
-//echo "query=".$Query."<br>";
-      $Result=mysql_query($Query,$DbConnection);
-	  $NumRows=mysql_num_rows($Result);
-	  if($NumRows>0)
-	  {
-		echo'<form name="schedule_assignment" method="POST" target="_blank">';
-		$csv_string="";
-		$title1="Schedule Assignment Report From ".$date1." To ".$date2." ";
-		echo"<input TYPE=\"hidden\" VALUE=\"$title1\" NAME=\"title\">";
-		$csv_string = $csv_string.$title1."\n";
-		$csv_string = $csv_string."SNo,Vehicle Name,Location Name,Date From,Date To,By Day,Min OT,Max OT,Rest Time,Min HT,Max HT,Min DT,Max DT,Intermediate HT\n";
-	
+$getSAArr=getScheduleAssignmentData($vid_local,$date1,$date2,1,$DbConnection);
+    
+    
+    if(count($getSAArr)>0)
+    {
+        echo'<form name="schedule_assignment" method="POST" target="_blank">';
+        $csv_string="";
+        $title1="Schedule Assignment Report From ".$date1." To ".$date2." ";
+        echo"<input TYPE=\"hidden\" VALUE=\"$title1\" NAME=\"title\">";
+        $csv_string = $csv_string.$title1."\n";
+        $csv_string = $csv_string."SNo,Vehicle Name,Location Name,Date From,Date To,By Day,Min OT,Max OT,Rest Time,Min HT,Max HT,Min DT,Max DT,Intermediate HT\n";
+
 		echo '	
 			<div style="height:10px"></div>
 			<table border=0 width = 100% cellspacing=2 cellpadding=0>
@@ -70,23 +68,34 @@ $vid_local=substr($vid_local,0,-1);
 				  </tr>';
 				  $sno=0;
 				  $data_cnt=0;
-				  while($Row=mysql_fetch_object($Result))
+				  foreach($getSAArr as $sAValue)
 				  {
+                                        $locationId=$sAValue['location_id'];
+                                        $dateFrom=$sAValue['date_from'];
+                                        $dateTo=$sAValue['date_to'];
+                                        $byDay=$sAValue['by_day'];
+                                        $minOperationTime=$sAValue['min_operation_time'];
+                                        $maxOperationTime=$sAValue['max_operation_time'];
+                                        $restTime=$sAValue['rest_time'];
+                                        $minHaltTime=$sAValue['min_halt_time'];
+                                        $maxHaltTime=$sAValue['max_halt_time'];
+                                        $minDistanceTravelled=$sAValue['min_distance_travelled'];
+                                        $maxDistanceTravelled=$sAValue['max_distance_travelled'];
+                                        $intermediateHaltTime=$sAValue['Intermediate_halt_time'];
 					$sno++;
 					$vehicle_name_local=get_vehicle_name($root,$Row->vehicle_id);
 				   echo '<tr>
 							<td>'.$sno.'</td>
 							<td>'.$vehicle_name_local.'</td> ';
-							if($Row->location_id!="")
+							if($locationId!="")
 							{
-							  $Query1="SELECT * FROM schedule_location WHERE location_id IN(".$Row->location_id.") AND status=1";
-							  echo "quyer=".$Query1."<br>";                 
-							  $Result1=mysql_query($Query1,$DbConnection);
+                                                          $sLArr=getScheduleLocationDetail($locationId,1,$DbConnection);                                                         
+							
 							  $localtion_str_name="";
 							  $localtion_str_name_1="";
-							  while($Row1=mysql_fetch_object($Result1))
+							  foreach($sLArr as $sLValue)
 							  {
-								 $localtion_str_name=$localtion_str_name.$Row1->location_name.',';					 
+								 $localtion_str_name=$localtion_str_name.$sLValue['location_name'].',';					 
 							  }				  
 							  $localtion_str_name_1=substr($localtion_str_name,0,-1);   
 							}
@@ -96,17 +105,17 @@ $vid_local=substr($vid_local,0,-1);
 							}
 									   
 							echo'<td>'.$localtion_str_name_1.'</td>
-							<td>'.$Row->date_from.'</td>
-							<td>'.$Row->date_to.'</td>
-							<td>'.$Row->by_day.'</td>
-							<td>'.$Row->min_operation_time.'</td>
-							<td>'.$Row->max_operation_time.'</td>
-							<td>'.$Row->rest_time.'</td>
-							<td>'.$Row->min_halt_time.'</td>
-							<td>'.$Row->max_halt_time.'</td>
-							<td>'.$Row->min_distance_travelled.'</td>
-							<td>'.$Row->max_distance_travelled.'</td>
-							<td>'.$Row->Intermediate_halt_time.'</td>
+							<td>'.$dateFrom.'</td>
+							<td>'.$dateTo.'</td>
+							<td>'.$byDay.'</td>
+							<td>'.$minOperationTime.'</td>
+							<td>'.$maxOperationTime.'</td>
+							<td>'.$restTime.'</td>
+							<td>'.$minHaltTime.'</td>
+							<td>'.$maxHaltTime.'</td>
+							<td>'.$minDistanceTravelled.'</td>
+							<td>'.$maxDistanceTravelled.'</td>
+							<td>'.$intermediateHaltTime.'</td>
 						  </tr>'; 
 						echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$data_cnt][Seral]\">";
 						$csv_string = $csv_string.$sno;
@@ -114,28 +123,28 @@ $vid_local=substr($vid_local,0,-1);
 						$csv_string = $csv_string.','.$vehicle_name_local;
 						echo"<input TYPE=\"hidden\" VALUE=\"$localtion_str_name_1\" NAME=\"temp[$data_cnt][Location Name]\">";
 						$csv_string = $csv_string.','.$localtion_str_name_1;
-						echo"<input TYPE=\"hidden\" VALUE=\"$Row->date_from\" NAME=\"temp[$data_cnt][Date From]\">";
-						$csv_string = $csv_string.','.$Row->date_from;
-						echo"<input TYPE=\"hidden\" VALUE=\"$Row->date_to\" NAME=\"temp[$data_cnt][Date To]\">";
-						$csv_string = $csv_string.','.$Row->date_to;
-						echo"<input TYPE=\"hidden\" VALUE=\"$Row->by_day\" NAME=\"temp[$data_cnt][By Day]\">";
-						$csv_string = $csv_string.','.$Row->by_day;
-						echo"<input TYPE=\"hidden\" VALUE=\"$Row->min_operation_time\" NAME=\"temp[$data_cnt][Min OT]\">";
-						$csv_string = $csv_string.','.$Row->min_operation_time;
-						echo"<input TYPE=\"hidden\" VALUE=\"$Row->max_operation_time\" NAME=\"temp[$data_cnt][Max OT]\">";
-						$csv_string = $csv_string.','.$Row->max_operation_time;
-						echo"<input TYPE=\"hidden\" VALUE=\"$Row->rest_time\" NAME=\"temp[$data_cnt][Rest Time]\">";
-						$csv_string = $csv_string.','.$Row->rest_time;
-						echo"<input TYPE=\"hidden\" VALUE=\"$Row->min_halt_time\" NAME=\"temp[$data_cnt][Min HT]\">";
-						$csv_string = $csv_string.','.$Row->min_halt_time;
-						echo"<input TYPE=\"hidden\" VALUE=\"$Row->max_halt_time\" NAME=\"temp[$data_cnt][Max HT]\">";
-						$csv_string = $csv_string.','.$Row->max_halt_time;
-						echo"<input TYPE=\"hidden\" VALUE=\"$Row->min_distance_travelled\" NAME=\"temp[$data_cnt][Min DT]\">";
-						$csv_string = $csv_string.','.$Row->min_distance_travelled;
-						echo"<input TYPE=\"hidden\" VALUE=\"$Row->max_distance_travelled\" NAME=\"temp[$data_cnt][Max DT]\">";
-						$csv_string = $csv_string.','.$Row->max_distance_travelled;
-						echo"<input TYPE=\"hidden\" VALUE=\"$Row->intermediate_halt_time\" NAME=\"temp[$data_cnt][Intermediate HT]\">";
-						$csv_string = $csv_string.','.$Row->intermediate_halt_time;
+						echo"<input TYPE=\"hidden\" VALUE=\"$dateFrom\" NAME=\"temp[$data_cnt][Date From]\">";
+						$csv_string = $csv_string.','.$dateFrom;
+						echo"<input TYPE=\"hidden\" VALUE=\"$dateTo\" NAME=\"temp[$data_cnt][Date To]\">";
+						$csv_string = $csv_string.','.$dateTo;
+						echo"<input TYPE=\"hidden\" VALUE=\"$byDay\" NAME=\"temp[$data_cnt][By Day]\">";
+						$csv_string = $csv_string.','.$byDay;
+						echo"<input TYPE=\"hidden\" VALUE=\"$minOperationTime\" NAME=\"temp[$data_cnt][Min OT]\">";
+						$csv_string = $csv_string.','.$minOperationTime;
+						echo"<input TYPE=\"hidden\" VALUE=\"$maxOperationTime\" NAME=\"temp[$data_cnt][Max OT]\">";
+						$csv_string = $csv_string.','.$maxOperationTime;
+						echo"<input TYPE=\"hidden\" VALUE=\"$restTime\" NAME=\"temp[$data_cnt][Rest Time]\">";
+						$csv_string = $csv_string.','.$restTime;
+						echo"<input TYPE=\"hidden\" VALUE=\"$minHaltTime\" NAME=\"temp[$data_cnt][Min HT]\">";
+						$csv_string = $csv_string.','.$minHaltTime;
+						echo"<input TYPE=\"hidden\" VALUE=\"$maxHaltTime\" NAME=\"temp[$data_cnt][Max HT]\">";
+						$csv_string = $csv_string.','.$maxHaltTime;
+						echo"<input TYPE=\"hidden\" VALUE=\"$minDistanceTravelled\" NAME=\"temp[$data_cnt][Min DT]\">";
+						$csv_string = $csv_string.','.$minDistanceTravelled;
+						echo"<input TYPE=\"hidden\" VALUE=\"$maxDistanceTravelled\" NAME=\"temp[$data_cnt][Max DT]\">";
+						$csv_string = $csv_string.','.$maxDistanceTravelled;
+						echo"<input TYPE=\"hidden\" VALUE=\"$intermediateHaltTime\" NAME=\"temp[$data_cnt][Intermediate HT]\">";
+						$csv_string = $csv_string.','.$intermediateHaltTime;
 						$csv_string=$csv_string."\n";	
 						$data_cnt++;
 					}

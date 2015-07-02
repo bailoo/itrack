@@ -73,8 +73,7 @@
 	{		
 		echo "lat=".$lat."lng=".$lng."datetime=".$datetime."<br>";
 	}*/
-	$time_interval=$time_interval1/60;
-	//echo"text_report_io_element=".$text_report_io_element."<br>";
+	
 	if($text_report_io_element!="tmp_str")
 	{
 		$text_report_io_element=explode(":",$text_report_io_element);

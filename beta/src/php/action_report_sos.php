@@ -3,12 +3,14 @@ include_once("main_vehicle_information_1.php");
 include_once('Hierarchy.php');
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
-$root=$_SESSION["root"];
-include_once("get_all_dates_between.php");
-include_once("sort_xml.php");
 include_once("calculate_distance.php");
 include_once("report_title.php");
-include_once("read_filtered_xml.php");
+
+include_once('parameterizeData.php');
+include_once('data.php');
+include_once("sortXmlData.php");
+include_once("getXmlData.php");
+
 
 $DEBUG = 0;
 
@@ -19,277 +21,116 @@ $vsize=count($vserial);
 
 $date1 = $_POST['start_date'];
 $date2 = $_POST['end_date']; 
-
 $date1 = str_replace("/","-",$date1);
 $date2 = str_replace("/","-",$date2);
+$date_1 = explode(" ",$date1);
+$date_2 = explode(" ",$date2);
+$datefrom = $date_1[0];
+$dateto = $date_2[0];
 
+$sortBy='h';
+$firstDataFlag=0;
+$requiredData="All";
+
+$parameterizeData=new parameterizeData();
+$parameterizeData->latitude="d";
+$parameterizeData->longitude="e";
+$ioFoundFlag=0;
 
 if($vsize>0)
 {
-  for($i=0;$i<$vsize;$i++)
-  {
-    /*$query = "SELECT vehicle_name FROM vehicle WHERE ".
-    " vehicle_id IN(SELECT vehicle_id FROM vehicle_assignment ".
-    "WHERE device_imei_no='$vserial[$i]' AND status=1) AND status=1";
-    //echo $query;
-    $result = mysql_query($query, $DbConnection);
-    $row = mysql_fetch_object($result);
-    $vname[$i] = $row->vehicle_name;*/
-    $vehicle_info=get_vehicle_info($root,$vserial[$i]);
-    $vehicle_detail_local=explode(",",$vehicle_info);	
-    $vname[$i] = $vehicle_detail_local[0];
-  }  
-  $current_dt = date("Y_m_d_H_i_s");	
-  $xmltowrite = "../../../xml_tmp/filtered_xml/tmp_".$current_dt.".xml";
-  write_engine_runhr_report_xml($vserial, $vname, $date1, $date2, $xmltowrite);
-}
+    get_All_Dates($datefrom, $dateto, $userdates);
+    $date_size = sizeof($userdates);
+   for($i=0;$i<$vsize;$i++)
+    {
+        $dataCnt=0;
+        $vehicle_info=get_vehicle_info($root,$vserial[$i]);
+        $vehicle_detail_local=explode(",",$vehicle_info);
+       
+        $ioArr=explode(":",$vehicle_detail_local[7]);		
 
-function write_engine_runhr_report_xml($vserial, $vname, $startdate, $enddate, $xmltowrite)
-{
-  $maxPoints = 1000;
-	$file_exist = 0;
-
-	$fh = fopen($xmltowrite, 'w') or die("can't open file 3"); // new
-	fwrite($fh, "<t1>");  
-	fclose($fh);
-
-	//$i=0;
-	for($i=0;$i<sizeof($vserial);$i++)
-	{  	
-     //echo   "<br>vserial[i] =".$vserial[$i];
-     get_engine_runhr_xml_data($vserial[$i], $vname[$i], $startdate, $enddate, $xmltowrite);
-    //echo   "t2".' '.$i;
-	}  
- 
-	$fh = fopen($xmltowrite, 'a') or die("can't open file 4"); //append
-	fwrite($fh, "\n</t1>");  
-	fclose($fh);
-}
-
-function get_engine_runhr_xml_data($vehicle_serial, $vname, $startdate, $enddate, $xmltowrite)
-{
-	global $DbConnection;
-	$io = get_io($vehicle_serial,'engine');
-	
-	$fix_tmp = 1;
-	$xml_date_latest="1900-00-00 00:00:00";
-	$CurrentLat = 0.0;
-	$CurrentLong = 0.0;
-	$LastLat = 0.0;
-	$LastLong = 0.0;
-	$firstData = 0;
-	$distance =0.0;
-	$linetowrite="";
-	$firstdata_flag =0;
-	$date_1 = explode(" ",$startdate);
-	$date_2 = explode(" ",$enddate);
-
-	$datefrom = $date_1[0];
-	$dateto = $date_2[0];
-	$timefrom = $date_1[1];
-	$timeto = $date_2[1];
-
-	get_All_Dates($datefrom, $dateto, &$userdates);
-
-	//date_default_timezone_set("Asia/Calcutta");
-	$current_datetime = date("Y-m-d H:i:s");
-	$current_date = date("Y-m-d");
-	//print "<br>CurrentDate=".$current_date;
-	$date_size = sizeof($userdates);
-
-	$fh = fopen($xmltowrite, 'a') or die("can't open file 6"); //append
-  
-  $runhr_duration =0 ;
-  $flag =0;
-  
-   $StartFlag=0; 
-  for($i=0;$i<=($date_size-1);$i++)
-	{
-		if($userdates[$i] == $current_date)
-		{			
-			//echo "in else";
-			$xml_file = "../../../xml_vts/xml_data/".$userdates[$i]."/".$vehicle_serial.".xml";
-			$CurrentFile = 1;
-		}		
-		else
-		{
-			$xml_file = "../../../sorted_xml_data/".$userdates[$i]."/".$vehicle_serial.".xml";
-			$CurrentFile = 0;
-		}
-		
-		//echo "<br>xml in get_xml_data =".$xml_file;	
-    	
-    if (file_exists($xml_file)) 
-		{			     
-      //$current_datetime1 = date("Y_m_d_H_i_s");
-      $t=time();
-      $xml_original_tmp = "../../../xml_tmp/original_xml/tmp_".$vehicle_serial."_".$t."_".$i.".xml";
-      //$xml_log = "../../../xml_tmp/filtered_xml/tmp_".$current_datetime1.".xml";
-      //echo "<br>xml_file=".$xml_file." <br>tmpxml=".$xml_original_tmp."<br>";
-									      
-      if($CurrentFile == 0)
-			{
-				//echo "<br>ONE<br>";
-        copy($xml_file,$xml_original_tmp);
-			}
-			else
-			{
-				//echo "<br>TWO<br>";
-        $xml_unsorted = "../../../xml_tmp/unsorted_xml/tmp_".$vehicle_serial."_".$t."_".$i."_unsorted.xml";
-				//echo  "<br>".$xml_file." <br>".$xml_unsorted."<br><br>";
-				        
-        copy($xml_file,$xml_unsorted);        // MAKE UNSORTED TMP FILE
-        SortFile($xml_unsorted, $xml_original_tmp);    // SORT FILE
-				unlink($xml_unsorted);                // DELETE UNSORTED TMP FILE
-			}
-      
-      $total_lines = count(file($xml_original_tmp));
-      //echo "<br>Total lines orig=".$total_lines;
-      
-      $xml = @fopen($xml_original_tmp, "r") or $fexist = 0;  
-      //$xmllog = fopen($xml_log, "w") or $fexist1 = 0;
-      $logcnt=0;
-      $DataComplete=false;                  
-      $vehicleserial_tmp=null;
-      $format =2;
-      
-      
-      if (file_exists($xml_original_tmp)) 
-      {      
-        while(!feof($xml))          // WHILE LINE != NULL
-  			{
-  				$DataValid = 0;
-          //echo fgets($file). "<br />";
-  				$line = fgets($xml);        // STRING SHOULD BE IN SINGLE QUOTE			
-  				//echo "<br>Line".$line;
-  				if(strlen($line)>20)
-  				{
-  				  $linetmp =  $line;
-          }
-  				
-  				$linetolog =  $logcnt." ".$line;
-  				$logcnt++;
-  				//fwrite($xmllog, $linetolog);
-  
-  				if(strpos($line,'fix="1"'))     // RETURN FALSE IF NOT FOUND
-  				{
-  					$format = 1;
-            $fix_tmp = 1;
-  				}
-                
-  				else if(strpos($line,'fix="0"'))
-  				{
-  				  $format = 1;
-  					$fix_tmp = 0;
-  				}			
-  				
-          if( (preg_match('/lat="\d+.\d+[a-zA-Z0-9]\"/', $line, $lat_match)) &&  (preg_match('/lng="\d+.\d+[a-zA-Z0-9]\"/', $line, $lng_match)) )
-          { 
-            $lat_value = explode('=',$lat_match[0]);
-            $lng_value = explode('=',$lng_match[0]);
-            //echo " lat_value=".$lat_value[1];         
-            if( (strlen($lat_value[1])>5) && ($lat_value[1]!="-") && (strlen($lng_value[1])>5) && ($lng_value[1]!="-") )
+        $ioArrSize=sizeof($ioArr);
+        for($z=0;$z<$ioArrSize;$z++)
+        {
+            $tempIo=explode("^",$ioArr[$z]);
+            //echo "io=".$ioArr[$z]."<br>";
+            if($tempIo[1]=="engine")
             {
-              $DataValid = 1;
+                $ioFoundFlag=1;
+                $parameterizeData->engineRunHr=$finalIoArr[$tempIo[0]];
             }
-          }
-          
-          //if( (substr($line, 0,1) == '<') && (substr( (strlen($line)-1), 0,1) == '>') && ($fix_tmp==1) && ($f>0) && ($f<$total_lines-1) )        
-          if( ($line[0] == '<') && ($line[strlen($line)-2] == '>') && ($DataValid == 1) )   // FIX_TMP =1 COMES IN BOTH CASE     
-  				{
-  					preg_match('/datetime="[^"]+/', $line, $str3tmp);    // EXTRACT DATE FROM LINE
-  					//echo "<br>str3tmp[0]=".$str3tmp[0];
-  					//$xml_date = $str3tmp[0];
-            $str3tmp1 = explode("=",$str3tmp[0]);  
-            $xml_date = preg_replace('/"/', '', $str3tmp1[1]);            					
-  				}				
-          //echo "<br>xml_date=".$xml_date." datavalid=".$DataValid;
-          
-          if($xml_date!=null)
-  				{				  
-            //echo "<br>".$xml_date.",".$startdate.",".$enddate.",".$DataValid;
-            //$lat = $lat_value[1] ;
-  					//$lng = $lng_value[1];
-  					
-  					if( ($xml_date >= $startdate && $xml_date <= $enddate) && ($xml_date!="-") && ($DataValid==1) )
-  					{							           	
-              //echo "<br>One";             
-              $status = preg_match('/vehicleserial="[^" ]+/', $line, $vehicleserial_tmp);
-              //echo "Status=".$status.'<BR>';
-              if($status==0)
-              {
-                continue;
-              }
-              
-              $status = preg_match('/lat="[^" ]+/', $line, $lat_tmp);
-              if($status==0)
-              {
-                continue;               
-              }
-              //echo "test6".'<BR>';
-              
-              $status = preg_match('/lng="[^" ]+/', $line, $lng_tmp);
-              if($status==0)
-              {
-                continue;
-              }     
-                                       
-              //echo "<br>Format=".$format;	
-              $status = preg_match('/'.$io.'="[^" ]+/', $line, $enginecount_tmp);                        
-              //echo "<br>status=".$status;
-              if($status==0)
-              {
-                continue;
-              }
-              
-              $datetime = $xml_date;           
-                          
-              $vehicleserial_tmp1 = explode("=",$vehicleserial_tmp[0]);  
-              $vserial = preg_replace('/"/', '', $vehicleserial_tmp1[1]);                                            
-  
-              //$vehiclename_tmp1 = explode("=",$vehiclename_tmp[0]);  
-              //$vname = preg_replace('/"/', '', $vehiclename_tmp1[1]);                     
-              
-              $enginecount_tmp1 = explode("=",$enginecount_tmp[0]);  
-              $engine_count = preg_replace('/"/', '', $enginecount_tmp1[1]);                                                                            	                         
-              //echo "<br>enginecount=".$engine_count;
-              
-            	//$date_secs2 = strtotime($time2);              
-            	if($engine_count>500 && $StartFlag==0)  //500
-            	{                						
-            		$time1 = $datetime;
-            		$StartFlag = 1;
-            	} 
-            	else if($engine_count<500 && $StartFlag==1)   //500
-            	{
-            		$StartFlag = 2;
-            	}
-              $time2 = $datetime;
+        }
+        //echo "tmpio=".$parameterizeData->temperature."<br>";
+        if($ioFoundFlag==1)
+        { 
+            $CurrentLat = 0.0;
+            $CurrentLong = 0.0;
+            $LastLat = 0.0;
+            $LastLong = 0.0;
+            $firstData = 0;
+            $distance =0.0;
+            $firstdata_flag =0;
+            $runhr_duration =0 ;
+            $flag =0;  
+            $StartFlag=0; 
             
-            	if($StartFlag == 2)
-            	{
-            		$StartFlag=0;
-            		$runtime = strtotime($time2) - strtotime($time1);
-            		//echo "<br>runtime=".$runtime;
-            		//$runhr_duration = strtotime($runtime);
-            		$hr =  (int)(($runtime)/3600);	 
-            		//$runhr_duration = round($runhr_duration,2);
-            		$min =  ($runtime)%3600;
-            		$sec =  (int)(($min)%60);
-            		$min =  (int)(($min)/60);
-            
-            		$engine_runhr_data = "\n< marker imei=\"".$vserial."\" vname=\"".$vname."\" datefrom=\"".$time1."\" dateto=\"".$time2."\" engine_runhr=\"".$hr.':'.$min.':'.$sec."\"/>";						          						
-            		//echo "<br>".$engine_runhr_data;
-            		$linetowrite = $engine_runhr_data; // for distance       // ADD DISTANCE
-            		fwrite($fh, $linetowrite); 
-            	}                                     																                              										                               
-  					} // $xml_date_current >= $startdate closed
-  				}   // if xml_date!null closed
-        }   // while closed
-      } // if original_tmp exist closed
-	  
-	  if($StartFlag == 1)
-	  {
+            for($di=0;$di<=($date_size-1);$di++)
+            {
+                $SortedDataObject=new data();
+                readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+                 if(count($SortedDataObject->deviceDatetime)>0)
+                {                   
+                    $sortedSize=sizeof($SortedDataObject->deviceDatetime);
+                    for($obi=0;$obi<$sortedSize;$obi++)
+                    {
+                        $lat = $SortedDataObject->latitudeData[$obi];
+                        $lng = $SortedDataObject->longitudeData[$obi];
+                        if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))
+                        {
+                            $DataValid = 1;
+                        }
+                        if($DataValid==1)
+                        { 
+              
+                            $datetime = $SortedDataObject->deviceDatetime[$obi];   
+                            $engine_count =$SortedDataObject->engineIOData[$obi];                                                                            	                         
+                                   
+                            if($engine_count>500 && $StartFlag==0)  //500
+                            {                						
+                                $time1 = $datetime;
+                                $StartFlag = 1;
+                            } 
+                            else if($engine_count<500 && $StartFlag==1)   //500
+                            {
+                                $StartFlag = 2;
+                            }
+                            $time2 = $datetime;
+
+                            if($StartFlag == 2)
+                            {
+                                $StartFlag=0;
+                                $runtime = strtotime($time2) - strtotime($time1);
+                                //echo "<br>runtime=".$runtime;
+                                //$runhr_duration = strtotime($runtime);
+                                $hr =  (int)(($runtime)/3600);	 
+                                //$runhr_duration = round($runhr_duration,2);
+                                $min =  ($runtime)%3600;
+                                $sec =  (int)(($min)%60);
+                                $min =  (int)(($min)/60);
+                                
+                                $imei[]=$vserial[$i];
+                                $vname[]=$vehicle_detail_local[0];
+                                $dateFromDisplay[]=$time1;
+                                $dateToDisplay[]=$time2;
+                                $engine_runhr[]=$hr.':'.$min.':'.$sec;
+                            } 
+                        } 
+                    }
+                    $SortedDataObject=null;
+                }
+            }
+            if($StartFlag == 1)
+            {
 		$StartFlag=0;
 		$runtime = strtotime($time2) - strtotime($time1);
 		//echo "<br>runtime=".$runtime;
@@ -300,39 +141,31 @@ function get_engine_runhr_xml_data($vehicle_serial, $vname, $startdate, $enddate
 		$sec =  (int)(($min)%60);
 		$min =  (int)(($min)/60);
   
-		$engine_runhr_data = "\n< marker imei=\"".$vserial."\" vname=\"".$vname."\" datefrom=\"".$time1."\" dateto=\"".$time2."\" engine_runhr=\"".$hr.':'.$min.':'.$sec."\"/>";						          						
-		//echo "<br>".$engine_runhr_data;
-		$linetowrite = $engine_runhr_data; // for distance       // ADD DISTANCE
-		fwrite($fh, $linetowrite); 
-	  }
-          			
-     fclose($xml);            
-		 unlink($xml_original_tmp);
-		} // if (file_exists closed
-	}  // for closed 	                		                 	
-	
-	//echo "Test1";
-	fclose($fh);
+		$imei[]=$vserial[$i];
+                $vname[]=$vehicle_detail_local[0];
+                $dateFromDisplay[]=$time1;
+                $dateToDisplay[]=$time2;
+                $engine_runhr[]=$hr.':'.$min.':'.$sec;
+            }
+          	
+        }
+    }
 }
+$parameterizeData=null;
+$o_cassandra->close();
 
-	
 $m1=date('M',mktime(0,0,0,$month,1));
   
   echo'<center>';   
   report_title("SOS Report",$date1,$date2);   
 	echo'<div style="overflow: auto;height: 285px; width: 600px;" align="center">';
-   
-  ///////////////////  READ SPEED XML 	//////////////////////////////				                      
-  $xml_path = $xmltowrite;
-  //echo "<br>xml_path=".$xml_path;
-	read_engine_runhr_xml($xml_path, &$imei, &$vname, &$datefrom, &$dateto, &$engine_runhr);
-	//convert_in_two_dimension
-  //echo "<br><br>size, vname=".sizeof($vname).", dt=".$datefrom[0];
-	//////////////////////////////////////////////////////////////////////
+
   			             
   $j=-1;
   $k=0;
-  			             
+  $datefrom1=array();
+  $dateto1=array();
+  $engine_runhr1=array();
   for($i=0;$i<sizeof($imei);$i++)
 	{								              
     if(($i===0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )
@@ -376,14 +209,14 @@ $m1=date('M',mktime(0,0,0,$month,1));
     
     //echo "<br>sum_engine_runhr =".$sum_engine_runhr." ,sum_engine_runmin=".$sum_engine_runmin;              		              
     echo'<tr><td class="text" align="left" width="4%"><b>'.$sno.'</b></td>';        												
-		echo'<td class="text" align="left">'.$datefrom[$i].'</td>';		
-    echo'<td class="text" align="left">'.$dateto[$i].'</td>';			
+		echo'<td class="text" align="left">'.$dateFromDisplay[$i].'</td>';		
+    echo'<td class="text" align="left">'.$dateToDisplay[$i].'</td>';			
 		echo'<td class="text" align="left">'.$engine_runhr[$i].'</td>';					
 		echo'</tr>';	          		
 		//echo "<br>arr_time1[$j][$k]main=".$arr_time1[$j][$k];
     
-    $datefrom1[$j][$k] = $datefrom[$i];	
-    $dateto1[$j][$k] = $dateto[$i];										
+    $datefrom1[$j][$k] = $dateFromDisplay[$i];	
+    $dateto1[$j][$k] = $dateToDisplay[$i];										
     $engine_runhr1[$j][$k] = $engine_runhr[$i];       			    				  				
 	
 	  if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
@@ -476,7 +309,11 @@ $m1=date('M',mktime(0,0,0,$month,1));
 		</table>
 		</form></center>
  ';  
-           
-unlink($xml_path);
+    echo'<center>		
+		<a href="javascript:showReportPrevPageNew();" class="back_css">
+			&nbsp;<b>Back</b>
+		</a>
+	</center>';       
+
                      
 ?>							 					

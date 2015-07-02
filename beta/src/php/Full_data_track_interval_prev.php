@@ -1,8 +1,6 @@
 ﻿<?php
 set_time_limit(2000);
 include_once("get_filteredTrackInterval_xml.php");      // WRITE SORTED XML , FINAL XML NAME STORED IN 'xmltowirte' VARIABLE
-include_once("read_filtered_xml.php");
-//echo "xmltowrite=".$xmltowrite." startdate=".$startdate." enddate=".$enddate;
 ?>
 
 <html>
@@ -327,23 +325,8 @@ echo'
   <div id="progress"></div>
   <div id="delay"></div>
   <textarea id="geocodedPostcodes" name="geocodedPostcodes" cols="40" rows="20" style="visibility:hidden;"></textarea>';
-      
-  //read_xml_imei($xmltowrite, &$vehicleserialA, &$lat, &$lng);
-  read_xml_imei2($xmltowrite, $vehicleserialA, $lat, $lng, $noloc);
-  $size = sizeof($vehicleserialA);
-  //echo "SIZE=".$size."<br>";
-  /*$place_name_arr=array();
-	for($i=0;$i<$size;$i++)
-	{
-		$lat[$i] = substr($lat[$i], 0, -1);
-		$lng[$i] = substr($lng[$i], 0, -1);
-		get_location_tmp($lat[$i],$lng[$i],&$placename);
-		//echo "placename=".$placename."<br>";
-		$place_name_arr[$i]=$placename;
-	} 
-	$_SESSION['place_name_arr1'] = $place_name_arr;*/
-  //echo "<br>size:".$size;   
-
+  
+ $size = sizeof($vehicleserialA);
  if($dwt=="1")
 {	
 	//echo "in if";
@@ -352,10 +335,10 @@ echo'
 	{
 		//echo "<br>NoLoc=".$noloc[$i];
 		if($noloc[$i]=="1"){
-			$lat[$i] = substr($lat[$i], 0, -1);
-			$lng[$i] = substr($lng[$i], 0, -1);
+			$latDisplay[$i] = substr($latDisplay[$i], 0, -1);
+			$lngDisplay[$i] = substr($lngDisplay[$i], 0, -1);
 
-			$coord = $lat[$i].">R,".$lng[$i].">R"; 
+			$coord = $latDisplay[$i].">R,".$lngDisplay[$i].">R"; 
 			if($i==0)
 			{
 			  $point = $point.$coord;   
@@ -366,10 +349,10 @@ echo'
 			}
 		}
 		else{
-			$lat[$i] = substr($lat[$i], 0, -1);
-			$lng[$i] = substr($lng[$i], 0, -1);
+			$latDisplay[$i] = substr($latDisplay[$i], 0, -1);
+			$lngDisplay[$i] = substr($lngDisplay[$i], 0, -1);
 
-			$coord = $lat[$i].",".$lng[$i]; 
+			$coord = $latDisplay[$i].",".$lngDisplay[$i]; 
 			if($i==0)
 			{
 			  $point = $point.$coord;   
@@ -379,10 +362,10 @@ echo'
 			  $point = $point.":".$coord;   
 			}
 		}
-		/*$lat[$i] = substr($lat[$i], 0, -1);
-		$lng[$i] = substr($lng[$i], 0, -1);
+		/*$latDisplay[$i] = substr($latDisplay[$i], 0, -1);
+		$lngDisplay[$i] = substr($lngDisplay[$i], 0, -1);
 
-		$coord = $lat[$i].",".$lng[$i]; 
+		$coord = $latDisplay[$i].",".$lngDisplay[$i]; 
 		if($i==0)
 		{
 		  $point = $point.$coord;   
@@ -422,29 +405,29 @@ echo'
 </body>
 </html>   
 ';
- /*function get_location_tmp($lat,$lng,&$placename)
+ /*function get_location_tmp($latDisplay,$lngDisplay,&$placename)
 {	
-	$geoCodeURL = "http://nominatim.openstreetmap.org/reverse?format=xml&lat=".$lat."&lon=".$lng."&zoom=18&addressdetails=1";
+	$geoCodeURL = "http://nominatim.openstreetmap.org/reverse?format=xml&lat=".$latDisplay."&lon=".$lngDisplay."&zoom=18&addressdetails=1";
 	$xml=@simplexml_load_file($geoCodeURL);	
 	foreach($xml->result[0]->attributes() as $a => $b) 
 	{
 		if($a=="lat")
 		{
-			$lat_local=$b;
+			$latDisplay=$b;
 		}
 		else if($a=="lon")
 		{
 			$lon_local=$b;
 		}
 	}
-	$lat=round($lat,4);
-	$lng=round($lng,4);	
+	$latDisplay=round($latDisplay,4);
+	$lngDisplay=round($lngDisplay,4);	
 	$lat_local = round(floatval($lat_local),4);
 	$lon_local = round(floatval($lon_local),4);
 
-	//echo "lat1=".$lat."lng1=".$lng."lat2=".$lat_local."long2=".$lon_local."<br>";
+	//echo "lat1=".$lat."lng1=".$lngDisplay."lat2=".$lat_local."long2=".$lon_local."<br>";
 	$distance="";
-	calculate_distance_1($lat,$lat_local,$lng,$lon_local,&$distance);
+	calculate_distance_1($latDisplay,$lat_local,$lngDisplay,$lon_local,&$distance);
 	$placename=round($distance,2)." km from ".$xml->result;
 }
 

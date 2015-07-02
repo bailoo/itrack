@@ -1,16 +1,16 @@
 <?php
-	include_once("report_iotype_hierarchy.php");
-	include_once("user_type_setting.php");
+    include_once("report_iotype_hierarchy.php");
+    include_once("user_type_setting.php");
 
-	$account_id_local1 = $_POST['account_id_local'];	
-	$vehicle_display_option1 = $_POST['vehicle_display_option'];	
-	$options_value1 = $_POST['options_value'];
+    $account_id_local1 = $_POST['account_id_local'];	
+    $vehicle_display_option1 = $_POST['vehicle_display_option'];	
+    $options_value1 = $_POST['options_value'];
 
-	$options_value2=explode(",",$options_value1);			
-	$option_size=sizeof($options_value2);
-	$option_string="";  
+    $options_value2=explode(",",$options_value1);			
+    $option_size=sizeof($options_value2);
+    $option_string="";  
 
-	$function_string='get_'.$vehicle_display_option1.'_vehicle';
+    $function_string='get_'.$vehicle_display_option1.'_vehicle';
   
   /*$query_geo_exist = "SELECT geo_id,geo_name FROM geofence WHERE geo_id IN(SELECT geo_id FROM geo_assignment WHERE status=1) AND ".
                 "user_account_id='$account_id' AND status=1"; */

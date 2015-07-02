@@ -1,183 +1,110 @@
 <?php
-	set_time_limit(2000);
-	include_once('main_vehicle_information_1.php');
-	include_once('Hierarchy.php');
-	include_once('util_session_variable.php');
-	include_once('util_php_mysql_connectivity.php');
-	include_once('common_xml_element.php');
-	include_once('calculate_distance.php');
-	//echo "Crd=".$crd_data."mode=".$mode."<br>";
-	
-	$xmltowrite = $_REQUEST['xml_file']; 
-	//echo "xmltowrite=".$xmltowrite."<br>";
-	$mode = $_REQUEST['mode'];
-	$vserial1 = $_REQUEST['vserial'];		   
-	include_once("sort_xml.php");
-	
-	$minlat = 180; 
-	$maxlat = -180;
-	$minlong = 180;
-	$maxlong = -180;
-	$maxPoints = 1000;
-	$file_exist = 0;	
-	
-	$fh = fopen($xmltowrite, 'w') or die("can't open file 1"); // new
-	fwrite($fh, "<t1>");  
-	fclose($fh);
-	$vserial_arr = explode(',',$vserial1);
-	$vname1 ="";
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 
-	for($i=0;$i<sizeof($vserial_arr);$i++)
-	{
-		$tmp = explode('#',$vserial_arr[$i]);
-		$imei = $tmp[0];
-		$last_time = $tmp[1];
-		$vehicle_info=get_vehicle_info($root,$imei);	
-		$vehicle_detail_local=explode(",",$vehicle_info);
-		$vname_str = $vname_str.$vehicle_detail_local[0].":";
-		$vnumber_str = $vnumber_str.$vehicle_detail_local[2].":";		
-		get_vehicle_last_data($current_date, $imei, $last_time, $vehicle_detail_local[0],$vehicle_detail_local[2], $xmltowrite);
-	}
-	$vname1=substr($vname_str,0,-1); /////////for last position text report
-	$vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
-	$fh = fopen($xmltowrite, 'a') or die("can't open file 2"); //append
-	fwrite($fh, "\n<a1 datetime=\"unknown\"/>");       
-	fwrite($fh, "\n</t1>");  
-	fclose($fh);
-  
+include_once("main_vehicle_information_1.php");
+include_once('Hierarchy.php');
+include_once('util_session_variable.php');
 
+include_once('calculate_distance.php');
+
+include_once('xmlParameters.php');
+include_once('parameterizeData.php');
+include_once('lastRecordData.php');
+include_once("getXmlData.php");	
+
+
+$mode = $_REQUEST['mode'];
+$vserial1 = $_REQUEST['vserial'];
+//echo"veserial=".$vserial1."<br>";
+$vserial = explode(',',$vserial1) ;
+$vsize=sizeof($vserial);
+$startdate = $_REQUEST['startdate'];
+$enddate = $_REQUEST['enddate'];
 	
-	
-function get_vehicle_last_data($current_date, $imei, $last_time, $vname, $vnumber, $pathtowrite)
+$parameterizeData=new parameterizeData();
+$parameterizeData->messageType='a';
+$parameterizeData->version='b';
+$parameterizeData->fix='c';
+$parameterizeData->latitude='d';
+$parameterizeData->longitude='e';
+$parameterizeData->speed='f';	
+$parameterizeData->io1='i';
+$parameterizeData->io2='j';
+$parameterizeData->io3='k';
+$parameterizeData->io4='l';
+$parameterizeData->io5='m';
+$parameterizeData->io6='n';
+$parameterizeData->io7='o';
+$parameterizeData->io8='p';	
+$parameterizeData->sigStr='q';
+$parameterizeData->supVoltage='r';
+$parameterizeData->dayMaxSpeed='s';
+$parameterizeData->dayMaxSpeedTime='t';
+$parameterizeData->lastHaltTime='u';
+$parameterizeData->cellName='ab';	
+$sortBy="h";
+//date_default_timezone_set('Asia/Calcutta');
+$current_date=date("Y-m-d");
+
+$vname_str ="";
+$vnumber_str ="";
+for($i=0;$i<$vsize;$i++)
 {
-	//global $va,$vb,$vc,$vd,$ve,$vf,$vg,$vh,$vi,$vj,$vk,$vl,$vm,$vn,$vo,$vp,$vq,$vr,$vs,$vt,$vu,$vv,$vw,$vx,$vy,$vz,$vaa,$vab;
-	//global $old_xml_date;
-	//echo "in function test<br>";
-	//date_default_timezone_set('Asia/Calcutta');
-  $current_time = date('Y-m-d H:i:s');
-  global $d;
-	$d++;
+    $tmp = explode('#',$vserial[$i]);
+    $imei = $tmp[0];
+    $last_time = $tmp[1];
+    $vehicle_info=get_vehicle_info($root,$imei);
+    $vehicle_detail_local=explode(",",$vehicle_info);
+    $vname_str = $vname_str.$vehicle_detail_local[0].":";
+    $vnumber_str = $vnumber_str.$vehicle_detail_local[2].":";
+    $LastRecordObject=new lastRecordData();	
+    //echo "imei=".$imei."<br>";
+    $LastRecordObject=getLastRecord($imei,$sortBy,$parameterizeData);
+    //echo "getOBJ";
+    //echo "<br>";
+   //var_dump($LastRecordObject);
+   
 	
-  $xml_file = "../../../xml_vts/xml_last/".$imei.".xml";
-	$file = file_get_contents($xml_file);
-  if(!strpos($file, "</t1>")) 
-  {
-    usleep(1000);
-  }		
-  
-  $t=time();
-  $rno = rand();			
-	$xml_original_tmp = "../../../xml_tmp/original_xml/tmp_".$imei."_".$t."_".$rno.".xml";		
-	copy($xml_file,$xml_original_tmp); 
-	  //echo "test=".$xml_original_tmp."<br>";  
-	if (file_exists($xml_original_tmp))
-	{
-	//	echo "<br>exist2";
-    $fexist =1;
-		$fp = fopen($xml_original_tmp, "r") or $fexist = 0;   
-		$total_lines =0;
-		$total_lines = count(file($xml_original_tmp));
-		//echo "<br>total_lines=".$total_lines;
-		$c =0;
-		while(!feof($fp)) 
-		{
-			$line = fgets($fp);
-			$c++;				
-			
-			if(strlen($line)>15)
-			{
-				if ( (preg_match('/d="\d+.\d+[a-zA-Z0-9]\"/', $line, $lat_match)) && (preg_match('/e="\d+.\d+[a-zA-Z0-9]\"/', $line, $lng_match)) )
-				{
-            $status = preg_match('/h="[^"]+/', $line, $datetime_tmp);
-            $datetime_tmp1 = explode("=",$datetime_tmp[0]);
-            $datetime = preg_replace('/"/', '', $datetime_tmp1[1]);
-            $xml_date = $datetime;
-            
-            $status = preg_match('/f="[^"]+/', $line, $speed_tmp);
-            $speed_tmp1 = explode("=",$speed_tmp[0]);
-            $speed = preg_replace('/"/', '', $speed_tmp1[1]);
-            
-            $status = preg_match('/d="[^"]+/', $line, $lat_tmp);
-            $lat_tmp1 = explode("=",$lat_tmp[0]);
-            $lat = preg_replace('/"/', '', $lat_tmp1[1]);
-            
-            $status = preg_match('/e="[^"]+/', $line, $lng_tmp);
-            $lng_tmp1 = explode("=",$lng_tmp[0]);
-            $lng = preg_replace('/"/', '', $lng_tmp1[1]);
-                        
-            $status = preg_match('/s="[^"]+/', $line, $day_max_speed_tmp);
-            $day_max_speed_tmp1 = explode("=",$day_max_speed_tmp[0]);
-            $day_max_speed = preg_replace('/"/', '', $day_max_speed_tmp1[1]);
+    if(!empty($LastRecordObject))
+    {
+        //echo "inOBJ";
+        $current_time = date('Y-m-d H:i:s');
+        $last_halt_time_sec = strtotime($LastRecordObject->lastHaltTimeLR[0]);			
+        $current_time_sec = strtotime($current_time);
+        $diff = ($current_time_sec - $last_halt_time_sec); 
 
-            $status = preg_match('/t="[^"]+/', $line, $day_max_speed_time_tmp);
-            $day_max_speed_time_tmp1 = explode("=",$day_max_speed_time_tmp[0]);
-            $day_max_speed_time = preg_replace('/"/', '', $day_max_speed_time_tmp1[1]);
-
-            $status = preg_match('/u="[^"]+/', $line, $last_halt_time_tmp);
-            $last_halt_time_tmp1 = explode("=",$last_halt_time_tmp[0]);
-            $last_halt_time = preg_replace('/"/', '', $last_halt_time_tmp1[1]);                                                                 
-                                                                  
-					             
-            $xml_date_sec = strtotime($xml_date);   
-            $current_time_sec = strtotime($current_time);
-            
-            //////////////////////////////////////////
-            $diff = ($current_time_sec - $xml_date_sec);   // IN SECONDS
-            //echo "<br>Diff in Get filteredXml=".$diff;             
-            //$status = "Stopped";                             
-            //echo "<br>diff=".$diff." ,speed=".$speed;            
-            //if( ($diff < 120) && ($lat!="" || $lng!="") && ($speed>=5) )         //< 2 min
-            //if( ($diff < 180) && ($lat!="" || $lng!="") )
-            
-            //if($speed>=10 && $diff <=180)
-            if($speed>=5 && $diff <=600)
-	          {
-              $status = "Running";
-              //echo "<br>Running";
-            }   
-//echo '<textarea>'.$line.'</textarea>';             
-            /*else if((($diff < 120) || ($diff >180 && $diff <1200)) && ($speed<10))      //>2 and <20 min
-            {
-              $status = "Idle";
-              //echo "<br>Idle";
-            }
-            //else if(($diff >1200) && ($speed <10))               //>20 min
-            else if($diff >1200)        //>20 min
-            {
-              $status = "Stopped";
-              //echo "<br>Stopped";
-            } */
-            else
-            {
-              $status = "Stopped";
-            }                           
-            
-            $line = substr($line, 0, -3);
-            $line2 = "\n".$line.' v="'.$imei.'" w="'.$vname.'" x="'.$vnumber.'" aa="'.$status.'"/>';                          									
-				}																			
-			}			
-		}
-		
-		//echo "<br>pathtowrite1:".$pathtowrite."<br>";			
-    $len = strlen($line2);
-    if($len>0)
-		{
-      //echo "<br>pathtowrite2:".$pathtowrite."<br>";				
-      $fh = fopen($pathtowrite, 'a') or die("can't open file pathtowrite"); //append
-      //$fh = fopen($pathtowrite, 'w') or die("can't open file 1");
-      
-			fwrite($fh, $line2);  
-			fclose($fh);
-			
-			fclose($fp);
-      unlink($xml_original_tmp);
-			//break;
-		}
-		else
-		{
-		 fclose($fp);
-		 unlink($xml_original_tmp);
-    }							
-	}	
+        if($LastRecordObject->speedLR[0]>=5 && $diff <=600)
+        {
+            $status = "Running";
+        }
+        else
+        {
+            $status = "Stopped";
+        }
+        $datetime[]=$LastRecordObject->deviceDatetimeLR[0];
+        $vehicleserial[]=$imei;
+        $vehiclename[]=$vehicle_detail_local[0];
+        $vehiclenumber[]=$vehicle_detail_local[2];
+        $last_halt_time[]=$LastRecordObject->lastHaltTimeLR[0];
+        $lat[]=$LastRecordObject->latitudeLR[0];
+        $lng[]=$LastRecordObject->longitudeLR[0];
+        $vehicletype[]=$vehicle_detail_local[1];
+        $speed[]=$LastRecordObject->speedLR[0];
+        $io1[]=$LastRecordObject->io1LR[0];
+        $io1[]=$LastRecordObject->io2LR[0];
+        $io1[]=$LastRecordObject->io3LR[0];
+        $io1[]=$LastRecordObject->io4LR[0];
+        $io1[]=$LastRecordObject->io5LR[0];
+        $io1[]=$LastRecordObject->io6LR[0];
+        $io1[]=$LastRecordObject->io7LR[0];
+        $io1[]=$LastRecordObject->io8LR[0];    
+        $last_halt_time[]=$LastRecordObject->lastHaltTimeLR[0];
+        //$linetmp="\n".'<x a="'.$LastRecordObject->messageTypeLR[0].'" b="'.$LastRecordObject->versionLR[0].'" c="'.$LastRecordObject->fixLR[0].'" d="'.$LastRecordObject->latitudeLR[0].'" e="'.$LastRecordObject->longitudeLR[0].'" f="'.$LastRecordObject->speedLR[0].'" g="'.$LastRecordObject->serverDatetimeLR[0].'" h="'.$LastRecordObject->deviceDatetimeLR[0].'" i="'.$LastRecordObject->io1LR[0].'" j="'.$LastRecordObject->io2LR[0].'" k="'.$LastRecordObject->io3LR[0].'" l="'.$LastRecordObject->io4LR[0].'" m="'.$LastRecordObject->io5LR[0].'" n="'.$LastRecordObject->io6LR[0].'" o="'.$LastRecordObject->io7LR[0].'" p="'.$LastRecordObject->io8LR[0].'" q="'.$LastRecordObject->sigStrLR[0].'" r="'.$LastRecordObject->suplyVoltageLR[0].'" s="'.$LastRecordObject->dayMaxSpeedLR[0].'" t="'.$LastRecordObject->dayMaxSpeedTimeLR[0].'" u="'.$LastRecordObject->lastHaltTimeLR[0].'" v="'.$imei.'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" aa="'.$status.'"/>,';
+       
+    }
+    $LastRecordObject=null;
 }
+$vname1=substr($vname_str,0,-1); /////////for last position text report
+$vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
 ?>

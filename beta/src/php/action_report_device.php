@@ -13,8 +13,6 @@
 	$option1 = explode(':',$option_str);
 	$size_option = sizeof($option1);	
 	$deviceDataArr=getDeviceImeiNoAr($account_id_local1,$DbConnection);
-	$query = "SELECT DISTINCT device_imei_no FROM device_assignment WHERE account_id='$account_id_local1' AND status=1";
-	$result = mysql_query($query,$DbConnection);
 	foreach($deviceDataArr as $dValye)
 	{
 		$device[] = $dValye['device_imei_no'];

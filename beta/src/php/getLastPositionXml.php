@@ -57,51 +57,31 @@
 	$parameterizeData->lastHaltTime='u';
 	$parameterizeData->cellName='ab';	
 	$linetmp="";
+        $vname_str ="";
+        $vnumber_str ="";
 	for($i=0;$i<$vsize;$i++)
 	{
 		$vehicle_info=get_vehicle_info($root,$vserial[$i]);
 		$vehicle_detail_local=explode(",",$vehicle_info);
 		$io_type_value[]=$vehicle_detail_local[7];
+                $vname_str = $vname_str.$vehicle_detail_local[0].":";
+                $vnumber_str = $vnumber_str.$vehicle_detail_local[8].":";
 			
 		$LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
-		$LastDataObject=new lastDataObj();	
-		
-		/*if(($LastSortedDate+24*60*60)>=$endDateTS) //All sorted data
-		{	
-			//echo "in if1";
-			$type="sorted";			
-			getLastPositionXMl($vserial[$i],$date1,$date2,$datefrom,$dateto,$sortBy,$type,$parameterizeData,$LastDataObject);
-		}
-		else if($LastSortedDate==null) //All Unsorted data
-		{
-			//echo "in if2";
-			$type="unSorted";
-			getLastPositionXMl($vserial[$i],$date1,$date2,$datefrom,$dateto,$sortBy,$type,$parameterizeData,$LastDataObject);
-		}
-		else //Partially Sorted data
-		{
-			$LastSDate=date("Y-m-d",$LastSortedDate+24*60*60);
-			//echo "in else";
-			getLastPositionXMl($vserial[$i],$date1,$date2,$datefrom,$LastSDate,$sortBy,$type,$parameterizeData,$LastDataObject);
-			$type="sorted";					
-			
-			if(!count($LastDataObject->latitudeLD)>0)
-			{
-				$type="unSorted";
-				getLastPositionXMl($vserial[$i],$date1,$date2,$LastSDate,$dateto,$sortBy,$type,$parameterizeData,$LastDataObject);
-			}
-		}*/
+		$LastDataObject=new lastDataObj();		
 		$type="unSorted";
 		//var_dump($LastDataObject);
 		getLastPositionXMl($vserial[$i],$date1,$date2,$datefrom,$dateto,$sortBy,$type,$parameterizeData,$LastDataObject);
 		//var_dump($LastDataObject);
 		if ($LastDataObject->messageTypeLD[0]!="" && $LastDataObject->deviceDatetimeLD[0]!="")
 		{
-			//var_dump($LastRecordObject);
-			$linetmp=$linetmp.'<x a="'.$LastDataObject->messageTypeLD[0].'" b="'.$LastDataObject->versionLD[0].'" c="'.$LastDataObject->fixLD[0].'" d="'.$LastDataObject->latitudeLD[0].'" e="'.$LastDataObject->longitudeLD[0].'" f="'.$LastDataObject->speedLD[0].'" g="'.$LastDataObject->serverDatetimeLD[0].'" h="'.$LastDataObject->deviceDatetimeLD[0].'" i="'.$LastDataObject->io1LD[0].'" j="'.$LastDataObject->io2LD[0].'" k="'.$LastDataObject->io3LD[0].'" l="'.$LastDataObject->io4LD[0].'" m="'.$LastDataObject->io5LD[0].'" n="'.$LastDataObject->io6LD[0].'" o="'.$LastDataObject->io7LD[0].'" p="'.$LastDataObject->io8LD[0].'" q="'.$LastDataObject->sigStrLD[0].'" r="'.$LastDataObject->suplyVoltageLD[0].'" s="'.$LastRecordObject->dayMaxSpeedLR[0].'" t="'.$LastRecordObject->dayMaxSpeedTimeLR[0].'" u="'.$LastRecordObject->lastHaltTimeLR[0].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'"/>,';
+                    //var_dump($LastRecordObject);
+                    $linetmp=$linetmp.'<x a="'.$LastDataObject->messageTypeLD[0].'" b="'.$LastDataObject->versionLD[0].'" c="'.$LastDataObject->fixLD[0].'" d="'.$LastDataObject->latitudeLD[0].'" e="'.$LastDataObject->longitudeLD[0].'" f="'.$LastDataObject->speedLD[0].'" g="'.$LastDataObject->serverDatetimeLD[0].'" h="'.$LastDataObject->deviceDatetimeLD[0].'" i="'.$LastDataObject->io1LD[0].'" j="'.$LastDataObject->io2LD[0].'" k="'.$LastDataObject->io3LD[0].'" l="'.$LastDataObject->io4LD[0].'" m="'.$LastDataObject->io5LD[0].'" n="'.$LastDataObject->io6LD[0].'" o="'.$LastDataObject->io7LD[0].'" p="'.$LastDataObject->io8LD[0].'" q="'.$LastDataObject->sigStrLD[0].'" r="'.$LastDataObject->suplyVoltageLD[0].'" s="'.$LastDataObject->dayMaxSpeedLD[0].'" t="'.$LastDataObject->dayMaxSpeedTimeLD[0].'" u="'.$LastDataObject->lastHaltTimeLD[0].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'"/>,';
 		}
 		$LastDataObject =null;
 	}
+        $vname1=substr($vname_str,0,-1); /////////for last position text report
+        $vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
 	$parameterizeData=null;	
 	
 

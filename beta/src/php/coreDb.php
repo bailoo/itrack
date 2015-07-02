@@ -107,6 +107,14 @@ function getAccountIDByGroupId($group_id_local1,$status,$DbC)
 	return $row[0];	
 }
 
+function getColorFromAP($accId,$DbConnection)  /// A->Account P->Preference 
+{
+    $query1="SELECT vehicle_color from account_preference WHERE account_id='$accId'";
+    $result1=mysql_query($query1,$DbConnection); 
+    $row1=mysql_fetch_row($result1);
+    return  $row1[0];    
+}
+
 function GetAccountInfo($accountID,$status,$DbC)
 {
 	$query="SELECT user_type,status FROM account USE INDEX(accountid_status) WHERE account_id='$accountID' AND status=$status";
@@ -2948,6 +2956,18 @@ function updateLandmark($landmark_name1,$landmark_point1,$zoom_level1,$account_i
 	return $result;
 }
 
+function getScheduleLocationDetail($locationId,$status,$DbConnection)
+{
+  $Query1="SELECT * FROM schedule_location WHERE location_id IN(".$locationId.") AND status=$status";
+  //echo "quyer=".$Query1."<br>";                 
+  $Result1=mysql_query($Query1,$DbConnection);
+  while($Row1=mysql_fetch_object($Result1))
+  {
+    $data[]=array('location_name'=>$Row1->location_name);   
+  }
+  return $data;
+}
+
 function deleteLandmark($account_id,$date,$upstatus,$landmark_id1,$constatus,$DbConnection)
 {
 	$query="UPDATE landmark SET edit_id='$account_id',edit_date='$date',status=$upstatus WHERE landmark_id='$landmark_id1' AND status=$constatus"; 
@@ -2986,6 +3006,32 @@ function getDetailAllMileStone($groupo_id_local,$DbConnection)
     }
     return $data;
 }
+
+function  getScheduleAssignmentData($vidStr,$dateFrom,$dateTo,$status,$DbConnection)
+    {
+        $Query="SELECT * FROM schedule_assignment WHERE vehicle_id IN (".$vidStr.") AND date_from >= '$dateFrom' AND date_to <= '$dateTo' AND status=$status";
+        //echo "query=".$Query."<br>";
+        $Result=mysql_query($Query,$DbConnection);
+        while($Row=mysql_fetch_object($Result))
+        {
+
+           $data[]=array(
+                        'location_id'=>$Row->location_id,
+                        'date_from'=>$Row->date_from,
+                        'date_to'=>$Row->date_to,
+                        'by_day'=>$Row->by_day,
+                        'min_operation_time'=>$Row->min_operation_time,
+                        'max_operation_time'=>$Row->max_operation_time,
+                        'rest_time'=>$Row->rest_time,
+                        'min_halt_time'=>$Row->min_halt_time,
+                        'max_halt_time'=>$Row->max_halt_time,
+                        'min_distance_travelled'=>$Row->min_distance_travelled,
+                        'max_distance_travelled'=>$Row->max_distance_travelled,
+                        'Intermediate_halt_time'=>$Row->Intermediate_halt_time                 
+                    );
+       }
+       return $data; 
+    }
 /*****************************************************************************************************************************/
 
 /********************************************manage Edit Delete PolyLine*******************************************************/
