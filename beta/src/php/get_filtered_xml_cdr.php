@@ -98,7 +98,8 @@ for($i=0;$i<$vsize;$i++)
         $io1[]=$LastRecordObject->io5LR[0];
         $io1[]=$LastRecordObject->io6LR[0];
         $io1[]=$LastRecordObject->io7LR[0];
-        $io1[]=$LastRecordObject->io8LR[0];       
+        $io1[]=$LastRecordObject->io8LR[0];    
+        $last_halt_time[]=$LastRecordObject->lastHaltTimeLR[0];
         //$linetmp="\n".'<x a="'.$LastRecordObject->messageTypeLR[0].'" b="'.$LastRecordObject->versionLR[0].'" c="'.$LastRecordObject->fixLR[0].'" d="'.$LastRecordObject->latitudeLR[0].'" e="'.$LastRecordObject->longitudeLR[0].'" f="'.$LastRecordObject->speedLR[0].'" g="'.$LastRecordObject->serverDatetimeLR[0].'" h="'.$LastRecordObject->deviceDatetimeLR[0].'" i="'.$LastRecordObject->io1LR[0].'" j="'.$LastRecordObject->io2LR[0].'" k="'.$LastRecordObject->io3LR[0].'" l="'.$LastRecordObject->io4LR[0].'" m="'.$LastRecordObject->io5LR[0].'" n="'.$LastRecordObject->io6LR[0].'" o="'.$LastRecordObject->io7LR[0].'" p="'.$LastRecordObject->io8LR[0].'" q="'.$LastRecordObject->sigStrLR[0].'" r="'.$LastRecordObject->suplyVoltageLR[0].'" s="'.$LastRecordObject->dayMaxSpeedLR[0].'" t="'.$LastRecordObject->dayMaxSpeedTimeLR[0].'" u="'.$LastRecordObject->lastHaltTimeLR[0].'" v="'.$imei.'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" aa="'.$status.'"/>,';
        
     }

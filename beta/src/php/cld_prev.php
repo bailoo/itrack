@@ -405,7 +405,7 @@ if($dwt=="1")
     <input type="hidden" name="lat" value='.serialize($lat).'>
     <input type="hidden" name="lng" value='.serialize($lng).'>
    <input type="hidden" name="datetime" value='.base64_encode(serialize($datetime)).'>
-    <input type="hidden" name="last_halt_time" value='.base64_encode(serialize($last_halt_time)).'>
+<input type="hidden" name="last_halt_time" value='.base64_encode(serialize($last_halt_time)).'>
    <input type="hidden" name="data_with_location" value="'.$dwt.'">  
    <input type="hidden" name="text_report_io_element" value="'.$text_report_io_element.'">';
    

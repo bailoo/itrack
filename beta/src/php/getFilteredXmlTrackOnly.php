@@ -761,7 +761,7 @@ for($i=0;$i<$vsize;$i++)
                         {
                             $DataValid = 1;
                         }
-                        if($DataValid==1)
+                        if(($DataValid==1) && ($xml_date_current>$date1 && $xml_date_current<$date2))
                         { 
                            if((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval)
                            {
