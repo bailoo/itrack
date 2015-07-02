@@ -30,7 +30,7 @@ public class report_turning_violation {
     public static ArrayList<String> location = new ArrayList<String>();
     public static ArrayList<String> roadID = new ArrayList<String>();
     public static ArrayList<String> roadName = new ArrayList<String>();
-  
+      
 	
 	//IF ANGLE > 30 DEG && Speed > 10 Km/hr
 	public static void action_report_truning_violation(String imei, String device_time, String sts, String startdate, String enddate, double interval, double lat, double lng, double speed, int data_size, int record_count)
@@ -117,7 +117,7 @@ public class report_turning_violation {
 						turningLatitude.add(lat_middle);
 						turningLongitude.add(lng_middle);
 						
-						LatLng tmpobj = new LatLng(Double.toString(lat_middle), Double.toString(lng_middle),"","","");
+						LatLng tmpobj = new LatLng(Double.toString(lat_middle), Double.toString(lng_middle),"","","","");
 						latLngObj.add(tmpobj);
 					}				
 					
