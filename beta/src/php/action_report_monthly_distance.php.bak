@@ -119,63 +119,22 @@
 
 		$endDateTS=strtotime($date2);
 		//echo "<br>A:date1=".$date1." ,date2=".$date2;
-		$LastSortedDate = getLastSortedDate($vserial,$datefrom,$dateto);
+		$LastSortedDate = getLastSortedDate($datefrom,$dateto,$userdates);
 		$SortedDataObject=new data();
-		$UnSortedDataObject=new data();
+                readFileXml($vserial,$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
 		
-		if(($LastSortedDate+24*60*60)>=$endDateTS) //All sorted data
-		{	
-			//echo "in if1";
-			$type="sorted";
-			readFileXml($vserial,$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-		}
-		else if($LastSortedDate==null) //All Unsorted data
-		{
-			//echo "in if2";
-			$type="unSorted";
-			//echo"st=".$datefrom."ed=".$dateto."<br>";
-			readFileXml($vserial,$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-		}
-		else //Partially Sorted data
-		{
-			$LastSDate=date("Y-m-d",$LastSortedDate+24*60*60);
-			//echo "in else";
-			$type="sorted";					
-			readFileXml($vserial,$date1,$date2,$datefrom,$LastSDate,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
 		
-			$type="unSorted";
-			readFileXml($vserial,$date1,$date2,$LastSDate,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-		}		
 	
-		/*echo "udt1=".$UnSortedDataObject->deviceDatetime[0]."<br>";
-		echo "udt2=".$UnSortedDataObject->deviceDatetime[1]."<br>";
-	
-		echo "dt3=".$SortedDataObject->deviceDatetime[2]."<br>";
-		echo "dt4=".$SortedDataObject->deviceDatetime[3]."<br>";*/
 		if(count($SortedDataObject->deviceDatetime)>0)
 		{
-			$prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
-			for($obi=0;$obi<$prevSortedSize;$obi++)
-			{			
-				$finalDateTimeArr[$dataCnt][]=$SortedDataObject->deviceDatetime[$obi];
-				$finalLatitudeArr[$dataCnt][]=$SortedDataObject->latitudeData[$obi];
-				$finalLongitudeArr[$dataCnt][]=$SortedDataObject->longitudeData[$obi];		
-				$dataFoundFlag=1;
-			}
-		}
-		if(count($UnSortedDataObject->deviceDatetime)>0)
-		{
-			$sortObjTmp=sortData($UnSortedDataObject,$sortBy,$parameterizeData);
-			$sortedSize=sizeof($sortObjTmp->deviceDatetime);
-			/*echo "dt1=".$sortObjTmp->deviceDatetime[0]."<br>";
-			echo "dt2=".$sortObjTmp->deviceDatetime[1]."<br>";
-			echo "dt1=".$sortObjTmp->latitudeData[0]."<br>";
-			echo "dt2=".$sortObjTmp->latitudeData[1]."<br>";*/
+			$sortedSize=sizeof($SortedDataObject->deviceDatetime);
+		
 			for($obi=0;$obi<$sortedSize;$obi++)
 			{				
-				$finalDateTimeArr[$dataCnt][]=$sortObjTmp->deviceDatetime[$obi];	
-				$finalLatitudeArr[$dataCnt][]=$sortObjTmp->latitudeData[$obi];
-				$finalLongitudeArr[$dataCnt][]=$sortObjTmp->longitudeData[$obi];
+				$finalDateTimeArr[$dataCnt][]=$SortedDataObject->deviceDatetime[$obi];	
+				$finalLatitudeArr[$dataCnt][]=$SortedDataObject->latitudeData[$obi];
+				$finalLongitudeArr[$dataCnt][]=$SortedDataObject->longitudeData[$obi];
+				$finalSpeedArr[$dataCnt][]=$SortedDataObject->speedData[$obi];
 				$dataFoundFlag=1;
 			}
 		}		
@@ -191,234 +150,364 @@
 	}
 	$parameterizeData=null;
 	
-$reportTitle="Monthly Distance Report ";
-$displayFormat="Daily Distance (km)";
-	
-//print_r($finalLatitudeArr);
-//echo "tdi=".$tdi."<br>";
-if(count($finalLatitudeArr)>0)
-{
-$csv_string = "";
-//echo "date1=".$date1."date2=".$date2."<br>";
-echo'<form  name="text_data_report" method="post" target="_blank">'.
-		report_title($reportTitle,$dateStartDisplay,$dateEndDisplay).'
-			<center>
-				<div style="overflow: auto;height: 300px; width: 620px;">';
-					//$reportSize=sizeof($finalVNameArr);
-					//ech$date2o "vsize=".$dataCnt."<br>";
-					$sno=1;
-					$pdfi=0;
-				    $sum_dailydist =0;
-					for($i=0;$i<$dataCnt;$i++)
+	for($i=0;$i<$dataCnt;$i++)
+	{
+		$fix_tmp = 1;
+		$xml_date_latest="1900-00-00 00:00:00";
+		$CurrentLat = 0.0;
+		$CurrentLong = 0.0;
+		$LastLat = 0.0;
+		$LastLong = 0.0;
+		$firstData = 0;
+		$start_time_flag = 0;
+		$distance_total = 0;
+		$daily_dist=0;
+		$distance_threshold = 0.200;
+		$datetime_threshold = 300;
+		$distance_error = 0.100;
+		$distance_incriment =0.0;
+		$firstdata_flag =0;
+		$start_point_display =0;
+		$j=0;
+		$haltFlag==True;
+		$distance_travel=0; 
+		$innerSize=sizeof($finalDateTimeArr[$i]);
+		for($j=0;$j<$innerSize;$j++)
+		{
+			
+			$lat = $finalLatitudeArr[$i][$j];
+			$lng = $finalLongitudeArr[$i][$j];
+                       // echo "lat=".$lat."lng=".$lng."<br>";
+			if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))
+			{
+				$DataValid = 1;
+			}
+			if($DataValid==1)
+			{
+				$datetime=$finalDateTimeArr[$i][$j];
+				$speed = $finalSpeedArr[$i][$j];
+				if($firstdata_flag==0)
+				{                                
+					$firstdata_flag = 1;
+					$distance_travel=0;                                    
+
+					$lat_S = $lat;
+					$lng_S = $lng;
+					$datetime_S = $datetime;
+					$datetime_travel_start = $datetime_S;              		
+					$lat_travel_start = $lat_S;
+					$lng_travel_start = $lng_S;                  
+					$start_point_display =0;                  
+					$last_time1 = $datetime;
+					$latlast = $lat;
+					$lnglast =  $lng;  
+					$max_speed	=0.0;								
+				}           	              	
+				else
+				{           
+					$lat_E = $lat;
+					$lng_E = $lng; 
+					$datetime_E = $datetime; 
+					calculate_distance($lat_S, $lat_E, $lng_S, $lng_E, $distance_incriment);								         		
+					$tmp_time_diff1 = (double)(strtotime($datetime) - strtotime($last_time1)) / 3600;                
+					
+					calculate_distance($latlast, $lat_E, $lnglast, $lng_E, $distance1);
+					$tmp_time_diff = ((double)( strtotime($datetime) - strtotime($last_time) )) / 3600; 
+					
+					if($tmp_time_diff1>0)
 					{
-						$innerSize=0;
-						$innerSize=sizeof($finalDateTimeArr[$i]);
-						//echo "innerSize=".$innerSize."<br>";
-						/*for($j=0;$j<$innerSize;$j++)
-						{
-							echo "vehcileName=".$finalDateTimeArr[$i][$j]."<br>";
-						}*/
-						if($i==0)
-						{
-							$csvtitle1=$reportTitle." Report :- ".$vehicle_detail_local[0]." 
-										(".$vserial." )  DateTime :".$date1." - ".$date2." )";
-								echo"<input TYPE=\"hidden\" VALUE=\"$csvtitle1\" NAME=\"title[$i]\">";
-								$csv_string = $csv_string.$csvtitle1."\n";
-								$csv_string = $csv_string."SNo,Date,".$reportTitle."\n";
-								$title=$finalVNameArr[$i]." &nbsp;
-								
-							<font color=red>
-								(".$vserial.")
-							</font>";
-							echo'<br>
-							<table align="center">
-								<tr>
-									<td class="text" align="center">
-										<b>'.$title.'</b> 
-										<div style="height:8px;">
-										</div>
-									</td>
-								</tr>
-							</table>
-							<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
-								<tr>
-									<td class="text" align="left">
-										<b>SNo</b>
-									</td>
-									<td class="text" align="left">
-										<b>Date</b>
-									</td>											
-									<td class="text" align="left">
-										<b>'.$reportTitle.'</b>
-									</td>								
-								</tr>';  
-						}
-						$daily_dist=0;
-						$distance=0.0;
-						$distance1=0.0;
-						$tmp_time_diff=0;
-						$tmp_time_diff1=0;
-						$prevDateFlag="OFF";
-						$lat_prev_date="";
-						$lng_prev_date="";		
-						$last_time1_prev=""; 
-						$latlast_prev="";
-						$lnglast_prev="";
-						$lat="";
-						$lng="";
-						$datetime="";
-						$last_time=null;
-						$tmp_speed=0;
-						for($j=0;$j<$innerSize;$j++)
-						{
-							$lat=$finalLatitudeArr[$i][$j];
-							$lng = $finalLongitudeArr[$i][$j];
-							$datetime=$finalDateTimeArr[$i][$j];
-							
-							if($j==0)
-							{
-								if($prevDateFlag=="OFF")
-								{
-									//echo "in if";
-									$lat1 = $lat;
-									$lng1 = $lng;
-									$last_time1 = $datetime; 
-									$latlast = $lat;
-									$lnglast =  $lng; 
-								}									
-								else if($prevDateFlag=="ON")
-								{
-									//echo "in else if";
-									$lat1 = $lat_prev_date;
-									$lng1 = $lng_prev_date;
-									$last_time1 = $last_time1_prev; 
-									$latlast = $latlast_prev;
-									$lnglast =  $lnglast_prev;
-									//echo "latlast=".$latlast."lnglast=".$lnglast."last_time1=".$last_time1."<br><br>";
-								} 
-							}
-							else
-							{								                                   
-								$lat2 = $lat;
-								$lng2 = $lng; 
-								calculate_distance($lat1, $lat2, $lng1, $lng2, $distance);
-								//echo "<br>lat1=".$lat1." ,lat2=".$lat2." ,lng1=".$lng1." ,lng2=".$lng2." ,dist=".$distance;
-								if($distance>2000)
-								{
-									$distance=0;
-									$lat1 = $lat2;
-									$lng1 = $lng2;
-								}		
-								$tmp_time_diff1 = ((double) (strtotime($datetime) - strtotime($last_time1))) / 3600;
-
-								calculate_distance($latlast, $lat2, $lnglast, $lng2, $distance1);
-
-								if($tmp_time_diff1>0)
-								{
-									$tmp_speed = ((double) ($distance1)) / $tmp_time_diff1;
-									$last_time1 = $datetime;
-									$latlast = $lat2;
-									$lnglast =  $lng2;        					
-								}
-								$tmp_time_diff = ((double)( strtotime($datetime) - strtotime($last_time) )) / 3600;
-
-								//if($tmp_speed <3000 && $distance>0.1)
-								//echo "\nTmpSpeed=".$tmp_speed." ,distance=".$distance." ,tmp_time_diff=".$tmp_time_diff;
-
-								if($tmp_speed<500 && $distance>0.1 && $tmp_time_diff>0)
-								{		              
-									$daily_dist= (float) ($daily_dist + $distance);																															
-									$lat1 = $lat2;
-									$lng1 = $lng2;
-									$last_time = $datetime;
-									$lastdatalat=$lat2;
-									$lastdatalng=$lng2;
-									$lastdatetime=$datetime;
-								}							
-							}						
-						}
-						$lat_prev_date=$lastdatalat;
-						$lng_prev_date=$lastdatalng;			
-						$last_time1_prev = $lastdatetime; 
-						$latlast_prev = $lastdatalat;
-						$lnglast_prev =  $lastdatalng;
-						if($daily_dist!=0)
-						{
-							$prevDateFlag="ON";
-						}
-						//echo "lat2=".$lat_prev_date."datetime=".$last_time1_prev."<br>";
-						//echo "prevDateFlag=".$prevDateFlag."<br>";
-						if($daily_dist==0)
-						{
-							$latlast_prev = "";
-							$lnglast_prev =  "";
-							$prevDateFlag="OFF";
-						}
-						$daily_dist = round($daily_dist,2);
-						$onlyDate=explode(" ",$finalDateTimeArr[$i][$j-1]);
-						
-					echo'<tr>
-							<td class="text" align="left" width="4%">
-								<b>'.$sno.'</b>
-							</td>';										
-							echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$pdfi][$sno][SNo]\">";
-							$csv_string = $csv_string.$sno;	
-							
-							echo'<td class="text" align="left">
-									'.$onlyDate[0].'
-								</td>';									
-							echo"<input TYPE=\"hidden\" VALUE=\"$onlyDate[0]\" NAME=\"temp[$pdfi][$sno][Date]\">";
-							$csv_string = $csv_string.','.$onlyDate[0];										
-							
-							$finalDistance=round($daily_dist,2);
-							$sum_dailydist=$sum_dailydist+$daily_dist;
-							echo'<td class="text" align="left">
-									'.$finalDistance.'
-								</td>';	
-							echo"<input TYPE=\"hidden\" VALUE=\"$finalDistance\" NAME=\"temp[$pdfi][$sno][$displayFormat]\">";
-							$csv_string = $csv_string.','.$finalDistance;
-						echo'</tr>';
-							$csv_string=$csv_string."\n";
-						$sno++;				
+						$tmp_speed = ((double) ($distance_incriment)) / $tmp_time_diff;
+						$tmp_speed1 = ((double) ($distance1)) / $tmp_time_diff1;
 					}
+					else
+					{
+						$tmp_speed1 = 1000.0; //very high value
+					}																			   
+					if($tmp_speed<300.0)
+					{
+						$speeed_data_valid_time = $datetime;
+					}
+					
+					if(( strtotime($datetime) - strtotime($speeed_data_valid_time) )>300) //data high speed for 5 mins
+					{
+						$lat_S = $lat_E;
+						$lng_S = $lng_E;
+						$last_time = $datetime;
+					}
+
+					$last_time1 = $datetime;
+					$latlast = $lat_E;
+					$lnglast =  $lng_E;
+					//echo"maxspeed=".$max_speed."speed=".$speed."<br>";
+					if($max_speed<$speed)
+					{
+						$max_speed = $speed;
+					}
+					
+													
+					if($tmp_speed<300.0 && $tmp_speed1<300.0 && $distance_incriment>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
+					{
+						if($haltFlag==True)
+						{
+							$datetime_travel_start = $datetime_E;
+							$lat_travel_start = $lat_E;
+							$lng_travel_start = $lng_E;
+							$distance_travel = 0;
+							$distance_total = 0;
+							$distance_incrimenttotal = 0;
+							$haltFlag = False;
+						}
+						$distance_total += $distance_incriment;
+						$distance_travel += $distance_incriment;
+						$daily_dist += $distance_incriment;
+						$lat_S = $lat_E;
+						$lng_S = $lng_E;
+						$datetime_S = $datetime_E;
+						
+						$start_point_display =1;
+						//$distance_incrimenttotal += $distance_incriment;
+						// echo $datetime_E . " -- " . $lat_E .",". $lng_E . "\tDelta Distance = " . $distance_incriment . "\tTotal Distance = " . $distance_total . "\n";
+					}
+								
+					$datetime_diff = strtotime($datetime_E) - strtotime($datetime_S);
+							
+					if(($datetime_diff > $datetime_threshold) && ($haltFlag==False))
+					{
+						$datetime_travel_end = $datetime_S;
+						$daily_travel_time += strtotime($datetime_travel_end) - strtotime($datetime_travel_start);
+						$haltFlag = True;
+						$j=0;
+					}
+				}
+			}
+		}
+                if($daily_travel_time>0)
+				{
+					$daily_avg_speed = ($daily_dist/$daily_travel_time)*3600;
+					$daily_avg_speed = round($daily_avg_speed,2);
+				}
+				else
+				{
+					$daily_avg_speed=0;
+				}
+				$daily_dist = round($daily_dist,2);
+				if($daily_avg_speed>$max_speed)
+				{
+					$daily_max_speed = $daily_avg_speed;
+				}
+				else
+				{
+					$daily_max_speed = $max_speed;
+				}
 				
-					  echo'<tr style="height:20px;background-color:lightgrey">
-							<td class="text">
-								<strong>Total<strong>&nbsp;
-							</td>
-							<td class="text">
-								<strong></strong>
-							</td>
-							<td class="text">
-								<font color="red">
-									<strong>'.$sum_dailydist.'</strong>
-								</font>
-							</td>
-						</tr>';
-					echo"<input TYPE=\"hidden\" VALUE=\"Total\" NAME=\"temp[$pdfi][$sno][SNo]\">
-					<input TYPE=\"hidden\" VALUE=\"-\" NAME=\"temp[$pdfi][$sno][Date]\">
-					<input TYPE=\"hidden\" VALUE=\"$sum_dailydist\" NAME=\"temp[$pdfi][$sno][$displayFormat]\">";
-      $csv_string = $csv_string.'Total,-,'.$sum_dailydist."\n"; 
-				echo'</table>
-				</div>
+				if($daily_dist==0)
+				{
+					$daily_max_speed=0;
+					$daily_avg_speed=0;
+				}
+				
+				$imei[]=$vserial[$i];
+				$vname[]='-';
+				$mdate[]=$dateSwitchPrev[0];
+				$dailyDistArr[]=$daily_dist;
+				$maxSpeedArr[]=$daily_max_speed;
+				$avgSpeedArr[]=$daily_avg_speed;
+				
+				$daily_dist = 0;
+				$daily_travel_time=0;
+				$firstdata_flag=0;
+				$daily_avg_speed=0;
+				$daily_max_speed=0;
+				$max_speed=0;
+		
+	}
+	
+	if($breakflag==1)
+	 echo"<br>
+			<center>
+				<font color=red>
+					Data too large please select less duration/days/vehicle
+				</font>
 			</center>
-			<input TYPE="hidden" VALUE="full data" NAME="csv_type">
-			<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">
-			<br><center>
-				<input type="button" onclick="javascript:report_pdf_csv(\'src/php/report_getpdf_type4.php?size='.$dataCnt.'\');" value="Get PDF" class="noprint">&nbsp;
-				<input type="button" onclick="javascript:report_pdf_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
-				<!--<input type="button" value="Print it" onclick="window.print()" class="noprint">&nbsp;-->
-		</form>';						
-}
-else
-{
-	print"<center><FONT color=\"Red\" size=2><strong>No ".$reportTitle." Record Found</strong></font></center>";
-}
+		<br><br>";
+		report_title("Monthly Distance",$date1,$date2);
 
+echo'<center>
+		<div style="overflow: auto;height: 350px; width: 620px;" align="center">';
+		///////////////////  READ SPEED XML 	//////////////////////////////				                      
+		
+		$j=-1;
+		$k=0;
+		$final_maxspeed_tmp=0;
+		$endtable=0;
+    	$daily_dist1=array();
+		$maxSpeedArr1=array();
+		$avgSpeedArr1=array();		
+		for($i=0;$i<sizeof($imei);$i++)
+		{								              
+			if(($i==0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )
+			{
+				$k=0;                
+				$sum_dailydist =0;                
+        
+				$j++;
+				$total_dailydist[$j] =0;
+				
+				$sno = 1;
+				$title="Monthly Distance Report : ".$vname[$i]." &nbsp;<font color=red>(".$imei[$i].")</font>". "( ".$m1."-".$year."  )";
+				$vname1[$j][$k] = $vname[$i];
+				$imei1[$j][$k] = $imei[$i];
+				
+				echo'
+				<br><table align="center">
+				<tr>
+					<td class="text" align="center"><b>'.$title.'</b> <div style="height:8px;"></div></td>
+				</tr>
+				</table>
+				<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
+				<tr>
+					<td class="text" align="left"><b>SNo</b></td>
+					<td class="text" align="left"><b>Date</b></td>
+					<td class="text" align="left"><b>Daily Distance (km)</b></td>
+					<td class="text" align="left"><b>Max Speed (km/hr)</b></td>
+					<td class="text" align="left"><b>Avg Speed (km/hr)</b></td>
+				</tr>';  								
+			}                                                                        		
+			
+		$sum_dailydist = $sum_dailydist + $daily_dist[$i];
 
+		echo'<tr><td class="text" align="left" width="12%"><b>'.$sno.'</b></td>';        												
+		echo'<td class="text" align="left">'.$mdate[$i].'</td>';		
+		echo'<td class="text" align="left">'.$dailyDistArr[$i].'</td>';
+		echo'<td class="text" align="left">'.$maxSpeedArr[$i].'</td>';
+		echo'<td class="text" align="left">'.$avgSpeedArr[$i].'</td>';		
+		echo'</tr>';	          		
+			//echo "<br>arr_time1[$j][$k]main=".$arr_time1[$j][$k];
+      
+		$date_pdf[$j][$k] = $mdate[$i];	
+		$daily_dist1[$j][$k] = $dailyDistArr[$i];
+		$maxSpeedArr1[$j][$k] = $maxSpeedArr[$i];
+		$avgSpeedArr1[$j][$k] = $avgSpeedArr[$i];		
+								
+		if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
+		{
+			$endtable =1;        
+			echo '<tr style="height:20px;background-color:lightgrey">
+			<td class="text"><strong>Total<strong>&nbsp;</td>
+			<td class="text"><strong></strong></td>';									
+        
+			if($k>0)
+			{
+				//echo  "<br>sum_avgspeed=".$sum_avgspeed."<br>";
+				$total_dailydist[$j] = round(($sum_dailydist),2);
+				//echo  "<br>total_avgspeed[$j]=".$total_avgspeed[$j]."<br>";
+			}
+			else
+			{
+				$total_dailydist[$j] = "NA";
+			}															
+
+				echo'<td class="text"><font color="red"><strong>'.$total_dailydist[$j].'</strong></font></td>';
+				echo'</tr>'; 
+        echo '</table>';
+		}  
+			
+      $k++;   
+      $sno++;                       							  		
+   }
+   
+   if(!$endtable)
+   {
+        echo '<tr style="height:20px;background-color:lightgrey">
+        <td class="text"><strong>Total<strong>&nbsp;</td>
+        <td class="text"><strong></strong></td>';								
+        echo'<td class="text"><font color="red"><strong>'.round(($sum_dailydist),2).'</strong></font></td>';
+				echo'</tr>'; 
+        echo '</table>';    
+   }
+   
+   echo "</div>";  
+   echo'<br><br>';   
+
+   $vsize = sizeof($imei);
+   
+   $csv_string = "";   
+	 
+   echo'<form method = "post" target="_blank">';
+		
+		for($x=0;$x<=$j;$x++)
+		{								
+			$title=$vname[$x]." (".$imei[$x]."): Monthly Distance Report(km) Date From ".$date1." To ".$date2;
+			$csv_string = $csv_string.$title."\n";
+			$csv_string = $csv_string."SNo,Date,Daily Distance (km),Max Speed(km/hr),Average Speed(km/hr)\n";
+      echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title[$x]\">";
+			
+			$sno=0;
+			for($y=0;$y<$k;$y++)
+			{
+				//$k=$j-1;
+				$sno++;
+                      
+        $datetmp = $date_pdf[$x][$y];	
+				$dailydisttmp = $daily_dist1[$x][$y];
+				$maxSpeedTmp = $maxSpeedArr1[$x][$y];
+				$avgSpeedTmp = $avgSpeedArr1[$x][$y];				
+				//echo "dt=".$datetmp1;
+				
+				echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$x][$y][SNo]\">";
+				echo"<input TYPE=\"hidden\" VALUE=\"$datetmp\" NAME=\"temp[$x][$y][Date]\">";
+				echo"<input TYPE=\"hidden\" VALUE=\"$dailydisttmp\" NAME=\"temp[$x][$y][Daily Distance]\">";
+				echo"<input TYPE=\"hidden\" VALUE=\"$maxSpeedTmp\" NAME=\"temp[$x][$y][Max Speed]\">";
+				echo"<input TYPE=\"hidden\" VALUE=\"$avgSpeedTmp\" NAME=\"temp[$x][$y][Avg Speed]\">";
+        
+        $csv_string = $csv_string.$sno.','.$datetmp.','.$dailydisttmp.','.$maxSpeedTmp.','.$avgSpeedTmp."\n"; 							
+			}		
+
+			echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][SNo]\">";
+			echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][Date]\">";
+			echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][Daily Distance]\">";
+			echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][Max Speed]\">";
+			echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][Avg Speed]\">";
+			
+			$m = $y+1;								
+			
+			echo"<input TYPE=\"hidden\" VALUE=\"Total\" NAME=\"temp[$x][$m][SNo]\">";
+			echo"<input TYPE=\"hidden\" VALUE=\"$date2\" NAME=\"temp[$x][$m][Date]\">";
+			if(!$endtable)
+			$total_dailydist[$x] = $sum_dailydist;
+      echo"<input TYPE=\"hidden\" VALUE=\"$total_dailydist[$x]\" NAME=\"temp[$x][$m][Daily Distance]\">";
+      $csv_string = $csv_string.'Total,-,'.$sum_dailydist."\n"; 																																									
+		}																						
+
+    echo'	
+      <table align="center">
+  		<tr>
+  			<td>';
+        
+    		if(sizeof($imei)==0)
+    		{						
+    			print"<center><FONT color=\"Red\" size=2><strong>No Distance Record</strong></font></center>";
+    			//echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=HaltReport.php\">";
+    			echo'<br><br>';
+    		}	
+    		else
+    		{
+          echo'<input TYPE="hidden" VALUE="monthly_distance" NAME="csv_type">';
+          echo'<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">';                 
+          echo'<br><center><input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type4.php?size='.$vsize.'\');" value="Get PDF" class="noprint">&nbsp;<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
+          <!--<input type="button" value="Print it" onclick="window.print()" class="noprint">-->&nbsp;';      
+        }
+                    
+        echo'</td>		
+      </tr>
+  		</table>
+  		</form>
+   ';             
+unlink($xml_path);
+echo '</center>';  
 echo'<center>		
 		<a href="javascript:showReportPrevPageNew();" class="back_css">
 			&nbsp;<b>Back</b>
 		</a>
-	</center>';	
-?>							 					
+	</center>';            							
+?>

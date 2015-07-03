@@ -1,3 +1,7 @@
+<?php
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
+?>
 <html>
 <head>
 	<link rel="StyleSheet" href="../css/newwindow.css">
@@ -297,20 +301,19 @@ echo '
 ?>
 <?php
 set_time_limit(3000);	
-date_default_timezone_set("Asia/Kolkata"); 
+date_default_timezone_set("Asia/Kolkata");
 include_once("main_vehicle_information_1.php");
 include_once('Hierarchy.php');
-$root=$_SESSION["root"];
 include_once('util_session_variable.php');
-include_once('util_php_mysql_connectivity.php');
 include_once('xmlParameters.php');
+include_once("report_title.php");
 include_once('parameterizeData.php');
 include_once('data.php');
 include_once("sortXmlData.php");
 include_once("getXmlData.php");
-//set_time_limit(300);
+include_once("calculate_distance.php");;
 include_once("get_location_lp_track_report.php");
-include_once("calculate_distance.php");
+
 include_once("area_violation/check_with_range.php");
 include_once("area_violation/pointLocation.php");
 include_once("util.hr_min_sec.php");
@@ -367,6 +370,7 @@ $userInterval = $_POST['user_interval'];
 	for($i=0;$i<$vsize;$i++)
 	{
 		$dataCnt=0;
+                //echo "vserial=".$vserial[$i]."<br>";
 		$vehicle_info=get_vehicle_info($root,$vserial[$i]);
 		$vehicle_detail_local=explode(",",$vehicle_info);
 		$finalVNameArr[$i]=$vehicle_detail_local[0];
@@ -394,23 +398,23 @@ $userInterval = $_POST['user_interval'];
 		{	
 			//echo "in if1";
 			$type="sorted";
-			readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,&$SortedDataObject);
+			readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
 		}
 		else if($LastSortedDate==null) //All Unsorted data
 		{
 			//echo "in if2";
 			$type="unSorted";
-			readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,&$UnSortedDataObject);
+			readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
 		}
 		else //Partially Sorted data
 		{
 			$LastSDate=date("Y-m-d",$LastSortedDate+24*60*60);
 			//echo "in else";
 			$type="sorted";					
-			readFileXml($vserial[$i],$date1,$date2,$datefrom,$LastSDate,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,&$SortedDataObject);
+			readFileXml($vserial[$i],$date1,$date2,$datefrom,$LastSDate,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
 		
 			$type="unSorted";
-			readFileXml($vserial[$i],$date1,$date2,$LastSDate,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,&$UnSortedDataObject);
+			readFileXml($vserial[$i],$date1,$date2,$LastSDate,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
 		}
 	
 		/*echo "udt1=".$UnSortedDataObject->deviceDatetime[0]."<br>";

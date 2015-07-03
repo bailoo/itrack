@@ -348,426 +348,341 @@ $dateto = $date_2[0];
 
 $userInterval = $_POST['user_interval'];
 
+$sortBy='h';
+$firstDataFlag=0;
+$endDateTS=strtotime($date2);
+$dataCnt=0;	
+//$userInterval = "0";
+$requiredData="All";
+
+$parameterizeData=new parameterizeData();
+$ioFoundFlag=0;
+
+$parameterizeData->latitude="d";
+$parameterizeData->longitude="e";
+$parameterizeData->speed="f";
 
 
-
-	$sortBy='h';
-	$firstDataFlag=0;
-	$endDateTS=strtotime($date2);
-	$dataCnt=0;	
-	//$userInterval = "0";
-	$requiredData="All";
-	
-	$parameterizeData=new parameterizeData();
-	$ioFoundFlag=0;
-	
-	$parameterizeData->latitude="d";
-	$parameterizeData->longitude="e";
-	$parameterizeData->speed="f";
-	
-	$finalVNameArr=array();
-
-	for($i=0;$i<$vsize;$i++)
-	{
-		$dataCnt=0;
-                //echo "vserial=".$vserial[$i]."<br>";
-		$vehicle_info=get_vehicle_info($root,$vserial[$i]);
-		$vehicle_detail_local=explode(",",$vehicle_info);
-		$finalVNameArr[$i]=$vehicle_detail_local[0];
-		//echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
-		
-		$ioArr=explode(":",$vehicle_detail_local[7]);
-		$ioFoundFlag=0;
-		$ioArrSize=sizeof($ioArr);
-		for($z=0;$z<$ioArrSize;$z++)
-		{
-			$tempIo=explode("^",$ioArr[$z]);
-			//echo "io=".$ioArr[$z]."<br>";
-			if($tempIo[1]=="temperature")
-			{
-				$ioFoundFlag=1;
-				$parameterizeData->temperature=$finalIoArr[$tempIo[0]];
-			}
-		}
-			
-		$LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
-		$SortedDataObject=new data();
-		$UnSortedDataObject=new data();
-		
-		if(($LastSortedDate+24*60*60)>=$endDateTS) //All sorted data
-		{	
-			//echo "in if1";
-			$type="sorted";
-			readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-		}
-		else if($LastSortedDate==null) //All Unsorted data
-		{
-			//echo "in if2";
-			$type="unSorted";
-			readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-		}
-		else //Partially Sorted data
-		{
-			$LastSDate=date("Y-m-d",$LastSortedDate+24*60*60);
-			//echo "in else";
-			$type="sorted";					
-			readFileXml($vserial[$i],$date1,$date2,$datefrom,$LastSDate,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-		
-			$type="unSorted";
-			readFileXml($vserial[$i],$date1,$date2,$LastSDate,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-		}
-	
-		/*echo "udt1=".$UnSortedDataObject->deviceDatetime[0]."<br>";
-		echo "udt2=".$UnSortedDataObject->deviceDatetime[1]."<br>";	
-		echo "udt1=".$UnSortedDataObject->speedData[0]."<br>";
-		echo "udt2=".$UnSortedDataObject->speedData[1]."<br>";
-		echo "<br><br>";*/
-		
-		if(count($SortedDataObject->deviceDatetime)>0)
-		{
-			/*echo "psdt1=".$SortedDataObject->deviceDatetime[0]."<br>";
-		echo "psdt2=".$SortedDataObject->deviceDatetime[1]."<br>";	
-		echo "psp1=".$SortedDataObject->speedData[0]."<br>";
-		echo "psp2=".$SortedDataObject->speedData[1]."<br>";
-		echo "<br><br>";*/
-			$prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
-			for($obi=0;$obi<$prevSortedSize;$obi++)
-			{			
-				$finalDateTimeArr[$i][]=$SortedDataObject->deviceDatetime[$obi];
-				$finalLatitudeArr[$i][]=$SortedDataObject->latitudeData[$obi];
-				$finalLongitudeArr[$i][]=$SortedDataObject->longitudeData[$obi];
-				$finalSpeedArr[$i][]=$SortedDataObject->speedData[$obi];
-				if($ioFoundFlag==1)
-				{
-					$finalTemperatureArr[$i][]=$SortedDataObject->temperatureIOData[$obi];
-				}
-				else
-				{
-					$finalTemperatureArr[$i][]="0.0";
-				}
-				///$dataCnt++;
-			}
-		}
-		if(count($UnSortedDataObject->deviceDatetime)>0)
-		{
-			$sortObjTmp=sortData($UnSortedDataObject,$sortBy,$parameterizeData);
-			//var_dump($sortObjTmp);
-			/*echo"sdt1=".$sortObjTmp->deviceDatetime[0]."<br>";
-			echo "sdt2=".$sortObjTmp->deviceDatetime[1]."<br>";	
-			echo "ss1=".$sortObjTmp->speedData[0]."<br>";
-			echo "ss2=".$sortObjTmp->speedData[1]."<br>";
-			echo "<br><br>";*/
-			$sortedSize=sizeof($sortObjTmp->deviceDatetime);
-			for($obi=0;$obi<$sortedSize;$obi++)
-			{				
-				$finalDateTimeArr[$i][]=$sortObjTmp->deviceDatetime[$obi];	
-				$finalLatitudeArr[$i][]=$sortObjTmp->latitudeData[$obi];
-				$finalLongitudeArr[$i][]=$sortObjTmp->longitudeData[$obi];	
-				$finalSpeedArr[$i][]=$sortObjTmp->speedData[$obi];
-				if($ioFoundFlag==1)
-				{
-					$finalTemperatureArr[$i][]=$sortObjTmp->temperatureIOData[$obi];
-				}
-				else
-				{
-					$finalTemperatureArr[$i][]="0.0";
-				}
-				//$dataCnt++;
-			}
-		}
-		$SortedDataObject=null;			
-		$sortObjTmp=null;
-		$UnsortedDataObject =null;
-			
-	}
-	$parameterizeData=null;	
-
-
-
+get_All_Dates($datefrom, $dateto, $userdates);    
+$date_size = sizeof($userdates);
 for($i=0;$i<$vsize;$i++)
 {
-	//echo "vserial=".$vserial[$i]."<br>";
-	$innerSize=0;
-	$innerSize=sizeof($finalDateTimeArr[$i]);	
+    $dataCnt=0;
+    //echo "vserial=".$vserial[$i]."<br>";
+    $vehicle_info=get_vehicle_info($root,$vserial[$i]);
+    $vehicle_detail_local=explode(",",$vehicle_info);
+    $finalVNameArr[$i]=$vehicle_detail_local[0];
+    //echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
+
+    $ioArr=explode(":",$vehicle_detail_local[7]);
+    $ioFoundFlag=0;
+    $ioArrSize=sizeof($ioArr);
+    for($z=0;$z<$ioArrSize;$z++)
+    {
+        $tempIo=explode("^",$ioArr[$z]);
+        //echo "io=".$ioArr[$z]."<br>";
+        if($tempIo[1]=="temperature")
+        {
+            $ioFoundFlag=1;
+            $parameterizeData->temperature=$finalIoArr[$tempIo[0]];
+        }
+    }
+    	
 	
-	$halt_flag = 0;	
-	$firstData = 0;
-	$distance =0.0;
-	$firstdata_flag =0;
-	$interval = $userInterval*60; 	
-	for($j=0;$j<$innerSize;$j++)
-	{
-		$speed = $finalSpeedArr[$i][$j];
-		$datetime=$finalDateTimeArr[$i][$j];
-		$temperature=$finalTemperatureArr[$i][$j];
-		
-		if($firstdata_flag==0)
-		{
-			$halt_flag = 0;
-			$firstdata_flag = 1;
-			//$vserial=$vehicle_serial;					
-			$lat_ref = $finalLatitudeArr[$i][$j];		
-			$lng_ref = $finalLongitudeArr[$i][$j];			
-			$datetime_ref = $datetime;
-			$tmp_ref = $temperature;                  	
-			$date_secs1 = strtotime($datetime_ref);
-			$date_secs1 = (double)($date_secs1 + $interval);          	
-		}           	
-		//echo "<br>k2=".$k2."<br>";                	
-		else
-		{   
-			$lat_cr = $finalLatitudeArr[$i][$j];		
-			$lng_cr = $finalLongitudeArr[$i][$j];
+    $halt_flag = 0;	
+    $firstData = 0;
+    $distance =0.0;
+    $firstdata_flag =0;
+    $interval = $userInterval*60;
+    
+    for($di=0;$di<=($date_size-1);$di++)
+    {
+        //echo "userdate=".$userdates[$di]."<br>";
+        $SortedDataObject=new data();
+        readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+        //var_dump($SortedDataObject);
+        if(count($SortedDataObject->deviceDatetime)>0)
+        {                
+            $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+            for($obi=0;$obi<$prevSortedSize;$obi++)
+            {
+                $latCheck=$SortedDataObject->latitudeData[$obi];
+                $lngCheck=$SortedDataObject->longitudeData[$obi];               
+                if((strlen($latCheck)>5) && ($latCheck!="-") && (strlen($lngCheck)>5) && ($lngCheck!="-"))
+                {
+                    $DataValid = 1;
+                }
+                if($DataValid==1)
+                {
+                   
+                    $speed = $SortedDataObject->speedData[$obi];
+                    $datetime=$SortedDataObject->deviceDatetime[$obi];
+                    if($ioFoundFlag==1)
+                    {
+                        $temperature=$SortedDataObject->temperatureIOData[$obi];                
+                    }
+                    else
+                    {
+                        $temperature="0.0";
+                    }
 
-			//$datetime_tmp1 = explode("=",$datetime_tmp[0]);
-			$datetime_cr = $datetime;
-			$tmp_cr = $temperature;
-			//$time2 = $datetime[$i][$j];											
-			$date_secs2 = strtotime($datetime_cr);
-			//echo "<br>str=".$lat_ref.", ".$lat_cr.", ".$lng_ref." ,".$lng_cr.", ". $datetime_cr;
-			calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, $distance);
-			//echo "<br>distance=".$distance."<br>";
-			//if( ($distance > 0.200) || ($f== $total_lines-2) )
-			///if(($distance > 0.150) || ($f == $total_lines-10) )
-			if($distance > 0.150)
-			{
-				//echo "<br>In dist ".$distance." lat_ref ".$lat_ref." lng_ref ".$lng_ref." lat_cr ".$lat_cr." lng_cr ".$lng_cr." datetime_cr ".$datetime_cr." datetime_ref ".$datetime_ref."<br>";
-				if ($halt_flag == 1)
-				{				
-					//echo "<br>In Halt1";
-					//echo "<br>datetime_ref=".$datetime_ref;
-					$arrivale_time=$datetime_ref;
-					$tmp_arr=$tmp_ref;
-					$starttime = strtotime($datetime_ref);
-					//$stoptime = strtotime($datetime_cr);  
-					$stoptime = strtotime($datetime_cr);
-					$depature_time=$datetime_cr;
-					$tmp_dep=$tmp_cr;			
-					$halt_dur =  ($stoptime - $starttime);
-				
-					if($halt_dur >= $interval)
-					{						
-						if((sizeof($geo_id1)>0) && ($geo_id1[0]!="") )
-						{                                                                                            
-							$exclude_flag = 1;
-							$geo_status = 1;
-							for($j=0;$j<sizeof($geo_id1);$j++)
-							{                                                                                                    
-								include('action_halt_exclusion.php');
-								if($geo_coord!="")
-								{                
-									check_with_range($lat_ref, $lng_ref, $geo_coord, $geo_status);
-									//echo "<Br>geo_status1:".$geo_status;                                        
-								}
-								if($geo_status == 1)
-								{
-									$exclude_flag = 0;
-								}                                                                                          
-								//echo "<br>geo_status=".$geo_status;                                
-								//echo "<br>geo_id[i]=".$geo_id1[$j]." ,geo_status=".$geo_status;                                      
-							}	// FOR LOOP
-							//echo "<BR>geo_status2:".$geo_status." ,exclude_flag:".$exclude_flag;
-							if(($geo_status==false) && ($exclude_flag==1))
-							{                                                														
-								//echo "<br>Print:".$lat_ref.",".$lng_ref;
-								//echo "<br>Print_1:".$tmp_arr.",".$tmp_dep;
-								//echo "<br>Print:".$tmp_arr.",".$tmp_dep."<br>";
-								if($tmp_arr=="" && $tmp_dep=="")
-								{
-									$tmp_arr="0.0";
-									$tmp_dep="0.0";
-								}
-								else
-								{
-									if($tmp_arr<-30 || $tmp_arr>70)
-									{
-										$tmp_arr="-";
-									}
-									if($tmp_dep<-30 || $tmp_dep>70)
-									{
-										$tmp_dep="-";
-									}
-								}
-								$imei[]=$vserial[$i];
-								$vname[]=$finalVNameArr[$i];
-								$lat[]=$lat_ref;
-								$lng[]=$lng_ref;
-								$arr_time[]=$arrivale_time;
-								$dep_time[]=$depature_time;							
-								$in_temperature[]=$tmp_arr;
-								$out_temperature[]=$tmp_dep;
-								$duration[]=$halt_dur; 
+                    if($firstdata_flag==0)
+                    {
+                        $halt_flag = 0;
+                        $firstdata_flag = 1;
+                        //$vserial=$vehicle_serial;					
+                        $lat_ref = $SortedDataObject->latitudeData[$obi];		
+                        $lng_ref = $SortedDataObject->longitudeData[$obi];			
+                        $datetime_ref = $datetime;
+                        $tmp_ref = $temperature;                  	
+                        $date_secs1 = strtotime($datetime_ref);
+                        $date_secs1 = (double)($date_secs1 + $interval);          	
+                    }           	
+                    //echo "<br>k2=".$k2."<br>";                	
+                    else
+                    {   
+                        $lat_cr = $SortedDataObject->latitudeData[$obi];		
+                        $lng_cr = $SortedDataObject->longitudeData[$obi];
+                        
+                        $datetime_cr = $datetime;
+                        $tmp_cr = $temperature;                    											
+                        $date_secs2 = strtotime($datetime_cr);
+                        //echo "<br>str=".$lat_ref.", ".$lat_cr.", ".$lng_ref." ,".$lng_cr.", ". $datetime_cr;
+                        calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, $distance);
+                      
+                        if($distance > 0.150)
+                        {
+                            //echo "<br>In dist ".$distance." lat_ref ".$lat_ref." lng_ref ".$lng_ref." lat_cr ".$lat_cr." lng_cr ".$lng_cr." datetime_cr ".$datetime_cr." datetime_ref ".$datetime_ref."<br>";
+                            if ($halt_flag == 1)
+                            {				
+                                //echo "<br>In Halt1";
+                                //echo "<br>datetime_ref=".$datetime_ref;
+                                $arrivale_time=$datetime_ref;
+                                $tmp_arr=$tmp_ref;
+                                $starttime = strtotime($datetime_ref);
+                                //$stoptime = strtotime($datetime_cr);  
+                                $stoptime = strtotime($datetime_cr);
+                                $depature_time=$datetime_cr;
+                                $tmp_dep=$tmp_cr;			
+                                $halt_dur =  ($stoptime - $starttime);
 
-								$date_secs1 = strtotime($datetime_cr);
-								$date_secs1 = (double)($date_secs1 + $interval);
-								//break;
-							}  // IF STATUS  
-						} // SIZE OF GEO_ID
-						else
-						{
-							//echo "<br>In Halt else";
-								//echo "<br>Print:".$lat_ref.",".$lng_ref;
-							//echo "<br>Print:".$tmp_arr.",".$tmp_dep."<br>";
-							
-							if($tmp_arr=="" && $tmp_dep=="")
-							{
-								$tmp_arr="0.0";
-								$tmp_dep="0.0";
-							}
-							else
-							{
-								if($tmp_arr<-30 || $tmp_arr>70)
-								{
-									$tmp_arr="-";
-								}
-								if($tmp_dep<-30 || $tmp_dep>70)
-								{
-									$tmp_dep="-";
-								}
-							}
-						
-							$imei[]=$vserial[$i];
-							$vname[]=$finalVNameArr[$i];
-							$lat[]=$lat_ref;
-							$lng[]=$lng_ref;
-							$arr_time[]=$arrivale_time;
-							$dep_time[]=$depature_time;							
-							$in_temperature[]=$tmp_arr;
-							$out_temperature[]=$tmp_dep;
-							$duration[]=$halt_dur; 
+                                if($halt_dur >= $interval)
+                                {						
+                                    if((sizeof($geo_id1)>0) && ($geo_id1[0]!="") )
+                                    {                                                                                            
+                                        $exclude_flag = 1;
+                                        $geo_status = 1;
+                                        for($j=0;$j<sizeof($geo_id1);$j++)
+                                        {                                                                                                    
+                                            include('action_halt_exclusion.php');
+                                            if($geo_coord!="")
+                                            {                
+                                                check_with_range($lat_ref, $lng_ref, $geo_coord, $geo_status);
+                                                //echo "<Br>geo_status1:".$geo_status;                                        
+                                            }
+                                            if($geo_status == 1)
+                                            {
+                                                $exclude_flag = 0;
+                                            }                                                                                          
+                                            //echo "<br>geo_status=".$geo_status;                                
+                                            //echo "<br>geo_id[i]=".$geo_id1[$j]." ,geo_status=".$geo_status;                                      
+                                        }	// FOR LOOP
+                                        //echo "<BR>geo_status2:".$geo_status." ,exclude_flag:".$exclude_flag;
+                                        if(($geo_status==false) && ($exclude_flag==1))
+                                        {                                                														
+                                            //echo "<br>Print:".$lat_ref.",".$lng_ref;
+                                            //echo "<br>Print_1:".$tmp_arr.",".$tmp_dep;
+                                            //echo "<br>Print:".$tmp_arr.",".$tmp_dep."<br>";
+                                            if($tmp_arr=="" && $tmp_dep=="")
+                                            {
+                                                $tmp_arr="0.0";
+                                                $tmp_dep="0.0";
+                                            }
+                                            else
+                                            {
+                                                if($tmp_arr<-30 || $tmp_arr>70)
+                                                {
+                                                    $tmp_arr="-";
+                                                }
+                                                if($tmp_dep<-30 || $tmp_dep>70)
+                                                {
+                                                    $tmp_dep="-";
+                                                }
+                                            }
+                                            $imei[]=$vserial[$i];
+                                            $vname[]=$vehicle_detail_local[0];
+                                            $lat[]=$lat_ref;
+                                            $lng[]=$lng_ref;
+                                            $arr_time[]=$arrivale_time;
+                                            $dep_time[]=$depature_time;							
+                                            $in_temperature[]=$tmp_arr;
+                                            $out_temperature[]=$tmp_dep;
+                                            $duration[]=$halt_dur; 
 
-							$date_secs1 = strtotime($datetime_cr);
-							$date_secs1 = (double)($date_secs1 + $interval);                              
-						}                       
-					}		// IF TOTAL MIN										
-				}   //IF HALT FLAG
-				$lat_ref = $lat_cr;
-				$lng_ref = $lng_cr;
-				$datetime_ref= $datetime_cr;
-				$tmp_ref= $tmp_cr;
-				
+                                            $date_secs1 = strtotime($datetime_cr);
+                                            $date_secs1 = (double)($date_secs1 + $interval);
+                                            //break;
+                                        }  // IF STATUS  
+                                    } // SIZE OF GEO_ID
+                                    else
+                                    {
+                                        //echo "<br>In Halt else";
+                                                //echo "<br>Print:".$lat_ref.",".$lng_ref;
+                                        //echo "<br>Print:".$tmp_arr.",".$tmp_dep."<br>";
 
-				$halt_flag = 0;
-			}
-			else if(((strtotime($datetime_cr)-strtotime($datetime_ref))>60) && ($halt_flag != 1))
-			{            			
-				//echo "<br>normal flag set "." datetime_cr ".$datetime_cr."<br>";
-				
-				$halt_flag = 1;
-			}
+                                        if($tmp_arr=="" && $tmp_dep=="")
+                                        {
+                                            $tmp_arr="0.0";
+                                            $tmp_dep="0.0";
+                                        }
+                                        else
+                                        {
+                                            if($tmp_arr<-30 || $tmp_arr>70)
+                                            {
+                                                $tmp_arr="-";
+                                            }
+                                            if($tmp_dep<-30 || $tmp_dep>70)
+                                            {
+                                                $tmp_dep="-";
+                                            }
+                                        }
+                                        $imei[]=$vserial[$i];
+                                        $vname[]=$vehicle_detail_local[0];
+                                        $lat[]=$lat_ref;
+                                        $lng[]=$lng_ref;
+                                        $arr_time[]=$arrivale_time;
+                                        $dep_time[]=$depature_time;							
+                                        $in_temperature[]=$tmp_arr;
+                                        $out_temperature[]=$tmp_dep;
+                                        $duration[]=$halt_dur; 
+                                        $date_secs1 = strtotime($datetime_cr);
+                                        $date_secs1 = (double)($date_secs1 + $interval);                              
+                                    }                       
+                                }		// IF TOTAL MIN										
+                            }   //IF HALT FLAG
+                            $lat_ref = $lat_cr;
+                            $lng_ref = $lng_cr;
+                            $datetime_ref= $datetime_cr;
+                            $tmp_ref= $tmp_cr;
+                            $halt_flag = 0;
+                        }
+                        else if(((strtotime($datetime_cr)-strtotime($datetime_ref))>60) && ($halt_flag != 1))
+                        {            			
+                            //echo "<br>normal flag set "." datetime_cr ".$datetime_cr."<br>";
+                            $halt_flag = 1;
+                        }
+                    }
 		}
-	}
-	if ($halt_flag == 1)
-	{				
-		//echo "<br>In Halt1";
-		//echo "<br>datetime_ref=".$datetime_ref;
-		$arrivale_time=$datetime_ref;
-		$tmp_arr=$tmp_ref;
-		$starttime = strtotime($datetime_ref);
-		//$stoptime = strtotime($datetime_cr);  
-		$stoptime = strtotime($datetime_cr);
-		$depature_time=$datetime_cr;
-		$tmp_dep=$tmp_cr;
-		//echo "<br>".$starttime." ,".$stoptime;
-		$halt_dur =  ($stoptime - $starttime);
-		
-		if((sizeof($geo_id1)>0) && ($geo_id1[0]!="") )
-		{                                                                                            
-			$exclude_flag = 1;
-			$geo_status = 1;
-			for($j=0;$j<sizeof($geo_id1);$j++)
-			{                                                                                                    
-				include('action_halt_exclusion.php');
-				if($geo_coord!="")
-				{                
-					check_with_range($lat_ref, $lng_ref, $geo_coord, $geo_status);
-					//echo "<Br>geo_status1:".$geo_status;                                        
-				}
-				if($geo_status == 1)
-				{
-					$exclude_flag = 0;
-				}                                                                                          
-				//echo "<br>geo_status=".$geo_status;                                
-				//echo "<br>geo_id[i]=".$geo_id1[$j]." ,geo_status=".$geo_status;                                      
-			}	// FOR LOOP
-			//echo "<BR>geo_status2:".$geo_status." ,exclude_flag:".$exclude_flag;
-			if(($geo_status==false) && ($exclude_flag==1))
-			{                                                														
-				//echo "<br>Print:".$lat_ref.",".$lng_ref;
-				//echo "<br>Print_1:".$tmp_arr.",".$tmp_dep;
-				//echo "<br>Print:".$tmp_arr.",".$tmp_dep."<br>";
-				if($tmp_arr=="" && $tmp_dep=="")
-				{
-					$tmp_arr="0.0";
-					$tmp_dep="0.0";
-				}
-				else
-				{
-					if($tmp_arr<-30 || $tmp_arr>70)
-					{
-						$tmp_arr="-";
-					}
-					if($tmp_dep<-30 || $tmp_dep>70)
-					{
-						$tmp_dep="-";
-					}
-				}
-				$imei[]=$vserial[$i];
-				$vname[]=$finalVNameArr[$i];
-				$lat[]=$lat_ref;
-				$lng[]=$lng_ref;
-				$arr_time[]=$arrivale_time;
-				$dep_time[]=$depature_time;							
-				$in_temperature[]=$tmp_arr;
-				$out_temperature[]=$tmp_dep;
-				$duration[]=$halt_dur;  
+            }
+            $SortedDataObject=null;
+        }
+    }
+    if ($halt_flag == 1)
+    {				
+        //echo "<br>In Halt1";
+        //echo "<br>datetime_ref=".$datetime_ref;
+        $arrivale_time=$datetime_ref;
+        $tmp_arr=$tmp_ref;
+        $starttime = strtotime($datetime_ref);
+        //$stoptime = strtotime($datetime_cr);  
+        $stoptime = strtotime($datetime_cr);
+        $depature_time=$datetime_cr;
+        $tmp_dep=$tmp_cr;
+        //echo "<br>".$starttime." ,".$stoptime;
+        $halt_dur =  ($stoptime - $starttime);
 
-				$date_secs1 = strtotime($datetime_cr);
-				$date_secs1 = (double)($date_secs1 + $interval);
-				//break;
-			}  // IF STATUS  
-		} // SIZE OF GEO_ID
-		else
-		{
-			//echo "<br>In Halt else";
-				//echo "<br>Print:".$lat_ref.",".$lng_ref;
-			//echo "<br>Print:".$tmp_arr.",".$tmp_dep."<br>";
-			
-			if($tmp_arr=="" && $tmp_dep=="")
-			{
-				$tmp_arr="0.0";
-				$tmp_dep="0.0";
-			}
-			else
-			{
-				if($tmp_arr<-30 || $tmp_arr>70)
-				{
-					$tmp_arr="-";
-				}
-				if($tmp_dep<-30 || $tmp_dep>70)
-				{
-					$tmp_dep="-";
-				}
-			}
-			$imei[]=$vserial[$i];
-			$vname[]=$finalVNameArr[$i];
-			$lat[]=$lat_ref;
-			$lng[]=$lng_ref;
-			$arr_time[]=$arrivale_time;
-			$dep_time[]=$depature_time;							
-			$in_temperature[]=$tmp_arr;
-			$out_temperature[]=$tmp_dep;
-			$duration[]=$halt_dur;  
+        if((sizeof($geo_id1)>0) && ($geo_id1[0]!="") )
+        {                                                                                            
+            $exclude_flag = 1;
+            $geo_status = 1;
+            for($j=0;$j<sizeof($geo_id1);$j++)
+            {                                                                                                    
+                include('action_halt_exclusion.php');
+                if($geo_coord!="")
+                {                
+                    check_with_range($lat_ref, $lng_ref, $geo_coord, $geo_status);
+                    //echo "<Br>geo_status1:".$geo_status;                                        
+                }
+                if($geo_status == 1)
+                {
+                    $exclude_flag = 0;
+                }                                                                                          
+                //echo "<br>geo_status=".$geo_status;                                
+                //echo "<br>geo_id[i]=".$geo_id1[$j]." ,geo_status=".$geo_status;                                      
+            }	// FOR LOOP
+            //echo "<BR>geo_status2:".$geo_status." ,exclude_flag:".$exclude_flag;
+            if(($geo_status==false) && ($exclude_flag==1))
+            {                                                														
+                //echo "<br>Print:".$lat_ref.",".$lng_ref;
+                //echo "<br>Print_1:".$tmp_arr.",".$tmp_dep;
+                //echo "<br>Print:".$tmp_arr.",".$tmp_dep."<br>";
+                if($tmp_arr=="" && $tmp_dep=="")
+                {
+                    $tmp_arr="0.0";
+                    $tmp_dep="0.0";
+                }
+                else
+                {
+                    if($tmp_arr<-30 || $tmp_arr>70)
+                    {
+                        $tmp_arr="-";
+                    }
+                    if($tmp_dep<-30 || $tmp_dep>70)
+                    {
+                        $tmp_dep="-";
+                    }
+                }
+                $imei[]=$vserial[$i];
+                $vname[]=$finalVNameArr[$i];
+                $lat[]=$lat_ref;
+                $lng[]=$lng_ref;
+                $arr_time[]=$arrivale_time;
+                $dep_time[]=$depature_time;							
+                $in_temperature[]=$tmp_arr;
+                $out_temperature[]=$tmp_dep;
+                $duration[]=$halt_dur;  
 
-			$date_secs1 = strtotime($datetime_cr);
-			$date_secs1 = (double)($date_secs1 + $interval);                              
-		}                       										
-	}   
+                $date_secs1 = strtotime($datetime_cr);
+                $date_secs1 = (double)($date_secs1 + $interval);
+                //break;
+            }  // IF STATUS  
+        } // SIZE OF GEO_ID
+        else
+        {
+            if($tmp_arr=="" && $tmp_dep=="")
+            {
+                $tmp_arr="0.0";
+                $tmp_dep="0.0";
+            }
+            else
+            {
+                if($tmp_arr<-30 || $tmp_arr>70)
+                {
+                    $tmp_arr="-";
+                }
+                if($tmp_dep<-30 || $tmp_dep>70)
+                {
+                    $tmp_dep="-";
+                }
+            }
+            $imei[]=$vserial[$i];
+            $vname[]=$vehicle_detail_local[0];
+            $lat[]=$lat_ref;
+            $lng[]=$lng_ref;
+            $arr_time[]=$arrivale_time;
+            $dep_time[]=$depature_time;							
+            $in_temperature[]=$tmp_arr;
+            $out_temperature[]=$tmp_dep;
+            $duration[]=$halt_dur;  
+
+            $date_secs1 = strtotime($datetime_cr);
+            $date_secs1 = (double)($date_secs1 + $interval);                              
+        }                       										
+    } 
 }
-?>
-	                                                                                                                                                    
-<?php
-//echo''; 
+$o_cassandra->close();
+$parameterizeData=null;
+
 echo'<form method="post" action="action_report_halt_1.php" target="_self">  
 		<div id="progress"></div>
 		<div id="delay"></div>';		

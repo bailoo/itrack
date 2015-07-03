@@ -43,74 +43,10 @@ $parameterizeData=new parameterizeData();
 $parameterizeData->latitude="d";
 $parameterizeData->longitude="e";
 	
-$finalVNameArr=array();
-$i=0;
-foreach($hDisArr as $hDValue)
-{
-	$dataCnt=0;
-	$LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
-	$SortedDataObject=new data();
-	$UnSortedDataObject=new data();
-		
-	if(($LastSortedDate+24*60*60)>=$endDateTS) //All sorted data
-	{	
-		//echo "in if1";
-		$type="sorted";
-		readFileXml($hDValue['device_imei_no'],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-	}
-	else if($LastSortedDate==null) //All Unsorted data
-	{
-		//echo "in if2";
-		$type="unSorted";
-		readFileXml($hDValue['device_imei_no'],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-	}
-	else //Partially Sorted data
-	{
-		$LastSDate=date("Y-m-d",$LastSortedDate+24*60*60);
-		//echo "in else";
-		$type="sorted";					
-		readFileXml($hDValue['device_imei_no'],$date1,$date2,$datefrom,$LastSDate,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-	
-		$type="unSorted";
-		readFileXml($hDValue['device_imei_no'],$date1,$date2,$LastSDate,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-	}
-	
-	//var_dump($UnSortedDataObject);		
-	//var_dump($SortedDataObject);	
-	//echo "<br><br>";
-	
-	if(count($SortedDataObject->deviceDatetime)>0)
-	{
-		$prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
-		for($obi=0;$obi<$prevSortedSize;$obi++)
-		{			
-			$finalDateTimeArr[$i][$dataCnt]=$SortedDataObject->deviceDatetime[$obi];
-			$finalLatitudeArr[$i][$dataCnt]=$SortedDataObject->latitudeData[$obi];
-			$finalLongitudeArr[$i][$dataCnt]=$SortedDataObject->longitudeData[$obi];		
-			$dataCnt++;
-		}
-	}
-	if(count($UnSortedDataObject->deviceDatetime)>0)
-	{
-		$sortObjTmp=sortData($UnSortedDataObject,$sortBy,$parameterizeData);
-		//var_dump($sortObjTmp);
-		$sortedSize=sizeof($sortObjTmp->deviceDatetime);
-		for($obi=0;$obi<$sortedSize;$obi++)
-		{				
-			$finalDateTimeArr[$i][$dataCnt]=$sortObjTmp->deviceDatetime[$obi];	
-			$finalLatitudeArr[$i][$dataCnt]=$sortObjTmp->latitudeData[$obi];
-			$finalLongitudeArr[$i][$dataCnt]=$sortObjTmp->longitudeData[$obi];			
-			$dataCnt++;
-		}
-	}
-	$i++;
-	$SortedDataObject=null;			
-	$sortObjTmp=null;
-	$UnsortedDataObject =null;	
-}
-$parameterizeData=null;
-$o_cassandra->close();
 
+$i=0;
+get_All_Dates($datefrom, $dateto, $userdates);    
+$date_size = sizeof($userdates);
 
 //echo "pdate=".$pdate."<br>";
 //$date="2015-06-18";
@@ -133,108 +69,131 @@ if(file_exists($xmltowrite))
 $fh = fopen($xmltowrite, 'w') or die("can't open file 3"); // new
 fwrite($fh, "<t1>"); 
 $i=0; 
+
 foreach($hDisArr as $hDValue)
 {
-	$fix_tmp = 1;
-	$xml_date_latest="1900-00-00 00:00:00";
-	$CurrentLat = 0.0;
-	$CurrentLong = 0.0;
-	$LastLat = 0.0;
-	$LastLong = 0.0;
-	$firstData = 0;
-	$distance =0.0;
-	$linetowrite="";
-	$firstdata_flag =0;
-	$total_dist = 0.0;
-	$innerSize=sizeof($finalDateTimeArr[$i]);
-	for($j=0;$j<$innerSize;$j++)
-	{
-		
-		$lat =$finalLatitudeArr[$i][$j];
-		$lng = $finalLongitudeArr[$i][$j];
-		$datetimeN = new DateTime($finalDateTimeArr[$i][$j]);		                                        
-		if($firstdata_flag==0)
-		{					
-			$firstdata_flag = 1;
-			$lat1 = $lat;
-			$lng1 = $lng;
-			//echo "<br>DateSec1 before=".$date_secs1." time_int=".$user_interval;
-			$interval = (double)$user_interval*60;
-			$time1 =$datetimeN;					
-			$date_secs1 = $time1->format('U');					
-			//echo "<br>DateSec1 before=".$date_secs1." time_int=".$interval;
-			$date_secs1 = (double)($date_secs1 + $interval); 
-			$date_secs2 = 0;  
-			$last_time1 = $datetimeN;
-			$latlast = $lat;
-			$lnglast =  $lng;  
-			//echo "datetime=".$datetimeN."<br>";
-		}				
-		else
-		{
-			$time2 = $datetimeN;										
-			$date_secs2 = $time2->format('U');	
-			$vserial=$vehicle_serial;														                                      													      					
-			$lat2 = $lat;      				        					
-			$lng2 = $lng; 
-			calculate_distance($lat1, $lat2, $lng1, $lng2, &$distance);
-			if($distance>2000)
-			{
-				$distance=0;
-				$lat1 = $lat2;
-				$lng1 = $lng2;
-			}					
-			$tmp_time_diff1 = (double)($datetimeN->format('U') - $last_time1->format('U')) / 3600;
-			calculate_distance($latlast, $lat2, $lnglast, $lng2, $distance1);
-			if($tmp_time_diff1>0)
-			{
-				$tmp_speed = ((double) ($distance1)) / $tmp_time_diff1;
-				$last_time1 = $datetimeN;
-				$latlast = $lat2;
-				$lnglast =  $lng2;
-			}				
-			if($last_time_exception=="")
-			{
-				$tmp_time_diff = ((double)($datetimeN->format('U') -0)) / 3600;
-			} 
-			else
-			{
-				$tmp_time_diff = ((double)($datetimeN->format('U') - $last_time->format('U'))) / 3600;
-			}                             
-			if($tmp_speed<500.0 && $distance>0.1 && $tmp_time_diff>0.0)
-			//if($distance>0.1)
-			{
-				$total_dist = (double)( $total_dist + $distance );
-				$daily_dist= (double) ($daily_dist + $distance);	
-				$daily_dist = round($daily_dist,2);
-				$last_time_exception=$datetime;
-				$lat1 = $lat2;
-				$lng1 = $lng2;
-				$last_time = $datetimeN;
-				$vname_tmp  = $vname;
-				$vserial_tmp = $vserial;
-				$time1_tmp = $time1;
-				$time2_tmp = $time2;
-				$total_dist_tmp = $total_dist;                		    						
-			}  
-			if( ($date_secs2 >= $date_secs1))// || ($f == $total_lines-5))
-			{
-				get_location($lat2,$lng2,$placename);				
-				$dateThis=explode(" ",$xml_date);
-				$dateThis1=explode(":",$dateThis[1]);
-				$distanceVar="#d".$dateThis1[0];									
-				$distance_data = "\n<marker imei=\"".trim($vehicle_serial)."\" vn=\"".trim($vname)."\" dis=\"".$total_dist.$distanceVar."\" add=\"".$placename."\" dtm=\"".$xml_date."\"/>";
-				$linetowrite = $distance_data; // for distance       // ADD DISTANCE
-				fwrite($fh, $linetowrite); 
-				$time1 = $datetimeN;
-				$date_secs1 = $time1->format('U');
-				$date_secs1 = (double)($date_secs1 + $interval);	
-				$total_dist = 0.0;	 															
-			}	                                                                        									                               
-		}   // else closed 
-	}
-	$i++;
+    $CurrentLat = 0.0;
+    $CurrentLong = 0.0;
+    $LastLat = 0.0;
+    $LastLong = 0.0;
+    $firstData = 0;
+    $distance =0.0;
+    $linetowrite="";
+    $firstdata_flag =0;
+    $total_dist = 0.0;
+    
+    for($di=0;$di<=($date_size-1);$di++)
+    {
+        //echo "userdate=".$userdates[$di]."<br>";
+        $SortedDataObject=new data();
+        readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+        if(count($SortedDataObject->deviceDatetime)>0)
+        {
+            $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+            for($obi=0;$obi<$prevSortedSize;$obi++)
+            {			
+                $finalDateTimeArr[$i][$dataCnt]=$SortedDataObject->deviceDatetime[$obi];
+                $finalLatitudeArr[$i][$dataCnt]=$SortedDataObject->latitudeData[$obi];
+                $finalLongitudeArr[$i][$dataCnt]=$SortedDataObject->longitudeData[$obi];
+                $lat = $SortedDataObject->latitudeData[$obi];
+                $lng = $SortedDataObject->longitudeData[$obi];
+                if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))
+                {
+                    $DataValid = 1;
+                }
+                if($DataValid==1)
+                {
+                    $datetimeN = new DateTime($SortedDataObject->deviceDatetime[$obi]);		                                        
+                    if($firstdata_flag==0)
+                    {					
+                        $firstdata_flag = 1;
+                        $lat1 = $lat;
+                        $lng1 = $lng;
+                        //echo "<br>DateSec1 before=".$date_secs1." time_int=".$user_interval;
+                        $interval = (double)$user_interval*60;
+                        $time1 =$datetimeN;					
+                        $date_secs1 = $time1->format('U');					
+                        //echo "<br>DateSec1 before=".$date_secs1." time_int=".$interval;
+                        $date_secs1 = (double)($date_secs1 + $interval); 
+                        $date_secs2 = 0;  
+                        $last_time1 = $datetimeN;
+                        $latlast = $lat;
+                        $lnglast =  $lng;  
+                        //echo "datetime=".$datetimeN."<br>";
+                    }				
+                    else
+                    {
+                        $time2 = $datetimeN;										
+                        $date_secs2 = $time2->format('U');	
+                        $vserial=$vehicle_serial;														                                      													      					
+                        $lat2 = $lat;      				        					
+                        $lng2 = $lng; 
+                        calculate_distance($lat1, $lat2, $lng1, $lng2, &$distance);
+                        if($distance>2000)
+                        {
+                            $distance=0;
+                            $lat1 = $lat2;
+                            $lng1 = $lng2;
+                        }					
+                        $tmp_time_diff1 = (double)($datetimeN->format('U') - $last_time1->format('U')) / 3600;
+                        calculate_distance($latlast, $lat2, $lnglast, $lng2, $distance1);
+                        if($tmp_time_diff1>0)
+                        {
+                            $tmp_speed = ((double) ($distance1)) / $tmp_time_diff1;
+                            $last_time1 = $datetimeN;
+                            $latlast = $lat2;
+                            $lnglast =  $lng2;
+                        }				
+                        if($last_time_exception=="")
+                        {
+                            $tmp_time_diff = ((double)($datetimeN->format('U') -0)) / 3600;
+                        } 
+                        else
+                        {
+                            $tmp_time_diff = ((double)($datetimeN->format('U') - $last_time->format('U'))) / 3600;
+                        }                             
+                        if($tmp_speed<500.0 && $distance>0.1 && $tmp_time_diff>0.0)
+                        //if($distance>0.1)
+                        {
+                            $total_dist = (double)( $total_dist + $distance );
+                            $daily_dist= (double) ($daily_dist + $distance);	
+                            $daily_dist = round($daily_dist,2);
+                            $last_time_exception=$datetime;
+                            $lat1 = $lat2;
+                            $lng1 = $lng2;
+                            $last_time = $datetimeN;
+                            $vname_tmp  = $vname;
+                            $vserial_tmp = $vserial;
+                            $time1_tmp = $time1;
+                            $time2_tmp = $time2;
+                            $total_dist_tmp = $total_dist;                		    						
+                        }  
+                        if( ($date_secs2 >= $date_secs1))// || ($f == $total_lines-5))
+                        {
+                            get_location($lat2,$lng2,$placename);				
+                            $dateThis=explode(" ",$xml_date);
+                            $dateThis1=explode(":",$dateThis[1]);
+                            $distanceVar="#d".$dateThis1[0];									
+                            $distance_data = "\n<marker imei=\"".trim($vehicle_serial)."\" vn=\"".trim($vname)."\" dis=\"".$total_dist.$distanceVar."\" add=\"".$placename."\" dtm=\"".$xml_date."\"/>";
+                            $linetowrite = $distance_data; // for distance       // ADD DISTANCE
+                            fwrite($fh, $linetowrite); 
+                            $time1 = $datetimeN;
+                            $date_secs1 = $time1->format('U');
+                            $date_secs1 = (double)($date_secs1 + $interval);	
+                            $total_dist = 0.0;	 															
+                        }	                                                                        									                               
+                    }   // else closed 
+                }
+                $dataCnt++;
+            }
+            $SortedDataObject=null;	
+        }
+        //var_dump($SortedDataObject);
+    }
+    $i++;	
 }
 fwrite($fh, "\n</t1>");  
 fclose($fh);
+$parameterizeData=null;
+$o_cassandra->close();
 ?>

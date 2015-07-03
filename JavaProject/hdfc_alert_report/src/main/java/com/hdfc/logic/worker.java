@@ -1,8 +1,9 @@
 package com.hdfc.logic;
 
-import in.co.itracksolution.SampleFullDataQuery;
+import in.co.itracksolution.InsertVehicleAlerts;
 import in.co.itracksolution.pull_full_data_cassandra;
 import in.co.itracksolution.dao.FullDataDao;
+import in.co.itracksolution.dao.TurnAlertDao;
 import in.co.itracksolution.model.FullData;
 
 import java.io.FileWriter;
@@ -15,8 +16,7 @@ import java.util.TreeMap;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
-import com.hdfc.db.gis.LatLng;
-import com.hdfc.db.gis.class_pop_road;
+import com.datastax.driver.core.Session;
 import com.hdfc.db.mysql.connection;
 import com.hdfc.db.mysql.mysql_handler;
 import com.hdfc.init.init;
@@ -25,6 +25,8 @@ import com.hdfc.report.report_distance;
 import com.hdfc.report.report_travel;
 import com.hdfc.report.report_turning_violation;
 import com.hdfc.utils.utility_class;
+import com.iespl.gisgraphy.LatLng;
+import com.iespl.gisgraphy.class_pop_road;
 
 public class worker {
 	
@@ -40,27 +42,30 @@ public class worker {
 	public static FullData data = new FullData();			
 	public static FullDataDao dao = new FullDataDao(fd.conn.getSession());
 	
+	public static InsertVehicleAlerts st = new InsertVehicleAlerts();
+	public static Session session = st.conn.getSession();	
+	
 	public static String previous_date1 ="", previous_date2 ="";
 	public static double interval=3600.0; //in secs : 1 hour 
 	
 	//####### TEMPORARY FILE WRITE
 	public static FileWriter fw = null;
-	public static String tDeviceTime ="", tServerTime ="", q=",", line="";
-	public static double tSpeed =0.0;
-	public static float tAngle =0.f;
-	public static double tLatitude=0.0, tLongitude=0.0;
+	public static String dtime ="", stime ="", latitude="", longitude="", roadId="", roadName="", locationId="", locationName="", q=",", line="";
+	public static float speed =0.0f, angle =0.0f;	
 	//##############################
 
 	public worker() {
 		//sdf.setTimeZone(tz);
 	}
 	
-	public static void process_data(int account_id) {				
-		//init init_var = new init();
+	public static void process_data(int account_id) {
+		
+		//###### MYSQL CONN
+		connection sql_con = new connection();
+		//mysql_handler mh = new mysql_handler();
+		mysql_handler.getVehicleInformation(sql_con, account_id);
+		
 		sdf.setTimeZone(tz);
-		connection conn = new connection();
-		mysql_handler mh = new mysql_handler();
-		mysql_handler.getVehicleInformation(conn, account_id);
 		//System.out.println("AftergetVehicleInfo");
 		String previous_day = utility_class.getYesterdayDateString();
 //		previous_date1 = previous_day+" 00:00:00";
@@ -68,7 +73,7 @@ public class worker {
 		
 		//previous_date1 = "2015-06-14 13:19:35";
 		//previous_date2 = "2015-06-14 13:20:08";	
-		previous_date1 = "2015-06-14 00:00:00";
+		previous_date1 = "2015-06-01 00:00:00";
 		previous_date2 = "2015-06-15 23:30:37";
 //		previous_date1 = "2015-04-26 00:00:00";
 //		previous_date2 = "2015-06-15 23:59:00";
@@ -77,7 +82,7 @@ public class worker {
 		for(int i=0;i<(init.device_imei_no.size());i++) {			
 			
 			//####### TEMPORARY
-			report_turning_violation.IMEI_No.clear();
+			/*report_turning_violation.IMEI_No.clear();
 			report_turning_violation.turningDeviceTime.clear();
 			report_turning_violation.turningServerTime.clear();
 			report_turning_violation.turningSpeed.clear();
@@ -85,7 +90,21 @@ public class worker {
 			report_turning_violation.turningLatitude.clear();
 			report_turning_violation.turningLongitude.clear();
 			report_turning_violation.locationCode.clear();
-			report_turning_violation.roadID.clear();
+			report_turning_violation.roadID.clear();*/
+			
+			report_turning_violation.IMEI_No = new ArrayList<String>();
+			report_turning_violation.turningDeviceTime = new ArrayList<String>();
+			report_turning_violation.turningServerTime = new ArrayList<String>();
+			report_turning_violation.turningSpeed = new ArrayList<Double>();
+			report_turning_violation.turningAngle = new ArrayList<Float>();
+			report_turning_violation.turningLatitude = new ArrayList<Double>();
+			report_turning_violation.turningLongitude = new ArrayList<Double>();
+			report_turning_violation.latLngObj = new ArrayList<LatLng>();
+			report_turning_violation.locationCode = new ArrayList<String>();
+			report_turning_violation.location = new ArrayList<String>();
+			report_turning_violation.roadID = new ArrayList<String>();
+			report_turning_violation.roadName = new ArrayList<String>();
+			
 			//####################
 			
 			report_distance.firstdata_flag_distance = 0;
@@ -119,11 +138,12 @@ public class worker {
 		    report_distance.AlertTime.clear();*/
 			//###### TEMPORARY WRITE
 			//System.out.println("CALL="+i);
-			write_to_database(init.device_imei_no.get(i));
+			write_to_database(init.device_imei_no.get(i), session);
 			System.out.println("Processed IMEI:"+init.device_imei_no.get(i)+" -"+i);
 		}
 		
 		fd.close();
+		st.close();
 		//System.out.println("Point3");
 	}
 	
@@ -225,24 +245,47 @@ public class worker {
 		//CHECK AND PUSH
 	}*/
 	
-	public static void write_to_database(String imei) {
+	public static void write_to_database(String imei, Session session) {
 		
-		int rad=2000;//meter
-		System.out.println("Road VIA latlng Array ");
+		//########## GIS
+		int rad=200;//meter
+		String tmp_loc ="";
+		System.out.println("GIS Data Before="+report_turning_violation.latLngObj.size());
 		class_pop_road rd_lat_lng= new class_pop_road(report_turning_violation.latLngObj,rad);		
 		
 		ArrayList<LatLng>  data = rd_lat_lng.getLatlngData();
 		
-		for(LatLng obj1 : data){
-			System.out.println("Lat : "+obj1.getLat());
-			System.out.println("lng : "+obj1.getLng());
-			System.out.println("location : "+obj1.getLocation());
-			System.out.println("locationCode : "+obj1.getLocationCode());
-			report_turning_violation.locationCode.add(obj1.getLocation());
-			//report_turning_violation.roadID.add();
-		}		
+		System.out.println("GIS Data AfterRequest="+data.size());
 		
-		//String filename= "D:\\itrack_vts/hdfc_alert_report/"+imei+".csv";
+		for(LatLng obj1 : data){
+			try{
+				/*System.out.println("Lat : "+obj1.getLat());
+				System.out.println("lng : "+obj1.getLng());			
+				System.out.println("locationCode : "+obj1.getLocationCode());
+				System.out.println("location : "+obj1.getLocation());
+				System.out.println("Distance : "+obj1.getDistance());
+				System.out.println("Is_in : "+obj1.getIs_in());
+				*/
+				report_turning_violation.roadID.add(obj1.getLocationCode());			
+				if(!obj1.getDistance().equals("-")) {					
+					if(obj1.getIs_in()!=null) {
+						tmp_loc = Double.parseDouble(obj1.getDistance())/1000+" Km from "+obj1.getLocation()+","+obj1.getIs_in();
+					} else {
+						tmp_loc = Double.parseDouble(obj1.getDistance())/1000+" Km from "+obj1.getLocation();
+					}
+				} else {
+					tmp_loc = "-";
+				}
+				//System.out.println("Loc : "+tmp_loc);
+				report_turning_violation.roadName.add(tmp_loc);
+				//report_turning_violation.roadID.add();
+			} catch(Exception e1) {System.out.println("LocError="+e1.getMessage());}
+		}
+		
+		System.out.println("GIS Data After="+report_turning_violation.roadName.size());
+		//#############
+		
+		/*//String filename= "D:\\itrack_vts/hdfc_alert_report/"+imei+".csv";
 		String filename= "/mnt/hdfc_report/csv/"+imei+".csv";
 		line = "DeviceTime,ServerTime,Speed (Km/hr),Angle (Deg),Latitude,Longitude\n";
 		try {
@@ -250,39 +293,48 @@ public class worker {
 		} catch (IOException e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
-		} //the true will append the new data
+		} //the true will append the new data*/
 		
-		//System.out.println("Size="+report_turning_violation.IMEI_No.size());
+		System.out.println("Size="+report_turning_violation.IMEI_No.size());
+		
 		if(report_turning_violation.IMEI_No.size() > 0) {
+			
+			TurnAlertDao turnAlertDao = new TurnAlertDao(session);
+			
 			for(int i=0;i<report_turning_violation.IMEI_No.size();i++) {
 				
-				tDeviceTime = report_turning_violation.turningDeviceTime.get(i);
-				tServerTime = report_turning_violation.turningServerTime.get(i);
-				tSpeed = report_turning_violation.turningSpeed.get(i);
-				tAngle = report_turning_violation.turningAngle.get(i);
-				tLatitude = report_turning_violation.turningLatitude.get(i);
-				tLongitude = report_turning_violation.turningLongitude.get(i);						
+				dtime = report_turning_violation.turningDeviceTime.get(i);
+				stime = report_turning_violation.turningServerTime.get(i);
+				speed = (float)((double)Double.valueOf(report_turning_violation.turningSpeed.get(i)));
+				angle = report_turning_violation.turningAngle.get(i);
+				//locationId = "";
+				//locationName = "";
+				latitude = report_turning_violation.turningLatitude.get(i).toString();
+				longitude = report_turning_violation.turningLongitude.get(i).toString();
+				roadId = report_turning_violation.roadID.get(i);		
+				roadName = report_turning_violation.roadName.get(i);			
 				
-				line += tDeviceTime+q+tServerTime+q+tSpeed+q+tAngle+q+tLatitude+q+tLongitude+"\n";
+				//line += tDeviceTime+q+tServerTime+q+tSpeed+q+tAngle+q+tLatitude+q+tLongitude+"\n";				
+				turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, locationId, locationName, latitude, longitude, roadId, roadName);
 				//System.out.println("filename="+filename+" ,line="+line);
 			}
 		    
-			try {
+			/*try {
 				fw.write(line);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}//appends the string to the file
+			}//appends the string to the file*/
 		}
 	    
 		System.out.println("Write to Alert");
 		
-	    try {
+	    /*try {
 			fw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 }

@@ -28,6 +28,8 @@ import java.util.TimeZone;
 import java.util.Calendar;
 import java.util.Properties;
 
+import com.datastax.driver.core.Session;
+
 public class InsertAlerts {
 	CassandraConn conn;
 	
@@ -60,10 +62,10 @@ public class InsertAlerts {
 	{
 		String imei = "123456";
 		String type = "nogps";
-		String dtime = "2015-06-29 12:17:18";
-		String stime = "2015-06-29 12:17:38";
-		String starttime = "2015-06-29 12:27:18";
-		String endtime = "2015-06-29 15:37:38";
+		String dtime = "2015-06-30 12:17:18";
+		String stime = "2015-06-30 12:17:38";
+		String starttime = "2015-06-30 12:27:18";
+		String endtime = "2015-06-30 15:37:38";
 		int duration = (int)84;
 		int haltduration = (int)34;
 		float speed = (float)30.1;
@@ -87,26 +89,27 @@ public class InsertAlerts {
 		String roadName = "Shahjahan Road";
 		
 		InsertAlerts st = new InsertAlerts();
+		Session session = st.conn.getSession();
 
-		SpeedAlertDao speedAlertDao = new SpeedAlertDao(st.conn.getSession());
+		SpeedAlertDao speedAlertDao = new SpeedAlertDao(session);
 		speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, locationId, locationName, latitude, longitude, roadId, roadName);
 		
-		TurnAlertDao turnAlertDao = new TurnAlertDao(st.conn.getSession());
+		TurnAlertDao turnAlertDao = new TurnAlertDao(session);
 		turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, locationId, locationName, latitude, longitude, roadId, roadName);
 		
-		XroadLogDao xroadLogDao = new XroadLogDao(st.conn.getSession());
+		XroadLogDao xroadLogDao = new XroadLogDao(session);
 		xroadLogDao.insertXroadLog(imei, dtime, stime, roadId, roadName, haltduration, speed, locationId, locationName, latitude, longitude);
 		
-		DistanceLogDao distanceLogDao = new DistanceLogDao(st.conn.getSession());
+		DistanceLogDao distanceLogDao = new DistanceLogDao(session);
 		distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
 
-		NightLogDao nightLogDao = new NightLogDao(st.conn.getSession());
+		NightLogDao nightLogDao = new NightLogDao(session);
 		nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
 
-		GapLogDao gapLogDao = new GapLogDao(st.conn.getSession());
+		GapLogDao gapLogDao = new GapLogDao(session);
 		gapLogDao.insertGapLog(imei, type, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname);
 
-		TravelLogDao travelLogDao = new TravelLogDao(st.conn.getSession());
+		TravelLogDao travelLogDao = new TravelLogDao(session);
 		travelLogDao.insertTravelLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
 
 		st.close();

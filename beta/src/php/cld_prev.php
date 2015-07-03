@@ -1,11 +1,6 @@
 <?php
 set_time_limit(2000);
-//include_once('util_session_variable.php');
-//include_once('util_php_mysql_connectivity.php');
-//echo "test";
-include_once("get_filtered_xml_cdr.php");      // WRITE SORTED XML , FINAL XML NAME STORED IN 'xmltowirte' VARIABLE
-include_once("read_filtered_xml_crd.php");
-//echo "xmltowrite=".$xmltowrite." startdate=".$startdate." enddate=".$enddate;
+include_once("get_filtered_xml_cdr.php"); 
 ?>
 
 <html>
@@ -353,8 +348,10 @@ echo'
 	echo'<textarea id="geocodedPostcodes" name="geocodedPostcodes" style="visibility:hidden;" cols="40" rows="20"></textarea>';
 
  // echo "path=".$xmltowrite."<br>";
-  read_xml_imei($xmltowrite, &$vehicleserial, &$lat, &$lng); 
+ 
+ 
   $size = sizeof($vehicleserial);
+  //echo "size=".$size."<br>";
 	/*$place_name_arr=array();
 	for($i=0;$i<$size;$i++)
 	{
@@ -392,20 +389,38 @@ if($dwt=="1")
   
   call_geocode($point); 
 
-}          
-
-    
+}    
+ // print_r($vehicleserial);  
   echo' 
-   <input type="hidden" name="vserial" value="'.$vserial1.'">
-   <input type="hidden" name="vname" value="'.$vname1.'">
-   <input type="hidden" name="vnumber" value="'.$vnumber1.'">   
-   <input type="hidden" name="xmltowrite" value="'.$xmltowrite.'">
    <input type="hidden" name="startdate" value="'.$startdate.'">
    <input type="hidden" name="enddate" value="'.$enddate.'">
-    <input type="hidden" name="text_report_io_element" value="'.$text_report_io_element.'">
-    <input type="hidden" name="data_with_location" value="'.$dwt.'">
-  
-</form>';
+   <input type="hidden" name="vserial" value="'.$vserial1.'">
+   <input type="hidden" name="vname" value="'.$vname1.'">
+   <input type="hidden" name="vnumber" value="'.$vnumber1.'"> 
+   <input type="hidden" name="vehicleserial" value='.serialize($vehicleserial).'>
+   <input type="hidden" name="vehiclename" value='.serialize($vehiclename).'>
+   <input type="hidden" name="vehicletype" value='.serialize($vehicletype).'>
+   <input type="hidden" name="vehiclenumber" value='.serialize($vehiclenumber).'>
+    <input type="hidden" name="speed" value='.serialize($speed).'>
+    <input type="hidden" name="lat" value='.serialize($lat).'>
+    <input type="hidden" name="lng" value='.serialize($lng).'>
+   <input type="hidden" name="datetime" value='.base64_encode(serialize($datetime)).'>
+<input type="hidden" name="last_halt_time" value='.base64_encode(serialize($last_halt_time)).'>
+   <input type="hidden" name="data_with_location" value="'.$dwt.'">  
+   <input type="hidden" name="text_report_io_element" value="'.$text_report_io_element.'">';
+   
+    if($report_type=="Vehicle")
+	{
+	echo'<input type="hidden" name="io1" value='.serialize($io1).'>
+	<input type="hidden" name="io2" value='.serialize($io2).'>
+	<input type="hidden" name="io3" value='.serialize($io3).'>
+	<input type="hidden" name="io4" value='.serialize($io4).'>
+	<input type="hidden" name="io5" value='.serialize($io5).'>
+	<input type="hidden" name="io6" value='.serialize($io6).'>
+	<input type="hidden" name="io7" value='.serialize($io7).'>
+	<input type="hidden" name="io8" value='.serialize($io8).'>';
+	}
+echo'</form>';
   if($dwt=="0")
   {
 	echo'<script type="text/javascript" language="javascript">

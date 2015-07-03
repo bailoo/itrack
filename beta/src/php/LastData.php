@@ -571,7 +571,7 @@
 													<td class="text">'.$m.'</td>
 													<td class="text">'.$tmp_vname.'</td>
 													<td colspan="7" class="text">
-														<font color="red">No record found&nbsp;&nbsp;&nbsp;&nbsp;</font>
+														<font color="red">Inactive&nbsp;&nbsp;&nbsp;&nbsp;</font>
 														<font color="blue">'.$vnumber_post[$k].'</font>
 													</td>
 												</tr>';
@@ -583,7 +583,7 @@
 													<td class="text">'.$tmp_vname.'</td>
 													<td class="text">'.$vserial_post[$k].'</td>	
 													<td colspan="7" class="text">
-														<font color="red">No record found</font>
+														<font color="red">Inactive</font>
 													</td>
 												</tr>';
 										}

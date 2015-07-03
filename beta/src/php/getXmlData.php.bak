@@ -561,7 +561,7 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 
 function getLastSortedDate($vserial, $datefrom, $dateto) {
     //echo "dateFrom=".$datefrom."datetoe=".$dateto."<br>";
-   /* $fromDateTS = strtotime($datefrom);
+   /*$fromDateTS = strtotime($datefrom);
     $toDateTS = strtotime($dateto);
     for ($currentDateTS = $toDateTS; $currentDateTS >= $fromDateTS; $currentDateTS -= (60 * 60 * 24)) {
         $currentDateStr = date("Y-m-d", $currentDateTS);
@@ -572,7 +572,7 @@ function getLastSortedDate($vserial, $datefrom, $dateto) {
             return $currentDateTS;
         }
     }*/
-    return null;
+   return null;
 }
 
 function get_All_Dates($fromDate, $toDate, &$userdates) {

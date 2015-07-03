@@ -100,7 +100,7 @@ public class class_pop_junction {
 			
 					//Execute the SQL statement and get the results in a Resultset
 					
-					String query="SELECT id, name, astext(location) as lnglat,featureId, CAST (st_distance_sphere(location, st_setsrid(st_makepoint("+lng+","+lat+"),4326)) AS INT) AS d FROM road ORDER BY location <-> st_setsrid(st_makepoint("+lng+","+lat+"), 4326)  LIMIT 1";
+					String query="SELECT id, name, astext(location) as lnglat,featureId, CAST (st_distance_sphere(location, st_setsrid(st_makepoint("+lng+","+lat+"),4326)) AS INT) AS d FROM road WHERE name!='' ORDER BY location <-> st_setsrid(st_makepoint("+lng+","+lat+"), 4326)  LIMIT 1";
 					//String query="SELECT id, name, astext(location) as lnglat,featureId FROM road ORDER BY location <-> st_setsrid(st_makepoint("+lng+","+lat+"), 4326)  LIMIT 1";
 					//System.out.println(query);
 					//long starttime  = System.currentTimeMillis();
@@ -108,7 +108,7 @@ public class class_pop_junction {
 					ResultSet rs1 = stmt.executeQuery(query);
 					//long endtime  = System.currentTimeMillis();
 					long endtime  = System.nanoTime();
-					System.out.println("start time latlng to get"+(endtime-starttime));
+					//System.out.println("start time latlng to get"+(endtime-starttime));
 					// Iterate through the ResultSet, displaying two values
 					// for each row using the getString method
 					String get_radius="";
@@ -117,7 +117,7 @@ public class class_pop_junction {
 						churaha_name=rs1.getString("name");
 						churaha_code=rs1.getString("featureId");
 						get_radius=rs1.getString("d");
-						System.out.println("radius=:"+get_radius);
+						//System.out.println("radius=:"+get_radius);
 						//System.out.println("end time latlng to get"+System.currentTimeMillis());
 						if(Double.parseDouble(get_radius) <= radius)
 						{
@@ -252,7 +252,7 @@ public class class_pop_junction {
 					//Execute the SQL statement and get the results in a Resultset
 					
 					String query="SELECT name,astext(location) as lnglat,featureId FROM road where featureid="+code;
-					System.out.println(query);
+					//System.out.println(query);
 					ResultSet rs1 = stmt.executeQuery(query);
 					// Iterate through the ResultSet, displaying two values
 					// for each row using the getString method

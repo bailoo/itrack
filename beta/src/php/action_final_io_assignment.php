@@ -4,7 +4,7 @@
 	include_once('coreDb.php');
 	
 	$list_fname=getIoAssignmentFnameList($DbConnection);
-	echo "listfaname=".$list_fname."<br>";
+	//echo "listfaname=".$list_fname."<br>";
 
 	$DEBUG=0;	
 	$vehicle_ids = $_POST['vehicle_ids'];

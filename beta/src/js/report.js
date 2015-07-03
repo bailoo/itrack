@@ -460,6 +460,7 @@ if(document.getElementById('acc').value=='1')
 		showManageLoadingMessage();
     var poststr = "filename=" + encodeURI(filename)+
 				  "&title=" + encodeURI(title);	
+            //alert("poststr="+poststr);
     makePOSTRequest('src/php/report_common_prev.htm', poststr);
 	}
 	
@@ -1612,23 +1613,24 @@ function action_report_nearby_location(obj)
     	{
     		document.getElementById("loading_msg").style.display='none';
     	}
-  	
+  	if(document.getElementById("serverTimeCheck").checked==true)
+	{
+            var getDataBy=1;
+	}
+        else
+        {
+            var getDataBy=0;  
+        }
       if(device_str!=false)
   	  {    
         var poststr = "vehicleserial=" + encodeURI( device_str ) +				
                     "&start_date=" + encodeURI( document.getElementById("date1").value )+
-                    "&end_date=" + encodeURI( document.getElementById("date2").value )+  
+                    "&end_date=" + encodeURI( document.getElementById("date2").value )+ 
+                    "&getDataBy=" + getDataBy+
                     "&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
-                    //alert("riz:"+poststr);  
-  	 } 
-	if(document.getElementById("serverTimeCheck").checked==true)
-	{
-		makePOSTRequest('src/php/action_report_st_temperature.htm', poststr);
-	}
-	else
-	{
-		makePOSTRequest('src/php/action_report_temperature.htm', poststr);
-	}
+                    //alert("riz:"+poststr);
+         makePOSTRequest('src/php/action_report_temperature.htm', poststr);
+  	 } 	
   }  
   
   

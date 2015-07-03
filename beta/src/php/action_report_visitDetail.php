@@ -3,19 +3,21 @@ include_once("main_vehicle_information_1.php");
 include_once('Hierarchy.php');
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
-$root=$_SESSION["root"];
 
 set_time_limit(380);
 
 include_once("get_all_dates_between.php");
-include_once("sort_person_xml.php");
 include_once("calculate_distance.php");
 include_once("report_title.php");
-include_once("read_filtered_xml.php");
 include_once("get_location.php");
 include_once("get_location_cellname.php");
 include_once("util.hr_min_sec.php");
-       
+ 
+include_once('xmlParameters.php');
+include_once('parameterizeData.php');
+include_once('data.php');
+include_once("sortXmlData.php");
+include_once("getXmlData.php");
 
 $DEBUG = 0;
 
@@ -26,74 +28,89 @@ $psize=count($pserial);
 
 $date1 = $_POST['start_date'];
 $date2 = $_POST['end_date'];
-
 $date1 = str_replace("/","-",$date1);
 $date2 = str_replace("/","-",$date2);
+$date_1 = explode(" ",$date1);
+$date_2 = explode(" ",$date2);
+$datefrom = $date_1[0];
+$dateto = $date_2[0];
 
-$user_interval = $_POST['user_interval'];
-//echo "psize=".$psize;
-////////////////////////////////////////////////////////////////////////////
+$sortBy='h';
+$endDateTS=strtotime($date2);
+$dataCnt=0;	
 
-function calculate_mileage($lat1, $lat2, $lon1, $lon2, &$distance) 
-{	
-	// used internally, this function actually performs that calculation to
-	// determine the mileage between 2 points defined by lattitude and
-	// longitude coordinates.  This calculation is based on the code found
-	// at http://www.cryptnet.net/fsp/zipdy/
+$userInterval = $_POST['user_interval'];
+//echo "userInterval=".$userInterval."<br>";
+$requiredData="All";
 
-	// Convert lattitude/longitude (degrees) to radians for calculations
-	$lat1 = deg2rad($lat1);
-	$lon1 = deg2rad($lon1);
+$parameterizeData=new parameterizeData();
+$ioFoundFlag=0;
 
-	$lat2 = deg2rad($lat2);
-	$lon2 = deg2rad($lon2);
+$parameterizeData->latitude="d";
+$parameterizeData->longitude="e";
 
-	// Find the deltas
-	$delta_lat = $lat2 - $lat1;
-	$delta_lon = $lon2 - $lon1;
 
-	// Find the Great Circle distance
-	$temp = pow(sin($delta_lat/2.0),2) + cos($lat1) * cos($lat2) * pow(sin($delta_lon/2.0),2);
-	$distance = 3956 * 2 * atan2(sqrt($temp),sqrt(1-$temp));
+get_All_Dates($datefrom, $dateto, $userdates);    
+$date_size = sizeof($userdates);  
 
-	//convert into km
-	$distance = $distance*1.609344;
-	//echo "dist=".$distance;
-	// return $distance;
-} 
-/////////////////////////////////////XML CODE STARTS//////////////////////////////////////
 
 if($psize>0)
 {
-  /*for($i=0;$i<$vsize;$i++)
-  {
-    $query = "SELECT vehicle_name FROM vehicle WHERE ".
-    " vehicle_id=(SELECT vehicle_id FROM vehicle_assignment ".
-    "WHERE device_imei_no='$vserial[$i]' AND status=1) AND status=1";
-    //echo $query;
-    $result = mysql_query($query, $DbConnection);
-    $row = mysql_fetch_object($result);
-    $vname[$i] = $row->vehicle_name;
-  }*/
-  
+  $checkVehicleArr=array();
   for($i=0;$i<$psize;$i++)
   {
-    //$query="SELECT person_id, person_name, mobile_no FROM person WHERE imei_no = '$pserial[$i]' AND status=1";
-    /*$query = "SELECT vehicle_name,vehicle_number FROM vehicle WHERE ".
-    " vehicle_id IN(SELECT vehicle_id FROM vehicle_assignment ".
-    "WHERE device_imei_no='$pserial[$i]' AND status=1) AND status=1";
-    //echo $query;
-    //if($_SERVER["HTTP_X_FORWARDED_FOR"] == "172.26.48.90") 
-      //echo $query;
-      
-    $result = mysql_query($query, $DbConnection);
-    $row = mysql_fetch_object($result);
-    $pname[$i]=$row->vehicle_name;
-    $pmobile[$i]=$row->vehicle_number;*/
-    $vehicle_info=get_vehicle_info($root,$vserial[$i]);
-    $vehicle_detail_local=explode(",",$vehicle_info);	
-    $pname[$i] = $vehicle_detail_local[0];
-    $pmobile[$i] = $vehicle_detail_local[2];
+        $checkVehicleArr[$i]=$vserial[$i]; 
+        $vehicle_info=get_vehicle_info($root,$vserial[$i]);
+        $vehicle_detail_local=explode(",",$vehicle_info);	
+        $pname[$i] = $vehicle_detail_local[0];
+        $pmobile[$i] = $vehicle_detail_local[2];
+        
+        $CurrentLat = 0.0;
+	$CurrentLong = 0.0;
+	$LastLat = 0.0;
+	$LastLong = 0.0;
+	$firstData = 0;
+	$distance =0.0;	
+	$firstdata_flag =0;
+        $count = 0;
+	$j = 0;
+	
+	$avg_speed = null;
+	$max_speed = null;
+	
+	$total_avg_speed = null;
+	$total_max_speed = null;
+        
+        for($di=0;$di<=($date_size-1);$di++)
+        {
+            //echo "userdate=".$userdates[$di]."<br>";
+            $SortedDataObject=new data();
+            readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+            //var_dump($SortedDataObject);
+            
+            $logcnt=0;
+            $DataComplete=false;
+            $personserial_tmp=null;
+            $format =2;
+            
+            if(count($SortedDataObject->deviceDatetime)>0)
+            {
+                $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+                for($obi=0;$obi<$prevSortedSize;$obi++)
+                {		
+                    $lat = $SortedDataObject->latitudeData[$obi];
+                    $lng = $SortedDataObject->longitudeData[$obi];
+                    if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))
+                    {
+                        $DataValid = 1;
+                    }
+                    if($DataValid==1)
+                    { 
+                        
+                    }
+                }
+            }
+        }
   } 
     
   $current_dt = date("Y_m_d_H_i_s");	
@@ -719,4 +736,13 @@ $m1=date('M',mktime(0,0,0,$month,1));
       				 
 unlink($xml_path);
 echo'</center>';
+$strArr = serialize($checkVehicleArr);
+$strArrEnc = urlencode($strArr);
+
+echo'<center>
+		<a href="javascript:showReportPrevPage(\'report_visitdetail.htm\',\''.$selected_account_id.'\',\''.$selected_options_value.'\',\''.$s_vehicle_display_option.'\',\''.$start_date.'\',\''.$end_date.'\',\''.$strArrEnc.'\');" class="back_css">
+			&nbsp;<b>Back</b>
+			<!--<button onclick="history.back()">back</button>-->
+		</a>
+	</center>';	
 ?>								

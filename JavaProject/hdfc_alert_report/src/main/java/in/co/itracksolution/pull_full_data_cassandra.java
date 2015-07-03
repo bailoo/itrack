@@ -26,8 +26,8 @@ public class pull_full_data_cassandra
 	
 	public pull_full_data_cassandra()
 	{
-		//String propFileName = "config.properties";
-		String propFileName = "resources/config.properties";
+		String propFileName = "config.properties";
+		//String propFileName = "resources/config.properties";
 		Properties prop = new Properties();
 		
 		try {
@@ -65,7 +65,7 @@ public class pull_full_data_cassandra
 		TimeZone tz = TimeZone.getTimeZone("Asia/Kolkata");
 		sdf.setTimeZone(tz);	
 
-		SampleFullDataQuery st = new SampleFullDataQuery();
+		pull_full_data_cassandra st = new pull_full_data_cassandra();
 			
 		FullDataDao dao = new FullDataDao(st.conn.getSession());
 		
