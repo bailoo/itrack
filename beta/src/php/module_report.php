@@ -1938,7 +1938,7 @@
 									
 								//if($person_user_type!=1)
 								//{                  
-								  if($flag_performance)
+								  /*if($flag_performance)
 								  {
 									echo'"<table border=0 class=\'mystyle\'>"+
 											"<tr>"+ 
@@ -1972,7 +1972,7 @@
 												"</td>"+
 											"</tr>"+
 										"</table>",';                  
-								  }
+								  }*/
 								  
 								  //if($flag_performance)
 								  //{
