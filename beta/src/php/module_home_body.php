@@ -1,7 +1,5 @@
-<?php 
-$options = array();
- 
-		/*$options = array(
+<?php    
+$options = array(
     'center' => true,
 	'navigationControl' => true,
 	'mapTypeControl' => true,
@@ -16,9 +14,8 @@ $options = array();
     'lat'=> 22.755920681486,
     'lng'=> 78.2666015625,
 	'style' => ''
-);*/
+);
 //echo "3";
-echo'<div id="map-canvas" style="height: 100%;width:100%;margin: 0px;padding: 0px"></div>';
 echo'<input id="pac-input" class="controls" type="text" placeholder="Search Box">';
 $googleMapthisapi=new GoogleMapHelper();
 echo $googleMapthisapi->map($options);
