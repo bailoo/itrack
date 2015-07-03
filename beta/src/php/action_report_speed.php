@@ -106,7 +106,7 @@
                     {
                         $DataValid = 1;
                     }
-                    if($DataValid==1)
+                    if(($DataValid==1) && ($SortedDataObject->deviceDatetime[$obi] > $date1 && $SortedDataObject->deviceDatetime[$obi] < $date2))
                     {         	
                         $speed =$SortedDataObject->speedData[$obi];
                         $datetime =$SortedDataObject->deviceDatetime[$obi];
@@ -346,220 +346,133 @@
             }
         }		
     }
-    $o_cassandra->close();
-    //print_r($finalSpeedArr);
-    $parameterizeData=null;	
 
-$m1=date('M',mktime(0,0,0,$month,1));
-						
-	echo '<center>';
-	
-  /*echo'<form method = "post" action="SpeedReportAction.php" target="_self">';							
-	
-  echo'<br><SPAN STYLE="font-size: xx-small">Select Interval </SPAN><select name="user_interval" onChange="this.form.submit();">';			
+$o_cassandra->close();
+//print_r($finalSpeedArr);
+$parameterizeData=null;
 
-	if($user_interval==1)
-		echo '<option value="1" selected>1</option>';
-	else
-		echo '<option value="1">1</option>';
+$m1=date('M',mktime(0,0,0,$month,1));		
+echo '<center>';
+$size_vserial = sizeof($vserial);
+report_title("Speed Report",$date1,$date2);    
+echo'<div style="overflow: auto;height: 300px; width: 820px;" align="center">';		
+$j=-1;
+$k=0;
+$final_maxspeed_tmp=0;
+$datefrom1=array();
+$dateto1=array();
+$avgspeed1=array();
+$maxspeed1=array();
+$avg_speed_last=array();
 
-	if($user_interval==2)
-		echo '<option value="2" selected>2</option>';
-	else
-		echo '<option value="2">2</option>';
-								
-	if($user_interval==3)
-		echo '<option value="3" selected>3</option>';
-	else
-		echo '<option value="3">3</option>';
-
-	if($user_interval==4)
-		echo '<option value="4" selected>4</option>';
-	else
-		echo '<option value="4">4</option>';
-
-	if($user_interval==5)
-		echo '<option value="5" selected>5</option>';
-	else
-		echo '<option value="5">5</option>';
-
-	if($user_interval==6)
-		echo '<option value="6" selected>6</option>';
-	else
-		echo '<option value="6">6</option>';
-
-	if($user_interval==7)
-		echo '<option value="7" selected>7</option>';
-	else
-		echo '<option value="7">7</option>';
-
-	if($user_interval==8)
-		echo '<option value="8" selected>8</option>';
-	else
-		echo '<option value="8">8</option>';
-
-	if($user_interval==9)
-		echo '<option value="9" selected>9</option>';
-	else
-		echo '<option value="9">9</option>';
-
-	if($user_interval==10)
-		echo '<option value="10" selected>10</option>';
-	else
-		echo '<option value="10">10</option>';
-
-	if($user_interval==11)
-		echo '<option value="11" selected>11</option>';
-	else
-		echo '<option value="11">11</option>';
-
-	if($user_interval==12)
-		echo '<option value="12" selected>12</option>';
-	else
-		echo '<option value="12">12</option>';							
-
-	echo'</select>&nbsp;<SPAN STYLE="font-size: xx-small"> hr/hrs</SPAN>';						
-
-	for($i=0;$i<sizeof($vserial);$i++)
-	{
-		//echo "<br>vid=".$vehicleid[$i];
-		echo '<input type="hidden" name="vehicleserial[]" value="'.$vserial[$i].'"';
-	}
-	//echo '<input type="hidden" name="vehicleid[]" value="-"';
-	
-	echo '<input type="hidden" name="start_date" value="'.$date1.'"';
-	echo '<input type="hidden" name="end_date" value="'.$date2.'"';
-
-	echo '</form>';
-*/	
-	        
-   $size_vserial = sizeof($vserial);
-
-    report_title("Speed Report",$date1,$date2);    
-    
-		echo'<div style="overflow: auto;height: 300px; width: 820px;" align="center">';
-		
-		
-    $j=-1;
-    $k=0;
-		$final_maxspeed_tmp=0;
-        $datefrom1=array();
-      $dateto1=array();
-      $avgspeed1=array();
-      $maxspeed1=array();		             
-    for($i=0;$i<sizeof($imei);$i++)
-		{								              
-      if(($i===0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )
-      {
-        $k=0;
-        
+for($i=0;$i<sizeof($imei);$i++)
+{								              
+    if(($i===0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )
+    {
+        $k=0;        
         $sum_avgspeed =0;
         $sum_runtime =0;
         $sum_dist =0;      
-        $total_distance[$j] =0;
-              
+        $total_distance[$j] =0;              
         $sum_avgspeed =0;                
-        //$final_maxspeed_tmp =0;                                
-        
+        //$final_maxspeed_tmp =0;
         $j++;
         $total_avgspeed[$j] =0;
         $final_maxspeed[$j] =0;
-        
         $sno = 1;
         $title="Speed Report : ".$vname[$i]." &nbsp;<font color=red>(".$imei[$i].")</font>";
         $vname1[$j][$k] = $vname[$i];
-        $imei1[$j][$k] = $imei[$i];
-        
-        echo'
-        <br><table align="center">
-        <tr>
-        	<td class="text" align="center"><b>'.$title.'</b> <div style="height:8px;"></div></td>
-        </tr>
+        $imei1[$j][$k] = $imei[$i];        
+        echo'<br>
+        <table align="center">
+            <tr>
+                <td class="text" align="center">
+                    <b>'.$title.'</b> <div style="height:8px;"></div>
+                </td>
+            </tr>
         </table>
         <table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
-        <tr>
-				<td class="text" align="left"><b>SNo</b></td>
-				<td class="text" align="left"><b>DateTime From</b></td>
-				<td class="text" align="left"><b>DateTime To</b></td>
-				<td class="text" align="left"><b>Avg Speed (km/hr)</b></td>	
-				<td class="text" align="left"><b>Max Speed (km/hr)</b></td>	
-        </tr>';  								
-      }                                                                        		
+            <tr>
+                <td class="text" align="left"><b>SNo</b></td>
+                <td class="text" align="left"><b>DateTime From</b></td>
+                <td class="text" align="left"><b>DateTime To</b></td>
+                <td class="text" align="left"><b>Avg Speed (km/hr)</b></td>	
+                <td class="text" align="left"><b>Max Speed (km/hr)</b></td>	
+            </tr>';  								
+    }                                                                        		
 			
-if($avgspeed[$i] == 0)
-{
-        $maxspeed[$i] = 0;
-}
-
-
-
-      //echo "<br>runtime=".$runtimeDisplay[$i];
-      $sum_dist = $sum_dist + $distanceDisplay[$i];
-      $sum_runtime = $sum_runtime + $runtimeDisplay[$i];
-            
-      $sum_avgspeed = $sum_avgspeed + $avgspeed[$i];
+    if($avgSpeedDisplay[$i] == 0)
+    {
+        $maxSpeedDisplay[$i] = 0;
+    }
+    //echo "<br>runtime=".$runtimeDisplay[$i];
+    $sum_dist = $sum_dist + $distanceDisplay[$i];
+    $sum_runtime = $sum_runtime + $runtimeDisplay[$i];
+    $sum_avgspeed = $sum_avgspeed + $avgSpeedDisplay[$i];
 			
-			if( $final_maxspeed_tmp < $maxspeed[$i] ) 
-			 $final_maxspeed_tmp = $maxspeed[$i];
+    if( $final_maxspeed_tmp < $maxSpeedDisplay[$i] )
+    {
+        $final_maxspeed_tmp = $maxSpeedDisplay[$i];
+    }
+echo'<tr>
+        <td class="text" align="left" width="4%"><b>'.$sno.'</b></td>
+        <td class="text" align="left">'.$dateFromDisplay[$i].'</td>
+        <td class="text" align="left">'.$dateToDisplay[$i].'</td>
+        <td class="text" align="left">'.$avgSpeedDisplay[$i].'</td>
+        <td class="text" align="left"><b>'.$maxSpeedDisplay[$i].'</b></td>
+    </tr>';
+    $datefrom1[$j][$k] = $dateFromDisplay[$i];	
+    $dateto1[$j][$k] = $dateToDisplay[$i];										
+    $avgspeed1[$j][$k] = $avgSpeedDisplay[$i];
+    $maxspeed1[$j][$k] = $maxSpeedDisplay[$i];       			    				  				
 		
-      
-      echo'<tr><td class="text" align="left" width="4%"><b>'.$sno.'</b></td>';        												
-			echo'<td class="text" align="left">'.$dateFromDisplay[$i].'</td>';		
-      echo'<td class="text" align="left">'.$dateToDisplay[$i].'</td>';
-
-			echo'<td class="text" align="left">'.$avgSpeedDisplay[$i].'</td>';
-			echo'<td class="text" align="left"><b>'.$maxSpeedDisplay[$i].'</b></td>';						
-			echo'</tr>';	          		
-			//echo "<br>arr_time1[$j][$k]main=".$arr_time1[$j][$k];
-     
-      $datefrom1[$j][$k] = $dateFromDisplay[$i];	
-      $dateto1[$j][$k] = $dateToDisplay[$i];										
-      $avgspeed1[$j][$k] = $avgSpeedDisplay[$i];
-      $maxspeed1[$j][$k] = $maxSpeedDisplay[$i];       			    				  				
-		
-		  if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
-      {
-        echo '<tr style="height:20px;background-color:lightgrey">
-        <td class="text"><strong>Total<strong>&nbsp;</td>
-				<td class="text"><strong>'.$date1.'</strong></td>	
-        <td class="text"><strong>'.$date2.'</strong></td>									
-				<td class="text"><font color="red"><strong>';
-        
-				if($k>0)
-				{
-					//echo  "<br>sum_avgspeed=".$sum_avgspeed."<br>";
-					$total_distance[$j] = round($sum_dist,2);
-          $total_avgspeed[$j] = round(($sum_avgspeed/$k),2);
-          //echo  "<br>total_avgspeed[$j]=".$total_avgspeed[$j]."<br>";
-				}
-				else
-				{
-					$total_avgspeed[$j] = "NA";
-				}
+    if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
+    {
+        echo'<tr style="height:20px;background-color:lightgrey">
+                <td class="text"><strong>Total<strong>&nbsp;</td>
+                <td class="text"><strong>'.$date1.'</strong></td>	
+                <td class="text"><strong>'.$date2.'</strong></td>';
+                if($k>0)
+                {
+                    //echo  "<br>sum_avgspeed=".$sum_avgspeed."<br>";
+                    $total_distance[$j] = round($sum_dist,2);
+                    $total_avgspeed[$j] = round(($sum_avgspeed/$k),2);
+                     //echo  "<br>total_avgspeed[$j]=".$total_avgspeed[$j]."<br>";
+                }
+                else
+                {
+                    $total_avgspeed[$j] = "NA";
+                }
 				
-				if($k>0)
-				{																									
-					$final_maxspeed[$j] = round($final_maxspeed_tmp,2);
-				}
-				else
-				{
-					$final_maxspeed[$j] = "NA";
-				}								
+                if($k>0)
+                {																									
+                    $final_maxspeed[$j] = round($final_maxspeed_tmp,2);
+                }
+                else
+                {
+                    $final_maxspeed[$j] = "NA";
+                }								
 														
-				$avg_speed[$j] = round((($total_distance[$j]/$sum_runtime)*3600),2);
-        echo $avg_speed[$j].'</strong></font></td>
-				<td class="text"><font color="red"><strong>'.$final_maxspeed[$j].'</strong></font></td>';
-				echo'</tr>'; 
-        echo '</table>';
+            $avg_speed_last[$j] = round((($total_distance[$j]/$sum_runtime)*3600),2);
+        echo'<td class="text">
+                <font color="red">
+                    <strong>'.$avg_speed_last[$j].'</strong>
+                </font>
+            </td>
+            <td class="text">
+                <font color="red">
+                    <strong>'.$final_maxspeed[$j].'</strong>
+                </font>
+            </td>
+        </tr>
+    </table>';
         
-        $no_of_data[$j] = $k;
-      
-      $final_maxspeed_tmp =0;
-			}  
-			
-      $k++;   
-      $sno++;                                   							  		
-   }
+    $no_of_data[$j] = $k;
+    $final_maxspeed_tmp =0;
+    }		
+    $k++;   
+    $sno++;                                   							  		
+}
    
    echo "</div>";     
 
@@ -597,7 +510,7 @@ if($avgspeed[$i] == 0)
         $csv_string = $csv_string.$sno.','.$datetmp1.','.$datetmp2.','.$avgspd.','.$maxspd."\n";									
 			}		
 			
-      $csv_string = $csv_string.'Total,'.$date1.','.$date2.','.$avg_speed[$x].','.$final_maxspeed[$x]."\n";
+      $csv_string = $csv_string.'Total,'.$date1.','.$date2.','.$avg_speed_last[$x].','.$final_maxspeed[$x]."\n";
 
 			echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][SNo]\">";
 			echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][DateTime From]\">";
@@ -610,7 +523,7 @@ if($avgspeed[$i] == 0)
 			echo"<input TYPE=\"hidden\" VALUE=\"Total\" NAME=\"temp[$x][$m][SNo]\">";
 			echo"<input TYPE=\"hidden\" VALUE=\"$date1\" NAME=\"temp[$x][$m][DateTime From]\">";
 			echo"<input TYPE=\"hidden\" VALUE=\"$date2\" NAME=\"temp[$x][$m][DateTime To]\">";
-			echo"<input TYPE=\"hidden\" VALUE=\"$avg_speed[$x]\" NAME=\"temp[$x][$m][Avg Speed (km/hr)]\">";									
+			echo"<input TYPE=\"hidden\" VALUE=\"$avg_speed_last[$x]\" NAME=\"temp[$x][$m][Avg Speed (km/hr)]\">";									
 			echo"<input TYPE=\"hidden\" VALUE=\"$final_maxspeed[$x]\" NAME=\"temp[$x][$m][Max Speed (km/hr)]\">";																																		
 		}																						
 
