@@ -57,6 +57,29 @@ ini_set('max_execution_time', 1200); //300 seconds = 5 minutes
 	#manage_add_raw_milk_usertype_approve_1 **** ***
 
 /**********************************/
+
+///////////////// shams parwez changes//////////////
+function getMaxSpeed($vSerial,$status,$DbConnection)
+{
+  $query_geo = "select vehicle.max_speed FROM vehicle,vehicle_assignment WHERE vehicle.".
+          "vehicle_id = vehicle_assignment.vehicle_id AND vehicle_assignment.device_imei_no".
+          "='$vSerial' AND vehicle_assignment.status=$status AND vehicle.status=$status"; 
+  //echo "queryGeo=".$query_geo."<br>";
+
+   $res_geo = mysql_query($query_geo,$DbConnection);
+   $Row=mysql_fetch_row($res_geo);
+   return $Row[0];
+}
+function getPolyLineDetail($accId,$status,$DbConnection)
+{
+   $query_polyline = "SELECT polyline_coord,polyline_name FROM polyline WHERE polyline_id IN(SELECT polyline_id FROM polyline_assignment WHERE status=1 AND ".
+    "vehicle_id IN (SELECT vehicle_id FROM vehicle_assignment WHERE device_imei_no='$vserial' AND status=1)) AND ".
+    "user_account_id='$account_id' AND status=1";  
+    $res_polyline = mysql_query($query_polyline,$DbConnection); 
+    $rowArr=mysql_fetch_row($res_polyline);
+    return $rowArr;
+}
+/////////////////////////////////////
 function getTimeZone($accountId,$DbC)
 {
 	$query="SELECT time_zone FROM account_preference USE INDEX(acc_id) WHERE account_id=$accountId";

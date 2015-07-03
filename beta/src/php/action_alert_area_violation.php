@@ -1,6 +1,6 @@
 <?php
-error_reporting(-1);
-ini_set('display_errors', 'On');
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 set_time_limit(3000);	
 date_default_timezone_set("Asia/Kolkata");
 include_once("main_vehicle_information_1.php");
@@ -43,19 +43,11 @@ $filter_flag1 = $_POST['filter_flag'];
 $userInterval = $_POST['user_interval'];
 //echo "userInterval=".$userInterval."<br>";
 $sortBy='h';
-$firstDataFlag=0;
-$endDateTS=strtotime($date2);
-
-
 $requiredData="All";
-
 $parameterizeData=new parameterizeData();
-$ioFoundFlag=0;
-
 $parameterizeData->latitude="d";
 $parameterizeData->longitude="e";
 
-$finalVNameArr=array();
 get_All_Dates($datefrom, $dateto, $userdates);    
 $date_size = sizeof($userdates);
 
@@ -149,7 +141,7 @@ for($i=0;$i<$vsize;$i++)
                             $duration = $hms[h].":".$hms[m].":".$hms[s]; 
                             
                             $imei_report[]= $vserial[$i];
-                            $vname_report[] = $finalVNameArr[$i];
+                            $vname_report[] = $vehicle_detail_local[0];
                             $lat_report[] = $lat1;
                             $lng_report[] = $lng1;
                             $datefrom_report[] = $time1;
@@ -163,7 +155,7 @@ for($i=0;$i<$vsize;$i++)
             if($outflag==1)
             {
                     $imei_report[]= $vserial[$i];
-                    $vname_report[] = $finalVNameArr[$i];
+                    $vname_report[] = $vehicle_detail_local[0];
                     $lat_report[] = $lat1;
                     $lng_report[] = $lng1;
                     $datefrom_report[] = $time1;
@@ -365,7 +357,7 @@ for($x=0;$x<=$j;$x++)
 				
 if($size_vserial==0)
 {						
-	print"<center><FONT color=\"Red\" size=2><strong>No Geofence violat_reportion found</strong></font></center>";
+	print"<center><FONT color=\"Red\" size=2><strong>No Geofence violat_report found</strong></font></center>";
 	//echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=HaltReport.php\">";
 	echo'<br><br>';
 }	
@@ -381,9 +373,9 @@ echo '</form>';
 
 echo '</center>
 	<center>		
-		<a href="javascript:showReportPrevPageNew();" class="back_css">
-			&nbsp;<b>Back</b>
-		</a>
+            <a href="javascript:showReportPrevPageNew();" class="back_css">
+                &nbsp;<b>Back</b>
+            </a>
 	</center>';
 ?>
 					
