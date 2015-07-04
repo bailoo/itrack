@@ -405,7 +405,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
 								$lng_cr = $lng;							
 								$datetime_cr = $datetime;																		
 								$date_secs2 = strtotime($datetime_cr);	
-								calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, &$distance);
+								calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, $distance);
 								//if(($distance > 0.0100) || ($f== $total_lines-2) )
 								//echo "\nF=".$f." ,total_lines=".$total_lines;										
 								
@@ -414,7 +414,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
 									//###### FOR IRREGULAR DATA FILTER CODE
 									$tmp_time_diff1 = (double)(strtotime($datetime) - strtotime($last_time1)) / 3600;
 
-									calculate_distance($latlast, $lat_cr, $lnglast, $lng_cr, &$distance1);
+									calculate_distance($latlast, $lat_cr, $lnglast, $lng_cr, $distance1);
 									if($tmp_time_diff1>0)
 									{
 										$tmp_speed = ((double) ($distance1)) / $tmp_time_diff1;
@@ -526,8 +526,8 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
 							if( ($lat_g!="") && ($lng_g!="") && ($customer_no[$k]!="") )
 							{
 								//echo "\nDIST::datetime=".$datetime." ,op_date1=".$op_date1." ,op_date2=".$op_date2." \ndistance=".$distance;
-								calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, &$distance_station1);
-								calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, &$distance_station2);
+								calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, $distance_station1);
+								calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, $distance_station2);
 								
 								/*if($customer_no[$k]=="1105")
 								{
