@@ -1,13 +1,14 @@
 <?php
+	echo"reportPrevPage##";
 	include_once("report_hierarchy_header.php");
 	$account_id_local1 = $_POST['account_id_local'];	
-  $vehicle_display_option1 = $_POST['vehicle_display_option'];	
-  $options_value1 = $_POST['options_value'];
-  
-  $options_value2=explode(",",$options_value1);			
-  $option_size=sizeof($options_value2);
+	$vehicle_display_option1 = $_POST['vehicle_display_option'];	
+	$options_value1 = $_POST['options_value'];
+
+	$options_value2=explode(",",$options_value1);			
+	$option_size=sizeof($options_value2);
 	$option_string="";  
-  
+
 	$function_string='get_'.$vehicle_display_option1.'_vehicle'; 
 
  echo'
@@ -45,7 +46,7 @@
 			echo'<fieldset class="report_fieldset">';
 			echo'<legend>Select display Option</legend>';	
 			
-			echo'<br><br><center><SPAN STYLE="font-size: xx-small">Select Interval </SPAN>
+			/*echo'<br><br><center><SPAN STYLE="font-size: xx-small">Select Interval </SPAN>
       <select name="user_interval" id="user_interval">';
 			echo '<option value="1">1</option>';
 
@@ -71,7 +72,8 @@
 
 			echo '<option value="12">12</option>';							
 
-			echo'</select>&nbsp;<SPAN STYLE="font-size: xx-small"> hr/hrs</SPAN></center><br>';
+			echo'</select>&nbsp;<SPAN STYLE="font-size: xx-small"> hr/hrs</SPAN></center><br>';*/
+			echo "<input type='hidden' name='user_interval' id='user_interval' value='0'>";
 														
 			//date_default_timezone_set('Asia/Calcutta');
 			$start_date=date("Y/m/d 00:00:00");	

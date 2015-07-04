@@ -16,14 +16,14 @@ public class class_pop_junction {
 		return latlngData;
 	}
 	
-	
+	gis_connection gis_con = new gis_connection();
 	//========pop by lat lng
 	public class_pop_junction(String lt, String lg){
 		lat=lt;
 		lng=lg;
 		//System.out.println("Latitude:"+lat);
 		//System.out.println("Longitude:"+lng);		
-		try{
+		/*try{
 			Class.forName("org.postgresql.Driver");
 		}catch(ClassNotFoundException e){
 			//System.out.println("Where is your PostgreSQL JDBC Driver? Included in your library path!");
@@ -33,18 +33,19 @@ public class class_pop_junction {
 		//System.out.println("PostgreSQL JDBC Driver Registered!");
 		Connection connection=null;
 		try{
-			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/gisgraphy","postgres","neon04$");
+			//connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/gisgraphy","postgres","neon04$");
+			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5433/gisgraphy","postgres","neon04$");
 			//connection = DriverManager.getConnection("jdbc:postgresql://52.74.144.159:5432/gisgraphy","postgres","neon04$");
 		}catch(SQLException e){
 			//System.out.println("Connection Failed!Check output console");
 			e.printStackTrace();
 			return;
-		}
-		if(connection !=null){
+		}*/
+		if(gis_con.connection !=null){
 			//System.out.println("You made it, take control your database now!");
 			//Create a Statement class to execute the SQL statement
 		    try {
-				Statement stmt = connection.createStatement();
+				Statement stmt = gis_con.connection.createStatement();
 				 //Execute the SQL statement and get the results in a Resultset
 				String query="SELECT id, name, astext(location) as lnglat,featureid, CAST (st_distance_sphere(location, st_setsrid(st_makepoint("+lng+","+lat+"),4326)) AS INT) AS d FROM road ORDER BY location <-> st_setsrid(st_makepoint("+lng+","+lat+"), 4326)  LIMIT 1";
 			    ResultSet rs1 = stmt.executeQuery(query);
@@ -79,7 +80,8 @@ public class class_pop_junction {
 		//System.out.println("PostgreSQL JDBC Driver Registered!");
 		Connection connection=null;
 		try{
-			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/gisgraphy","postgres","neon04$");
+			//connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/gisgraphy","postgres","neon04$");
+			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5433/gisgraphy","postgres","neon04$");
 			//connection = DriverManager.getConnection("jdbc:postgresql://52.74.144.159:5432/gisgraphy","postgres","neon04$");
 		}catch(SQLException e){
 			//System.out.println("Connection Failed!Check output console");
@@ -126,17 +128,17 @@ public class class_pop_junction {
 						//System.out.println("end time latlng to get"+System.currentTimeMillis());
 						if(Double.parseDouble(get_radius) <= radius)
 						{
-							LatLng item = new LatLng(lat, lng, churaha_name, churaha_code,get_radius);
+							LatLng item = new LatLng(lat, lng, churaha_name, churaha_code,get_radius,"-");
 							latlngData.add(item);
 						}
 						else
 						{
 							if(Double.parseDouble(get_radius) < 5000)
 							{
-								LatLng item = new LatLng(lat, lng, churaha_name, churaha_code,get_radius);
+								LatLng item = new LatLng(lat, lng, churaha_name, churaha_code,get_radius,"-");
 								latlngData.add(item);
 							}
-							LatLng item = new LatLng(lat, lng, "-", "-","-");
+							LatLng item = new LatLng(lat, lng, "-", "-","-","-");
 							latlngData.add(item);
 						}
 						
@@ -157,7 +159,7 @@ public class class_pop_junction {
 	
 	public class_pop_junction(String cde){
 		code=cde;
-		try{
+		/*try{
 			Class.forName("org.postgresql.Driver");
 		}catch(ClassNotFoundException e){
 			//System.out.println("Where is your PostgreSQL JDBC Driver? Included in your library path!");
@@ -167,18 +169,19 @@ public class class_pop_junction {
 		//System.out.println("PostgreSQL JDBC Driver Registered!");
 		Connection connection=null;
 		try{
-			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/gisgraphy","postgres","neon04$");
+			//connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/gisgraphy","postgres","neon04$");
+			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5433/gisgraphy","postgres","neon04$");
 			//connection = DriverManager.getConnection("jdbc:postgresql://52.74.144.159:5432/gisgraphy","postgres","neon04$");
 		}catch(SQLException e){
 			//System.out.println("Connection Failed!Check output console");
 			e.printStackTrace();
 			return;
-		}
-		if(connection !=null){
+		}*/
+		if(gis_con.connection !=null){
 			//System.out.println("You made it, take control your database now!");
 			//Create a Statement class to execute the SQL statement
 		    try {
-				Statement stmt = connection.createStatement();
+				Statement stmt = gis_con.connection.createStatement();
 				 //Execute the SQL statement and get the results in a Resultset
 				String query="SELECT name,astext(location) as lnglat,featureId FROM road where featureid="+code;
 			    ResultSet rs1 = stmt.executeQuery(query);
@@ -229,7 +232,7 @@ public class class_pop_junction {
 	//========pop by code array
 	public class_pop_junction(ArrayList<LatLng> codeArray){
 			
-		try{
+		/*try{
 			Class.forName("org.postgresql.Driver");
 		}catch(ClassNotFoundException e){
 			//System.out.println("Where is your PostgreSQL JDBC Driver? Included in your library path!");
@@ -239,18 +242,19 @@ public class class_pop_junction {
 		//System.out.println("PostgreSQL JDBC Driver Registered!");
 		Connection connection=null;
 		try{
-			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/gisgraphy","postgres","neon04$");
+			//connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/gisgraphy","postgres","neon04$");
+			connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5433/gisgraphy","postgres","neon04$");
 			//connection = DriverManager.getConnection("jdbc:postgresql://52.74.144.159:5432/gisgraphy","postgres","neon04$");
 		}catch(SQLException e){
 			//System.out.println("Connection Failed!Check output console");
 			e.printStackTrace();
 			return;
-		}
-		if(connection !=null){
+		}*/
+		if(gis_con.connection !=null){
 			//System.out.println("You made it, take control your database now!");
 			//Create a Statement class to execute the SQL statement
 		    try {
-				Statement stmt = connection.createStatement();
+				Statement stmt = gis_con.connection.createStatement();
 				
 				
 				for(LatLng data : codeArray){
@@ -295,7 +299,7 @@ public class class_pop_junction {
 				    	lat1=lat2.split("\\)");  //(lat 0
 				    	lat=lat1[0];
 						
-						LatLng item = new LatLng(lat, lng, churaha_name, churaha_code,"-");
+						LatLng item = new LatLng(lat, lng, churaha_name, churaha_code,"-","-");
 						latlngData.add(item);
 					}
 				}
@@ -319,4 +323,5 @@ public class class_pop_junction {
 		values.add(final_data);
 		return values;
 	}
+	
 }

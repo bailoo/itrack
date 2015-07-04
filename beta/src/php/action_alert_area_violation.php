@@ -5,7 +5,7 @@ set_time_limit(3000);
 date_default_timezone_set("Asia/Kolkata");
 include_once("main_vehicle_information_1.php");
 include_once('Hierarchy.php');
-$root=$_SESSION["root"];
+
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
 include_once("calculate_distance.php");
@@ -17,12 +17,11 @@ include_once("util.hr_min_sec.php");
 include_once("area_violation/check_with_range.php");
 include_once("area_violation/pointLocation.php");
 include("user_type_setting.php");
+include_once("report_title.php");
 
 include_once('xmlParameters.php');
-include_once("report_title.php");
 include_once('parameterizeData.php');
 include_once('data.php');
-include_once("sortXmlData.php");
 include_once("getXmlData.php");
 
 $DEBUG =0;
@@ -44,188 +43,133 @@ $filter_flag1 = $_POST['filter_flag'];
 $userInterval = $_POST['user_interval'];
 //echo "userInterval=".$userInterval."<br>";
 $sortBy='h';
-$firstDataFlag=0;
-$endDateTS=strtotime($date2);
-
-
 $requiredData="All";
-
 $parameterizeData=new parameterizeData();
-$ioFoundFlag=0;
-
 $parameterizeData->latitude="d";
 $parameterizeData->longitude="e";
 
-$finalVNameArr=array();
+get_All_Dates($datefrom, $dateto, $userdates);    
+$date_size = sizeof($userdates);
 
 for($i=0;$i<$vsize;$i++)
 {
-	$dataCnt=0;
-	//echo "vs=".$vserial[$i]."<br>";
-	$vehicle_info=get_vehicle_info($root,$vserial[$i]);
-	$vehicle_detail_local=explode(",",$vehicle_info);
-	$finalVNameArr[$i]=$vehicle_detail_local[0];
-	//echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
-		
-	$LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
-	$SortedDataObject=new data();
-	$UnSortedDataObject=new data();
-	
-	if(($LastSortedDate+24*60*60)>=$endDateTS) //All sorted data
-	{	
-		//echo "in if1";
-		$type="sorted";
-		readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,&$SortedDataObject);
-	}
-	else if($LastSortedDate==null) //All Unsorted data
-	{
-		//echo "in if2";
-		$type="unSorted";
-		readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,&$UnSortedDataObject);
-	}
-	else //Partially Sorted data
-	{
-		$LastSDate=date("Y-m-d",$LastSortedDate+24*60*60);
-		//echo "in else";
-		$type="sorted";					
-		readFileXml($vserial[$i],$date1,$date2,$datefrom,$LastSDate,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,&$SortedDataObject);
-	
-		$type="unSorted";
-		readFileXml($vserial[$i],$date1,$date2,$LastSDate,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,&$UnSortedDataObject);
-	}
-		
-	if(count($SortedDataObject->deviceDatetime)>0)
-	{
-		//echo "in sorted=".$SortedDataObject->deviceDatetime."<br><br><br><br><br><br>";
-		$prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
-		for($obi=0;$obi<$prevSortedSize;$obi++)
-		{			
-			$finalDateTimeArr[$i][$dataCnt]=$SortedDataObject->deviceDatetime[$obi];
-			$finalLatitudeArr[$i][$dataCnt]=$SortedDataObject->latitudeData[$obi];
-			$finalLongitudeArr[$i][$dataCnt]=$SortedDataObject->longitudeData[$obi];	
-			$dataCnt++;
-		}
-	}
-	if(count($UnSortedDataObject->deviceDatetime)>0)
-	{
-		$sortObjTmp=sortData($UnSortedDataObject,$sortBy,$parameterizeData);
-		//var_dump($sortObjTmp);
-		/*echo"sdt1=".$sortObjTmp->deviceDatetime[0]."<br>";
-		echo "sdt2=".$sortObjTmp->deviceDatetime[1]."<br>";	
-		echo "ss1=".$sortObjTmp->speedData[0]."<br>";
-		echo "ss2=".$sortObjTmp->speedData[1]."<br>";
-		echo "<br><br>";*/
-		$sortedSize=sizeof($sortObjTmp->deviceDatetime);
-		for($obi=0;$obi<$sortedSize;$obi++)
-		{				
-			$finalDateTimeArr[$i][$dataCnt]=$sortObjTmp->deviceDatetime[$obi];	
-			$finalLatitudeArr[$i][$dataCnt]=$sortObjTmp->latitudeData[$obi];
-			$finalLongitudeArr[$i][$dataCnt]=$sortObjTmp->longitudeData[$obi];			
-			$dataCnt++;				
-		}
-	}
-	//$innerSize=sizeof($finalDateTimeArr[$i]);
-	//echo"size=".$innerSize."<br>";
-	$SortedDataObject=null;			
-	$sortObjTmp=null;
-	$UnsortedDataObject =null;
-		
+    $dataCnt=0;
+    //echo "vs=".$vserial[$i]."<br>";
+    $vehicle_info=get_vehicle_info($root,$vserial[$i]);
+    $vehicle_detail_local=explode(",",$vehicle_info);
+    $finalVNameArr[$i]=$vehicle_detail_local[0];
+    //echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
+    
+    $CurrentLat = 0.0;
+    $CurrentLong = 0.0;
+    $LastLat = 0.0;
+    $LastLong = 0.0;
+    $firstData = 0;
+    $distance =0.0;
+    $firstdata_flag =0;
+    $j = 0;
+    $total_dist = 0;
+    $query_geo = "SELECT geo_coord FROM geofence WHERE geo_id IN(SELECT geo_id FROM geo_assignment WHERE status=1 AND ".
+                "vehicle_id IN (SELECT vehicle_id FROM vehicle_assignment WHERE device_imei_no='$vehicle_serial' AND status=1)) AND ".
+                "user_account_id='$account_id' AND status=1";                          
+
+
+    $res_geo = mysql_query($query_geo,$DbConnection);
+    if($row_geo = mysql_fetch_object($res_geo))
+    {
+        $geo_coord_tmp = $row_geo->geo_coord;
+        $geo_coord = base64_decode($geo_coord_tmp);
+
+        $geo_coord = str_replace('),(',' ',$geo_coord);
+        $geo_coord = str_replace('(','',$geo_coord);
+        $geo_coord = str_replace(')','',$geo_coord);
+        $geo_coord = str_replace(', ',',',$geo_coord);
+    }
+    $outflag=0; 
+    
+    for($di=0;$di<=($date_size-1);$di++)
+    { 
+        $SortedDataObject=new data();
+        readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+        //var_dump($SortedDataObject);
+        $logcnt=0;
+        $format =2;      
+        $datetime = null;
+        $hrs_min = null;
+        $j=0; 
+        $v=0;
+        $f = 0;    
+        if(count($SortedDataObject->deviceDatetime)>0)
+        {
+            
+            $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+            for($obi=0;$obi<$prevSortedSize;$obi++)
+            {                   
+                $lat = $SortedDataObject->latitudeData[$obi];
+                $lng = $SortedDataObject->longitudeData[$obi];
+                if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))
+                {
+                    $DataValid = 1;
+                }
+                if(($DataValid==1) && ($SortedDataObject->deviceDatetime[$obi] > $date1 && $SortedDataObject->deviceDatetime[$obi] < $date2))
+                { 
+                    $finalDateTimeArr[$i][$dataCnt]=$SortedDataObject->deviceDatetime[$obi];
+                    $finalLatitudeArr[$i][$dataCnt]=$SortedDataObject->latitudeData[$obi];
+                    $finalLongitudeArr[$i][$dataCnt]=$SortedDataObject->longitudeData[$obi];
+                         
+                    if($geo_coord!="")
+                    {                
+                        check_with_range($lat, $lng, $geo_coord, $status_geo);                                
+                        if(($status_geo==false ) || ($status_geo==''))
+                        {
+                            if($outflag==0)
+                            {
+                                $outflag = 1; 
+                                $time1 = $datetime;   							
+                                $starttime = strtotime($time1);
+                                $lat1 = $lat; 
+                                $lng1 = $lng; 
+                            }										
+                        } 
+                        else if(($status_geo==true) && ($outflag==1))
+                        {
+                            $outflag = 0; 
+                            $time2 = $datetime;   							
+                            $stoptime = strtotime($time2);
+                            $violated_dur = $stoptime - $starttime;
+                            $hms = secondsToTime($violated_dur);
+                            $duration = $hms[h].":".$hms[m].":".$hms[s]; 
+                            
+                            $imei_report[]= $vserial[$i];
+                            $vname_report[] = $vehicle_detail_local[0];
+                            $lat_report[] = $lat1;
+                            $lng_report[] = $lng1;
+                            $datefrom_report[] = $time1;
+                            $dateto_report[] = $time2;
+                            $duration_report[] = $duration;			                		                     
+                        }
+                    } // if geo_coord!="" closed
+                    //echo "<br>Astatus=".$status." ,time2=".$time2.", outflag=".$outflag;	
+                }
+            }
+            if($outflag==1)
+            {
+                    $imei_report[]= $vserial[$i];
+                    $vname_report[] = $vehicle_detail_local[0];
+                    $lat_report[] = $lat1;
+                    $lng_report[] = $lng1;
+                    $datefrom_report[] = $time1;
+                    $dateto_report[] = $time2;
+                    $duration_report[] = $duration;	
+            }
+            $SortedDataObject=null;	
+        }
+    }
 }
 $o_cassandra->close();
 $parameterizeData=null;	
 	
-for($i=0;$i<$vsize;$i++)
-{	
-	$distance =0.0;
-	$firstdata_flag =0;
-	$total_dist = 0;
 
-	$query_geo = "SELECT geo_coord FROM geofence WHERE geo_id IN(SELECT geo_id FROM geo_assignment WHERE status=1 AND ".
-		"vehicle_id IN (SELECT vehicle_id FROM vehicle_assignment WHERE device_imei_no='$vserial[$i]' AND status=1)) AND ".
-		"user_account_id='$account_id' AND status=1";                   
-
-	$res_geo = mysql_query($query_geo,$DbConnection);
-	if($row_geo = mysql_fetch_object($res_geo))
-	{
-		$geo_coord_tmp = $row_geo->geo_coord;
-		$geo_coord = base64_decode($geo_coord_tmp);
-
-		$geo_coord = str_replace('),(',' ',$geo_coord);
-		$geo_coord = str_replace('(','',$geo_coord);
-		$geo_coord = str_replace(')','',$geo_coord);
-		$geo_coord = str_replace(', ',',',$geo_coord);
-	}	
-	//echo "<br>query_geo=".$query_geo." ,<br>geo_record=".$geo_coord;
-	$outflag=0;
-	$innerSize=0;
-	$innerSize=sizeof($finalDateTimeArr[$i]);
-
-	$logcnt=0;
-	$DataComplete=false;                  
-	$vehicleserial_tmp=null;
-	$format =2;
-
-	$datetime = null;
-	$hrs_min = null;
-	$v=0;
-	$f = 0; 
-	  
-	for($j=0;$j<$innerSize;$j++)
-	{
-		if($geo_coord!="")
-		{                
-			check_with_range($finalLatitudeArr[$i][$j], $finalLongitudeArr[$i][$j], $geo_coord, &$status_geo);                                
-			//echo "<br><br>lat=".$lat.",lng=".$lng." <br> ,status=".$status;  
-			if(($status_geo==false ) || ($status_geo==''))
-			{
-			  	if($outflag==0)
-				{
-					$outflag = 1; 
-					$time1 = $finalDateTimeArr[$i][$j];   							
-					$starttime = strtotime($time1);			  
-					$lat1 = $finalLatitudeArr[$i][$j]; 
-					$lng1 = $finalLongitudeArr[$i][$j];
-				}                 
-			}  
-
-			else if( ($status_geo==true && $outflag==1))
-			{
-				$outflag = 0; 
-				$time2 = $finalDateTimeArr[$i][$j];   							
-				$stoptime = strtotime($time2);
-
-				$violated_dur = $stoptime - $starttime;
-				/*$hr =  (int)(($violated_dur)/3600);	 
-				$min =  ($violated_dur)%3600;
-				$min =  (int)(($min)/60); 
-				$sec =  (int)(($min)%60);*/
-
-				$hms = secondsToTime($violated_dur);
-				$duration = $hms[h].":".$hms[m].":".$hms[s];                          		
-			  
-				//$area_violated_data = "\n<marker imei=\"".$vserial."\" vname=\"".$vname."\" lat=\"".$lat1."\" lng=\"".$lng1."\" datefrom=\"".$time1."\" dateto=\"".$time2."\" duration=\"".$duration."\"/>";
-				$imei_report[]= $vserial[$i];
-				$vname_report[] = $finalVNameArr[$i];
-				$lat_report[] = $lat1;
-				$lng_report[] = $lng1;
-				$datefrom_report[] = $time1;
-				$dateto_report[] = $time2;
-				$duration_report[] = $duration;				    		                     
-			}
-		} // if geo_coord!="" closed
-		
-	}
-	if($outflag==1)
-	{
-		$imei_report[]= $vserial[$i];
-		$vname_report[] = $finalVNameArr[$i];
-		$lat_report[] = $lat1;
-		$lng_report[] = $lng1;
-		$datefrom_report[] = $time1;
-		$dateto_report[] = $time2;
-		$duration_report[] = $duration;	
-	}
-}
 include("map_window/mapwindow_jsmodule.php");		
 include("map_window/floating_map_window.php");
 	
@@ -295,13 +239,13 @@ for($i=0;$i<sizeof($imei_report);$i++)
   
   ////////////////////////////
   $landmark="";
-  get_landmark($lt1,$lng_report1,&$landmark);    // CALL LANDMARK FUNCTION
+  get_landmark($lt1,$lng_report1,$landmark);    // CALL LANDMARK FUNCTION
 	
   $place = $landmark;
   
   if($place=="")
   {
-    get_location($lt1,$lng_report1,$alt1,&$place,$DbConnection);    // CALL GOOGLE LOCATION FUNCTION
+    get_location($lt1,$lng_report1,$alt1,$place,$DbConnection);    // CALL GOOGLE LOCATION FUNCTION
   }
 	
   //echo "P:".$place;
@@ -413,7 +357,7 @@ for($x=0;$x<=$j;$x++)
 				
 if($size_vserial==0)
 {						
-	print"<center><FONT color=\"Red\" size=2><strong>No Geofence violat_reportion found</strong></font></center>";
+	print"<center><FONT color=\"Red\" size=2><strong>No Geofence violat_report found</strong></font></center>";
 	//echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=HaltReport.php\">";
 	echo'<br><br>';
 }	
@@ -429,9 +373,9 @@ echo '</form>';
 
 echo '</center>
 	<center>		
-		<a href="javascript:showReportPrevPageNew();" class="back_css">
-			&nbsp;<b>Back</b>
-		</a>
+            <a href="javascript:showReportPrevPageNew();" class="back_css">
+                &nbsp;<b>Back</b>
+            </a>
 	</center>';
 ?>
 					

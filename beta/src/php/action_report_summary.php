@@ -377,7 +377,7 @@
                     $track_str_this = $lat_ref_track.",".$lng_ref_track." ".$lat_cr_track.",".$lng_cr_track;
                 }
                 $imei[]=$vserial[$i];
-                $vname[]=$vehicle_detail_local;
+                $vname[]=$vehicle_detail_local[0];
                 $startdate[]=$date_start;
                 $enddate[]=$date_end;
                 $startlat[]=$lat_start;

@@ -97,7 +97,6 @@
 <body>
 <?php   
 $threshold1 = $threshold;
-	$threshold = $threshold/60;
 	$param1 = $date1;
    // $param2 = $date2."&nbsp;-Interval:".round($threshold,3)." mins";
     $param2 = $date2."&nbsp;-Interval:".$threshold1." mins";

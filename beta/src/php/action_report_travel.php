@@ -589,7 +589,7 @@ echo'<form method="post" action="action_report_travel_1.php" target="_self">
 	<div id="progress"></div>
 	<div id="delay"></div>';	
 	echo'<br>';
-	$threshold = $threshold/60;
+	$threshold = $datetime_threshold/60;
 	$vsize = sizeof($imei);
 	$point_start = '"';
 	$point_end = '"';
