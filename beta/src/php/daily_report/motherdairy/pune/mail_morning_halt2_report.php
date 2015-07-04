@@ -6,15 +6,15 @@ set_time_limit(18000);
 //include_once('util_php_mysql_connectivity.php');
 $DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
-$isReport = true;
+$isReport2 = true;
 //$HOST = "111.118.181.156";
 $DBASE = "iespl_vts_beta";
 if ($DEBUG_OFFLINE) {
     $HOST = "localhost";
 } else if ($DEBUG_ONLINE) {
-    include_once("../database_ip.php");
+    include_once("../../database_ip.php");
 } else {
-    include_once("../database_ip.php");
+    include_once("../../database_ip.php");
 }
 $USER = "root";
 if ($DEBUG_OFFLINE) {
