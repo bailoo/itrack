@@ -4,8 +4,8 @@ set_time_limit(360000);
 //error_reporting(E_ALL);
 //ini_set('display_errors', TRUE);
 $DEBUG_OFFLINE = false;
-$DEBUG_ONLINE = false;
-$CREATE_MASTER = false;
+$DEBUG_ONLINE = true;
+$CREATE_MASTER = true;
 $isReport = true;
 //$HOST = "111.118.181.156";
 $DBASE = "iespl_vts_beta";
@@ -120,7 +120,7 @@ $shift_mor = false;
 
 if ($DEBUG_OFFLINE || $DEBUG_ONLINE) {
     $shift_ev1 = true;
-    $date = '2015-06-26';
+    $date = '2015-07-04';
     $cdate = $date;
     $cdatetime = $cdate . " 10:00:00";
     $pdate = date('Y-m-d', strtotime($date . ' -1 day'));
