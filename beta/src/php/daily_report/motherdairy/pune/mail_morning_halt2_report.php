@@ -1442,7 +1442,7 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3, $array4) 
         
 	//################################//
 	
-	//############# CREATE FOLDER AND BACKUP FILES ########
+	/*//############# CREATE FOLDER AND BACKUP FILES ########
 	$sourcepath = $file_path;
 	$dirPath = "excel_reports/".$previous_date;
 	mkdir ($dirPath, 0755, false);
@@ -1451,7 +1451,7 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3, $array4) 
 	echo "\nSourcePath=".$sourcepath;
 	echo "\nDestinationPath=".$destpath;
 	
-	copy($sourcepath,$destpath);	
+	copy($sourcepath,$destpath);*/	
 	//########## BACKUP FILES CLOSED #######################
 
 	unlink($file_path); 
