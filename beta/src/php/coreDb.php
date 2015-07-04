@@ -3420,7 +3420,7 @@ function insertRoutAssignment2Detail($vName,$aId,$cId,$date,$status,$DbConnectio
 {
 	$query_string1="INSERT INTO route_assignment2(vehicle_name,user_account_id,create_id,create_date,status) VALUES".
 	"('$vName',$aId,$cId,'$date',$status)";
-	echo "<br>Q1=".$query_string1;
+	//echo "<br>Q1=".$query_string1;
 	$result_insert = mysql_query($query_string1, $DbConnection);
 }
 

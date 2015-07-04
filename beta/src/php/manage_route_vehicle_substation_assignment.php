@@ -49,9 +49,12 @@
 	//GET ALL ROUTES
 	$route_input_ZPME = array();
 	$route_input_ZPMM = array();
+        //echo $parent_admin_id;
+        
 	get_route_detail($parent_admin_id, "ZPME",$user_name);
-	get_route_detail($parent_admin_id, "ZPMM",$user_name);
-	
+
+        get_route_detail($parent_admin_id, "ZPMM",$user_name);
+
 	$route_input_eve = array_unique($route_input_ZPME);	
 	$route_input_mor = array_unique($route_input_ZPMM);	
 	//class called
@@ -189,9 +192,13 @@
 		global $route_input_ZPME;
 		global $route_input_ZPMM;
 		
-		$dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";		
+		$dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";
+                
+                //$dir = "C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master";
 		$dh = opendir($dir);
-		while (($file = readdir($dh)) !== false) {			
+                
+		while (($file = readdir($dh)) !== false) {
+                    
 			$file_tmp = explode("#",$file);
 			$file_ext = explode(".",$file_tmp[2]);
 			if($file_ext[0]!="")
@@ -253,6 +260,7 @@
 					}
 				}								
 			}  //
+                        
 		}
 		closedir($dh);
 	} //function closed			
@@ -419,17 +427,7 @@
 						//echo "id=".$box1_id."<br>";
 					echo '<div id="'.$box2_id.'" class="input-div-route" style="display:none"></div>';
 
-					//echo '<SELECT id="'.$vehicle_id.'">';
-					//echo '<option value="0">Select</option>';
-					//if(sizeof($route_input1)>0)					
-					//{								
-						/*foreach ($route_input1 as $route_new) 
-						{													
-							$val = $vehicle_id.':'.$route_new;
-							echo '<option value="'.$val.'">'.$route_new.'</option>';
-						}*/
-					//}
-					//echo '</SELECT>';
+					
 				}
 				
 				echo'</td>';
@@ -452,39 +450,7 @@
 			}
 		}
 		//}
-		/*else
-		{
-			echo'
-			<tr>
-			<td align="left"><font color="grey">'.$vehicle_name.'</font></td><td>:</td>
-			<td align="left">';
-				
-				if($found)
-				{
-					echo '<font color="green"><strong>'.$route_matched.'</strong></font>';
-				}
-				else
-				{						
-					echo '<input type="hidden" name="unassigned_vehicles[]" value="'.$vehicle_id.'"/>';
-					echo '<SELECT id="'.$vehicle_id.'">';
-					echo '<option value="0">Select</option>';
-					if(sizeof($route_input1)>0)					
-					{								
-						foreach ($route_input1 as $route_new) 
-						{													
-							$val = $vehicle_id.':'.$route_new;
-							echo '<option value="'.$val.'">'.$route_new.'</option>';
-						}
-					}
-					echo '</SELECT>';
-				}
-				$rem = $vehicle_id."rem";
-				echo'</td>	
-				<td>&nbsp;<input type="text" id="'.$rem.'" size="10"></td>						
-			   </td>
-			</tr>
-			<tr><td coslpan="3"><br></td></tr>';
-		}*/
+		
 	}
 
 	function get_user_vehicle($AccountNode,$account_id)

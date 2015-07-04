@@ -71,6 +71,13 @@
 				//$dir = "c:\\gps_report/231/master";
 				//$dir = "c:\\halt2/test_master";
 				$dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";
+				if(file_exists($dir))
+				{
+					echo "True";
+				}
+				{
+					echo "false";
+				}
 				$dh = opendir($dir);
 				while (($file = readdir($dh)) !== false) {
 					//echo "<A HREF=\"$file\">$file</A><BR>\n";
