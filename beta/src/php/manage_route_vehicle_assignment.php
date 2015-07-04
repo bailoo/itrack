@@ -1,8 +1,10 @@
 <?php
+    //error_reporting(-1);
+   // ini_set('display_errors', 'On');
 	include_once('Hierarchy.php');
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');
-	include_once('coreDb.php');
+	
 	//include_once('manage_hierarchy_header1.php');
 	$root=$_SESSION['root'];
 	//$common_id1=$_POST['common_id'];
