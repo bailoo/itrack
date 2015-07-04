@@ -5,6 +5,7 @@ class Hierarchy
 { 
 	public function GetHierarchy($groupid,$account_id,$accountUserType,$admin_id,$user_type,$DbConnection) 
 	{
+            //test git hub pull event
 		//--code updated on 30032015 for third party---//
 		$admin_account_id_array=array();
 		global $admin_account_id_array;
