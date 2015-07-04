@@ -1,7 +1,7 @@
 <?php
 $download_file_id_1=$_POST['download_file_id'];
 $file_path =$download_file_id_1;
-//echo "file_path=".$file_path;
+echo "file_path=".$file_path;
 
 if(file_exists($file_path))
 {
