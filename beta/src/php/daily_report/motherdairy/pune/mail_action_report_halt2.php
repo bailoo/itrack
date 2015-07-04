@@ -103,7 +103,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
 	$timeto = $date_2[1];
 	$cum_dist = 0;
 	
-	get_All_Dates($datefrom, $dateto, &$userdates);
+	get_All_Dates($datefrom, $dateto, $userdates);
 	//date_default_timezone_set("Asia/Calcutta");
 	$current_datetime = date("Y-m-d H:i:s");
 	$current_date = date("Y-m-d");
