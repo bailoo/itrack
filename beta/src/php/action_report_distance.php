@@ -8,11 +8,13 @@
     include_once('util_session_variable.php');    
     include_once("report_title.php");
     include_once("calculate_distance.php");
-    
+
+//====cassamdra //////////////
     include_once('xmlParameters.php');
-    include_once('parameterizeData.php');
+    include_once('parameterizeData.php'); /////// for seeing parameters
     include_once('data.php');   
     include_once("getXmlData.php");
+    ////////////////////////
 
     $DEBUG = 0;
     $device_str = $_POST['vehicleserial'];
@@ -24,16 +26,14 @@
     $date2 = $_POST['end_date'];
     $date1 = str_replace("/","-",$date1);
     $date2 = str_replace("/","-",$date2);
+    
+    ////////// cassandra //////////
     $date_1 = explode(" ",$date1);
     $date_2 = explode(" ",$date2);
     $datefrom = $date_1[0];
     $dateto = $date_2[0];	
 
     $sortBy='h';
-    $firstDataFlag=0;
-    $endDateTS=strtotime($date2);
-    $dataCnt=0;	
-
     $userInterval = $_POST['user_interval'];
     //echo "userInterval=".$userInterval."<br>";
     $requiredData="All";
