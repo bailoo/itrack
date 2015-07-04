@@ -1,9 +1,10 @@
 <?php
-	echo"reportPrevPage##";
+    echo"reportPrevPage##";
     global $report_station_halt_option;
     $report_station_halt_option="1";
     include_once("report_hierarchy_header.php");
     include_once("user_type_setting.php");
+    include_once("coreDb.php");
     
 	$account_id_local1 = $_POST['account_id_local'];
 	$vehicle_display_option1 = $_POST['vehicle_display_option'];
@@ -120,9 +121,8 @@ echo '<!--<div style="height:5px;display:none;" id="manual">-->
 	</fieldset>'; 
 	
 	echo'<fieldset class="report_fieldset">';
-	$Query="SELECT customer_no,station_name,station_coord,distance_variable,google_location FROM station WHERE user_account_id=$account_id AND status=1";
-	//echo "Query=".$Query."<br>";
-	$Result=mysql_query($Query,$DbConnection);
+       
+        $stationArr=getDetailAllCustomerNoStationNameStation($account_id,$DbConnection);
 //echo "result=".$Result."<br>";
 		echo'<legend>Select Customer</legend>';
 	
@@ -137,25 +137,25 @@ echo '<!--<div style="height:5px;display:none;" id="manual">-->
 								</td>
 							</tr>'; 
 							$cnt=0;
-							while($row=mysql_fetch_object($Result))
+							foreach($stationArr as $sValue)
 							{							
-								$cnt++;          
-								if($cnt==1)
-								{
-								echo'<tr>';
-								} 
-								echo'<td align="left">
-										<!--<INPUT TYPE="checkbox"  name="stationids[]" VALUE="'.$row->customer_no.':'.$row->station_name.':'.str_replace(', ',',',$row->station_coord).':'.$row->google_location.':'.$row->distance_variable.'">-->
-									<INPUT TYPE="checkbox"  name="stationids[]" VALUE="'.$row->customer_no.'">
-                                                                     </td>
-									<td class=\'text\'>';								
-										echo $row->customer_no;							
-								echo'</td>';         
-								if($cnt==3)
-								{
-									echo'</tr><tr>';
-									$cnt=0;
-								}
+                                                            $cnt++;          
+                                                            if($cnt==1)
+                                                            {
+                                                            echo'<tr>';
+                                                            } 
+                                                        echo'<td align="left">
+                                                                        <!--<INPUT TYPE="checkbox"  name="stationids[]" VALUE="'.$row->customer_no.':'.$row->station_name.':'.str_replace(', ',',',$row->station_coord).':'.$row->google_location.':'.$row->distance_variable.'">-->
+                                                                <INPUT TYPE="checkbox"  name="stationids[]" VALUE="'.$sValue['final_plant_list'].'">
+                                                             </td>
+                                                                <td class=\'text\'>';								
+                                                                        echo $sValue['final_plant_list'];							
+                                                        echo'</td>';         
+                                                            if($cnt==3)
+                                                            {
+                                                                    echo'</tr><tr>';
+                                                                    $cnt=0;
+                                                            }
 							}
 					echo'</table>
 					</div>
