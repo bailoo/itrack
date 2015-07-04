@@ -105,9 +105,9 @@
 		
 
 		//$dir = "C:\\Program Files/Apache Software Foundation/Apache2.2/htdocs/vts_beta_new/src/php/gps_report/".$account_id."/master";
-		//$dir = "C:\\xampp/htdocs/beta/src/php/gps_report/".$account_id."/master";
+		$dir = "C:\\xampp/htdocs/beta/src/php/gps_report/".$account_id."/master";
 		
-		$dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";
+		//$dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";
 		//echo "dir=".$dir."<br>";
 		$dh = opendir($dir);
 		while (($file = readdir($dh)) !== false) {
