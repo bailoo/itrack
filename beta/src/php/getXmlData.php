@@ -2,12 +2,15 @@
 //echo "INGET11";
 //include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
 if($isReport) {
-        include_once("../../../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
+   include_once("../../../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
    include_once("../../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
 } else {
-    
+if($isReport2) {
+   include_once("../../../../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
+   include_once("../../../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
+} else {      
    // echo "in else";
-   include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
     include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
 }
 //echo "EXISTS=".file_exists("../../../../../phpApi/libLog.php")."<br>";
