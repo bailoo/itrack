@@ -14,7 +14,7 @@
 	$parent_admin_id=getAccountIdByAdminId($account_admin_id,$DbConnection);
 	
 	global $user_name;	
-	$user_name=getUserID($accountId,1,$DbConnection);
+	$user_name=getUserID($account_id,1,$DbConnection);
 	//echo  $user_name;	
 	/*******************************************************************************************************************************/
 	

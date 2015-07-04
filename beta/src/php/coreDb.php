@@ -3567,6 +3567,7 @@ function getDetailAllRouteAssingment3($account_id,$DbConnection)
 /***********************************************Manage Route Vehicle Substation Assingnment *********************************/
  function getDetailAllRouteAssignment2VSA($parent_admin_id,$DbConnection)
  {
+        $data=array();
 	$query_assigned_ev = "SELECT vehicle_name,route_name_ev,remark_ev FROM route_assignment2 USE INDEX(rass2_aid_status) WHERE user_account_id='$parent_admin_id' AND status=1";	
 	$result_assigned_ev = mysql_query($query_assigned_ev, $DbConnection);
 	while($row_ev=mysql_fetch_object($result_assigned_ev))
@@ -3575,13 +3576,14 @@ function getDetailAllRouteAssingment3($account_id,$DbConnection)
 		$route_assigned_ev = $row_ev->route_name_ev;
 		$remark_assigned_ev = $row_ev->remark_ev;*/
 		
-	    $data[]=array('vname_assigned_ev'=>$row->vehicle_name,'route_assigned_ev'=>$row->route_name_ev,'remark_assigned_ev'=>$row->remark_ev);	
+	    $data[]=array('vname_assigned_ev'=>$row_ev->vehicle_name,'route_assigned_ev'=>$row_ev->route_name_ev,'remark_assigned_ev'=>$row_ev->remark_ev);	
 	}
 	return $data;
  }
  function getDetailAllRouteAssingment2VRR($parent_admin_id,$DbConnection)
  {
-	$query_assigned_mor = "SELECT vehicle_name,route_name_mor,remark_mor FROM route_assignment2 USE INDEX(rass2_aid_status) WHERE user_account_id='$parent_admin_id' AND status=1";	
+	$data=array();
+        $query_assigned_mor = "SELECT vehicle_name,route_name_mor,remark_mor FROM route_assignment2 USE INDEX(rass2_aid_status) WHERE user_account_id='$parent_admin_id' AND status=1";	
 	//echo $query_assigned_mor."<BR>";
 	$result_assigned_mor = mysql_query($query_assigned_mor, $DbConnection);
 	while($row_mor=mysql_fetch_object($result_assigned_mor))
@@ -3590,7 +3592,7 @@ function getDetailAllRouteAssingment3($account_id,$DbConnection)
 		$route_assigned_mor = $row_mor->route_name_mor;
 		$remark_assigned_mor = $row_mor->remark_mor;*/
 		
-		$data[]=array('vname_assigned_mor'=>$row->vehicle_name,'route_assigned_mor'=>$row->route_name_mor,'remark_assigned_mor'=>$row->remark_mor);	
+		$data[]=array('vname_assigned_mor'=>$row_mor->vehicle_name,'route_assigned_mor'=>$row_mor->route_name_mor,'remark_assigned_mor'=>$row_mor->remark_mor);	
 	}	
  }
  function getNumRowSecVechicle($vehicle_id,$DbConnection)
@@ -3606,28 +3608,30 @@ function getDetailAllRouteAssingment3($account_id,$DbConnection)
 /***********************************************Manage Route Vehicle Substation Inherit**************************************/
  function getDetailAllRouteAssignment2InheritEV($parent_admin_id,$DbConnection)
  {
-		$query_db_route_vehicle_ev = "SELECT DISTINCT vehicle_name,route_name_ev,evening_update_time,remark_ev FROM route_assignment2 USE INDEX(rass2_aid_status) WHERE user_account_id='$parent_admin_id' and status=1";
-		$result1 = mysql_query($query_db_route_vehicle_ev, $DbConnection);
-		while($row1=mysql_fetch_object($result1))
-		{
-		  /*$vehicle_name=$row1->vehicle_name;
-		  $evening_update_time=$row1->evening_update_time;
-		  $route_name_ev=$row1->route_name_ev;*/
-		  
-		  $data[]=array('vehicle_name'=>$row->vehicle_name,'evening_update_time'=>$row->evening_update_time,'route_name_ev'=>$row->route_name_ev);	
-	    }
-	   return $data;
+        $data=array();
+        $query_db_route_vehicle_ev = "SELECT DISTINCT vehicle_name,route_name_ev,evening_update_time,remark_ev FROM route_assignment2 USE INDEX(rass2_aid_status) WHERE user_account_id='$parent_admin_id' and status=1";
+        $result1 = mysql_query($query_db_route_vehicle_ev, $DbConnection);
+        while($row1=mysql_fetch_object($result1))
+        {
+          /*$vehicle_name=$row1->vehicle_name;
+          $evening_update_time=$row1->evening_update_time;
+          $route_name_ev=$row1->route_name_ev;*/
+
+          $data[]=array('vehicle_name'=>$row1->vehicle_name,'evening_update_time'=>$row1->evening_update_time,'route_name_ev'=>$row1->route_name_ev);	
+    }
+   return $data;
  }
  function getDetailAllRouteAssignment2InheritMR($parent_admin_id,$DbConnection)
  {
-	$query_db_route_vehicle_mor = "SELECT DISTINCT vehicle_name,route_name_mor,morning_update_time,remark_mor FROM route_assignment2 USE INDEX(rass2_aid_status) WHERE user_account_id='$parent_admin_id'  and status=1";
+	$data=array();
+        $query_db_route_vehicle_mor = "SELECT DISTINCT vehicle_name,route_name_mor,morning_update_time,remark_mor FROM route_assignment2 USE INDEX(rass2_aid_status) WHERE user_account_id='$parent_admin_id'  and status=1";
 	$result = mysql_query($query_db_route_vehicle_mor, $DbConnection);			
 	while($row2=mysql_fetch_object($result))
 	{
        /*$vehicle_name=$row2->vehicle_name;
 	   $morning_update_time=$row2->morning_update_time;
 	   $route_name_mor=$row2->route_name_mor;*/
-		$data[]=array('vehicle_name'=>$row->vehicle_name,'morning_update_time'=>$row->morning_update_time,'route_name_mor'=>$row->route_name_mor);	
+		$data[]=array('vehicle_name'=>$row2->vehicle_name,'morning_update_time'=>$row2->morning_update_time,'route_name_mor'=>$row2->route_name_mor);	
 	}
    return $data;
  }
