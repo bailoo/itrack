@@ -153,7 +153,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	$row++;
 		
-	//echo "\nSizeRoute=".sizeof($route_name_rdb);
+	echo "\nSizeRoute=".sizeof($route_name_rdb);
 	
 	for($i=0;$i<sizeof($route_name_rdb);$i++)
 	{
@@ -230,7 +230,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 							
 			if($pre_match)
 			{						
-				echo "<BR>CreateHrly ".$i." ".$vehicle_imei_rdb[$i];
+				//echo "<BR>CreateHrly ".$i." ".$vehicle_imei_rdb[$i];
 				for($j=0;$j<sizeof($customer_sel[$route_name_rdb_3]);$j++)				
 				//echo "\nSizeCustomerSel=".sizeof($customer_sel[$vehicle_imei_rdb[$i]]);
 				//for($j=0;$j<sizeof($customer_sel[$vehicle_imei_rdb[$i]]);$j++)
@@ -244,8 +244,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param)
 					$col_tmp = 'C'.$row;
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $customer_sel[$route_name_rdb_3][$j]);
 					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $customer_sel[$vehicle_imei_rdb[$i]][$j]);
-				
-					echo "\nCust=".$customer_sel[$route_name_rdb_3][$j];	
+					
 					$col_tmp = 'D'.$row;
 					if($type[$route_name_rdb_3][$j]==1)
 					//if($type[$vehicle_imei_rdb[$i]][$j]==1)
