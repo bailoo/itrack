@@ -1369,7 +1369,7 @@
 											"</tr>"+
 										"</table>",';  
 										
-										echo'"<table border=0 class=\'mystyle\'>"+
+										/*echo'"<table border=0 class=\'mystyle\'>"+
 											"<tr>"+ 
 												"<td valign=\'top\'>"+
 													"<table border=0 class=\'mystyle\'>"+
@@ -1400,7 +1400,7 @@
 													"</table>"+
 												"</td>"+
 											"</tr>"+
-										"</table>",'; 
+										"</table>",'; */
 							}			
 								if($flag_station)
 								{
