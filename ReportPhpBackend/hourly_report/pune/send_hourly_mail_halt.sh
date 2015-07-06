@@ -1,5 +1,5 @@
 #!/usr/bin/php
-cd /var/www/html/vts/beta/src/php/hourly_report/mumbai
+cd cd /mnt/itrack/ReportPhpBackend/hourly_report/mumbai
 php mail_hourly_halt_report.php
 
 
