@@ -6,6 +6,7 @@ set_time_limit(18000);
 //include_once('util_php_mysql_connectivity.php');
 $DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
+$isReport = false;
 $isReport2 = true;
 //$HOST = "111.118.181.156";
 $DBASE = "iespl_vts_beta";
