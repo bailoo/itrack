@@ -1,3 +1,0 @@
-http://www.bettina-attack.de/jonny/view.php/projects/php_writeexcel/demo/
-
-http://cpansearch.perl.org/src/JMCNAMARA/Spreadsheet-WriteExcel-2.37/docs/palette.html
