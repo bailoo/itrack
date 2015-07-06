@@ -5,12 +5,12 @@
 	//include_once('manage_hierarchy_header1.php');
         
         include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
-    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
+        include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
     
-    $o_cassandra = new Cassandra();	
-    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+        $o_cassandra = new Cassandra();	
+        $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 
-   $vehicle_color1=getColorFromAP($account_id,$DbConnection); /// A->Account P->Preference
+        $vehicle_color1=getColorFromAP($account_id,$DbConnection); /// A->Account P->Preference
 	$root=$_SESSION['root'];
 	$common_id1=$_POST['common_id'];
 	//echo "common_id=".$common_id1;

@@ -39,6 +39,115 @@ customerIcon.iconSize = new GSize(10, 10);
 customerIcon.iconAnchor = new GPoint(2, 7);
 customerIcon.infoWindowAnchor = new GPoint(3, 10);
 
+var RouteNMCustomer=new Array(); // Route Number Evening Customer Type
+var RouteMCustomerLat=new Array();
+var RouteMCustomerLng=new Array();
+var RouteMCustomerStationNo=new Array();
+var RouteMCustomerNo=new Array();
+var RouteMCustomerType=new Array();
+
+var RouteNECustomer=new Array(); // Route Number Evening Customer Type
+var RouteECustomerLat=new Array();
+var RouteECustomerLng=new Array();
+var RouteECustomerStationNo=new Array();
+var RouteECustomerNo=new Array();	
+var RouteECustomerType=new Array();
+
+
+var uniqueRouteParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteTransporters']); ?> );
+var bname = navigator.appName;
+   var xml_data_this="";   
+    var customerRouteEvening = "<?php echo $_SESSION['uniqueCustomerRouteEvening']; ?>";
+    //alert('eveningFile='+customerRouteEvening);
+    var xmlObj = null; 			
+    var dest_station_test=customerRouteEvening;
+    //alert("dest_station_test="+dest_station_test);
+    var exists = isFile(dest_station_test);
+     //alert("exists="+exists);
+    xmlObj = loadXML(dest_station_test);
+    //alert("after loadXml");
+    dataReceived=false;
+    if (bname == "Microsoft Internet Explorer")
+    {    
+            if(xmlObj!=null)	
+            {                                      
+                    xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
+                    if(xml_data_this1.length>0)
+                    {
+                            dataReceived=true;
+                    }
+            }                                     
+    }
+    else
+    {   
+            xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
+            //alert("length 1:"+xml_data_this.length);    
+            var xml_data_this1 = xmlObj.documentElement.getElementsByTagName("a1");
+            //alert("length 2:"+xml_data_this.length);
+            if(xml_data_this1.length>0)
+            {
+                    dataReceived=true;
+            }
+    }
+    if(dataReceived==true)
+    {
+            for (var k = 0; k < xml_data_this.length; k++) 
+            {
+                    RouteNECustomer[k] = xml_data_this[k].getAttribute("routeNo");
+                    RouteECustomerLat[k] = xml_data_this[k].getAttribute("lat");
+                    RouteECustomerLng[k] = xml_data_this[k].getAttribute("lng");			
+                    RouteECustomerStationNo[k] = xml_data_this[k].getAttribute("station");					
+                    RouteECustomerNo[k] = xml_data_this[k].getAttribute("customer");
+                    RouteECustomerType[k] = xml_data_this[k].getAttribute("type");	
+            } 
+    }
+    
+    xml_data_this="";
+        var customerRouteMorning ="<?php echo $_SESSION['uniqueCustomerRouteMorning']; ?>";
+        var xmlObj = null; 			
+        var dest_station_test=customerRouteMorning;
+        //alert("dest_station_test="+dest_station_test);
+    var exists = isFile(dest_station_test);
+    //alert("exists="+exists);
+        xmlObj = loadXML(dest_station_test);
+        dataReceived=false;
+        if (bname == "Microsoft Internet Explorer")
+        {    
+                if(xmlObj!=null)	
+                {                                      
+                        xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
+                        if(xml_data_this1.length>0)
+                        {
+                                dataReceived=true;
+                        }
+                }                                     
+        }
+        else
+        {   
+            xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
+            //alert("length M:"+xml_data_this.length);    
+            var xml_data_this1 = xmlObj.documentElement.getElementsByTagName("a1");
+          // alert("length 2:"+xml_data1.length);
+            if(xml_data_this1.length>0)
+            {
+                dataReceived=true;
+            }
+        }
+        if(dataReceived==true)
+        {
+            for (var k = 0; k < xml_data_this.length; k++) 
+            {																													
+                RouteNMCustomer[k] = xml_data_this[k].getAttribute("routeNo");
+                RouteMCustomerLat[k] = xml_data_this[k].getAttribute("lat");
+                RouteMCustomerLng[k] = xml_data_this[k].getAttribute("lng");			
+                RouteMCustomerStationNo[k] = xml_data_this[k].getAttribute("station");					
+                RouteMCustomerNo[k] = xml_data_this[k].getAttribute("customer");
+                RouteMCustomerType[k] = xml_data_this[k].getAttribute("type");
+            } 
+        }
+    
+    
+
 var pt = new Array();
 var imei1 = new Array();
 var vname1 = new Array();
@@ -2497,49 +2606,87 @@ function PlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed
 	remark = "-";
 	
 	var feature_id_map = document.getElementById('station_flag_map').value;
+        //alert('fid='+feature_id_map);
 	if(feature_id_map == 1)
 	{
-		//##################### GET NEAREST DISTANCE #######################
-		var lowest_dist = 0;
-		var matched_customer ="";
-		var lt_v = point.lat();
-		var lng_v = point.lng();
-	
-		//alert("len="+lat_customer_tmp.length);
-		//var m=0;
-		for(var k=0;k<lat_customer_tmp.length;k++)
-		{
-			//if(trim(vehiclename) == trim(vehicle_tmp[k]))
-			//{
-				var distance = calculate_distance(lt_v,lat_customer_tmp[k],lng_v,lng_customer_tmp[k]);
-				//alert("dist="+distance);
-				if(k==0)
-				{
-					lowest_dist = distance;
-					matched_customer = matched_customer_tmp[k];
-				}
-				else
-				{
-					if(distance < lowest_dist)
-					{
-						lowest_dist = distance;
-						matched_customer = matched_customer_tmp[k];
-					}
-				}	
-			//}
-			//m++;
-		}
-		var lowest_dist = Math.round(lowest_dist*100)/100;
-		var customer_dist = "<font color=green><strong>"+matched_customer+"</strong></font> ("+lowest_dist+" km)";
-		//alert("customer_dist="+customer_dist)
-		
-		nearest_customer_string = "<tr><td "+window_style1+">RouteNo</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+route+"</td></tr><tr><td "+window_style1+">Nearest Customer</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+customer_dist+"</td></tr>";
-		//################# NEAREST DISTANCE CLOSED ##########################
-		
+            var obj=document.form1.route_opt;
+            var morningFlag=0;
+            var eveningFlag=0;
+            for(var i=0;i<obj.length;i++)
+            {		
+                if(obj[i].checked==true)
+                {
+                   if(obj[i].value==1)
+                   {
+                     eveningFlag=1;
+                   }
+                   else if(obj[i].value==2)
+                   {
+                    
+                     morningFlag=1;
+                   }
+                }
+            }        
+            //alert("morningFlag="+morningFlag+"eveningFlag="+eveningFlag);
+            
+            var lt_v = point.lat();
+            var lng_v = point.lng();
+             if(eveningFlag==1)
+                {
+                    var eCustomerLength=RouteNECustomer.length;
+                    //alert("len="+eCustomerLength);
+                    var e_customer_min_distance;		
+                    if(eCustomerLength>0)
+                    {
+                        var e_customer_distance_arr=new Array();
+                        var e_customer_print_str=new Array();
+                        for(var i=0;i<eCustomerLength;i++)
+                        {
+                            /*if(i<3)
+                            {
+                                alert("latPrev="+lt_v+"lngPrev="+ RouteECustomerLat[i]);
+                            }*/
+                                var customer_distance = calculate_distance(lt_v, RouteECustomerLat[i], lng_v, RouteECustomerLng[i]);
+                                e_customer_distance_arr[i]=customer_distance;
+                                e_customer_print_str[customer_distance]=RouteECustomerNo[i];
+                        }
+                        e_customer_distance_arr.sort();
+                        //alert("minDistance="+e_customer_distance_arr[0]);
+                       e_customer_min_distance=e_customer_distance_arr[0];
+                        var e_customer_print_str=e_customer_print_str[e_customer_min_distance];
+                       
+                      nearest_customer_string = "<tr><td "+window_style1+">RouteNo</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+route+"</td></tr><tr><td "+window_style1+">Nearest Customer</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+e_customer_min_distance+" From "+e_customer_print_str+"</td></tr>";
+                    }                    
+                }
+                if(morningFlag==1)
+                {
+                    var mCustomerLength=RouteNECustomer.length;
+                    var m_customer_min_distance;		
+                    if(mCustomerLength>0)
+                    {
+                        var m_customer_distance_arr=new Array();
+                        var m_customer_print_str=new Array();
+                        for(var i=0;i<mCustomerLength;i++)
+                        {					
+                                var customer_distance = calculate_distance(lt_v, RouteMCustomerLat[i], lng_v, RouteMCustomerLng[i]);
+                                m_customer_distance_arr[i]=customer_distance;
+                                m_customer_print_str[customer_distance]=RouteMCustomerNo[i];
+                        }
+                        m_customer_distance_arr.sort();
+                        //alert("minDistance="+m_customer_distance_arr[0]);
+                        m_customer_min_distance=m_customer_distance_arr[0];
+                      var m_customer_print_str=m_customer_print_str[m_customer_min_distance];                        
+                      nearest_customer_string = "<tr><td "+window_style1+">RouteNo</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+route+"</td></tr><tr><td "+window_style1+">Nearest Customer</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+m_customer_min_distance+" From "+m_customer_print_str+"</td></tr>";
+                    }             
+                }
 		//################# GET TRANSPORTER AND REMARK #######################
-		transporter_remark_string = "<tr><td "+window_style1+">Transporter</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr><tr><td "+window_style1+">Remark</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";			
-
-		if(remark_tmp.length>0 && transporter_tmp.length>0)
+                //alert('vehiclename='+vehiclename);
+                if(morningFlag==1 || eveningFlag==1)
+                {
+		//transporter_remark_string = "<tr><td "+window_style1+">Transporter</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr><tr><td "+window_style1+">Remark</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";			
+                transporter_remark_string = "<tr><td "+window_style1+">Transporter</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+uniqueRouteParseJson[vehiclename]+"</td></tr>";			
+                }
+    /*if(remark_tmp.length>0 && transporter_tmp.length>0)
 		{
 			var match_v = false;
 			var sel_vehicle = "";
@@ -2561,7 +2708,7 @@ function PlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed
 				transporter = tpt_final;  //######### tpt string 
 				transporter_remark_string = "<tr><td "+window_style1+">Transporter</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+transporter+"</td></tr><tr><td "+window_style1+">Remark</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+remark+"</td></tr>";			
 			}			
-		}		
+		}*/		
 		//################# TRANSPORTER AND REMARK CLOSED ####################				
 	}
 
