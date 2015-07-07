@@ -24,10 +24,10 @@
 	{
             //$station[$size]=preg_replace('/[^a-zA-Z0-9-]/', '', $row->station_name);
             //$station[$size]=preg_replace('/[^a-zA-Z0-9-]/', '', $row->station_name);
-            if($row->customer_no=="12")
+            /*if($row->customer_no=="12") // for debug
             {
                 echo "true";
-            }
+            }*/
             $station[$size]=$row->station_name;
             $customer[$size]=$row->customer_no;
             $coord = $row->station_coord;
@@ -253,10 +253,10 @@
 				$csvMorningArr=fgetcsv($file);	
 				//echo "plantNo=".$plantArr[$csvMorningArr[0]]."<br>";
 				$trimCustomerNo=trim($csvMorningArr[0]);
-				if(trim($csvMorningArr[0])=="12")
+				/*if(trim($csvMorningArr[0])=="12")  // for debug
 				{
 					echo "<br>present in file Morning";
-				}
+				}*/
 				if($customerArr[$trimCustomerNo]!="")
 				{
 					//echo "plantNo=".$customerArr[$trimCustomerNo]."<br>";
