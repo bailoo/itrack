@@ -1601,12 +1601,15 @@ function getStation1(select_value)
 					//station_name_customer[i] = trim(station_name_customer[i]);
 					station_customer_1[i] = trim(station_customer_1[i]); 
 					//if((search_text == station_name_customer[i]) || (search_text == station_customer_1[i]) )
-					if(search_text == station_customer_1[i])
+					
+                                        if(search_text.trim() == station_customer_1[i].trim())
 					{
 						//alert("found");
 						tmp_flag=true;
 						found_station_name = station_name_customer[i];
+                                                //alert('found_station_name'+station_name_customer[i]);
 						found_lat = station_lat_customer[i];
+                                                //alert('found_lat'+found_lat);
 						found_lng = station_lng_customer[i];
 						found_customer_no = station_customer_1[i];
 						found_type = station_type_customer[i]; 					
@@ -2799,6 +2802,7 @@ function ShowStation(point, station, customer, type)
 
 function Show_Search_Station(lt_1, ln_1, station, customer, type)  
 {
+    //alert("in function");
 	//map.clearOverlays();
 	var icon1 = 'images/station.png';
 	point=new google.maps.LatLng(lt_1, ln_1);
