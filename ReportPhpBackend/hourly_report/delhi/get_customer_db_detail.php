@@ -51,7 +51,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param) {
         if ($DEBUG_OFFLINE) {
             $path = "C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
         } else if($DEBUG_ONLINE) {
-            $path = "/var/www/html/vts/test/src/php/gps_report/" . $account_id . "/master/morning_plant_customer#1#8.csv";
+            $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/morning_plant_customer#1#8.csv";
         } else {
             $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/morning_plant_customer#1#8.csv";
         }
@@ -60,7 +60,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param) {
         if ($DEBUG_OFFLINE) {
             $path = "C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";
         }else if($DEBUG_ONLINE) {
-            $path = "/var/www/html/vts/test/src/php/gps_report/" . $account_id . "/master/evening_plant_customer#1#7.csv";
+            $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/evening_plant_customer#1#7.csv";
         } else {
             $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/evening_plant_customer#1#7.csv";
         }

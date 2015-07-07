@@ -123,7 +123,7 @@ $shift_mor = false;
 
 if ($DEBUG_OFFLINE || $DEBUG_ONLINE) {
     $shift_ev1 = true;
-    $date = '2015-07-04';
+    $date = '2015-07-07';
     $cdate = $date;
     $cdatetime = $cdate . " 10:00:00";
     $pdate = date('Y-m-d', strtotime($date . ' -1 day'));

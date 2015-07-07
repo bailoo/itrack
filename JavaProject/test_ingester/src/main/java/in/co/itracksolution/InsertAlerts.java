@@ -62,10 +62,10 @@ public class InsertAlerts {
 	{
 		String imei = "123456";
 		String type = "nogps";
-		/*String dtime = "2015-06-30 12:17:18";
+		String dtime = "2015-06-30 12:17:18";
 		String stime = "2015-06-30 12:17:38";
 		String starttime = "2015-06-30 12:27:18";
-		String endtime = "2015-06-30 15:37:38";*/
+		String endtime = "2015-06-30 15:37:38";
 		int duration = (int)84;
 		int haltduration = (int)34;
 		float speed = (float)30.1;
@@ -74,53 +74,43 @@ public class InsertAlerts {
 		float distance = (float)369.4;
 		float angle = (float)35.3;
 		String locationId = "98765";
-		String locationName = "Dwarka Mor2";
+		String locationName = "Dwarka Mor";
 		String latitude = "21.4568N";
 		String longitude = "82.22434E";
 		String startlocationid = "54321";
-		String startlocationname = "Dwarka Mor2";
-		String startlatitude = "20.4668N";
+		String startlocationname = "Dwarka Mor";
+		String startlatitude = "20.4568N";
 		String startlongitude = "85.23234E";
 		String endlocationid = "6543";
-		String endlocationname = "C R Park2";
-		String endlatitude = "22.4568N";
+		String endlocationname = "C R Park";
+		String endlatitude = "22.1568N";
 		String endlongitude = "79.88434E";
 		String roadId = "4321";
-		String roadName = "Shahjahan Road2";
+		String roadName = "Shahjahan Road";
 		
 		InsertAlerts st = new InsertAlerts();
 		Session session = st.conn.getSession();
 
+		SpeedAlertDao speedAlertDao = new SpeedAlertDao(session);
+		speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, locationId, locationName, latitude, longitude, roadId, roadName);
 		
-		for(int i=0;i<55;i++) {
-			String c = "";
-			if(i<10) { c+="0"+i;} else {c=Integer.toString(i);} 
-			String dtime = "2015-06-30 12:"+c+":18";
-			String stime = "2015-06-30 12:"+c+":38";
-			String starttime = "2015-06-30 12:"+c+":18";
-			String endtime = "2015-06-30 15:"+c+":38";
-			
-			SpeedAlertDao speedAlertDao = new SpeedAlertDao(session);
-			speedAlertDao.insertSpeedAlert(imei, dtime, stime, speed, locationId, locationName, latitude, longitude, roadId, roadName);
-			
-			TurnAlertDao turnAlertDao = new TurnAlertDao(session);
-			turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, locationId, locationName, latitude, longitude, roadId, roadName);
-			
-			XroadLogDao xroadLogDao = new XroadLogDao(session);
-			xroadLogDao.insertXroadLog(imei, dtime, stime, roadId, roadName, haltduration, speed, locationId, locationName, latitude, longitude);
-			
-			DistanceLogDao distanceLogDao = new DistanceLogDao(session);
-			distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
-	
-			NightLogDao nightLogDao = new NightLogDao(session);
-			nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
-	
-			GapLogDao gapLogDao = new GapLogDao(session);
-			gapLogDao.insertGapLog(imei, type, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname);
-	
-			TravelLogDao travelLogDao = new TravelLogDao(session);
-			travelLogDao.insertTravelLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
-		}
+		TurnAlertDao turnAlertDao = new TurnAlertDao(session);
+		turnAlertDao.insertTurnAlert(imei, dtime, stime, speed, angle, locationId, locationName, latitude, longitude, roadId, roadName);
+		
+		XroadLogDao xroadLogDao = new XroadLogDao(session);
+		xroadLogDao.insertXroadLog(imei, dtime, stime, roadId, roadName, haltduration, speed, locationId, locationName, latitude, longitude);
+		
+		DistanceLogDao distanceLogDao = new DistanceLogDao(session);
+		distanceLogDao.insertDistanceLog(imei, starttime, endtime, avgspeed, distance, maxspeed); 
+
+		NightLogDao nightLogDao = new NightLogDao(session);
+		nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
+
+		GapLogDao gapLogDao = new GapLogDao(session);
+		gapLogDao.insertGapLog(imei, type, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname);
+
+		TravelLogDao travelLogDao = new TravelLogDao(session);
+		travelLogDao.insertTravelLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, duration, avgspeed, distance, maxspeed);
 
 		st.close();
 	

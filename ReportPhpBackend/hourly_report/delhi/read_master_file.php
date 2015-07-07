@@ -14,7 +14,7 @@ function read_expected_time($account_id, $shift) {
     if ($DEBUG_OFFLINE) {
         $dir="C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master";
     }else if($DEBUG_ONLINE){
-        $dir = "/var/www/html/vts/test/src/php/gps_report/" . $account_id . "/master";
+        $dir = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master";
     } else {
         $dir = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master";
     }
@@ -113,7 +113,7 @@ function read_transporter($account_id, $shift) {
     if ($DEBUG_OFFLINE) {
         $dir="C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master";
     } else if($DEBUG_ONLINE) { 
-        $dir = "/var/www/html/vts/test/src/php/gps_report/" . $account_id . "/master";
+        $dir = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master";
     } else {
         $dir = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master";
     }
