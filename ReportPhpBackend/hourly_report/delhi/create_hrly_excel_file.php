@@ -473,7 +473,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 	$result_all_routes = array_unique($all_routes);	
 	//foreach($all_routes as $array_key => $array_value)	
 	foreach($result_all_routes as $array_key => $array_value)	
-    {
+        {
         $found = false;		
 		
 		//echo "<br>".$array_value;		
