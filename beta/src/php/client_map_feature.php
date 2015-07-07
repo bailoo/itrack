@@ -287,7 +287,7 @@
                             $transporterRouteArr[$csvTransporterArr[0]]=$csvTransporterArr[1];
 
                     }
-                    print_r($transporterRouteArr);
+                    //print_r($transporterRouteArr);
                     $_SESSION['uniqueRouteTransporters'] = json_encode($transporterRouteArr);
 		}
 		
