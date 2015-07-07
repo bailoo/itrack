@@ -550,7 +550,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                               }
                               else
                               { */
-                            calculate_distance(trim($tmp_coord[0]), $lat_sel[$IMEI[$i]][$y], trim($tmp_coord[1]), $lng_sel[$IMEI[$i]][$y], &$distance_plant);
+                            calculate_distance(trim($tmp_coord[0]), $lat_sel[$IMEI[$i]][$y], trim($tmp_coord[1]), $lng_sel[$IMEI[$i]][$y], $distance_plant);
                             //}							
                             //echo "\nPlantLat=".$plant_lat_local[$Vehicle[$i]][$RouteNo[$i]]." ,PlantLng=".$plant_lng_local[$Vehicle[$i]][$RouteNo[$i]]." ,LatSel=".$lat_sel[$y]." ,LngSel=".$lng_sel[$y];
                             //echo "\nDistance1=".$distance_plant." ,tmp_radius[p]=".$tmp_radius[$p];
@@ -608,7 +608,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                                   }
                                   else
                                   { */
-                                calculate_distance(trim($tmp_coord[0]), $lat_sel[$IMEI[$i]][$y], trim($tmp_coord[1]), $lng_sel[$IMEI[$i]][$y], &$distance_plant);
+                                calculate_distance(trim($tmp_coord[0]), $lat_sel[$IMEI[$i]][$y], trim($tmp_coord[1]), $lng_sel[$IMEI[$i]][$y], $distance_plant);
                                 //}
                                 //echo "\nPlantLat=".$plant_lat_local[$Vehicle[$i]][$RouteNo[$i]]." ,PlantLng=".$plant_lng_local[$Vehicle[$i]][$RouteNo[$i]]." ,LatSel=".$lat_sel[$y]." ,LngSel=".$lng_sel[$y];
                                 //echo "\nVehicle=".$Vehicle[$i]." ,Distance1=".$distance_plant." ,tmp_radius[p]=".$tmp_radius[$p];
@@ -665,7 +665,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                           }
                           else
                           { */
-                        calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, &$distance);
+                        calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, $distance);
                         //}
                         //if(($distance > 0.0100) || ($f== $total_lines-2) )
                         //echo "\nF=".$f." ,total_lines=".$total_lines;										
@@ -678,7 +678,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                           }
                           else
                           { */
-                        calculate_distance($latlast, $lat_cr, $lnglast, $lng_cr, &$distance1);
+                        calculate_distance($latlast, $lat_cr, $lnglast, $lng_cr, $distance1);
                         //}
                         //echo "<br>Distance=".$distance1;
 
@@ -1183,8 +1183,8 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
           }
           else
           { */
-        calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, &$distance_station1);
-        calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, &$distance_station2);
+        calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, $distance_station1);
+        calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, $distance_station2);
         //}
 
 
