@@ -22,35 +22,37 @@
 	$customerArr=array();
 	while($row=mysql_fetch_object($result))
 	{
-		//$station[$size]=preg_replace('/[^a-zA-Z0-9-]/', '', $row->station_name);
-		//$station[$size]=preg_replace('/[^a-zA-Z0-9-]/', '', $row->station_name);
-		if($row->customer_no=="12")
-		{
-			echo "true";
-		}
-		$station[$size]=$row->station_name;
-		$customer[$size]=$row->customer_no;
-		$coord = $row->station_coord;
-		$type[$size] = $row->type;  	
-		$coord1 = explode(',',$coord);
-		$lat[$size]= substr(trim($coord1[0]),0,-1);
-		$lng[$size]= substr(trim($coord1[1]),0,-1);
-		$customerArr[trim($row->customer_no)]= "marker lat='".trim($lat[$size])."' lng='".trim($lng[$size])."' station='".$station[$size]."' customer='".trim($row->customer_no)."'";
-		//$customerArr[trim($row->customer_no)]= "marker lat='".trim($lat[$size])."' lng='".trim($lng[$size])."' customer='".trim($row->customer_no)."'";
-		$size++;
+            //$station[$size]=preg_replace('/[^a-zA-Z0-9-]/', '', $row->station_name);
+            //$station[$size]=preg_replace('/[^a-zA-Z0-9-]/', '', $row->station_name);
+            /*if($row->customer_no=="12") // for debug
+            {
+                echo "true";
+            }*/
+            $station[$size]=$row->station_name;
+            $station[$size] = str_replace('/', 'by', $station[$size]);
+            $station[$size] = str_replace('\\', 'by', $station[$size]);
+            $station[$size] = str_replace('&', 'and', $station[$size]);
+            
+            $customer[$size]=$row->customer_no;
+            $coord = $row->station_coord;
+            $type[$size] = $row->type;  	
+            $coord1 = explode(',',$coord);
+            $lat[$size]= substr(trim($coord1[0]),0,-1);
+            $lng[$size]= substr(trim($coord1[1]),0,-1);
+            $customerArr[trim($row->customer_no)]= "marker lat='".trim($lat[$size])."' lng='".trim($lng[$size])."' station='".$station[$size]."' customer='".trim($row->customer_no)."'";
+            //$customerArr[trim($row->customer_no)]= "marker lat='".trim($lat[$size])."' lng='".trim($lng[$size])."' customer='".trim($row->customer_no)."'";
+            $size++;
 	}	
 	$fh = fopen($pathtowrite, 'a') or die("can't open file pathtowrite"); //append 
    
 	for($i=0;$i<$size;$i++)
 	{
-		//$station[$i] = "abc";
-		//$line = "\n".$line.'< marker lat="'.trim($lat[$i]).'" lng="'.trim($lng[$i]).'" station="'.$station[$i].'" customer="'.$customer[$i].'"/>';
-		$station[$i] = str_replace('/', 'by', $station[$i]);
-		$station[$i] = str_replace('\\', 'by', $station[$i]);
-		$station[$i] = str_replace('&', 'and', $station[$i]);
-		$linetowrite = "\n<marker lat=\"".trim($lat[$i])."\" lng=\"".trim($lng[$i])."\" station=\"".$station[$i]."\" customer=\"".$customer[$i]."\" type=\"".$type[$i]."\"/>";
-		fwrite($fh, $linetowrite);  
-		//echo "In loop";     	
+            //$station[$i] = "abc";
+            //$line = "\n".$line.'< marker lat="'.trim($lat[$i]).'" lng="'.trim($lng[$i]).'" station="'.$station[$i].'" customer="'.$customer[$i].'"/>';
+            
+            $linetowrite = "\n<marker lat=\"".trim($lat[$i])."\" lng=\"".trim($lng[$i])."\" station=\"".$station[$i]."\" customer=\"".$customer[$i]."\" type=\"".$type[$i]."\"/>";
+            fwrite($fh, $linetowrite);  
+            //echo "In loop";     	
 	} //loop $j closed
 
 	fwrite($fh, "\n<a1 datetime=\"unknown\"/>");       
@@ -75,15 +77,15 @@
 	//$plantArr=array();
 	while($row=mysql_fetch_object($result))
 	{
-		$station[$size]=$row->station_name;
-		$customer[$size]=$row->customer_no;
-		$coord = $row->station_coord;
-		$type[$size] = $row->type;  	
-		$coord1 = explode(',',$coord);
-		$lat[$size]= trim($coord1[0]);
-		$lng[$size]= trim($coord1[1]);  
-		//$plantArr[$row->customer_no]="marker lat='".trim($lat[$size])."' lng='".trim($lng[$size])."' station='".$station[$size]."' customer='".trim($row->customer_no)."'";
-		$size++;
+            $station[$size]=$row->station_name;
+            $customer[$size]=$row->customer_no;
+            $coord = $row->station_coord;
+            $type[$size] = $row->type;  	
+            $coord1 = explode(',',$coord);
+            $lat[$size]= trim($coord1[0]);
+            $lng[$size]= trim($coord1[1]);  
+            //$plantArr[$row->customer_no]="marker lat='".trim($lat[$size])."' lng='".trim($lng[$size])."' station='".$station[$size]."' customer='".trim($row->customer_no)."'";
+            $size++;
 	}	
 	$fh = fopen($pathtowrite, 'a') or die("can't open file pathtowrite"); //append 
    
@@ -185,7 +187,13 @@
 			if($strPosition!="")
 			{
 				$morningFileName=$fileEM;
-			}						
+			}
+                        $strPosition = strpos($fileNameEM[5], '#6');
+			//echo "mfm=".$morningFileName."<br>";
+			if($strPosition!="")
+			{
+                            $transporterName=$fileEM;
+			}
 		}
 		if(file_exists($eveningFileName))
 		{
@@ -247,10 +255,10 @@
 				$csvMorningArr=fgetcsv($file);	
 				//echo "plantNo=".$plantArr[$csvMorningArr[0]]."<br>";
 				$trimCustomerNo=trim($csvMorningArr[0]);
-				if(trim($csvMorningArr[0])=="12")
+				/*if(trim($csvMorningArr[0])=="12")  // for debug
 				{
 					echo "<br>present in file Morning";
-				}
+				}*/
 				if($customerArr[$trimCustomerNo]!="")
 				{
 					//echo "plantNo=".$customerArr[$trimCustomerNo]."<br>";
@@ -270,6 +278,19 @@
 			fclose($fh);
 			$_SESSION['uniqueCustomerRouteMorning'] = $pathtowrite;
 			$_SESSION['uniqueRouteArrMorning'] = $routeArrMorning;
+		}
+                if(file_exists($transporterName))
+		{			
+                    $transporterRouteArr=array();
+                    $file = fopen($transporterName,"r");
+                    while(! feof($file))
+                    {
+                            $csvTransporterArr=fgetcsv($file);
+                            $transporterRouteArr[$csvTransporterArr[0]]=$csvTransporterArr[1];
+
+                    }
+                    //print_r($transporterRouteArr);
+                    $_SESSION['uniqueRouteTransporters'] = json_encode($transporterRouteArr);
 		}
 		
 		/*$pathtowrite="";
