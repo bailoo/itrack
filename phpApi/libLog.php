@@ -199,7 +199,7 @@ function getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc)
 function getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc)
 {
 
-	global $TZ;
+	$TZ = '0530';
 
 	$table = ($deviceTime)?'log1':'log2';
 	$qtime = ($deviceTime)?'dtime':'stime';
