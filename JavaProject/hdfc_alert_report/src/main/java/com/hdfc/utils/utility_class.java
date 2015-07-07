@@ -106,19 +106,23 @@ public class utility_class {
 		return seconds;		
 	}
 	
-	public static String get_hms(double timeInSeconds) {
+	public static String get_hms(long timeInSeconds) {
 		   
 		if(timeInSeconds>86400)
 		 timeInSeconds = 86400;
 			  
-		double hours, minutes, seconds;
+		long hours, minutes, seconds;
+		String hours_1, minutes_1, seconds_1;
 		hours = timeInSeconds / 3600;
 		timeInSeconds = timeInSeconds - (hours * 3600);
 		minutes = timeInSeconds / 60;
 		timeInSeconds = timeInSeconds - (minutes * 60);
 		seconds = timeInSeconds;
 		//System.out.println(hours + " hour(s) " + minutes + " minute(s) " + seconds + " second(s)");
-		return (hours+":"+minutes+":"+seconds);
+		if(hours<10){ hours_1="0"+hours;} else {hours_1= ""+hours;}
+		if(minutes<10){ minutes_1="0"+minutes;} else {minutes_1=""+minutes;}
+		if(seconds<10){ seconds_1="0"+seconds;} else {seconds_1=""+seconds;}
+		return (hours_1+":"+minutes_1+":"+seconds_1);
 	}
 	
 	

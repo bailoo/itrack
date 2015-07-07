@@ -73,8 +73,8 @@ public class worker {
 		
 		//previous_date1 = "2015-06-14 13:19:35";
 		//previous_date2 = "2015-06-14 13:20:08";	
-		previous_date1 = "2015-06-01 00:00:00";
-		previous_date2 = "2015-06-15 23:30:37";
+		previous_date1 = "2015-06-14 00:00:00";
+		previous_date2 = "2015-06-14 23:30:37";
 //		previous_date1 = "2015-04-26 00:00:00";
 //		previous_date2 = "2015-06-15 23:59:00";
 				
@@ -138,8 +138,8 @@ public class worker {
 		    report_distance.AlertTime.clear();*/
 			//###### TEMPORARY WRITE
 			//System.out.println("CALL="+i);
-			write_to_database(init.device_imei_no.get(i), session);
-			System.out.println("Processed IMEI:"+init.device_imei_no.get(i)+" -"+i);
+//			write_to_database(init.device_imei_no.get(i), session);
+//			System.out.println("Processed IMEI:"+init.device_imei_no.get(i)+" -"+i);
 		}
 		
 		fd.close();
@@ -227,7 +227,8 @@ public class worker {
 		//CHECK AND PUSH
 //		report_distance.action_report_distance(imei, device_time, startdate, enddate, interval, lat, lng, speed, data_size, record_count);
 //		report_travel.action_report_travel(imei, device_time, startdate, enddate, interval, lat, lng, speed, data_size, record_count);
-		report_turning_violation.action_report_truning_violation(imei, device_time, sts, startdate, enddate, interval, lat, lng, speed, data_size, record_count);
+//		report_turning_violation.action_report_truning_violation(imei, device_time, sts, startdate, enddate, interval, lat, lng, speed, data_size, record_count);
+		report_travel.action_report_travel(imei, device_time, sts, startdate, enddate, interval, lat, lng, speed, data_size, record_count);
 		
 	}
 	
