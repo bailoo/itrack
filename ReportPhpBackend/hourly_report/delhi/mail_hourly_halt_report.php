@@ -8,7 +8,7 @@ global $DEBUG_OFFLINE;
 $DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
 $CREATE_MASTER = false;
-$MAIN_DEBUG = false;
+$MAIN_DEBUG = true;
 //#################
 
 $isReport = true;
@@ -60,13 +60,13 @@ if (file_exists($tmp)) {
 } else {
     "Does not exist";
 }
-echo "\nD4";
+//echo "\nD4";
 include_once($abspath . '/sortXmlData.php');
-echo "\nD5:" . $abspath;
+//echo "\nD5:" . $abspath;
 //$tmp = $abspath.'/getXmlData.php';
 //if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
 include_once($abspath . '/getXmlData.php');
-echo "\nD6";
+//echo "\nD6";
 
 include_once($abspath . "/calculate_distance.php");
 include_once($abspath . "/report_title.php");
@@ -142,8 +142,8 @@ include_once("get_route_db_detail.php");
 //$pdate = date('Y-m-d', strtotime($date .' -1 day'));
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-07-05');
-    $date = date('2015-07-06');
+    $pdate = date('2015-07-06');
+    $date = date('2015-07-07');
 } else {
     $date = date('Y-m-d');
 }
@@ -167,7 +167,7 @@ $shift_mor_date2 = $date . " 22:00:00";
 
 if ($MAIN_DEBUG) {
     //$current_time = $date." 10:22:00";	//current date ev
-    $current_time = $date . " 19:00:00";      //current date mor
+    $current_time = $date . " 12:00:00";      //current date mor
 } else {
     $current_time = date('Y-m-d H:i:s');
 }
@@ -181,8 +181,8 @@ $mor_run_start_time = $date . " 10:00:00";
 
 if ($MAIN_DEBUG) {
     $shift_ev1 = false;
-    $shift_ev2 = false;
-    $shift_mor = true;
+    $shift_ev2 = true;
+    $shift_mor = false;
 } else {
     $shift_ev1 = false;
     $shift_ev2 = false;
