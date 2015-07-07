@@ -26,17 +26,29 @@ $app->get('/getlog/:imei/:dtime1/:dtime2/', function ($imei, $dtime1, $dtime2) {
 
 	$o_cassandra = new Cassandra();
 	$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
-	
 	$deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
 	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
 	$st_results = getImeiDateTimes($o_cassandra, $imei, $dtime1, $dtime2, $deviceTime, $orderAsc);
-
-	//$st_results = getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc);
-	//$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
 	echo json_encode($st_results);
 	$o_cassandra->close();
 
 });
+
+
+$app->get('/getlastlog/:imei/', function ($imei) {
+	
+	require_once 'Cassandra/Cassandra.php';
+	require_once 'libLog.php';
+	
+	$o_cassandra = new Cassandra();
+	$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+	$st_results = getLastSeen($o_cassandra,$imei);
+	echo json_encode($st_results);
+	$o_cassandra->close();
+
+});
+
+
 
 $app->run();
 
