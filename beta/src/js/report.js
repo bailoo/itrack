@@ -2730,7 +2730,7 @@ function action_alert_polyline_route_violation(obj)
                     "&start_date=" + encodeURI( document.getElementById("date1").value )+
                     "&end_date=" + encodeURI( document.getElementById("date2").value )+  
                     "&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
-                    //alert("riz:"+poststr);  
+                   // alert("riz:"+poststr);  
   	}                     
     //makePOSTRequest('src/php/action_alert_polyline_route_violation.htm', poststr);
 	
@@ -2744,7 +2744,9 @@ function action_alert_polyline_route_violation(obj)
 	success: function(response){
 		//console.log(response);
 		//alert("response="+response);		
-		
+		 document.getElementById('reportPrevPage').style.display="none";
+                document.getElementById('rightMenu').style.display="";
+                document.getElementById('bodyspan').style.display="";
 		$("#bodyspan").html(response);
 		//document.getElementById('loading_pending_tanker').innerHTML="";	
 	},

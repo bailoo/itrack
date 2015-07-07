@@ -1369,7 +1369,7 @@
 											"</tr>"+
 										"</table>",';  
 										
-										echo'"<table border=0 class=\'mystyle\'>"+
+										/*echo'"<table border=0 class=\'mystyle\'>"+
 											"<tr>"+ 
 												"<td valign=\'top\'>"+
 													"<table border=0 class=\'mystyle\'>"+
@@ -1400,11 +1400,11 @@
 													"</table>"+
 												"</td>"+
 											"</tr>"+
-										"</table>",'; 
+										"</table>",'; */
 							}			
 								if($flag_station)
 								{
-									echo'"<table border=0 class=\'mystyle\'>"+
+									/*echo'"<table border=0 class=\'mystyle\'>"+
 											"<tr>"+ 
 												"<td valign=\'top\'>"+
 													"<table border=0 class=\'mystyle\'>"+
@@ -1435,7 +1435,7 @@
 													"</table>"+
 												"</td>"+
 											"</tr>"+
-										"</table>",';
+										"</table>",';*/
 										if($_SERVER['HTTP_X_FORWARDED_FOR']=="172.26.48.195")
 										{
 										echo'"<table border=0 class=\'mystyle\'>"+
@@ -1938,7 +1938,7 @@
 									
 								//if($person_user_type!=1)
 								//{                  
-								  if($flag_performance)
+								  /*if($flag_performance)
 								  {
 									echo'"<table border=0 class=\'mystyle\'>"+
 											"<tr>"+ 
@@ -1972,7 +1972,7 @@
 												"</td>"+
 											"</tr>"+
 										"</table>",';                  
-								  }
+								  }*/
 								  
 								  //if($flag_performance)
 								  //{

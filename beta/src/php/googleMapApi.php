@@ -44,8 +44,8 @@ class GoogleMapHelper{
 		{
 			extract($options);
 		}
-		$width=@$div['width'];
-		$height=@$div['height'];
+		$width=$div['width'];
+		$height=$div['height'];
 		
 		if( !isset($id) )		$id = $this->defaultId;
 		if( !isset($width) )		$width = $this->defaultWidth;
@@ -56,157 +56,323 @@ class GoogleMapHelper{
 		if( !isset($custom) )		$custom = $this->defaultCustom;
 		if( !isset($localize) )		$localize = $this->defaultLocalize;
 		//if( !isset($marker) )		$marker = $this->defaultMarker;
-		if( !isset($markerIcon) ) 	$markerIcon = @$this->defaultMarkerIcon;
+		if( !isset($markerIcon) ) 	$markerIcon = $this->defaultMarkerIcon;
 		if( !isset($markerShadow) )	$markerShadow = $this->defaultMarkerShadow;
 		if( !isset($markerTitle) ) 	$markerTitle = $this->defaultMarkerTitle;
 		if( !isset($infoWindow) ) 	$infoWindow = $this->defaultInfoWindow;
 		if( !isset($windowText) ) 	$windowText = $this->defaultWindowText;
 		if( !isset($lat) ) 	$latitude = $this->defaultInfoWindow;
 		if( !isset($lng) ) 	$longitude = $this->defaultWindowText;
-		
-		$cPlant=@$options['chillingPlant'];
-echo"<style>		
-		.controls 
-		{
-			margin-top: 16px;
-			border: 1px solid transparent;
-			border-radius: 2px 0 0 2px;
-			box-sizing: border-box;
-			-moz-box-sizing: border-box;
-			height: 32px;
-			outline: none;
-			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-		}
+		$cPlant=$options['chillingPlant'];
+		echo"	
+		<style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+      .controls {
+        margin-top: 16px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
 
-		#pac-input 
-		{
-			background-color: #fff;
-			padding: 0 11px 0 13px;
-			width: 200px;
-			font-family: Roboto;
-			font-size: 15px;
-			font-weight: 300;
-			text-overflow: ellipsis;
-		}
+      #pac-input {
+        background-color: #fff;
+        padding: 0 11px 0 13px;
+        width: 200px;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        text-overflow: ellipsis;
+      }
 
-		#pac-input:focus 
-		{
-			border-color: #4d90fe;
-			margin-left: -1px;
-			padding-left: 14px;  /* Regular padding-left + 1. */
-			width: 201px;
-		}
+      #pac-input:focus {
+        border-color: #4d90fe;
+        margin-left: -1px;
+        padding-left: 14px;  /* Regular padding-left + 1. */
+        width: 201px;
+      }
 
-		.pac-container 
-		{
-			font-family: Roboto;
-		}
+      .pac-container {
+        font-family: Roboto;
+      }
 
-		#type-selector 
-		{
-			color: #fff;
-			background-color: #4d90fe;
-			padding: 5px 11px 0px 11px;
-		}
+      #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+      }
 
-		#type-selector label 
-		{
-			font-family: Roboto;
-			font-size: 13px;
-			font-weight: 300;
-		}
-		.live_td_css1 
-		{
-			color: black;	
-			//background-color: white;
-			font-family: 'Lucida Grande', 'Arial', sans-serif;
-			font-size: 11px;
-			font-weight: bold;
-			text-align: left;
-			// width: 13%;  
-			white-space: nowrap;
-		}
-		.live_td_css2 
-		{
-			color: blue;
-			//background-color: white;
-			font-family: 'Lucida Grande', 'Arial', sans-serif;
-			font-size: 11px;
-			text-align: left;
-			// width: 55%;     
-			white-space: nowrap;
-		}
+      #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+}
+
+    </style>
+<style>
+  .live_td_css1 {
+   color: black;
+   //background-color: white;
+   font-family: 'Lucida Grande', 'Arial', sans-serif;
+   font-size: 11px;
+   font-weight: bold;
+   text-align: left;
+  // width: 13%;  
+   white-space: nowrap;
+ }
+  .live_td_css2 {
+   color: blue;
+   //background-color: white;
+   font-family: 'Lucida Grande', 'Arial', sans-serif;
+   font-size: 11px;
+   text-align: left;
+  // width: 55%;     
+   white-space: nowrap;
+ }
  </style>";
-	@$map .="<script>
-				//alert('test');
+		
+		$map .="<div id='$id' style='width:$width; height:$height; $style'></div>
+		<!--<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false'></script>-->
+               <!--<script type='text/javascript' src='http://maps.google.com/maps/api/js?sensor=false'></script> -->    
+			<script>
+			//alert('test');
 				var markers = new Array();
 				var markersIds = new Array();
-				var infowindow;
+				 var infowindow;
 				var geocoder = new google.maps.Geocoder();
-				var map;
-				var map_canvas;
-				var mapOptions = 
-				{
-					zoom: 5,
-					center: new google.maps.LatLng(22.755920681486, 78.2666015625)
-				};
-				map_canvas = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+                                var map;
+				/*function geocodeAddress(address, action, map,markerId, markerTitle, markerIcon, markerShadow, windowText, showInfoWindow) {
+				    geocoder.geocode( { 'address': address}, function(results, status) {
+				      if (status == google.maps.GeocoderStatus.OK) {
+				      	if(action =='setCenter'){
+				      		setCenterMap(results[0].geometry.location);
+				      	}
+				      	if(action =='setMarker'){
+				      		//return results[0].geometry.location;
+				      		setMarker(map,markerId,results[0].geometry.location,markerTitle, markerIcon, markerShadow,windowText, showInfoWindow);
+				      	}
+				      	if(action =='addPolyline'){
+				      		return results[0].geometry.location;
+				      	}
+				      } else {
+				        alert('Geocode was not successful for the following reason: ' + status);
+				        return null;
+				      }
+				    });
+				}*/";
 
-				var mining_test=document.getElementById('category').value;
-				//alert('mining_test='+mining_test);
-				if(mining_test=='5' || (document.getElementById('mining_user').value==5))
-				{
-					//alert('in if');
-					show_milestones(map_canvas);
-				}
-				else if(document.thisform.geofence_feature.checked==true)/////// for other users
-				{
-					show_geofence(map_canvas);				
-				}
-				var input = (document.getElementById('pac-input'));		
-				map_canvas.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-				var searchBox = new google.maps.places.SearchBox((input)); 
-				google.maps.event.addListener(searchBox, 'places_changed', function() 
-				{
-					var places = searchBox.getPlaces();
-					
-					// For each place, get the icon, place name, and location.
-					markers = [];
-					var bounds = new google.maps.LatLngBounds();
-					for (var i = 0, place; place = places[i]; i++) 
-					{
-						var image = 
+		$map .= "
+			var initialLocation;
+			var jsChillingPlant=".$cPlant.";
+			//alert('js='+jsChillingPlant);
+initialLocation = new google.maps.LatLng({$lat},{$lng});
+//alert('INIT='+initialLocation);
+		    var browserSupportFlag =  new Boolean();
+		    var {$id};
+		    var myOptions = {
+			 scaleControl: true,
+		      zoom: {$zoom},
+center: initialLocation,
+		      mapTypeId: google.maps.MapTypeId.{$type}
+		      ".(($custom != "")? ",$custom" : "")."
+
+		    };
+		    {$id} = new google.maps.Map(document.getElementById('$id'), myOptions);	
+			var mining_test=document.getElementById('category').value;
+			//alert('mining_test='+mining_test);
+			if(mining_test=='5' || (document.getElementById('mining_user').value==5))
+			{
+				//alert('in if');
+				show_milestones(map_canvas);
+			}
+			else if(document.thisform.geofence_feature.checked==true)/////// for other users
+			{
+				show_geofence(map_canvas);				
+			}
+var input = (document.getElementById('pac-input'));		
+  map_canvas.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  var searchBox = new google.maps.places.SearchBox((input)); 
+  google.maps.event.addListener(searchBox, 'places_changed', function() {
+    var places = searchBox.getPlaces();
+
+    /*for (var i = 0, marker; marker = markers[i]; i++) {
+      marker.setMap(null);
+    }*/
+
+    // For each place, get the icon, place name, and location.
+    markers = [];
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0, place; place = places[i]; i++) {
+      var image = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+
+      // Create a marker for each place.
+      var marker = new google.maps.Marker({
+        map: map_canvas,
+        icon: image,
+        title: place.name,
+        position: place.geometry.location
+      });
+
+      markers.push(marker);
+
+      bounds.extend(place.geometry.location);
+    }
+    map_canvas.fitBounds(bounds);
+  });
+
+  // Bias the SearchBox results towards places that are within the bounds of the
+  // current map's viewport.
+  google.maps.event.addListener(map_canvas, 'bounds_changed', function() {
+    var bounds = map_canvas.getBounds();
+    searchBox.setBounds(bounds);
+  });			
+
+		";
+		if(isset($latitude) && isset($longitude)) 
+                    $map .="setCenterMap(new google.maps.LatLng({$latitude}, {$longitude}));";
+		/*else if(isset($address)) 
+                    $map .="var centerLocation = geocodeAddress('{$address}','setCenter'); setCenterMap(centerLocation);";*/
+		else 
+                    $map .="setCenterMap(new google.maps.LatLng({$this->defaultLatitude}, {$this->defaultLongitude}));";
+		$map .= "
+			function localize(){
+		        if(navigator.geolocation) { // Try W3C Geolocation method (Preferred)
+		            browserSupportFlag = true;
+		            navigator.geolocation.getCurrentPosition(function(position) {
+		              initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+		              {$id}.setCenter(initialLocation);";
+		              if (!preg_match('/^https?:\/\//', $markerIcon)) 
+					  //$markerIcon = $this->webroot . IMAGES_URL . '/' . $markerIcon;
+					  $markerIcon=''; 
+					  if($marker) $map .= "setMarker({$id},'center',initialLocation,'{$markerTitle}','{$markerIcon}','{$markerShadow}','{$windowText}', ".($infoWindow? 'true' : 'false').");";
+
+		            $map .= "}, function() {
+		              handleNoGeolocation(browserSupportFlag);
+		            });
+
+		        } else if (google.gears) { // Try Google Gears Geolocation
+					browserSupportFlag = true;
+					var geo = google.gears.factory.create('beta.geolocation');
+					geo.getCurrentPosition(function(position) {
+						initialLocation = new google.maps.LatLng(position.latitude,position.longitude);
+						{$id}.setCenter(initialLocation);";
+					  	if($marker) $map .= "setMarker({$id},'center',initialLocation,'{$markerTitle}','{$markerIcon}','{$markerShadow}','{$windowText}', ".($infoWindow? 'true' : 'false').");";
+
+		            $map .= "}, function() {
+		              handleNoGeolocation(browserSupportFlag);
+		            });
+		        } else {
+		            // Browser doesn't support Geolocation
+		            browserSupportFlag = false;
+		            handleNoGeolocation(browserSupportFlag);
+		        }
+		    }
+
+		    function handleNoGeolocation(errorFlag) {
+		        if (errorFlag == true) {
+		          initialLocation = noLocation;
+		          contentString = \"Error: The Geolocation service failed.\";
+		        } else {
+		          initialLocation = noLocation;
+		          contentString = \"Error: Your browser doesn't support geolocation.\";
+		        }
+		        {$id}.setCenter(initialLocation);
+		        {$id}.setZoom(3);
+		    }";
+
+		    $map .= "
+			function setMarker(map, id, position, title, icon, dateTime, vehicleName,vehicleSerial,vehcleNumber, speed,ioStr){
+                        //alert('dateTime='+dateTime);
+				var index = markers.length;
+				markersIds[markersIds.length] = id;
+				markers[index] = new google.maps.Marker({
+		            position: position,
+		            map: map,
+		            icon: icon,		         
+		            title:title
+		        });
+                        var contentString='';
+                        contentString='<table>'+
+                                                '<tr>'+
+                                                    '<td>Vehicle Name</td>'+
+                                                    '<td>:</td>'+
+                                                    '<td>'+vehicleName+'</td>'+
+                                                   '</tr>'+
+                                                   '<tr>'+
+                                                    '<td>Vehicle Serial</td>'+
+                                                    '<td>:</td>'+
+                                                    '<td>'+vehicleSerial+'</td>'+
+                                                   '</tr>'+
+                                                    '<tr>'+
+                                                    '<td>Vehicle Number</td>'+
+                                                    '<td>:</td>'+
+                                                    '<td>'+vehcleNumber+'</td>'+
+                                                   '</tr>'+
+                                                   '<tr>'+
+                                                    '<td>Date Time</td>'+
+                                                    '<td>:</td>'+
+                                                    '<td>'+dateTime+'</td>'+ioStr+
+                                                   '</tr>';
+                                         
+                                            
+                                       
+                                         var address_tmp='';
+						//var latlng = new google.maps.LatLng(lat, lng);
+						//alert('latlng='+latlng);
+						 
+                                                //alert('address_tmp='+address_tmp);
+                                            
+                     //alert('contentString='+contentString);
+		     	if(contentString != ''){
+			     	var infowindow = new google.maps.InfoWindow();
+			     	google.maps.event.addListener(markers[index], 'click', function() {
+                                                geocoder.geocode({'latLng': position}, function(results, status) 
 						{
-							url: place.icon,
-							size: new google.maps.Size(71, 71),
-							origin: new google.maps.Point(0, 0),
-							anchor: new google.maps.Point(17, 34),
-							scaledSize: new google.maps.Size(25, 25)
-						};
-
-						// Create a marker for each place.
-						var marker = new google.maps.Marker({
-						map: map_canvas,
-						icon: image,
-						title: place.name,
-						position: place.geometry.location
-						});
-						markers.push(marker);
-						bounds.extend(place.geometry.location);
-					}
-					map_canvas.fitBounds(bounds);
-				});
-				// Bias the SearchBox results towards places that are within the bounds of the
-				// current map's viewport.
-				google.maps.event.addListener(map_canvas, 'bounds_changed', function() 
-				{
-					var bounds = map_canvas.getBounds();
-					searchBox.setBounds(bounds);
-				});";
-				$map .= @"
+							//alert('in gecode');
+							if (status == google.maps.GeocoderStatus.OK) 
+							{
+								//alert('in gecode 1');
+								if(results[1]) 
+								{
+									contentString=contentString+'<tr>'+
+																'<td>Address</td>'+
+																'<td>:</td>'+
+																'<td>'+results[1].formatted_address+'</td>'+
+																'</tr>'+ioStr+
+																'</table>';									
+									infowindow.setContent(contentString);
+									infowindow.open(map_canvas, markers[index]);
+								} 
+								else 
+								{
+									alert('No results found');
+								}
+							} 
+							else 
+							{
+								alert('Geocoder failed due to: ' + status);
+							}
+						});						
+        			});
+		        }
+		     }";
+			  $map .= "
 				function infoCallback(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,ioStr,marker,maxSpeed,maxHaltTime) 
 				{	
-					//alert('in call back');
 					return function() 
 					{
 						 var contentString='';
@@ -649,7 +815,7 @@ echo"<style>
 									{
 										tmp_address=landmark;
 									}
-									contentString='<table border=\"0\">'+
+									contentString='<table>'+
 									'<tr>'+
 									'<td class=\"live_td_css1\">Vehicle Name</td>'+
 									'<td width=\"1%\">:</td>'+
@@ -696,7 +862,14 @@ echo"<style>
 									'<br><form action=#>';
 									if(feature_id_map==1)
 									{
-										contenttmpstr='<em>Add </em><select id=landmark_type onchange=display_landmark_type(this.value)><option value=landmark>Landmark</option><option value=station>Station</option></select></em>';
+										if(jsChillingPlant==1)
+										{
+											contenttmpstr='<em>Add </em><select id=landmark_type onchange=display_landmark_type(this.value)><option value=landmark>Landmark</option><option value=0>Customer</option><option value=1>Plant</option><option value=2>Chilling Plant</option></select></em>';	
+										}
+										else
+										{
+											contenttmpstr='<em>Add </em><select id=landmark_type onchange=display_landmark_type(this.value)><option value=landmark>Landmark</option><option value=0>Customer</option><option value=1>Plant</option></select></em>';
+										}
 									}
 									else
 									{
@@ -985,11 +1158,11 @@ echo"<style>
 					var lnmark_data1;
 					//var icon1='images/landmark.png';
 					//var icon1='images/landmark.png';
-						var icon1 = {
-										url: 'images/landmark.png',
-										size: new google.maps.Size(10, 10),
-										scaledSize: new google.maps.Size(10, 10)
-						};
+					var icon1 = {
+								  url: 'images/landmark.png',
+								  size: new google.maps.Size(10, 10),
+								scaledSize: new google.maps.Size(10, 10)
+								};
 					for(i=0; i<lnmark_data.length; i++) 
 					{
 						lnmark_data1=lnmark_data[i].split('@');	
@@ -1057,7 +1230,7 @@ echo"<style>
 						}
 						else
 						{
-							//alert('speed='+speed[i]);
+					
 							if((speed[i]>=1 && speed[i]<=20) && (document.forms[0].m1.value==1))
 							{
 								icon='images/yellow_Marker1.png';
@@ -1079,7 +1252,6 @@ echo"<style>
 								icon='images/green_Marker1.png';
 							}*/
 						}
-						//alert('icon='+icon);
 						var position;
 						var lat_tmp=latarr[i];
 						var lng_tmp=lngarr[i];
@@ -1097,7 +1269,7 @@ echo"<style>
 						{
 							var marker = new google.maps.Marker
 							({
-								position: position,	 map: map, icon: icon, title:title
+								position: position,	 map: map, icon: icon
 							});	
 						}
 						else
@@ -1227,8 +1399,9 @@ echo"<style>
 						 }, i );
 					function playgoogle()
 					{
+						var play_stop=document.getElementById('play_stop').value;
 						var bounds =new google.maps.LatLngBounds();
-						if(i==latarr.length-1){
+						if(i==latarr.length-1 || play_stop=='Track Play'){
 								map.setCenter(latlngbounds.getCenter());
 								map.fitBounds(latlngbounds);
 								
@@ -1241,6 +1414,7 @@ echo"<style>
 								{
 									show_geofence(map_canvas);				
 								}
+								document.getElementById('play_stop').value='Track Play';
 							return false;
 						}
 						//alert('Firts');
@@ -1298,7 +1472,7 @@ echo"<style>
 							  // alert('in ');
 								var marker = new google.maps.Marker
 									({
-										position: position,	 map: map, icon: icon, title:title
+										position: position,	 map: map, icon: icon
 									});
 								
 							}
@@ -1423,10 +1597,10 @@ echo"<style>
 					var latlngbounds = new google.maps.LatLngBounds();
 					var image;
 					image = {
-								url: 'images/person_1.png',
-								size: new google.maps.Size(25, 25),
+								  url: 'images/person_1.png',
+								  size: new google.maps.Size(25, 25),
 								scaledSize: new google.maps.Size(25, 25)
-							};
+								};
 					var str='';
 					var strURL='src/php/select_landmark.php?content='+str;        
 					var req = getXMLHTTP();
@@ -1451,9 +1625,9 @@ echo"<style>
 						}
 						else
 						{
-								image = {
-								url: 'images/person_1.png',
-								size: new google.maps.Size(25, 25),
+							image = {
+								  url: 'images/person_1.png',
+								  size: new google.maps.Size(25, 25),
 								scaledSize: new google.maps.Size(25, 25)
 								};
 						}
@@ -1470,10 +1644,9 @@ echo"<style>
 						var vNumberLocal=vNumber[i];
 						var speedLocal=speed[i];						
 						var dTravelLocal=dTravel[i];
-						//alert('images='+image+'datetime='+dateTime);
 						var marker = new google.maps.Marker
 						({
-							position: position,	 map: map, icon: image, title:title
+							position: position,	 map: map, icon: image
 						});					
 							 markers.push(marker);
 										
@@ -1575,10 +1748,10 @@ echo"<style>
 					getLandMarkNew(landmark_str);
 					}
 					var image = {
-						url: 'images/person_1.png',
-						size: new google.maps.Size(25, 25),
-						scaledSize: new google.maps.Size(25, 25)
-					};
+								  url: 'images/person_1.png',
+								  size: new google.maps.Size(25, 25),
+								scaledSize: new google.maps.Size(25, 25)
+								};
 					for(var i=0;i<latarr.length;i++)
 					{
 						var position;
@@ -1595,7 +1768,7 @@ echo"<style>
 						var vNumberLocal=vNumber[i];						
 						var marker = new google.maps.Marker
 						({
-							position: position,	 map: map, icon: image, title:title
+							position: position,	 map: map, icon: image
 						});					
 							markers.push(marker);					
 						google.maps.event.addListener
@@ -1652,7 +1825,6 @@ echo"<style>
 						var lng_tmp=lngarr[i];
 						position=new google.maps.LatLng(latarr[i], lngarr[i]);				
 						latlngbounds.extend(position);
-						//alert('vtype='+vType[i]);
 						var icon1=setIconType(vType[i]);
 						
 						var title='abc';
@@ -1666,7 +1838,7 @@ echo"<style>
 						var lHaltSpeedLocal=lHaltSpeed[i];
 						var marker = new google.maps.Marker
 						({
-							position: position,	 map: map, icon: icon1, title:title
+							position: position,	 map: map, icon: icon1
 						});					
 							markers.push(marker);					
 						google.maps.event.addListener
@@ -1761,7 +1933,7 @@ echo"<style>
 						var lHaltSpeedLocal=lHaltSpeed[i];
 						var marker = new google.maps.Marker
 						({
-							position: position,	 map: map, icon: icon1, title:title
+							position: position,	 map: map, icon: icon1
 						});					
 							markers.push(marker);					
 						google.maps.event.addListener
@@ -1829,7 +2001,7 @@ echo"<style>
                                                 var ioStrLocal=ioStr[i];
 						var marker = new google.maps.Marker
 						({
-							position: position,	 map: map, icon: icon, title:title
+							position: position,	 map: map, icon: icon
 						});					
 												
 						google.maps.event.addListener
