@@ -507,8 +507,8 @@ if ($shift_mor) {
         echo "\nAfter Last ProcessedDetail:Morning";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL :MORNING ##############
-        $to = 'rizwan@iembsys.com';			
- //     $to = 'gpsreporthourly@gmail.com';
+        //$to = 'rizwan@iembsys.com';			
+        $to = 'gpsreporthourly@gmail.com';
 
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
