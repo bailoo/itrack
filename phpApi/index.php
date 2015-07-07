@@ -5,8 +5,13 @@ $app = new \Slim\Slim();
 $app->config('debug', true);
 
 $app->get('/', function() use($app) {
-    $app->response->setStatus(200);
-    echo "Welcome to Slim 3.0 based API";
+    	$app->response->setStatus(200);
+	echo "iTrack API <br/>\n";
+	echo "<br/>\n";	
+	echo "/getlog/:imei/:dtime1/:dtime2 <br/>\n";
+	echo "<br/>\n";	
+	echo "/getlastlog/:imei <br/>\n";
+	echo "<br/>\n";	
 }); 
 
 $app->get('/hello/:name', function ($name) {
