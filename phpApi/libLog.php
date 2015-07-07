@@ -49,7 +49,7 @@ function printHTML($st_results)
 */
 function getLastSeenDateTime($o_cassandra,$imei,$datetime)
 {
-	global $TZ;
+	$TZ = '0530';
 
 	$yy = substr($datetime,0,4);
 
@@ -167,8 +167,6 @@ function logParser($st_results, $dataType, $orderAsc)
 function getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc)
 {
 
-	global $TZ;
-
 	$table = ($deviceTime)?'log1':'log2';
 	$qtime = ($deviceTime)?'dtime':'stime';
 
@@ -199,7 +197,7 @@ function getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc)
 function getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc)
 {
 
-	global $TZ;
+	$TZ = '0530';
 
 	$table = ($deviceTime)?'log1':'log2';
 	$qtime = ($deviceTime)?'dtime':'stime';
