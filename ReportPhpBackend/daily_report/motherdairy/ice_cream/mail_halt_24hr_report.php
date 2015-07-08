@@ -9,13 +9,15 @@ set_time_limit(18000);
 include_once("../../database_ip.php");
 $DBASE = "iespl_vts_beta";
 $USER = "root";
+//$PASSWD = "neon04$VTS";
 $PASSWD = "mysql";
 $account_id = "723";
 //echo "\nDBASE=".$DBASE." ,User=".$USER." ,PASS=".$PASSWD;
 $DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server is down. Please try after few minutes.");
 mysql_select_db ($DBASE, $DbConnection) or die("could not find DB");
 
-$abspath = "/var/www/html/vts/beta/src/php";
+$abspath = "C:\\xampp/htdocs/itrack/beta/src/php";
+//$abspath = "/var/www/html/vts/beta/src/php";
 //$abspath = "D:\\test_app";
 include_once($abspath."/common_xml_element.php");
 include_once($abspath."/get_all_dates_between.php");
@@ -34,6 +36,29 @@ include_once($abspath."/util.hr_min_sec.php");
 include_once($abspath."/daily_report/motherdairy/ice_cream/get_master_detail.php");
 include_once($abspath."/get_io.php");
 include_once($abspath."/new_xml_string_io.php");
+
+include_once($abspath . '/xmlParameters.php');
+//echo "\nD2";
+include_once($abspath . '/parameterizeData.php');
+//echo "\nD3";
+include_once($abspath . '/data.php');
+if (file_exists($tmp)) {
+    echo "File Exists1";
+} else {
+    "Does not exist";
+}
+//echo "\nD4";
+include_once($abspath . '/sortXmlData.php');
+//echo "\nD5:" . $abspath;
+//$tmp = $abspath.'/getXmlData.php';
+//if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
+include_once($abspath . '/getXmlData.php');
+
+include_once($abspath . "/util.hr_min_sec.php");
+if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun.php"))
+    ;
+include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
+
 //echo "\nAfter Include";
 //include_once($abspath."/get_location_lp_track_report.php");
 
@@ -43,15 +68,15 @@ include_once($abspath."/new_xml_string_io.php");
 
 function tempnam_sfx($path, $suffix)
 {
-	$file = $path.$suffix;
-	/*do
-	{
-		$file = $path.$suffix;
-		$fp = @fopen($file, 'x');
-	}
-	while(!$fp);
-	fclose($fp);*/
-	return $file;
+    $file = $path.$suffix;
+    /*do
+    {
+            $file = $path.$suffix;
+            $fp = @fopen($file, 'x');
+    }
+    while(!$fp);
+    fclose($fp);*/
+    return $file;
 }
 
 //echo "report4\n";
@@ -205,20 +230,20 @@ $customer_input_string2 = "";
 
 for($k=0;$k<sizeof($customer_input);$k++)
 {
-	//echo "\n".$customer_input[$k];
-	if($customer_input[$k]!="")
-	{
-		if($k==0)
-		{
-			$customer_input_string = $customer_input_string."".$customer_input[$k];
-			$customer_input_string2 = $customer_input_string2." customer_no like '".$customer_input[$k]."@%'";
-		}
-		else
-		{
-			$customer_input_string = $customer_input_string.",".$customer_input[$k];
-			$customer_input_string2 = $customer_input_string2." OR customer_no like '".$customer_input[$k]."@%'";
-		}
-	}
+    //echo "\n".$customer_input[$k];
+    if($customer_input[$k]!="")
+    {
+        if($k==0)
+        {
+                $customer_input_string = $customer_input_string."".$customer_input[$k];
+                $customer_input_string2 = $customer_input_string2." customer_no like '".$customer_input[$k]."@%'";
+        }
+        else
+        {
+                $customer_input_string = $customer_input_string.",".$customer_input[$k];
+                $customer_input_string2 = $customer_input_string2." OR customer_no like '".$customer_input[$k]."@%'";
+        }
+    }
 }
 
 $station_id = array();
@@ -1141,8 +1166,8 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3) 	//elem =
 	} 	
      
     //############ WRITE CUSTOMER NOT VISITED #####################
-    $worksheet2->write($r, 0, "", $text_format);
-    $worksheet2->write($r, 1, "", $text_format);
+        $worksheet2->write($r, 0, "", $text_format);
+        $worksheet2->write($r, 1, "", $text_format);
 	//$worksheet2->write($r, 2, "Location", $text_format);
 	$worksheet2->write($r, 2, "", $text_format);
 	$worksheet2->write($r, 3, "", $text_format);
@@ -1155,19 +1180,19 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3) 	//elem =
 	$worksheet2->write($r, 10, "", $text_format);
 	$worksheet2->write($r, 11, "", $text_format);		
 	$worksheet2->write($r, 12, "", $text_format);
-    $worksheet2->write($r, 13, "", $text_format);
-    $worksheet2->write($r, 14, "", $text_format);
-    $worksheet2->write($r, 15, "", $text_format);
-    $worksheet2->write($r, 16, "", $text_format);
+        $worksheet2->write($r, 13, "", $text_format);
+        $worksheet2->write($r, 14, "", $text_format);
+        $worksheet2->write($r, 15, "", $text_format);
+        $worksheet2->write($r, 16, "", $text_format);
 	$worksheet2->write($r, 17, "", $text_format);
 	$worksheet2->write($r, 18, "", $text_format);
 	$worksheet2->write($r, 19, "", $text_format);
 	$worksheet2->write($r, 20, "", $text_format);
-    $r++;         
+         $r++;         
 
 
-    $worksheet2->write($r, 0, "", $text_format);
-    $worksheet2->write($r, 1, "", $text_format);
+        $worksheet2->write($r, 0, "", $text_format);
+        $worksheet2->write($r, 1, "", $text_format);
 	//$worksheet2->write($r, 2, "Location", $text_format);
 	$worksheet2->write($r, 2, "Customer Not Visited", $text_red_format);
 	$worksheet2->write($r, 3, "Type", $text_red_format);
@@ -1180,10 +1205,10 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3) 	//elem =
 	$worksheet2->write($r, 10, "", $text_format);
 	$worksheet2->write($r, 11, "", $text_format);		
 	$worksheet2->write($r, 12, "", $text_format);
-    $worksheet2->write($r, 13, "", $text_format);
-    $worksheet2->write($r, 14, "", $text_format);
-    $worksheet2->write($r, 15, "", $text_format);
-    $worksheet2->write($r, 16, "", $text_format);
+        $worksheet2->write($r, 13, "", $text_format);
+        $worksheet2->write($r, 14, "", $text_format);
+        $worksheet2->write($r, 15, "", $text_format);
+        $worksheet2->write($r, 16, "", $text_format);
 	$worksheet2->write($r, 17, "", $text_format);
 	$worksheet2->write($r, 18, "Transporter(I)", $text_red_format);
 	$worksheet2->write($r, 19, "Plant", $text_red_format);
@@ -1253,50 +1278,50 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3) 	//elem =
 		
      //####### IN MASTER NOT IN DATABASE : NOT VISITED
 	for($m=0;$m<sizeof($relative_customer_input);$m++)					//COUNTER VARIABLES:: $M = MASTER, $N = VISITED, $D = DATABASE
-    {    
-		$found = false;
-		for($n=0;$n<sizeof($customer_no);$n++)
-		{
-			if($relative_customer_input[$m] == $customer_no[$n])
-			{
-			  $found = true;
-			  break;
-			}
-		}		
-		
-		if(!$found)
-		{			
-			//echo "\nMasterCustomer=".$relative_customer_input[$m];
-			/*if($type[$m]==0)
-			  $type[$m] = "Customer";
-			else if($type[$m] ==1)
-			  $type[$m]= "Plant";*/
-						
-			$worksheet2->write($r, 0, "", $text_format);
-			$worksheet2->write($r, 1, "", $text_format);
-			//$worksheet2->write($r, 2, "", $text_format);
-			$worksheet2->write($r, 2, intval($relative_customer_input[$m]), $text_blue_format);
-			$worksheet2->write($r, 3, "Customer", $text_blue_format);
-			$worksheet2->write($r, 4, $relative_route_input[$m], $text_blue_format);
-			$worksheet2->write($r, 5, "", $text_format);
-			$worksheet2->write($r, 6, "", $text_format);
-			$worksheet2->write($r, 7, "", $text_format);
-			$worksheet2->write($r, 8, "", $text_format);
-			$worksheet2->write($r, 9, "", $text_format);
-			$worksheet2->write($r, 10, "", $text_format);
-			$worksheet2->write($r, 11, "", $text_format);		
-			$worksheet2->write($r, 12, "", $text_format);
-			$worksheet2->write($r, 13, "", $text_format);
-			$worksheet2->write($r, 14, "", $text_format);
-			$worksheet2->write($r, 15, "", $text_format);
-			$worksheet2->write($r, 16, "", $text_format);
-			$worksheet2->write($r, 17, "", $text_format);
-			$worksheet2->write($r, 18, $relative_transporter_input[$m], $text_blue_format);
-			$worksheet2->write($r, 19, $relative_plant_input[$m], $text_blue_format);
-			$worksheet2->write($r, 20, "", $text_format);
-			$r++;
-		}
-    }	
+        {    
+            $found = false;
+            for($n=0;$n<sizeof($customer_no);$n++)
+            {
+                    if($relative_customer_input[$m] == $customer_no[$n])
+                    {
+                      $found = true;
+                      break;
+                    }
+            }		
+
+            if(!$found)
+            {			
+                //echo "\nMasterCustomer=".$relative_customer_input[$m];
+                /*if($type[$m]==0)
+                  $type[$m] = "Customer";
+                else if($type[$m] ==1)
+                  $type[$m]= "Plant";*/
+
+                $worksheet2->write($r, 0, "", $text_format);
+                $worksheet2->write($r, 1, "", $text_format);
+                //$worksheet2->write($r, 2, "", $text_format);
+                $worksheet2->write($r, 2, intval($relative_customer_input[$m]), $text_blue_format);
+                $worksheet2->write($r, 3, "Customer", $text_blue_format);
+                $worksheet2->write($r, 4, $relative_route_input[$m], $text_blue_format);
+                $worksheet2->write($r, 5, "", $text_format);
+                $worksheet2->write($r, 6, "", $text_format);
+                $worksheet2->write($r, 7, "", $text_format);
+                $worksheet2->write($r, 8, "", $text_format);
+                $worksheet2->write($r, 9, "", $text_format);
+                $worksheet2->write($r, 10, "", $text_format);
+                $worksheet2->write($r, 11, "", $text_format);		
+                $worksheet2->write($r, 12, "", $text_format);
+                $worksheet2->write($r, 13, "", $text_format);
+                $worksheet2->write($r, 14, "", $text_format);
+                $worksheet2->write($r, 15, "", $text_format);
+                $worksheet2->write($r, 16, "", $text_format);
+                $worksheet2->write($r, 17, "", $text_format);
+                $worksheet2->write($r, 18, $relative_transporter_input[$m], $text_blue_format);
+                $worksheet2->write($r, 19, $relative_plant_input[$m], $text_blue_format);
+                $worksheet2->write($r, 20, "", $text_format);
+                $r++;
+            }
+        }	
 	for($x = 1; $x < sizeof($customer_arr); $x++) 
 	{
 		$tmp_vehicle_arr = $vehicle_arr[$x];
@@ -1464,35 +1489,35 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3) 	//elem =
 		
 	for($x = 1; $x < sizeof($customer_i); $x++) 
 	{
-		$tmp_customer_i = $customer_i[$x];
-		$tmp_route_i = $route_i[$x];		
-		///////////      				
+            $tmp_customer_i = $customer_i[$x];
+            $tmp_route_i = $route_i[$x];		
+            ///////////      				
 
-		$z = $x - 1;
-		$done = false;
-		while($done == false)
-		{
-			$customer_tmp1 = $customer_i[$z];
+            $z = $x - 1;
+            $done = false;
+            while($done == false)
+            {
+                $customer_tmp1 = $customer_i[$z];
 
-			if ($customer_tmp1 >$tmp_customer_i)
-			{
-				$customer_i[$z + 1] = $customer_i[$z];							
-				$route_i[$z + 1] = $route_i[$z];
-				//////////////////
-				$z = $z - 1;
-				if ($z < 0)
-				{
-					$done = true;
-				}
-			}
-			else
-			{
-				$done = true;
-			}
-		} //WHILE CLOSED
+                if ($customer_tmp1 >$tmp_customer_i)
+                {
+                    $customer_i[$z + 1] = $customer_i[$z];							
+                    $route_i[$z + 1] = $route_i[$z];
+                    //////////////////
+                    $z = $z - 1;
+                    if ($z < 0)
+                    {
+                            $done = true;
+                    }
+                }
+                else
+                {
+                    $done = true;
+                }
+            } //WHILE CLOSED
 
-		$customer_i[$z + 1] = $tmp_customer_i;		
-		$route_i[$z + 1] = $tmp_route_i;
+            $customer_i[$z + 1] = $tmp_customer_i;		
+            $route_i[$z + 1] = $tmp_route_i;
                     
 	}  // FOR CLOSED
 	
@@ -1501,24 +1526,24 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3) 	//elem =
 	
 	for($i=0;$i<sizeof($customer_arr);$i++)						//#### GENERATED IN REPORT
 	{
-		if( ($type_arr[$i]!="Plant") && (($color_arr[$i] == "white") || ($color_arr[$i] == "pink")) )
-		{
-			$customer_arr2[] = $customer_arr[$i];
-			$vehicle_arr2[] = $vehicle_arr[$i];
-		}
+            if( ($type_arr[$i]!="Plant") && (($color_arr[$i] == "white") || ($color_arr[$i] == "pink")) )
+            {
+                $customer_arr2[] = $customer_arr[$i];
+                $vehicle_arr2[] = $vehicle_arr[$i];
+            }
 	}
 	
 	$unique_customer_report = array_unique($customer_arr2);
 	
 	foreach ($unique_cusomer_input as $key1 => $val1) 	//## value1,value2 = count
 	{
-		//if($val1 == "1004465") echo "\nFound1 1004465";	
-		$customer_visit_input[$val1] += 1;
-		//if($val1 == "1004465") echo "\nValueAfter1=".$customer_visit_input[$val1];
+            //if($val1 == "1004465") echo "\nFound1 1004465";	
+            $customer_visit_input[$val1] += 1;
+            //if($val1 == "1004465") echo "\nValueAfter1=".$customer_visit_input[$val1];
 	}
 	foreach ($unique_customer_report as $key2 => $val2) 	//## value1,value2 = count
 	{
-		$customer_visit_report[$val2] += 1;
+            $customer_visit_report[$val2] += 1;
 	}
 	
 	/*for($i=0;$i<sizeof($unique_cusomer_input);$i++)						//#### INPUT MASTER
@@ -1535,15 +1560,15 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3) 	//elem =
 	
 	for($i=0;$i<sizeof($customer_i);$i++)						//#### INPUT MASTER
 	{				
-		if( ($customer_i[$i] == $customer_prev) && ($route_id[$i]!=$route_prev) )
-		{
-			//if($customer_i[$i] == "1004465") echo "\nFound2 1004465";	
-			//if($customer_i[$i] == "1004465") echo "\nValueBefore=".$customer_visit_input[$customer_i[$i]];
-			$customer_visit_input[$customer_i[$i]] += 1;
-			//if($customer_i[$i] == "1004465") echo "\nValueAfter2=".$customer_visit_input[$customer_i[$i]];
-		}
-		$customer_prev = $customer_i[$i];
-		$route_prev = $route_i[$i];		
+            if( ($customer_i[$i] == $customer_prev) && ($route_id[$i]!=$route_prev) )
+            {
+                //if($customer_i[$i] == "1004465") echo "\nFound2 1004465";	
+                //if($customer_i[$i] == "1004465") echo "\nValueBefore=".$customer_visit_input[$customer_i[$i]];
+                $customer_visit_input[$customer_i[$i]] += 1;
+                //if($customer_i[$i] == "1004465") echo "\nValueAfter2=".$customer_visit_input[$customer_i[$i]];
+            }
+            $customer_prev = $customer_i[$i];
+            $route_prev = $route_i[$i];		
 	}
 
 	$customer_prev = "";
@@ -1551,41 +1576,41 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3) 	//elem =
 	
 	for($i=0;$i<sizeof($customer_arr2);$i++)						//#### GENERATED IN REPORT
 	{
-		//if($customer_arr[$i] == "70845") echo "\nFound1 70845";			
-		if( ($customer_arr2[$i] == $customer_prev) && ($vehicle_arr2[$i]!=$vehicle_prev) )
-		{
-			$customer_visit_report[$customer_arr2[$i]] += 1;
-		}
-		$customer_prev = $customer_arr2[$i];
-		$vehicle_prev = $vehicle_arr2[$i];			
+            //if($customer_arr[$i] == "70845") echo "\nFound1 70845";			
+            if( ($customer_arr2[$i] == $customer_prev) && ($vehicle_arr2[$i]!=$vehicle_prev) )
+            {
+                $customer_visit_report[$customer_arr2[$i]] += 1;
+            }
+            $customer_prev = $customer_arr2[$i];
+            $vehicle_prev = $vehicle_arr2[$i];			
 	}
 		
 	foreach ($customer_visit_report as $customer_key1 => $value1) 	//## value1,value2 = count
 	{
-		$visit_match = false;		
-		//echo $customer_key1." ,".$value1."\n";
-		//if($customer_key1 == "70845") echo "\nFound2 70845";		
-		foreach($customer_visit_input as $customer_key2 => $value2)
-		{
-			//if($customer_key1 == "1004465" && $customer_key2 == "1004465") echo "\nC1=".$customer_key1." ,V1=".$value1." ,C2=".$customer_key2." ,V2=".$value2."\n";			
-			if($customer_key1 == $customer_key2)
-			{
-				if($value1 == $value2)
-				{
-					//if($customer_key1 == "1004465" && $customer_key2 == "1004465") echo "\nMatched";
-					$visit_match = true;					
-				}
-				$value2_tmp = $value2;
-				break;
-			}
-		}
-		if(!$visit_match)	//IF NOT MATCHED
-		{
-			//echo "\nvalue1=".$value1." ,value2=".$value2_tmp;
-			$mismatch_visit_customer[] = $customer_key1;
-			$expected_visit[] = $value2_tmp;
-			$report_visit[] = $value1;
-		}
+            $visit_match = false;		
+            //echo $customer_key1." ,".$value1."\n";
+            //if($customer_key1 == "70845") echo "\nFound2 70845";		
+            foreach($customer_visit_input as $customer_key2 => $value2)
+            {
+                //if($customer_key1 == "1004465" && $customer_key2 == "1004465") echo "\nC1=".$customer_key1." ,V1=".$value1." ,C2=".$customer_key2." ,V2=".$value2."\n";			
+                if($customer_key1 == $customer_key2)
+                {
+                    if($value1 == $value2)
+                    {
+                        //if($customer_key1 == "1004465" && $customer_key2 == "1004465") echo "\nMatched";
+                        $visit_match = true;					
+                    }
+                    $value2_tmp = $value2;
+                    break;
+                }
+            }
+            if(!$visit_match)	//IF NOT MATCHED
+            {
+                //echo "\nvalue1=".$value1." ,value2=".$value2_tmp;
+                $mismatch_visit_customer[] = $customer_key1;
+                $expected_visit[] = $value2_tmp;
+                $report_visit[] = $value1;
+            }
 	}	
 
 	//## WRITE SHEET3
@@ -1602,55 +1627,58 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3) 	//elem =
 	//$sno = 1;
 	for($i=0;$i<sizeof($mismatch_visit_customer);$i++)
 	{
-		if(($expected_visit[$i]>0) && ($report_visit[$i] < $expected_visit[$i]) )
-		{
-			$c = 0;			
-			$worksheet4->write($r,$c, $mismatch_visit_customer[$i], $excel_normal_format);
-			$c++;
-			$worksheet4->write($r,$c, $expected_visit[$i], $excel_normal_format);
-			$c++;
-			$worksheet4->write($r,$c, $report_visit[$i], $excel_normal_format);
-			$c++;
-			$r++;
-		}
+            if(($expected_visit[$i]>0) && ($report_visit[$i] < $expected_visit[$i]) )
+            {
+                $c = 0;			
+                $worksheet4->write($r,$c, $mismatch_visit_customer[$i], $excel_normal_format);
+                $c++;
+                $worksheet4->write($r,$c, $expected_visit[$i], $excel_normal_format);
+                $c++;
+                $worksheet4->write($r,$c, $report_visit[$i], $excel_normal_format);
+                $c++;
+                $r++;
+            }
 	}		
 	//############ THIRD SHEET CLOSED #################
 	//#################################################
 		
     //########### WRITE CUSTOMER NOT VISITED CLOSED ###############    	
    
-	$workbook->close(); //CLOSE WORKBOOK
-	//echo "\nWORKBOOK CLOSED"; 
+    $workbook->close(); //CLOSE WORKBOOK
+    //echo "\nWORKBOOK CLOSED"; 
 
-	########### SEND MAIL ##############//
-	//$to = 'rizwan@iembsys.com';
-	$to = 'Vijay.Singh@motherdairy.com,teetu.kumar@motherdairy.com,call1.center@motherdairy.com,Ved.Raturi@motherdairy.com,anil.chugh@motherdairy.com,atul.malhotra@motherdairy.com,ashish@iembsys.co.in';
-	$subject = 'BETA::VTS_HALT_REPORT_(MOTHER_ICECREAM)_'.$previous_date;
-	$message = 'BETA::VTS_HALT_REPORT_(MOTHER_ICECREAM)_'.$previous_date."<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply to this email***</font>"; 
-	$random_hash = md5(date('r', time()));  
-	$headers = "From: support@iembsys.co.in\r\n";
-	//$headers .= "Cc: rizwan@iembsys.com";  
-	$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com,support1@iembsys.com,support2@iembsys.com";
-	$headers .= "\r\nContent-Type: multipart/mixed; boundary=\"PHP-mixed-".$random_hash."\""; 
-	$filename_title = $filename_title.".xls";
-	$file_path = $fullPath.".xls";
+    ########### SEND MAIL ##############//
+    //$to = 'rizwan@iembsys.com';
+    $to = 'Vijay.Singh@motherdairy.com,teetu.kumar@motherdairy.com,call1.center@motherdairy.com,Ved.Raturi@motherdairy.com,anil.chugh@motherdairy.com,atul.malhotra@motherdairy.com,ashish@iembsys.co.in';
+    $subject = 'BETA::VTS_HALT_REPORT_(MOTHER_ICECREAM)_'.$previous_date;
+    $message = 'BETA::VTS_HALT_REPORT_(MOTHER_ICECREAM)_'.$previous_date."<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply to this email***</font>"; 
+    $random_hash = md5(date('r', time()));  
+    $headers = "From: support@iembsys.co.in\r\n";
+    //$headers .= "Cc: rizwan@iembsys.com";  
+    $headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com,support1@iembsys.com,support2@iembsys.com";
+    $headers .= "\r\nContent-Type: multipart/mixed; boundary=\"PHP-mixed-".$random_hash."\""; 
+    $filename_title = $filename_title.".xls";
+    $file_path = $fullPath.".xls";
 
-	//echo "\nFILE PATH=".$file_path;  
-	include_once("send_mail_api.php");
-	//################################//
+    //echo "\nFILE PATH=".$file_path;  
+    include_once("send_mail_api.php");
+    //################################//
 
-	//############# CREATE FOLDER AND BACKUP FILES ########
-	/*
-	$sourcepath = $file_path;
-	$dirPath = "excel_reports/".$previous_date;	
-	mkdir ($dirPath, 0755, false);
-	$destpath = $dirPath."/".$filename_title;
+    //############# CREATE FOLDER AND BACKUP FILES ########
+    /*
+    $sourcepath = $file_path;
+    $dirPath = "excel_reports/".$previous_date;	
+    mkdir ($dirPath, 0755, false);
+    $destpath = $dirPath."/".$filename_title;
 
-	copy($sourcepath,$destpath);	
-	//########## BACKUP FILES CLOSED #######################  
+    copy($sourcepath,$destpath);	
+    //########## BACKUP FILES CLOSED #######################  
 
-	unlink($file_path); 
-	*/
+    unlink($file_path); 
+    */
+    ######## CASSANDRA BLOCK3 CLOSED	
+    $o_cassandra->close();
+    ######## CASSANDRA BLOCK3 CLOSED
 }
  
 ?>
