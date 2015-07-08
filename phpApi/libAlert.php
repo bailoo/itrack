@@ -4,6 +4,25 @@ require_once 'libCommon.php';
 
 
 /***
+* Returns filtered results based on given param and its min, max  
+*
+* @param object $o_cassandra	Cassandra object 
+*
+* @return object 	filtered results	
+*/
+function filter($st_results, $param, $minVal, $maxVal)
+{
+	foreach ($st_results as $key=>$row)
+	{
+		$col = $row[$param];	
+		if ($col < $minVal || $col > $maxVal)
+			unset($st_results[$key]); 	// delete row from array
+	}
+
+	return $st_results;
+}
+
+/***
 * Returns Speed Violations for given imei, dtimes, minspeed, maxspeed, roadId
 * 
 * @param object $o_cassandra	Cassandra object 
@@ -33,7 +52,7 @@ function getSpeedAlerts($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSp
 		;";
 		
 	$st_results = $o_cassandra->query($s_cql);
-	//$filter_res = filter($st_results, $minSpeed, $maxSpeed);
+	$st_results = filter($st_results, 'speed', $minSpeed, $maxSpeed);
 	return $st_results;
 }
 
@@ -68,7 +87,21 @@ function getTurnAlerts($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpe
 		dtime <= '$dTime2+$TZ'
 		;";
 	$st_results = $o_cassandra->query($s_cql);
-	//$filter_res = filter($st_results,$minSpeed, $maxSpeed, $minAngle, $maxAngle);
+
+	$param1 = 'speed';
+	$minVal1 = $minSpeed;
+	$maxVal1 = $maxSpeed;	
+	$param2 = 'angle';
+	$minVal2 = $minAngle;
+	$maxVal2 = $maxAngle;	
+	foreach ($st_results as $key=>$row)
+	{
+		$col1 = $row[$param1];
+		$col2 = $row[$param2];
+		if ($col1 < $minVal1 || $col1 > $maxVal1 || $col2 < $minVal2 || $col2 > $maxVal2)
+			unset($st_results[$key]); 	// delete row from array
+	}
+	
 	return $st_results;
 }
 
@@ -94,10 +127,19 @@ function getDistanceLog($o_cassandra, $imei, $startTime, $endTime)
 		date IN $dateList
 		AND
 		starttime >= '$startTime+$TZ'
-		AND
-		starttime <= '$endTime+$TZ'
 		;";
 	$st_results = $o_cassandra->query($s_cql);
+	
+	$param1 = 'endtime';
+	$maxVal1 = strtotime($endTime) * 1000;	// cassandra timestamp is in milliseconds
+	echo "maxVal1 = $maxVal1 ";	
+	foreach ($st_results as $key=>$row)
+	{
+		$col1 = $row[$param1];
+		if ($col1 > $maxVal1)
+			unset($st_results[$key]); 	// delete row from array
+	}
+	
 	return $st_results;
 }
 
@@ -133,7 +175,20 @@ function getxRoadLog($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpeed
 		dtime <= '$dTime2+$TZ'
 		;";
 	$st_results = $o_cassandra->query($s_cql);
-	//$filter_res = filter($st_results,$minSpeed, $maxSpeed, $minHalt, $maxHalt);
+
+	$param1 = 'speed';
+	$minVal1 = $minSpeed;
+	$maxVal1 = $maxSpeed;	
+	$param2 = 'haltduration';
+	$minVal2 = $minHalt;
+	$maxVal2 = $maxHalt;
+	foreach ($st_results as $key=>$row)
+	{
+		$col1 = $row[$param1];
+		$col2 = $row[$param2];
+		if ($col1 < $minVal1 || $col1 > $maxVal1 || $col2 < $minVal2 || $col2 > $maxVal2)
+			unset($st_results[$key]); 	// delete row from array
+	}
 	return $st_results;
 
 }
@@ -163,11 +218,22 @@ function getTravelLog($o_cassandra, $imei, $startTime, $endTime, $minDuration, $
 		date IN $dateList
 		AND
 		starttime >= '$startTime+$TZ'
-		AND
-		starttime <= '$endTime+$TZ'
 		;";
 	$st_results = $o_cassandra->query($s_cql);
-	//$filter_res = filter($st_results,$minSpeed, $maxSpeed, $minDuration, $maxDuration);
+	
+	$param1 = 'endtime';
+	$maxVal1 = $endTime;	
+	$param2 = 'duration';
+	$minVal2 = $minDuration;
+	$maxVal2 = $maxDuration;
+	foreach ($st_results as $key=>$row)
+	{
+		$col1 = $row[$param1];
+		$col2 = $row[$param2];
+		if ($col1 > $maxVal1 || $col2 < $minVal2 || $col2 > $maxVal2)
+			unset($st_results[$key]); 	// delete row from array
+	}
+	
 	return $st_results;
 
 }
@@ -197,11 +263,22 @@ function getNightLog($o_cassandra, $imei, $startTime, $endTime, $minDuration, $m
 		date IN $dateList
 		AND
 		starttime >= '$startTime+$TZ'
-		AND
-		starttime <= '$endTime+$TZ'
 		;";
 	$st_results = $o_cassandra->query($s_cql);
-	//$filter_res = filter($st_results,$minSpeed, $maxSpeed, $minDuration, $maxDuration);
+	
+	$param1 = 'endtime';
+	$maxVal1 = $endTime;	
+	$param2 = 'duration';
+	$minVal2 = $minDuration;
+	$maxVal2 = $maxDuration;
+	foreach ($st_results as $key=>$row)
+	{
+		$col1 = $row[$param1];
+		$col2 = $row[$param2];
+		if ($col1 > $maxVal1 || $col2 < $minVal2 || $col2 > $maxVal2)
+			unset($st_results[$key]); 	// delete row from array
+	}
+	
 	return $st_results;
 
 }
@@ -231,10 +308,18 @@ function getGapLog($o_cassandra, $imei, $startTime, $endTime)
 		date IN $dateList
 		AND
 		starttime >= '$startTime+$TZ'
-		AND
-		starttime <= '$endTime+$TZ'
 		;";
 	$st_results = $o_cassandra->query($s_cql);
+	
+	$param1 = 'endtime';
+	$maxVal1 = $endTime;	
+	foreach ($st_results as $key=>$row)
+	{
+		$col1 = $row[$param1];
+		if ($col1 > $maxVal1)
+			unset($st_results[$key]); 	// delete row from array
+	}
+	
 	return $st_results;
 }
 
