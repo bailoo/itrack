@@ -1,6 +1,9 @@
 <?php
 
 set_time_limit(360000);
+/*error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);*/
 
 date_default_timezone_set("Asia/Kolkata");
 //### DEBUG BOOLEAN
@@ -88,7 +91,7 @@ define('EOL', (PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 require_once $abspath . '/PHPExcel/IOFactory.php';
 
 $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
-$cacheSettings = array('memoryCacheSize' => '128MB');
+$cacheSettings = array('memoryCacheSize' => '1028MB');
 PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
 
 $objPHPExcel_1 = null;
@@ -142,8 +145,8 @@ include_once("get_route_db_detail.php");
 //$pdate = date('Y-m-d', strtotime($date .' -1 day'));
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-07-06');
-    $date = date('2015-07-07');
+    $pdate = date('2015-07-07');
+    $date = date('2015-07-08');
 } else {
     $date = date('Y-m-d');
 }
@@ -167,7 +170,8 @@ $shift_mor_date2 = $date . " 22:00:00";
 
 if ($MAIN_DEBUG) {
     //$current_time = $date." 10:22:00";	//current date ev
-    $current_time = $date . " 12:00:00";      //current date mor
+    //$current_time = $date . " 12:00:00";      //current date mor
+    $current_time = date('Y-m-d H:i:s');
 } else {
     $current_time = date('Y-m-d H:i:s');
 }
@@ -180,7 +184,7 @@ $mor_run_start_time = $date . " 10:00:00";
 //$mor_run_start_time = $date." 06:00:00";
 
 if ($MAIN_DEBUG) {
-    $shift_ev1 = true;
+    $shift_ev1 = false;
     $shift_ev2 = true;
     $shift_mor = false;
 } else {

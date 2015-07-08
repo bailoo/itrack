@@ -79,6 +79,14 @@ function getPolyLineDetail($accId,$status,$DbConnection)
     $rowArr=mysql_fetch_row($res_polyline);
     return $rowArr;
 }
+
+function getLatLngPermission($accId,$DbConnection)
+{
+    $query="SELECT field22 FROM account_feature WHERE account_id=$accId";   
+    $result = mysql_query($query,$DbConnection);
+    $row=mysql_fetch_row($result);
+    return $row[0];
+}
 /////////////////////////////////////
 function getTimeZone($accountId,$DbC)
 {

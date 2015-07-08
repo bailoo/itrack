@@ -606,8 +606,8 @@ if ($shift_ev1) {
         $message = "HOURLY_MAIL_VTS_HALT_REPORT_MORNING(MOTHER_NAGPUR)_" . $msg . "_" . $time_1 . "_" . $time_2 . "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
         $random_hash = md5(date('r', time()));
         $headers = "From: support@iembsys.co.in\r\n";
-        $headers .= "Cc: hourlyreport4@gmail.com";
-        //$headers .= "Cc: rizwan@iembsys.com";	
+        //$headers .= "Cc: hourlyreport4@gmail.com";
+        $headers .= "Cc: rizwan@iembsys.com";	
         //pass:8090025844
         //$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com";
         $headers .= "\r\nContent-Type: multipart/mixed; boundary=\"PHP-mixed-" . $random_hash . "\"";

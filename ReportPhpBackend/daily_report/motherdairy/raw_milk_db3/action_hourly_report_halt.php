@@ -5,13 +5,13 @@
 $sheet1_row = 2;
 $sheet2_row = 2;
 
-$sts_date_sel_arr = array(array());
-$xml_date_sel_arr = array(array());
-$lat_sel_arr = array(array());
-$lng_sel_arr = array(array());
-$speed_sel_arr = array(array());
-$door_open1_arr = array(array());
-$door_open2_arr = array(array());
+$sts_date_sel = array();
+$xml_date_sel = array();
+$lat_sel = array();
+$lng_sel = array();
+$speed_sel = array();
+$door_open1_arr = array();
+$door_open2_arr = array();
 //$door_open3_arr = array(array());
 
 $Lat_Final = "";
@@ -165,15 +165,20 @@ $ioFoundFlag = 0;
 $parameterizeData = new parameterizeData();
 $parameterizeData->latitude = "d";
 $parameterizeData->longitude = "e";
+//###### CASSANDRA BLOCK1 CLOSED    
 
 for ($i = 0;$i < sizeof($Vehicle);$i++) {
-    
-    $dataCnt = 0;
-    $j = $i;
-    while ($Vehicle[$j] == $Vehicle[$i]) {
-        $j++; //J LIMIT
-    }
-    echo "\nReadSno:" . $i . " ,imei2=" . $IMEI[$i] . " ,datefrom=" . $datefrom . " ,dateto=" . $dateto;
+
+    $sts_date_sel = array();
+    $xml_date_sel = array();
+    $lat_sel = array();
+    $lng_sel = array();
+    $speed_sel = array();
+    $door_open1_arr = array();
+    $door_open2_arr = array();
+
+    //###### CASSANDRA BLOCK2 OPEN #########
+    //echo "\nReadSno:" . $i . " ,imei2=" . $IMEI[$i] . " ,datefrom=" . $datefrom . " ,dateto=" . $dateto;
 
     $ioFoundFlag = 0;
     $ioArrSize = sizeof($ioArr);
@@ -256,41 +261,22 @@ for ($i = 0;$i < sizeof($Vehicle);$i++) {
         $type = "unSorted";
         readFileXml($vserial[$i], $date1, $date2, $LastSDate, $dateto, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $UnSortedDataObject);
     }
-    /* echo "udt1=".$UnSortedDataObject->deviceDatetime[0]."<br>";
-      echo "udt2=".$UnSortedDataObject->deviceDatetime[1]."<br>";
-      echo "sdo1=".$UnSortedDataObject->doorOpen1Data[0]."<br>";
-      echo "sdo1=".$UnSortedDataObject->doorOpen1Data[1]."<br>";
-      echo "sdo2=".$UnSortedDataObject->doorOpen2Data[0]."<br>";
-      echo "sdo2=".$UnSortedDataObject->doorOpen2Data[1]."<br>";
-      echo "sdo3=".$UnSortedDataObject->doorOpen3Data[0]."<br>";
-      echo "sdo3=".$UnSortedDataObject->doorOpen3Data[1]."<br>"; */
-
-    /* echo "sodt1=".$SortedDataObject->deviceDatetime[0]."<br>";
-      echo "sodt2=".$SortedDataObject->deviceDatetime[1]."<br>";
-      echo "sdo1=".$SortedDataObject->doorOpen1Data[0]."<br>";
-      echo "sdo1=".$SortedDataObject->doorOpen1Data[1]."<br>";
-      echo "sdo2=".$SortedDataObject->doorOpen2Data[0]."<br>";
-      echo "sdo2=".$SortedDataObject->doorOpen2Data[1]."<br>";
-      echo "sdo3=".$SortedDataObject->doorOpen3Data[0]."<br>";
-      echo "sdo3=".$SortedDataObject->doorOpen3Data[1]."<br>";
-      echo "<br><br>"; */
-
     if(count($SortedDataObject->deviceDatetime)>0) {
         //echo "in sorted=".$SortedDataObject->deviceDatetime."<br><br><br><br><br><br>";
         $prevSortedSize = sizeof($SortedDataObject->deviceDatetime);
         for($obi = 0;$obi<$prevSortedSize; $obi++) {
-            $xml_date_sel_arr[$i][$dataCnt] = $SortedDataObject->deviceDatetime[$obi];
-            $lat_sel_arr[$i][$dataCnt] = $SortedDataObject->latitudeData[$obi];
-            $lng_sel_arr[$i][$dataCnt] = $SortedDataObject->longitudeData[$obi];
+            $xml_date_sel_arr[] = $SortedDataObject->deviceDatetime[$obi];
+            $lat_sel_arr[] = $SortedDataObject->latitudeData[$obi];
+            $lng_sel_arr[] = $SortedDataObject->longitudeData[$obi];
 
             if($parameterizeData->doorOpen1!=null) {
-                $door_open1_arr[$i][$dataCnt] = $SortedDataObject->doorOpen1Data[$obi];
+                $door_open1_arr[] = $SortedDataObject->doorOpen1Data[$obi];
             }
             if($parameterizeData->doorOpen2!=null) {
-                $door_open2_arr[$i][$dataCnt] = $SortedDataObject->doorOpen2Data[$obi];
+                $door_open2_arr[] = $SortedDataObject->doorOpen2Data[$obi];
             }
             if($parameterizeData->doorOpen3!=null) {
-                $door_open3_arr[$i][$dataCnt] = $SortedDataObject->doorOpen3Data[$obi];
+                $door_open3_arr[] = $SortedDataObject->doorOpen3Data[$obi];
             }
             $dataCnt++;
         }
@@ -309,17 +295,17 @@ for ($i = 0;$i < sizeof($Vehicle);$i++) {
           //echo "<br><br>";
           $sortedSize = sizeof($sortObjTmp->deviceDatetime);
         for($obi = 0;$obi<$sortedSize;$obi++) {
-            $xml_date_sel_arr[$i][$dataCnt] = $sortObjTmp->deviceDatetime[$obi];
-            $lat_sel_arr[$i][$dataCnt] = $sortObjTmp->latitudeData[$obi];
-            $lng_sel_arr[$i][$dataCnt] = $sortObjTmp->longitudeData[$obi];
+            $xml_date_sel_arr[] = $sortObjTmp->deviceDatetime[$obi];
+            $lat_sel_arr[] = $sortObjTmp->latitudeData[$obi];
+            $lng_sel_arr[] = $sortObjTmp->longitudeData[$obi];
             if($parameterizeData->doorOpen1!=null) {
-                $door_open1_arr[$i][$dataCnt] = $sortObjTmp->doorOpen1Data[$obi];
+                $door_open1_arr[] = $sortObjTmp->doorOpen1Data[$obi];
             }
             if($parameterizeData->doorOpen2!=null) {
-                $door_open2_arr[$i][$dataCnt] = $sortObjTmp->doorOpen2Data[$obi];
+                $door_open2_arr[] = $sortObjTmp->doorOpen2Data[$obi];
             }
             if($parameterizeData->doorOpen3!=null) {
-                $door_open3_arr[$i][$dataCnt] = $sortObjTmp->doorOpen3Data[$obi];
+                $door_open3_arr[] = $sortObjTmp->doorOpen3Data[$obi];
             }
             $dataCnt++;
         }
@@ -331,15 +317,7 @@ for ($i = 0;$i < sizeof($Vehicle);$i++) {
     $parameterizeData->doorOpen1 = null;
     $parameterizeData->doorOpen2 = null;
     $parameterizeData->doorOpen3 = null;
-
-    if ($j > $i) {
-    $i = $j - 1;
-    }
-}
-$o_cassandra->close();
-//###### CASSANDRA BLOCK1 CLOSED    
-
-for ($i = 0;$i < sizeof($Vehicle);$i++) {
+    //######## CASSANDRA BLOCK2 CLOSED
     
     if (($Plant_OutDate[$i] != "") && ($Plant_OutTime[$i] != "")) { //## IF OUT FOUND KEEP OLD RECORDS
         continue;
@@ -485,7 +463,7 @@ for ($i = 0;$i < sizeof($Vehicle);$i++) {
     $firstdata_flag = 0;
 
     //for ($d = ($date_size - 1); $d >= 0; $d--) {
-    for ($d = ((sizeof($xml_date_sel_arr[$IMEI[$i]])) - 1);$d >= 0;$d--) {
+    for ($i = ((sizeof($xml_date_sel_arr)) - 1);$i >= 0;$i--) {
         //echo "<br>Date=".$userdates[$d];
         if ($cp_dispatch_flag) { //##### BREAK IF CP DISPATCH IS FOUND
             //echo "<br>B2:";
@@ -509,22 +487,22 @@ for ($i = 0;$i < sizeof($Vehicle);$i++) {
         $nodata = false;
 
         //$sts_date_sel = $sts_date;
-        $xml_date_sel = $xml_date_sel_arr[$IMEI[$i]][$i];
-        $lat_sel = $lat_sel_arr[$IMEI[$i]][$i];
-        $lng_sel = $lng_sel_arr[$IMEI[$i]][$i];
+        $xml_date_sel = $xml_date_sel_arr[$i];
+        $lat_sel = $lat_sel_arr[$i];
+        $lng_sel = $lng_sel_arr[$i];
         //$speed_sel = $speed_sel_arr[$IMEI[$i]];
 
-        if($door_open1_arr[$IMEI[$i]][$i]!="") {
-            $door1_io_val = $door_open1_arr[$IMEI[$i]][$i];
+        if($door_open1_arr[$i]!="") {
+            $door1_io_val = $door_open1_arr[$i];
         }
-        if($door_open2_arr[$IMEI[$i]][$i]!="") {
-            $door2_io_val = $door_open2_arr[$IMEI[$i]][$i];
+        if($door_open2_arr[$i]!="") {
+            $door2_io_val = $door_open2_arr[$i];
         }
 
         //########## STORE VEHICLE COUNTER																	  					
         $nodata = false;
         //echo "\nNodata2=".$nodata;
-        $datetime = $xml_date_sel[$IMEI[$i]][$i];;
+        $datetime = $xml_date_sel[$i];;
 
         //echo "<br>Door1=".$door1_io_val." ,Door2=".$door2_io_val;
         //################ CHECK DATA => REVERSE - FIRST PLANT OUT->IN (OUTTIME), IN->OUT (INTIME)
@@ -573,7 +551,7 @@ for ($i = 0;$i < sizeof($Vehicle);$i++) {
                 $datetimec_cr = $datetime;
 
                 //$date_secs2 = strtotime($datetime_cr);																		
-                calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, &$distance);
+                calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, $distance);
                 if ($distance > 2000) {
                     $distance = 0;
                     $lat_ref = $lat_cr;
@@ -582,7 +560,7 @@ for ($i = 0;$i < sizeof($Vehicle);$i++) {
                 //###### FOR IRREGULAR DATA FILTER CODE
                 //$tmp_time_diff1 = (double)(strtotime($datetime) - strtotime($last_time1)) / 3600;
                 $tmp_time_diff1 = (double) (strtotime($last_time1) - strtotime($datetime)) / 3600;
-                calculate_distance($latlast, $lat_cr, $lnglast, $lng_cr, &$distance1);
+                calculate_distance($latlast, $lat_cr, $lnglast, $lng_cr, $distance1);
 
                 //echo "<br>Distance1=".$distance1." ,tmp_time_diff1=".$tmp_time_diff1;								
                 if ($tmp_time_diff1 > 0.0) {
@@ -612,7 +590,7 @@ for ($i = 0;$i < sizeof($Vehicle);$i++) {
                     } else if ($distance > 0.3) {
                         //###### FOR IRREGULAR DATA FILTER CODE
                         //$out_time = $datetime_ref;
-                        calculate_distance($Lat_Final, $lat_sel, $Lng_Final, $lng_sel, &$distance_plant);
+                        calculate_distance($Lat_Final, $lat_sel, $Lng_Final, $lng_sel, $distance_plant);
 
                         //echo "<br>CustomerFinal=".$Customer_Final." ,distance_plant=".$distance_plant." ,DistVar_Final=".$DistVar_Final." ,date_time_ref=".$datetime_cr." ,date_sel=".$datetime;
                         $out_time = "";
@@ -1146,8 +1124,8 @@ $DistVar = 1;
 
 $distance_station = 0;
 if (($lat_g != "") && ($lng_g != "")) {
-calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, &$distance_station1);
-calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, &$distance_station2);
+calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, $distance_station1);
+calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, $distance_station2);
 
 if ($distance_station1 < $distance_station2) {
 $distance_station = $distance_station1;
@@ -1180,8 +1158,8 @@ $DistVar = 0.1;
 
 $distance_station = 0;
 if (($lat_g != "") && ($lng_g != "")) {
-calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, &$distance_station1);
-calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, &$distance_station2);
+calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, $distance_station1);
+calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, $distance_station2);
 
 if ($distance_station1 < $distance_station2) {
 $distance_station = $distance_station1;
@@ -1224,8 +1202,8 @@ $CDistVar = 0.1;
 
 $distance_station = 0;
 if (($clat_g != "") && ($clng_g != "")) {
-calculate_distance($lat_ref1, $clat_g, $lng_ref1, $clng_g, &$distance_station1);
-calculate_distance($lat_cr, $clat_g, $lng_cr, $clng_g, &$distance_station2);
+calculate_distance($lat_ref1, $clat_g, $lng_ref1, $clng_g, $distance_station1);
+calculate_distance($lat_cr, $clat_g, $lng_cr, $clng_g, $distance_station2);
 
 if ($distance_station1 < $distance_station2) {
 $distance_station = $distance_station1;
