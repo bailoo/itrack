@@ -18,7 +18,7 @@ require_once 'libCommon.php';
 */
 function getSpeedAlerts($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpeed, $roadId)
 {
-	global $TZ;
+	$TZ='0530';	// Asia/Kolkata
 
 	$dateList = getDateList($dTime1,$dTime2);
 	$s_cql = "SELECT * FROM speedalert
@@ -54,7 +54,7 @@ function getSpeedAlerts($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSp
 */
 function getTurnAlerts($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpeed, $minAngle, $maxAngle, $roadId)
 {
-	global $TZ;
+	$TZ='0530';	// Asia/Kolkata
 
 	$dateList = getDateList($dTime1,$dTime2);
 	$s_cql = "SELECT * FROM turnalert
@@ -84,7 +84,7 @@ function getTurnAlerts($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpe
 */
 function getDistanceLog($o_cassandra, $imei, $startTime, $endTime)
 {
-	global $TZ;
+	$TZ='0530';	// Asia/Kolkata
 
 	$dateList = getDateList($startTime, $endTime);
 	$s_cql = "SELECT * FROM distancelog 
@@ -119,7 +119,7 @@ function getDistanceLog($o_cassandra, $imei, $startTime, $endTime)
 */
 function getxRoadLog($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpeed, $minHalt, $maxHalt, $xRoadId)
 {
-	global $TZ;
+	$TZ='0530';	// Asia/Kolkata
 
 	$dateList = getDateList($dTime1, $dTime2);
 	$s_cql = "SELECT * FROM xroadlog 
@@ -153,7 +153,7 @@ function getxRoadLog($o_cassandra, $imei, $dTime1, $dTime2, $minSpeed, $maxSpeed
 */
 function getTravelLog($o_cassandra, $imei, $startTime, $endTime, $minDuration, $maxDuration)
 {
-	global $TZ;
+	$TZ='0530';	// Asia/Kolkata
 
 	$dateList = getDateList($startTime, $endTime);
 	$s_cql = "SELECT * FROM travellog 
@@ -187,7 +187,7 @@ function getTravelLog($o_cassandra, $imei, $startTime, $endTime, $minDuration, $
 */
 function getNightLog($o_cassandra, $imei, $startTime, $endTime, $minDuration, $maxDuration)
 {
-	global $TZ;
+	$TZ='0530';	// Asia/Kolkata
 
 	$dateList = getDateList($startTime, $endTime);
 	$s_cql = "SELECT * FROM nightlog 
@@ -221,7 +221,7 @@ function getNightLog($o_cassandra, $imei, $startTime, $endTime, $minDuration, $m
 */
 function getGapLog($o_cassandra, $imei, $startTime, $endTime)
 {
-	global $TZ;
+	$TZ='0530';	// Asia/Kolkata
 
 	$dateList = getDateList($startTime, $endTime);
 	$s_cql = "SELECT * FROM gaplog 
