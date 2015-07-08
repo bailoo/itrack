@@ -131,14 +131,14 @@ for($i=0;$i<$vsize;$i++)
                     {
                         $CurrentLat = $SortedDataObject->latitudeData[$obi];
                         $CurrentLong = $SortedDataObject->longitudeData[$obi];
+                        $datetime=$SortedDataObject->deviceDatetime[$obi];
                         if((strlen($CurrentLat)>5) && ($CurrentLat!="-") && (strlen($CurrentLong)>5) && ($CurrentLong!="-"))
                         {
                             $DataValid = 1;
                         }
-                        if($DataValid==1)
-                        {
+                        if(($DataValid==1) && ($datetime>$date1 && $datetime<$date2))
+                        { 
                             
-                            $datetime=$SortedDataObject->deviceDatetime[$obi];
                             $xml_date_current = $datetime;
                             //echo "xml_date_current=".$xml_date_current."<br>";
                             if((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval)
@@ -535,14 +535,14 @@ for($i=0;$i<$vsize;$i++)
                     {
                         $CurrentLat = $SortedDataObject->latitudeData[$obi];
                         $CurrentLong = $SortedDataObject->longitudeData[$obi];
-                        
+                        $xml_date_current=$SortedDataObject->deviceDatetime[$obi];
                         if((strlen($CurrentLat)>5) && ($CurrentLat!="-") && (strlen($CurrentLong)>5) && ($CurrentLong!="-"))
                         {
                             $DataValid = 1;
                         }
-                        if($DataValid==1)
+                        if(($DataValid==1) && ($xml_date_current>$date1 && $xml_date_current<$date2))
                         { 
-                            $xml_date_current=$SortedDataObject->deviceDatetime;
+                            
                             if((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval)
                             {						
                                 $CurrentLat = $lat_value[1] ;
@@ -881,14 +881,13 @@ for($i=0;$i<$vsize;$i++)
                     {
                         $CurrentLat = $SortedDataObject->latitudeData[$obi];
                         $CurrentLong = $SortedDataObject->longitudeData[$obi];
-                        
+                        $xml_date_current=$SortedDataObject->deviceDatetime[$obi];                        
                         if((strlen($CurrentLat)>5) && ($CurrentLat!="-") && (strlen($CurrentLong)>5) && ($CurrentLong!="-"))
                         {
                             $DataValid = 1;
                         }
-                        if($DataValid==1)
+                        if(($DataValid==1) && ($xml_date_current>$date1 && $xml_date_current<$date2))
                         { 
-                            $xml_date_current=$SortedDataObject->deviceDatetime;
                             //echo "Final2";
                             if($firstData==1)
                             {
