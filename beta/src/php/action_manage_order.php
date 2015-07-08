@@ -163,6 +163,7 @@
         $flag=2;
       }    
 	}
+        }
 	else if ($pd->data[action_type]=="delete")
 	{
 	  $file_name="src/php/manage_edit_delete_order.php"; ///////for previous page

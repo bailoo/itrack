@@ -1,8 +1,9 @@
 ﻿<?php
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 set_time_limit(2000);
 include_once("get_filteredTrackInterval_xml.php");      // WRITE SORTED XML , FINAL XML NAME STORED IN 'xmltowirte' VARIABLE
 ?>
-
 <html>
 
 <head>
@@ -171,7 +172,7 @@ include_once("get_filteredTrackInterval_xml.php");      // WRITE SORTED XML , FI
 				}
 				else 
 				{          
-					document.forms[0].submit();	
+                                    document.forms[0].submit();	
 				}
 			});
 			}//else
@@ -383,16 +384,31 @@ echo'
   
          
   
-  echo'
+   echo'
     <input type="hidden" name="xmltowrite" value="'.$xmltowrite.'">
     <input type="hidden" name="startdate" value="'.$startdate.'">
     <input type="hidden" name="enddate" value="'.$enddate.'">
     <input type="hidden" name="time_interval" value="'.$time_interval1.'">
-	<input type="hidden" name="text_report_io_element" value="'.$text_report_io_element.'">
-	<input type="hidden" name="data_with_location" value="'.$dwt.'">
-	<input type="hidden" name="data_with_category" value="'.$lastcategory.'">
-	  
-  
+    <input type="hidden" name="text_report_io_element" value="'.$text_report_io_element.'">
+    <input type="hidden" name="data_with_location" value="'.$dwt.'">
+    <input type="hidden" name="data_with_category" value="'.$lastcategory.'">
+    <input type="hidden" name="vehicleserial" value='.serialize($vehicleserialA).'>
+    <input type="hidden" name="vehiclename" value='.serialize($vehiclename).'>
+    <input type="hidden" name="vehicletype" value='.serialize($vehicletype).'>
+    <input type="hidden" name="datetime" value='.base64_encode(serialize($datetimeDisplay)).'>
+    <input type="hidden" name="speed" value='.serialize($speed).'>
+    <input type="hidden" name="cumdist" value='.serialize($cumdist).'>
+    <input type="hidden" name="lat" value='.serialize($latDisplay).'>
+    <input type="hidden" name="lng" value='.serialize($lngDisplay).'>
+    <input type="hidden" name="noloc" value='.serialize($noloc).'>
+    <input type="hidden" name="io1" value='.serialize($io1).'>
+    <input type="hidden" name="io2" value='.serialize($io2).'>
+    <input type="hidden" name="io3" value='.serialize($io3).'>
+    <input type="hidden" name="io4" value='.serialize($io4).'>
+    <input type="hidden" name="io5" value='.serialize($io5).'>
+    <input type="hidden" name="io6" value='.serialize($io6).'>
+    <input type="hidden" name="io7" value='.serialize($io7).'>
+    <input type="hidden" name="io8" value='.serialize($io8).'>
 </form>';
   if($dwt=="0")
   {
@@ -457,3 +473,4 @@ function calculate_distance_1($lat1, $lat2, $lon1, $lon2, &$distance)
     ';
   } 
 ?>
+

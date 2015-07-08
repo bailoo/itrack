@@ -100,7 +100,8 @@
                             $date_secs1 = strtotime($time1);					
                             //echo "<br>DateSec1 before=".$date_secs1." time_int=".$interval;
                             $date_secs1 = (double)($date_secs1 + $interval); 
-                            $date_secs2 = 0;  
+                            $date_secs2 = 0; 
+                            $last_time = $datetime;
                             $last_time1 = $datetime;
                             $latlast = $lat;
                             $lnglast =  $lng;
