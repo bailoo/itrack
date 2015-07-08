@@ -85,9 +85,7 @@ else
         }
 }
 $distanceinterval=0.0;
-$finalVNameArr=array();
-$finalVTypeArr=array();	
-$finalVNumArr=array();
+
 
 get_All_Dates($datefrom, $dateto, $userdates);    
 $date_size = sizeof($userdates);
@@ -99,9 +97,7 @@ for($i=0;$i<$vsize;$i++)
     $vehicle_info=get_vehicle_info($root,$vserial[$i]);
     $vehicle_detail_local=explode(",",$vehicle_info);
 
-    $finalVNameArr[$i]=$vehicle_detail_local[0];
-    $finalVTypeArr[$i]=$vehicle_detail_local[1];
-    $finalVNumArr[$i]=$vehicle_detail_local[2];
+    
 		//echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
     if($home_report_type=="map_report" || $home_report_type=="play_report")   /// map only
     { 

@@ -172,7 +172,7 @@ include_once("get_filteredTrackInterval_xml.php");      // WRITE SORTED XML , FI
 				}
 				else 
 				{          
-					//document.forms[0].submit();	
+                                    document.forms[0].submit();	
 				}
 			});
 			}//else
