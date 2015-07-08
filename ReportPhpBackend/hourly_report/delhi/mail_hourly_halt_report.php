@@ -8,7 +8,7 @@ global $DEBUG_OFFLINE;
 $DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
 $CREATE_MASTER = false;
-$MAIN_DEBUG = true;
+$MAIN_DEBUG = false;
 //#################
 
 $isReport = true;
@@ -180,7 +180,7 @@ $mor_run_start_time = $date . " 10:00:00";
 //$mor_run_start_time = $date." 06:00:00";
 
 if ($MAIN_DEBUG) {
-    $shift_ev1 = false;
+    $shift_ev1 = true;
     $shift_ev2 = true;
     $shift_mor = false;
 } else {
@@ -507,7 +507,7 @@ if ($shift_mor) {
         echo "\nAfter Last ProcessedDetail:Morning";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL :MORNING ##############
-        //$to = 'rizwan@iembsys.com';			
+//       $to = 'rizwan@iembsys.com';			
         $to = 'gpsreporthourly@gmail.com';
 
         $time_1 = date('Y-m-d H:i:s');
