@@ -178,8 +178,8 @@ public class GetAlerts
 		for (DistanceLog distanceLog : distanceLogList)
 		{
 			System.out.print("imei: "+distanceLog.getImei()+" ");
-			System.out.print("device time: "+sdf.format(distanceLog.getStartTime())+" ");
-			System.out.print("server time: "+sdf.format(distanceLog.getEndTime())+" ");
+			System.out.print("start time: "+sdf.format(distanceLog.getStartTime())+" ");
+			System.out.print("end time: "+sdf.format(distanceLog.getEndTime())+" ");
 			System.out.print("avg speed: "+distanceLog.getAvgSpeed()+" ");
 			System.out.print("distance: "+distanceLog.getDistance()+" ");
 			System.out.print("max speed: "+distanceLog.getMaxSpeed()+" ");
