@@ -132,14 +132,13 @@ function getDistanceLog($o_cassandra, $imei, $startTime, $endTime)
 	
 	$param1 = 'endtime';
 	$maxVal1 = strtotime($endTime) * 1000;	// cassandra timestamp is in milliseconds
-	echo "maxVal1 = $maxVal1 ";	
 	foreach ($st_results as $key=>$row)
 	{
 		$col1 = $row[$param1];
 		if ($col1 > $maxVal1)
 			unset($st_results[$key]); 	// delete row from array
 	}
-	
+
 	return $st_results;
 }
 
@@ -222,7 +221,7 @@ function getTravelLog($o_cassandra, $imei, $startTime, $endTime, $minDuration, $
 	$st_results = $o_cassandra->query($s_cql);
 	
 	$param1 = 'endtime';
-	$maxVal1 = $endTime;	
+	$maxVal1 = strtotime($endTime) * 1000;	// cassandra timestamp is in milliseconds
 	$param2 = 'duration';
 	$minVal2 = $minDuration;
 	$maxVal2 = $maxDuration;
@@ -267,7 +266,7 @@ function getNightLog($o_cassandra, $imei, $startTime, $endTime, $minDuration, $m
 	$st_results = $o_cassandra->query($s_cql);
 	
 	$param1 = 'endtime';
-	$maxVal1 = $endTime;	
+	$maxVal1 = strtotime($endTime) * 1000;	// cassandra timestamp is in milliseconds
 	$param2 = 'duration';
 	$minVal2 = $minDuration;
 	$maxVal2 = $maxDuration;
@@ -312,7 +311,7 @@ function getGapLog($o_cassandra, $imei, $startTime, $endTime)
 	$st_results = $o_cassandra->query($s_cql);
 	
 	$param1 = 'endtime';
-	$maxVal1 = $endTime;	
+	$maxVal1 = strtotime($endTime) * 1000;	// cassandra timestamp is in milliseconds
 	foreach ($st_results as $key=>$row)
 	{
 		$col1 = $row[$param1];
