@@ -2,18 +2,31 @@
   include_once('util_session_variable.php');
   include_once('util_php_mysql_connectivity.php');
   include_once('user_type_setting.php');
-  include_once('common_xml_element.php');
+ // include_once('common_xml_element.php');
   //print_r($root);
   //echo "<br>z=".$root->data->AccountID;
+  //casandra------
+  include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+  include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
+  $o_cassandra = new Cassandra();	
+  $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+  $vehicle_color1=getColorFromAP($account_id,$DbConnection); /// A->Account P->Preference
+   $vcolor = explode(':',$vehicle_color1); //account_name:active:inactive
+    $vcolor1 = "#".$vcolor[0];
+    $vcolor2 = "#".$vcolor[1];
+    $vcolor3 = "#".$vcolor[2];
+  //---------------
   $common_id1=$account_id;
-  
+  /*
   $query="SELECT DISTINCT device_imei_no from device_assignment where account_id='$account_id' and status='1'";
   //echo $query;
   $result=mysql_query($query,$DbConnection);
-  
+  */
   function common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name,$option_name)
 	{	
-		//$td_cnt++;
+		//casandra
+                global $o_cassandra;
+                //$td_cnt++;
 		global $td_cnt;
 		if($td_cnt==1)
 		{
@@ -22,13 +35,22 @@
 		
 		//date_default_timezone_set('Asia/Calcutta');
 		$current_date = date('Y-m-d');
-
+                /*
+                 * old code
 		$xml_file = "../../../xml_vts/xml_data/".$current_date."/".$vehicle_imei.".xml";
 		//====code updated on 13032015=============//
 		include("/var/www/html/vts/beta/src/php/common_xml_path.php");
-		$xml_file =$xml_data."/".$current_date."/".$vehicle_imei.".xml";		
+		$xml_file =$xml_data."/".$current_date."/".$vehicle_imei.".xml";
+                */
+                 $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $current_date);
+                if($logResult!='')
+                {
+                    $vehicle_active_flag=1;
+                }
+                
 		//========XXXXXXXXXXXXXXXXXXXXXXX===========//
-		if(file_exists($xml_file))
+		//if(file_exists($xml_file))
+                if($vehicle_active_flag==1)
 		{		
 		echo'<td align="left">&nbsp;<INPUT TYPE="radio"  name="vehicleserial_radio" VALUE="'.$vehicle_imei.'"></td>
 			   <td class=\'text\'>&nbsp;
