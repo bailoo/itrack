@@ -34,15 +34,16 @@ public class report_distance {
     public static ArrayList<String> runtime_stop = new ArrayList<String>();
     
     //###### FINAL ARRAY
-    public static ArrayList<Integer> VehicleID = new ArrayList<Integer>();
+    public static ArrayList<Integer> IMEI_No = new ArrayList<Integer>();
     public static ArrayList<String> StartTime = new ArrayList<String>();
     public static ArrayList<String> EndTime = new ArrayList<String>();
+    public static ArrayList<String> ServerTime = new ArrayList<String>();
     public static ArrayList<Double> AverageSpeed = new ArrayList<Double>();
     public static ArrayList<Double> MaxSpeed = new ArrayList<Double>();
-    public static ArrayList<Double> TotalDistance = new ArrayList<Double>();
+    public static ArrayList<Double> Distance = new ArrayList<Double>();
     public static ArrayList<String> AlertTime = new ArrayList<String>();
     
-	public static void action_report_distance(String imei, String device_time, String startdate, String enddate, double interval, double lat, double lng, double speed, int data_size, int record_count) {
+	public static void action_report_distance(String imei, String device_time, String sts, String startdate, String enddate, double interval, double lat, double lng, double speed, int data_size, int record_count) {
 											  		
 		if(device_time!=null) {
 			//System.out.println(" imei="+imei+" device_time="+device_time+" startdate="+startdate+" enddate="+enddate+" interval="+interval+" lat="+lat+" lng="+lng+" speed="+speed+" data_size="+data_size+" record_count="+record_count);
@@ -258,9 +259,10 @@ public class report_distance {
 						
 					    StartTime.add(time1);
 					    EndTime.add(time2);
+					    ServerTime.add(sts);
 					    AverageSpeed.add(avg_speed);
 					    MaxSpeed.add(max_speed);
-					    TotalDistance.add(total_dist);
+					    Distance.add(total_dist);
 					    AlertTime.add(current_time);
 						
 						System.out.println("Time1="+time1+", Time2="+time2+" ,AvgSpd="+avg_speed+" ,MaxSpd="+max_speed+" ,TotalDist="+total_dist+" ,CurrentTime="+current_time);
@@ -343,9 +345,10 @@ public class report_distance {
 					    
 						StartTime.add(time1);
 					    EndTime.add(time2);
+					    ServerTime.add(sts);
 					    AverageSpeed.add(avg_speed);
 					    MaxSpeed.add(max_speed);
-					    TotalDistance.add(total_dist);
+					    Distance.add(total_dist);
 					    AlertTime.add(current_time);
 					    System.out.println("LAST::Time1="+time1+", Time2="+time2+" ,AvgSpd="+avg_speed+" ,MaxSpd="+max_speed+" ,TotalDist="+total_dist+" ,CurrentTime="+current_time);
 												

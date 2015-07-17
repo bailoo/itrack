@@ -26,7 +26,7 @@ public class report_turning_violation {
     public static ArrayList<Double> turningLatitude = new ArrayList<Double>();
     public static ArrayList<Double> turningLongitude = new ArrayList<Double>();
     public static ArrayList<LatLng> latLngObj = new ArrayList<LatLng>();
-    public static ArrayList<String> locationCode = new ArrayList<String>();
+    public static ArrayList<String> locationId = new ArrayList<String>();
     public static ArrayList<String> location = new ArrayList<String>();
     public static ArrayList<String> roadID = new ArrayList<String>();
     public static ArrayList<String> roadName = new ArrayList<String>();

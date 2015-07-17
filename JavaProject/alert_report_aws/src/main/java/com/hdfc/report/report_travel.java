@@ -1,6 +1,9 @@
 package com.hdfc.report;
 
+import java.util.ArrayList;
+
 import com.hdfc.utils.utility_class;
+import com.iespl.gisgraphy.LatLng;
 
 public class report_travel {
 	
@@ -13,6 +16,27 @@ public class report_travel {
 	public static double xml_date_latest_sec = 0.0, device_time_sec =0.0, startdate_sec =0.0, enddate_sec =0.0, tmp_time_diff=0.0, tmp_time_diff1=0.0, distance1=0.0, tmpdiff=0.0;
 	public static double tmp_speed=0.0, tmp_speed1=0.0, distance_travel=0.0, distance_total=0.0, distance_incrimenttotal=0.0, datetime_diff=0.0, lat_travel_end=0.0, lng_travel_end=0.0;
 	
+    //###### FINAL ARRAY
+    public static ArrayList<String> IMEI_No = new ArrayList<String>();    
+    public static ArrayList<String> ServerTime = new ArrayList<String>();
+    public static ArrayList<Double> AvgSpeed = new ArrayList<Double>();
+    public static ArrayList<Double> Distance = new ArrayList<Double>();
+    public static ArrayList<Double> MaxSpeed = new ArrayList<Double>();
+    public static ArrayList<String> StartDeviceTime = new ArrayList<String>();
+    public static ArrayList<String> EndDeviceTime = new ArrayList<String>();   
+    public static ArrayList<String> TravelTime = new ArrayList<String>();
+    public static ArrayList<Double> StartLatitude = new ArrayList<Double>();
+    public static ArrayList<Double> EndLatitude = new ArrayList<Double>();
+    public static ArrayList<Double> StartLongitude = new ArrayList<Double>();
+    public static ArrayList<Double> EndLongitude = new ArrayList<Double>();
+    public static ArrayList<LatLng> StartlatLngObj = new ArrayList<LatLng>();
+    public static ArrayList<LatLng> EndlatLngObj = new ArrayList<LatLng>();
+    public static ArrayList<String> StartlocationId = new ArrayList<String>();
+    public static ArrayList<String> EndlocationId = new ArrayList<String>();
+    public static ArrayList<String> Startlocation = new ArrayList<String>();
+    public static ArrayList<String> Endlocation = new ArrayList<String>(); 
+
+    
 	public static void action_report_travel(String imei, String device_time, String sts, String startdate, String enddate, double datetime_threshold, double lat, double lng, double speed, int data_size, int record_count) {
 
 		if(device_time!=null) {
@@ -125,7 +149,7 @@ public class report_travel {
 						//echo "start_date1=".$datetime_travel_start."end_date1=".$datetime_travel_end."<br>";
 						lat_travel_end = lat_S;
 						lng_travel_end = lng_S;
-						newTravel(imei, datetime_travel_start, datetime_travel_end, distance_travel, lat_travel_start, lng_travel_start, lat_travel_end, lng_travel_end, distance_travel,max_speed);
+						newTravel(imei, datetime_travel_start, datetime_travel_end, distance_travel, lat_travel_start, lng_travel_start, lat_travel_end, lng_travel_end, distance_travel,max_speed,sts);
 						haltFlag = true;
 						//j=0;
 					}
@@ -136,9 +160,7 @@ public class report_travel {
 							datetime_travel_end = datetime_E;
 							lat_travel_end = lat_S;
 							lng_travel_end = lng_S;
-							//$max_speed = max($speed_arr);
-							//$max_speed = round($max_speed,2);
-							newTravel(imei, datetime_travel_start, datetime_travel_end, distance_travel, lat_travel_start, lng_travel_start, lat_travel_end, lng_travel_end, distance_travel,max_speed);
+							newTravel(imei, datetime_travel_start, datetime_travel_end, distance_travel, lat_travel_start, lng_travel_start, lat_travel_end, lng_travel_end, distance_travel,max_speed,sts);
 						}
 					}
 				}
@@ -147,7 +169,7 @@ public class report_travel {
 	}
 	
 	
-	public static void newTravel(String imei, String datetime_S, String datetime_E, double distance, double lat_travel_start, double lng_travel_start, double lat_travel_end, double lng_travel_end, double distance_travel, double max_speed)
+	public static void newTravel(String imei, String datetime_S, String datetime_E, double distance, double lat_travel_start, double lng_travel_start, double lat_travel_end, double lng_travel_end, double distance_travel, double max_speed, String sts)
 	{
 		double travel_dur =  utility_class.get_seconds(datetime_E) - utility_class.get_seconds(datetime_S);                                                    
 		//hms = secondsToTime(travel_dur);
@@ -163,6 +185,26 @@ public class report_travel {
 			max_speed = avg_speed;
 		}
 		System.out.println("imei="+imei+" ,datetime_S="+datetime_S+" ,datetime_E="+datetime_E+", lat_travel_start="+lat_travel_start+" ,lng_travel_start="+lng_travel_start+" ,lat_travel_end="+lat_travel_end+" ,lng_travel_end="+lng_travel_end+" ,distance_travel="+distance_travel+" ,travel_time="+travel_time+" ,max_speed="+max_speed+" ,avg_speed="+avg_speed);
-		//total_travel = "\n< marker imei=\"".vserial."\" vname=\"".vname."\" time1=\"".datetime_S."\" time2=\"".datetime_E."\" lat_start=\"".lat_travel_start."\" lng_start=\"".lng_travel_start."\" lat_end=\"".lat_travel_end."\" lng_end=\"".lng_travel_end."\" distance_travelled=\"".distance_travel."\" travel_time=\"".travel_time."\" max_speed=\"".max_speed."\" avg_speed=\"".avg_speed."\"/>";
+		
+		IMEI_No.add(imei);		
+		ServerTime.add(sts);
+		AvgSpeed.add(avg_speed);
+		Distance.add(distance_travel);
+		MaxSpeed.add(max_speed);
+		StartDeviceTime.add(datetime_S);
+		EndDeviceTime.add(datetime_E);
+		StartLatitude.add(lat_travel_start);
+		StartLongitude.add(lng_travel_start);
+		TravelTime.add(travel_time);
+		LatLng tmpobj1 = new LatLng(Double.toString(lat_travel_start), Double.toString(lng_travel_start),"","","","");
+		StartlatLngObj.add(tmpobj1);
+		//StartlocationId.add();
+		//Startlocation.add();
+		EndLatitude.add(lat_travel_end);
+		EndLongitude.add(lng_travel_end);
+		LatLng tmpobj2 = new LatLng(Double.toString(lat_travel_end), Double.toString(lng_travel_end),"","","","");
+		StartlatLngObj.add(tmpobj2);
+		//EndlocationId.add();
+		//Endlocation.add();		
 	} 	
 }

@@ -19,7 +19,7 @@ public class mysql_handler {
 	      //STEP 2: Register JDBC driver
 
 	      //STEP 4: Execute a query
-	//      System.out.println("Selecting data...");
+	//    System.out.println("Selecting data...");
 		  conn.stmt = conn.conn.createStatement();
 
 	      String sql;

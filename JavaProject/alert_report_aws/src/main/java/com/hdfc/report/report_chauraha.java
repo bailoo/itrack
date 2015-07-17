@@ -2,6 +2,7 @@ package com.hdfc.report;
 import java.util.ArrayList;
 
 import com.hdfc.utils.utility_class;
+import com.iespl.gisgraphy.LatLng;
 import com.iespl.gisgraphy.class_pop_junction;
 
 public class report_chauraha {
@@ -16,6 +17,19 @@ public class report_chauraha {
 	public static int firstdata_flag =0;
 	public static int firstdata_flag_chauraha =0;
 	public static boolean out_flag=false;
+	
+	public static ArrayList<String> IMEI_No = new ArrayList<String>();
+	public static ArrayList<String> DeviceTime = new ArrayList<String>();
+	public static ArrayList<String> ServerTime = new ArrayList<String>();
+	public static ArrayList<Double> Speed = new ArrayList<Double>();
+	public static ArrayList<Double> Latitude = new ArrayList<Double>();
+	public static ArrayList<Double> Longitude = new ArrayList<Double>();
+	public static ArrayList<LatLng> latLngObj = new ArrayList<LatLng>();
+	public static ArrayList<String> locationId = new ArrayList<String>();
+	public static ArrayList<String> location = new ArrayList<String>();
+	public static ArrayList<String> roadID = new ArrayList<String>();
+	public static ArrayList<String> roadName = new ArrayList<String>();			
+	
 	
 	public static void action_report_chauraha(int vehicle_id, String imei, String device_time, String startdate, String enddate, double interval, double lat, double lng, double speed, int data_size, int record_count)
 	{
