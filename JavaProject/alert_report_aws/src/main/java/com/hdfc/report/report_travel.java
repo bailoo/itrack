@@ -24,7 +24,8 @@ public class report_travel {
     public static ArrayList<Double> MaxSpeed = new ArrayList<Double>();
     public static ArrayList<String> StartDeviceTime = new ArrayList<String>();
     public static ArrayList<String> EndDeviceTime = new ArrayList<String>();   
-    public static ArrayList<String> TravelTime = new ArrayList<String>();
+    //public static ArrayList<String> TravelTime = new ArrayList<String>();
+    public static ArrayList<Integer> TravelDuration = new ArrayList<Integer>();
     public static ArrayList<Double> StartLatitude = new ArrayList<Double>();
     public static ArrayList<Double> EndLatitude = new ArrayList<Double>();
     public static ArrayList<Double> StartLongitude = new ArrayList<Double>();
@@ -171,20 +172,24 @@ public class report_travel {
 	
 	public static void newTravel(String imei, String datetime_S, String datetime_E, double distance, double lat_travel_start, double lng_travel_start, double lat_travel_end, double lng_travel_end, double distance_travel, double max_speed, String sts)
 	{
-		double travel_dur =  utility_class.get_seconds(datetime_E) - utility_class.get_seconds(datetime_S);                                                    
+		double travel_dur =  utility_class.get_seconds(datetime_E) - utility_class.get_seconds(datetime_S);
+		int travel_duration = (int) travel_dur; 
 		//hms = secondsToTime(travel_dur);
-		String travel_time = utility_class.get_hms((long)travel_dur);
+	//	String travel_time = utility_class.get_hms((long)travel_dur);
 		//travel_time = hms[h].":".hms[m].":".hms[s];
 		//echo "avg_speed=".$distance_travel."travel_dur=".$travel_dur."<br>";
-		double avg_speed = distance_travel/(travel_dur/3600);
-		distance_travel = utility_class.roundTwoDecimals(distance_travel);
-		avg_speed = utility_class.roundTwoDecimals(avg_speed);
+		double avg_speed = 0.0;
+		if(avg_speed > 0.0) {
+			avg_speed = distance_travel/(travel_dur/3600);
+			distance_travel = utility_class.roundTwoDecimals(distance_travel);
+			avg_speed = utility_class.roundTwoDecimals(avg_speed);
+		}
 		//echo "avg_speed=".$avg_speed."<br>";
 		if(max_speed < avg_speed)
 		{
 			max_speed = avg_speed;
 		}
-		System.out.println("imei="+imei+" ,datetime_S="+datetime_S+" ,datetime_E="+datetime_E+", lat_travel_start="+lat_travel_start+" ,lng_travel_start="+lng_travel_start+" ,lat_travel_end="+lat_travel_end+" ,lng_travel_end="+lng_travel_end+" ,distance_travel="+distance_travel+" ,travel_time="+travel_time+" ,max_speed="+max_speed+" ,avg_speed="+avg_speed);
+		System.out.println("imei="+imei+" ,datetime_S="+datetime_S+" ,datetime_E="+datetime_E+", lat_travel_start="+lat_travel_start+" ,lng_travel_start="+lng_travel_start+" ,lat_travel_end="+lat_travel_end+" ,lng_travel_end="+lng_travel_end+" ,distance_travel="+distance_travel+" ,travel_dur="+travel_dur+" ,max_speed="+max_speed+" ,avg_speed="+avg_speed);
 		
 		IMEI_No.add(imei);		
 		ServerTime.add(sts);
@@ -195,7 +200,8 @@ public class report_travel {
 		EndDeviceTime.add(datetime_E);
 		StartLatitude.add(lat_travel_start);
 		StartLongitude.add(lng_travel_start);
-		TravelTime.add(travel_time);
+		//TravelTime.add(travel_time);
+		TravelDuration.add(travel_duration);
 		LatLng tmpobj1 = new LatLng(Double.toString(lat_travel_start), Double.toString(lng_travel_start),"","","","");
 		StartlatLngObj.add(tmpobj1);
 		//StartlocationId.add();
@@ -206,5 +212,38 @@ public class report_travel {
 		StartlatLngObj.add(tmpobj2);
 		//EndlocationId.add();
 		//Endlocation.add();		
-	} 	
+	}
+	
+	
+	public static void set_variables() {
+		halt_flag =0; firstdata_flag=0; start_point_display =0;
+		date_secs1 = 0; date_secs2 =0; starttime =0; stoptime =0; halt_dur =0;
+		xml_date_latest ="1900-00-00 00:00:00"; datetime_ref =""; datetime_cr =""; arrivale_time =""; depature_time =""; datetime_S =""; datetime_E = ""; datetime_travel_start = ""; last_time=""; last_time1 =""; speeed_data_valid_time = ""; datetime_travel_end ="";
+		firstdata_flag_travel =0; firstdata_flag_halt =0;
+		lat_ref =0.0; lng_ref =0.0; lat_cr =0.0; lng_cr =0.0; lat_E=0.0; lng_E=0.0; CurrentLat = 0.0; CurrentLong = 0.0; LastLat = 0.0; LastLong = 0.0; lat_S=0.0; lng_S=0.0; latlast =0.0; lnglast = 0.0; max_speed=0.0; lat_travel_start =0.0; lng_travel_start = 0.0; distance_incriment =0.0;
+		haltFlag = false;
+		xml_date_latest_sec = 0.0; device_time_sec =0.0; startdate_sec =0.0; enddate_sec =0.0; tmp_time_diff=0.0; tmp_time_diff1=0.0; distance1=0.0; tmpdiff=0.0;
+		tmp_speed=0.0; tmp_speed1=0.0; distance_travel=0.0; distance_total=0.0; distance_incrimenttotal=0.0; datetime_diff=0.0; lat_travel_end=0.0; lng_travel_end=0.0;
+		
+	    //###### FINAL ARRAY
+	    IMEI_No = new ArrayList<String>();    
+	    ServerTime = new ArrayList<String>();
+	    AvgSpeed = new ArrayList<Double>();
+	    Distance = new ArrayList<Double>();
+	    MaxSpeed = new ArrayList<Double>();
+	    StartDeviceTime = new ArrayList<String>();
+	    EndDeviceTime = new ArrayList<String>();   
+	    //TravelTime = new ArrayList<String>();
+	    TravelDuration = new ArrayList<Integer>();
+	    StartLatitude = new ArrayList<Double>();
+	    EndLatitude = new ArrayList<Double>();
+	    StartLongitude = new ArrayList<Double>();
+	    EndLongitude = new ArrayList<Double>();
+	    StartlatLngObj = new ArrayList<LatLng>();
+	    EndlatLngObj = new ArrayList<LatLng>();
+	    StartlocationId = new ArrayList<String>();
+	    EndlocationId = new ArrayList<String>();
+	    Startlocation = new ArrayList<String>();
+	    Endlocation = new ArrayList<String>();		
+	}
 }

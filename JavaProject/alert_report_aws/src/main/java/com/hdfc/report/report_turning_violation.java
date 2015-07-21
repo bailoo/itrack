@@ -183,4 +183,30 @@ public class report_turning_violation {
 	    //return new Double(dist * meterConversion).doubleValue();
 	    return Double.valueOf(dist * meterConversion).doubleValue();
 	}
+	
+	public static void set_variables() {
+
+		halt_flag = 0;	
+		xml_date_latest="1900-00-00 00:00:00"; devicetime_start=""; devicetime_middle=""; devicetime_end=""; sts_start=""; sts_middle=""; sts_end=""; datetime_cr=""; road_code=""; last_time=""; last_time1="";
+		lat_start=0.0; lng_start=0.0; lat_middle=0.0; lng_middle=0.0; lat_end = 0.0; lng_end=0.0; speed_start=0.0; speed_middle=0.0; speed_end=0.0;
+		xml_date_latest_sec=0.0; device_time_sec=0.0; startdate_sec=0.0; enddate_sec=0.0;
+		CurrentLong = 0.0; tmp_time_diff1=0.0; tmp_time_diff=0.0;
+		distance =0.0; distance1=0.0; starttime=0.0; stoptime=0.0; halt_dur=0.0;	
+		start_flag =0; middle_flag =0; angle=0;
+		out_flag=false;
+		
+	    //###### FINAL ARRAY
+		IMEI_No = new ArrayList<String>();
+		turningDeviceTime = new ArrayList<String>();
+		turningServerTime = new ArrayList<String>();
+		turningSpeed = new ArrayList<Double>();
+		turningAngle = new ArrayList<Float>();
+		turningLatitude = new ArrayList<Double>();
+		turningLongitude = new ArrayList<Double>();
+		latLngObj = new ArrayList<LatLng>();
+		locationId = new ArrayList<String>();
+		location = new ArrayList<String>();
+		roadID = new ArrayList<String>();
+		roadName = new ArrayList<String>();		
+	}
 }

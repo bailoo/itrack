@@ -34,7 +34,7 @@ public class report_distance {
     public static ArrayList<String> runtime_stop = new ArrayList<String>();
     
     //###### FINAL ARRAY
-    public static ArrayList<Integer> IMEI_No = new ArrayList<Integer>();
+    public static ArrayList<String> IMEI_No = new ArrayList<String>();
     public static ArrayList<String> StartTime = new ArrayList<String>();
     public static ArrayList<String> EndTime = new ArrayList<String>();
     public static ArrayList<String> ServerTime = new ArrayList<String>();
@@ -66,7 +66,7 @@ public class report_distance {
 					
 					date_secs1 = utility_class.get_seconds(time1);					
 					date_secs1 = date_secs1 + interval;
-					System.out.println("time1="+time1+" ,date_secs1="+date_secs1+", interval="+interval);
+					//System.out.println("time1="+time1+" ,date_secs1="+date_secs1+", interval="+interval);
 					//date_secs2 = 0;  
 					last_time1 = device_time;
 					latlast = lat;
@@ -90,7 +90,7 @@ public class report_distance {
 					// echo "<br>Total lines orig=".$total_lines." ,c=".$c;
 					time2 = device_time;					
 					date_secs2 = utility_class.get_seconds(time2);
-					System.out.println("DateSec2="+date_secs2+" ,time2="+time2);
+					//System.out.println("DateSec2="+date_secs2+" ,time2="+time2);
 														                                      													      					
 					lat2 = lat;      				        					
 					lng2 = lng; 
@@ -108,7 +108,7 @@ public class report_distance {
 					
 					//echo "distance=".$distance." ,datetime=".$datetime."<br>";
 					
-					//echo "<br>dist=".$distance;			      					
+					//echo "<br>dist=".$distance;
 					//if($_SERVER['HTTP_X_FORWARDED_FOR'] == "172.26.48.181")
 					//echo '<br>Time:'.$datetime.' ,lat1='.$lat1.' ,lng1='.$lng1.', lat2='.$lat2.' ,lng2='.$lng2.' ,dist='.$distance.' totaldist='.$total_dist;                         
 					//if($distance>0.025) 
@@ -153,12 +153,12 @@ public class report_distance {
 					//echo "datetime=".$datetime." distance=".$distance." total_dist=".$total_dist." tmpspeed=".$tmp_speed." tmpspeed1=".$tmp_speed1." tmp_time_diff=".$tmp_time_diff." tmp_time_diff1=".$tmp_time_diff1."<br>";																	
 
 					//System.out.println("TmpSpeed="+tmp_speed+" ,tmp_speed="+tmp_speed1+" ,distance="+distance+",tmp_time_diff="+tmp_time_diff+", tmp_time_diff1="+tmp_time_diff1);
-					if(tmp_speed<300.0 && tmp_speed1<300.0 && distance>0.1 && tmp_time_diff>0.0 && tmp_time_diff1>0) {								
+					if(tmp_speed<300.0 && tmp_speed1<300.0 && distance>0.1 && tmp_time_diff>0.0 && tmp_time_diff1>0) {
 
 						total_dist = total_dist + distance;						
 						daily_dist= daily_dist + distance;	
 						daily_dist = utility_class.roundTwoDecimals(daily_dist);
-						System.out.println("daily_dist="+daily_dist);
+						//System.out.println("daily_dist="+daily_dist);
 						lat1 = lat2;
 						lng1 = lng2;
 						last_time = device_time;
@@ -167,7 +167,7 @@ public class report_distance {
 						time1_tmp = time1;
 						time2_tmp = time2;
 						total_dist_tmp = total_dist;
-						////// TMP CLOSED	////////
+						////// TMP CLOSED ////////
 						
 						//SPEED CONDITION OPENS
 						if((speed < speed_threshold) && (stop_runflag ==0)) {
@@ -209,7 +209,8 @@ public class report_distance {
 					//System.out.println("dateSec1="+date_secs1+" ,dateSec2="+date_secs2);
 					if( (date_secs2 >= date_secs1)) {								
 						
-						//System.out.println("TEST8A");
+						System.out.println("INTERVAL DATA");
+						
 						if(runtime_start.size() == 0)
 							total_runtime =0;
 		  
@@ -235,13 +236,13 @@ public class report_distance {
 							
 							avg_speed = (total_dist / total_runtime)*3600;
 							avg_speed = utility_class.roundTwoDecimals(avg_speed);
-							System.out.println("total_dist="+total_dist+" ,total_runtime="+total_runtime+",avg_speed="+avg_speed);
+							//System.out.println("total_dist="+total_dist+" ,total_runtime="+total_runtime+",avg_speed="+avg_speed);
 						}
 						//max_speed = max(speed_list);
 						max_speed = Collections.max(speed_list);
 						max_speed = utility_class.roundTwoDecimals(max_speed);
 						
-						System.out.println("AvgSpeed="+avg_speed+" ,MaxSpeed="+max_speed);
+						//System.out.println("AvgSpeed="+avg_speed+" ,MaxSpeed="+max_speed);
 
 						if( (avg_speed > max_speed) && (max_speed > 2.0) ) {
 							avg_speed = max_speed - 2;
@@ -257,7 +258,10 @@ public class report_distance {
 						Date now = new Date();
 						current_time = cDate.format(now);
 						
-					    StartTime.add(time1);
+						total_dist = utility_class.roundTwoDecimals(total_dist);
+						
+						IMEI_No.add(imei);
+						StartTime.add(time1);
 					    EndTime.add(time2);
 					    ServerTime.add(sts);
 					    AverageSpeed.add(avg_speed);
@@ -267,11 +271,10 @@ public class report_distance {
 						
 						System.out.println("Time1="+time1+", Time2="+time2+" ,AvgSpd="+avg_speed+" ,MaxSpd="+max_speed+" ,TotalDist="+total_dist+" ,CurrentTime="+current_time);
 					    //echo "<br>IN DATESEC";                                                  						
-						//$distance_data = "\n<marker vname=\"".$vname."\" imei=\"".$vserial."\" datefrom=\"".$time1."\" dateto=\"".$time2."\" distance=\"".$total_dist."\"/>";			
 						//reassign time1
 						time1 = device_time;
 						date_secs1 = utility_class.get_seconds(time1);
-						date_secs1 = date_secs1 + interval;		    									    						    						
+						date_secs1 = date_secs1 + interval;
 						//echo "<br>datesec1=".$datetime;    						                  
 						total_dist = 0.0;
 						avg_speed = 0.0;
@@ -289,10 +292,6 @@ public class report_distance {
 
 						total_runtime =0; 
 
-						//$r1 = 0;
-						//$r2 = 0;						
-						//$lat1 = $lat2;
-						//$lng1 = $lng2;
 						///////////////////////																
 					}  //if datesec2
 					
@@ -343,6 +342,8 @@ public class report_distance {
 							avg_speed = 0;
 						}						
 					    
+						total_dist = utility_class.roundTwoDecimals(total_dist);
+						IMEI_No.add(imei);
 						StartTime.add(time1);
 					    EndTime.add(time2);
 					    ServerTime.add(sts);
@@ -363,5 +364,39 @@ public class report_distance {
 				}
 			}
 		}
-	}	
+	}
+	
+	public static void set_variables() {
+		
+		CurrentLat = 0.0; CurrentLong = 0.0; LastLat = 0.0; LastLong = 0.0;	
+		firstdata_flag_distance =0; firstdata_flag_speed =0; firstData = 0;
+		lat1 =0.0; lng1 =0.0; lat2 =0.0; lng2 =0.0;
+		total_speed = 0.0; tmp_speed=0.0; tmp_speed1=0.0;
+		total_dist =0.0; daily_dist =0.0; total_dist_tmp =0.0; avg_speed =0.0; max_speed =0.0;
+		xml_date_latest_sec = 0.0; device_time_sec =0.0; startdate_sec =0.0; enddate_sec =0.0;
+			    
+		speed_threshold = 1; start_runflag = 0; stop_runflag = 1;
+		StopTimeCnt = ""; speeed_data_valid_time =""; time1_tmp =""; time2_tmp =""; current_time ="";
+		StopStartFlag = 0; DataValid=0;
+
+		time1 = ""; time2 =""; last_time1 = ""; last_time="";
+		date_secs1 = 0.0; date_secs2=0.0; tmp_time_diff1=0.0; tmp_time_diff=0.0; runtime = 0.0; total_runtime =0.0; 
+
+		latlast = 0.0; lnglast = 0.0; distance=0.0; distance1 =0.0;
+		SimpleDateFormat cDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+			
+		speed_list = new ArrayList<Double>();
+		runtime_start = new ArrayList<String>();
+		runtime_stop = new ArrayList<String>();
+
+		//###### FINAL ARRAY
+		IMEI_No = new ArrayList<String>();
+		StartTime = new ArrayList<String>();
+		EndTime = new ArrayList<String>();
+		ServerTime = new ArrayList<String>();
+		AverageSpeed = new ArrayList<Double>();
+		MaxSpeed = new ArrayList<Double>();
+		Distance = new ArrayList<Double>();
+		AlertTime = new ArrayList<String>();
+	}
 }

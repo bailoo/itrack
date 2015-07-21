@@ -77,4 +77,43 @@ public class report_speed_violation {
 				}
 			}
 		}
+	
+		public static void set_variables() {
+			
+			CurrentLat = 0.0; CurrentLong = 0.0; LastLat = 0.0; LastLong = 0.0;	
+			firstdata_flag_speed =0; firstData = 0;
+			speed_threshold = 80.0; lat1 =0.0; lng1 =0.0; lat2 =0.0; lng2 =0.0;
+		    total_speed = 0.0; tmp_speed=0.0; tmp_speed1=0.0;
+		    total_dist =0.0; daily_dist =0.0; total_dist_tmp =0.0; avg_speed =0.0; max_speed =0.0;
+		    xml_date_latest_sec = 0.0; device_time_sec =0.0; startdate_sec =0.0; enddate_sec =0.0;
+		    
+		    start_runflag = 0; stop_runflag = 1;
+			StopTimeCnt = ""; speeed_data_valid_time =""; time1_tmp =""; time2_tmp =""; current_time ="";
+			StopStartFlag = 0; DataValid=0;
+			
+			time1 = ""; time2 =""; last_time1 = ""; last_time="";
+			date_secs1 = 0.0; date_secs2=0.0; tmp_time_diff1=0.0; tmp_time_diff=0.0; runtime = 0.0; total_runtime =0.0; 
+			
+			latlast = 0.0; lnglast = 0.0; speed=0.0; distance1 =0.0;
+			cDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+	
+		    
+			speed_list = new ArrayList<Double>();
+			runtime_start = new ArrayList<String>();
+		    runtime_stop = new ArrayList<String>();
+		    
+		    //###### FINAL ARRAY
+		    IMEI_No = new ArrayList<String>();
+		    DeviceTime = new ArrayList<String>();
+		    ServerTime = new ArrayList<String>();
+		    Speed = new ArrayList<Double>();
+		    Latitude = new ArrayList<Double>();
+		    Longitude = new ArrayList<Double>();
+		    latLngObj = new ArrayList<LatLng>();
+		    locationId = new ArrayList<String>();
+		    location = new ArrayList<String>();
+		    roadID = new ArrayList<String>();
+		    roadName = new ArrayList<String>();		
+		}
+	
 	}

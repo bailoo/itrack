@@ -12,8 +12,8 @@ public class connection {
 
 	   //  Database credentials
 	   static final String USER = "root";
-	   static final String PASS = "neon04$VTS";
-//	   static final String PASS = "mysql";
+	   //static final String PASS = "neon04$VTS";
+	   static final String PASS = "mysql";
 	   public static Connection conn = null;
 	   public static Statement stmt = null;
 	   
