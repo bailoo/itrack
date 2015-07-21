@@ -16,6 +16,13 @@ public class utility_class {
         return dateFormat.format(cal.getTime());
 	}
 	
+	public static String getDayBeforeYesterdayDateString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -2);
+        return dateFormat.format(cal.getTime());
+	}	
+	
 	/************* METHOD- CALCULATE DISTANCE ************/
 	public static double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
 		double earthRadius = 3958.75;
