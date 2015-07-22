@@ -1,3 +1,5 @@
+#!/usr/bin/php
+
 <?php
 
 set_time_limit(360000);
@@ -6,6 +8,7 @@ set_time_limit(360000);
 $DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
 $CREATE_MASTER = false;
+$LOG = false;
 $isReport = true;
 //$HOST = "111.118.181.156";
 $DBASE = "iespl_vts_beta";
@@ -46,17 +49,15 @@ if ($DEBUG_OFFLINE) {
 echo "<br>ABSPAth=" . $abspath;
 
 //echo "\nD1";
-include_once($abspath . '/xmlParameters.php');
+include_once($abspath . '/ioParameters.php');
 //echo "\nD2";
-include_once($abspath . '/parameterizeData.php');
+include_once($abspath . '/dataParameters.php');
 //echo "\nD3";
-include_once($abspath . '/data.php');
+include_once($abspath . '/dataArrays.php');
 //echo "\nD4";
-include_once($abspath . '/sortXmlData.php');
-//echo "\nD5:" . $abspath;
 //$tmp = $abspath.'/getXmlData.php';
 //if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
-include_once($abspath . '/getXmlData.php');
+include_once($abspath . '/getDeviceData.php');
 //echo "\nD6";
 //include_once($abspath."/sort_xml.php");
 include_once($abspath . "/calculate_distance.php");
@@ -64,14 +65,11 @@ include_once($abspath . "/report_title.php");
 include_once($abspath . "/read_filtered_xml.php");
 include_once($abspath . "/user_type_setting.php");
 
-//require_once $abspath."/excel_lib/class.writeexcel_workbook.inc.php";
-//require_once $abspath."/excel_lib/class.writeexcel_worksheet.inc.php";
 include_once($abspath . "/util.hr_min_sec.php");
 //echo "<br>D7";
 if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun.php"));
 include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
 //echo "<br>D8";
-//include_once($abspath."/hourly_report/".$user_name."/get_master_detail.php");
 //### IMPORT XLSX LIBRARY
 //ini_set('display_startup_errors', TRUE);
 
@@ -123,7 +121,7 @@ $shift_mor = false;
 
 if ($DEBUG_OFFLINE || $DEBUG_ONLINE) {
     $shift_ev1 = true;
-    $date = '2015-07-07';
+    $date = '2015-07-13';
     $cdate = $date;
     $cdatetime = $cdate . " 10:00:00";
     $pdate = date('Y-m-d', strtotime($date . ' -1 day'));
@@ -149,17 +147,26 @@ if ($DEBUG_OFFLINE || $DEBUG_ONLINE) {
     $cdatetime = date('Y-m-d H:i:s');
     $pdate = date('Y-m-d', strtotime($date . ' -1 day'));
 
+    /*$date = '2015-07-13';
+    $cdate = '2015-07-13';
+    $cdatetime = '2015-07-13 23:05:00';
+    $pdate = '2015-07-12';*/
+
+
     $shift_ev_date1 = $date . " 08:00:00";
     $shift_ev_date2 = $date . " 23:59:59";
     $shift_ev_date3 = $date . " 00:00:00";
     $shift_ev_date4 = $date . " 08:00:00";
+    //$shift_ev_date4 = $date . " 01:00:00";
 
     $shift_mor_date1 = $date . " 04:00:00";
     $shift_mor_date2 = $date . " 19:00:00";
     //$shift_mor_date2 = $date." 21:00:00";
 
     $current_time = date('Y-m-d H:i:s');
-    //$current_time = $date." 08:00:00";
+
+//    $current_time = $date." 23:05:00";
+
     #$ev_run_start_time1 = $date." 20:00:00";
     $ev_run_start_time1 = $date . " 23:00:00";
     $ev_run_start_time2 = $date . " 08:00:00";
@@ -181,6 +188,15 @@ $unchanged = true;
   {
   $time1 = $pdate." 08:00:00";
   } */
+$cdatetime1 = strtotime(date('00:00:00'));
+$cdatetime2 = strtotime(date('H:i:s'));
+$difftime = $cdatetime2 - $cdatetime1;
+/*
+$cdatetime1 = strtotime('00:00:00');
+$cdatetime2 = strtotime('23:05:00');
+$difftime = $cdatetime2 - $cdatetime1;*/
+
+//echo "\nDiffTime=".$difftime;
 
 if ($difftime > 72000) {
     $time1 = $cdate . " 08:00:00";
@@ -189,11 +205,11 @@ if ($difftime > 72000) {
 }
 
 //############## CHECK VALID SHIFT #############################
-//echo "\ncurrent_time=".$current_time.",shift_ev_date1=".$shift_ev_date1.", shift_ev_date2=".$shift_ev_date2;
+//echo "\nTime1=".$time1." ,current_time=".$current_time.",shift_ev_date1=".$shift_ev_date1.", shift_ev_date2=".$shift_ev_date2." ,Shiftdate3=".$shift_ev_date3." ,Shiftdate4=".$shift_ev_date4;
 //######## CHECK EVENING SHIFT1 ###########
 
 if (!$DEBUG_OFFLINE && !$DEBUG_ONLINE) {
-    if ((($current_time > $shift_ev_date1) && ($current_time > $shift_ev_date2) && ($current_time >= $ev_run_start_time1) ) || (($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4))) {
+    if ((($current_time >= $shift_ev_date1) && ($current_time <= $shift_ev_date2) && ($current_time >= $ev_run_start_time1) ) || (($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4))) {
         $shift_ev1 = true;
         echo "\nEv-Shift";
     } else {
@@ -210,7 +226,7 @@ if (!$DEBUG_OFFLINE && !$DEBUG_ONLINE) {
 }    
 
 //####### CHECK FOR ALREADY OPENED FILE/INSTANCE 
-if ($shift_ev1) {
+/*iif ($shift_ev1) {
     $result = exec("lsof +d $sent_root_path | grep -c -i HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_DELHI_CASH_ROUTE.xlsx");
     if ($result == "1") {
         $shift_ev1 = false;
@@ -230,6 +246,7 @@ if ($shift_mor) {
         $shift_mor = false;
     }
 }
+*/
 //###### CHECKING ALREADY OPEN FIL/INSTANCE CLOSED
 echo "\nSTART";
 
@@ -590,9 +607,9 @@ if ($shift_ev1) {
         update_last_processed_time($evening_last_processed_time_path1, $current_time);
         update_last_halt_time($evening_last_halt_time_path1);
         echo "\nAfter Last ProcessedDetail:Evening";
-        //#### LAST TIME PROCESSED CLOSED #############
+        //#### LAST TIME PROCESSED CLOSED #############   AWS
         //############ SEND EMAIL ##############
-        //$to = 'rizwan@iembsys.com';
+//        $to = 'rizwan@iembsys.com';
         $to = 'logistics.vashi@gmail.com,vivek.ghadge@motherdairy.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
@@ -602,7 +619,7 @@ if ($shift_ev1) {
         } else {
             $msg = "CHANGED";
         }
-        $subject = "HOURLY_MAIL_VTS_HALT_REPORT_MORNING(MOTHER_MUMBAI)_" . $msg . "_" . $time_1 . "_" . $time_2;
+        $subject = "TEST_AWS_HOURLY_MAIL_VTS_HALT_REPORT_MORNING(MOTHER_MUMBAI)_" . $msg . "_" . $time_1 . "_" . $time_2;
         $message = "HOURLY_MAIL_VTS_HALT_REPORT_MORNING(MOTHER_MUMBAI)_" . $msg . "_" . $time_1 . "_" . $time_2 . "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
         $random_hash = md5(date('r', time()));
         $headers = "From: support@iembsys.co.in\r\n";
@@ -619,7 +636,7 @@ if ($shift_ev1) {
         $result = $mgClient->sendMessage($domain, array(
             'from' => 'Itrack <support@iembsys.co.in>',
             'to' => $to,
-            //'cc'      => 'taseen@iembsys.com',
+            //'cc'      => 'rizwan@iembsys.com',
             'cc' => 'hourlyreport4@gmail.com',
             //'cc'      => 'hourlyreport4@gmail.com',
             // 'bcc'     => 'astaseen83@gmail.com',

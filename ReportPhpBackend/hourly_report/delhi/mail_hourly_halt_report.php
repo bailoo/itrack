@@ -12,6 +12,7 @@ $DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
 $CREATE_MASTER = false;
 $MAIN_DEBUG = false;
+$LOG = false;
 //#################
 
 $isReport = true;
@@ -53,11 +54,11 @@ if ($DEBUG_OFFLINE) {
 //echo "<br>AbsPath=" . $abspath;
 include_once($abspath . "/common_xml_element.php");
 //echo "\nD1";
-include_once($abspath . '/xmlParameters.php');
+include_once($abspath . '/ioParameters.php');
 //echo "\nD2";
-include_once($abspath . '/parameterizeData.php');
+include_once($abspath . '/dataParameters.php');
 //echo "\nD3";
-include_once($abspath . '/data.php');
+include_once($abspath . '/dataArrays.php');
 if (file_exists($tmp)) {
     echo "File Exists1";
 } else {
@@ -68,7 +69,7 @@ include_once($abspath . '/sortXmlData.php');
 //echo "\nD5:" . $abspath;
 //$tmp = $abspath.'/getXmlData.php';
 //if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
-include_once($abspath . '/getXmlData.php');
+include_once($abspath . '/getDeviceData.php');
 //echo "\nD6";
 
 include_once($abspath . "/calculate_distance.php");
@@ -145,8 +146,8 @@ include_once("get_route_db_detail.php");
 //$pdate = date('Y-m-d', strtotime($date .' -1 day'));
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-07-07');
-    $date = date('2015-07-08');
+    $pdate = date('2015-07-14');
+    $date = date('2015-07-15');
 } else {
     $date = date('Y-m-d');
 }
@@ -209,6 +210,7 @@ $cdatetime2 = strtotime(date('H:i:s'));
 $difftime = $cdatetime2 - $cdatetime1;
 //$difftime = 7200;	//EVENING COMMENT IT LATER
 //$difftime = 36000;	//MORNING
+echo "\nDiff=".$difftime;
 
 if ($MAIN_DEBUG) {
     $time1 = $pdate . " 12:00:00";

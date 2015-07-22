@@ -10,8 +10,17 @@ $lng_sel = array();
 $speed_sel = array();
 
 function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $time2_ev, $shift_1, $difftime) {
+
+    //###### OPEN CASSANDRA CONNECTION
+   $o_cassandra = openCassandraConnection();
+   
+    //##### DEBUG MSG
+    $title = "tanker";
+    $debug_msg = "";   
+ 
     echo "\nInAction";    
-    global $abspath;    
+    global $abspath;
+    global $LOG;
     echo "\nSD=" . $startdate . " ,ED=" . $enddate . " ,Time1=" . $time1_ev;
     global $Vehicle;   //SENT FILE
     global $SNo;
@@ -160,7 +169,6 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     echo "\nSizeVehicle=" . sizeof($Vehicle);
     
    //###### CASSANDRA BLOCK1 ###########
-    global $o_cassandra;
     global $sts_date_sel;
     global $xml_date_sel;
     global $lat_sel;
@@ -201,37 +209,22 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         $lng_sel = array();
         $speed_sel = array();
 
+        //##### DEBUG MSG
+        $msg = "\nReadSno:" . $i . " ,imei=" . $IMEI[$i] . " ,date1=" . $date1 . " ,date2=" . $date2;
+        if($LOG) {$debug_msg.=$msg."\n";}
+        echo $msg; 
+         
         //echo "\nReadSno:" . $i . " ,imei2=" . $IMEI[$i] . " ,datefrom=" . $datefrom . " ,dateto=" . $dateto;
         $dataCnt = 0;
-        //$vehicle_info=get_vehicle_info($root,$vserial[$i]);
-        //$vehicle_detail_local=explode(",",$vehicle_info);
-        //$finalVNameArr[$i]=$vehicle_detail_local[0];
-        //echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
-        $LastSortedDate = getLastSortedDate($IMEI[$i], $datefrom, $dateto);
+        $LastSortedDate = null;
         $SortedDataObject = new data();
         $UnSortedDataObject = new data();
 
-        //echo "\nimei3=".$IMEI[$i];
-        if (($LastSortedDate + 24 * 60 * 60) >= $endDateTS) { //All sorted data
-            //echo "\nIF1";
-            $type = "sorted";
-            readFileXml($IMEI[$i], $date1, $date2, $datefrom, $dateto, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $SortedDataObject);
-        } else if ($LastSortedDate == null) { //All Unsorted data
-            //echo "\nIF2";
-            $type = "unSorted";
-            readFileXml($IMEI[$i], $date1, $date2, $datefrom, $dateto, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $UnSortedDataObject);
-        } else { //Partially Sorted data
-            $LastSDate = date("Y-m-d", $LastSortedDate + 24 * 60 * 60);
-            //echo "nELSE";
-            $type = "sorted";
-            readFileXml($IMEI[$i], $date1, $date2, $datefrom, $LastSDate, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $SortedDataObject);
+        readDataBetweenDatetime($IMEI[$i], $date1, $date2, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $o_cassandra, $SortedDataObject);
 
-            $type = "unSorted";
-            readFileXml($IMEI[$i], $date1, $date2, $LastSDate, $dateto, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $UnSortedDataObject);
-        }
-
-        if (count($UnSortedDataObject->deviceDatetime) > 0) {
-            $sortObjTmp = sortData($UnSortedDataObject, $sortBy, $parameterizeData);
+        //echo "\nCount=".count($SortedDataObject->deviceDatetime);
+        if (count($SortedDataObject->deviceDatetime) > 0) {
+            //$sortObjTmp = sortData($UnSortedDataObject, $sortBy, $parameterizeData);
             //echo "::Data Read";
             //var_dump($sortObjTmp);
             /* echo"sdt1=".$sortObjTmp->deviceDatetime[0]."<br>";
@@ -239,26 +232,29 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
               echo "ss1=".$sortObjTmp->speedData[0]."<br>";
               echo "ss2=".$sortObjTmp->speedData[1]."<br>";
               echo "<br><br>"; */
-            $sortedSize = sizeof($sortObjTmp->deviceDatetime);
+            $sortedSize = sizeof($SortedDataObject->deviceDatetime);
             for ($obi = 0; $obi < $sortedSize; $obi++) {
-                /* $finalDateTimeArr[$IMEI[$i]][]=$sortObjTmp->deviceDatetime[$obi];	
-                  $finalLatitudeArr[$IMEI[$i]][]=$sortObjTmp->latitudeData[$obi];
-                  $finalLongitudeArr[$IMEI[$i]][]=$sortObjTmp->longitudeData[$obi];
-                  $finalSpeedArr[$IMEI[$i]][]=$sortObjTmp->speedData[$obi]; */
-                $sts_date_sel[] = $sortObjTmp->serverDatetime[$obi];
-                $xml_date_sel[] = $sortObjTmp->deviceDatetime[$obi];
-                $lat_sel[] = $sortObjTmp->latitudeData[$obi];
-                $lng_sel[] = $sortObjTmp->longitudeData[$obi];
-                $speed_sel[] = $sortObjTmp->speedData[$obi];
-                //echo "\nSTS=".$sortObjTmp->serverDatetime[$obi]." ,DeviceDate=".$sortObjTmp->deviceDatetime[$obi]." ,Lat=".$sortObjTmp->latitudeData[$obi]." ,Lng=".$sortObjTmp->longitudeData[$obi];
-                //$dataCnt++;
-            }
-            
-        }
+                /* $finalDateTimeArr[$IMEI[$i]][]=$SortedDataObject->deviceDatetime[$obi];
+                  $finalLatitudeArr[$IMEI[$i]][]=$SortedDataObject->latitudeData[$obi];
+                  $finalLongitudeArr[$IMEI[$i]][]=$SortedDataObject->longitudeData[$obi];
+                  $finalSpeedArr[$IMEI[$i]][]=$SortedDataObject->speedData[$obi]; */
+                $sts_date_sel[] = $SortedDataObject->serverDatetime[$obi];
+                $xml_date_sel[] = $SortedDataObject->deviceDatetime[$obi];
+                $lat_sel[] = $SortedDataObject->latitudeData[$obi];
+                $lng_sel[] = $SortedDataObject->longitudeData[$obi];
+                $speed_sel[] = $SortedDataObject->speedData[$obi];
+			}
+		}
         
         $SortedDataObject = null;
         $sortObjTmp = null;
-        $UnsortedDataObject = null;        
+        $UnsortedDataObject = null;
+        
+        //##### DEBUG MSG
+        $msg = "\nVehicle=".$Vehicle[$i]." ,SizeXmlDate=".sizeof($xml_date_sel);
+        if($LOG) {$debug_msg.=$msg."\n";}
+        echo $msg;
+        
         ######## CASSANDRA BLOCK2 CLOSED
         
         $lat_ref = 0.0;
@@ -762,8 +758,14 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         }
     } //##### EXCEL VEHICLE LOOP CLOSED
     //
-    ######## CASSANDRA BLOCK3 CLOSED	
-    $o_cassandra->close();
+    ######## CLOSE CASSANDRA CONNECTION	
+    closeCassandraConnection($o_cassandra);
+    
+    //##### DEBUG MSG
+    if(!$DEBUG_OFFLINE && !$DEBUG_ONLINE && $LOG) {
+        write_log($title,$difftime);
+    }
+    
     ######## CASSANDRA BLOCK3 CLOSED				
     
     //######### CALL SORT ROUTES FUNCTION
@@ -1521,4 +1523,11 @@ function sort_all_routes() {
     }
 }
 
+function write_log($title,$difftime) {
+    global $debug_msg;
+    $log_file = "/mnt/phpReportLog/".$title."_".$difftime.".txt";
+    $file = fopen($log_file,"a");
+    fwrite($file,$debug_msg);
+    fclose($file);
+}
 ?>

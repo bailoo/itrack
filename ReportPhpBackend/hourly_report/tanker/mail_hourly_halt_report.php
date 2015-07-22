@@ -10,6 +10,7 @@ global $DEBUG_OFFLINE;
 $DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
 $CREATE_MASTER = false;
+$LOG = false;
 $isReport = true;
 //#################
 
@@ -48,37 +49,20 @@ if ($DEBUG_OFFLINE) {
     $report_path = "/mnt/itrack/ReportPhpBackend";
 }
 echo "<br>AbsPath=" . $abspath;
-include_once($abspath . "/common_xml_element.php");
-
+//include_once($abspath . "/common_xml_element.php");
 //echo "\nD1";
-include_once($abspath . '/xmlParameters.php');
+include_once($abspath . '/ioParameters.php');
 //echo "\nD2";
-include_once($abspath . '/parameterizeData.php');
+include_once($abspath . '/dataParameters.php');
 //echo "\nD3";
-include_once($abspath . '/data.php');
-/* if (file_exists($tmp)) {
-  echo "File Exists1";
-  } else {
-  "Does not exist";
-  } */
+include_once($abspath . '/dataArrays.php');
 //echo "\nD4";
-include_once($abspath . '/sortXmlData.php');
-//echo "\nD5:" . $abspath;
-//$tmp = $abspath.'/getXmlData.php';
-//if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
-include_once($abspath . '/getXmlData.php');
-
+include_once($abspath . '/getDeviceData.php');
 include_once($abspath . "/calculate_distance.php");
-include_once($abspath . "/report_title.php");
-//include_once($abspath."/read_filtered_xml.php");
-include_once($abspath . "/user_type_setting.php");
-
 include_once($abspath . "/util.hr_min_sec.php");
 //echo "<br>D7";
 //if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun.php"));
 include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
-
-//include_once($abspath."/hourly_report/".$user_name."/get_master_detail.php");
 //### IMPORT XLSX LIBRARY
 //error_reporting(E_ALL);
 //ini_set('display_errors', TRUE);
