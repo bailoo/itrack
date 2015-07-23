@@ -16,7 +16,7 @@ if($isReport) {
 $o_cassandra = new Cassandra();	
 $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 
-function readFileXml($vSerial, $startDate, $endDate, $xmlFromDate, $xmlToDate, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, &$dataObject) {
+function read_data_between_datetime($vSerial, $startDate, $endDate, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, &$dataObject) {
 	
     global $o_cassandra; 
     $imei = $vSerial;

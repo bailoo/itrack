@@ -3,7 +3,13 @@
 	<?php
 		include('main_google_key.php'); 
 		include('common_js_css.php');
-		include('manage_js_css.php');      
+		include('manage_js_css.php');  
+                //==updated on 13032015=========
+		include('polyline_map_js_css.php');
+		include('util_calculate_distance_js.php');
+		//==updated on 13032015=========
+		echo"<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places'></script>";
+		echo'<script type="text/javascript" src="src/js/markerwithlabel.js"></script>';
 	?>  
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=drawing"></script>
     <style type="text/css">

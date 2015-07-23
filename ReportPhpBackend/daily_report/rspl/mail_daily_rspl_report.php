@@ -13,22 +13,41 @@ define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 include_once("../database_ip.php");
 $DBASE = "iespl_vts_beta";
 $USER = "root";
-$PASSWD = "mysql";
+//$PASSWD = 'mysql';
+$PASSWD = 'neon04$VTS';
 //echo "\nDBASE=".$DBASE." ,User=".$USER." ,PASS=".$PASSWD;
 $DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server is down. Please try after few minutes.");
 mysql_select_db ($DBASE, $DbConnection) or die("could not find DB");
 
+$isReport = true;
 //echo "\nAfter Connection";
 $abspath = "/var/www/html/vts/beta/src/php";
-include_once($abspath."/common_xml_element.php");
-include_once($abspath."/get_all_dates_between.php");
-include_once($abspath."/sort_xml.php");
+//$abspath = "C:\\xampp/htdocs/itrack/beta/src/php";
+//include_once($abspath."/common_xml_element.php");
+//include_once($abspath."/get_all_dates_between.php");
+//include_once($abspath."/sort_xml.php");
 include_once($abspath."/calculate_distance.php");
 include_once($abspath."/report_title.php");
 include_once($abspath."/read_filtered_xml.php");
 include_once($abspath."/select_landmark_report.php");
 include_once($abspath."/util.hr_min_sec.php");
 include_once($abspath."/get_location_lp_track_report_2.php");
+
+include_once($abspath . '/xmlParameters.php');
+//echo "\nD2";
+include_once($abspath . '/parameterizeData.php');
+//echo "\nD3";
+include_once($abspath . '/data.php');
+//echo "\nD4";
+include_once($abspath . '/sortXmlData.php');
+//echo "\nD5:" . $abspath;
+//$tmp = $abspath.'/getXmlData.php';
+//if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
+include_once($abspath . '/getXmlData.php');
+
+if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun.php"));
+include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
+
 //include("get_location.php");
 
 //include_once($abspath."/area_violation/check_with_range.php");
@@ -116,10 +135,10 @@ $user_interval = "5";
 $rno = rand();
 $filename_title = 'DAILY_RSPL_VTS_REPORT_'.$previous_date.'_'.$rno;
 //echo "\nfilename1=".$filename_title."\n";
-$file_path = "/var/www/html/vts/beta/src/php/download/".$filename_title;
+$file_path = $abspath."/download/".$filename_title;
 $fname = tempnam_sfx($file_path, ".xlsx");
 
-//echo "\nFname=".$fname;
+echo "\nFname=".$fname;
 $sheet_title = "DAILY VTS REPORT-RSPL_".$previous_date;
 $objPHPExcel = new PHPExcel();  //write new file
 $objPHPExcel->getActiveSheet()->setTitle();
@@ -209,366 +228,249 @@ $objPHPExcel->getActiveSheet()->getColumnDimensionByColumn(6)->setWidth(80);
 $r++;*/
 
 //GET XML_DATA
-function get_daily_rspl_report_xml($vehicle_serial, $vname, $startdate, $enddate)
+function get_daily_rspl_report_xml($vehicle_serial, $vname, $startdate)
 {
-	global $va,$vb,$vc,$vd,$ve,$vf,$vg,$vh,$vi,$vj,$vk,$vl,$vm,$vn,$vo,$vp,$vq,$vr,$vs,$vt,$vu,$vv,$vw,$vx,$vy,$vz,$vaa,$vab;
-	global $old_xml_date;
+    //global $va,$vb,$vc,$vd,$ve,$vf,$vg,$vh,$vi,$vj,$vk,$vl,$vm,$vn,$vo,$vp,$vq,$vr,$vs,$vt,$vu,$vv,$vw,$vx,$vy,$vz,$vaa,$vab;
+    //global $old_xml_date;
 
-	//echo "<br>vs=".$vehicle_serial." ,vname=".$vname." ,startdate=".$startdate." ,enddate=".$enddate." ,xmltowrite=".$xmltowrite;
-	//echo "\nIn function -wockhardt report xml main";
-	$fix_tmp = 1;
-	$xml_date_latest="1900-00-00 00:00:00";
-	$CurrentLat = 0.0;
-	$CurrentLong = 0.0;
-	$LastLat = 0.0;
-	$LastLong = 0.0;
-	$firstData = 0;
-	$distance =0.0;
-	$linetowrite="";
-	$firstdata_flag =0;     //INITIALISE FIRST FLAG
-	$breakflag = 0;
-	$date_1 = explode(" ",$startdate);
-	$date_2 = explode(" ",$enddate);
+    //echo "<br>vs=".$vehicle_serial." ,vname=".$vname." ,startdate=".$startdate." ,enddate=".$enddate." ,xmltowrite=".$xmltowrite;
+    //echo "\nIn function -wockhardt report xml main";
+    $fix_tmp = 1;
+    $xml_date_latest="1900-00-00 00:00:00";
+    $CurrentLat = 0.0;
+    $CurrentLong = 0.0;
+    $LastLat = 0.0;
+    $LastLong = 0.0;
+    $firstData = 0;
+    $distance =0.0;
+    $linetowrite="";
+    $firstdata_flag =0;     //INITIALISE FIRST FLAG
+    $breakflag = 0;
+    $date_1 = explode(" ",$startdate);
+    $date_2 = explode(" ",$enddate);
 
-	$datefrom = $date_1[0];
-	$dateto = $date_2[0];
-	$timefrom = $date_1[1];
-	$timeto = $date_2[1];
+    $datefrom = $date_1[0];
+    $dateto = $date_2[0];
+    $timefrom = $date_1[1];
+    $timeto = $date_2[1];
 
-	global $daily_dist_tmp;
+    global $daily_dist_tmp;
 
-	global $last_lat;
-	global $last_lng;
-	
-	global $nodata_flag;
-	global $nogps_flag;
-	global $data_flag;	
+    global $last_lat;
+    global $last_lng;
 
-	//global $daily_halt_tmp;	
-	get_All_Dates($datefrom, $dateto, &$userdates);
+    global $nodata_flag;
+    global $nogps_flag;
+    global $data_flag;	
 
-	//date_default_timezone_set("Asia/Calcutta");
-	$current_datetime = date("Y-m-d H:i:s");
-	$current_date = date("Y-m-d");
-	//print "<br>CurrentDate=".$current_date;
-	$date_size = sizeof($userdates);
+    //global $daily_halt_tmp;	
+    //get_All_Dates($datefrom, $dateto, &$userdates);
 
-	//$fh = fopen($xmltowrite, 'a') or die("can't open file 6"); //append
+    //date_default_timezone_set("Asia/Calcutta");
+    $current_datetime = date("Y-m-d H:i:s");
+    $current_date = date("Y-m-d");
+    //print "<br>CurrentDate=".$current_date;
+    //$date_size = sizeof($userdates);
 
-	//$j = 0;
-	$total_dist = 0; 									  
-	global $timetmp1;
-	global $breakflag; 
-	global $user_interval;   
-	//echo "\nstartdate=".$startdate." ,enddate=".$enddate." ,Date size=".$date_size;	
-  
-	for($i=0;$i<=($date_size-1);$i++)
-	{
-		//echo "\nIn Date Loop";
-		//echo "<br>time=".$timetmp1;
-		$timetmp2 = date("Y-m-d H:i:s");	
-		$timetmp2 = strtotime($timetmp2);    
-		$difftmp = ($timetmp2 - $timetmp1);
-		//echo "<br>diff=".$difftmp;
+    //$fh = fopen($xmltowrite, 'a') or die("can't open file 6"); //append
 
-		$daily_dist = 0; 
-		$daily_halt = 0;
+    //$j = 0;
+    $total_dist = 0; 									  
+    global $timetmp1;
+    global $breakflag; 
+    global $user_interval;   
+    //echo "\nstartdate=".$startdate." ,enddate=".$enddate." ,Date size=".$date_size;	
 
-		$abspath = "/var/www/html/itrack_vts";
-		//$abspath_current = "/mnt/volume3";
-		//$abspath_sorted = "/mnt/volume4";
+    //###### CASSANDRA BLOCK1 ###########
+     global $o_cassandra;
+     global $sts_date_sel;
+     global $xml_date_sel;
+     global $lat_sel;
+     global $lng_sel;
+     global $speed_sel;
 
-		include("/var/www/html/vts/beta/src/php/common_xml_path.php");
-		$xml_current = $xml_data."/".$userdates[$i]."/".$vehicle_serial.".xml";	    		
-		//echo "<br>xml_current=".$xml_current;
+     $date1 = $startdate;
+     $date2 = $enddate;
+     $datefrom = $report_date1;
+     $dateto = $report_date2;
 
-		if (file_exists($xml_current))      
-		{		    		
-			//echo "in else";
-			$xml_file = $xml_current;
-			$CurrentFile = 1;
-		}		
-		else
-		{
-			$xml_file = $sorted_xml_data."/".$userdates[$i]."/".$vehicle_serial.".xml";
-			$CurrentFile = 0;
-		}
-		
-		//echo "<br>xml_file =".$xml_file;	    	
-		if (file_exists($xml_file)) 
-		{			
-			$nodata_flag = 0;             //SET NO DATA OFF  
-			//echo "\nfile_exists xml_file";
-			$t=time();
-			$xml_original_tmp = $abspath."/xml_tmp/original_xml/tmp_".$vehicle_serial."_".$t."_".$i.".xml";
-			//echo "<br>xml_file=".$xml_file." <br>tmpxml=".$xml_original_tmp."<br>";
-								  
-			if($CurrentFile == 0)
-			{
-				//echo "<br>ONE<br>";
-				copy($xml_file,$xml_original_tmp);
-			}
-			else
-			{
-				//echo "<br>TWO<br>";
-				$xml_unsorted = $abspath."/xml_tmp/unsorted_xml/tmp_".$vehicle_serial."_".$t."_".$i."_unsorted.xml";
-				//echo  "<br>".$xml_file." <br>".$xml_unsorted."<br><br>";
-				        
-				copy($xml_file,$xml_unsorted);        // MAKE UNSORTED TMP FILE
-				SortFile($xml_unsorted, $xml_original_tmp, $userdates[$i]);    // SORT FILE
-				unlink($xml_unsorted);                // DELETE UNSORTED TMP FILE
-			}
-      
-			$total_lines = count(file($xml_original_tmp));
-			//echo "<br>Total lines orig=".$total_lines;
+     $userInterval = 0;
 
-			$xml = @fopen($xml_original_tmp, "r") or $fexist = 0;
+     $sortBy = 'g';
+     $firstDataFlag = 0;
+     $endDateTS = strtotime($date2);
+     $dataCnt = 0;
+     //$userInterval = "0";
+     $requiredData = "All";
 
-			$logcnt=0;
-			$DataComplete=false;
-					  
-			$vehicleserial_tmp=null;
-			$format =2;      
-      
-			if (file_exists($xml_original_tmp)) 
-			{              
-				//echo "\nFileExists";
-				//$daily_dist =0;
-				//  $firstdata_flag =0;
-				//SET MASTER VARIABLE
-				set_master_variable($userdates[$i]);
+     $parameterizeData = new parameterizeData();
+     $ioFoundFlag = 0;
 
-				while(!feof($xml))          // WHILE LINE != NULL
-				{
-					$DataValid = 0;
-					//echo fgets($file). "<br />";
-					$line = fgets($xml);        // STRING SHOULD BE IN SINGLE QUOTE			
+     $parameterizeData->latitude = "d";
+     $parameterizeData->longitude = "e";
+     $parameterizeData->speed = "f";
 
-					if(strlen($line)>20)
-					{
-						$linetmp =  $line;
-					}
+     $finalVNameArr = array();
+     //###### CASSANDRA BLOCK1 CLOSED   	
 
-					$linetolog =  $logcnt." ".$line;
-					$logcnt++;
-					//fwrite($xmllog, $linetolog);
+    $sts_date_sel = array();
+    $xml_date_sel = array();
+    $lat_sel = array();
+    $lng_sel = array();
+    $speed_sel = array();
 
-					if(strpos($line,''.$vc.'="1"'))     // RETURN FALSE IF NOT FOUND
-					{
-						$format = 1;
-						$fix_tmp = 1;
-					}
+    //echo "\nReadSno:" . $i . " ,imei2=" . $IMEI[$i] . " ,datefrom=" . $datefrom . " ,dateto=" . $dateto;
+    $dataCnt = 0;
+    //$vehicle_info=get_vehicle_info($root,$vserial[$i]);
+    //$vehicle_detail_local=explode(",",$vehicle_info);
+    //$finalVNameArr[$i]=$vehicle_detail_local[0];
+    //echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
+    //echo "userdate=".$userdates[$di]."<br>";
+    $SortedDataObject=new data();
+    readFileXmlNew($vehicle_serial,$startdate,$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+    //var_dump($SortedDataObject);
+    //echo "\nvehicle_serial=".$vehicle_serial." ,STARTDATE0=".$startdate;
+    if(count($SortedDataObject->deviceDatetime)>0)
+    {
+        //echo "\nSTARTDATE1=".$startdate;
+        $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+        for($obi=0;$obi<$prevSortedSize;$obi++)
+        {	
+            //echo "\nSTARTDATE2=".$startdate;
+            /*$lat = $SortedDataObject->latitudeData[$obi];
+            $lng = $SortedDataObject->longitudeData[$obi];
+            if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))
+            {
+                $DataValid = 1;
+            }
+            if($DataValid==1 && ($SortedDataObject->deviceDatetime[$obi]>$date1 && $SortedDataObject->deviceDatetime[$obi]<$date2))
+            {*/
+                $sts_date_sel[] = $SortedDataObject->serverDatetime[$obi];
+                $xml_date_sel[] = $SortedDataObject->deviceDatetime[$obi];
+                $lat_sel[] = $SortedDataObject->latitudeData[$obi];
+                $lng_sel[] = $SortedDataObject->longitudeData[$obi];
+                $speed_sel[] = $SortedDataObject->speedData[$obi];
+            //} 
+        }    
+    }
+    $SortedDataObject = null;
+    $parameterizeData = null;    
+              
+    ######## CASSANDRA BLOCK2 CLOSED
+    //echo "\nIn Date Loop";
+    //echo "<br>time=".$timetmp1;
+    $timetmp2 = date("Y-m-d H:i:s");	
+    $timetmp2 = strtotime($timetmp2);    
+    $difftmp = ($timetmp2 - $timetmp1);
+    //echo "<br>diff=".$difftmp;
+    $daily_dist = 0; 
+    $daily_halt = 0;
 
-					else if(strpos($line,''.$vc.'="0"'))
-					{
-						$format = 1;
-						$fix_tmp = 0;
-					}
+    $nodata_flag = 0;             //SET NO DATA OFF  
 
-					if( (preg_match('/'.$vd.'="\d+.\d+[a-zA-Z0-9]\"/', $line, $lat_match)) &&  (preg_match('/'.$ve.'="\d+.\d+[a-zA-Z0-9]\"/', $line, $lng_match)) )
-					{ 
-						$lat_value = explode('=',$lat_match[0]);
-						$lng_value = explode('=',$lng_match[0]);
-						//echo " lat_value=".$lat_value[1];         
-						if( (strlen($lat_value[1])>5) && ($lat_value[1]!="-") && (strlen($lng_value[1])>5) && ($lng_value[1]!="-") )
-						{
-							$DataValid = 1;
-							$nogps_flag = 0;     // SET NO GPS FLAG OFF
-						}
-					}
-          
-					//if( (substr($line, 0,1) == '<') && (substr( (strlen($line)-1), 0,1) == '>') && ($fix_tmp==1) && ($f>0) && ($f<$total_lines-1) )        
-					if( ($line[0] == '<') && ($line[strlen($line)-2] == '>') && ($DataValid == 1) )   // FIX_TMP =1 COMES IN BOTH CASE     
-					{
-						//preg_match('/\d+-\d+-\d+ \d+:\d+:\d+/', $line, $str3tmp);    // EXTRACT DATE FROM LINE
-						//echo "<br>str3tmp[0]=".$str3tmp[0];
-						$status = preg_match('/'.$vh.'="[^"]+/', $line, $datetime_tmp);
-						$datetime_tmp1 = explode("=",$datetime_tmp[0]);
-						$datetime = preg_replace('/"/', '', $datetime_tmp1[1]);	
-						$xml_date = $datetime;
-					}				
-					//echo "Final0=".$xml_date." datavalid=".$DataValid;
+    $logcnt=0;
+    $DataComplete=false;
 
-					if($xml_date!=null)
-					{				    					
-						if( ($xml_date >= $startdate && $xml_date <= $enddate) && ($xml_date!="-") && ($DataValid==1) )
-						{
-							$data_flag = 1;
-						//echo "<br>One";             
-						/*$status = preg_match('/vehicleserial="[^" ]+/', $line, $vehicleserial_tmp);
-						//echo "Status=".$status.'<BR>';
-						//echo "test1".'<BR>';
-						if($status==0)
-						{
-							continue;
-						}*/
+    $vehicleserial_tmp=null;
+    $format =2;      
 
-						$status = preg_match('/'.$vd.'="[^" ]+/', $line, $lat_tmp);
-						if($status==0)
-						{
-							continue;               
-						}
-						//echo "test6".'<BR>';
-						$status = preg_match('/'.$ve.'="[^" ]+/', $line, $lng_tmp);
-						if($status==0)
-						{
-							continue;
-						}     
-						$lat_tmp1 = explode("=",$lat_tmp[0]);
-						$lat = preg_replace('/"/', '', $lat_tmp1[1]);
+    $size = sizeof($xml_date_sel);
+    $firstdata_flag = 0;
+    
+    for($i=0;$i<$size;$i++)
+    {
+        $DataValid = 0;
 
-						$lng_tmp1 = explode("=",$lng_tmp[0]);
-						$lng = preg_replace('/"/', '', $lng_tmp1[1]); 
+        $DataValid = 1;
+        $nogps_flag = 0;     // SET NO GPS FLAG OFF
 
-						/*$vehicleserial_tmp1 = explode("=",$vehicleserial_tmp[0]);
-						$vserial = preg_replace('/"/', '', $vehicleserial_tmp1[1]);*/
-						$vserial = $vehicle_serial;
-						//echo "<br>first=".$firstdata_flag;                                        
-						if($firstdata_flag==0)
-						{
-							//echo "<br>FirstData";
-							$firstdata_flag = 1;
-							//$halt_flag = 0;
-							$lat1_dist = $lat;
-							$lng1_dist = $lng;
+        $datetime = $xml_date_sel[$i];
+        $xml_date = $datetime;		
 
-							//$lat1_halt = $lat;
-							//$lng1_halt = $lng;
-							//$time1_halt = $datetime;
+        if($xml_date!=null)
+        {
+            $data_flag = 1;                      
 
-							$interval = $user_interval*60;		//30 mins interval
-							$last_time1 = $datetime;                                                        													                 	
-						}           	
-						//echo "<br>k2=".$k2."<br>";              	
-						else
-						{                           
-							/*
-							//********* HALT LOGIC BEGINS
-							$lat2_halt = $lat;
-							$lng2_halt = $lng;                
-							$time2_halt = $datetime;
-							 
-							calculate_distance($lat1_halt, $lat2_halt, $lng1_halt, $lng2_halt, &$distance_halt);
-						
-							//if( ($distance > 0.200) || ($f== $total_lines-2) )          			
-							//echo "\nlat1_halt=".$lat1_halt.", lat2_halt=".$lat2_halt.", lng1_halt=".$lng1_halt.", lng2_halt=".$lng2_halt.", distance_halt=".$distance_halt;
+            $lat = $lat_sel[$i];
+            $lng = $lng_sel[$i];
 
-							if( ($distance_halt > 0.0100) || ($f== $total_lines-2) )
-							{
-								//echo "\nIn distance";
-								//echo "<br>In dist ".$distance." lat_ref ".$lat_ref." lng_ref ".$lng_ref." lat_cr ".$lat_cr." lng_cr ".$lng_cr."<br>";
-								if ($halt_flag == 1)
-								{				
-									//echo "\nIn Halt1";
-									$arrivale_time = $time1_halt;
-									$starttime = strtotime($time1_halt);
+            /*$vehicleserial_tmp1 = explode("=",$vehicleserial_tmp[0]);
+            $vserial = preg_replace('/"/', '', $vehicleserial_tmp1[1]);*/
+            $vserial = $vehicle_serial;
+            //echo "<br>first=".$firstdata_flag;                                        
+            if($firstdata_flag==0)
+            {
+                //echo "<br>FirstData";
+                $firstdata_flag = 1;
+                //$halt_flag = 0;
+                $lat1_dist = $lat;
+                $lng1_dist = $lng;
 
-									//$stoptime = strtotime($datetime_cr);  
-									$stoptime = strtotime($time2_halt);
-									$depature_time = $time2_halt;
-									//echo "<br>".$starttime." ,".$stoptime;
+                //$lat1_halt = $lat;
+                //$lng1_halt = $lng;
+                //$time1_halt = $datetime;
 
-									$halt_dur =  ($stoptime - $starttime);
+                $interval = $user_interval*60;		//30 mins interval
+                $last_time1 = $datetime;                                                        													                 	
+            }           	
+            //echo "<br>k2=".$k2."<br>";              	
+            else
+            {                           
+                //********* DISTANCE LOGIC BEGINS
+                $time2 = $datetime;											
+                $date_secs2 = strtotime($time2);	
 
-									//echo "\nHalt Dur=".$halt_dur." ,interval=".$interval." ,time1_halt=".$time1_halt." ,time2_halt=".$time2_halt;
+                $lat2_dist = $lat;
+                $lng2_dist = $lng;  
 
-									if( ($halt_dur >= $interval) || ($f== $total_lines-2))
-									{
-									//echo "<br>In Halt else";
-									$daily_halt = $daily_halt + $halt_dur; 
-									//$total_halt_vehicle = "\n<marker imei=\"".$vserial."\" vname=\"".$vname."\" lat=\"".$lat_ref."\" lng=\"".$lng_ref."\" arr_time=\"".$arrivale_time."\" dep_time=\"".$depature_time."\" duration=\"".$halt_dur."\"/>";						          						
-									//echo "<br>total halt vehicle=".$total_halt_vehicle;
-									$linetowrite = $total_halt_vehicle; // for distance       // ADD DISTANCE
-									fwrite($fh, $linetowrite); 
+                calculate_distance($lat1_dist, $lat2_dist, $lng1_dist, $lng2_dist, $distance);
+                //echo "<br>lat1=".$lat1." ,lat2=".$lat2." ,lng1=".$lng1." ,lng2=".$lng2." ,dist=".$distance;
 
-									//$date_secs1 = strtotime($datetime_cr);
-									//$date_secs1 = (double)($date_secs1 + $interval);                                                   
-									}		// IF TOTAL MIN										
-									}   //IF HALT FLAG
+                $tmp_time_diff1 = (strtotime($datetime) - strtotime($last_time1)) / 3600;
+                if($tmp_time_diff1>0)
+                {
+                        $tmp_speed = $distance / $tmp_time_diff1;
+                        $last_time1 = $datetime;
+                }
+                $tmp_time_diff = (strtotime($datetime) - strtotime($last_time)) / 3600;
 
-									$lat1_halt = $lat2_halt;
-									$lng1_halt = $lng2_halt;
-									$time1_halt = $time2_halt;
+                //if($tmp_speed <3000 && $distance>0.1)
+                if($tmp_speed<500 && $distance>0.1 && $tmp_time_diff>0)
+                {		              
+                    //echo "\nIndistance";
+                    $daily_dist= (float) ($daily_dist + $distance);	
+                    $daily_dist = round($daily_dist,2);							                          
 
-									$halt_flag = 0;
-									}
-									else
-									{            			
-									//echo "<br>normal flag set";
-									$halt_flag = 1;
-									}					                                              							  							
-										//********* HALT LOGIC CLOSED
-								*/
-						
-								//********* DISTANCE LOGIC BEGINS
-								$time2 = $datetime;											
-								$date_secs2 = strtotime($time2);	
+                    ///////////////////////////////////////////////////////////																							
+                    $lat1_dist = $lat2_dist;
+                    $lng1_dist = $lng2_dist;
 
-								$lat2_dist = $lat;
-								$lng2_dist = $lng;  
+                    $last_time = $datetime;			
+                }	
+                //**** DISTANCE LOGIC CLOSED						                               
+            }
+        }   // if xml_date!null closed
+                            //$j++;
+    }   // FOR closed  
 
-								calculate_distance($lat1_dist, $lat2_dist, $lng1_dist, $lng2_dist, &$distance);
-								//echo "<br>lat1=".$lat1." ,lat2=".$lat2." ,lng1=".$lng1." ,lng2=".$lng2." ,dist=".$distance;
+    if($nodata_flag)
+    {
+            $daily_dist_tmp = -1;   //NO DATA      
+    }
+    else if($nogps_flag)
+    {
+            $daily_dist_tmp = -2;   //NO GPS
+    }
+    else if($data_flag)
+    {
+            $daily_dist_tmp = $daily_dist;
+    }
 
-								$tmp_time_diff1 = (strtotime($datetime) - strtotime($last_time1)) / 3600;
-								if($tmp_time_diff1>0)
-								{
-									$tmp_speed = $distance / $tmp_time_diff1;
-									$last_time1 = $datetime;
-								}
-								$tmp_time_diff = (strtotime($datetime) - strtotime($last_time)) / 3600;
-
-								//if($tmp_speed <3000 && $distance>0.1)
-								if($tmp_speed<500 && $distance>0.1 && $tmp_time_diff>0)
-								{		              
-									//echo "\nIndistance";
-									$daily_dist= (float) ($daily_dist + $distance);	
-									$daily_dist = round($daily_dist,2);							                          
-
-									///////////////////////////////////////////////////////////																							
-									$lat1_dist = $lat2_dist;
-									$lng1_dist = $lng2_dist;
-
-									$last_time = $datetime;			
-								}	
-								//**** DISTANCE LOGIC CLOSED						                               
-							}
-						} // $xml_date_current >= $startdate closed
-					}   // if xml_date!null closed
-					//$j++;
-				}   // while closed
-			} // if original_tmp closed         
-			
-			//WRITE DAILY DISTANCE DATA
-			/*$daily_distance_data = "\n<marker imei=\"".$vserial."\" vname=\"".$vname."\" date=\"".$userdates[$i]."\" daily_dist=\"".$daily_dist."\"/>";						          						
-			//echo "<br><br>".$daily_distance_data;
-			$linetowrite = $daily_distance_data; // for distance       // ADD DISTANCE
-			fwrite($fh, $linetowrite); */ 		
-
-			//$daily_halt_tmp = $daily_halt;     
-			fclose($xml);            
-			unlink($xml_original_tmp);
-		} // if (file_exists closed      
-
-		if($nodata_flag)
-		{
-			$daily_dist_tmp = -1;   //NO DATA      
-		}
-		else if($nogps_flag)
-		{
-			$daily_dist_tmp = -2;   //NO GPS
-		}
-		else if($data_flag)
-		{
-			$daily_dist_tmp = $daily_dist;
-		}
-	}  // for closed
-
-	//echo "\nDailyDistance=".$daily_dist_tmp;
-	$last_lat[] = $lat;
-	$last_lng[] = $lng;  
-	//echo "Test1";
-	//fclose($fh);
+    //echo "\nDailyDistance=".$daily_dist_tmp;
+    $last_lat[] = $lat;
+    $last_lng[] = $lng;  
+    //echo "Test1";
+    //fclose($fh);
 }
 /////////////////////////////////////////////
 //OPEN	
@@ -641,516 +543,514 @@ $discontinued_vehicles = 0;
 
 while($row_account = mysql_fetch_object($result_account))
 {	
-	$account_id = $row_account->account_id;
-	$user_id = $row_account->user_id;
-	//echo "\nAccountID=".$account_id;
+    $account_id = $row_account->account_id;
+    $user_id = $row_account->user_id;
+    //echo "\nAccountID=".$account_id;
 
-	$query_name = "SELECT name FROM account_detail WHERE account_id='$account_id'";
-	$result_name = mysql_query($query_name,$DbConnection);
+    $query_name = "SELECT name FROM account_detail WHERE account_id='$account_id'";
+    $result_name = mysql_query($query_name,$DbConnection);
 
-	$row_name = mysql_fetch_object($result_name);
-	$user_name = $row_name->name;
+    $row_name = mysql_fetch_object($result_name);
+    $user_name = $row_name->name;
 
-	$query_assignment = "SELECT DISTINCT vehicle.vehicle_id,vehicle.vehicle_name,vehicle_grouping.create_date,vehicle_grouping.edit_date FROM vehicle,vehicle_assignment,vehicle_grouping WHERE vehicle.vehicle_id = vehicle_assignment.vehicle_id AND vehicle_assignment.vehicle_id = vehicle_grouping.vehicle_id AND vehicle_grouping.account_id='$account_id' AND vehicle_grouping.status=1 AND vehicle.status=1 AND vehicle_assignment.status=1"; 
-												  
-	//echo "\nquery_assignment=".$query_assignment."\n";
-	$result_assignment = mysql_query($query_assignment,$DbConnection);
+    $query_assignment = "SELECT DISTINCT vehicle.vehicle_id,vehicle.vehicle_name,vehicle_grouping.create_date,vehicle_grouping.edit_date FROM vehicle,vehicle_assignment,vehicle_grouping WHERE vehicle.vehicle_id = vehicle_assignment.vehicle_id AND vehicle_assignment.vehicle_id = vehicle_grouping.vehicle_id AND vehicle_grouping.account_id='$account_id' AND vehicle_grouping.status=1 AND vehicle.status=1 AND vehicle_assignment.status=1"; 
 
-	$v=0;
-	$vehicle_id_tmp ="";
-		
-	$j=0;
-	$vname = array();
-	$vserial = array();
-	$vid = array();	
+    //echo "\nquery_assignment=".$query_assignment."\n";
+    $result_assignment = mysql_query($query_assignment,$DbConnection);
 
-	while($row_assignment = mysql_fetch_object($result_assignment))
-	{
-		$vehicle_id_a = $row_assignment->vehicle_id;
-		$vname[$j] = $row_assignment->vehicle_name;
-		$create_date = $row_assignment->create_date;
-		$edit_date = $row_assignment->edit_date;
+    $v=0;
+    $vehicle_id_tmp ="";
 
-		$query_imei = "SELECT device_imei_no FROM vehicle_assignment WHERE vehicle_id ='$vehicle_id_a' AND status=1";
-		//echo "\nquery_imei=".$query_imei;
-		$result_imei = mysql_query($query_imei, $DbConnection);
-		
-		if($row_imei = mysql_fetch_object($result_imei))
-		{
-			$vserial[$j] = $row_imei->device_imei_no;
-			if($account_id != "1727")
-			{
-				$all_imei[] = $vserial[$j];		//ALL IMEIS
-			}
-			$vid[$j] = $vehicle_id_a;
-			$create_date_tmp[$j] = $create_date;
-			$edit_date_tmp[$j] = $edit_date;
-		 
-			if($v==0) 
-			  $vehicle_id_tmp = $vehicle_id_tmp.$vehicle_id_a;
-			else
-			  $vehicle_id_tmp = $vehicle_id_tmp.",".$vehicle_id_a;  
+    $j=0;
+    $vname = array();
+    $vserial = array();
+    $vid = array();	
 
-			//echo "\n".$vid[$j]." ,".$vname[$j]." ,".$vserial[$j];
-			$j++;
-			$v++;     
-		}
-	}
-  
-	$vsize = sizeof($vserial);
-	if($account_id == "1646")	//ACCIDENTAL
-	{
-		$accidental_vehicles = $vsize;
-	}	
-	if($account_id == "1647")	//MISCELLANEOUS
-	{
-		$miscellaneous_vehicles = $vsize;
-	}
-	if($account_id == "1727")	//MISCELLANEOUS
-	{
-		$discontinued_vehicles = $vsize;
-	}	
+    while($row_assignment = mysql_fetch_object($result_assignment))
+    {
+        $vehicle_id_a = $row_assignment->vehicle_id;
+        $vname[$j] = $row_assignment->vehicle_name;
+        $create_date = $row_assignment->create_date;
+        $edit_date = $row_assignment->edit_date;
 
-	$inactive_vehicle_counter = 0;
-	$nogps_vehicle_counter = 0;
+        $query_imei = "SELECT device_imei_no FROM vehicle_assignment WHERE vehicle_id ='$vehicle_id_a' AND status=1";
+        //echo "\nquery_imei=".$query_imei;
+        $result_imei = mysql_query($query_imei, $DbConnection);
 
-	$last_lat = array();
-	$last_lng = array();
+        if($row_imei = mysql_fetch_object($result_imei))
+        {
+            $vserial[$j] = $row_imei->device_imei_no;
+            if($account_id != "1727")
+            {
+                    $all_imei[] = $vserial[$j];		//ALL IMEIS
+            }
+            $vid[$j] = $vehicle_id_a;
+            $create_date_tmp[$j] = $create_date;
+            $edit_date_tmp[$j] = $edit_date;
 
-	$sno = 1;
-	
+            if($v==0) 
+              $vehicle_id_tmp = $vehicle_id_tmp.$vehicle_id_a;
+            else
+              $vehicle_id_tmp = $vehicle_id_tmp.",".$vehicle_id_a;  
+
+            //echo "\n".$vid[$j]." ,".$vname[$j]." ,".$vserial[$j];
+            $j++;
+            $v++;     
+        }
+    }
+
+    $vsize = sizeof($vserial);
+    if($account_id == "1646")	//ACCIDENTAL
+    {
+       $accidental_vehicles = $vsize;
+    }	
+    if($account_id == "1647")	//MISCELLANEOUS
+    {
+       $miscellaneous_vehicles = $vsize;
+    }
+    if($account_id == "1727")	//MISCELLANEOUS
+    {
+       $discontinued_vehicles = $vsize;
+    }	
+
+    $inactive_vehicle_counter = 0;
+    $nogps_vehicle_counter = 0;
+
+    $last_lat = array();
+    $last_lng = array();
+
+    $sno = 1;
+
 //	$bg_cell = 'A'.$r.':F'.$r;
 //	$objPHPExcel->getActiveSheet()->getStyle($bg_cell)->applyFromArray($styleBgGreen);
-	//echo "\nSizeV=".$vsize;
-	
-	//$r++;
-	$vstatus = "";
-	$user_len[] = $user_name;
-	
-	echo "\nVsize=".$vsize;
-	for($i=0;$i<$vsize;$i++)  
-	{
-		//echo "\nV1:i=".$i." ,vsize=".$vsize;
-		$total_dist_tmp = 0;
-		$total_halt_tmp = 0;
+    //echo "\nSizeV=".$vsize;
+    $date1 = $previous_date;  
+    //$r++;
+    $vstatus = "";
+    $user_len[] = $user_name;
 
-		$daily_dist_tmp =0;             //RESET VARIABLES FOR INDIVIDUAL DAY
-		//$daily_halt_tmp =0;
+    echo "\nVsize=".$vsize;
+    for($i=0;$i<$vsize;$i++)  
+    {
+        //echo "\nV1:i=".$i." ,vsize=".$vsize;
+        $total_dist_tmp = 0;
+        $total_halt_tmp = 0;
 
-		$date1 = $previous_date." 00:00:00";
-		$date2 = $previous_date." 23:59:59";
-		
-		$nodata_flag = 1;
-		$nogps_flag = 1;
-		$data_flag = 0;
-		//CALL FUNCTION
-		get_daily_rspl_report_xml($vserial[$i], $vname[$i], $date1, $date2);
-		//echo "\nV2";
-		
-		$cell = 'A'.$r;
-		$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($sno);
-		//$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);
-		
-		$cell = 'B'.$r;
-		$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($vname[$i]);
-		//$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);
+        $daily_dist_tmp =0;             //RESET VARIABLES FOR INDIVIDUAL DAY
+        //$daily_halt_tmp =0;
 
-		$cell = 'C'.$r;						//ACCOUNT DETAIL
-		//$bg_cell = 'A'.$r.':C'.$r;
-		//$objPHPExcel->getActiveSheet()->getStyle($bg_cell)->applyFromArray($styleBgYellow);		
-		$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($user_name);		
-		//$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);
-		
+        $nodata_flag = 1;
+        $nogps_flag = 1;
+        $data_flag = 0;
+        //CALL FUNCTION
+        get_daily_rspl_report_xml($vserial[$i], $vname[$i], $date1);
+        //echo "\nV2";
 
-		//echo "\nV3";
-		//$daily_dist_tmp = -1;
-		//echo "\nDailyDisttmp=".$daily_dist_tmp;
-		
-		if($nodata_flag)
-		{
-		   //echo "\nV4";
-		   if($account_id == "1646")		//ACCIDENTAL
-		   {
-				$daily_dist_tmp = "ACCIDENTAL";
-		   }
-		   else
-		   {
-				$daily_dist_tmp = "INACTIVE";
-				$inactive_vehicle_counter++;
-				if($account_id != "1727")
-				{
-					$all_inactive[] = $vserial[$i];	//ALL INACTIVES
-				}
-				$vstatus = "NA";
-				$sms_string_inactive[$user_name][] = $vname[$i];
-		   }
-		   
-                    $cell = 'D'.$r;
-                    if($account_id==1646 || $account_id==1647 || $account_id==1727) {
-                            $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($user_name);
-                    } else {			
-                            $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($daily_dist_tmp);
-                    }
-			//$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontRed);	
-			//echo "\nV5";			
-		}    
-		else if($nogps_flag)
-		{
-			//echo "\nV6";
-			$daily_dist_tmp = "No GPS";
-			$nogps_vehicle_counter++;
-			if($account_id != "1727")
-			{
-				$all_nogps[] = $vserial[$i];	//ALL NO GPS
-			}
-			$vstatus = "NG";	
-			$sms_string_nogps[$user_name][] = $vname[$i];
-			
-			$cell = 'D'.$r;
-			if($account_id==1646 || $account_id==1647 || $account_id==1727) {
-				$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($user_name);
-			}
-			else {			
-				$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($daily_dist_tmp);
-			}
-			//$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontRed);
-			//echo "\nV6";			
-		}
-		else if($data_flag)
-		{
-			//echo "\nV7";
-			$vstatus = "AC";
-			$cell = 'D'.$r;
-			if($account_id==1646 || $account_id==1647 || $account_id==1727) {
-				$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($user_name);
-			}
-			else {
-				$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($daily_dist_tmp);
-			}
-			//$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);
-			//echo "\nV8";
-		}
-                else
+        $cell = 'A'.$r;
+        $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($sno);
+        //$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);
+
+        $cell = 'B'.$r;
+        $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($vname[$i]);
+        //$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);
+
+        $cell = 'C'.$r;						//ACCOUNT DETAIL
+        //$bg_cell = 'A'.$r.':C'.$r;
+        //$objPHPExcel->getActiveSheet()->getStyle($bg_cell)->applyFromArray($styleBgYellow);		
+        $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($user_name);		
+        //$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);
+
+
+        //echo "\nV3";
+        //$daily_dist_tmp = -1;
+        //echo "\nDailyDisttmp=".$daily_dist_tmp;
+
+        if($nodata_flag)
+        {
+           //echo "\nV4";
+           if($account_id == "1646")		//ACCIDENTAL
+           {
+               $daily_dist_tmp = "ACCIDENTAL";
+           }
+           else
+           {
+                $daily_dist_tmp = "INACTIVE";
+                $inactive_vehicle_counter++;
+                if($account_id != "1727")
                 {
-			$cell = 'D'.$r;
-			if($account_id==1646 || $account_id==1647 || $account_id==1727) {
-				$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($user_name);
-			}
-			else {			
-				$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($daily_dist_tmp);
-			}                    
+                        $all_inactive[] = $vserial[$i];	//ALL INACTIVES
                 }
-		 
-		//echo "Lat=".$last_lat[$i]." ,lng=".$last_lng[$i];
-		if($last_lat[$i]!="" && $last_lng[$i]!="")
-		{
-		  $last_lat[$i] = substr_replace($last_lat[$i] ,"",-1);
-		  $last_lng[$i] = substr_replace($last_lng[$i] ,"",-1);
-		}			
-		
-		$cell = 'E'.$r;
-		$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($last_lat[$i]);
-		//$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);
+                $vstatus = "NA";
+                $sms_string_inactive[$user_name][] = $vname[$i];
+           }
 
-		$cell = 'F'.$r;
-		$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($last_lng[$i]);
-		//$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);		
-		
-		//echo "\nV9";
-		//####### GET GOOGLE LOCATION
-		$lttmp = $last_lat[$i];
-		$lngtmp = $last_lng[$i];
+            $cell = 'D'.$r;
+            if($account_id==1646 || $account_id==1647 || $account_id==1727) {
+                    $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($user_name);
+            } else {			
+                    $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($daily_dist_tmp);
+            }
+                //$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontRed);	
+                //echo "\nV5";			
+        }    
+        else if($nogps_flag)
+        {
+            //echo "\nV6";
+            $daily_dist_tmp = "No GPS";
+            $nogps_vehicle_counter++;
+            if($account_id != "1727")
+            {
+                    $all_nogps[] = $vserial[$i];	//ALL NO GPS
+            }
+            $vstatus = "NG";	
+            $sms_string_nogps[$user_name][] = $vname[$i];
+
+            $cell = 'D'.$r;
+            if($account_id==1646 || $account_id==1647 || $account_id==1727) {
+                    $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($user_name);
+            }
+            else {			
+                    $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($daily_dist_tmp);
+            }
+            //$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontRed);
+            //echo "\nV6";			
+        }
+        else if($data_flag)
+        {
+                //echo "\nV7";
+                $vstatus = "AC";
+                $cell = 'D'.$r;
+                if($account_id==1646 || $account_id==1647 || $account_id==1727) {
+                        $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($user_name);
+                }
+                else {
+                        $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($daily_dist_tmp);
+                }
+                //$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);
+                //echo "\nV8";
+        }
+        else
+        {
+                $cell = 'D'.$r;
+                if($account_id==1646 || $account_id==1647 || $account_id==1727) {
+                        $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($user_name);
+                }
+                else {			
+                        $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($daily_dist_tmp);
+                }                    
+        }
+
+        //echo "Lat=".$last_lat[$i]." ,lng=".$last_lng[$i];
+        if($last_lat[$i]!="" && $last_lng[$i]!="")
+        {
+          $last_lat[$i] = substr_replace($last_lat[$i] ,"",-1);
+          $last_lng[$i] = substr_replace($last_lng[$i] ,"",-1);
+        }			
+
+        $cell = 'E'.$r;
+        $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($last_lat[$i]);
+        //$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);
+
+        $cell = 'F'.$r;
+        $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($last_lng[$i]);
+        //$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);		
+
+        //echo "\nV9";
+        //####### GET GOOGLE LOCATION
+        $lttmp = $last_lat[$i];
+        $lngtmp = $last_lng[$i];
 
 //		echo "\nLat=".$lttmp." ,Lng=".$lngtmp;
-		$placename1 = "";
+        $placename1 = "";
 
-		if($lttmp!="" && $lngtmp!="")
-		{
-			$lttmp = substr($lttmp, 0, -1);
-			$lngtmp = substr($lngtmp, 0, -1);
-			$landmark = "";
-			get_landmark($lttmp,$lngtmp,&$landmark);
-			if($landmark!="")
-			{
-				//echo "\nLNMRK1=".$landmark;
-				$placename1 = $landmark;
-			}
-			else
-			{
-				if($lttmp!="" && $lngtmp!="")
-				{
-				  get_report_location($lttmp,$lngtmp,&$placename1);
-		//		  echo "<br>PL1=".$placename1;
-				  $placename1 = preg_replace('/भारत गणराज्य/', '' , $placename1);
-				  $placename1 = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '' , $placename1);
-				  //echo "<br>PL3=".$placename1;
-				}
-			}
-		}	
-		
-		$cell = 'G'.$r;
-		$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($placename1);
-		//$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);				
-		//echo "\nV10";
+        if($lttmp!="" && $lngtmp!="")
+        {
+            $lttmp = substr($lttmp, 0, -1);
+            $lngtmp = substr($lngtmp, 0, -1);
+            $landmark = "";
+            get_landmark($lttmp,$lngtmp,&$landmark);
+            if($landmark!="")
+            {
+                //echo "\nLNMRK1=".$landmark;
+                $placename1 = $landmark;
+            }
+            else
+            {
+                if($lttmp!="" && $lngtmp!="")
+                {
+                  get_report_location($lttmp,$lngtmp,&$placename1);
+//		  echo "<br>PL1=".$placename1;
+                  $placename1 = preg_replace('/भारत गणराज्य/', '' , $placename1);
+                  $placename1 = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '' , $placename1);
+                  //echo "<br>PL3=".$placename1;
+                }
+            }
+        }	
 
-		//$worksheet->write($r, 5, "Halt(H:m:s)", $text_format);  
-		//######## FILL BG COLORS IF CREATE OR EDIT DATE <= 24 HRS
+        $cell = 'G'.$r;
+        $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($placename1);
+        //$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);				
+        //echo "\nV10";
+
+        //$worksheet->write($r, 5, "Halt(H:m:s)", $text_format);  
+        //######## FILL BG COLORS IF CREATE OR EDIT DATE <= 24 HRS
 /*		$flag_update = false;
-		$current_date = date('Y-m-d H:i:s');
-		$diff_create_date = strtotime($current_date) - strtotime($create_date_tmp[$i]);
-		
-		//echo "\nVehicleID:".$vid[$i]." ,DiffCreateDate=".$diff_create_date." ,CurrentDate=".$current_date." ,CreateDate=".$create_date_tmp[$i];
-		if($diff_create_date <= 86400)
-		{
-			//echo "\nInCreateDate";
-			$flag_update = true;
-		}
-		if($edit_date_tmp[$i]!="")
-		{
-			$diff_edit_date = strtotime($current_date) - strtotime($edit_date_tmp[$i]);				
-			//echo "\nInEditDate, Diff=".$diff_edit_date;
-			
-			if($diff_edit_date <= 86400)
-			{
-				$flag_update = true;
-			}
-		}										
-		if($flag_update)
-		{
-			//echo "\nFlagUpdateTrue";
-			$bg_cell = 'A'.$r.':F'.$r;
-			$objPHPExcel->getActiveSheet()->getStyle($bg_cell)->applyFromArray($styleFontEditedPink);
-		}
+        $current_date = date('Y-m-d H:i:s');
+        $diff_create_date = strtotime($current_date) - strtotime($create_date_tmp[$i]);
+
+        //echo "\nVehicleID:".$vid[$i]." ,DiffCreateDate=".$diff_create_date." ,CurrentDate=".$current_date." ,CreateDate=".$create_date_tmp[$i];
+        if($diff_create_date <= 86400)
+        {
+                //echo "\nInCreateDate";
+                $flag_update = true;
+        }
+        if($edit_date_tmp[$i]!="")
+        {
+                $diff_edit_date = strtotime($current_date) - strtotime($edit_date_tmp[$i]);				
+                //echo "\nInEditDate, Diff=".$diff_edit_date;
+
+                if($diff_edit_date <= 86400)
+                {
+                        $flag_update = true;
+                }
+        }										
+        if($flag_update)
+        {
+                //echo "\nFlagUpdateTrue";
+                $bg_cell = 'A'.$r.':F'.$r;
+                $objPHPExcel->getActiveSheet()->getStyle($bg_cell)->applyFromArray($styleFontEditedPink);
+        }
 */
-		//######## FILL BG COLORS CLOSED
-		
-		$r++;  
-		//$daily_halt_global[$i] = $daily_halt_tmp;
-		//echo "\nIMEI=".$vserial[$i]." ,Date1=".$date1." ,Date2=".$date2." dist=".$daily_dist_tmp;  
-		$sno++; 
+        //######## FILL BG COLORS CLOSED
 
-		//######### CODE FOR REPORT2 FILE
-		if($i == 0)
-		{
-			//echo "\nV11";
-			//######## SET SUBGROUP IN COLUMN -B
-			/*$subgroup_cell = 'B'.$r2;
-			$objPHPExcel2->getActiveSheet()->getCell($subgroup_cell)->setValue($user_name);
-			$objPHPExcel2->getActiveSheet()->getStyle($subgroup_cell)->applyFromArray($styleText);*/			 
-			//echo "\nV12";
-		}
+        $r++;  
+        //$daily_halt_global[$i] = $daily_halt_tmp;
+        //echo "\nIMEI=".$vserial[$i]." ,Date1=".$date1." ,Date2=".$date2." dist=".$daily_dist_tmp;  
+        $sno++; 
 
-		//######## SET VEHICLE IN COLUMN -C
-		/*$vehicle_cell = 'C'.$r2;
-		$objPHPExcel2->getActiveSheet()->getCell($vehicle_cell)->setValue($vname[$i]);
-		$objPHPExcel2->getActiveSheet()->getStyle($vehicle_cell)->applyFromArray($styleText);*/
-		
-		//echo "\nV13";
-		//######## SET STATUS :DECIDE COLUMN BY THE DAY
-		/*
-		switch($day_report2)
-		{
-		  case "01" :
-			  $vstatus_cell = $c1.$r2;
-			  break;
-		  case "02" :
-			  $vstatus_cell = $c2.$r2;
-			  break;
-		  case "03" :
-			  $vstatus_cell = $c3.$r2;
-			  break;
-		  case "04" :
-			  $vstatus_cell = $c4.$r2;
-			  break;
-		  case "05" :
-			  $vstatus_cell = $c5.$r2;
-			  break;
-		  case "06" :
-			  $vstatus_cell = $c6.$r2;
-			  break;
-		  case "07" :
-			  $vstatus_cell = $c7.$r2;
-			  break;
-		  case "08" :
-			  $vstatus_cell = $c8.$r2;
-			  break;
-		  case "09" :
-			  $vstatus_cell = $c9.$r2;
-			  break;
-		  case "10" :
-			  $vstatus_cell = $c10.$r2;
-			  break;
-		  case "11" :
-			  $vstatus_cell = $c11.$r2;
-			  break;
-		  case "12" :
-			  $vstatus_cell = $c12.$r2;
-			  break;
-		  case "13" :
-			  $vstatus_cell = $c13.$r2;
-			  break;
-		  case "14" :
-			  $vstatus_cell = $c14.$r2;
-			  break;
-		  case "15" :
-			  $vstatus_cell = $c15.$r2;
-			  break;
-		  case "16" :
-			  $vstatus_cell = $c16.$r2;
-			  break;
-		  case "17" :
-			  $vstatus_cell = $c17.$r2;
-			  break;
-		  case "18" :
-			  $vstatus_cell = $c18.$r2;
-			  break;
-		  case "19" :
-			  $vstatus_cell = $c19.$r2;
-			  break;
-		  case "20" :
-			  $vstatus_cell = $c20.$r2;
-			  break;		
-		  case "21" :
-			  $vstatus_cell = $c21.$r2;
-			  break;
-		  case "22" :
-			  $vstatus_cell = $c22.$r2;
-			  break;
-		  case "23" :
-			  $vstatus_cell = $c23.$r2;
-			  break;
-		  case "24" :
-			  $vstatus_cell = $c24.$r2;
-			  break;
-		  case "25" :
-			  $vstatus_cell = $c25.$r2;
-			  break;
-		  case "26" :
-			  $vstatus_cell = $c26.$r2;
-			  break;
-		  case "27" :
-			  $vstatus_cell = $c27.$r2;
-			  break;
-		  case "28" :
-			  $vstatus_cell = $c28.$r2;
-			  break;
-		  case "29" :
-			  $vstatus_cell = $c29.$r2;
-			  break;
-		  case "30" :
-			  $vstatus_cell = $c30.$r2;
-			  break;
-		  case "31" :
-			  $vstatus_cell = $c31.$r2;
-			  break;				  
-		}	*/					
-		//$objPHPExcel2->getActiveSheet()->getCell($vstatus_cell)->setValue($vstatus);
-		//$objPHPExcel2->getActiveSheet()->getStyle($vstatus_cell)->applyFromArray($styleText);			 
-		
-		//echo "\nV14";
-		//###### CALCULATE TOTAL AC,NA,NG IN THIS ROW -READ ALL VALUES
-		$count_ac = 0;
-		$count_na = 0;
-		$count_ng = 0;
+        //######### CODE FOR REPORT2 FILE
+        if($i == 0)
+        {
+                //echo "\nV11";
+                //######## SET SUBGROUP IN COLUMN -B
+                /*$subgroup_cell = 'B'.$r2;
+                $objPHPExcel2->getActiveSheet()->getCell($subgroup_cell)->setValue($user_name);
+                $objPHPExcel2->getActiveSheet()->getStyle($subgroup_cell)->applyFromArray($styleText);*/			 
+                //echo "\nV12";
+        }
 
-		if (file_exists($destpath2)) 				//LOAD IF EXISTS
-		{		
-			//echo "\nV15";			
-			/*foreach ($objPHPExcel2->setActiveSheetIndex(0)->getRowIterator() as $row2) 
-			{
-				$cellIterator2 = $row2->getCellIterator();
-				$cellIterator2->setIterateOnlyExistingCells(false);
-				//echo "\nRow=".$r2;
-				foreach ($cellIterator2 as $cell2) 
-				{
-					if (!is_null($cell2)) 
-					{
-						$column2 = $cell2->getColumn();
-						$row2 = $cell2->getRow();
-						//if($row>1 && $row<=50)
-						//if($row > $sheet2_row_count)
-						if($row2==$r2)
-						{							
-							//echo "\nCol2=".$r2;
-							$status ="";
-							
-							if($column2=="D" || $column2=="E" || $column2=="F" || $column2=="G" || $column2=="H"
-							|| $column2=="I" || $column2=="J" || $column2=="K" || $column2=="L" || $column2=="M" || $column2=="N" || $column2=="O" || $column2=="P"
-							|| $column2=="Q" || $column2=="R" || $column2=="S" || $column2=="T" || $column2=="U" || $column2=="V" || $column2=="W" || $column2=="X"
-							|| $column2=="Y" || $column2=="Z" || $column2=="AA" || $column2=="AB" || $column2=="AC" || $column2=="AD" || $column2=="AE"
-							|| $column2=="AF" || $column2=="AG" || $column2=="AH")
-							{
-								$col2 =$column2.$row2;
-				
-								$status = $objPHPExcel2->getActiveSheet()->getCell($col2)->getValue();								
-								if($status == "AC") {$count_ac++;}
-								else if($status == "NA") {$count_na++;}
-								else if($status == "NG") {$count_ng++;}																							
-								//echo "\nV16-BEFORE, Status=".$status." ,col2=".$col2." ,count_ac=".$count_ac." ,count_na=".$count_na." ,count_ng=".$count_ng;						
-							}
-						}																
-					}		
-				}
-			}*/
-			/*if($vstatus == "AC") {$count_ac++;}		//INCREMENT CURRENT STATUS ALSO
-			else if($vstatus == "NA") {$count_na++;}
-			else if($vstatus == "NG") {$count_ng++;}*/
-			//echo "\nV16-AFTER, col2=".$col2." ,count_ac=".$count_ac." ,count_na=".$count_na." ,count_ng=".$count_ng;			
-		} //IF FILE EXIST CLOSED
-		else
-		{
-			//## FOR THE FIRST TIME
-			if($vstatus == "AC") {$count_ac++;}		//INCREMENT CURRENT STATUS ALSO
-			else if($vstatus == "NA") {$count_na++;}
-			else if($vstatus == "NG") {$count_ng++;}			
-		}
+        //######## SET VEHICLE IN COLUMN -C
+        /*$vehicle_cell = 'C'.$r2;
+        $objPHPExcel2->getActiveSheet()->getCell($vehicle_cell)->setValue($vname[$i]);
+        $objPHPExcel2->getActiveSheet()->getStyle($vehicle_cell)->applyFromArray($styleText);*/
 
-		$vstatus = "";			
-					
-		$ac_total = "AI".$r2;
-		$na_total = "AJ".$r2;
-		$ng_total = "AK".$r2;
-		//$remark = "AL".$r2;
-		/*$objPHPExcel2->getActiveSheet()->getCell($ac_total)->setValue($count_ac);
-		$objPHPExcel2->getActiveSheet()->getStyle($ac_total)->applyFromArray($styleText);
+        //echo "\nV13";
+        //######## SET STATUS :DECIDE COLUMN BY THE DAY
+        /*
+        switch($day_report2)
+        {
+          case "01" :
+                  $vstatus_cell = $c1.$r2;
+                  break;
+          case "02" :
+                  $vstatus_cell = $c2.$r2;
+                  break;
+          case "03" :
+                  $vstatus_cell = $c3.$r2;
+                  break;
+          case "04" :
+                  $vstatus_cell = $c4.$r2;
+                  break;
+          case "05" :
+                  $vstatus_cell = $c5.$r2;
+                  break;
+          case "06" :
+                  $vstatus_cell = $c6.$r2;
+                  break;
+          case "07" :
+                  $vstatus_cell = $c7.$r2;
+                  break;
+          case "08" :
+                  $vstatus_cell = $c8.$r2;
+                  break;
+          case "09" :
+                  $vstatus_cell = $c9.$r2;
+                  break;
+          case "10" :
+                  $vstatus_cell = $c10.$r2;
+                  break;
+          case "11" :
+                  $vstatus_cell = $c11.$r2;
+                  break;
+          case "12" :
+                  $vstatus_cell = $c12.$r2;
+                  break;
+          case "13" :
+                  $vstatus_cell = $c13.$r2;
+                  break;
+          case "14" :
+                  $vstatus_cell = $c14.$r2;
+                  break;
+          case "15" :
+                  $vstatus_cell = $c15.$r2;
+                  break;
+          case "16" :
+                  $vstatus_cell = $c16.$r2;
+                  break;
+          case "17" :
+                  $vstatus_cell = $c17.$r2;
+                  break;
+          case "18" :
+                  $vstatus_cell = $c18.$r2;
+                  break;
+          case "19" :
+                  $vstatus_cell = $c19.$r2;
+                  break;
+          case "20" :
+                  $vstatus_cell = $c20.$r2;
+                  break;		
+          case "21" :
+                  $vstatus_cell = $c21.$r2;
+                  break;
+          case "22" :
+                  $vstatus_cell = $c22.$r2;
+                  break;
+          case "23" :
+                  $vstatus_cell = $c23.$r2;
+                  break;
+          case "24" :
+                  $vstatus_cell = $c24.$r2;
+                  break;
+          case "25" :
+                  $vstatus_cell = $c25.$r2;
+                  break;
+          case "26" :
+                  $vstatus_cell = $c26.$r2;
+                  break;
+          case "27" :
+                  $vstatus_cell = $c27.$r2;
+                  break;
+          case "28" :
+                  $vstatus_cell = $c28.$r2;
+                  break;
+          case "29" :
+                  $vstatus_cell = $c29.$r2;
+                  break;
+          case "30" :
+                  $vstatus_cell = $c30.$r2;
+                  break;
+          case "31" :
+                  $vstatus_cell = $c31.$r2;
+                  break;				  
+        }	*/					
+        //$objPHPExcel2->getActiveSheet()->getCell($vstatus_cell)->setValue($vstatus);
+        //$objPHPExcel2->getActiveSheet()->getStyle($vstatus_cell)->applyFromArray($styleText);			 
 
-		$objPHPExcel2->getActiveSheet()->getCell($na_total)->setValue($count_na);
-		$objPHPExcel2->getActiveSheet()->getStyle($na_total)->applyFromArray($styleText);
+        //echo "\nV14";
+        //###### CALCULATE TOTAL AC,NA,NG IN THIS ROW -READ ALL VALUES
+        $count_ac = 0;
+        $count_na = 0;
+        $count_ng = 0;
 
-		$objPHPExcel2->getActiveSheet()->getCell($ng_total)->setValue($count_ng);
-		$objPHPExcel2->getActiveSheet()->getStyle($ng_total)->applyFromArray($styleText);*/
-		//echo "\nV17";
-		
-		//###############################
-		$r2++;
-	}     
- 
-	if($vsize==0)
-	{
-		$r2++;
-	}
-	/*$bg_cell = 'A'.$r.':C'.$r;
-	$objPHPExcel->getActiveSheet()->getStyle($bg_cell)->applyFromArray($styleBgGreen);
-	
-	$cell = 'A'.$r;
-	$objPHPExcel->getActiveSheet()->getCell($cell)->setValue("TOTAL INACTIVE");
-	$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);
+        if (file_exists($destpath2)) 				//LOAD IF EXISTS
+        {		
+            //echo "\nV15";			
+            /*foreach ($objPHPExcel2->setActiveSheetIndex(0)->getRowIterator() as $row2) 
+            {
+                    $cellIterator2 = $row2->getCellIterator();
+                    $cellIterator2->setIterateOnlyExistingCells(false);
+                    //echo "\nRow=".$r2;
+                    foreach ($cellIterator2 as $cell2) 
+                    {
+                            if (!is_null($cell2)) 
+                            {
+                                    $column2 = $cell2->getColumn();
+                                    $row2 = $cell2->getRow();
+                                    //if($row>1 && $row<=50)
+                                    //if($row > $sheet2_row_count)
+                                    if($row2==$r2)
+                                    {							
+                                            //echo "\nCol2=".$r2;
+                                            $status ="";
 
-	$cell = 'C'.$r;
-	$objPHPExcel->getActiveSheet()->getCell($cell)->setValue($inactive_vehicle_counter);
-	$objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);*/						
-	//CLOSE 
+                                            if($column2=="D" || $column2=="E" || $column2=="F" || $column2=="G" || $column2=="H"
+                                            || $column2=="I" || $column2=="J" || $column2=="K" || $column2=="L" || $column2=="M" || $column2=="N" || $column2=="O" || $column2=="P"
+                                            || $column2=="Q" || $column2=="R" || $column2=="S" || $column2=="T" || $column2=="U" || $column2=="V" || $column2=="W" || $column2=="X"
+                                            || $column2=="Y" || $column2=="Z" || $column2=="AA" || $column2=="AB" || $column2=="AC" || $column2=="AD" || $column2=="AE"
+                                            || $column2=="AF" || $column2=="AG" || $column2=="AH")
+                                            {
+                                                    $col2 =$column2.$row2;
 
-	$total_vehicles = $total_vehicles + $vsize;
-	$total_inactive_vehicles = $total_inactive_vehicles + $inactive_vehicle_counter;
-	$total_nogps_vehicles = $total_nogps_vehicles + $nogps_vehicle_counter;
-	//echo "\nLAST";
-	//$r++;
-	
-	echo "\nUserId :".$user_name." completed -(Vehicles:".$vsize.")\n";
-        //######## UPDATE ROW POINTER OF SECOND FILE
-	//$r2++;	
-	//##########################################
+                                                    $status = $objPHPExcel2->getActiveSheet()->getCell($col2)->getValue();								
+                                                    if($status == "AC") {$count_ac++;}
+                                                    else if($status == "NA") {$count_na++;}
+                                                    else if($status == "NG") {$count_ng++;}																							
+                                                    //echo "\nV16-BEFORE, Status=".$status." ,col2=".$col2." ,count_ac=".$count_ac." ,count_na=".$count_na." ,count_ng=".$count_ng;						
+                                            }
+                                    }																
+                            }		
+                    }
+            }*/
+            /*if($vstatus == "AC") {$count_ac++;}		//INCREMENT CURRENT STATUS ALSO
+            else if($vstatus == "NA") {$count_na++;}
+            else if($vstatus == "NG") {$count_ng++;}*/
+            //echo "\nV16-AFTER, col2=".$col2." ,count_ac=".$count_ac." ,count_na=".$count_na." ,count_ng=".$count_ng;			
+        } //IF FILE EXIST CLOSED
+        else
+        {
+            //## FOR THE FIRST TIME
+            if($vstatus == "AC") {$count_ac++;}		//INCREMENT CURRENT STATUS ALSO
+            else if($vstatus == "NA") {$count_na++;}
+            else if($vstatus == "NG") {$count_ng++;}			
+        }
+
+        $vstatus = "";			
+
+        $ac_total = "AI".$r2;
+        $na_total = "AJ".$r2;
+        $ng_total = "AK".$r2;
+        //$remark = "AL".$r2;
+        /*$objPHPExcel2->getActiveSheet()->getCell($ac_total)->setValue($count_ac);
+        $objPHPExcel2->getActiveSheet()->getStyle($ac_total)->applyFromArray($styleText);
+
+        $objPHPExcel2->getActiveSheet()->getCell($na_total)->setValue($count_na);
+        $objPHPExcel2->getActiveSheet()->getStyle($na_total)->applyFromArray($styleText);
+
+        $objPHPExcel2->getActiveSheet()->getCell($ng_total)->setValue($count_ng);
+        $objPHPExcel2->getActiveSheet()->getStyle($ng_total)->applyFromArray($styleText);*/
+        //echo "\nV17";
+
+        //###############################
+        $r2++;
+    }     
+
+    if($vsize==0)
+    {
+            $r2++;
+    }
+    /*$bg_cell = 'A'.$r.':C'.$r;
+    $objPHPExcel->getActiveSheet()->getStyle($bg_cell)->applyFromArray($styleBgGreen);
+
+    $cell = 'A'.$r;
+    $objPHPExcel->getActiveSheet()->getCell($cell)->setValue("TOTAL INACTIVE");
+    $objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);
+
+    $cell = 'C'.$r;
+    $objPHPExcel->getActiveSheet()->getCell($cell)->setValue($inactive_vehicle_counter);
+    $objPHPExcel->getActiveSheet()->getStyle($cell)->applyFromArray($styleFontBlack);*/						
+    //CLOSE 
+
+    $total_vehicles = $total_vehicles + $vsize;
+    $total_inactive_vehicles = $total_inactive_vehicles + $inactive_vehicle_counter;
+    $total_nogps_vehicles = $total_nogps_vehicles + $nogps_vehicle_counter;
+    //echo "\nLAST";
+    //$r++;
+    $parameterizeData=null;
+    $o_cassandra->close();
+    echo "\nUserId :".$user_name." completed -(Vehicles:".$vsize.")\n";
+    //######## UPDATE ROW POINTER OF SECOND FILE
+    //$r2++;	
+    //##########################################
 }  //ACCOUNT CLOSED
 
 
@@ -1220,36 +1120,36 @@ $count = 0;
 
 for($i=0;$i<sizeof($user_len);$i++)
 {
-	$tmp = $user_len[$i];
-	$sms_string1 = "";
-	$sms_string1 = "NA-SG:".$tmp."=>";
-	$count = 0;
-	for($j=0;$j<sizeof($sms_string_inactive[$tmp]);$j++)
-	{		
-		$sms_string1 = $sms_string1.$sms_string_inactive[$tmp][$j].",";
-		$count++;
-		if($sms_string_inactive[$tmp][$j]!="Accidental")
-		{
-		if($count == 5)
-		{
-			$sms_string1 = substr($sms_string1, 0, -1);
-			$tmp_data = "<marker phone=\"".$phone1."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string1."\" person=\"".$person1."\"/>\n";
-			$tmp_data .= "<marker phone=\"".$phone2."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string1."\" person=\"".$person2."\"/>\n";
-			$tmp_data .= "<marker phone=\"".$phone3."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string1."\" person=\"".$person3."\"/>\n";
-			fwrite($file1, $tmp_data);
-			$sms_string1 = "NA-SG:".$tmp."=>";
-			$count = 0;
-		}
-		else if($j == sizeof($sms_string_inactive[$tmp])-1)
-		{
-			$sms_string1 = substr($sms_string1, 0, -1);
-			$tmp_data = "<marker phone=\"".$phone1."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string1."\" person=\"".$person1."\"/>\n";
-			$tmp_data .= "<marker phone=\"".$phone2."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string1."\" person=\"".$person2."\"/>\n";
-			$tmp_data .= "<marker phone=\"".$phone3."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string1."\" person=\"".$person3."\"/>\n";						
-			fwrite($file1, $tmp_data);
-		}		
-		}
-		}
+    $tmp = $user_len[$i];
+    $sms_string1 = "";
+    $sms_string1 = "NA-SG:".$tmp."=>";
+    $count = 0;
+    for($j=0;$j<sizeof($sms_string_inactive[$tmp]);$j++)
+    {		
+            $sms_string1 = $sms_string1.$sms_string_inactive[$tmp][$j].",";
+            $count++;
+            if($sms_string_inactive[$tmp][$j]!="Accidental")
+            {
+            if($count == 5)
+            {
+                    $sms_string1 = substr($sms_string1, 0, -1);
+                    $tmp_data = "<marker phone=\"".$phone1."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string1."\" person=\"".$person1."\"/>\n";
+                    $tmp_data .= "<marker phone=\"".$phone2."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string1."\" person=\"".$person2."\"/>\n";
+                    $tmp_data .= "<marker phone=\"".$phone3."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string1."\" person=\"".$person3."\"/>\n";
+                    fwrite($file1, $tmp_data);
+                    $sms_string1 = "NA-SG:".$tmp."=>";
+                    $count = 0;
+            }
+            else if($j == sizeof($sms_string_inactive[$tmp])-1)
+            {
+                    $sms_string1 = substr($sms_string1, 0, -1);
+                    $tmp_data = "<marker phone=\"".$phone1."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string1."\" person=\"".$person1."\"/>\n";
+                    $tmp_data .= "<marker phone=\"".$phone2."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string1."\" person=\"".$person2."\"/>\n";
+                    $tmp_data .= "<marker phone=\"".$phone3."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string1."\" person=\"".$person3."\"/>\n";						
+                    fwrite($file1, $tmp_data);
+            }		
+            }
+            }
 }
 fwrite($file1, "</t1>");	
 fclose($file1);
@@ -1268,36 +1168,36 @@ $sms_string2 =$head2.$sms_string2;
 
 for($i=0;$i<sizeof($user_len);$i++)
 {
-	$tmp = $user_len[$i];
-	$sms_string2 = "";
-	$sms_string2 = "NG-SG:".$tmp."=>";
-	$count = 0;
-	for($j=0;$j<sizeof($sms_string_nogps[$tmp]);$j++)
-	{		
-		$sms_string2 = $sms_string2.$sms_string_nogps[$tmp][$j].",";
-		$count++;
-		if($sms_string_nogps[$tmp][$j]!="Accidental")
-		{
-		if($count == 5)
-		{
-			$sms_string2 = substr($sms_string2, 0, -1);
-			$tmp_data = "<marker phone=\"".$phone1."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string2."\" person=\"".$person1."\"/>\n";
-			$tmp_data .= "<marker phone=\"".$phone2."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string2."\" person=\"".$person2."\"/>\n";
-			$tmp_data .= "<marker phone=\"".$phone3."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string2."\" person=\"".$person3."\"/>\n";
-			fwrite($file2, $tmp_data);
-			$sms_string2 = "NG-SG:".$tmp."=>";
-			$count = 0;
-		}
-		else if($j == sizeof($sms_string_nogps[$tmp])-1)
-		{
-			$sms_string2 = substr($sms_string2, 0, -1);
-			$tmp_data = "<marker phone=\"".$phone1."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string2."\" person=\"".$person1."\"/>\n";
-			$tmp_data .= "<marker phone=\"".$phone2."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string2."\" person=\"".$person2."\"/>\n";
-			$tmp_data .= "<marker phone=\"".$phone3."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string2."\" person=\"".$person3."\"/>\n";						
-			fwrite($file2, $tmp_data);
-		}		
-		}
-	}
+    $tmp = $user_len[$i];
+    $sms_string2 = "";
+    $sms_string2 = "NG-SG:".$tmp."=>";
+    $count = 0;
+    for($j=0;$j<sizeof($sms_string_nogps[$tmp]);$j++)
+    {		
+        $sms_string2 = $sms_string2.$sms_string_nogps[$tmp][$j].",";
+        $count++;
+        if($sms_string_nogps[$tmp][$j]!="Accidental")
+        {
+        if($count == 5)
+        {
+                $sms_string2 = substr($sms_string2, 0, -1);
+                $tmp_data = "<marker phone=\"".$phone1."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string2."\" person=\"".$person1."\"/>\n";
+                $tmp_data .= "<marker phone=\"".$phone2."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string2."\" person=\"".$person2."\"/>\n";
+                $tmp_data .= "<marker phone=\"".$phone3."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string2."\" person=\"".$person3."\"/>\n";
+                fwrite($file2, $tmp_data);
+                $sms_string2 = "NG-SG:".$tmp."=>";
+                $count = 0;
+        }
+        else if($j == sizeof($sms_string_nogps[$tmp])-1)
+        {
+                $sms_string2 = substr($sms_string2, 0, -1);
+                $tmp_data = "<marker phone=\"".$phone1."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string2."\" person=\"".$person1."\"/>\n";
+                $tmp_data .= "<marker phone=\"".$phone2."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string2."\" person=\"".$person2."\"/>\n";
+                $tmp_data .= "<marker phone=\"".$phone3."\" vehicle_id=\"".$vid."\" alertid=\"".$alert_id."\" escalationid=\"".$eid."\" sts=\"".$sts."\" datetime=\"".$date."\" message=\"".$sms_string2."\" person=\"".$person3."\"/>\n";						
+                fwrite($file2, $tmp_data);
+        }		
+        }
+    }
 }
 fwrite($file2, "</t1>");
 fclose($file2);	
@@ -1415,6 +1315,7 @@ $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 //$abspath = "xlsx/abc.xlsx";
 //echo "\nABS=".$abspath;
 $objWriter->save($fname);
+//$objWriter->save($file_path);
 //echo "\nAccount After-4";
 
 //########### SEND MAIL ##############//
@@ -1431,7 +1332,22 @@ $filename_title = $filename_title.".xlsx";
 $file_path = $file_path.".xlsx";
 //echo "\nFILE PATH=".$file_path;
 
-include("send_mail_api.php");
+//### MAILGUN -Make the call to the client.
+$result = $mgClient->sendMessage($domain, array(
+    'from' => 'Itrack <support@iembsys.co.in>',
+    'to' => $to,
+    //'cc'      => 'rizwan@iembsys.com',
+    'cc' => 'rizwan@iembsys.com,ashish@iembsys.co.in,jyoti.jaiswal@iembsys.com,support1@iembsys.com,support2@iembsys.com,support3@iembsys.com,support4@iembsys.com',
+    //'cc'      => 'hourlyreport4@gmail.com',
+    // 'bcc'     => 'astaseen83@gmail.com',
+    'subject' => $subject,
+    'text' => $message,
+    'html' => '<html></html>'
+        ), array(
+    'attachment' => array($file_path)
+));        
+////include("send_mail_api.php");
+//#####################################
 //####################################//
 unlink($file_path);
 

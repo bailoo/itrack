@@ -79,6 +79,14 @@ function getPolyLineDetail($accId,$status,$DbConnection)
     $rowArr=mysql_fetch_row($res_polyline);
     return $rowArr;
 }
+
+function getLatLngPermission($accId,$DbConnection)
+{
+    $query="SELECT field22 FROM account_feature WHERE account_id=$accId";   
+    $result = mysql_query($query,$DbConnection);
+    $row=mysql_fetch_row($result);
+    return $row[0];
+}
 /////////////////////////////////////
 function getTimeZone($accountId,$DbC)
 {
@@ -2618,7 +2626,7 @@ function getTpaUidNameAr($account_id,$DbConnection)
 /***********************************Defautl Chilling PlantAssignment********************************************************/
  function getCustomerNoStationNext($account_id,$DbConnection)  
  { 
-    $query_chillplant = "SELECT customer_no,station_name FROM station USE INDEX(stn_type_uaid_status) WHERE type=2 AND user_account_id='$account_id' AND status=1";
+    $query_chillplant = "SELECT customer_no,station_name FROM station USE INDEX(stn_type_uaid_status) WHERE type=2 AND user_account_id='$account_id' AND status=1 order by station_name";
 	$result_chillquery = mysql_query($query_chillplant,$DbConnection);
 	while($rowchill=mysql_fetch_object($result_chillquery))
 	{

@@ -6,6 +6,7 @@ set_time_limit(360000);
 $DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
 $CREATE_MASTER = false;
+$LOG = false;
 $isReport = true;
 //$HOST = "111.118.181.156";
 $DBASE = "iespl_vts_beta";
@@ -46,32 +47,21 @@ if ($DEBUG_OFFLINE) {
 echo "<br>ABSPAth=" . $abspath;
 
 //echo "\nD1";
-include_once($abspath . '/xmlParameters.php');
+include_once($abspath . '/ioParameters.php');
 //echo "\nD2";
-include_once($abspath . '/parameterizeData.php');
+include_once($abspath . '/dataParameters.php');
 //echo "\nD3";
-include_once($abspath . '/data.php');
+include_once($abspath . '/dataArrays.php');
 //echo "\nD4";
-include_once($abspath . '/sortXmlData.php');
-//echo "\nD5:" . $abspath;
-//$tmp = $abspath.'/getXmlData.php';
-//if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
-include_once($abspath . '/getXmlData.php');
+include_once($abspath . '/getDeviceData.php');
 //echo "\nD6";
-//include_once($abspath."/sort_xml.php");
 include_once($abspath . "/calculate_distance.php");
-include_once($abspath . "/report_title.php");
-include_once($abspath . "/read_filtered_xml.php");
-include_once($abspath . "/user_type_setting.php");
 
-//require_once $abspath."/excel_lib/class.writeexcel_workbook.inc.php";
-//require_once $abspath."/excel_lib/class.writeexcel_worksheet.inc.php";
 include_once($abspath . "/util.hr_min_sec.php");
 //echo "<br>D7";
 if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun.php"));
 include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
 //echo "<br>D8";
-//include_once($abspath."/hourly_report/".$user_name."/get_master_detail.php");
 //### IMPORT XLSX LIBRARY
 //ini_set('display_startup_errors', TRUE);
 
@@ -193,7 +183,8 @@ if ($difftime > 72000) {
 //######## CHECK EVENING SHIFT1 ###########
 
 if (!$DEBUG_OFFLINE && !$DEBUG_ONLINE) {
-    if ((($current_time > $shift_ev_date1) && ($current_time > $shift_ev_date2) && ($current_time >= $ev_run_start_time1) ) || (($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4))) {
+    //if ((($current_time > $shift_ev_date1) && ($current_time > $shift_ev_date2) && ($current_time >= $ev_run_start_time1) ) || (($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4))) {
+    if ((($current_time >= $shift_ev_date1) && ($current_time <= $shift_ev_date2) && ($current_time >= $ev_run_start_time1) ) || (($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4))) {
         $shift_ev1 = true;
         echo "\nEv-Shift";
     } else {
@@ -606,8 +597,8 @@ if ($shift_ev1) {
         $message = "HOURLY_MAIL_VTS_HALT_REPORT_MORNING(MOTHER_NAGPUR)_" . $msg . "_" . $time_1 . "_" . $time_2 . "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
         $random_hash = md5(date('r', time()));
         $headers = "From: support@iembsys.co.in\r\n";
-        $headers .= "Cc: hourlyreport4@gmail.com";
-        //$headers .= "Cc: rizwan@iembsys.com";	
+        //$headers .= "Cc: hourlyreport4@gmail.com";
+        $headers .= "Cc: rizwan@iembsys.com";	
         //pass:8090025844
         //$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com";
         $headers .= "\r\nContent-Type: multipart/mixed; boundary=\"PHP-mixed-" . $random_hash . "\"";

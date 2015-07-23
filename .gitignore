@@ -91,13 +91,10 @@ hs_err_pid*
 /beta/src/php/junkFiles/
 /nbproject/private/
 /beta/src/php/hourly_report/mumbai/sent_file/
-<<<<<<< HEAD
 /beta/src/php/mail_api/
-=======
->>>>>>> origin/master
-/xml_tmp/
+/beta/xml_tmp/
 /beta/sorted_xml_data/
 /beta/src/fonts/
 /beta/src/media/
 /beta/xml_tmp/
-/beta/xml_vts/
+/beta/xml_vts/ReportPhpBackend/test_folder

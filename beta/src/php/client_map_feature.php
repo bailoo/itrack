@@ -29,13 +29,17 @@
                 echo "true";
             }*/
             $station[$size]=$row->station_name;
+            $station[$size] = str_replace('/', 'by', $station[$size]);
+            $station[$size] = str_replace('\\', 'by', $station[$size]);
+            $station[$size] = str_replace('&', 'and', $station[$size]);
+            
             $customer[$size]=$row->customer_no;
             $coord = $row->station_coord;
             $type[$size] = $row->type;  	
             $coord1 = explode(',',$coord);
             $lat[$size]= substr(trim($coord1[0]),0,-1);
             $lng[$size]= substr(trim($coord1[1]),0,-1);
-            $customerArr[trim($row->customer_no)]= "marker lat='".trim($lat[$size])."' lng='".trim($lng[$size])."' station='".str_replace("&","AND",$station[$size])."' customer='".trim($row->customer_no)."'";
+            $customerArr[trim($row->customer_no)]= "marker lat='".trim($lat[$size])."' lng='".trim($lng[$size])."' station='".$station[$size]."' customer='".trim($row->customer_no)."'";
             //$customerArr[trim($row->customer_no)]= "marker lat='".trim($lat[$size])."' lng='".trim($lng[$size])."' customer='".trim($row->customer_no)."'";
             $size++;
 	}	
@@ -45,10 +49,8 @@
 	{
             //$station[$i] = "abc";
             //$line = "\n".$line.'< marker lat="'.trim($lat[$i]).'" lng="'.trim($lng[$i]).'" station="'.$station[$i].'" customer="'.$customer[$i].'"/>';
-            $station[$i] = str_replace('/', 'by', $station[$i]);
-            $station[$i] = str_replace('\\', 'by', $station[$i]);
-            $station[$i] = str_replace('&', 'and', $station[$i]);
-            $linetowrite = "\n<marker lat=\"".trim($lat[$i])."\" lng=\"".trim($lng[$i])."\" station=\"".str_replace("&","AND",$station[$size])."\" customer=\"".$customer[$i]."\" type=\"".$type[$i]."\"/>";
+            
+            $linetowrite = "\n<marker lat=\"".trim($lat[$i])."\" lng=\"".trim($lng[$i])."\" station=\"".$station[$i]."\" customer=\"".$customer[$i]."\" type=\"".$type[$i]."\"/>";
             fwrite($fh, $linetowrite);  
             //echo "In loop";     	
 	} //loop $j closed

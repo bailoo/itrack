@@ -1,9 +1,79 @@
+
 <?php
+echo "edit##";
+
+?>
+<style>
+   /* html, body{
+margin:0;
+padding:0;
+height:100%;
+}*/
+section {
+position: relative;
+border: 1px solid #000;
+padding-top: 37px;
+/*background: #500;*/
+}
+section.positioned {
+position: absolute;
+top:100px;
+left:100px;
+width:800px;
+box-shadow: 0 0 15px #333;
+}
+.container {
+overflow-y: auto;
+height: 350px;
+}
+/*table {
+border-spacing: 0;
+width:100%;
+}*/
+.tablescroll {
+border-spacing: 0;
+width:100%;
+}
+.tablescroll td + td {
+border-left:1px solid #eee;
+}
+.tablescroll td, th {
+border-bottom:1px solid #eee;
+/*background: #ddd;*/
+color: #000;
+padding: 5px 15px;
+}
+.tablescroll th {
+height: 0;
+line-height: 0;
+padding-top: 0;
+padding-bottom: 0;
+color: transparent;
+border: none;
+white-space: nowrap;
+}
+.tablescroll th div{
+position: absolute;
+
+background: transparent;
+/*color: #fff;*/
+color: black;
+padding: 9px 25px;
+top: 0;
+margin-left: -25px;
+line-height: normal;
+border-left: 1px solid #800;
+}
+.tablescroll th:first-child div{
+border: none;
+}
+</style>  
+    <?php
 	include_once('Hierarchy.php');
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php'); 	
 	$root=$_SESSION['root'];		
-	echo "edit##"; 
+	//echo "edit##"; 
 	include_once("util_account_detail.php");
 	$account_id_local=$_POST['common_id'];	
 	$startdate = str_replace('/','-',$startdate);
@@ -328,34 +398,35 @@
 			//echo $query;
 			//$result = mysql_query($query,$DbConnection);			
 		?>		
-		<div style="height:430px;overflow:auto;font-size:11px;" align="center">
-		<form name="invoice_form" method = "post" target="_blank">
-		<table style="border:thin;" class="manage_interface" cellspacing="2" cellpadding="2" rules="all" align="center" width=100%>
+		<!--<div style="height:430px;overflow:auto;font-size:11px;" align="center">-->
+                <div style="font-size:11px;">
+                <form name="invoice_form" method = "post" target="_blank">
+                <section class="">
+                <div class="container">
+		<!--<table style="border:thin;" class="manage_interface" cellspacing="2" cellpadding="2" rules="all" align="center" width=100%>-->
+                    <table class="tablescroll">
+			<thead>
 			<?php
 			if( $user_type=="plant_raw_milk"){
-				echo "<tr style='background-color:silver;' rules='all'>
-			<td>SNO</td><td>FIRST CREATE DATE</td><td>LORRY NO</td><td>VEHICLE NO</td><td>TANKER TYPE</td><td>DOCKET NO</td><td>EMAIL</td><td>TRANSPORTER MOBILE</td><td>QTY(KG)</td>
-				<td>FAT(%)</td><td>SNF(%)</td><td>FAT(KG)</td><td>SNF(KG)</td><td>MANUAL MILK AGE(Hrs)</td><td>DISPATCH TIME</td><td>TARGET TIME</td><td>DRIVER NAME</td><td>DRIVER MOBILE</td><td>USERNAME(USERID)</td><td>STATUS</td><td>CLOSE</td><td><font color=blue>PLANT</font></td><td><font color=blue>CHILLING PLANT</font></td><td>UNLOAD EST.In MINS(GateEntry)</td><td>UNLOAD ACCEPT TIME</td><td>FAT%(FT)</td><td>SNF%(FT)</td><td>Qty(FT)</td><td>Temp.(FT)</td><td>Acidity(FT)</td><td>MBRT-min(FT)</td><td>RM(FT)</td><td>BR(FT)</td><td>Protien%(FT)</td><td>Sodium(FT)</td><td>Testing Status</td><td>FAT%(RT)</td><td>SNF%(RT)</td><td>ADULTRATION</td><td>OtherADULTRATION</td>
+				echo "<tr class='header' style='background-color:silver;' rules='all'>
+			<th>SNO<div>SNO</div></th><th>FIRST CREATE DATE<div>FIRST CREATE DATE</div></th><th>LORRY NO<div>LORRY NO</div></th><th>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th>QTY(KG)<div>QTY(KG)</div></th>
+				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>CLOSE<div>CLOSE</div></th><th><font color=blue>PLANT</font><div><font color=blue>PLANT</font></div></th><th><font color=blue>CHILLING PLANT</font><div><font color=blue>CHILLING PLANT</font></div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>UNLOAD ACCEPT TIME<div>UNLOAD ACCEPT TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th>
 			</tr>";
 			}
-			else if($user_type=="raw_milk"){
-				/*echo "<tr style='background-color:silver;' rules='all'>
-			<td>SNO</td><td>LORRY NO</td><td>VEHICLE NO</td><td>TANKER TYPE</td><td>DOCKET NO</td><td>EMAIL</td><td>TRANSPORTER MOBILE</td><td>QTY(KG)</td>
-				<td>FAT(%)</td><td>SNF(%)</td><td>FAT(KG)</td><td>SNF(KG)</td><td>MANUAL MILK AGE(Hrs)</td><td>DISPATCH TIME</td><td>TARGET TIME</td><td>DRIVER NAME</td><td>DRIVER MOBILE</td><td>USERNAME(USERID)</td><td>STATUS</td><td><font color=red>CANCEL</font></td><td><font color=blue>PLANT</font></td><td><font color=blue>CHILLING PLANT</font></td><td>UNLOAD EST.In MINS(GateEntry)</td><td>UNLOAD ACCEPT TIME</td><td>FAT%(FT)</td><td>SNF%(FT)</td><td>Qty(FT)</td><td>Temp.(FT)</td><td>Acidity(FT)</td><td>MBRT-min(FT)</td><td>RM(FT)</td><td>BR(FT)</td><td>Protien%(FT)</td><td>Sodium(FT)</td><td>Testing Status</td><td>FAT%(RT)</td><td>SNF%(RT)</td><td>ADULTRATION</td><td>OtherADULTRATION</td><td>APPROVED TIME</td>
-			</tr>";*/
-			
-				echo "<tr style='background-color:silver;' rules='all'>
-			<td>SNO</td><td>FIRST CREATE DATE</td><td>LORRY NO</td><td>VEHICLE NO</td><td>TANKER TYPE</td><td>DOCKET NO</td><td>EMAIL</td><td>TRANSPORTER MOBILE</td><td>QTY(KG)</td>
-				<td>FAT(%)</td><td>SNF(%)</td><td>FAT(KG)</td><td>SNF(KG)</td><td>MANUAL MILK AGE(Hrs)</td><td>DISPATCH TIME</td><td>TARGET TIME</td><td>DRIVER NAME</td><td>DRIVER MOBILE</td><td>USERNAME(USERID)</td><td>STATUS</td><td><font color=blue>PLANT</font></td><td><font color=blue>CHILLING PLANT</font></td><td>UNLOAD EST.In MINS(GateEntry)</td><td>UNLOAD ACCEPT TIME</td><td>FAT%(FT)</td><td>SNF%(FT)</td><td>Qty(FT)</td><td>Temp.(FT)</td><td>Acidity(FT)</td><td>MBRT-min(FT)</td><td>RM(FT)</td><td>BR(FT)</td><td>Protien%(FT)</td><td>Sodium(FT)</td><td>Testing Status</td><td>FAT%(RT)</td><td>SNF%(RT)</td><td>ADULTRATION</td><td>OtherADULTRATION</td><td>APPROVED TIME</td>
+			else if($user_type=="raw_milk"){						
+				echo "<tr class='header' style='background-color:silver;' rules='all'>
+			<th>SNO<div>SNO</div></th><th>FIRST CREATE DATE<div>FIRST CREATE DATE</div></th><th>LORRY NO<div>LORRY NO</div></th><th>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th>QTY(KG)<div>QTY(KG)</div></th>
+				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th><font color=blue>PLANT</font><div><font color=blue>PLANT</font></div></th><th><font color=blue>CHILLING PLANT</font><div><font color=blue>CHILLING PLANT</font></div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>UNLOAD ACCEPT TIME<div>UNLOAD ACCEPT TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th><th>APPROVED TIME<div>APPROVED TIME</div></th>
 			</tr>";
 			}
 			else{ //admin
-			echo "<tr style='background-color:silver;' rules='all'>
-			<td>SNO</td><td>FIRST CREATE DATE</td><td>LORRY NO</td><td>VEHICLE NO</td><td>TANKER TYPE</td><td>DOCKET NO</td><td>EMAIL</td><td>TRANSPORTER MOBILE</td><td>QTY(KG)</td>
-				<td>FAT(%)</td><td>SNF(%)</td><td>FAT(KG)</td><td>SNF(KG)</td><td>MANUAL MILK AGE(Hrs)</td><td>DISPATCH TIME</td><td>TARGET TIME</td><td>DRIVER NAME</td><td>DRIVER MOBILE</td><td>USERNAME(USERID)</td><td>STATUS</td><td>CLOSE</td><td><font color=red>CANCEL</font></td><td><font color=blue>PLANT</font></td><td><font color=blue>CHILLING PLANT</font></td><td>UNLOAD EST.In MINS(GateEntry)</td><td>UNLOAD ACCEPT TIME</td><td>FAT%(FT)</td><td>SNF%(FT)</td><td>Qty(FT)</td><td>Temp.(FT)</td><td>Acidity(FT)</td><td>MBRT-min(FT)</td><td>RM(FT)</td><td>BR(FT)</td><td>Protien%(FT)</td><td>Sodium(FT)</td><td>Testing Status</td><td>FAT%(RT)</td><td>SNF%(RT)</td><td>ADULTRATION</td><td>OtherADULTRATION</td><td>APPROVED</td><td>APPROVED TIME</td>
-			</tr>";
+			echo "<tr class='header' style='background-color:silver;' rules='all'>
+			<th>SNO<div>SNO</div></th><th>FIRST CREATE DATE<div>FIRST CREATE DATE</div></th><th>LORRY NO<div>LORRY NO</div></th><th>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th>QTY(KG)<div>QTY(KG)</div></th>
+				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>CLOSE<div>CLOSE</div></th><th><font color=red>CANCEL</font><div>CANCEL</div></th><th><font color=blue>PLANT</font><div>PLANT</div></th><th><font color=blue>CHILLING PLANT</font><div>CHILLING PLANT</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>UNLOAD ACCEPT TIME<div>UNLOAD ACCEPT TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th><th>APPROVED<div>APPROVED</div></th><th>APPROVED TIME<div>APPROVED TIME</div></th>
+			</tr>"; 
+                       
 			}
-			
+			echo"</thead><tbody class='scrollContent'>";
 			
 			$sno_local =1;
 			$color=1;
@@ -1877,17 +1948,10 @@
 			echo '<input type="hidden" id="tmp_serial"/>';
 			
 	echo '		
+	 </tbody>
 	</table>
-	<!--
-	<center>
-	<input TYPE="hidden" VALUE="Raw_Milk_Invoice" NAME="csv_type">
-	<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">			
-	<input type="button" onclick="javascript:manage_csv(\'src/php/report_getpdf_type3.php?size='.$sno_local.'\');" value="Get PDF" class="noprint">
-	&nbsp;
-	<input type="button" onclick="javascript:manage_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">
-	&nbsp;
-	</center>
-	-->
+	</div>
+	<section>
 	</form>';
 	echo'
 	<form name="invoice_form_csv" id="invoice_form_csv" method = "post" target="_blank">
@@ -1902,7 +1966,8 @@
 	</form>
 	';
 	?>
-	</div>
+	
+                            </div>
 	
 	<table align="center">
 		<tr>

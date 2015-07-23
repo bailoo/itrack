@@ -6,15 +6,52 @@
 	include_once('util_php_mysql_connectivity.php');
 	include_once('user_type_setting.php');	
 	include_once('calculate_distance.php');	
-	include_once('common_xml_element.php');
+	
 	include_once('googleMapApiPolyline.php');
+        //casandra//
+        include_once('xmlParameters.php');
+        include_once('parameterizeData.php');
+        include_once('data.php');   
+        include_once("getXmlData.php");
+        //=========
 	$xmltowrite = $_REQUEST['xml_file']; 	
 	$mode = $_REQUEST['mode'];
 	$vserial1 = $_REQUEST['vserial'];
 	$startdate = $_REQUEST['startdate'];
 	$enddate = $_REQUEST['enddate']; 
+        $date_1 = explode(" ",$startdate);
+        $date_2 = explode(" ",$enddate);
+        $daterange1 = $date_1[0];
+        $daterange2 = $date_2[0];
 	$time_interval1 = $_REQUEST['time_interval']; 
+        $userInterval=$time_interval1;
 	
+        $requiredData="All";
+        $sortBy='h';
+         $parameterizeData=new parameterizeData();
+         $ioFoundFlag=0;
+        $parameterizeData->messageType='a';
+$parameterizeData->version='b';
+$parameterizeData->fix='c';
+$parameterizeData->latitude='d';
+$parameterizeData->longitude='e';
+$parameterizeData->speed='f';
+$parameterizeData->cellName='ab';
+$parameterizeData->supVoltage='r';
+$parameterizeData->dayMaxSpeed='s';
+$parameterizeData->lastHaltTime='u';
+$parameterizeData->io1='i';
+$parameterizeData->io2='j';
+$parameterizeData->io3='k';
+$parameterizeData->io4='l';
+$parameterizeData->io5='m';
+$parameterizeData->io6='n';
+$parameterizeData->io7='o';
+$parameterizeData->io8='p';
+        
+        get_All_Dates($daterange1, $daterange2, $userdates);    
+        $date_size = sizeof($userdates); 
+        
 	// for google play//
 	$flag_play = $_REQUEST['flag_play'];
 	$play_interval = $_REQUEST['play_interval']; 
@@ -23,14 +60,7 @@
 	//echo "xmltowrite=".$xmltowrite."<br>";
 		
 	$vserial = explode(',',$vserial1) ;   
-	if($report_type	== "Vehicle")
-	{
-		include_once("sort_xml.php");
-	}
-	else
-	{
-		include_once("sort_xml_person.php");
-	}
+	
 	//include_once("sort_xml.php");
 	$minlat = 180; 
 	$maxlat = -180;
@@ -63,13 +93,125 @@
 		
 		$vehicle_info=get_vehicle_info($root,$vserial[0]);
 		$vehicle_detail_local=explode(",",$vehicle_info);
+                
 		if($home_report_type=="map_report" || $home_report_type=="play_report")
 		{
 			$lineTmpTrack="";
 			if($report_type=="Vehicle")
 			{
-				$io_type_value=$vehicle_detail_local[7];
-				getTrackMap($vserial[0], $vehicle_detail_local[0], $vehicle_detail_local[2], $startdate,$enddate,$xmltowrite,$timeinterval,$distanceinterval,&$lineTmpTrack);
+                            
+		$CurrentLat = 0.0;
+		$CurrentLong = 0.0;
+		$LastLat = 0.0;
+		$LastLong = 0.0;
+		$LastDTForDiff = "";
+		$firstData = 0;
+		$distance =0.0;
+		
+                              
+                 for($di=0;$di<=($date_size-1);$di++)
+                 {
+                                 //echo "userdate=".$userdates[$di]."<br>";
+                            $SortedDataObject=new data();
+                            readFileXmlNew($vserial[0],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+                           // var_dump($SortedDataObject);
+                            //var_dump($SortedDataObject);
+            if(count($SortedDataObject->deviceDatetime)>0)
+            {
+                $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+                for($obi=0;$obi<$prevSortedSize;$obi++)
+                {		
+                    $lat = $SortedDataObject->latitudeData[$obi];
+                    $lng = $SortedDataObject->longitudeData[$obi];
+                    $datetime=$SortedDataObject->deviceDatetime[$obi];
+                    $xml_date_current=$datetime;
+                    if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))
+                    {
+                        $DataValid = 1;
+                    }
+                    if(($DataValid==1) && ($datetime>$startdate && $datetime<$enddate))
+                    {
+                       
+                        //echo "Final2";
+                        $CurrentLat =$lat ;
+                        $CurrentLong =  $lng;
+                        $CurrentDTForDiffTmp=strtotime($datetime);
+                        if($firstData==1)
+                        {
+                                if($minlat>$CurrentLat)
+                                {
+                                        $minlat = $CurrentLat;
+                                }
+                                if($maxlat<$CurrentLat)
+                                {
+                                        $maxlat = $CurrentLat;
+                                }
+					
+                                if($minlong>$CurrentLong)
+                                {
+                                        $minlong = $CurrentLong;
+                                }
+                                if($maxlong<$CurrentLong)
+                                {
+                                        $maxlong = $CurrentLong;
+                                }                
+                                $tmp1lat = round(substr($CurrentLat,1,(strlen($CurrentLat)-3)),4);
+                                $tmp2lat = round(substr($LastLat,1,(strlen($LastLat)-3)),4);
+                                $tmp1lng = round(substr($CurrentLong,1,(strlen($CurrentLong)-3)),4);
+                                $tmp2lng = round(substr($LastLong,1,(strlen($LastLong)-3)),4);  							
+                                //echo  "Coord: ".$tmp1lat.' '.$tmp2lat.' '.$tmp1lng.' '.$tmp2lng.'<BR>'; 
+                                //echo "lastDate=".$LastDTForDif."<br>";
+                                $LastDTForDiffTS=strtotime($LastDTForDif);									
+                                $dateDifference=($CurrentDTForDiffTmp-$LastDTForDiffTS)/3600;
+                                $dateDifference_1=round($dateDifference,5);
+                                //echo" dateDifference=".round($dateDifference,5)."<br>";
+                                //echo  "dateDifference: ".$dateDifference.'<BR>'; 									
+                                calculate_distance($tmp1lat,$tmp2lat,$tmp1lng,$tmp2lng,$distance);
+
+                                //$linetolog = $CurrentLat.','.$CurrentLong.','.$LastLat.','.$LastLong.','.$distance.','.$xml_date_current.','.$xml_date_last.','.(strtotime($xml_date_current)-strtotime($xml_date_last)).','.$timeinterval.','.$distanceinterval.','.$enddate.','.$startdate."\n";
+                                //echo "distance=".$distance."<br>";									
+                                $overSpeed=$distance/$dateDifference_1;
+
+                                //fwrite($xmllog, $linetolog);
+                        }
+
+                        if($distance<$distanceinterval)
+                        {
+                            $LastDTForDif=$xml_date_current;
+                        }
+                        /*if((((((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval) && ($distance>=$distanceinterval)) || ($firstData==0)) && 
+                        (($xml_date_current<=$enddate) && ($xml_date_current>=$startdate))) || ($f==$total_lines-2) )*/
+                        if(($distance>=$distanceinterval) || ($firstData==0))
+                        {									
+                            //fwrite($xmllog, $linetolog);
+                            //echo "<br>FinalWrite";
+                            $xml_date_last = $xml_date_current;
+									
+                            if($overSpeed<200)
+                            {										
+                                $LastLat =$CurrentLat;
+                                $LastLong =$CurrentLong;									
+                                $linetolog = "Data Written\n";
+                                $LastDTForDif=$xml_date_current;
+                                $line = substr($line, 0, -3);   // REMOVE LAST TWO /> CHARARCTER
+                                $finalDistance = $finalDistance + $distance;
+                                $linetowrite='<x a="'.$SortedDataObject->messageTypeData[$obi].'" b="'.$SortedDataObject->versionData[$obi].'" c="'.$SortedDataObject->fixData[$obi].'" d="'.$SortedDataObject->latitudeData[$obi].'" e="'.$SortedDataObject->longitudeData[$obi].'" f="'.$SortedDataObject->speedData[$obi].'" g="'.$SortedDataObject->serverDatetime[$obi].'" h="'.$SortedDataObject->deviceDatetime[$obi].'" i="'.$SortedDataObject->io1Data[$obi].'" j="'.$SortedDataObject->io2Data[$obi].'" k="'.$SortedDataObject->io3Data[$obi].'" l="'.$SortedDataObject->io4Data[$obi].'" m="'.$SortedDataObject->io5Data[$obi].'" n="'.$SortedDataObject->io6Data[$obi].'" o="'.$SortedDataObject->io7Data[$obi].'" p="'.$SortedDataObject->io8Data[$obi].'" q="'.$SortedDataObject->sigStrData[$obi].'" r="'.$SortedDataObject->supVoltageData[$obi].'" s="'.$SortedDataObject->dayMaxSpeedData[$obi].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" z="'.round($finalDistance,2).'"/>';
+                                        $firstData = 1;  
+                                        $lineTmpTrack=$lineTmpTrack.$linetowrite."@";
+                                //$fh = fopen($xmltowrite, 'a') or die("can't open file 4"); //append
+                                //fwrite($fh, $linetowrite); 
+                            }
+                        }                                              									                               
+                         
+                    }
+                }          
+                $linetowrite='<x a="'.$SortedDataObject->messageTypeData[$obi-1].'" b="'.$SortedDataObject->versionData[$obi-1].'" c="'.$SortedDataObject->fixData[$obi-1].'" d="'.$SortedDataObject->latitudeData[$obi-1].'" e="'.$SortedDataObject->longitudeData[$obi-1].'" f="'.$SortedDataObject->speedData[$obi-1].'" g="'.$SortedDataObject->serverDatetime[$obi-1].'" h="'.$SortedDataObject->deviceDatetime[$obi-1].'" i="'.$SortedDataObject->io1Data[$obi-1].'" j="'.$SortedDataObject->io2Data[$obi-1].'" k="'.$SortedDataObject->io3Data[$obi-1].'" l="'.$SortedDataObject->io4Data[$obi-1].'" m="'.$SortedDataObject->io5Data[$obi-1].'" n="'.$SortedDataObject->io6Data[$obi-1].'" o="'.$SortedDataObject->io7Data[$obi-1].'" p="'.$SortedDataObject->io8Data[$obi-1].'" q="'.$SortedDataObject->sigStrData[$obi-1].'" r="'.$SortedDataObject->supVoltageData[$obi-1].'" s="'.$SortedDataObject->dayMaxSpeedData[$obi-1].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" z="'.round($finalDistance,2).'"/>';
+		$lineTmpTrack=$lineTmpTrack.$linetowrite."@";
+                $SortedDataObject=null;
+            }
+                            }
+                           $io_type_value=$vehicle_detail_local[7];
+				
 					//echo "linetmp=".$linetmp."<br>";
 					$lineF=explode("@",substr($lineTmpTrack,0,-1));					
 					for($n=0;$n<sizeof($lineF);$n++)
@@ -344,358 +486,12 @@
 					$googleMapthisapi=new GoogleMapHelper();								
 					echo $googleMapthisapi->addMultipleMarker("map_div",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$io_str_last,$distance_travel_arr);
 					
+					//$googleMapthisapi=new GoogleMapHelper();								
+					//echo $googleMapthisapi->addMultipleMarker("map_div",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$io_str_last,$distance_travel_arr);
+					
 			
 			}
 		}
 	
-	function getTrackMap($vehicle_serial,$vname,$vehicle_number,$startdate,$enddate,$xmltowrite,$timeinterval,$distanceinterval,&$lineTmpTrack)
-	{
-		//echo "in function<br>";		
-		global $va,$vb,$vc,$vd,$ve,$vf,$vg,$vh,$vi,$vj,$vk,$vl,$vm,$vn,$vo,$vp,$vq,$vr,$vs,$vt,$vu,$vv,$vw,$vx,$vy,$vz,$vaa,$vab;
-		global $old_xml_date;	
-		//echo "In Track";
-		
-		$fix_tmp = 1;
-		$xml_date_latest="1900-00-00 00:00:00";
-		$CurrentLat = 0.0;
-		$CurrentLong = 0.0;
-		$LastLat = 0.0;
-		$LastLong = 0.0;
-		$LastDTForDiff = "";
-		$firstData = 0;
-		$distance =0.0;
-		$linetowrite="";
-		$date_1 = explode(" ",$startdate);
-		$date_2 = explode(" ",$enddate);
-		$date_time_cmp=$date_2[0]." 23:59:59";
-		$datefrom = $date_1[0];
-		$dateto = $date_2[0];
-		$timefrom = $date_1[1];
-		$timeto = $date_2[1];
-
-		get_All_Dates($datefrom, $dateto, &$userdates);
-
-		date_default_timezone_set("Asia/Calcutta");
-		$current_datetime = date("Y-m-d H:i:s");
-		$current_date = date("Y-m-d");
-		//print "<br>CurrentDate=".$current_date;
-		$date_size = sizeof($userdates);
-		//$fh = fopen($xmltowrite, 'a') or die("can't open file 6"); //append
-
-		for($i=0;$i<=($date_size-1);$i++)
-		{
-			//if($userdates[$i] == $current_date)
-			//{	
-			
-			$xml_current ="../../../xml_vts/xml_data/".$userdates[$i]."/".$vehicle_serial.".xml";	
-		include("/var/www/html/vts/beta/src/php/common_xml_path.php");
-		$xml_current =$xml_data."/".$userdates[$i]."/".$vehicle_serial.".xml";
-		//echo"ghanta". $xml_current;
-			//$xml_current = "../../../xml_vts/xml_data/".$userdates[$i]."/".$vehicle_serial.".xml";	    		
-			if (file_exists($xml_current))      
-			{    		
-				echo "in else";
-				$xml_file = $xml_current;
-				$CurrentFile = 1;
-			}		
-			else
-			{
-				$xml_file = "../../../sorted_xml_data/".$userdates[$i]."/".$vehicle_serial.".xml";
-				$CurrentFile = 0;
-			}
-			//echo "<br>xml_file=".$xml_file;			
-			if (file_exists($xml_file)) 
-			{	
-				set_master_variable($userdates[$i]);
-				$t=time();
-				//$current_datetime1 = date("Y_m_d_H_i_s");      
-				//$xml_original_tmp = "xml_tmp/original_xml/tmp_".$current_datetime1.".xml";
-				$xml_original_tmp = "../../../xml_tmp/original_xml/tmp_".$t."_".$i.".xml";
-				//$xml_log = "xml_tmp/filtered_xml/tmp_".$current_datetime1.".xml";
-				//echo "<br>xml_file=".$xml_file." <br>tmpxml=".$xml_original_tmp."<br>";
-				//copy($xml_file,$xml_original_tmp); 
-											  
-				if($CurrentFile == 0)
-				{
-					//echo "<br>ONE<br>";
-					copy($xml_file,$xml_original_tmp);
-				}
-				else
-				{
-					//echo "<br>TWO<br>";
-					//$xml_unsorted = "xml_tmp/unsorted_xml/tmp".$current_datetime1."_unsorted.xml";
-					$xml_unsorted = "../../../xml_tmp/unsorted_xml/tmp_".$t."_".$i."_unsorted.xml";
-					//echo  "<br>".$xml_file." <br>".$xml_unsorted;				
-					copy($xml_file,$xml_unsorted);        // MAKE UNSORTED TMP FILE
-					SortFile($xml_unsorted, $xml_original_tmp,$userdates[$i]);    // SORT FILE
-					unlink($xml_unsorted);                // DELETE UNSORTED TMP FILE
-				}      
-				$f=0;  
-				$xml = @fopen($xml_original_tmp, "r") or $fexist = 0;
-				$total_lines = count(file($xml_original_tmp));  
-				//$xmllog = fopen($xml_log, "w") or $fexist1 = 0;
-				$logcnt=0;
-				$DataComplete=false;
-				
-				if (file_exists($xml_original_tmp)) 
-				{      
-					while(!feof($xml))          // WHILE LINE != NULL
-					{
-						//echo fgets($file). "<br />";
-						$DataValid = 0;
-						$line = fgets($xml);        // STRING SHOULD BE IN SINGLE QUOTE
-						//echo "0:line:".$line;					
-						$linetolog =  $logcnt." ".$line;
-						$logcnt++;
-						//fwrite($xmllog, $linetolog);
-						
-						//echo "vc:".$vc;
-						/*if(strpos($line,''.$vc.'="1"'))     // RETURN FALSE IF NOT FOUND
-						{
-							$fix_tmp = 1;
-						}                
-						else if(strpos($line,''.$vc.'="0"'))
-						{
-							$fix_tmp = 0;
-						}
-						else
-						{
-							$fix_tmp = 2;
-						}*/
-						$fix_tmp = 1;				
-						if((preg_match('/'.$vd.'="\d+.\d+[a-zA-Z0-9]\"/', $line, $lat_match)) &&  (preg_match('/'.$ve.'="\d+.\d+[a-zA-Z0-9]\"/', $line, $lng_match)) )
-						{ 
-							$lat_value = explode('=',$lat_match[0]);
-							$lng_value = explode('=',$lng_match[0]);
-							//echo " lat_value=".$lat_value[1];         
-							if( (strlen($lat_value[1])>5) && ($lat_value[1]!="-") && (strlen($lng_value[1])>5) && ($lng_value[1]!="-") && (strrpos($lat_value[1], '.'))==3 && (strrpos($lng_value[1], '.'))==3)
-							{
-								$DataValid = 1;
-							}         
-						}
-						/*echo "datavalie=".$DataValid;
-						echo "line1=".$line[strlen($line)-2];
-						echo "fix_tmp=".$fix_tmp;*/
-						$linetmp = "";
-						//if( (substr($line, 0,1) == '<') && (substr( (strlen($line)-1), 0,1) == '>') && ($fix_tmp==1) && ($f>0) && ($f<$total_lines-1) )        
-						if(($line[0] == '<') && ($line[strlen($line)-2] == '>') && (($fix_tmp==1) || ($fix_tmp == 2))&& ($DataValid == 1) )        
-						{
-							//preg_match('/\d+-\d+-\d+ \d+:\d+:\d+/', $line, $str3tmp);    // EXTRACT DATE FROM LINE
-							//echo "<br>str3tmp[0]=".$str3tmp[0];
-							//$xml_date_current = $str3tmp[0];
-							$linetmp =  $line;
-							//echo "linetmp=".$linetmp;
-							$status = preg_match('/'.$vh.'="[^"]+/', $line, $datetime_tmp);
-							$datetime_tmp1 = explode("=",$datetime_tmp[0]);
-							$datetime = preg_replace('/"/', '', $datetime_tmp1[1]);
-							$xml_date_current = $datetime;										
-						}
-						if($DataValid==1)
-						{
-							$break_flag=1;
-							if(strtotime($datetime)>strtotime($date_time_cmp))
-							{
-								$break_flag=0;
-							}						
-							if($break_flag==1)
-							{
-								if($xml_date_current>=$enddate)
-								{
-									break;
-								}
-							}
-						}
-						//echo "Final0=".$xml_date_current." datavalid=".$DataValid;
-			  
-						if (($xml_date_current!=null)  && ($DataValid==1) && (($fix_tmp==1) || ($fix_tmp == 2)))
-						{
-							$linetolog = $xml_date_current.' '.$firstData."\n";
-							//fwrite($xmllog, $linetolog);
-							//echo "Final1";
-							$CurrentLat = $lat_value[1] ;
-							$CurrentLong = $lng_value[1];
-
-							//if(($xml_date_current >= $startdate && $xml_date_current <= $enddate) && ($xml_date_current!="-"))
-							//if(($xml_date_current >= $startdate && $xml_date_current <= $enddate) && ($xml_date_current!="-") && $xml_date_current >= $xml_date_latest && $xml_date_current<=($userdates[$i]." 23:59:59"))
-							if(($xml_date_current >= $startdate && $xml_date_current <= $enddate) && ((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval) && ($xml_date_current!="-") && $xml_date_current >= $xml_date_latest && $xml_date_current<=($userdates[$i]." 23:59:59"))
-							{								
-								$xml_date_latest = $xml_date_current;
-								//echo "Final2";
-								$CurrentLat = $lat_value[1] ;
-								$CurrentLong = $lng_value[1];
-								$CurrentDTForDiffTmp=strtotime($datetime);
-								if($firstData==1)
-								{
-									if($minlat>$CurrentLat)
-									{
-										$minlat = $CurrentLat;
-									}
-									if($maxlat<$CurrentLat)
-									{
-										$maxlat = $CurrentLat;
-									}
-					
-									if($minlong>$CurrentLong)
-									{
-										$minlong = $CurrentLong;
-									}
-									if($maxlong<$CurrentLong)
-									{
-										$maxlong = $CurrentLong;
-									}                
-									$tmp1lat = round(substr($CurrentLat,1,(strlen($CurrentLat)-3)),4);
-									$tmp2lat = round(substr($LastLat,1,(strlen($LastLat)-3)),4);
-									$tmp1lng = round(substr($CurrentLong,1,(strlen($CurrentLong)-3)),4);
-									$tmp2lng = round(substr($LastLong,1,(strlen($LastLong)-3)),4);  							
-									//echo  "Coord: ".$tmp1lat.' '.$tmp2lat.' '.$tmp1lng.' '.$tmp2lng.'<BR>'; 
-									//echo "lastDate=".$LastDTForDif."<br>";
-									$LastDTForDiffTS=strtotime($LastDTForDif);									
-									$dateDifference=($CurrentDTForDiffTmp-$LastDTForDiffTS)/3600;
-									$dateDifference_1=round($dateDifference,5);
-									//echo" dateDifference=".round($dateDifference,5)."<br>";
-									//echo  "dateDifference: ".$dateDifference.'<BR>'; 									
-									calculate_distance($tmp1lat,$tmp2lat,$tmp1lng,$tmp2lng,&$distance);
-										
-									//$linetolog = $CurrentLat.','.$CurrentLong.','.$LastLat.','.$LastLong.','.$distance.','.$xml_date_current.','.$xml_date_last.','.(strtotime($xml_date_current)-strtotime($xml_date_last)).','.$timeinterval.','.$distanceinterval.','.$enddate.','.$startdate."\n";
-									//echo "distance=".$distance."<br>";									
-									$overSpeed=$distance/$dateDifference_1;
-									
-									//fwrite($xmllog, $linetolog);
-								}
-
-								if($distance<$distanceinterval)
-								{
-									$LastDTForDif=$xml_date_current;
-								}
-								/*if((((((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval) && ($distance>=$distanceinterval)) || ($firstData==0)) && 
-								(($xml_date_current<=$enddate) && ($xml_date_current>=$startdate))) || ($f==$total_lines-2) )*/
-								if(($distance>=$distanceinterval) || ($firstData==0))
-								{
-									
-									//fwrite($xmllog, $linetolog);
-									//echo "<br>FinalWrite";
-									$xml_date_last = $xml_date_current;
-									
-									if($overSpeed<200)
-									{										
-										$LastLat =$CurrentLat;
-										$LastLong =$CurrentLong;									
-										$linetolog = "Data Written\n";
-										$LastDTForDif=$xml_date_current;
-										$line = substr($line, 0, -3);   // REMOVE LAST TWO /> CHARARCTER
-										$finalDistance = $finalDistance + $distance;
-										if($userdates[$i]<$old_xml_date)
-										{
-											//echo "in replace 1";
-											$line=str_replace("marker","x",$line);
-											$line=str_replace("msgtype=","a=",$line);
-											$line=str_replace("vehicleserial=","v=",$line);
-											$line=str_replace("ver=","b=",$line);
-											$line=str_replace("fix=","c=",$line);
-											$line=str_replace("lat=","d=",$line);
-											$line=str_replace("lng=","e=",$line);
-											$line=str_replace("speed=","f=",$line);
-											$line=str_replace("sts=","g=",$line);
-											$line=str_replace("datetime=","h=",$line);
-											$line=str_replace("io1=","i=",$line);
-											$line=str_replace("io2=","j=",$line);
-											$line=str_replace("io3=","k=",$line);
-											$line=str_replace("io4=","l=",$line);
-											$line=str_replace("io5=","m=",$line);
-											$line=str_replace("io6=","n=",$line);
-											$line=str_replace("io7=","o=",$line);
-											$line=str_replace("io8=","p=",$line);
-											$line=str_replace("sig_str=","q=",$line);
-											$line=str_replace("sup_v=","r=",$line);
-											$line=str_replace("day_max_speed=","s=",$line);
-											$line=str_replace("day_max_speed_time=","t=",$line);
-											$line=str_replace("last_halt_time=","u=",$line);
-											$line=str_replace("cellname=","ab=",$line);
-											$linetowrite = "\n".$line.' w="'.$vname.'" x="'.$vehicle_number.'" z="'.round($finalDistance,2).'"/>'; // for distance       // ADD DISTANCE
-										}
-										else
-										{
-											$linetowrite = "\n".$line.' v="'.$vehicle_serial.'" w="'.$vname.'" x="'.$vehicle_number.'" z="'.round($finalDistance,2).'"/>'; // for distance       // ADD DISTANCE
-										}
-										//echo "<br>finalDistance=".$finalDistance;
-										//$linetowrite = "\n".$line.' cumdist="'.$finalDistance.'"./>'; // for distance       // ADD DISTANCE
-										//$linetowrite = "\n".$line.'/>';
-										//echo "<textarea>".$linetowrite."</textarea>";
-										//echo "lintowrite=".$linetowrite;
-										$firstData = 1;  
-										$lineTmpTrack=$lineTmpTrack.$linetowrite."@";
-										//$fh = fopen($xmltowrite, 'a') or die("can't open file 4"); //append
-										//fwrite($fh, $linetowrite); 
-									}
-								}
-							}
-							if((strlen($line)>20) && ($xml_date_current >= $startdate && $xml_date_current <= $enddate))
-							{
-								$linelast =  $line;
-							}
-							
-						}
-						$f++;
-					}   // while closed
-				} // if original_tmp exist closed 
-				fclose($xml);            
-				unlink($xml_original_tmp);
-			} // if (file_exists closed
-		}  // for closed
-		$linelast=substr($linelast,0,-3);
-		if($userdates[$i-1]<$old_xml_date)
-		{
-			//echo "Test2";
-			//echo "in replace 1";
-			$linelast=str_replace("marker","x",$linelast);
-			$linelast=str_replace("msgtype=","a=",$linelast);
-			$linelast=str_replace("vehicleserial=","v=",$linelast);
-			$linelast=str_replace("ver=","b=",$linelast);
-			$linelast=str_replace("fix=","c=",$linelast);
-			$linelast=str_replace("lat=","d=",$linelast);
-			$linelast=str_replace("lng=","e=",$linelast);
-			$linelast=str_replace("speed=","f=",$linelast);
-			$linelast=str_replace("sts=","g=",$linelast);
-			$linelast=str_replace("datetime=","h=",$linelast);
-			$linelast=str_replace("io1=","i=",$linelast);
-			$linelast=str_replace("io2=","j=",$linelast);
-			$linelast=str_replace("io3=","k=",$linelast);
-			$linelast=str_replace("io4=","l=",$linelast);
-			$linelast=str_replace("io5=","m=",$linelast);
-			$linelast=str_replace("io6=","n=",$linelast);
-			$linelast=str_replace("io7=","o=",$linelast);
-			$linelast=str_replace("io8=","p=",$linelast);
-			$linelast=str_replace("sig_str=","q=",$linelast);
-			$linelast=str_replace("sup_v=","r=",$linelast);
-			$linelast=str_replace("day_max_speed=","s=",$linelast);
-			$linelast=str_replace("day_max_speed_time=","t=",$linelast);
-			$linelast=str_replace("last_halt_time=","u=",$linelast);
-			$linelast=str_replace("cellname=","ab=",$linelast);
-			$linetowrite = "\n".$linelast.' w="'.$vname.'" x="'.$vehicle_number.'" z="'.round($finalDistance,2).'"/>'; // for distance       // ADD DISTANCE
-		}
-		else
-		{
-			//echo "Test3";
-			$linetowrite = "\n".$linelast.' v="'.$vehicle_serial.'" w="'.$vname.'" x="'.$vehicle_number.'" z="'.round($finalDistance,2).'"/>'; // for distance       // ADD DISTANCE
-		}	
-		$lineTmpTrack=$lineTmpTrack.$linetowrite."@";		
-	}
-
-	function get_All_Dates($fromDate, $toDate, &$userdates)
-	{
-		$dateMonthYearArr = array();
-		$fromDateTS = strtotime($fromDate);
-		$toDateTS = strtotime($toDate);
-
-		for ($currentDateTS = $fromDateTS; $currentDateTS <= $toDateTS; $currentDateTS += (60 * 60 * 24)) 
-		{
-			// use date() and $currentDateTS to format the dates in between
-			$currentDateStr = date("Y-m-d",$currentDateTS);
-			$dateMonthYearArr[] = $currentDateStr;
-			//print $currentDateStr.”<br />”;
-		}
-		$userdates = $dateMonthYearArr;
-	}
-
-
+	
 ?>

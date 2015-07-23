@@ -2439,7 +2439,7 @@ function Load_Data(vserial,startdate,enddate,pt_for_zoom,zoom_level,status,acces
 				"&flag_play=" + encodeURI(flag_play) +
 				"&play_interval=" + encodeURI(play_interval) +
                 "&time_interval=" + encodeURI(time_interval);
-			//alert("poststr="+poststr);	
+			alert("poststr="+poststr);	
 				$.ajax({
 		type: "POST",
 		url:'src/php/get_filtered_xml_polyline.php',
@@ -2452,8 +2452,9 @@ function Load_Data(vserial,startdate,enddate,pt_for_zoom,zoom_level,status,acces
 		
 		document.getElementById('prepage').style.visibility='hidden';
 		// document.getElementById('dummy_div').innerHTML=responsedatas;
-		document.getElementById('debugDiv').style.display="";
-		document.getElementById('debugDiv').innerHTML=response;
+		//document.getElementById('debugDiv').style.display="";
+                alert(response);
+		//document.getElementById('debugDiv').innerHTML=response;
 		},
 		error: function()
 		{
@@ -4275,7 +4276,7 @@ function map_add_landmark(form)
 	var res = req.responseText;
   document.getElementById('wait_lnmrk').style.display ='none';
   document.getElementById('save_lnmrk').style.display ='';	  
-  alert(res);
+ // alert(res);
 }
 
 
@@ -4323,7 +4324,7 @@ function map_add_station(form)
 	var res = req.responseText;
   document.getElementById('wait_lnmrk').style.display ='none';
   document.getElementById('save_lnmrk').style.display ='';	  
-  alert(res);
+  //alert(res);
 }
 //CLOSE STATION
 
