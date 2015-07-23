@@ -174,9 +174,6 @@ public class collect_data_main {
 					//System.out.println("startdate1="+startdate1);
 							
 					try {
-		            //String Request = "http://fleetradar24x7.com/android/triplogtpt.php?imei=861001003846728,861001005344862&sdt=2015-02-07%2005:00:00&edt=2015-02-07%2006:10:00";
-					//String Request = "http://fleetradar24x7.com/android/triplogtpt.php?imei="+vehicle_imei+"&sdt="+startdate1+"&edt="+enddate1;
-		        	//String Request = "http://fleetradar24x7.com/android/triplogtpt.php?imei=861001003846728,861001005344862,861001005327420,861001005500422&sdt=2015-02-27%2000:45:59&edt=2015-02-27%2008:14:58";
 		        	String Request = "http://tracker24.in/getlastdata.jsp?opr=getalldatabydate&username=sidanth&password=123456&dname="+vehicleNoString+"&date1="+startdate1+"&date2="+enddate1;
 		        	//String Request = "http://tracker24.in/getlastdata.jsp?opr=getalldatabydate&username=sidanth&password=123456&dname=TN45AT5155&date1=2015-07-09%2016:00:00&date2=2015-07-09%2023:10:00";
 		        		
@@ -1003,7 +1000,7 @@ public class collect_data_main {
 						}catch(Exception c){System.out.println("C="+convertedDate);}*/
 
 						if(update) {
-							sql = "UPDATE device_last_time SET last_time='"+LastTime.get(vehicleNoString)+"' WHERE device='"+vehicleNoString+"'";
+							sql = "UPDATE device_last_time SET last_time='"+LastTime.get(vehicleNoString)+"' WHERE device='"+vehicleNoString+"' AND vendor_sno=6";
 							//System.out.println("Update1:"+sql);
 							collect_data_main.stmt.executeUpdate(sql);							
 						} else {
