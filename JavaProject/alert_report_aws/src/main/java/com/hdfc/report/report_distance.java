@@ -54,9 +54,14 @@ public class report_distance {
 			
 			if( (device_time_sec >= startdate_sec) && (device_time_sec <= enddate_sec) ) {
 
+                if(speed > 200)
+                {
+                	speed =0;
+                }
+
 				speed_list.add(speed);   
 				
-				if(firstdata_flag_distance==0) {					
+				if(firstdata_flag_distance==0) {				
 					firstdata_flag_distance = 1;
 			
 					lat1 = lat;
@@ -167,49 +172,50 @@ public class report_distance {
 						time1_tmp = time1;
 						time2_tmp = time2;
 						total_dist_tmp = total_dist;
-						////// TMP CLOSED ////////
+						////// TMP CLOSED ////////						
+					} 
+					
+					//SPEED CONDITION OPENS
+					if((speed < speed_threshold) && (stop_runflag ==0)) {
 						
-						//SPEED CONDITION OPENS
-						if((speed < speed_threshold) && (stop_runflag ==0)) {
-							
-							double sec_tmp = 0.0;
-							
-							if(!StopTimeCnt.equals("")) {
-								//System.out.println("TEST6");								
-								sec_tmp = utility_class.get_seconds(device_time) - utility_class.get_seconds(StopTimeCnt);
-							} else {
-								//System.out.println("TEST7");
-								sec_tmp = utility_class.get_seconds(device_time);
-							}							
-									
-							if(((sec_tmp)>15.0) && (StopStartFlag==1)) {
-								//echo ", stop<br>";
-								runtime_stop.add(device_time);
-								//$r2++;
-								stop_runflag = 1;
-								start_runflag = 0;
-							}
-							else if(StopStartFlag==0) {
-								StopTimeCnt = device_time;
-								StopStartFlag = 1;
-							}
+						double sec_tmp = 0.0;
+						
+						if(!StopTimeCnt.equals("")) {
+							//System.out.println("TEST6");								
+							sec_tmp = utility_class.get_seconds(device_time) - utility_class.get_seconds(StopTimeCnt);
+						} else {
+							//System.out.println("TEST7");
+							sec_tmp = utility_class.get_seconds(device_time);
+						}							
+								
+						if(((sec_tmp)>15.0) && (StopStartFlag==1)) {
+							//echo ", stop<br>";
+							runtime_stop.add(device_time);
+							//$r2++;
+							stop_runflag = 1;
+							start_runflag = 0;
 						}
-								  
-						if(speed > speed_threshold && (start_runflag ==0) && (distance>0.1)  ) {
-							//echo "<br>start";
-							runtime_start.add(device_time);
-							//$r1++;
-							start_runflag =1;
-							stop_runflag = 0;
-							StopStartFlag = 0;
+						else if(StopStartFlag==0) {
+							StopTimeCnt = device_time;
+							StopStartFlag = 1;
 						}
-						//SPEED CONDITION CLOSED
-					}      					
+					}
+							  
+					if(speed > speed_threshold && (start_runflag ==0) && (distance>0.1)  ) {
+						//echo "<br>start";
+						runtime_start.add(device_time);
+						//$r1++;
+						start_runflag =1;
+						stop_runflag = 0;
+						StopStartFlag = 0;
+					}
+					//SPEED CONDITION CLOSED
+					
 
 					//System.out.println("dateSec1="+date_secs1+" ,dateSec2="+date_secs2);
 					if( (date_secs2 >= date_secs1)) {								
 						
-						System.out.println("INTERVAL DATA");
+						//System.out.println("INTERVAL DATA");
 						
 						if(runtime_start.size() == 0)
 							total_runtime =0;
@@ -227,7 +233,7 @@ public class report_distance {
 						//int retval = runtime_start.size();
 						for(int m=0; m<runtime_start.size(); m++) {
 							//echo "<br>A:run1=".$runtime_stop[$m]." ,run2=".$runtime_start[$m]."<br>";                   
-							//System.out.println("TEST8");
+							System.out.println("StartRunTime="+runtime_start+" ,StopRunTime="+runtime_stop);
 							runtime = utility_class.get_seconds(runtime_stop.get(m)) - utility_class.get_seconds(runtime_start.get(m));
 							total_runtime = total_runtime + runtime;							               
 						} 
@@ -236,7 +242,7 @@ public class report_distance {
 							
 							avg_speed = (total_dist / total_runtime)*3600;
 							avg_speed = utility_class.roundTwoDecimals(avg_speed);
-							//System.out.println("total_dist="+total_dist+" ,total_runtime="+total_runtime+",avg_speed="+avg_speed);
+							System.out.println("Rec::total_dist="+total_dist+" ,total_runtime="+total_runtime+",avg_speed="+avg_speed);
 						}
 						//max_speed = max(speed_list);
 						max_speed = Collections.max(speed_list);
@@ -269,7 +275,7 @@ public class report_distance {
 					    Distance.add(total_dist);
 					    AlertTime.add(current_time);
 						
-						System.out.println("Time1="+time1+", Time2="+time2+" ,AvgSpd="+avg_speed+" ,MaxSpd="+max_speed+" ,TotalDist="+total_dist+" ,CurrentTime="+current_time);
+						//System.out.println("Time1="+time1+", Time2="+time2+" ,AvgSpd="+avg_speed+" ,MaxSpd="+max_speed+" ,TotalDist="+total_dist+" ,CurrentTime="+current_time);
 					    //echo "<br>IN DATESEC";                                                  						
 						//reassign time1
 						time1 = device_time;
@@ -323,7 +329,7 @@ public class report_distance {
 							
 							avg_speed = (total_dist / total_runtime)*3600;
 							avg_speed = utility_class.roundTwoDecimals(avg_speed);
-							System.out.println("total_dist="+total_dist+" ,total_runtime="+total_runtime+",avg_speed="+avg_speed);
+							System.out.println("Final:total_dist="+total_dist+" ,total_runtime="+total_runtime+",avg_speed="+avg_speed);
 						}
 						//max_speed = max(speed_list);
 						max_speed = Collections.max(speed_list);

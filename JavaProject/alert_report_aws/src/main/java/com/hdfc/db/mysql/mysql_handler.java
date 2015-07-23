@@ -51,14 +51,14 @@ public class mysql_handler {
 	 	  init.device_imei_no.add("862170018383602");
 	 	  
 	 	  //init.vehicle_id.add(20);
-	 	  init.vehicle_name.add("test_hdfc2");
+	 	  /*init.vehicle_name.add("test_hdfc2");
 	 	  init.max_speed.add(30.0f);
-	 	  init.device_imei_no.add("862170018368132");
+	 	  init.device_imei_no.add("862170018368132");*/
 
-	 	  /*init.vehicle_id.add(30);
+	 	  init.vehicle_id.add(30);
 	 	  init.vehicle_name.add("test_hdfc3");
 	 	  init.max_speed.add(30.0f);
-	 	  init.device_imei_no.add("865733021569959");*/	
+	 	  init.device_imei_no.add("862170018382109");
 	   
 	 	  /*init.vehicle_name.add("DL1LR7112");
 	 	  init.max_speed.add(80.0f);

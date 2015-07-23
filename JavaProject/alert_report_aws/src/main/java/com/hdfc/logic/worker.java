@@ -205,7 +205,7 @@ public class worker {
 //			push_vehicle_turn_to_database(init.device_imei_no.get(i), session);
 //			push_vehicle_speed_violation_to_database(init.device_imei_no.get(i), session);
 			push_vehicle_distance_to_database(init.device_imei_no.get(i), session);
-			push_vehicle_travel_to_database(init.device_imei_no.get(i), session);
+//			push_vehicle_travel_to_database(init.device_imei_no.get(i), session);
 //			push_chauraha_to_database(init.device_imei_no.get(i), session);
 //			System.out.println("Processed IMEI:"+init.device_imei_no.get(i)+" -"+i);
 		}
@@ -257,7 +257,7 @@ public class worker {
 			System.out.print("f: "+pMap1.get("f")+" ");
 			System.out.println();*/
 				
-			System.out.println("Lat="+pMap1.get("d")+" ,Lng="+pMap1.get("e"));
+			//System.out.println("Lat="+pMap1.get("d")+" ,Lng="+pMap1.get("e"));
 			tmp_lat = (String) pMap1.get("d");
 			tmp_lng = (String) pMap1.get("e");
 			
