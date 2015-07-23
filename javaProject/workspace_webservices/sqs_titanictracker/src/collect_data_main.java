@@ -54,10 +54,11 @@ public class collect_data_main {
 	public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	public static final String DB_URL = "jdbc:mysql://localhost/alert_session";
 	public static final String DB_URL_remote = "jdbc:mysql://111.118.181.156/iespl_vts_beta";
-	//public static final String DB_URL_remote = "jdbc:mysql://localhost/iespl_vts_beta";
+//	public static final String DB_URL_remote = "jdbc:mysql://localhost/iespl_vts_beta";
 	//public static final String DB_URL_remote = "jdbc:mysql://www.itracksolution.co.in/iespl_vts_beta";
 	public static ArrayList<String> vehicleNoArr=new ArrayList<String>();
-	public static HashMap<String, String>  LastTime = new HashMap(new Hashtable<String, String>());      
+	public static HashMap<String, String>  LastTime = new HashMap(new Hashtable<String, String>());	
+	//HashMap<String, ArrayList<String>> map = new HashMap<String,ArrayList<String>>();	
 	
 	//  Database credentials
 	public static final String USER = "root";
@@ -151,7 +152,7 @@ public class collect_data_main {
 //		enddate1 = "2015-02-09%2000:10:00";
 		
         String DeviceIMEINo="",VehicleName="",DateTime="",Latitude="",Longitude="",Speed="",tmptime="";
-        String all_data="";        
+        //String all_data="";        
         
         int x=0,y=0;
         //vehicle_imei = "TN45AT5155";
@@ -161,6 +162,7 @@ public class collect_data_main {
 			try{
 				for(String vehicleNoString : vehicleNoArr) {
 					
+					open_file(vehicleNoString);	//OPEN FILE
 					//System.out.println("LastTime="+LastTime.get(vehicleNoString));
 					if( (LastTime.get(vehicleNoString)==null) || (LastTime.get(vehicleNoString).equals(""))) {
 						
@@ -232,6 +234,8 @@ public class collect_data_main {
 	        				}
 						}            
 					}catch(Exception e){System.out.println("Msg1="+e.getMessage());}
+					
+					close_file();	//CLOSE FILE
 				}
 			}catch(Exception e1){System.out.println("Msg2="+e1.getMessage());}
         }
@@ -255,27 +259,19 @@ public class collect_data_main {
 			//Handle exception
 		}        
 	}
-	
-	
-	public static void createXmlFile(String DeviceIMEINo, String DateTime, String Latitude, String Longitude, String Speed)
-	{	
-		//String RealDataPath = "D:\\itrack_vts/xml_vts_java/last_location";		
-		//String LogDataPath = "/home/current_data/xml_data";
-		//String RealDataPath = "/home/current_data/last_location";
-		String MsgType = "", strOrig="", Version = "";
-		String Fix = "1", io_value1 ="0",io_value2 ="0",io_value3="0",io_value4="0",io_value5="0",io_value6="0",io_value7="0",io_value8="0", Signal_Strength="0";
 		
-		GregorianCalendar calendar = new GregorianCalendar();
 	
-		/*Calendar cal = Calendar.getInstance(); // creates calendar
-		cal.setTime(new Date()); // sets calendar time/date
-		cal.add(Calendar.HOUR_OF_DAY, 1); // adds one hour
-		date=(Date) cal.getTime();*/
-		
-		//formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	
-		Date result;
+	 public static RandomAccessFile raf1 =null;
+	 public static RandomAccessFile out_a2 =null;
+		// boolean FilehandlerReceived = false;
+		 //FileWriteHandler CurrentFileWriteHandler = null;
+		 //BufferedWriter out_a1 =null;
+		 //BufferedWriter out_a2 =null;
+	 public static void open_file(String DeviceIMEINo) {
+	 	Date result;
+	 	String folderDate ="";
 		String serverdatetime="";
+		StringTokenizer st;
 		try 		
 		{
 			Date date = new Date();
@@ -288,7 +284,81 @@ public class collect_data_main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
-	   	   		
+		st = new StringTokenizer(serverdatetime," ");
+		folderDate = st.nextToken();
+		String SFile = LogDataPath+"/"+folderDate+"/"+DeviceIMEINo+".xml";
+						
+		String mydir1 = LogDataPath;
+		boolean success1 = (new File(mydir1 + "/" + folderDate)).mkdir();
+	  
+		 //System.out.println("file="+SFile);
+		 try 
+		 {
+			raf1 = new RandomAccessFile(SFile, "rwd");
+		 } 
+		 catch (FileNotFoundException e)
+		 {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		 }
+		 
+		//open last location file
+		String tmpstr2="";
+		//tmpstr2 = "/var/www/html/itrack_vts/xml_vts/last_location/"+vserial+".xml";
+		tmpstr2 = RealDataPath+"/"+DeviceIMEINo+".xml";
+		try {
+			out_a2 = new RandomAccessFile(tmpstr2, "rwd");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	 
+	 public static void close_file() {
+		 try {
+			raf1.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			out_a2.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 }
+
+	public static void createXmlFile(String DeviceIMEINo, String DateTime, String Latitude, String Longitude, String Speed)
+	{	
+		//String RealDataPath = "D:\\itrack_vts/xml_vts_java/last_location";		
+		//String LogDataPath = "/home/current_data/xml_data";
+		//String RealDataPath = "/home/current_data/last_location";
+		String MsgType = "", strOrig="", Version = "", q="\"", serverdatetime="";
+		String Fix = "1", io_value1 ="0",io_value2 ="0",io_value3="0",io_value4="0",io_value5="0",io_value6="0",io_value7="0",io_value8="0", Signal_Strength="0";
+		
+		GregorianCalendar calendar = new GregorianCalendar();
+	
+		/*Calendar cal = Calendar.getInstance(); // creates calendar
+		cal.setTime(new Date()); // sets calendar time/date
+		cal.add(Calendar.HOUR_OF_DAY, 1); // adds one hour
+		date=(Date) cal.getTime();*/
+		
+		//formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+		try 		
+		{
+			Date date = new Date();
+			serverdatetime = dDF.format(date);
+			//result = sDF.parse(ReceiveDateFormat);			
+			//DateTime = dDF.format(result);			
+		}
+		catch(Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
 		//Statement statement;
 		//ResultSet result;
 		//result=null;
@@ -323,8 +393,7 @@ public class collect_data_main {
 		int GPSYear,GPSMonth,GPSDay,GPSHr,GPSMin,GPSSec;
 		double Latitudetmp=0.0,Longitudetmp=0.0;
 		String marker_a1="",marker_a2="";
-		String folderDate="",RFID="";
-		StringTokenizer st;
+		String folderDate="",RFID="";		
 //		int SerialNo = 0;
 		//String[] data = new String[30];
 		//System.out.println(Response);
@@ -332,31 +401,8 @@ public class collect_data_main {
 		//NoofToken = st.countTokens();
 		//System.out.println("No of Token="+NoofToken);
 //	
-		st = new StringTokenizer(serverdatetime," ");
-		folderDate = st.nextToken();
-		
-		String q="\"";
-		String mydir1 = LogDataPath;
-		boolean success1 = (new File(mydir1 + "/" + folderDate)).mkdir();
-		//System.out.println("Success="+success1);							
-		 
-		 RandomAccessFile raf1 =null;
-		// boolean FilehandlerReceived = false;
-		 //FileWriteHandler CurrentFileWriteHandler = null;
-		 //BufferedWriter out_a1 =null;
-		 //BufferedWriter out_a2 =null;
-		 String SFile = LogDataPath+"/"+folderDate+"/"+DeviceIMEINo+".xml";
-		 //System.out.println("file="+SFile);
-		 try 
-		 {
-			raf1 = new RandomAccessFile(SFile, "rwd");
-		 } 
-		 catch (FileNotFoundException e)
-		 {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		 }
-		 long length1=0;
+		//System.out.println("Success="+success1);		 
+		long length1=0;
 		try 
 		{
 			length1 = raf1.length();
@@ -413,7 +459,7 @@ public class collect_data_main {
 	public static void write_last_location(String DeviceIMEINo, String DateTime, String Latitude, String Longitude, String Speed)
 	//public void write_last_location(String filename, String MsgType, String vserial, String Version, String Fix, String Latitude, String Longitude, String Speed, String serverdatetime, String DateTime, String io_value1, String io_value2, String io_value3, String io_value4, String io_value5, String io_value6, String io_value7, String io_value8, String Signal_Strength, String SupplyVoltage)
 	{
-		RandomAccessFile out_a2 =null;
+		//RandomAccessFile out_a2 =null;
 		//************WRITE LAST LOCATION FILE **********************
 		//String filename = "/var/www/html/itrack_vts/xml_vts/last_location/"+vserial+".xml";
 		String marker_a2="", q="\"", xml_date="", xml_last_halt_time="", xml_day_max_speed="", xml_day_max_speed_time="", xml_lat="", xml_lng="";
@@ -462,10 +508,6 @@ public class collect_data_main {
 		day_max_speed_time = DateTime; //DEFAULT ASSINGMENT
 		Date date_last_loc1=null, date_last_loc2=null, date_servertime2=null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-		String tmpstr2="";
-		//tmpstr2 = "/var/www/html/itrack_vts/xml_vts/last_location/"+vserial+".xml";
-		tmpstr2 = RealDataPath+"/"+DeviceIMEINo+".xml";
 		
 		//ADD ONE HOUR TO SERVERTIME
 		int minutesToAdd = 60; // 1 hrs
@@ -497,7 +539,6 @@ public class collect_data_main {
 
 		try
 		{
-			out_a2 = new RandomAccessFile(tmpstr2, "rwd");
 			//out_a2 = new RandomAccessFile(filename, "rw");
 			FileLength = out_a2.length();
 			out_a2.seek(0);
@@ -679,19 +720,19 @@ public class collect_data_main {
 				}
 			}
 		}
-		out_a2.close();	
+		//out_a2.close();	
 	}
 	catch (IOException e)
 	{
 		e.printStackTrace();
-		try
+		/*try
 		{
 			out_a2.close();
 		}
 		catch (Exception e1)
 		{
 	
-		}
+		}*/
 	}	
 	}
 	public static float calculateDistance(float lat1, float lat2, float lng1, float lng2)
