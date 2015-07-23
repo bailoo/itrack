@@ -164,7 +164,7 @@ public class collect_data_main {
 					
 					open_file(vehicleNoString);	//OPEN FILE
 					//System.out.println("LastTime="+LastTime.get(vehicleNoString));
-					if( (LastTime.get(vehicleNoString)==null) || (LastTime.get(vehicleNoString).equals(""))) {
+					if( (LastTime.get(vehicleNoString)==null) || (LastTime.get(vehicleNoString).equals("")) || (LastTime.get(vehicleNoString).equals("null"))) {
 						
 						startdate1 = startdate.replace(" ","%20");						
 						
@@ -244,7 +244,8 @@ public class collect_data_main {
 		//System.out.println("Min_time_final="+min_time+" ,StartDateFinal="+startdate+" ,Enddate_Final="+enddate);
 		//last_time_tmp = enddate;		
 		//System.out.println("DateTimeLast:"+DateTimeLast);
-		//System.out.println("Files Updated");
+		System.out.println("Process Completed...");
+		
         try 
 		{
 			Thread.sleep(600000);  //10 mins
