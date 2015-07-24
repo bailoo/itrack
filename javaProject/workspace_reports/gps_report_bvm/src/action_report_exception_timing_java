@@ -1,0 +1,889 @@
+//import java.beans.Statement;
+import java.net.URL;
+import java.sql.Statement;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.w3c.dom.NodeList;
+
+
+public class action_report_exception_timing {
+
+	public static void main(String[] args) throws IOException
+	{
+		//START ACCOUNT_ID LOOP
+		alert_variables avd = new alert_variables();
+		//String top_directory = "C:\\upload_data_files";		
+		//String top_directory = "/var/www/html/vts/beta/src/php/upload_data_files";	//example
+		String top_directory = "/var/www/html/vts/beta/src/php/exception_timing_files/upload";	//UPLOADED STATION FILE PATH
+		//File top_dir = new File(top_directory);
+		///GET ALL DIR IN XML_DATA
+		ArrayList<String> MainDiretories = new ArrayList<String>();
+		utility_classes.get_all_directories(top_directory, "account_dir", MainDiretories);
+		int account_dir_count = MainDiretories.size();					//GET TOTAL ACCOUNT DIRECTORIES				
+		
+		String account_folder = "", date_folder_path="", date_folder ="", file_path="", file_name ="", read_excel_filepath = "", serverdatetime = "";
+		int account_id = 0;
+
+		SimpleDateFormat formatter;
+		Date date = new Date();
+		formatter = new SimpleDateFormat("yyyy-MM-dd");
+		serverdatetime = formatter.format(date);
+
+		for(int x=0; x<account_dir_count; x++)
+		{
+			ArrayList<String> SubDiretories = new ArrayList<String>();
+			account_folder = (String)MainDiretories.get(x);
+			
+			date_folder_path = top_directory+"/"+account_folder;
+			//File date_dir = new File(date_folder_path);
+
+			utility_classes.get_all_directories(date_folder_path, "date_dir", SubDiretories);
+			//date_folder = (String)av.station_date_diretories.get(i);				
+			int date_dir_count = SubDiretories.size();
+			
+			System.out.println("account_dir_count="+account_dir_count+" ,date_dir_count="+date_dir_count);
+			//System.out.println("account_folder="+account_folder+" ,date_dir_count="+date_dir_count);	//GET TOTAL DATE DIRECTORIES
+
+			for(int y=0; y<date_dir_count; y++)
+			{								
+				date_folder = (String)SubDiretories.get(y);	
+				file_path = top_directory+"/"+account_folder+"/"+date_folder;
+				
+				if(serverdatetime.equals(date_folder))
+				{
+					File file_folder = new File(file_path);
+					//System.out.println("file_path:"+file_path);
+					File[] listOfFiles = file_folder.listFiles();
+					//System.out.println("testA");
+					//System.out.println("files="+listOfFiles.length);			
+					 
+					for (int z = 0; z < listOfFiles.length; z++)
+					{						// CURRENT FILES
+						if (listOfFiles[z].isFile())
+						{
+							alert_variables av = new alert_variables();
+							
+							file_name = listOfFiles[z].getName();
+							//System.out.println("ACCOUNT_DIR="+account_folder+" ,DATE_FOLDER="+date_folder+" ,FileName ="+file_name);						
+							//int file_length = file_name.length();
+					
+							account_id = Integer.parseInt(account_folder);
+							//int local_account_id = 2; // WILL BE FOUND BY FOLDER NAME
+							//customer_no =null;
+							//date =null;
+							//stringData ="";
+							
+							//GET THE FILE EXTENSION
+							//System.out.println("FILE="+file_name);
+							String[] tmp = file_name.split("\\.");		
+							//System.out.println("tmp0="+tmp[0]+" ,tmp1="+tmp[1]);
+							
+							//String extension = tmp[1];
+							String extension = tmp[1].trim();
+													
+							//echo "<br>extension=".$extension;			
+							read_excel_filepath = file_path + "/"+file_name; 
+							
+							if(extension.equals("csv"))
+							{  
+								///#### INCLUDE READ STATION CSV FILE
+								try{
+									//read_write_excel_file3 rw = new read_write_excel_file3();
+									read_exception_timing_input.readCSVFile(read_excel_filepath, av);
+								} catch(Exception r1) {System.out.println(r1.getMessage());}
+								//include_once("read_station_csv.php");
+								//////////////////////////////////////////////////
+							}
+							else if(extension.equals("xls"))
+							{
+								 ///#### INCLUDE READ STATION XLS FILE		
+								try{
+									//read_write_excel_file3 rw = new read_write_excel_file3();
+									read_exception_timing_input.readXLSFile(read_excel_filepath, av);
+								} catch(Exception r2) {System.out.println(r2.getMessage());}
+								//writeXLSFile();				
+								//include_once("read_station_xls.php");
+								//////////////////////////////////////////////////
+							}
+							else if(extension.equals("xlsx"))
+							{
+								///#### INCLUDE READ STATION XLSX FILE *******					
+								try{
+									//read_write_excel_file3 rw = new read_write_excel_file3();
+									read_exception_timing_input.readXLSXFile(read_excel_filepath, av);
+								} catch(Exception r3) {System.out.println(r3.getMessage());}
+								//writeXLSXFile();
+								//include_once("read_station_xlsx.php");
+								///////////////////////////////////////////////////////////////
+							}
+							
+							String vname_tmp ="";
+					
+							//System.out.println("vname="+av.vname.size());						
+							for(int i=0;i<av.vname.size();i++)
+							{
+								if(i==0)
+								{
+								   vname_tmp = vname_tmp+"'"+(String)av.vname.get(i)+"'";
+								}
+								else
+								{
+								  vname_tmp = vname_tmp+",'"+(String)av.vname.get(i)+"'";
+								}
+							}						
+							
+							Connection con = null;
+							Statement stmt1 = null,stmt2 = null;
+							ResultSet res1 = null, res2 = null;
+							
+							//utility_classes util = new utility_classes();
+							con = utility_classes.get_connection();
+							
+							String query = "SELECT DISTINCT device_imei_no,vehicle_id FROM vehicle_assignment WHERE "+
+							"vehicle_id IN(SELECT vehicle_id FROM vehicle WHERE vehicle_name IN("+vname_tmp+") AND status=1)"+
+							" AND status=1"; 
+							
+							//System.out.println(query);
+							
+							try{
+								stmt1 = con.createStatement();
+								res1 = stmt1.executeQuery(query);	
+								
+								String query2 ="", imei_db ="",tmp_vid="",tmp_vname1="";
+								while(res1.next())
+								{
+									imei_db = res1.getString("device_imei_no");
+									av.vserial.add(imei_db);
+					
+									tmp_vid = res1.getString("vehicle_id");
+									//av.vid.add(tmp_vid);
+									
+									query2 = "SELECT vehicle_name FROM vehicle WHERE vehicle_id="+tmp_vid+"";	
+					
+									stmt2 = con.createStatement();
+									res2 = stmt2.executeQuery(query2);
+									
+									if(res2.next())
+									{
+										tmp_vname1 = res2.getString("vehicle_name");
+										av.vname1.add(tmp_vname1);
+									}				
+								}
+							}catch (Exception e) { System.out.println("EXCEPTION IN GETTING ASSIGNED IMEI:"+e.getMessage()); }		
+									
+							
+							//CODE FOR MULTIPLE DATES
+							//System.out.println("av.vname1.size()="+av.vname1.size());
+							
+							for(int i=0;i<av.vname1.size();i++)		//SIZE OF VNAME IN DATABASE 
+							{			
+								String in_min_date = "3000-00-00 00:00:00";
+								String in_max_date = "0000-00-00 00:00:00";
+								
+								String out_min_date = "3000-00-00 00:00:00";		
+								String out_max_date = "0000-00-00 00:00:00";
+							
+								//System.out.println("av.vname.size()="+av.vname1.size());
+								
+								String in_min_date_final_tmp="",in_max_date_final_tmp="",out_min_date_final_tmp = "",out_max_date_final_tmp ="";
+								
+								for(int j=0;j<av.vname.size();j++)	//SIZE OF VNAME IN CSV
+								{				
+									//System.out.println("av.vname1="+(String)av.vname1.get(i)+" ,av.vname="+(String)av.vname.get(j));
+									
+									if( ((String)av.vname1.get(i).trim()).equals(((String)av.vname.get(j).trim())) )
+									{
+										//System.out.println("VEHICLE MATCHED");
+										//DATE1
+										String[] datetmp_input1 = ((String)av.date1_csv.get(j)).split("-");
+										String in_date_csv = datetmp_input1[2]+"-"+datetmp_input1[1]+"-"+datetmp_input1[0]+" "+((String)av.time1_csv.get(j));
+										
+										//DATE2
+										String[] datetmp_input2 = ((String)av.date2_csv.get(j)).split("-");
+										String out_date_csv = datetmp_input2[2]+"-"+datetmp_input2[1]+"-"+datetmp_input2[0]+" "+((String)av.time2_csv.get(j));			
+										
+										//System.out.println("in_date_csv="+in_date_csv+" ,out_date_csv="+out_date_csv+" ,datetmp_input1[0]="+datetmp_input1[0]+" ,datetmp_input1[1]="+datetmp_input1[1]);
+										
+										long in_date_csv_secs = utility_classes.get_seconds(in_date_csv,2);
+										long in_min_date_secs = utility_classes.get_seconds(in_min_date,2);
+										long in_max_date_secs = utility_classes.get_seconds(in_max_date,2);
+										long out_date_csv_secs = utility_classes.get_seconds(out_date_csv,2);
+										long out_min_date_secs = utility_classes.get_seconds(out_min_date,2);
+										long out_max_date_secs = utility_classes.get_seconds(out_max_date,2);
+										
+										
+										//System.out.println("in_date_csv_secs="+in_date_csv_secs+" , out_date_csv_secs="+out_date_csv_secs+" ,in_min_date_secs="+in_min_date_secs);	
+										
+										if(in_date_csv_secs < in_min_date_secs)				//IN DATE
+										{
+											//System.out.println("IN_MIN_DATE ADD");			
+											//in_min_date_final_tmp = in_date_csv;
+											//av.in_min_date_final.add(in_date_csv);
+											in_min_date = in_date_csv;
+										}
+										if(in_date_csv_secs > in_max_date_secs)
+										{
+											//System.out.println("IN_MAX_DATE ADD");	
+											//in_max_date_final_tmp = in_date_csv;
+											in_max_date = in_date_csv;
+										}
+														
+										//echo "<br>OUT::in_date_csv=".$in_date_csv." ,out_min_date=".$out_min_date." out_max_date=".$out_max_date;
+										if(out_date_csv_secs < out_min_date_secs)				//OUT DATE
+										{										
+											//System.out.println("OUT_MIN_DATE ADD");	
+											//out_min_date_final_tmp = out_date_csv;
+											out_min_date = out_date_csv; 
+										}
+										if(out_date_csv_secs > out_max_date_secs)
+										{
+											//System.out.println("OUT_MAX_DATE ADD="+out_date_csv);	
+											//out_max_date_final_tmp = out_date_csv;
+											out_max_date = out_date_csv;
+										}						
+																					
+									} // IF VNAME CLOSED
+								} // INNER FOR CLOSED
+								
+								//System.out.println("in_min:"+in_min_date+" in_max:"+in_max_date+" out_min:"+out_min_date+" out_max:"+out_max_date);
+								
+								av.in_min_date_final.add(in_min_date);
+								av.in_max_date_final.add(in_max_date);
+								av.out_min_date_final.add(out_min_date);
+								av.out_max_date_final.add(out_max_date);														
+								
+							} // OUTER FOR CLOSED
+							/////////////////////////	
+							
+							//String datetmp_start_xls = (String)av.date1_csv.get(0);
+							//String[] datetmp_input = datetmp_start_xls.split("-");
+					
+							//String date1 = datetmp_input[2]+"-"+datetmp_input[1]+"-"+datetmp_input[0]+" 00:00:00";
+							//String date2 = datetmp_input[2]+"-"+datetmp_input[1]+"-"+datetmp_input[0]+" 23:59:59";
+											
+							int vsize = av.vserial.size();
+							//System.out.println("vsize:"+vsize);
+							
+							if(vsize>0)
+							{		  
+								av.stringData = av.stringData + ",Google Location";
+								av.stringData = av.stringData+",VIOLATION,REACH TIME\n";
+												
+								//System.out.println("AV.STRINGDATA="+av.stringData);
+								
+								write_station_report_xml(account_id, av);
+												
+								//###### WRITE STATION FILES
+								write_download_station_files(account_id, file_name, date_folder, av);
+								
+								//example: String upload_file_path = "/var/www/html/vts/beta/src/php/upload_data_files/"+account_folder+"/"+date_folder+"/"+file_name;
+								String upload_file_path = "/var/www/html/vts/beta/src/php/exception_timing_files/upload/"+account_folder+"/"+date_folder+"/"+file_name;
+								//String processed_file_path = "/var/www/html/vts/beta/src/php/processed_data_files/"+file_name;							
+								
+								//String upload_file_path = "C:\\upload_data_files/"+account_folder+"/"+date_folder+"/"+file_name;
+								//String processed_file_path = "C:\\processed_data_files/"+file_name;							
+								
+								//utility_classes.copyfile(upload_file_path, processed_file_path);
+								sort_xml.deleteFile(upload_file_path);// DELETE UNSORTED TMP FILE
+								
+							} // IF VSIZE CLOSED
+						} // IF IS FILE CLOSED
+					} //FILE LOOP CLOSED
+				} //IF DATE FOLDER IS CURRENT , SERVERTIME=DATEFOLDER
+			} // DATE DIR LOOP CLOSED
+		} // ACCOUNT DIR LOOP CLOSED
+				
+	}  // MAIN CLOSED
+	
+
+	
+	//##### WRITE STATION REPORT XML
+	public static void write_station_report_xml(int account_id, alert_variables av)
+	{
+		int maxPoints = 1000;
+		boolean file_exist = false;
+				
+		System.out.println("IN WRITE_STATION_REPORT_XML");
+		
+		Connection con = null;
+		Statement stmt1 = null;
+		ResultSet res1 = null;
+		String geo_coord = "";
+		int i=0;
+		con = utility_classes.get_connection();
+		
+		for(i=0;i<av.customer_no.size();i++)
+		{
+			String query_geo = "SELECT DISTINCT station_coord,station_name, CAST(customer_no AS UNSIGNED INTEGER) as customer_no_int,distance_variable,google_location FROM station WHERE user_account_id ="+account_id+" AND CAST(customer_no AS UNSIGNED INTEGER)="+(Integer)av.customer_no.get(i)+" AND status=1";				
+			//System.out.println(query_geo);
+			
+			try{
+				stmt1 = null;
+				res1 = null;				
+				stmt1 = con.createStatement();
+				res1 = stmt1.executeQuery(query_geo);					
+				
+				String query2 ="", imei_db ="",tmp_vid="",tmp_vname1="", location="";
+				if(res1.next())
+				{
+					//System.out.println("IF STATION-1");
+					geo_coord = res1.getString("station_coord");
+					geo_coord = geo_coord.replaceAll(", ",",");					
+					av.geo_coord_station.add(geo_coord);
+					//System.out.println("IF STATION-2");
+					
+					//String[] coord_tmp = geo_coord.split(",");					
+					//location = get_url_location(coord_tmp[0],coord_tmp[1]);
+					location = "-";					
+					location = res1.getString("google_location");
+					//System.out.println("IF STATION-2A:"+location+" ,geo_coord="+geo_coord);
+					if((location!=null))
+					{
+						//System.out.println("IF");
+						location = location.replaceAll(",",":");	
+					}									
+					else if(location == null)
+					{
+						//System.out.println("ELSE IF");
+						location ="-";
+					}					
+					
+					//System.out.println("IF STATION-3");
+					av.google_location.add(location);
+										
+					//System.out.println("location="+location);
+					String tmp_station_name = res1.getString("station_name");					
+			      	tmp_station_name = tmp_station_name.replaceAll("/", "by");
+			      	tmp_station_name = tmp_station_name.replaceAll("\\\\", "by");
+			      	tmp_station_name = tmp_station_name.replaceAll("&", "and"); 
+			      	
+			      	//System.out.println("IF STATION-4");
+			      	av.geo_station.add(tmp_station_name);
+					int customer_no_int = Integer.parseInt(res1.getString("customer_no_int"));
+					av.customer_no_db.add(customer_no_int);
+					
+					//System.out.println("IF STATION-5");
+					float distance_variable_tmp = 0.0f;
+					distance_variable_tmp = res1.getFloat("distance_variable");
+					av.distance_variable.add(distance_variable_tmp);
+					av.entered_flag.add(0);
+					av.datetime_counter.add(0);				
+					//System.out.println("IF STATION-6");
+				}
+				else
+				{
+					//System.out.println("ELSE STATION");
+					geo_coord = "";
+					av.geo_coord_station.add("");
+					av.geo_station.add("");
+					av.google_location.add("");
+					av.customer_no_db.add(0);
+					av.distance_variable.add(0.0f);
+					av.entered_flag.add(0);
+					av.datetime_counter.add(0);      
+				}
+			}catch (Exception e2) { 
+			
+					//System.out.println("EXCEPTION STATION");
+					geo_coord = "";
+					av.geo_coord_station.add("");
+					av.geo_station.add("");
+					av.google_location.add("");
+					av.customer_no_db.add(0);
+					av.distance_variable.add(0.0f);
+					av.entered_flag.add(0);
+					av.datetime_counter.add(0);  
+					
+					System.out.println("EXCEPTION IN SELECT DISTINCT station_coord:"+e2.getMessage()); 
+			}		
+		}
+	  
+		//System.out.println("vserial_size="+av.vserial.size());
+		
+		for(i=0;i<av.vserial.size();i++)
+		{  	
+			//System.out.println("Test1:"+i);
+			String startdate = (String)av.in_min_date_final.get(i);
+			String enddate = (String)av.out_max_date_final.get(i);		
+			
+			//System.out.println("startdate="+startdate+" ,enddate="+enddate);
+			//###### GET XML DATA
+			get_station_xml_data((String)av.vserial.get(i), (String)av.vname1.get(i), startdate, enddate, av);			
+			//System.out.println("AFTER get_station_xml_data");
+			//#################
+		}
+		//System.out.println("Test2:"+i);
+		System.out.println("STATION_SIZE="+av.geo_coord_station.size());
+		
+		boolean violation_flag = false;
+		boolean inflag = false;
+		String reach_time = "";
+		
+		try{
+			for(i=0;i<av.geo_coord_station.size();i++)		//NUMBER OF EXCEL RECORDS
+			{
+				//$stringData = $stringData.$date1_csv[$i].",".$time1_csv[$i].",".$date2_csv[$i].",".$time2_csv[$i].",".$doctype[$i].",".$plant[$i].",".$route[$i].",".$vname[$i].",".$vendor_name[$i].",".$customer_no[$i].",".$qty[$i].",".$unit[$i];			
+				av.stringData = av.stringData + (String)av.date1_csv.get(i) + "," + (String) av.time1_csv.get(i) + "," + (String) av.time2_csv.get(i) +"," + (String) av.vname.get(i) + "," + (Integer) av.customer_no.get(i) + "," + (String) av.customer_time.get(i);
+				av.stringData = av.stringData + "," + (String) av.google_location.get(i);
+				
+				/*if((av.datetime_counter.get(i)) > 0)
+				{
+					System.out.println("av.datetime_counter.get(i)="+(av.datetime_counter.get(i))+" ,i="+i);
+				}*/
+				
+				violation_flag = false;
+				inflag = false;
+				reach_time = "";
+				
+				try{
+					for(int j=0;j<(av.datetime_counter.get(i));j++)		//NUMBER OF IN OUT
+					{														
+						//echo "<br>Customer and Vehicle matched";
+						String[] in_date_arr = av.intime_halt_2d[i][j].split(" ");
+						String[] out_date_arr = av.outime_halt_2d[i][j].split(" ");
+						
+						//FORMAT DATE TO DD-MM-YY
+						String[] in_date = in_date_arr[0].split("-");              
+						String in_date_tmp = in_date[2]+"-"+in_date[1]+"-"+in_date[0];
+						
+						String[] out_date = out_date_arr[0].split("-");              
+						String out_date_tmp = out_date[2]+"-"+out_date[1]+"-"+out_date[0];
+						//echo "<br>in_date=".$in_date_tmp." ,out_date=".$out_date_tmp;
+						/////////////////////////        
+						
+						float in_dist_tmp = utility_classes.Round(av.in_distance_2d[i][j],2);
+						float out_dist_tmp = utility_classes.Round(av.out_distance_2d[i][j],2);
+						
+						//System.out.println("in_date_tmp="+in_date_tmp+" , in_date_arr[1]="+in_date_arr[1]+", out_date_tmp="+out_date_tmp+" ,out_date_arr[1]="+out_date_arr[1]+" ,av.time_dur_halt2d[i][j]="+av.time_dur_halt_2d[i][j]+" ,in_dist_tmp="+in_dist_tmp+" ,out_dist_tmp="+out_dist_tmp);
+						//av.stringData = av.stringData+","+in_date_tmp+","+in_date_arr[1]+","+out_date_tmp+","+out_date_arr[1]+","+av.time_dur_halt_2d[i][j]+","+in_dist_tmp+","+out_dist_tmp;					
+						
+						String in_time_str = av.intime_halt_2d[i][j];
+						String in_time_str_excel = (String)av.date1_csv.get(i) + " " +(String) av.customer_time.get(i);
+						long in_time_sec = utility_classes.get_seconds(in_time_str, 2);
+						long in_time_excel = utility_classes.get_seconds(in_time_str_excel, 2);	
+						
+						if(in_time_sec <= in_time_excel)
+						{
+							inflag = true;
+							reach_time = in_date_arr[1];
+						}
+						if( (in_time_sec > in_time_excel) && (!inflag))
+						{
+							violation_flag = true;
+							reach_time = in_date_arr[1];
+						}						
+					}  // FOR DATETIME COUNTER CLOSED
+				} catch(Exception ef) { System.out.println("EXCEPTION IN FINAL BLOCK:MSG="+ef.getMessage());}   
+				
+				if((violation_flag) && (!reach_time.equals("")))
+				{
+					av.stringData = av.stringData+",YES,"+reach_time;
+				}
+				if((!violation_flag) && (reach_time.equals("")))
+				{
+					av.stringData = av.stringData+",YES,"+reach_time;	//BLANK
+				}
+				else
+				{
+					av.stringData = av.stringData+",NO,"+reach_time;
+				}
+				
+				if((av.datetime_counter.get(i))==0)
+				{
+					av.stringData = av.stringData+", , , ,";
+				}
+				av.stringData = av.stringData+"\n";
+			}   // FOR GEO COORD SIZE CLOSED	
+		}catch(Exception ef2) { System.out.println("EXCEPTION IN GEO BLOCK:MSG="+ef2.getMessage());}
+		
+		//System.out.println("av.stringData ="+av.stringData);
+	}
+	
+
+	public static void get_station_xml_data(String vehicle_serial, String vname1, String startdate, String enddate, alert_variables av)
+	{
+		int fix_tmp = 1;
+		String xml_date_latest="1900-00-00 00:00:00";
+		double CurrentLat = 0.0;
+		double CurrentLong = 0.0;
+		double LastLat = 0.0;
+		double LastLong = 0.0;
+		int firstData = 0;
+		float distance =0.0f;
+		String linetowrite="";
+		int firstdata_flag =0;		
+		SimpleDateFormat formatter1, formatter2;
+	
+		String[] date_1 = startdate.split(" ");
+		String[] date_2 = enddate.split(" ");
+
+		String datefrom = date_1[0];
+		String dateto = date_2[0];
+		String timefrom = date_1[1];
+		String timeto = date_2[1];
+
+		ArrayList<String> userdates = utility_classes.get_All_Dates(datefrom, dateto);
+
+		//date_default_timezone_set("Asia/Calcutta");
+		//current_datetime = date("Y-m-d H:i:s");
+		//current_date = date("Y-m-d");
+		
+		Date date = new Date();
+		formatter1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String current_datetime = formatter1.format(date);
+		
+		formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+		String current_date = formatter2.format(date);
+		
+		//System.out.println("IN GET_XML_DATA");
+		
+		//print "<br>CurrentDate=".$current_date;
+		int date_size = userdates.size();
+
+		int j = 0;
+		int total_dist = 0; 									  
+		int outflag=0, CurrentFile=0;          	
+       
+		//String abspath = "C:\\itrack_vts";
+		String abspath = "/var/www/html/itrack_vts";
+		String xml_file ="", xml_original_tmp="", xml_unsorted_file="", xml_unsorted_file_path="";
+		String filename_tmp="", xml_unsorted_folder="", xml_original_folder="", folderDate="";
+		String enter_time = "", leave_time ="", enter_time_tmp="", leave_time_tmp="", duration ="";
+		String fix="", vehicleserial="", lat="", lng="", xml_date="", xml_datetime="", vserial="", geo_lat="", geo_lng="";
+		
+		long xml_date_sec=0, startdate_sec=0, enddate_sec=0, input_date1_sec=0, input_date2_sec=0, time =0;
+		int halt_complete = 0;
+		boolean status_geo = false;
+		float in_dist = 0.0f, out_dist= 0.0f;
+		
+		for(int i=0;i<=(date_size-1);i++)
+		{  
+			String xml_current = abspath+"/xml_vts/xml_data/"+((String)userdates.get(i))+"/"+vehicle_serial+".xml";	
+					
+			File file1 = new File(xml_current);
+			boolean exist1 = file1.exists();
+
+			if (exist1)      
+			{    		
+				xml_file = xml_current;
+				CurrentFile = 1;
+			}		
+			else
+			{
+				xml_file = abspath+"/sorted_xml_data/"+((String)userdates.get(i))+ "/" + vehicle_serial+ ".xml";
+				CurrentFile = 0;
+			}
+		
+			File file2 = new File(xml_file);
+			boolean exist2 = file2.exists();
+			
+			//System.out.println("Exist2="+exist2);
+			if (exist2) 
+			{			
+				long t = new Date().getTime();
+				//filename_tmp = "tmp_"+vehicle_serial+"_"+t+"_"+i+"_unsorted.xml"
+				filename_tmp = "tmp_"+vehicle_serial+"_"+t+"_"+i+".xml";
+				xml_original_tmp = abspath+"/java_xml_tmp/original_xml/"+filename_tmp;
+									      
+				xml_unsorted_folder = abspath+"/java_xml_tmp/unsorted_xml/";
+				xml_unsorted_file_path = xml_unsorted_folder + filename_tmp;
+				
+				if(CurrentFile == 0)
+				{
+					utility_classes.copyfile(xml_file, xml_original_tmp);
+				}
+				else
+				{
+					xml_original_folder = abspath+"/java_xml_tmp/original_xml";
+					folderDate = ((String)userdates.get(i));
+					
+					utility_classes.copyfile(xml_file,xml_unsorted_file_path);        // MAKE UNSORTED TMP FILE					
+					sort_xml.sortfile(xml_unsorted_folder, filename_tmp, xml_original_folder, folderDate);					
+					sort_xml.deleteFile(xml_unsorted_file_path);   // DELETE UNSORTED TMP FILE
+				}     
+
+				//############ READ XML DATA				
+				int total_t1=0;
+				NodeList listOf_t1 = null;														
+				
+				try
+				{										
+					String final_value ="";
+					try{
+						// Open the file that is the first 
+						// command line parameter
+						
+						File file3 = new File(xml_original_tmp);
+						boolean exist3 = file3.exists();
+						/*if(exist3)
+						{
+							System.out.println("XML ORIGINAL FILE EXISTS");
+						}*/
+						
+						FileInputStream fstream = new FileInputStream(xml_original_tmp);
+						// Get the object of DataInputStream
+						DataInputStream in = new DataInputStream(fstream);
+						BufferedReader br = new BufferedReader(new InputStreamReader(in));
+						String strLine;
+						//Read File Line By Line
+						//System.out.println("Read File Started ..");
+						
+						while ((strLine = br.readLine()) != null) {
+							
+							int len = strLine.length();
+							
+							//System.out.println("STR_LEN="+len);
+							
+							if(len > 50)
+							{
+								try{
+									fix = sort_xml.getXmlAttribute(strLine,"fix=\"[^\" ]+");
+									xml_date  = sort_xml.getXmlAttribute(strLine,"datetime=\"[^\"]+");
+									
+									//System.out.println("XML_DATE="+xml_date);
+									
+									try{
+										if(xml_date!=null)
+										{				    					
+											xml_date_sec = utility_classes.get_seconds(xml_date, 2);
+											startdate_sec = utility_classes.get_seconds(startdate, 2);
+											enddate_sec = utility_classes.get_seconds(enddate, 2);
+											
+											try{
+												if( (xml_date_sec >= startdate_sec && xml_date_sec <= enddate_sec) && (!xml_date.equals("-")) && (fix.equals("1")) )
+												{							           	              																													
+													lat = sort_xml.getXmlAttribute(strLine,"lat=\"[^\" ]+");
+													lng  = sort_xml.getXmlAttribute(strLine,"lng=\"[^\" ]+");											
+													vserial = vehicle_serial; 
+													
+													lat = lat.substring(0, lat.length() - 1);
+													lng = lng.substring(0, lng.length() - 1);
+													
+													//System.out.println("VSERIAL="+vserial+" ,LAT="+lat+" ,LNG="+lng);
+													//System.out.println("GEO_SIZE="+av.geo_coord_station.size());
+													//###### LOGIC PART STARTED
+													
+													try{
+														if((av.geo_coord_station.size())>0)
+														{                
+															//System.out.println("IN GEO_COORD");
+															
+															halt_complete = 0;                
+										
+															//System.out.println("STATION SIZE="+av.geo_coord_station.size());
+															try{
+																for(int g=0; g<av.geo_coord_station.size();g++)
+																{
+																	//echo "<br>vname=".$vname1." ,vname[g]=".$vname[$g];
+																	if(!vname1.equals( (String)av.vname.get(g)))
+																	{
+																		continue;
+																	}
+																	
+																	input_date1_sec = utility_classes.get_seconds(((String)av.input_date1.get(g)), 2);
+																	input_date2_sec = utility_classes.get_seconds(((String)av.input_date2.get(g)), 2);
+																	
+																	try{
+																		if( (xml_date_sec >= input_date1_sec) && (xml_date_sec <= input_date2_sec) )  //** CSV INPUT DATE COMPARISON
+																		{
+																					//System.out.println("DATE MATCHED: lat="+lat+" ,lng="+lng+" ,xml_date="+xml_date);
+																			status_geo = false;
+																			
+																			try{
+																				if(!((String) av.geo_coord_station.get(g)).equals(""))
+																				{
+																					String[] geo_data = av.geo_coord_station.get(g).split(",");
+																					geo_lat = geo_data[0];
+																					geo_lng = geo_data[1];
+																					
+																					//System.out.println("geo_lat="+geo_lat+" ,geo_lng="+geo_lng+ " ,lat="+lat+" ,lng="+lng+" ,distance_variable="+((Float)av.distance_variable.get(g)));
+																					
+																					status_geo = utility_classes.check_with_range_landmark(lat, lng, geo_lat, geo_lng, ((Float)av.distance_variable.get(g)));
+																					//System.out.println("status_geo="+status_geo);
+																				} 
+																			} catch(Exception e3) {System.out.println("Exception in Main File: IN1:"+e3.getMessage());}
+																											
+																			try{
+																				if( (status_geo==true) && ((Integer)av.entered_flag.get(g) == 0) )
+																				{                                            
+																						//System.out.println("HALT_OCCURRED_BEFORE_SET: ,entered_flag="+(Integer)av.entered_flag.get(g));															
+																					
+																					av.entered_flag.set(g,1);	//corresponding to g
+																					
+																						//System.out.println("HALT_OCCURRED_AFTER_SET: ,entered_flag="+(Integer)av.entered_flag.get(g));                     
+																					enter_time = xml_date;
+																					
+																					//$geo_lat1 = round($geo_lat,4);
+																					//$geo_lng1 = round($geo_lng,4);                                              
+																					in_dist = utility_classes.calculateDistance(Float.parseFloat(lat),Float.parseFloat(geo_lat),Float.parseFloat(lng),Float.parseFloat(geo_lng));
+																					
+																						//System.out.println("STATION_GEO TRUE1, enter_time="+enter_time);
+																						//System.out.println("indist_BEFORE_SET="+in_dist);
+																						
+																					av.intime_halt_2d[g][(Integer)av.datetime_counter.get(g)] = enter_time;
+																					av.in_distance_2d[g][(Integer)av.datetime_counter.get(g)] = in_dist;
+																					
+																						//System.out.println("STATION_GEO TRUE2, enter_time="+av.intime_halt_2d[g][(Integer)av.datetime_counter.get(g)]);
+																						//System.out.println("indist_AFTER_SET="+av.in_distance_2d[g][(Integer)av.datetime_counter.get(g)]);
+																						
+																					//STORE HALT VNAME AND CUSTOMER NO
+																					//$vname_halt[$g][$datetime_counter[$g]] = $vname[$g];
+																					//$cust_no_halt[$g][$datetime_counter[$g]] = $customer_no[$g];
+																					//////////////////////////////////                       
+																				}
+																			} catch(Exception e2) {System.out.println("Exception in Main File: IN2:"+e2.getMessage());}
+													
+																			//echo "<br>closed";                  
+																			
+																			try{
+																				if((status_geo == false) && ( ((Integer)av.entered_flag.get(g)) ==1) )
+																				{                    
+																						//System.out.println("HALT COMPLETED1");
+																				 
+																				  av.entered_flag.set(g,0);	//corresponding to g
+																				  leave_time = xml_date;
+																				  av.outime_halt_2d[g][(Integer)av.datetime_counter.get(g)] = leave_time;
+																				  
+																						//System.out.println("HALT COMPLETED2: entered_flag="+(Integer)av.entered_flag.get(g));
+																						//System.out.println("HC:: outime_halt="+av.outime_halt_2d[g][(Integer)av.datetime_counter.get(g)]);
+																	 
+																				  out_dist = utility_classes.calculateDistance(Float.parseFloat(lat),Float.parseFloat(geo_lat),Float.parseFloat(lng),Float.parseFloat(geo_lng));
+																				  
+																						//System.out.println("HC::outdist_BEFORE_SET="+out_dist);
+																					
+																				  av.out_distance_2d[g][(Integer)av.datetime_counter.get(g)] = out_dist;
+																				  
+																						//System.out.println("HC::outdist_AFTER_SET="+av.out_distance_2d[g][(Integer)av.datetime_counter.get(g)]);
+																				  
+																				  enter_time_tmp = av.intime_halt_2d[g][(Integer)av.datetime_counter.get(g)];
+																				  leave_time_tmp = av.outime_halt_2d[g][(Integer)av.datetime_counter.get(g)];   
+																				  
+																						//System.out.println("HC::enter_time_tmp="+enter_time_tmp+" ,leave_time_tmp="+leave_time_tmp);
+																				  
+																				  input_date1_sec = utility_classes.get_seconds(leave_time_tmp, 2);
+																				  time = (utility_classes.get_seconds(leave_time_tmp, 2)) - (utility_classes.get_seconds(enter_time_tmp, 2));  
+																				  
+																						//System.out.println("HC::input_date1_sec="+input_date1_sec+" ,time="+time);
+																				  //$hms = secondsToTime($time);
+																				  duration = utility_classes.get_hms(time);	//$hms[h].":".$hms[m].":".$hms[s];
+																				  
+																						//System.out.println("HC::duration_BEFORE="+duration);
+																				  
+																				  av.time_dur_halt_2d[g][(Integer)av.datetime_counter.get(g)] = duration;
+																				  
+																						//System.out.println("HC::duration_AFTER="+av.time_dur_halt_2d[g][(Integer)av.datetime_counter.get(g)]);														  													 
+																				  
+																						//System.out.println("HC::datetime_counter_BEFORE=" +(Integer)av.datetime_counter.get(g));
+																						
+																				  av.datetime_counter.set(g,((Integer)av.datetime_counter.get(g)) + 1);	//corresponding to g
+																				  
+																						//System.out.println("HC::datetime_counter_AFTER=" +(Integer)av.datetime_counter.get(g));
+																				  
+																				} //IF GEO STATUS CLOSED 
+																			} catch(Exception e1) {System.out.println("Exception in Main File: IN3:"+e1.getMessage());}
+																		} // IF INPUT CSV DATE COMPARISON               
+																	} catch(Exception e4) {System.out.println("Exception in Main File: IF INPUT CSV DATE COMPARISON :"+e4.getMessage());}
+																}  // GEO COORD LOOP 
+															} catch(Exception e5) {System.out.println("Exception in Main File:GEO COORD LOOP  :"+e5.getMessage());}
+														} // IF GEO_COORD!="" closed                                              	                         																                              										                               
+													} catch(Exception e6) {System.out.println("Exception in Main File: IF GEO_COORD NOT EQUAL BLANK :"+e6.getMessage());}
+													//#### LOGIC PART CLOSED										
+												} //IF XML_DATE_SEC > STARTDATE CLOSED
+											} catch(Exception e7) {System.out.println("Exception in Main File:IF XML_DATE_SEC > STARTDATE:"+e7.getMessage());}
+										} // IF XML_DATE!=NULL CLOSED
+									} catch(Exception e8) {System.out.println("Exception in Main File: XML_DATE:"+e8.getMessage());}
+								} catch(Exception e9) {System.out.println("Exception in Main File: IF LEN CLOSED:"+e9.getMessage());}
+							}	// if len closed
+						}	// while readline closed
+						System.out.println("Read File Completed.");
+						//Close the input stream
+						in.close();
+					}catch (Exception e10){ System.err.println("ERROR IN GETTING XML ATTRIBUTE: " + e10.getMessage());}			
+					/////////////// E			
+				}
+				catch(Exception e)			////CATCH BLOCK
+				{
+					System.out.println("INSIDE CATCH++++++++++++++++ EXCEPTION OCCURRED");
+					//System.out.println("Total no of t1: " + total_t1);
+					return;									
+				}							
+				
+				sort_xml.deleteFile(xml_original_tmp);// DELETE XML ORIGINAL TMP FILE
+			} // IF ORIGINAL TEMP EXIST CLOSED
+		}  // DATE FOR CLOSED 
+	}	//METHOD CLOSED
+	
+	
+	public static void write_download_station_files(int account_id, String filename, String folder_date, alert_variables av)
+	{
+		System.out.println("IN DOWNLOAD STATION FILE");
+		
+		//String path = "C:\\download_data_files";
+		//String path = "/var/www/html/vts/beta/src/php/download_data_files";
+		String path = "/var/www/html/vts/beta/src/php/exception_timing_files/download";
+		
+		boolean success1 = (new File(path + "/" + +account_id)).mkdir();	//ACCOUNT_ID	
+
+		path = path+"/"+account_id;
+		
+		//Date date;
+		/*SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String folder_date = formatter.format(date);*/
+		
+		boolean success2 = (new File(path + "/" + folder_date)).mkdir();	//FOLDER DATE
+		path = path+"/"+folder_date;										
+				
+		//SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss");
+		//String hms = formatter2.format(date);								//HH:MM:SS				
+		long millisec = new Date().getTime();								//IN MILLI		
+		
+		String[] fileparts = filename.split("\\.");
+		//String final_file_name = path+"/"+fileparts[0]+"_"+hms+"_"+millisec+".csv";	//IN CSV 
+		String final_file_name = path+"/"+fileparts[0]+"_"+millisec+".csv";	//IN CSV
+	
+		System.out.println("Download_file_name="+final_file_name);
+	
+		/*String final_file_path = path+"/"+final_file_name;									
+		File file = new File(final_file_path);
+		boolean exists = file.exists();*/		
+		
+		BufferedWriter out1 =null;
+		
+		try{
+			out1 = new BufferedWriter(new FileWriter(final_file_name, false));		//	DO NOT UPDATE																												
+			out1.write(av.stringData);
+			out1.close();
+		}catch(Exception e) {System.out.println("EXCEPTION IN STATION FILE WRITE:"+e.getMessage());}
+		
+	}
+	
+	//GET URL LOCATION
+	/*public static String get_url_location(String lat, String lng)
+	{
+		try {		
+				String Request = "http://www.itracksolution.co.in/src/php/get_url_location.php?lat="+lat+"&lng="+lng+"";
+				//URL my_url = new URL("http://www.placeofjo.blogspot.com/");
+				URL my_url = new URL(Request);
+				BufferedReader br = new BufferedReader(new InputStreamReader(my_url.openStream()));
+				String strTemp = "";
+				while(null != (strTemp = br.readLine())){
+					//System.out.println(strTemp);
+					return strTemp;
+				}
+		} catch (Exception ex) {ex.printStackTrace();}
+		
+		return null;
+	}*/	
+}
