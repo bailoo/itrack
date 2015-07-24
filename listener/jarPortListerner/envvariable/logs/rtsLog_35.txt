@@ -1,0 +1,134 @@
+Sep 22, 2013 12:35:05 PM com.wanhive.rts.utils.Application writeLog
+INFO: 
+
+-----------------------------------------------------------------------
+Welcome to Wanhive Realtime Transaction Server (RTS) v1.0
+Copyright (C)2011 Wanhive Technologies Private Limited, All rights reserved
+-----------------------------------------------------------------------
+
+
+Sep 22, 2013 12:35:05 PM com.wanhive.rts.utils.Application writeLog
+INFO: Initializing Request Handler: com.wanhive.rts.handler.RequestHandler
+Sep 22, 2013 12:35:05 PM com.wanhive.rts.utils.Application writeLog
+INFO: Server has been initialized with following configuration:
+PORT=35, MESSAGEDELIMITER=Semicolon, SELECTORTIMEOUT=10000, CONNECTIONIDLETIMEOUT=10000, READBUFFERSIZE=1024 ,SOCKETPAIRBUFFERSIZE=8192, REMOVEPAIRONEXIT=false
+Sep 22, 2013 12:35:05 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer: Socket Monitor has been created
+Sep 22, 2013 12:35:05 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer: Listening Socket Channel has been created on port: 35
+Sep 22, 2013 12:35:41 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.201.166.65:52492], Currently Active Connections=0
+Sep 22, 2013 12:35:41 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.201.157.74:53660], Currently Active Connections=1
+Sep 22, 2013 12:38:32 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.201.166.65:52492]
+Sep 22, 2013 12:38:32 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.201.157.74:53660]
+Sep 22, 2013 12:38:45 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.205.156.48:59085], Currently Active Connections=0
+Sep 22, 2013 12:39:05 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.205.156.48:59085]
+Sep 22, 2013 12:39:18 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.201.76.208:61468], Currently Active Connections=0
+Sep 22, 2013 12:39:38 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.201.76.208:61468]
+Sep 22, 2013 12:39:51 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.223.221.152:65510], Currently Active Connections=0
+Sep 22, 2013 12:40:11 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.223.221.152:65510]
+Sep 22, 2013 12:40:24 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.205.137.159:61910], Currently Active Connections=0
+Sep 22, 2013 12:40:44 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.205.137.159:61910]
+Sep 22, 2013 12:40:57 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/223.184.87.155:52153], Currently Active Connections=0
+Sep 22, 2013 12:41:17 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/223.184.87.155:52153]
+Sep 22, 2013 12:41:32 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.205.211.115:60807], Currently Active Connections=0
+Sep 22, 2013 12:41:50 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.205.211.115:60807]
+Sep 22, 2013 12:42:05 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/171.50.38.242:59492], Currently Active Connections=0
+Sep 22, 2013 12:42:22 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/171.50.38.242:59492]
+Sep 22, 2013 12:42:36 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/171.60.115.227:50090], Currently Active Connections=0
+Sep 22, 2013 12:42:55 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/171.60.115.227:50090]
+Sep 22, 2013 12:43:08 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.205.63.29:54670], Currently Active Connections=0
+Sep 22, 2013 12:43:28 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.205.63.29:54670]
+Sep 22, 2013 12:43:42 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/171.49.29.63:57796], Currently Active Connections=0
+Sep 22, 2013 12:44:01 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/171.49.29.63:57796]
+Sep 22, 2013 12:44:14 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/223.189.98.87:61116], Currently Active Connections=0
+Sep 22, 2013 12:44:19 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/171.60.57.60:52492], Currently Active Connections=1
+Sep 22, 2013 12:50:47 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/171.60.57.60:52492]
+Sep 22, 2013 12:50:55 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.223.229.81:51495], Currently Active Connections=1
+Sep 22, 2013 12:53:22 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/223.189.98.87:61116]
+Sep 22, 2013 12:53:22 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.223.229.81:51495]
+Sep 22, 2013 12:53:29 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/223.185.252.90:64993], Currently Active Connections=0
+Sep 22, 2013 12:53:35 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.202.130.53:64866], Currently Active Connections=1
+Sep 22, 2013 12:57:12 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.201.24.37:57307], Currently Active Connections=2
+Sep 22, 2013 1:03:40 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.203.197.49:60670], Currently Active Connections=3
+Sep 22, 2013 1:04:00 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.203.197.49:60670]
+Sep 22, 2013 1:19:31 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.202.130.53:64866]
+Sep 22, 2013 1:19:31 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.201.24.37:57307]
+Sep 22, 2013 1:19:31 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/223.181.75.180:53619], Currently Active Connections=1
+Sep 22, 2013 1:19:39 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.210.18.63:55707], Currently Active Connections=2
+Sep 22, 2013 1:19:52 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/223.185.252.90:64993]
+Sep 22, 2013 1:19:52 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/223.181.75.180:53619]
+Sep 22, 2013 1:19:52 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/1.38.19.53:29192], Currently Active Connections=1
+Sep 22, 2013 1:19:52 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/223.225.7.88:65378], Currently Active Connections=2
+Sep 22, 2013 1:19:58 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.202.168.118:52581], Currently Active Connections=3
+Sep 22, 2013 1:20:03 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/223.181.43.50:59101], Currently Active Connections=4
+Sep 22, 2013 1:20:15 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/1.38.19.53:29192]
+Sep 22, 2013 1:20:27 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/1.38.19.121:62792], Currently Active Connections=4
+Sep 22, 2013 1:20:48 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/1.38.19.121:62792]
+Sep 22, 2013 1:21:03 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/1.38.19.121:11163], Currently Active Connections=4
+Sep 22, 2013 1:21:11 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/223.225.7.88:65378]
+Sep 22, 2013 1:21:22 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/106.205.15.146:63288], Currently Active Connections=4
+Sep 22, 2013 1:21:32 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/1.38.19.121:11163]
+Sep 22, 2013 1:21:48 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/1.38.19.121:42371], Currently Active Connections=4
+Sep 22, 2013 1:22:05 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/1.38.19.121:42371]
+Sep 22, 2013 1:22:21 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/1.38.19.121:32584], Currently Active Connections=4
+Sep 22, 2013 1:22:38 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/1.38.19.121:32584]
+Sep 22, 2013 1:22:38 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[cleanupChannel] Closing the connection from: [/106.210.18.63:55707]
+Sep 22, 2013 1:23:01 PM com.wanhive.rts.utils.Application writeLog
+INFO: TransactionServer[accept] Incoming connection from: [/1.38.19.117:39042], Currently Active Connections=3

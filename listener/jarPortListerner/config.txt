@@ -1,0 +1,1 @@
+export WANHIVERTS=/home/VTS/GPRSLoggerLocal/envvariable
