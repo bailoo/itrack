@@ -155,6 +155,7 @@ public class collect_data_main {
         //String all_data="";        
         
         int x=0,y=0;
+        boolean create_flag = false;
         //vehicle_imei = "TN45AT5155";
         //System.out.println("SizevehicleNoArr="+vehicleNoArr.size());
 		if (!(vehicleNoArr.isEmpty()))
@@ -162,7 +163,8 @@ public class collect_data_main {
 			try{
 				for(String vehicleNoString : vehicleNoArr) {
 					
-					open_file(vehicleNoString);	//OPEN FILE
+					create_flag = false;
+					
 					System.out.println("LastTime="+LastTime.get(vehicleNoString));
 					if( (LastTime.get(vehicleNoString)==null) || (LastTime.get(vehicleNoString).equals("")) || (LastTime.get(vehicleNoString).equals("null"))) {
 						System.out.println("ONE="+startdate);						
@@ -201,6 +203,11 @@ public class collect_data_main {
 				        			//System.out.println("Speed="+jObject.getInt("Speed"));	        			
 				        			//DeviceIMEINo = jObject.getString("IMEINo");
 				        			DeviceIMEINo = jObject.getString("IMEINo");
+				        			
+				        			if( (vehicleNoString.equals(VehicleName)) && (!create_flag) ) {
+				        				open_file(vehicleNoString);	//OPEN FILE
+				        				create_flag = true;
+				        			}				        			
 				        			//VehicleName = jObject.getString("VehicleName");
 				        			tmptime = jObject.getString("GPSLogDateTime");
 				        			String[] parts = tmptime.split("\\.");
