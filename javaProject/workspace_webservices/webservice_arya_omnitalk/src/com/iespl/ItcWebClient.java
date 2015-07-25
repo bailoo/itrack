@@ -121,6 +121,7 @@ public class ItcWebClient
 				
 				for (int temp = 0; temp < nList.getLength(); temp++) 
 				{
+					last_date = "1970-01-01 00:00:00";
 					Node nNode = nList.item(temp);
 					//System.out.println("\nCurrent Element :" + nNode.getNodeName());
 					if (nNode.getNodeType() == Node.ELEMENT_NODE)
@@ -195,8 +196,8 @@ public class ItcWebClient
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				String exception_date = formatter.format(datex);
 				//String filename= "D:\\EXCEPTION_LOG/9001_"+exception_date+".txt";
-				String filename= "/home/VTS/GPRSLoggerLocal/webservice_exception_log/"+exception_date+".txt";
-				//System.out.println("after write="+filename);
+				String filename= "/home/VTS/webservice_exception_log/"+exception_date+".txt";
+				System.out.println("after write="+filename);
 				excptionf = new RandomAccessFile(filename, "rwd");				
 				excptionf.writeBytes(exception_message);
 			} catch (IOException e) {			
@@ -320,7 +321,7 @@ public class ItcWebClient
 			 try 
 			 {
 				raf1.seek(0);
-				marker_a2 = "<t1>\n<x "+"a="+q+MsgType+q+" b="+q+Version+q+" c="+q+Fix+q+" d="+q+Latitude+q+" e="+q+Longitude+q+" f="+q+speed_f+q+" g="+q+serverdatetime+q+" h="+q+DateTime+q+" i="+q+io_value1+q+" j="+q+io_value2+q+" k="+q+io_value3+q+" l="+q+io_value4+q+" m="+q+io_value5+q+" n="+q+io_value6+q+" o="+q+io_value7+q+" p="+q+io_value8+q+" q="+q+Signal_Strength+q+" r="+q+supv_f+q+"/>\n</t1>";
+				marker_a2 = "<t1>\n<x "+"a="+q+MsgType+q+" b="+q+Version+q+" c="+q+Fix+q+" d="+q+Latitude+q+" e="+q+Longitude+q+" f="+q+speed_f+q+" g="+q+serverdatetime+q+" h="+q+DateTime+q+" i="+q+io_value1+q+" j="+q+io_value2+q+" k="+q+io_value3+q+" l="+q+io_value4+q+" m="+q+io_value5+q+" n="+q+io_value6+q+" o="+q+io_value7+q+" p="+q+io_value8+q+" q="+q+Signal_Strength+q+" r="+q+supv_f+q+"/>\n</t1>";				
 				raf1.writeBytes(marker_a2);
 			 } 
 			catch (IOException e) 
