@@ -1,2 +1,0 @@
-Set Classpath
-export WANHIVERTS=/home/VTS/GPRSLoggerLocal/envvariable

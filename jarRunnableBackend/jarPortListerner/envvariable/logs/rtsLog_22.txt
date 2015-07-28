@@ -1,2 +1,0 @@
-Sep 22, 2013 12:35:05 PM com.wanhive.rts.utils.Application writeLog
-SEVERE: TransactionServer[initServer]: Address already in use
