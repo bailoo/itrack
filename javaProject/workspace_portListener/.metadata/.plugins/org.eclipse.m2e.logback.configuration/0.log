@@ -1,0 +1,149 @@
+2015-07-24 12:09:28,758 [Worker-5] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9001_ok\pom.xml.
+2015-07-24 12:09:28,760 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9001_ok\pom.xml.
+2015-07-24 12:09:32,626 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9001_ok\pom.xml.
+2015-07-24 12:09:32,644 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:09:32,649 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:09:32,661 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:09:32,661 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9001_ok\src\test\resources
+2015-07-24 12:09:32,789 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9001_ok\pom.xml.
+2015-07-24 12:09:35,488 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:09:35,493 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:09:35,497 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:09:35,497 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9001_ok\src\test\resources
+2015-07-24 12:09:59,069 [Worker-3] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9002_ok\pom.xml.
+2015-07-24 12:09:59,580 [Worker-6] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9002_ok\pom.xml.
+2015-07-24 12:09:59,670 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:09:59,671 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:09:59,673 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:09:59,674 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9002_ok\src\test\resources
+2015-07-24 12:10:00,897 [Worker-10] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9002_ok\pom.xml.
+2015-07-24 12:10:01,443 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:10:01,444 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:10:01,448 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:10:01,449 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9002_ok\src\test\resources
+2015-07-24 12:10:02,619 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:10:02,619 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-07-24 12:10:02,620 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:10:02,621 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9002_ok\src\test\resources
+2015-07-24 12:10:15,768 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9003_ok\pom.xml.
+2015-07-24 12:10:16,258 [Worker-5] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9003_ok\pom.xml.
+2015-07-24 12:10:16,792 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:10:16,793 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:10:16,795 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:10:16,796 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9003_ok\src\test\resources
+2015-07-24 12:10:17,961 [Worker-3] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9003_ok\pom.xml.
+2015-07-24 12:10:18,382 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:10:18,383 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:10:18,385 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:10:18,386 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9003_ok\src\test\resources
+2015-07-24 12:10:19,591 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:10:19,592 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-07-24 12:10:19,595 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:10:19,596 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9003_ok\src\test\resources
+2015-07-24 12:11:19,285 [Worker-9] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9004_ok\pom.xml.
+2015-07-24 12:11:19,443 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9004_ok\pom.xml.
+2015-07-24 12:11:19,545 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:19,546 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:11:19,548 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:19,548 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9004_ok\src\test\resources
+2015-07-24 12:11:20,732 [Worker-3] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9004_ok\pom.xml.
+2015-07-24 12:11:21,175 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:21,177 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:11:21,203 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:21,204 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9004_ok\src\test\resources
+2015-07-24 12:11:22,357 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:22,358 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-07-24 12:11:22,359 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:22,359 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9004_ok\src\test\resources
+2015-07-24 12:11:34,300 [Worker-6] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9005_ok\pom.xml.
+2015-07-24 12:11:34,433 [Worker-3] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9005_ok\pom.xml.
+2015-07-24 12:11:34,526 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:34,527 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:11:34,529 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:34,529 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9005_ok\src\test\resources
+2015-07-24 12:11:35,739 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9005_ok\pom.xml.
+2015-07-24 12:11:36,242 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:36,243 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:11:36,245 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:36,245 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9005_ok\src\test\resources
+2015-07-24 12:11:37,423 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:37,423 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-07-24 12:11:37,424 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:37,424 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9005_ok\src\test\resources
+2015-07-24 12:11:53,869 [Worker-6] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_mumbai_8002\pom.xml.
+2015-07-24 12:11:53,999 [Worker-9] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_mumbai_8002\pom.xml.
+2015-07-24 12:11:54,089 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:54,089 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:11:54,091 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:54,092 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_mumbai_8002\src\test\resources
+2015-07-24 12:11:55,284 [Worker-9] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_mumbai_8002\pom.xml.
+2015-07-24 12:11:55,652 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:55,653 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:11:55,656 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:55,656 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_mumbai_8002\src\test\resources
+2015-07-24 12:11:56,825 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:56,826 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-07-24 12:11:56,827 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:11:56,828 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_mumbai_8002\src\test\resources
+2015-07-24 12:27:20,665 [Worker-3] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5001\pom.xml.
+2015-07-24 12:27:21,469 [Worker-6] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5001\pom.xml.
+2015-07-24 12:27:22,032 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:27:22,036 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:27:22,044 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:27:22,045 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5001\src\test\resources
+2015-07-24 12:27:23,463 [Worker-5] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5001\pom.xml.
+2015-07-24 12:27:24,006 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:27:24,010 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:27:24,013 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:27:24,014 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5001\src\test\resources
+2015-07-24 12:27:25,199 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:27:25,200 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-07-24 12:27:25,201 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:27:25,201 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5001\src\test\resources
+2015-07-24 12:27:36,310 [Worker-3] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5005\pom.xml.
+2015-07-24 12:27:36,778 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5005\pom.xml.
+2015-07-24 12:27:36,914 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:27:36,915 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:27:36,919 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:27:36,920 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5005\src\test\resources
+2015-07-24 12:27:38,182 [Worker-5] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5005\pom.xml.
+2015-07-24 12:27:38,774 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:27:38,775 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:27:38,777 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:27:38,778 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5005\src\test\resources
+2015-07-24 12:27:39,952 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:27:39,952 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-07-24 12:27:39,953 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:27:39,954 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5005\src\test\resources
+2015-07-24 17:55:29,400 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:29,428 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 17:55:29,433 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:29,434 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9001_ok\src\test\resources
+2015-07-24 17:55:29,692 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:29,692 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 17:55:29,694 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:29,694 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9002_ok\src\test\resources
+2015-07-24 17:55:29,946 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:29,947 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 17:55:29,949 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:29,950 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9003_ok\src\test\resources
+2015-07-24 17:55:30,084 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:30,085 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 17:55:30,086 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:30,086 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9004_ok\src\test\resources
+2015-07-24 17:55:30,271 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:30,272 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 17:55:30,273 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:30,273 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9005_ok\src\test\resources
+2015-07-24 17:55:30,603 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:30,606 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 17:55:30,612 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:30,614 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_mumbai_8002\src\test\resources
+2015-07-24 17:55:30,831 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:30,832 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 17:55:30,833 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:30,833 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5001\src\test\resources
+2015-07-24 17:55:31,017 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:31,017 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 17:55:31,019 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 17:55:31,020 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_test_5005\src\test\resources
