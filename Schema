@@ -1,5 +1,5 @@
 CREATE KEYSPACE gps
-  WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+  WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'us-east' : 2, 'ap-southeast' : 1 };
 
 CREATE TABLE log1(
   imei ascii,

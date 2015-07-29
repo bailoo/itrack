@@ -8,23 +8,20 @@
 	$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 	
 	
-	$imei = '865733021562939';
-	$datetime1 = '2015-06-14 23:59:45';
-	$datetime2 = '2015-06-15 00:00:10';
-	//$imei = '359231030125239';
-	//$datetime1 = '2014-12-31 00:00:00';
-	//$datetime2 = '2015-01-01 23:59:59';
-	
+	$imei = '862170018383602';
+	$datetime1 = '2015-07-28 18:00:00';
+	$datetime2 = '2015-07-28 18:30:00';
 	$deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
 	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
-	//$st_results = getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc);
-
-	$date = '2015-06-14';
-	$st_results = getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc);
-
-
-	//$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
+	$st_results = getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc);
 	print_r($st_results);
+
+
+
+	//$date = '2015-06-14';
+	//$st_results = getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc);
+	//$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
+	//print_r($st_results);
 		
 
 	//printHTML($st_results);
