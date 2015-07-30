@@ -245,4 +245,29 @@ function hasImeiLogged($o_cassandra, $imei, $date)
 
 }
 
+/***
+* Runs CQL query on Cassandra datastore
+* 
+* @param string $imei	IMEI
+* 
+* @return boolean 	true if imei has logged Today 
+*/
+function hasImeiLoggedToday($o_cassandra, $imei)
+{
+
+	$table = 'lastlog';
+
+	$s_cql2 = "SELECT * FROM $table
+		WHERE
+		imei = '$imei'
+		;";
+	$st_results = $o_cassandra->query($s_cql2);
+
+	$row = $st_results[0];
+	$TZDIFF = 0;		// date takes system time zone
+	$stime = date('Y-m-d@H:i:s',$row['stime']/1000-$TZDIFF);	// server time is stored as row key as timestamp in milisecond
+	return $stime;
+
+}
+
 ?>
