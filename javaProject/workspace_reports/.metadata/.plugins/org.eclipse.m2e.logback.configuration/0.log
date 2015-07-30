@@ -1,0 +1,32 @@
+2015-07-24 12:29:29,625 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:libCassandra:0.0.1 @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\alert_night_travel\pom.xml.
+2015-07-24 12:29:29,698 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:libCassandra:0.0.1 @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\alert_night_travel\pom.xml.
+2015-07-24 12:29:31,620 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:29:31,625 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:29:31,636 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:29:31,637 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\alert_night_travel\src\test\resources
+2015-07-24 12:29:31,708 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:libCassandra:0.0.1 @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\alert_night_travel\pom.xml.
+2015-07-24 12:29:31,946 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:libCassandra:0.0.1 @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\alert_night_travel\pom.xml.
+2015-07-24 12:29:33,195 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:29:33,199 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:29:33,202 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:29:33,203 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\alert_night_travel\src\test\resources
+2015-07-24 12:29:55,797 [Worker-5] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:libCassandra:0.0.1 @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\alert_report_aws\pom.xml.
+2015-07-24 12:29:55,981 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:29:55,982 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:29:55,984 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:29:55,985 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\alert_report_aws\src\test\resources
+2015-07-24 12:29:56,870 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:libCassandra:0.0.1 @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\alert_report_aws\pom.xml.
+2015-07-24 12:29:57,561 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:29:57,562 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:29:57,566 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:29:57,566 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\alert_report_aws\src\test\resources
+2015-07-24 12:30:13,313 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\convert_xml_data_to_csv\pom.xml.
+2015-07-24 12:30:13,542 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:30:13,543 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:30:13,545 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:30:13,546 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\convert_xml_data_to_csv\src\test\resources
+2015-07-24 12:30:13,661 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: in.co.itracksolution:gps-ingester-sample:0.0.1-SNAPSHOT @ D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\convert_xml_data_to_csv\pom.xml.
+2015-07-24 12:30:14,826 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:30:14,827 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-07-24 12:30:14,829 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-07-24 12:30:14,829 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_reports\convert_xml_data_to_csv\src\test\resources
