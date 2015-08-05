@@ -39,20 +39,20 @@
 '862170018323400'
 );
 	$imei = '862170018383602';
-	$datetime1 = '2015-07-28 19:28:00';
-	$datetime2 = '2015-07-28 19:30:00';
+	$datetime1 = '2015-07-29 18:28:00';
+	$datetime2 = '2015-07-29 19:30:00';
 	$deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
-	$orderAsc = TRUE;	// TRUE for ascending, otherwise descending (default) 
+	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
 
-	//$len = count($imeiArray);
-	//for ($i=0; $i < $len; $i++)
-	//{
-	//	$imei = $imeiArray[$i];
-		echo ("imei = $imei\n");
+	$len = count($imeiArray);
+	for ($i=0; $i < $len; $i++)
+	{
+		$imei = $imeiArray[$i];
+		//echo ("imei = $imei\n");
 		$st_results = getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc);
 		//$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
 		print_r($st_results);
-	//}
+	}
 	
 
 	//$date = '2015-06-14';

@@ -43,19 +43,8 @@ include_once("markers.php");?>
 	var schedule_lng = new Array();	
 	var schedule_location_counter= 0;
 	
-	var RouteNMCustomer=new Array(); // Route Number Evening Customer Type
-	var RouteMCustomerLat=new Array();
-	var RouteMCustomerLng=new Array();
-	var RouteMCustomerStationNo=new Array();
-	var RouteMCustomerNo=new Array();
-	var RouteMCustomerType=new Array();
-	
-	var RouteNECustomer=new Array(); // Route Number Evening Customer Type
-	var RouteECustomerLat=new Array();
-	var RouteECustomerLng=new Array();
-	var RouteECustomerStationNo=new Array();
-	var RouteECustomerNo=new Array();	
-	var RouteECustomerType=new Array();
+	var uniqueRouteMorningParseJson;
+        var uniqueRouteEveningParseJson;
 	
 	/*var RouteNMPlant=new Array(); // Route Number Evening Plant Type
 	var RouteMPlantLat=new Array();
@@ -232,92 +221,9 @@ include_once("markers.php");?>
 						chillingTypePlant[k] = xml_data_this[k].getAttribute("type");
 					} 
 				}				
-				xml_data_this="";
-				var customerRouteEvening = "<?php echo $_SESSION['uniqueCustomerRouteEvening']; ?>";
-				xmlObj = null; 			
-				var dest_station_test=customerRouteEvening;
-				//alert("dest_station_test="+dest_station_test);
-				xmlObj = loadXML(dest_station_test);
-				dataReceived=false;
-				if (bname == "Microsoft Internet Explorer")
-				{    
-					if(xmlObj!=null)	
-					{                                      
-						xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-						if(xml_data_this1.length>0)
-						{
-							dataReceived=true;
-						}
-					}                                     
-				}
-				else
-				{   
-					xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-					//alert("length 1:"+xml_data_this.length);    
-					var xml_data_this1 = xmlObj.documentElement.getElementsByTagName("a1");
-					// alert("length 2:"+xml_data1.length);
-					if(xml_data_this1.length>0)
-					{
-						dataReceived=true;
-					}
-				}
-				if(dataReceived==true)
-				{
-					for (var k = 0; k < xml_data_this.length; k++) 
-					{
-						RouteNECustomer[k] = xml_data_this[k].getAttribute("routeNo");
-						RouteECustomerLat[k] = xml_data_this[k].getAttribute("lat");
-						RouteECustomerLng[k] = xml_data_this[k].getAttribute("lng");			
-						RouteECustomerStationNo[k] = xml_data_this[k].getAttribute("station");					
-						RouteECustomerNo[k] = xml_data_this[k].getAttribute("customer");
-						RouteECustomerType[k] = xml_data_this[k].getAttribute("type");	
-					} 
-				}
-				
-				xml_data_this="";
-				var customerRouteMorning ="<?php echo $_SESSION['uniqueCustomerRouteMorning']; ?>";
-				xmlObj = null; 			
-				var dest_station_test=customerRouteMorning;
-				 var exists = isFile(dest_station_test);
-				//alert("exists="+exists);
-				//alert("dest_station_test="+dest_station_test);
-				xmlObj = loadXML(dest_station_test);
-				dataReceived=false;
-				if (bname == "Microsoft Internet Explorer")
-				{    
-					if(xmlObj!=null)	
-					{                                      
-						xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-						if(xml_data_this1.length>0)
-						{
-							dataReceived=true;
-						}
-					}                                     
-				}
-				else
-				{   
-					xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-					//alert("length 1:"+xml_data_this.length);    
-					var xml_data_this1 = xmlObj.documentElement.getElementsByTagName("a1");
-					//alert("length 2:"+xml_data1.length);
-					if(xml_data_this1.length>0)
-					{
-						dataReceived=true;
-					}
-				}
-				if(dataReceived==true)
-				{
-					for (var k = 0; k < xml_data_this.length; k++) 
-					{																													
-						RouteNMCustomer[k] = xml_data_this[k].getAttribute("routeNo");
-						//alert("routeNo="+RouteNMCustomer[k]);
-						RouteMCustomerLat[k] = xml_data_this[k].getAttribute("lat");
-						RouteMCustomerLng[k] = xml_data_this[k].getAttribute("lng");			
-						RouteMCustomerStationNo[k] = xml_data_this[k].getAttribute("station");					
-						RouteMCustomerNo[k] = xml_data_this[k].getAttribute("customer");
-						RouteMCustomerType[k] = xml_data_this[k].getAttribute("type");
-					} 
-				}
+				uniqueRouteMorningParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteArrMorningNew']); ?> );
+                                uniqueRouteEveningParseJson=JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteArrEveningNew']); ?> );
+                            
 				
 
 function show_data_on_map(report_format)
@@ -1733,8 +1639,7 @@ function getStation1(select_value)
 	//alert("client_type_combo_up="+client_type_combo);
 		if(client_type_combo=="2")
 		{	
-			//alert("client_type_combo="+client_type_combo);
-			routeLength=RouteNMCustomer.length;
+			routeLength=uniqueRouteMorningParseJson.length;
 			//alert("routeLengthaa="+routeLength+" search_text="+search_text);
 			if(parseInt(routeLength)>0)
 			{
@@ -1742,22 +1647,24 @@ function getStation1(select_value)
 				for(var i=0;i<routeLength;i++)
 				{
 					search_text = search_text.trim();
-					//alert("route1="+RouteNMCustomer[i]+" route2="+search_text);
-					if(search_text == RouteNMCustomer[i].trim())                                        
+					//alert("route1="+uniqueRouteMorningParseJson[i]['routeNo']+" route2="+search_text);
+					if(search_text.trim() == uniqueRouteMorningParseJson[i]['routeNo'].trim())                                        
 					{
+                                           
 						routeTmpFlag=true;
-						rFoundRNumber[tmpCnt]=RouteNMCustomer[i]
-						rFoundLat[tmpCnt] = RouteMCustomerLat[i];
-						rFoundLng[tmpCnt] = RouteMCustomerLng[i];
-						rFoundStationName[tmpCnt] = RouteMCustomerStationNo[i];
-						rFoundCustomerNo[tmpCnt] = RouteMCustomerNo[i];
-						rFoundType[tmpCnt] = RouteMCustomerType[i];
+						rFoundRNumber[tmpCnt]=uniqueRouteMorningParseJson[i]['routeNo'];
+						rFoundLat[tmpCnt] = uniqueRouteMorningParseJson[i]['lat'];
+						rFoundLng[tmpCnt] = uniqueRouteMorningParseJson[i]['lng'];
+						rFoundStationName[tmpCnt] = uniqueRouteMorningParseJson[i]['stationName'];
+						rFoundCustomerNo[tmpCnt] = uniqueRouteMorningParseJson[i]['customerNo'];
+						rFoundType[tmpCnt] = uniqueRouteMorningParseJson[i]['type'];
 						tmpCnt++;
 					}    
 				}  
 				if(routeTmpFlag==true)
 				{
-					plotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType, rFoundLat, rFoundLng,inci);
+                                    //alert("found");
+                                    plotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType, rFoundLat, rFoundLng,inci);
 				}
 			}
 			if(routeTmpFlag==false)
@@ -1778,7 +1685,7 @@ function getStation1(select_value)
 		var routeTmpFlag = false;
 		if(client_type_combo=="3")
 		{				
-			routeLength=RouteNECustomer.length;
+			routeLength=uniqueRouteEveningParseJson.length;
 			//alert("routeLength="+routeLength+" search_text="+search_text);
 			
 			if(routeLength>0)
@@ -1786,16 +1693,16 @@ function getStation1(select_value)
 				for(var i=0;i<routeLength;i++)
 				{
 					search_text = search_text.trim();
-					if(search_text == RouteNECustomer[i].trim())                                        
+					if(search_text == uniqueRouteEveningParseJson[i]['routeNo'].trim())                                        
 					{
 						//alert("routeNo="+RouteNECustomer[i].trim());
 						routeTmpFlag=true;
-						rFoundRNumber[tmpCnt]=RouteNECustomer[i]
-						rFoundLat[tmpCnt] = RouteECustomerLat[i];
-						rFoundLng[tmpCnt] = RouteECustomerLng[i];
-						rFoundStationName[tmpCnt] = RouteECustomerStationNo[i];
-						rFoundCustomerNo[tmpCnt] = RouteECustomerNo[i];
-						rFoundType[tmpCnt] = RouteECustomerType[i];
+						rFoundRNumber[tmpCnt]=uniqueRouteEveningParseJson[i]['routeNo'];
+						rFoundLat[tmpCnt] = uniqueRouteEveningParseJson[i]['lat'];
+						rFoundLng[tmpCnt] = uniqueRouteEveningParseJson[i]['lng'];
+						rFoundStationName[tmpCnt] = uniqueRouteEveningParseJson[i]['stationName'];
+						rFoundCustomerNo[tmpCnt] = uniqueRouteEveningParseJson[i]['customerNo'];
+						rFoundType[tmpCnt] = uniqueRouteEveningParseJson[i]['type'];
 						tmpCnt++;
 					}    
 				}  
@@ -2252,7 +2159,7 @@ function getStation1(select_value)
 			
 			position=new google.maps.LatLng(routeLatTmp, routeLngTmp);	
 			
-			//alert("pos="+position);
+			//alert("pos="+position+"inci="+inci);
 			//latlngbounds.extend(position);
 			
 			title='abc';

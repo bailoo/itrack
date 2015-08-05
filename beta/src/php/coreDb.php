@@ -59,6 +59,39 @@ ini_set('max_execution_time', 1200); //300 seconds = 5 minutes
 /**********************************/
 
 ///////////////// shams parwez changes//////////////
+function getCustomerPlantChillingRecord($account_id,$type,$DbConnection)
+{
+    $query = "SELECT DISTINCT station_name,station_coord,customer_no,type FROM station WHERE ".
+            "user_account_id='$account_id' AND type='$type' AND status=1";
+    $result = mysql_query($query,$DbConnection);
+    
+    while($row=mysql_fetch_object($result))
+    {
+       $dataArr[]=array(
+                            'station_name'=>$row->station_name,
+                            'customer_no'=>$row->customer_no,
+                            'station_coord'=>$row->station_coord,
+                            'type'=>$row->type,
+                        ); 
+    }
+    return $dataArr;
+}
+function getSuspendaccountDetail($post_user_id,$status,$DbConnection)
+{
+    $query_suspend="SELECT remark FROM account WHERE user_id='$post_user_id' AND status=$status";  // status=4 means account suspended for some reason
+    $result_suspend = mysql_query($query_suspend, $DbConnection); 
+    $num_row_suspend = mysql_num_rows($result_suspend);
+    if($num_row_suspend>0)
+    {
+        $fetch_row=mysql_fetch_row($result_suspend);
+        $suspendRemark=$fetch_row[0];
+    }
+    else
+    {
+        $suspendRemark="";  
+    }
+    return $suspendRemark;
+}
 function getMaxSpeed($vSerial,$status,$DbConnection)
 {
   $query_geo = "select vehicle.max_speed FROM vehicle,vehicle_assignment WHERE vehicle.".
@@ -79,6 +112,63 @@ function getPolyLineDetail($accId,$status,$DbConnection)
     $rowArr=mysql_fetch_row($res_polyline);
     return $rowArr;
 }
+function stationRecord($accId,$DbConnection)
+{
+    $query = "SELECT * FROM station WHERE user_account_id='$accId' AND status=1";
+    //$query = "SELECT * FROM station WHERE status=1 limit 100";
+    $result = mysql_query($query,$DbConnection);
+    $numrows = mysql_num_rows($result); 
+    
+    while($row = mysql_fetch_object($result))
+    {
+        $dataArr=array(
+                        'type'=>$row->type,
+                        'station_id'=>$row->station_id,
+                        'customer_no'=>$row->customer_no,
+                        'station_name'=>$row->station_name,
+                        'create_date'=>$row->create_date,
+                        'distance_variable'=>$row->distance_variable,
+                        'station_coord'=>$row->station_coord
+                    );
+    }
+    return $dataArr;
+}
+
+function getMasterFileDetail($accId,$DbConnection)
+{
+    $Query="Select * FROM master_file WHERE account_id='$accId' AND status=1";
+    $Result=mysql_query($Query, $DbConnection);
+    
+    while($Row=mysql_fetch_object($Result))
+    {
+       $dataArr[]=array(
+                        'upload_format_id'=>$Row->upload_format_id,
+                        'file_ids'=>$Row->file_ids,
+                        'file_names'=>$Row->file_names,
+                        'format_name'=>$Row->format_name
+
+                    ); 
+    }
+    return $dataArr;
+}
+
+function getReportFileDetail($accId,$DbConnection)
+{
+    $Query="Select * FROM get_report_file WHERE account_id='$accId' AND status=1";	
+    $Result=mysql_query($Query, $DbConnection);
+    
+    while($Row=mysql_fetch_object($Result))
+    {
+       $dataArr[]=array(
+                        'upload_format_id'=>$Row->upload_format_id,
+                        'file_ids'=>$Row->file_ids,
+                        'file_names'=>$Row->file_names,
+                        'format_name'=>$Row->format_name
+
+                    ); 
+    }
+    return $dataArr;
+}
 
 function getLatLngPermission($accId,$DbConnection)
 {
@@ -86,6 +176,44 @@ function getLatLngPermission($accId,$DbConnection)
     $result = mysql_query($query,$DbConnection);
     $row=mysql_fetch_row($result);
     return $row[0];
+}
+function getAccoutDetailForLogin($post_group_id,$post_user_id,$post_password,$DbConnection)
+{
+    $query="SELECT account.account_id,account.user_type,account.group_id FROM account,account_detail WHERE (account.group_id=".
+                "'$post_group_id' OR account.group_id IS NULL) AND account.account_id=account_detail.account_id AND account.".
+                "user_id='$post_user_id' AND account.password='$post_password' AND (account.status=1 OR account.status=4)";
+    //echo "query=".$query."<br>";
+    $result = mysql_query($query, $DbConnection);
+    
+    $row =mysql_fetch_object($result);
+    //echo "accId=".$row->account_id."<br>";
+    //echo "user_type=".$row->user_type."<br>";
+    $account_id=$row->account_id;
+                $userTypeLogin=$row->user_type;
+    $dataArr[]=array(
+                        'account_id'=>$row->account_id,
+                        'user_type'=>$row->user_type
+                    );
+    return $dataArr;
+}
+
+function getLoadCell2Detail($vehicle_serial,$startdate,$enddate,$DbConnection)
+{
+    $query = "SELECT * FROM load_cell_2 WHERE imei='$vehicle_serial' AND status=1 AND datetime_1 BETWEEN '$startdate' AND '$enddate'";
+    //echo $query;
+    $result = mysql_query($query,$DbConnection);
+ 
+    while($row=mysql_fetch_object($result))
+    {
+        $dataArr[]=array(
+                            'datetime_1'=>$row->datetime_1,
+                            'load_status1'=>$row->load_status1,
+                            'location'=>$row->location,
+                            'load_1'=>$row->load_1,
+                            'load_status2'=>$row->load_status2,
+                        );
+    }
+    return $dataArr;
 }
 /////////////////////////////////////
 function getTimeZone($accountId,$DbC)
@@ -2626,7 +2754,7 @@ function getTpaUidNameAr($account_id,$DbConnection)
 /***********************************Defautl Chilling PlantAssignment********************************************************/
  function getCustomerNoStationNext($account_id,$DbConnection)  
  { 
-    $query_chillplant = "SELECT customer_no,station_name FROM station USE INDEX(stn_type_uaid_status) WHERE type=2 AND user_account_id='$account_id' AND status=1 order by station_name";
+    $query_chillplant = "SELECT customer_no,station_name FROM station USE INDEX(stn_type_uaid_status) WHERE type=2 AND user_account_id='$account_id' AND status=1";
 	$result_chillquery = mysql_query($query_chillplant,$DbConnection);
 	while($rowchill=mysql_fetch_object($result_chillquery))
 	{
@@ -2894,7 +3022,7 @@ function getDetailAllLandmark($account_id_local,$DbConnection)
             $landmark_name=$row->landmark_name;
             $zoom_level=$row->zoom_level;
             $distance_variable=$row->distance_variable;*/		
-            $data[]=array('landmark_id'=>$row->landmark_id,'landmark_name'=>$row->landmark_name,'zoom_level'=>$row->zoom_level,'distance_variable'=>$row->distance_variable);	
+            $data[]=array('landmark_id'=>$row->landmark_id,'landmark_name'=>$row->landmark_name,'landmark_coord'=>$row->landmark_coord,'zoom_level'=>$row->zoom_level,'distance_variable'=>$row->distance_variable);	
         }
 	return $data;
 }
@@ -3168,21 +3296,30 @@ function getScheduleAssignmentMaxSerial($DbConnection)
 	return $max_no;
  
 }
+
+function getIoType($imei,$type,$DbConnection)
+{
+    $query = "SELECT io_assignment.".$type." FROM io_assignment,vehicle_assignment WHERE io_assignment.vehicle_id=vehicle_assignment.vehicle_id AND".
+          " vehicle_assignment.device_imei_no='$imei' AND io_assignment.status=1 AND vehicle_assignment.status=1";  
+
+    $result = mysql_query($query,$DbConnection);
+    $row = mysql_fetch_object($result);
+    $rowResult=$row->$type;
+    return $rowResult;
+}
+
 function deassignStationDeassignment($vehicle_size,$local_vehicle_ids,$status0,$account_id,$date,$vehicle_id,$station_id,$status1,$DbConnection)
 {
-  
-	for($i=0;$i<$vehicle_size;$i++)
-	{	
-	  $local_all_ids=explode(":",$local_vehicle_ids[$i]);
-	  $vehicle_id = $local_all_ids[0];
-	  $station_id = $local_all_ids[1];					
-	  $query="UPDATE station_assignment SET status='$status0',edit_id='$account_id',edit_date='$date' WHERE vehicle_id='$vehicle_id' AND station_id='$station_id' AND status='$status1'";
-	  //echo $query;
-	  $result=mysql_query($query,$DbConnection); 
-	  return $result;
-		
-	}
- 
+    for($i=0;$i<$vehicle_size;$i++)
+    {	
+      $local_all_ids=explode(":",$local_vehicle_ids[$i]);
+      $vehicle_id = $local_all_ids[0];
+      $station_id = $local_all_ids[1];					
+      $query="UPDATE station_assignment SET status='$status0',edit_id='$account_id',edit_date='$date' WHERE vehicle_id='$vehicle_id' AND station_id='$station_id' AND status='$status1'";
+      //echo $query;
+      $result=mysql_query($query,$DbConnection); 
+      return $result;
+    }
 }
 /*********************************************manage Edit Delete Station************************************************/
 function getDetailAllStation($account_id_local,$station_type1,$DbConnection)
@@ -3203,6 +3340,14 @@ function getDetailAllStation($account_id_local,$station_type1,$DbConnection)
     }
 	//print_r($data);
     return $data;
+}
+
+ function getDistanceVariableAccountDetail($accId,$DbConnection)
+{
+    $query1 = "SELECT distance_variable FROM account_detail WHERE account_id='$accId'";
+    $result1 = mysql_query($query1,$DbConnection);
+    $Row1=mysql_fetch_row($result1);
+    return $Row1[0];
 }
 /***********************************************************************************************************************/
 /*********************************************manage Edit Delete Vehicel************************************************/

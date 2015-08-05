@@ -11,7 +11,7 @@ include_once('lastRecordData.php');
 include_once("getXmlData.php");	
 
 //echo "in if";
-$pathtowrite = $_REQUEST['xml_file']; 
+
 $mode = $_REQUEST['mode'];
 $vserial1 = $_REQUEST['vserial'];
 //echo"veserial=".$vserial1."<br>";
@@ -45,13 +45,12 @@ $sortBy="h";
 //date_default_timezone_set('Asia/Calcutta');
 $current_date=date("Y-m-d");
 
-$fh = fopen($pathtowrite, 'w') or die("can't open file 1"); // new
-fwrite($fh, "<t1>");  
-fclose($fh);
+
 //$vserial_arr = explode(',',$vserial);
 $vname1 ="";
 //echo "t1=";
 //echo"vsize=".$vsize."<br>";
+$data=array();
 for($i=0;$i<$vsize;$i++)
 {
 	$tmp = explode('#',$vserial[$i]);
@@ -81,22 +80,37 @@ for($i=0;$i<$vsize;$i++)
 		{
 			$status = "Stopped";
 		}
-	
-		//var_dump($LastRecordObject);
-		$linetmp="\n".'<x a="'.$LastRecordObject->messageTypeLR[0].'" b="'.$LastRecordObject->versionLR[0].'" c="'.$LastRecordObject->fixLR[0].'" d="'.$LastRecordObject->latitudeLR[0].'" e="'.$LastRecordObject->longitudeLR[0].'" f="'.$LastRecordObject->speedLR[0].'" g="'.$LastRecordObject->serverDatetimeLR[0].'" h="'.$LastRecordObject->deviceDatetimeLR[0].'" i="'.$LastRecordObject->io1LR[0].'" j="'.$LastRecordObject->io2LR[0].'" k="'.$LastRecordObject->io3LR[0].'" l="'.$LastRecordObject->io4LR[0].'" m="'.$LastRecordObject->io5LR[0].'" n="'.$LastRecordObject->io6LR[0].'" o="'.$LastRecordObject->io7LR[0].'" p="'.$LastRecordObject->io8LR[0].'" q="'.$LastRecordObject->sigStrLR[0].'" r="'.$LastRecordObject->suplyVoltageLR[0].'" s="'.$LastRecordObject->dayMaxSpeedLR[0].'" t="'.$LastRecordObject->dayMaxSpeedTimeLR[0].'" u="'.$LastRecordObject->lastHaltTimeLR[0].'" v="'.$imei.'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" aa="'.$status.'"/>,';
-		//get_vehicle_last_data($current_date, $imei, $last_time, $vehicle_detail_local[0],$vehicle_detail_local[1], $pathtowrite);
-		//echo "<textarea>".$linetmp."</textarea>";
-		$fh = fopen($pathtowrite, 'a') or die("can't open file pathtowrite"); //append
-		//$fh = fopen($pathtowrite, 'w') or die("can't open file 1");
-
-		fwrite($fh, $linetmp);  
-		fclose($fh);
+                
+            $data[]=array(
+                            'messageTypeLR'=>$LastRecordObject->messageTypeLR[0],
+                            'versionLR'=>$LastRecordObject->versionLR[0],
+                            'fixLR'=>$LastRecordObject->fixLR[0],
+                            'latitudeLR'=>$LastRecordObject->latitudeLR[0],
+                            'longitudeLR'=>$LastRecordObject->longitudeLR[0],
+                            'speedLR'=>$LastRecordObject->speedLR[0],
+                            'serverDatetimeLR'=>$LastRecordObject->serverDatetimeLR[0],
+                            'deviceDatetimeLR'=>$LastRecordObject->deviceDatetimeLR[0],
+                            'io1LR'=>$LastRecordObject->io1LR[0],
+                            'io2LR'=>$LastRecordObject->io1LR[0],
+                            'io3LR'=>$LastRecordObject->io1LR[0],
+                            'io4LR'=>$LastRecordObject->io1LR[0],
+                            'io5LR'=>$LastRecordObject->io1LR[0],
+                            'io6LR'=>$LastRecordObject->io1LR[0],
+                            'io7LR'=>$LastRecordObject->io1LR[0], 
+                            'io8LR'=>$LastRecordObject->io1LR[0], 
+                            'sigStrLR'=>$LastRecordObject->sigStrLR[0], 
+                            'suplyVoltageLR'=>$LastRecordObject->suplyVoltageLR[0], 
+                            'dayMaxSpeedLR'=>$LastRecordObject->dayMaxSpeedLR[0], 
+                            'dayMaxSpeedTimeLR'=>$LastRecordObject->dayMaxSpeedTimeLR[0],
+                            'lastHaltTimeLR'=>$LastRecordObject->lastHaltTimeLR[0],
+                            'deviceImeiNo'=>$imei,
+                            'vehicleName'=>$vehicle_detail_local[0],
+                            'vehilceType'=>$vehicle_detail_local[2],
+                            'vehilceNumber'=>$vehicle_detail_local[2],                               
+                            'status'=>$status
+                        );
 	}
 	$LastRecordObject=null;
 }
-
-$fh = fopen($pathtowrite, 'a') or die("can't open file 2"); //append
-fwrite($fh, "\n<a1 datetime=\"unknown\"/>");       
-fwrite($fh, "\n</t1>");  
-fclose($fh);
+echo json_encode($data);
 ?>

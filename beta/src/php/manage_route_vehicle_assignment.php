@@ -1,6 +1,6 @@
 <?php
     //error_reporting(-1);
-   // ini_set('display_errors', 'On');
+    //ini_set('display_errors', 'On');
 	include_once('Hierarchy.php');
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');

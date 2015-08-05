@@ -712,45 +712,24 @@ var input = (document.getElementById('pac-input'));
 								}
 								else
 								{
-									if(client_type_combo=='0')
-									{			
-										if(station_counter_customer>0)
-										{
-											for(var i=0;i<station_counter_customer;i++)
-											{
-												search_text = trim(search_text);
-												station_name_customer[i] = trim(station_name_customer[i]);
-												station_customer_1[i] = trim(station_customer_1[i]); 
-												if((search_text == station_name_customer[i]) || (search_text == station_customer_1[i]) )
-												{
-													//alert('found');
-													var customer_distance = calculate_distance(lat, station_lat_customer[i], lng, station_lng_customer[i]);							
-													customer_plant_str1='<tr><td class=\"live_td_css1\">Place From Customer</td><td>:</td><td class=\"live_td_css2\">'+customer_distance+' From '+station_name_customer[i]+':'+station_customer_1[i]+'</td></tr>';
-													break;
-												}    
-											}  				
-										}			
-									}
-									
-									if(client_type_combo=='1')
-									{	
-										if(station_counter_plant>0)
-										{				
-											for(var i=0;i<station_counter_plant;i++)
-											{
-												search_text = trim(search_text);
-												station_name_plant[i] = trim(station_name_plant[i]);
-												station_customer_plant[i] = trim(station_customer_plant[i]); 
-												if( (search_text == station_name_plant[i]) || (search_text == station_customer_plant[i]) )
-												{
-													//alert('found');
-													var customer_distance = calculate_distance(lat, station_lat_plant[i], lng, station_lng_plant[i]);							
-													customer_plant_str1='<tr><td class=\"live_td_css1\"> Place From Plant</td><td>:</td><td class=\"live_td_css2\">'+customer_distance+' From '+station_name_plant[i]+':'+station_customer_plant[i]+'</td></tr>';
-													break;					
-												}    
-											} 				
-										}
-									}
+if(client_type_combo=='0')
+{
+if(uniqueCustomerParseJson[search_text]!=undefined)
+{
+var customerArrDetail=uniqueCustomerParseJson[search_text].split('^');
+var customer_distance = calculate_distance(lat, customerArrDetail[0], lng, customerArrDetail[1]);	
+customer_plant_str1='<tr><td class=\"live_td_css1\">Place From Customer</td><td>:</td><td class=\"live_td_css2\">'+customer_distance+' From '+customerArrDetail[2]+':'+search_text+'</td></tr>';
+}
+}
+if(client_type_combo=='1')
+{	
+if(uniquePlantParseJson[search_text]!=undefined)
+{
+var plantArrDetail=uniquePlantParseJson[search_text].split('^');
+var customer_distance = calculate_distance(lat, plantArrDetail[0], lng, plantArrDetail[1]);	
+customer_plant_str1='<tr><td class=\"live_td_css1\"> Place From Plant</td><td>:</td><td class=\"live_td_css2\">'+customer_distance+' From '+plantArrDetail[2]+':'+search_text+'</td></tr>';
+}	
+}
 								}
 							}
 						}

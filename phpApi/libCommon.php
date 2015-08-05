@@ -1,6 +1,7 @@
 <?php
 
-$s_server_host     = '54.152.30.69'; // us-east ic1 (EIP)
+$s_server_host     = '172.31.57.53'; // us-east ic1 (EIP)
+#$s_server_host     = '54.152.30.69'; // us-east ic1 (EIP)
 #$s_server_host     = '52.74.33.255'; //ap-southeast itrackcass0
 #$s_server_host     = '127.0.0.1';    // Localhost
 $i_server_port     = 9042; 

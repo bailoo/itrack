@@ -50,8 +50,8 @@
 	{
 		$imei = $imeiArray[$i];
 		$date = date("Y-m-d"); 
-		//$todayLogResult=hasImeiLogged($o_cassandra, $imei, $date);
-		$todayLogResult=hasImeiLoggedToday($o_cassandra, $imei);
+		$todayLogResult=hasImeiLogged($o_cassandra, $imei, $date);
+		//$todayLogResult=hasImeiLoggedToday($o_cassandra, $imei);
 		echo "imei = $imei todayLog = $todayLogResult\n";
 		echo "\n";
 	}	

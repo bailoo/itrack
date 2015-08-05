@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.jst.ws.client.type.java">
+		<item value="http://118.67.240.88:5009/Service.asmx?wsdl"/>
+		<item value="http://220.226.105.72/RtrackWebservice/track.asmx?wsdl"/>
+	</list>
+</section>

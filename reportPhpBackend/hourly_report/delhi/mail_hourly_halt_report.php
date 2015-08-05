@@ -43,13 +43,13 @@ mysql_select_db($DBASE, $DbConnection) or die("could not find DB");
 date_default_timezone_set("Asia/Kolkata");
 if ($DEBUG_OFFLINE) {    
     $abspath = "C:\\xampp/htdocs/itrack/beta/src/php";
-    $report_path = "C:\\xampp/htdocs/itrack/ReportPhpBackend";
+    $report_path = "C:\\xampp/htdocs/itrack/reportPhpBackend";
 } else if ($DEBUG_ONLINE) {
     $abspath = "/var/www/html/vts/beta/src/php";
-    $report_path = "/mnt/itrack/ReportPhpBackend";
+    $report_path = "/mnt/itrack/reportPhpBackend";
 } else {
     $abspath = "/var/www/html/vts/beta/src/php";
-    $report_path = "/mnt/itrack/ReportPhpBackend";
+    $report_path = "/mnt/itrack/reportPhpBackend";
 }
 //echo "<br>AbsPath=" . $abspath;
 include_once($abspath . "/common_xml_element.php");
