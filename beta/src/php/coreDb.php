@@ -2153,7 +2153,7 @@ function deleteRouteAssign($vehicle_size,$account_id,$date,$local_vehicle_ids,$D
 	$max_no= $row->serial_no;
 	return $max_no; 
  }
- function insertStation($account_size,$local_account_ids,$max_no,$station_no1,$station_name1,$station_coord1,$type1,$account_id,$status,$date,$DbConnection)
+ function insertStation($account_size,$local_account_ids,$max_no,$station_no1,$station_name1,$station_coord1,$type1,$status,$account_id,$date,$DbConnection)
  {
 	$query_string1="INSERT INTO station(user_account_id,station_id,customer_no,station_name,station_coord,type,status,create_id,create_date) VALUES";
 	for($i=0;$i<$account_size;$i++)
