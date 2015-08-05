@@ -57,7 +57,7 @@ uniqueRouteMorningParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniq
 uniqueRouteEveningParseJson=JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteArrEveningNew']); ?> );
 var uniqueRouteParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteTransporters']); ?> );
 
-var liveDataDisplay;
+var liveDataDisplay=[[]];
 
 
 
@@ -598,7 +598,8 @@ function filter_live_vehicle(obj,jsActionNo)
 	//alert("s1.len="+s1.length);
 
 	if (GBrowserIsCompatible()) 
-	{	  			
+	{
+            liveDataDisplay=[[]];
 		//alert("in GBrowserIsCompatible")
 		map.clearOverlays();	
 	}	
@@ -1138,7 +1139,7 @@ function Load_MovingData_Map(startdate,enddate,pt_for_zoom,zoom_level,status)
 			  thisdest = "../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
         TryCnt =0;
         //clearTimeout(timer);
-        timer = setTimeout('displayInfo_live()',1000);        
+        //timer = setTimeout('displayInfo_live()',1000);        
          //displayInfo();
         //alert("poststr2="+poststr);
         //alert("after req1");        
