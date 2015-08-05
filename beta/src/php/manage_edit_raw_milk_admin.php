@@ -1,7 +1,6 @@
 
 <?php
 echo "edit##";
-
 ?>
 <style>
    /* html, body{
@@ -67,7 +66,7 @@ border-left: 1px solid #800;
 .tablescroll th:first-child div{
 border: none;
 }
-</style>  
+</style>   
     <?php
 	include_once('Hierarchy.php');
 	include_once('util_session_variable.php');
@@ -78,7 +77,7 @@ border: none;
 	$account_id_local=$_POST['common_id'];	
 	$startdate = str_replace('/','-',$startdate);
 	$enddate = str_replace('/','-',$enddate);
-	$all_data=0;$all_data_without_date=0;
+	$all_data=0;$all_data_without_date=0;$targetdatewise=0;
 	if($order=="3")
 	{
 		$all_data = 1;
@@ -87,22 +86,19 @@ border: none;
 	{
 		$all_data_without_date = 1;
 	}
+	if($order=="7")
+	{
+		$targetdatewise = 1;
+	}
+	$targetplant=$_POST['targetplant'];
+	//echo $targetplant;
+        //echo $order."<br>";
+        //echo $targetdatewise;
 	if($user_type=="raw_milk"){
-		/*$query_account_admin_id="SELECT account_admin_id FROM account_detail WHERE account_id='$account_id'";
-		//echo $query_account_admin_id;
-		$result_account_admin_id = mysql_query($query_account_admin_id, $DbConnection);
-		$row_account_admin_id =mysql_fetch_object($result_account_admin_id);*/
-                $row_account_admin_id=getAcccountAdminIdAdminId($account_id,$DbConnection);
-                $account_admin_id=$row_account_admin_id[0];
-		/*
-		$query_admin_id="SELECT account_id FROM account_detail WHERE admin_id='$row_account_admin_id->account_admin_id'";
-		//echo $query_admin_id;
-		$result_admin_id = mysql_query($query_admin_id, $DbConnection);
-		$row_admin_id =mysql_fetch_object($result_admin_id);
-		$parent_admin_id=$row_admin_id->account_id;
-                */
-                $parent_admin_id=getAccountIdByAdminId($account_admin_id,$DbConnection);
 		
+                $row_account_admin_id=getAcccountAdminIdAdminId($account_id,$DbConnection);
+                $account_admin_id=$row_account_admin_id[0];		
+                $parent_admin_id=getAccountIdByAdminId($account_admin_id,$DbConnection);		
 		///new code assign till root////
 		$final_plant_list = array();
 		$final_plant_name_list=array();
@@ -116,17 +112,7 @@ border: none;
 				$conditionStr=$conditionStr." user_account_id='$rma' OR ";
 			}
 			$conditionStr=substr($conditionStr,0,-3);		  
-			/*
-                        $query_plant = "SELECT customer_no,station_name FROM station WHERE type=1 AND ($conditionStr) AND status=1";
-			//echo"Query=".$query_plant."<br>";
-			$result_query = mysql_query($query_plant,$DbConnection);
-			while($row=mysql_fetch_object($result_query))
-			{
-				//echo $row->customer_no;
-				$final_plant_list[]=$row->customer_no;
-				$final_plant_name_list[]=$row->station_name;
-			}
-                        */
+			
                         $dataCNS=getCustomerNoStationConditionStr($conditionStr,$DbConnection);
                         foreach($dataCNS as $row)
                         {
@@ -143,29 +129,12 @@ border: none;
 		global $DbConnection;	
 		global $parent_account_ids;	 
 		global $acc_size;		
-		/*	
-		$query = "SELECT account_admin_id FROM account_detail WHERE account_id='$account_id_local1'";	
-		//echo $query;
-		$result=mysql_query($query,$DbConnection);
-		$row=mysql_fetch_row($result);
-		$admin_id=$row[0];*/
+		
                 $row_account_admin_id=getAcccountAdminIdAdminId($account_id,$DbConnection);
                 $admin_id=$row_account_admin_id[0];
-		/*	
-		$query1 = "SELECT account_id FROM account_detail WHERE admin_id='$admin_id'";
-		//echo "<br>".$query;	
-		$result=mysql_query($query1,$DbConnection);
-		$row1=mysql_fetch_row($result);
-		$function_account_id=$row1[0];
-		//echo "account_id=".$function_account_id.'<br>';*/
+		
                 $function_account_id=getAccountIdByAdminId($admin_id,$DbConnection);
-			
-		/*$queryType="SELECT user_type from account WHERE account_id='$function_account_id'";
-		//echo "<br>".$queryType;
-		$resultType=mysql_query($queryType,$DbConnection);
-		$rowType=mysql_fetch_row($resultType);
-		$function_account_type=$rowType[0];
-		//echo "userType=".$function_account_type."<br>";*/
+		
                 $function_account_type=getUserTypeAccount($function_account_id,$DbConnection);
 		
 		if($function_account_type!='raw_milk')
@@ -197,14 +166,9 @@ border: none;
 			{
 				//echo "<br>Plant";
 				//*** Getting plant from plant_user_assignment*******//
-				/*$query_plant="SELECT * FROM plant_user_assignment WHERE status=1 AND  account_id='$account_id'";
-				$result_plant = mysql_query($query_plant,$DbConnection);*/
-                                $result_plant=getDetailAllPUA($account_id,$DbConnection);
+				$result_plant=getDetailAllPUA($account_id,$DbConnection);
 				$plant_in="";
-				/*while($row_plant = mysql_fetch_object($result_plant))
-				{
-					$plant_in.=" invoice_mdrm.plant=".$row_plant->plant_customer_no." OR ";
-				}*/
+				
                                 foreach($result_plant as $row_plant)
                                 {
                                     $plant_in.=" invoice_mdrm.plant=".$row_plant['plant_customer_no']." OR ";
@@ -212,59 +176,53 @@ border: none;
 				if($plant_in!=""){
 					$plant_in = substr($plant_in, 0, -3);
 				}
-                                /*
-				if($all_data)
-				{
-					//date between
-					$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
-						account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-						AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate' AND ($plant_in)";
-					
-				}
-				else
-				{
-                                    if($all_data_without_date)
-                                    {
-					//invoice_status=1	
-					$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
-						account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-						AND ($plant_in) AND invoice_mdrm.invoice_status=1";
-                                    }
-                                    else
-                                    {
-					//date between and imvoice_status	
-					$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
-						account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-						AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate' AND ($plant_in) AND invoice_mdrm.invoice_status='$order'";
-                                    }
-					
-				}
-				//echo $query;
-                                */
+                                
                                 if($all_data)
 				{
-                                    $condition="datebetweenonly_alldata";
-                                    $orderA="";
-                                    $user_type="plant_raw_milk";
-                                    $result=getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type,$DbConnection);
-                                }
+					$condition="datebetweenonly_alldata";
+					$orderA="";
+					$user_type="plant_raw_milk";
+					$result=getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type,$DbConnection);
+				}
                                 else
 				{
-                                    if($all_data_without_date)
-                                    {
-                                        $condition="invoicestatus_alldataNoDate";
-                                        $orderA="1";
-                                        $user_type="plant_raw_milk";
-                                        $result=getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type,$DbConnection);
-                                    }
-                                    else
-                                    {
-                                        $condition="datebetween_invoicestatus";
-                                        $orderA=$order;
-                                        $user_type="plant_raw_milk";
-                                        $result=getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type,$DbConnection); 
-                                    }
-                                }
+					if($all_data_without_date)
+					{
+						$condition="invoicestatus_alldataNoDate";
+						$orderA="1";
+						$user_type="plant_raw_milk";
+						$result=getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type,$DbConnection);
+					}
+					else if($targetdatewise)
+					{
+						if($targetplant=="0")//for all plant
+						{						
+							 $condition="invoicestatus_allplant_targetdate";
+                                                        //$targetplant=$targetplant;
+                                                        $user_type="plant_raw_milk";
+                                                        $conditionStr=""; 
+                                                        $result=getInvoiceMDRMTargetDate($condition,$startdate,$enddate,$conditionStr,$targetplant,$user_type,$DbConnection);
+                                                        
+						}
+						else
+						{	
+                                                         $condition="invoicestatus_plant_targetdate";
+                                                        //$targetplant=$targetplant;
+                                                        $user_type="plant_raw_milk";
+                                                        $conditionStr=""; 
+                                                        $result=getInvoiceMDRMTargetDate($condition,$startdate,$enddate,$conditionStr,$targetplant,$user_type,$DbConnection);
+                                                       
+							//echo$query1;
+						}
+					}
+					else
+					{
+						$condition="datebetween_invoicestatus";
+						$orderA=$order;
+						$user_type="plant_raw_milk";
+						$result=getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type,$DbConnection); 
+					}
+                }
 			}
 			else if($user_type=="raw_milk")
 			{
@@ -283,32 +241,7 @@ border: none;
 				}
 				//$conditionStr=$conditionStr." transporter_account_id='$account_id' OR ";
 				$conditionStr = substr($conditionStr,0,-3);
-				/*
-				if($all_data)
-				{
-					
-					$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
-						account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-						AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate' AND ($conditionStr) AND invoice_mdrm.invoice_status!=5";
-					
-				}
-				else
-				{
-					if($all_data_without_date)
-					{
-						
-						$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
-							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-							 AND ($conditionStr) AND invoice_mdrm.invoice_status=1";
-					}
-					else
-					{
-						
-						$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
-							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-							AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate' AND ($conditionStr) AND invoice_mdrm.invoice_status='$order'";
-					}
-				}*/
+				
                                 if($all_data)
 				{
                                     $condition="datebetweenonly_alldata";
@@ -338,62 +271,55 @@ border: none;
 			else //admin
 			{
 				//echo "<br>User";
-				/*
-                                if($all_data)
-				{
-					
-					$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
-						account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1 
-						AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate'";
-				}
-				else
-				{
 				
-					if($all_data_without_date)
-					{
-						
-						$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
-							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-							AND invoice_mdrm.invoice_status=1 ";
-						//echo $query;
-					}
-					else
-					{
-						
-						$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
-							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-							AND invoice_mdrm.invoice_status='$order' AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate'";
-							//echo"Test";
-					}
-					//$query = "SELECT invoice_mdrm.* FROM invoice_mdrm WHERE status=1 AND invoice_status='$order' AND dispatch_time BETWEEN '$startdate' AND '$enddate'";
-				}*/
-                                if($all_data)
-				{
+                            if($all_data)
+                            {
                                     $condition="datebetweenonly_alldata";
                                     $orderA="";
                                     $user_type="admin";
                                     $conditionStr="";
                                     $result=getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type,$DbConnection);
-                                }
-                                else
-                                {
-                                   if($all_data_without_date)
-                                   {
+                            }
+                            else
+                            {
+                               if($all_data_without_date)
+                               {
                                        $condition="invoicestatus_alldataNoDate";
                                        $orderA="1";
                                        $user_type="admin";
                                        $conditionStr="";
                                        $result=getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type,$DbConnection);
-                                   } 
-                                   else
-                                   {
+                               } 
+                               else if($targetdatewise)
+                                    {
+                                            if($targetplant=="0")//for all plant
+                                            {
+                                               $condition="invoicestatus_allplant_targetdate";
+                                               //$targetplant=$targetplant;
+                                               $user_type="admin";
+                                               $conditionStr=""; 
+                                               $result=getInvoiceMDRMTargetDate($condition,$startdate,$enddate,$conditionStr,$targetplant,$user_type,$DbConnection);
+                                          
+                                            }
+                                            else
+                                            {
+                                                $condition="invoicestatus_plant_targetdate";
+                                               //$targetplant=$targetplant;
+                                               $user_type="admin";
+                                               $conditionStr=""; 
+                                               $result=getInvoiceMDRMTargetDate($condition,$startdate,$enddate,$conditionStr,$targetplant,$user_type,$DbConnection);
+                                            
+                                            }
+                                    }
+                               else
+                               {
                                        $condition="datebetween_invoicestatus";
                                        $orderA=$order;
                                        $user_type="admin";
                                        $conditionStr="";
                                        $result=getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type,$DbConnection);
-                                   }
-                                }
+                               }
+                            }
 			}
 			//echo $query;
 			//$result = mysql_query($query,$DbConnection);			
@@ -408,24 +334,37 @@ border: none;
 			<thead>
 			<?php
 			if( $user_type=="plant_raw_milk"){
-				echo "<tr class='header' style='background-color:silver;' rules='all'>
+				/*echo "<tr style='background-color:silver;' rules='all'>
+			<td>SNO</td><td>FIRST CREATE DATE</td><td>LORRY NO</td><td>VEHICLE NO</td><td>TANKER TYPE</td><td>DOCKET NO</td><td>EMAIL</td><td>TRANSPORTER MOBILE</td><td>QTY(KG)</td>
+				<td>FAT(%)</td><td>SNF(%)</td><td>FAT(KG)</td><td>SNF(KG)</td><td>MANUAL MILK AGE(Hrs)</td><td>DISPATCH TIME</td><td>TARGET TIME</td><td>DRIVER NAME</td><td>DRIVER MOBILE</td><td>USERNAME(USERID)</td><td>STATUS</td><td>CLOSE</td><td><font color=blue>PLANT</font></td><td><font color=blue>CHILLING PLANT</font></td><td>UNLOAD EST.In MINS(GateEntry)</td><td>UNLOAD ACCEPT TIME</td><td>FAT%(FT)</td><td>SNF%(FT)</td><td>Qty(FT)</td><td>Temp.(FT)</td><td>Acidity(FT)</td><td>MBRT-min(FT)</td><td>RM(FT)</td><td>BR(FT)</td><td>Protien%(FT)</td><td>Sodium(FT)</td><td>Testing Status</td><td>FAT%(RT)</td><td>SNF%(RT)</td><td>ADULTRATION</td><td>OtherADULTRATION</td>
+			</tr>";*/
+			echo "<tr class='header' style='background-color:silver;' rules='all'>
 			<th>SNO<div>SNO</div></th><th>FIRST CREATE DATE<div>FIRST CREATE DATE</div></th><th>LORRY NO<div>LORRY NO</div></th><th>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th>QTY(KG)<div>QTY(KG)</div></th>
-				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>CLOSE<div>CLOSE</div></th><th><font color=blue>PLANT</font><div><font color=blue>PLANT</font></div></th><th><font color=blue>CHILLING PLANT</font><div><font color=blue>CHILLING PLANT</font></div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>UNLOAD ACCEPT TIME<div>UNLOAD ACCEPT TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th>
+				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>CLOSE<div>CLOSE</div></th><th>PLANT<div>PLANT</div></th><th>CHILLING PLANT<div>CHILLING PLANT</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>UNLOAD ACCEPT TIME<div>UNLOAD ACCEPT TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th>
 			</tr>";
 			}
-			else if($user_type=="raw_milk"){						
-				echo "<tr class='header' style='background-color:silver;' rules='all'>
+			else if($user_type=="raw_milk"){
+				/*			
+				echo "<tr style='background-color:silver;' rules='all'>
+			<td>SNO</td><td>FIRST CREATE DATE</td><td>LORRY NO</td><td>VEHICLE NO</td><td>TANKER TYPE</td><td>DOCKET NO</td><td>EMAIL</td><td>TRANSPORTER MOBILE</td><td>QTY(KG)</td>
+				<td>FAT(%)</td><td>SNF(%)</td><td>FAT(KG)</td><td>SNF(KG)</td><td>MANUAL MILK AGE(Hrs)</td><td>DISPATCH TIME</td><td>TARGET TIME</td><td>DRIVER NAME</td><td>DRIVER MOBILE</td><td>USERNAME(USERID)</td><td>STATUS</td><td><font color=blue>PLANT</font></td><td><font color=blue>CHILLING PLANT</font></td><td>UNLOAD EST.In MINS(GateEntry)</td><td>UNLOAD ACCEPT TIME</td><td>FAT%(FT)</td><td>SNF%(FT)</td><td>Qty(FT)</td><td>Temp.(FT)</td><td>Acidity(FT)</td><td>MBRT-min(FT)</td><td>RM(FT)</td><td>BR(FT)</td><td>Protien%(FT)</td><td>Sodium(FT)</td><td>Testing Status</td><td>FAT%(RT)</td><td>SNF%(RT)</td><td>ADULTRATION</td><td>OtherADULTRATION</td><td>APPROVED TIME</td>
+			</tr>";*/
+			echo "<tr class='header' style='background-color:silver;' rules='all'>
 			<th>SNO<div>SNO</div></th><th>FIRST CREATE DATE<div>FIRST CREATE DATE</div></th><th>LORRY NO<div>LORRY NO</div></th><th>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th>QTY(KG)<div>QTY(KG)</div></th>
-				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th><font color=blue>PLANT</font><div><font color=blue>PLANT</font></div></th><th><font color=blue>CHILLING PLANT</font><div><font color=blue>CHILLING PLANT</font></div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>UNLOAD ACCEPT TIME<div>UNLOAD ACCEPT TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th><th>APPROVED TIME<div>APPROVED TIME</div></th>
+				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>PLANT<div>PLANT</div></th><th>CHILLING PLANT<div>CHILLING PLANT</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>UNLOAD ACCEPT TIME<div>UNLOAD ACCEPT TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th><th>APPROVED TIME<div>APPROVED TIME</div></th>
 			</tr>";
 			}
 			else{ //admin
+			/*echo "<tr style='background-color:silver;' rules='all'>
+			<td>SNO</td><td>FIRST CREATE DATE</td><td>LORRY NO</td><td>VEHICLE NO</td><td>TANKER TYPE</td><td>DOCKET NO</td><td>EMAIL</td><td>TRANSPORTER MOBILE</td><td>QTY(KG)</td>
+				<td>FAT(%)</td><td>SNF(%)</td><td>FAT(KG)</td><td>SNF(KG)</td><td>MANUAL MILK AGE(Hrs)</td><td>DISPATCH TIME</td><td>TARGET TIME</td><td>DRIVER NAME</td><td>DRIVER MOBILE</td><td>USERNAME(USERID)</td><td>STATUS</td><td>CLOSE</td><td><font color=red>CANCEL</font></td><td><font color=blue>PLANT</font></td><td><font color=blue>CHILLING PLANT</font></td><td>UNLOAD EST.In MINS(GateEntry)</td><td>UNLOAD ACCEPT TIME</td><td>FAT%(FT)</td><td>SNF%(FT)</td><td>Qty(FT)</td><td>Temp.(FT)</td><td>Acidity(FT)</td><td>MBRT-min(FT)</td><td>RM(FT)</td><td>BR(FT)</td><td>Protien%(FT)</td><td>Sodium(FT)</td><td>Testing Status</td><td>FAT%(RT)</td><td>SNF%(RT)</td><td>ADULTRATION</td><td>OtherADULTRATION</td><td>APPROVED</td><td>APPROVED TIME</td>
+			</tr>";*/
 			echo "<tr class='header' style='background-color:silver;' rules='all'>
 			<th>SNO<div>SNO</div></th><th>FIRST CREATE DATE<div>FIRST CREATE DATE</div></th><th>LORRY NO<div>LORRY NO</div></th><th>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th>QTY(KG)<div>QTY(KG)</div></th>
-				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>CLOSE<div>CLOSE</div></th><th><font color=red>CANCEL</font><div>CANCEL</div></th><th><font color=blue>PLANT</font><div>PLANT</div></th><th><font color=blue>CHILLING PLANT</font><div>CHILLING PLANT</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>UNLOAD ACCEPT TIME<div>UNLOAD ACCEPT TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th><th>APPROVED<div>APPROVED</div></th><th>APPROVED TIME<div>APPROVED TIME</div></th>
+				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>CLOSE<div>CLOSE</div></th><th>CANCEL<div>CANCEL</div></th><th>PLANT<div>PLANT</div></th><th>CHILLING PLANT<div>CHILLING PLANT</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>UNLOAD ACCEPT TIME<div>UNLOAD ACCEPT TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th><th>APPROVED<div>APPROVED</div></th><th>APPROVED TIME<div>APPROVED TIME</div></th>
 			</tr>"; 
-                       
 			}
+			
 			echo"</thead><tbody class='scrollContent'>";
 			
 			$sno_local =1;
@@ -451,7 +390,7 @@ border: none;
                       
                         //print_r($result);
                         
-                        foreach($result as $row_select)
+            foreach($result as $row_select)
 			{
 				
 				$user_id = $row_select['uid'];
@@ -519,29 +458,20 @@ border: none;
 				}
                       	else if($status==5)
 				{
-					/*$query_transporterid = "SELECT account.user_id as uid,account_detail.name as nme FROM account ,account_detail USE INDEX(ad_account_id) WHERE account.account_id=".$row_select['transporter_account_id']." AND account.status=1 AND account_detail.account_id=account.account_id ";
-					$result_transporterid = mysql_query($query_transporterid, $DbConnection);
-					$row_transporterid = mysql_fetch_object($result_transporterid);
-					$user_Tid = $row_transporterid->uid;*/
-                                        $user_Tid = getAccountAndDetail($row_select['transporter_account_id'],$DbConnection);
-                                        //echo $user_Tid;
-					if( ($user_type!="raw_milk") && ($user_type!="plant_raw_milk" ))
-					{
-						$status = "<a href='src/php/manage_invoice_milk_add_upload.php?pending=1&tid_p=".$row_select['transporter_account_id']."&sno_p=".$row_select['sno']." ;' class='hs2' target='_blank'><font color=red>Pending to<br> $user_Tid </font></a><br>CR:".$row_select['create_date']." ";
-					}
-					else
-					{
-						$status = "<font color=red>Pending to<br> $user_Tid </font>";
-					}
-					
-					$status_download = "Pending to $user_Tid  ";
+                                    $user_Tid = getAccountAndDetail($row_select['transporter_account_id'],$DbConnection);
+                                    //echo $user_Tid;
+                                    if( ($user_type!="raw_milk") && ($user_type!="plant_raw_milk" ))
+                                    {
+                                            $status = "<a href='src/php/manage_invoice_milk_add_upload.php?pending=1&tid_p=".$row_select['transporter_account_id']."&sno_p=".$row_select['sno']." ;' class='hs2' target='_blank'><font color=red>Pending to<br> $user_Tid </font></a><br>CR:".$row_select['create_date']." ";
+                                    }
+                                    else
+                                    {
+                                            $status = "<font color=red>Pending to<br> $user_Tid </font>";
+                                    }
+
+                                    $status_download = "Pending to $user_Tid  ";
 				}
-                               
-				/*
-				$query_createuser = "SELECT account.user_type FROM account  WHERE account.account_id=".$row_select['create_id']." AND account.status=1 ";
-					$result_createuser = mysql_query($query_createuser, $DbConnection);
-					$row_createuser = mysql_fetch_object($result_createuser);
-					$create_user_type = $row_createuser->user_type;*/
+                               				
                                 $row_createuser= GetAccountInfo($row_select['create_id'],"1",$DbConnection);
                                 $create_user_type = $row_createuser[0];
                                 //echo $create_user_type;					
@@ -725,43 +655,13 @@ border: none;
 					//0 => CANCELLED
 					$close_invoice_flag = 0;
 					$validity_time_tmp = $row_select['validity_time'];
-					/*if((strtotime($date) > strtotime($validity_time_tmp) && ($row_select->invoice_status !=2) && ($row_select->invoice_status !=0)))
-					{
-						$close_invoice_flag = 1;
-						echo '<td><font color=brown>Closed (AutoClose)</font></td>";'; //to show as it is closed when expiry
-						$status_download = "Closed (AutoClose)";
-					}
-					else{*/
-							echo"<td><font color=green>".$status."</font></td>";
+					
+					echo"<td><font color=green>".$status."</font></td>";
 							
-					/*}*/					
-					/*
-					if($close_invoice_flag == 1)
-					{	
-						
-						$query_close = "UPDATE invoice_mdrm SET invoice_status=2 ,system_time='$date',close_time='$date' ,close_type='a' WHERE sno='$sno'";
-						$result_close = mysql_query($query_close);
-						if( $user_type!="raw_milk"){
-							echo '<td align=right>'.$date.'</td>';	
-						}
-						if( $user_type=="plant_raw_milk"){
-							echo '<input type="hidden" name="invoice_serial_cancel[]" value="'.$sno.'">';
-						}
-						else{
-							echo '<td align=right><input type="checkbox" name="invoice_serial_cancel[]" value="'.$sno.'"></td>';
-						}
-						
-						echo '<input type="hidden" name="invoice_serial_close[]" value="'.$sno.'"/>
-						<input type="hidden" name="edit_close_chk[]" value="0" id="edit_close_chk_'.$sno.'"  >
-						
-						<input type="hidden" id="closetime_'.$sno.'" name="closetime'.$sno.'" >';
-
-						//$query_close = "UPDATE invoice_mdrm SET invoice_status=2 WHERE sno='$sno'";
-						//$result = mysql_query($query_close);
-					}					
-					else */
+					
                                         if($row_select['invoice_status'] == 1)
-					{
+					{		
+						
 						if( $user_type!="raw_milk"){
 							echo '<td align=right><input type="checkbox" name="invoice_serial_close[]" value="'.$sno.'" id="close_chk_'.$sno.'" onclick=setclosetime('.$sno.') > <input type="hidden" id="closetime_'.$sno.'" name="closetime'.$sno.'" ></td>
 							<input type="hidden" name="edit_close_chk[]" value="0" id="edit_close_chk_'.$sno.'"  >
@@ -818,24 +718,19 @@ border: none;
 							if( $user_type!="raw_milk" && $user_type!="plant_raw_milk"){
 								echo '<td align=right>'.$closetime.'</td>';
 							}
-							//echo '<td align=right>&nbsp;</td>';
-							/*echo '<td align=right>&nbsp';
-							        if( $user_type!="raw_milk" && $user_type!="plant_raw_milk")
-									{
-										echo '<input type="checkbox" name="invoice_serial_cancel[]" value="'.$sno.'">';
-									}
-									else{
-										echo '<input type="hidden" name="invoice_serial_cancel[]" value="'.$sno.'"/>';	
-									}
-							echo'</td>';*/
+							else
+							{
+								echo '<td align=right>&nbsp;</td>';
+							}
 							
-							        if( $user_type!="raw_milk" && $user_type!="plant_raw_milk")
-									{
-										echo '<td><input type="checkbox" name="invoice_serial_cancel[]" value="'.$sno.'"></td>';
-									}
-									else{
-										echo '<input type="hidden" name="invoice_serial_cancel[]" value="'.$sno.'"/>';	
-									}
+							
+                                                        if( $user_type!="raw_milk" && $user_type!="plant_raw_milk")
+                                                        {
+                                                                echo '<td><input type="checkbox" name="invoice_serial_cancel[]" value="'.$sno.'"></td>';
+                                                        }
+                                                        else{
+                                                                echo '<input type="hidden" name="invoice_serial_cancel[]" value="'.$sno.'"/>';	
+                                                        }
 							
 							
 							echo '<input type="hidden" name="invoice_serial_close[]" value="'.$sno.'"/>
@@ -849,13 +744,13 @@ border: none;
 					
 					echo '<td>
 					<input type="hidden" id="plant_'.$sno.'" name="plant_'.$sno.'" value="'.$row_select['plant'].'">
-					<input type="hidden" id="plant_pre_'.$sno.'" name="plant_pre_'.$sno.'" value="'.$row_select['plant'].'">'
+					<input type="hidden" id="plant_pre_'.$sno.'" name="plant_pre_'.$sno.'" value="'.$row_select['plant'].'">'					
 					;
 					
 					//echo $row_select->invoice_status."<br>";
 					if($row_select['plant']!="") //plant exist
 					{
-						if($row_select['invoice_status'] == 1)
+						if($row_select['invoice_status'] == 1 || $user_type=="raw_milk")
 						{
 							if($user_type=="plant_raw_milk")
 							{
@@ -867,16 +762,7 @@ border: none;
 								}
 								
 							}
-							else if($user_type=="raw_milk" )
-							{
-								if($plant_acceptance_time==""){
-									echo '<a href="javascript:show_plant_list_transporter('.$sno.','.$row_select['plant'].')"><div id="label_'.$sno.'"><font color=red>'.$row_select['plant'].'</font></div></a>';
-								}
-								else{
-									echo '<div id="label_'.$sno.'"><font color=green>'.$row_select['plant'].'</div></font>';
-								}
-								
-							}
+							
 							else
 							{
 								if($plant_acceptance_time==""){
@@ -925,26 +811,33 @@ border: none;
 					if($row_select['unload_estimated_time']=="") //	unload_estimated_time (empty)
 					{
 						//if($user_type!="raw_milk" && $row_select->invoice_status == 1) //for plant and admin
-						
-						if( $row_select['invoice_status'] == 1) //for plant and admin
+						if($row_select['unload_estimated_datetime']!="")
 						{
+							$uedt='('.$row_select['unload_estimated_datetime'].')';
+						}
+						else
+						{
+							$uedt="";
+						}
+						if( $row_select['invoice_status'] == 1) //for plant and admin
+						{	
 							echo '<td align=right>
-									<input type="hidden" name="unload_estimated_time[]" id="unload_estimated_time_'.$sno.'" value=""  readonly />
-									<input type="hidden" name="unload_estimated_datetime[]" id="unload_estimated_datetime_'.$sno.'" value=""  readonly />
-									<font color=green>-</font>
-								</td>';							
+									<input type="hidden" name="unload_estimated_time[]" id="unload_estimated_time_'.$sno.'" value="'.$row_select['unload_estimated_time'].'"   readonly />
+									<input type="hidden" name="unload_estimated_datetime[]" id="unload_estimated_datetime_'.$sno.'" value="'.$row_select['unload_estimated_datetime'].'"  readonly />
+									<font color=green>-'.$uedt.'</font>
+								</td>';	
 						}
 						//else if($user_type!="raw_milk" && $row_select->invoice_status != 1) //for plant and admin)
 						else if( $row_select['invoice_status'] != 1) //for plant and admin)
-						{
+						{							
 							echo'<td align=right><font color=red>X</font>
 								<input type="hidden" name="unload_estimated_time[]" id="unload_estimated_time_'.$sno.'" />
-								<input type="hidden" name="unload_estimated_datetime[]" id="unload_estimated_datetime_'.$sno.'" />
+								<input type="hidden" name="unload_estimated_datetime[]" id="unload_estimated_datetime_'.$sno.'"  />
 							</td>';
 						}
 						else{
-							echo'<input type="hidden" name="unload_estimated_time[]" id="unload_estimated_time_'.$sno.'" />';
-							echo'<input type="hidden" name="unload_estimated_datetime[]" id="unload_estimated_datetime_'.$sno.'" />';
+							echo'<input type="hidden" name="unload_estimated_time[]" id="unload_estimated_time_'.$sno.'"  />';
+							echo'<input type="hidden" name="unload_estimated_datetime[]" id="unload_estimated_datetime_'.$sno.'"  />';
 						}
 					}
 					else
@@ -966,7 +859,8 @@ border: none;
 										<input type="hidden" name="unload_estimated_time[]" id="unload_estimated_time_'.$sno.'" value="'.$row_select['unload_estimated_time'].'"  readonly />
 										<input type="hidden" name="unload_estimated_datetime[]" id="unload_estimated_datetime_'.$sno.'" value="'.$row_select['unload_estimated_datetime'].'"  readonly />
 										<font color=green>'.$row_select['unload_estimated_time'].'('.$unload_estimated_datetime.')</font>
-								</td>';							
+								</td>';	
+									
 							}
 							//else if($user_type!="raw_milk" && $row_select->invoice_status != 1) //for plant and admin)
 							else if( $row_select['invoice_status'] != 1) //for plant and admin)

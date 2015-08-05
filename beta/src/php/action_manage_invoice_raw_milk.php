@@ -420,19 +420,7 @@
 				if($unload_accepttime_serials[$cnt]=="" || $unload_accepttime_serials[$cnt]==null){
 					if($approval_serials[$cnt]=="approved")
 					{
-									/*--old$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',edit_id='$account_id',parent_account_id='$account_id' ,plant_acceptance_time='$date',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',
-									fat_per_ft='$fat_per_ft_serials[$cnt]',snf_per_ft='$snf_per_ft_serials[$cnt]',testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
-						temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
-						mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',
-						snf_per_rt='$snf_per_rt_serials[$cnt]' , adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";*/
-						/*
-                                                 $query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',plant_acceptance_time='$date',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',
-									fat_per_ft='$fat_per_ft_serials[$cnt]',snf_per_ft='$snf_per_ft_serials[$cnt]',testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
-						temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
-						mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',
-						snf_per_rt='$snf_per_rt_serials[$cnt]' , adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";
-						//echo "1a=". $query_update;
-						$result_update = mysql_query($query_update,$DbConnection);*/
+									
                                               
                                                $result_update= updateInvoiceMdrmApproved($plant_serials[$cnt],$date,$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
 					}
@@ -440,19 +428,7 @@
 					{
 						if($flag_add==1)
 						{
-										/*--old--$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',edit_id='$account_id',parent_account_id='$account_id' ,unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',
-										fat_per_ft='$fat_per_ft_serials[$cnt]',snf_per_ft='$snf_per_ft_serials[$cnt]',testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
-							temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
-							mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',
-							snf_per_rt='$snf_per_rt_serials[$cnt]' , adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";*/
-							//echo "2a=". $query_update;
-							/*	$query_update = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',unload_estimated_time='$unload_estimatetime_serials[$cnt]',unload_estimated_datetime='$unload_estimatedatetime_serials[$cnt]',
-										fat_per_ft='$fat_per_ft_serials[$cnt]',snf_per_ft='$snf_per_ft_serials[$cnt]',testing_status='$testing_status_serials[$cnt]',qty_ct='$qty_ct_serials[$cnt]',
-							temp_ct='$temp_ct_serials[$cnt]',acidity_ct='$acidity_ct_serials[$cnt]',mbrt_min_ct='$mbrt_min_ct_serials[$cnt]',mbrt_br_ct='$mbrt_br_ct_serials[$cnt]',
-							mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',
-							snf_per_rt='$snf_per_rt_serials[$cnt]' , adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";
-							$result_update = mysql_query($query_update,$DbConnection);
-                                                        */
+							
                                                         $result_update = updateInvoiceMdrmNoApproved_flag_add($plant_serials[$cnt],$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
 						}
 						else if($snf_per_rt_serials[$cnt]!="" && $fat_per_rt_serials[$cnt]!="")
@@ -641,8 +617,8 @@
 			echo'<br><center><a href="javascript:show_option(\'manage\',\'edit_raw_milk_prev\');" class="menuitem">&nbsp;<b>Back</b></a></center>';
 		}
 		else
-		{
-			echo'<br><center><a href="javascript:show_option(\'manage\',\'edit_raw_milk_admin_prev\');" class="menuitem">&nbsp;<b>Back</b></a></center>';
+		{       echo'<br><center><a href="javascript:show_option(\'manage\',\'edit_invoice_raw_milk_admin_prev\');" class="menuitem">&nbsp;<b>Back</b></a></center>';
+			//echo'<br><center><a href="javascript:show_option(\'manage\',\'edit_raw_milk_admin_prev\');" class="menuitem">&nbsp;<b>Back</b></a></center>';
 		}
 	}
 	/*else if($action_type =="delete")                     ///////// ADD
