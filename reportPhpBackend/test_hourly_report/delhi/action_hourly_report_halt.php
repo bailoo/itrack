@@ -228,12 +228,12 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     $parameterizeData->speed = "f";
 
     $finalVNameArr = array();
-    //echo "\nSIZE1=" . sizeof($Vehicle);
+    echo "\nVehicleSize=" . sizeof($Vehicle);
     //###### CASSANDRA BLOCK1 CLOSED
     
     for ($i = 0; $i < sizeof($Vehicle); $i++) {
         
-        //echo "\nVehicle=" . $i . "::" . $Vehicle[$i];        
+        echo "\nVehicle=" . $i . "::" . $Vehicle[$i];        
         //######### CASSANDRA BLOCK2 OPENS
         $sts_date_sel = array();
         $xml_date_sel = array();
@@ -254,7 +254,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
 
         readDataBetweenDatetime($IMEI[$i], $date1, $date2, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $o_cassandra, $SortedDataObject);
 
-        echo "\nCount=".count($SortedDataObject->deviceDatetime);
+        //echo "\nCount=".count($SortedDataObject->deviceDatetime);
    
 	//exit(0);
      if (count($SortedDataObject->deviceDatetime) > 0) {
@@ -287,7 +287,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         //##### DEBUG MSG
         $msg = "\nVehicle=".$Vehicle[$i]." ,SizeXmlDate=".sizeof($xml_date_sel);
         if($LOG) {$debug_msg.=$msg."\n";}
-        echo $msg;
+        //echo $msg;
 
         ######## CASSANDRA BLOCK2 CLOSED
         
@@ -484,7 +484,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         //##################################################################			
 
         $total_lines = sizeof($xml_date_sel);
-	echo "\nASizeSEL=" . sizeof($xml_date_sel);
+	//echo "\nASizeSEL=" . sizeof($xml_date_sel);
 
         $DataComplete = false;
         $vehicleserial_tmp = null;
@@ -492,7 +492,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         $tmp = 0;
 
         if (sizeof($xml_date_sel) > 0) {
-            //echo "\nFile ExistFinal";
+            //echo "\nArrayExist";
             $halt_once = false;
 
             $p_in = false;
@@ -690,7 +690,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
 
                                 if (($PlantInTime[$k] == "") || ($PlantOutTime[$k] == "")) {
                                     //UPDATE PLANT
-                                    //update_plant($k, $objPHPExcel_1, $read_excel_path, $p_in, $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]], $p_out, $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]], $startdate, $enddate);
+                                    update_plant($k, $objPHPExcel_1, $read_excel_path, $p_in, $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]], $p_out, $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]], $startdate, $enddate);
                                 }
 
                                 //echo "\nArrivalTime[$k]=".$ArrivalTime[$k]." ,DepartureTime[$k]=".$DepartureTime[$k];
@@ -703,7 +703,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                                     $hrs_min = $hms_2[h] . ":" . $hms_2[m] . ":" . $hms_2[s];
                                     //echo "\nDepartureFound:Time=".$datetime;
 
-                                    //update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k], $k, $StationNo[$k], $Lat[$k], $Lng[$k], $ScheduleTime[$k], $DistVar[$k], $Remark[$k], $startdate, $enddate, $lat_cr, $lng_cr, $lat_cr, $lng_cr, $arrivale_time, $depature_time, $RouteNo[$k], $hrs_min, $Type[$k], $plant_status_local[$Vehicle[$i]][$RouteNo[$i]], 2, $p_in, $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]], $p_out, $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]]);
+                                    update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k], $k, $StationNo[$k], $Lat[$k], $Lng[$k], $ScheduleTime[$k], $DistVar[$k], $Remark[$k], $startdate, $enddate, $lat_cr, $lng_cr, $lat_cr, $lng_cr, $arrivale_time, $depature_time, $RouteNo[$k], $hrs_min, $Type[$k], $plant_status_local[$Vehicle[$i]][$RouteNo[$i]], 2, $p_in, $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]], $p_out, $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]]);
                                 }
                             }
 
@@ -719,7 +719,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                             for ($k = $i; $k < $j; $k++) {
                                 if ($ArrivalTime[$k] == "") {
                                     //echo "\nArrivalFound:".$Vehicle[$k]." ,Station=".$StationNo[$k];
-                                    //update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k], $k, $StationNo[$k], $Lat[$k], $Lng[$k], $ScheduleTime[$k], $DistVar[$k], $Remark[$k], $startdate, $enddate, $lat_ref1, $lng_ref1, $lat_cr, $lng_cr, $datetime_ref, $depature_time, $RouteNo[$k], $hrs_min, $Type[$k], $plant_status_local[$Vehicle[$i]][$RouteNo[$i]], 1, $p_in, $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]], $p_out, $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]]);
+                                    update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k], $k, $StationNo[$k], $Lat[$k], $Lng[$k], $ScheduleTime[$k], $DistVar[$k], $Remark[$k], $startdate, $enddate, $lat_ref1, $lng_ref1, $lat_cr, $lng_cr, $datetime_ref, $depature_time, $RouteNo[$k], $hrs_min, $Type[$k], $plant_status_local[$Vehicle[$i]][$RouteNo[$i]], 1, $p_in, $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]], $p_out, $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]]);
                                 }
                             }
                             $current_halt_time = 0;
