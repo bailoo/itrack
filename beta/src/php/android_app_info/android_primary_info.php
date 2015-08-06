@@ -64,13 +64,14 @@
 			{
 				$type="V";
 			}
-			$msgStatus="success,".$type.",".$row1->name.",".$row[1];						
+                        $data[]=array("actionStatus"=>"success","deviceType"=>$type,"accountName"=>$row1->name,"accountType"=>$row[1]);
+									
 		}
 		else
-		{
-			$msgStatus="failure";
+		{		
+                    $data[]=array("actionStatus"=>"failure","deviceType"=>"","accountName"=>"","accountType"=>"");
 		}
-                return $msgStatus;
+                return json_encode($data);
 	}
 	else if($sync=="vehicleList")
 	{
