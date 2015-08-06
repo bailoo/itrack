@@ -1,6 +1,6 @@
 <?php
-
-require_once 'libCommon.php';
+//echo "libCommon=".file_exists($pathToRoot."/phpApi/libCommon.php");
+require_once ($pathToRoot."/phpApi/libCommon.php");
 
 
 /***

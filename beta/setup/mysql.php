@@ -1,5 +1,6 @@
 <?php
 	$DBASE = "iespl_vts_beta";
-	$USER = "bailoo";
+	$USER = "root";
 	$PASSWD = 'neon04$VTS';
+        //$PASSWD = 'mysql';
 ?>
