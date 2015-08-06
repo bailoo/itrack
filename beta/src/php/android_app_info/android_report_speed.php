@@ -2,20 +2,32 @@
 	include_once('util_android_php_mysql_connectivity.php');  	   //util_session_variable.php sets values in session
 	include_once('util_android_session_variable.php');   //util_php_mysql_connectivity.php make set connection of user to database  
         include_once("android_calculate_distance.php");
-        require_once "lib/nusoap.php"; 
+        //require_once "lib/nusoap.php"; 
 
+        $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+//print_r($pathInPieces);
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+//echo "pathToRoot=".$pathToRoot."<br>";
 	//====cassamdra //////////////
-    include_once('../xmlParameters.php');
-    include_once('../parameterizeData.php'); /////// for seeing parameters
-    include_once('../data.php');   
-    include_once('../getXmlData.php');
+   include_once($pathToRoot.'/beta/src/php/xmlParameters.php');
+    include_once($pathToRoot.'/beta/src/php/parameterizeData.php'); /////// for seeing parameters
+    include_once($pathToRoot.'/beta/src/php/data.php');   
+    include_once($pathToRoot.'/beta/src/php/getXmlData.php');
 ////////////////////////
+    /*$deviceImeiNo="862170017134329";
+    $startDate="2015/08/06 00:00:00";
+    $endDate="2015/08/06 16:38:36";
+    $userInterval="5";
+   
+    $result=getSpeedDeviceDataPrev($vehicleSerial,$startDate,$endDate,$userInterval);
+    echo $result;*/
+           
     function getSpeedDeviceDataPrev($vehicleSerial,$startDate,$endDate,$userInterval)
     {
 	set_time_limit(800);
 	$DEBUG = 0;
 	$device_str = $vehicleSerial;
-	//$device_str="862170018368900:862170018371144:862170018371953:862170018370328:862170018370286:";
+	$device_str="862170017134329:";
 	$device_str=substr($device_str,0,-1); 
 	//echo "<br>devicestr=".$device_str;
 	$vserial = explode(':',$device_str);
@@ -50,8 +62,8 @@
                     //echo "Query=".$Query."<br>";
                     $Result=mysql_query($Query,$DbConnection);
                     $Row=mysql_fetch_row($Result);
-                    //echo   "<br>vserial[i] =".$vserial[$i];
-                    getSpeedDeviceData($vserial[$i], $Row[0], $date1, $date2, $user_interval,$parameterizeData);
+                   // echo   "<br>vserial[i] =".$vserial[$i];
+                    getSpeedDeviceData($vserial[$i], $Row[0], $date1, $date2, $user_interval,$parameterizeData,$o_cassandra);
                     //echo   "t2".' '.$i;
             }           
             $parameterizeData=null;
@@ -59,8 +71,11 @@
             return json_encode($speed_data);
 	}
     }   
-	function getSpeedDeviceData($vehicle_serial, $vname, $startdate, $enddate, $user_interval, $parameterizeData)
+	function getSpeedDeviceData($vehicle_serial, $vname, $startdate, $enddate, $user_interval, $parameterizeData,$o_cassandra)
 	{
+            //echo   "<br>vserial1 =".$vehicle_serial;
+              $requiredData="All";
+     $sortBy='h';
 		global $speed_data;
 		$total_speed_tmp = 0;
 		$total_time_tmp = 0;	
@@ -95,7 +110,9 @@
 		for($i=0;$i<=($date_size-1);$i++)
 		{
 			$SortedDataObject=new data();
-            readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+                        //echo "date=".$userdates[$i]."<br>";
+                        //echo "date=".$parameterizeData->latitude."<br>";
+            readFileXmlNew($vehicle_serial,$userdates[$i],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
             //var_dump($SortedDataObject);	
 
 			if(count($SortedDataObject->deviceDatetime)>0)
@@ -224,7 +241,7 @@
 									//echo "<br>speed=".$speed." ,time=".$time2;
 									$lat2 = $lat;
 									$lng2 = $lng;			
-									calculate_distance($lat1, $lat2, $lng1, $lng2, &$distance);			
+									calculate_distance($lat1, $lat2, $lng1, $lng2, $distance);			
 									//if($distance>0.25)
 									if($distance>0.1)
 									{	                                     													
@@ -358,8 +375,8 @@
 	}
 	//global $speed_data;
 	//print_r($speed_data);
-	$server = new soap_server();
+	/*$server = new soap_server();
 $server->register("getSpeedDeviceDataPrev");
-$server->service($HTTP_RAW_POST_DATA);
+$server->service($HTTP_RAW_POST_DATA);*/
 
 ?>
