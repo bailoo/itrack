@@ -20,12 +20,12 @@ require_once "lib/nusoap.php";
     
 ////////////////////////
 
-    /*$deviceImeiNo="862170017134329";
+    $deviceImeiNo="862170017134329";
             $startDate="2015/08/06 00:00:00";
             $endDate="2015/08/06 16:38:36";
             $userInterval="60";
 $result=getDistanceDeviceData($deviceImeiNo, $startDate, $endDate, $userInterval);
-echo $result;*/
+echo $result;
 
 $DEBUG = 0;		
 global $distance_data;

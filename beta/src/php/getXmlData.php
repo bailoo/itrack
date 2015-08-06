@@ -285,7 +285,7 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
     /*echo "deviceTime=".$deviceTime."<br>";
     echo "dateToData=".$dateToData."<br>";
     echo "requiredData=".$requiredData."<br>";
-    echo "imei=".$imei."<br>";*/ 
+    echo "imei=".$imei."<br>"; */
 	
     $orderAsc = TRUE;
     $st_results = getLogByDate($o_cassandra, $imei, $dateToData, $deviceTime, $orderAsc);
