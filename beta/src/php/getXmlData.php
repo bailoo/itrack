@@ -7,8 +7,7 @@ if($isReport) {
 } else if($isReport2) {
    include_once("../../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
    include_once("../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
-} else {  
-    
+} else {      
    // echo "in else";
     include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
     include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
