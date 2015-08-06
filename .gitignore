@@ -51,7 +51,6 @@ hs_err_pid*
 /beta/src/php/download_data_files/
 /beta/src/php/download/
 /beta/src/php/demo_group/
-/beta/src/php/android_app_info/
 /beta/src/php/location_js/
 /beta/src/php/test_sales/
 /beta/src/php/exception_timing_files/
@@ -98,3 +97,5 @@ hs_err_pid*
 /beta/src/media/
 /beta/xml_tmp/
 /beta/xml_vts/ReportPhpBackend/test_folder
+/beta/src/php/hourly_report/
+/beta/src/php/test_hourly_report/
