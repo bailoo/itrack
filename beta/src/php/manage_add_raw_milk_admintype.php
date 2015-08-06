@@ -102,8 +102,8 @@
 		//echo $row->customer_no;
 		/*$final_chillplant_list[]=$rowchill['final_plant_list'];
 		$final_chillplant_name_list[]=$rowchill['final_plant_name_list'];*/
-                $final_chillplant_list[]=$dt['final_chillplant_list'];
-                $final_chillplant_name_list[]=$dt['final_chillplant_name_list'];
+                $final_chillplant_list[]=$rowchill['final_chillplant_list'];
+                $final_chillplant_name_list[]=$rowchill['final_chillplant_name_list'];
 	}
 	/*******************************************************************************************************************************/
 	/*$parent_account_ids=array();
