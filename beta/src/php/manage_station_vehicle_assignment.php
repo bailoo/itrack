@@ -6,6 +6,12 @@
 	$root=$_SESSION['root'];
 	$common_id1=$_POST['common_id'];
 	//echo "common_id=".$common_id1;
+include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
+	$logDate=date('Y-m-d');
+    
+    $o_cassandra = new Cassandra();	
+    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 	echo'<input type="hidden" id="account_id_hidden" value='.$common_id1.'>';
 	echo"<br>			
 			<form name='manage1' method='post'>
@@ -72,18 +78,23 @@
 			{	
 				//$td_cnt++;
 				global $td_cnt;
+				global $o_cassandra;
+				global $logDate;
 				if($td_cnt==1)
 				{
 					echo'<tr>';
 				}
 				
 				//date_default_timezone_set('Asia/Calcutta');
-				$current_date = date('Y-m-d');
-
-				$xml_file = "../../../xml_vts/xml_data/".$current_date."/".$vehicle_imei.".xml";
 			
-				if(file_exists($xml_file))
-				{
+
+						
+			$logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                            //$st_results = getCurrentDateTime($o_cassandra,$vehicle_imei,$sortFetchData);
+                            //var_dump($st_results);
+                            //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
+                            if($logResult!='')			
+	{
 				echo'<td align="left"><INPUT TYPE="radio"  name="vehicle_id" VALUE="'.$vehicle_id.'"></td>
 					   <td class=\'text\'>
 					     <font color="darkgreen">'.$vehicle_name.'</font>
