@@ -204,8 +204,8 @@
 		return json_encode($data);
             }
         }
-        /*$server = new soap_server();
+$server = new soap_server();
 $server->register("primaryDeviceInfo");
-$server->service($HTTP_RAW_POST_DATA);*/
+$server->service($HTTP_RAW_POST_DATA);
 	
 ?>
