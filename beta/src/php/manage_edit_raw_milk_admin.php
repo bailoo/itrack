@@ -750,9 +750,21 @@ border: none;
 					//echo $row_select->invoice_status."<br>";
 					if($row_select['plant']!="") //plant exist
 					{
-						if($row_select['invoice_status'] == 1 || $user_type=="raw_milk")
+						//if($row_select['invoice_status'] == 1 || $user_type=="raw_milk")
+                                                if($row_select['invoice_status'] == 1 )
 						{
-							if($user_type=="plant_raw_milk")
+							/*if($user_type=="plant_raw_milk")
+							{
+								if($plant_acceptance_time==""){
+									echo '<div id="label_'.$sno.'"><font color=red>'.$row_select['plant'].'</div></font>';
+								}
+								else{
+									echo '<div id="label_'.$sno.'"><font color=green>'.$row_select['plant'].'</div></font>';
+								}
+								
+							}*/
+                                                        
+                                                        if($user_type=="plant_raw_milk" || $user_type=="raw_milk")
 							{
 								if($plant_acceptance_time==""){
 									echo '<div id="label_'.$sno.'"><font color=red>'.$row_select['plant'].'</div></font>';
