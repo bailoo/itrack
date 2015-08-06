@@ -17,6 +17,10 @@ $app->get('/', function() use($app) {
 	echo "/getlastlog/:imei";
 	echo "<br/>";	
 	echo "/getlastlog/:imei/:dtime";
+	echo "<br/>";	
+	echo "/rmlastlog/:imei";
+	echo "<br/>";	
+	echo "/trunclastlog/:key";
 	echo "<br/> <br/>";
 	
 	echo "/getspeedalerts/:imei/:starttime/:endtime/:minspeed/:maxspeed/:roadid";
@@ -94,6 +98,37 @@ $app->get('/getlastlog/:imei/:dtime/', function ($imei, $dtime) {
 	$st_results = getLastSeenDateTime($o_cassandra, $imei, $dtime);
 	echo json_encode($st_results);
 	$o_cassandra->close();
+
+});
+
+
+$app->get('/rmlastlog/:imei/', function ($imei) {
+	
+	require_once 'Cassandra/Cassandra.php';
+	require_once 'libLog.php';
+	$o_cassandra = new Cassandra();
+	$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+	
+	$st_results = rmLastSeen($o_cassandra,$imei);
+	echo json_encode($st_results);
+	$o_cassandra->close();
+
+});
+
+
+$app->get('/trunclastlog/:key', function ($key) {
+
+if ($key == 'lastloginMySQL')
+{	
+	require_once 'Cassandra/Cassandra.php';
+	require_once 'libLog.php';
+	$o_cassandra = new Cassandra();
+	$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+	
+	$st_results = truncLastLog($o_cassandra);
+	echo json_encode($st_results);
+	$o_cassandra->close();
+}
 
 });
 
