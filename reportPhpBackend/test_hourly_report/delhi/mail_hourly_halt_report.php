@@ -146,8 +146,8 @@ include_once("get_route_db_detail.php");
 //$pdate = date('Y-m-d', strtotime($date .' -1 day'));
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-08-02');
-    $date = date('2015-08-03');
+    $pdate = date('2015-08-05');
+    $date = date('2015-08-06');
 } else {
     $date = date('Y-m-d');
 }
@@ -186,7 +186,7 @@ $mor_run_start_time = $date . " 10:00:00";
 
 if ($MAIN_DEBUG) {
     $shift_ev1 = true;
-    $shift_ev2 = false;
+    $shift_ev2 = true;
     $shift_mor = false;
 } else {
     $shift_ev1 = false;

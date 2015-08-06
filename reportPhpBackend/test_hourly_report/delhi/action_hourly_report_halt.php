@@ -213,7 +213,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
 
     $userInterval = 0;
 
-    $sortBy = 'g';
+    $sortBy = 'h';
     $firstDataFlag = 0;
     $endDateTS = strtotime($date2);
     $dataCnt = 0;
@@ -287,7 +287,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         //##### DEBUG MSG
         $msg = "\nVehicle=".$Vehicle[$i]." ,SizeXmlDate=".sizeof($xml_date_sel);
         if($LOG) {$debug_msg.=$msg."\n";}
-        //echo $msg;
+        echo $msg;
 
         ######## CASSANDRA BLOCK2 CLOSED
         
@@ -442,7 +442,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         $AddEntryinrReport = false;
 
             //###### SORT THE ARRAYS
-        echo "\nBeforeSorting:SizeSEL=" . sizeof($xml_date_sel);    
+        /*echo "\nBeforeSorting:SizeSEL=" . sizeof($xml_date_sel);    
         for ($x = 1; $x < sizeof($xml_date_sel); $x++) {
 
             $value = $xml_date_sel[$x];
@@ -478,13 +478,13 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
             $lat_sel[$z + 1] = $tmp_lat;
             $lng_sel[$z + 1] = $tmp_lng;
             $speed_sel[$z + 1] = $tmp_speed;
-        }
+        }*/
         //###### SORTING CLOSED
         //##### CLOSED STS SORTED MEANINGFUL DATA ##########################
         //##################################################################			
 
         $total_lines = sizeof($xml_date_sel);
-	echo "\nAfterSorting:SizeSEL=" . sizeof($xml_date_sel);
+	echo "\nASizeSEL=" . sizeof($xml_date_sel);
 
         $DataComplete = false;
         $vehicleserial_tmp = null;
