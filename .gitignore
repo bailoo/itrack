@@ -100,3 +100,4 @@ hs_err_pid*
 /beta/src/media/
 /beta/xml_tmp/
 /beta/xml_vts/ReportPhpBackend/test_folder
+/data
