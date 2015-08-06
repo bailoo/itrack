@@ -8,13 +8,10 @@ if($isReport) {
    include_once("../../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
    include_once("../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
 } else {  
-    $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
-//print_r($pathInPieces);
-$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
-//echo "pathToRoot11=".$pathToRoot."<br>";
+    
    // echo "in else";
-    include_once($pathToRoot."/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
-    include_once($pathToRoot."/phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
+    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
 }
 //echo "EXISTS=".file_exists("../../../../../phpApi/libLog.php")."<br>";
 $o_cassandra = new Cassandra();	
@@ -282,10 +279,10 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
    {
         $deviceTime=FALSE;
    }
-    /*echo "deviceTime=".$deviceTime."<br>";
-    echo "dateToData=".$dateToData."<br>";
-    echo "requiredData=".$requiredData."<br>";
-    echo "imei=".$imei."<br>"; */
+    //echo "deviceTime=".$deviceTime."<br>";
+    //echo "dateToData=".$dateToData."<br>";
+    //echo "requiredData=".$requiredData."<br>";
+    //echo "imei=".$imei."<br>"; 
 	
     $orderAsc = TRUE;
     $st_results = getLogByDate($o_cassandra, $imei, $dateToData, $deviceTime, $orderAsc);
