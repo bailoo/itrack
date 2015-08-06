@@ -3,6 +3,7 @@
 	$file = "../../setup/mysql.php"; if(file_exists($file)) { include_once($file); }
 
 	$HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
+        //$HOST = "localhost";
 	// $DBASE = "iespl_vts_beta";
 	// $USER = "root";
 	// $PASSWD = "mysql";
