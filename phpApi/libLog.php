@@ -92,7 +92,6 @@ function getLastSeenDateTime($o_cassandra,$imei,$datetime)
 * 
 * @param object $o_cassandra	Cassandra object 
 * @param string $imei	IMEI
-* @param string $date	YYYY-MM-DD
 * 
 * @return array 	Results of the query 
 */
@@ -108,6 +107,43 @@ function getLastSeen($o_cassandra,$imei)
 	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
 	$st_obj = logParser($st_results, $dataType, $orderAsc);
 	return $st_obj;
+}
+
+
+/***
+* Deletes last seen data from last data table lastlog
+* 
+* @param object $o_cassandra	Cassandra object 
+* @param string $imei	IMEI
+* 
+* @return array 	Results of the query 
+*/
+function rmLastSeen($o_cassandra,$imei)
+{
+	$s_cql = "DELETE FROM lastlog 
+		  WHERE 
+		  imei = '$imei'
+		  ;";
+
+	$st_results = $o_cassandra->query($s_cql);
+	return $st_results;
+}
+
+
+/***
+* Truncate last data table lastlog
+* 
+* @param object $o_cassandra	Cassandra object 
+* 
+* @return array 	Results of the query 
+*/
+function truncLastLog($o_cassandra)
+{
+	$s_cql = "TRUNCATE lastlog 
+		  ;";
+
+	$st_results = $o_cassandra->query($s_cql);
+	return $st_results;
 }
 
 
