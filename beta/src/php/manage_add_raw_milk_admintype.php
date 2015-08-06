@@ -92,7 +92,7 @@
 		$final_plant_name_list[]=$row['final_plant_name_list'];
 	}
         
-        $data_cus_station2=getDetailAllCustomerNoStationNameStation($account_id,$DbConnection);
+        $data_cus_station2=getCustomerNoStationNext($account_id,$DbConnection);
         //chilling plant
 	//$query_chillplant = "SELECT customer_no,station_name FROM station WHERE type=2 AND user_account_id='$account_id' AND status=1";
 	//$result_chillquery = mysql_query($query_chillplant,$DbConnection);
@@ -100,8 +100,10 @@
         foreach($data_cus_station2 as $rowchill)
 	{
 		//echo $row->customer_no;
-		$final_chillplant_list[]=$rowchill['final_plant_list'];
-		$final_chillplant_name_list[]=$rowchill['final_plant_name_list'];
+		/*$final_chillplant_list[]=$rowchill['final_plant_list'];
+		$final_chillplant_name_list[]=$rowchill['final_plant_name_list'];*/
+                $final_chillplant_list[]=$rowchill['final_chillplant_list'];
+                $final_chillplant_name_list[]=$rowchill['final_chillplant_name_list'];
 	}
 	/*******************************************************************************************************************************/
 	/*$parent_account_ids=array();

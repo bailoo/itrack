@@ -86,97 +86,115 @@ function show_option_with_value(type, option)      // type="manage/report/settin
     http_request.send(parameters);
  }
 
-		function alertContents()
-		{
+ function alertContents()
+ {
 
-			if(typeof String.prototype.trim !== 'function') 
-			{
-				String.prototype.trim = function() 
-				{
-					return this.replace(/^\s+|\s+$/g, '');
-				}
-			}
+	if(typeof String.prototype.trim !== 'function') {
+	String.prototype.trim = function() {
+	return this.replace(/^\s+|\s+$/g, '');}
+	}
 
-			//alert("alertC");
-			if (http_request.readyState == 4) 
-			{
-				if (http_request.status == 200) 
-				{
-					result = http_request.responseText; 
-					//alert(result);                     
-					var result1=result.split("##");  
-					//alert("Rizwan:"+result1[0]);
+    //alert("alertC");
+    if (http_request.readyState == 4) 
+    {
+       if (http_request.status == 200) 
+       {
+          result = http_request.responseText; 
+          //alert(result);                     
+          var result1=result.split("##");  
+         //alert("Rizwan:"+result1[0]);
+          
+          if(result1[0].trim()=="map_show_vehicle" || result1[0].trim()=="live_show_vehicle")
+          {
+            //alert("map show vehicle");  
+            //alert("result="+result1[1]);			
+		        // document.getElementById('main_display_vehicle').value="1";
+            //alert("disp:"+document.getElementById('loading_live').style.display);            
+            /*if(result1[0]=="live_show_vehicle")
+            {
+              document.getElementById('loading_live').style.display = 'none';
+            } */           
+            //else
+            if(result1[0].trim()=="map_show_vehicle")
+            {
+              /*var display_mode=document.thisform.mode;
+              for(var i=0;i<display_mode.length;i++)
+              {    
+                if(i==0)
+                {  
+                  display_mode[i].checked = true;
+                }
+              }*/
+              document.getElementById('show_vehicle').style.display ="";              
+              document.getElementById('show_vehicle').innerHTML = result1[1]; 
+			 document.getElementById('vehicleloadmessage').style.display ="none";
+			  document.getElementById('vehicleloadmessage1').style.display ="";
+            }
+            
+           /*else if(result1[0]=="live_show_vehicle")
+            { 
+              document.getElementById("blackout_4").style.visibility = "visible";
+              document.getElementById("divpopup_4").style.visibility = "visible";
+              document.getElementById("blackout_4").style.display = "block";
+              document.getElementById("divpopup_4").style.display = "block";
+              
+              document.getElementById('show_vehicle').style.display ="";              
+              document.getElementById('show_vehicle').innerHTML = result1[1];
+            }*/						  
+          }         
+      		else if(result1[0].trim()=="map_selection_information")
+      		{  
+      		  //alert("result="+result1[1]);
+      			//document.getElementById("all_vehicle_1").style.display="none"; 
+      			// document.getElementById("all_vehicle_type").value="";
+      		  show_vehicle_display_option()
+      
+      		  document.getElementById('selection_information').style.display ="";              
+      		  document.getElementById('selection_information').innerHTML = result1[1];                           
+      		} 
+		  else if(result1[0].trim()=="manage_selection_information")
+          {  
+            //alert("result="+result1[1]);
+    			  document.getElementById("all_vehicle_1").style.display="none"; 
+    			  document.getElementById("all_vehicle_type").value="";			  
+            document.getElementById('manage_selection_information').style.display ="";              
+            document.getElementById('manage_selection_information').innerHTML = result1[1];                           
+          }
+			    else if(result1[0]=="portal_vehicle_information")
+          {                          
+              document.getElementById('portal_vehicle_information').style.display ="";			 			  
+              document.getElementById('portal_vehicle_information').innerHTML = result1[1];
+      			  //alert("result2="+result1[2]);
+      			  setCombo(result1[2])	
+          }		   
+		  else if(result1[0]=="main_vehicle_information")
+          {  
+          //alert("result="+result1[1]);          
+          document.getElementById('main_vehicle_information').style.display ="";              
+          document.getElementById('main_vehicle_information').innerHTML = result1[1];                           
+          } 	  
+          else 
+          {
+			hideManageLoadingMessage();
+			document.getElementById('bodyspan').innerHTML =result;
+          }                  
+       }
+       else 
+       {
+          alert('There was a problem with the request.');
+       }
+  
 
-					if(result1[0]=="report_vehicle_details")
-					{
-						document.getElementById('vehicle_details').style.display='';
-						document.getElementById('vehicle_details').innerHTML =result1[1];
-						//document.getElementById("enter_button").disabled=false;             
-					}
-					else if(result1[0].trim()=="portal_vehicle_information")
-					{                          
-						document.getElementById('portal_vehicle_information').style.display ="";			 			  
-						document.getElementById('portal_vehicle_information').innerHTML = result1[1];
-						//alert("result2="+result1[2]);
-						setCombo(result1[2])	
-					}	
+                var table3Filters = {
+                        btn: true,                        
+                        col_6: "none",
+                        col_7: "none"
+                }
+                setFilterGrid("table_id1",1,table3Filters);
 
-					else if(result1[0].trim()=="reportPrevPage")
-					{
-						//alert("result="+result1[1]);
-						hideManageLoadingMessage();
-						document.getElementById('rightMenu').style.display="none";
-						document.getElementById('bodyspan').style.display="none";			
-						document.getElementById('reportPrevPage').style.display="";
-						document.getElementById('reportPrevPage').innerHTML=result1[1];	
-					} 
-					else if(result1[0]=="datagap")
-					{         
-						var result2=result1[1].split(":");
-						//alert("r22="+result1);
-
-						var lat1 = result2[0];
-						var lng1 = result2[1];
-						var lat2 = result2[2];
-						var lng2 = result2[3];
-						var textcontent = result1[2];
-						//alert(lat1+","+lng1+" "+lat2+","+lng2);            
-						//alert(textcontent);
-						document.getElementById('floating_div').style.display='';
-						document.getElementById('floating_div').innerHTML = textcontent;
-
-						//alert("r");
-						if(lat1!="-" && lng1!="-" && lat2!="-" && lng2!="-")
-						{                
-							//alert("in load map");
-							load_map(lat1,lng1,lat2,lng2);
-						}
-					} 
-					else 
-					{
-                                            //alert("result="+result);
-                                            hideManageLoadingMessage();
-                                            document.getElementById('reportPrevPage').style.display="none";
-                                            document.getElementById('rightMenu').style.display="";
-                                            document.getElementById('bodyspan').style.display="";
-                                            document.getElementById('bodyspan').innerHTML =result;
-					}                  
-				}
-				else 
-				{
-					alert('There was a problem with the request.');
-				}
-
-				var table3Filters = 
-				{
-					btn: true,                        
-					col_6: "none",
-					col_7: "none"
-				}
-				setFilterGrid("table_id1",1,table3Filters);
-				/////////////////////// 
-			}
-		}
+      /////////////////////// 
+    }
+ }
 
 ////////////////// HTTP POST REQUEST CLOSED ////////////////////////////////////
 function closeShowNewTripFormat()

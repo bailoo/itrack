@@ -265,7 +265,7 @@ class Cassandra
      *               NULL on error.
      * @access public
      */
-    public function query($cql, $consistency = self::CONSISTENCY_ALL)
+    public function query($cql, $consistency = self::CONSISTENCY_LOCAL_ONE)
     {
         // Prepares the frame's body
         $frame = self::pack_long_string($cql).

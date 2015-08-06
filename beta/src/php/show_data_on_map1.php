@@ -6,6 +6,7 @@ include_once("user_type_setting.php");
 <script type="text/javascript" src="jquery.min.js"></script>
 <script language="javascript" src="src/js/underscore.js"></script>
 <script type="text/javascript">
+
 	var startup_var;    
 	var newurl;      ///////for change url every time
 	newurl=0;
@@ -30,13 +31,13 @@ include_once("user_type_setting.php");
 	var customer_station_no=new Array();
 	var type_customer=new Array();
 
-	var station_name_customer = new Array();
-	var station_lat_customer = new Array();
-	var station_lng_customer = new Array();			
-	var station_customer_1 = new Array();
-	var station_type_customer = new Array();
-	//var station_marker_customer = new Array();
-	var station_counter_customer = 0;
+	var uniqueRouteMorningParseJson;
+        var uniqueRouteEveningParseJson;
+      
+        var uniqueCustomerParseJson;
+        var uniquePlantParseJson;
+        var uniqueChillingParseJson;
+        
 	//markerCustomerS = new Array();
 	var schedule_location_id = new Array();
 	var schedule_location_name = new Array();
@@ -44,19 +45,9 @@ include_once("user_type_setting.php");
 	var schedule_lng = new Array();	
 	var schedule_location_counter= 0;
 	
-	var RouteNMCustomer=new Array(); // Route Number Evening Customer Type
-	var RouteMCustomerLat=new Array();
-	var RouteMCustomerLng=new Array();
-	var RouteMCustomerStationNo=new Array();
-	var RouteMCustomerNo=new Array();
-	var RouteMCustomerType=new Array();
 	
-	var RouteNECustomer=new Array(); // Route Number Evening Customer Type
-	var RouteECustomerLat=new Array();
-	var RouteECustomerLng=new Array();
-	var RouteECustomerStationNo=new Array();
-	var RouteECustomerNo=new Array();	
-	var RouteECustomerType=new Array();
+	
+
 	
 	/*var RouteNMPlant=new Array(); // Route Number Evening Plant Type
 	var RouteMPlantLat=new Array();
@@ -79,20 +70,9 @@ include_once("user_type_setting.php");
 	var customer_plant=new Array();
 	var type_plant=new Array();	
 	
-	var chillingLatPlant=new Array();
-	var chillingLngPlant=new Array();
-	var chillingStationPlant=new Array();
-	var chillingCustomerPlant=new Array();
-	var chillingTypePlant=new Array();
 	
-	var station_name_plant = new Array();
-	var station_lat_plant = new Array();
-	var station_lng_plant = new Array();			
-	var station_customer_plant = new Array();
-	var station_type_plant = new Array();			
-	//var station_marker_plant = new Array();
-	var station_counter_plant = 0;
-	//markerTypeS = new Array();
+	
+	
 	
 	function onlyUnique(value, index, self) { 
     return self.indexOf(value) === index;
@@ -343,237 +323,23 @@ function show_data_on_map(report_format)
 		 
 		//alert("vid="+vid);
     //else if(num1==1)
+                //alert("num1="+num1);
 		if(num1 == 1)
 		{
 			var feature_id_map = document.getElementById('station_flag_map').value;
+                        //alert('feature_id_map='+feature_id_map)
 			if(feature_id_map==1)
 			{
-				var bname = navigator.appName;	
+                            uniqueCustomerParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueCustomerArrNew']); ?> );
+                            //alert("len="+uniqueCustomerParseJson[1011564]);
+                            uniquePlantParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniquePlantArrNew']); ?> );
+                            uniqueChillingParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueChillingArrNew']); ?> );
+                            uniqueRouteMorningParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteArrMorningNew']); ?> );
+                            uniqueRouteEveningParseJson=JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteArrEveningNew']); ?> );
+                            //alert("routeNo="+uniqueRouteMorningParseJson.length);
+    
+                                var bname = navigator.appName;	
 				var xml_data_this;
-				var user_type_customer = "<?php echo $_SESSION['unique_client_customer']; ?>";	
-				var xmlObjThis = null; 			
-				var dest_station_test="src/php/client_map_feature_data/"+user_type_customer+".xml";
-				//var exists = isFile(dest_station_test);
-				//alert("exists="+exists);
-				//alert(dest_station_test);
-				xmlObjThis = loadXML(dest_station_test);
-				var dataReceived=false;
-				if (bname == "Microsoft Internet Explorer")
-				{    
-					if(xmlObjThis!=null)	
-					{                                      
-						xml_data_this = xmlObjThis.documentElement.getElementsByTagName("marker");
-						var xml_data_this1 = xmlObjThis.documentElement.getElementsByTagName("a1");
-						if(xml_data_this1.length>0)
-						{
-							dataReceived=true;
-						}
-					}                                     
-				}
-				else
-				{   
-					xml_data_this = xmlObjThis.documentElement.getElementsByTagName("marker");
-					//alert("length 1:"+xml_data.length);    
-					var xml_data_this1 = xmlObjThis.documentElement.getElementsByTagName("a1");
-					//alert("length 2:"+xml_data_this1.length);
-					if(xml_data_this1.length>0)
-					{
-						dataReceived=true;
-					}
-				}
-				if(dataReceived==true)
-				{
-					//alert("len="+xml_data_this.length);
-					for (var k = 0; k < xml_data_this.length; k++) 
-					{																													
-						lat_customer[k] = xml_data_this[k].getAttribute("lat");
-						lng_customer[k] = xml_data_this[k].getAttribute("lng");			
-						station_customer[k] = xml_data_this[k].getAttribute("station");					
-						customer_station_no[k] = xml_data_this[k].getAttribute("customer");
-						type_customer[k] = xml_data_this[k].getAttribute("type");	
-					
-						station_name_customer[station_counter_customer] = station_customer[k];
-						station_lat_customer[station_counter_customer] =lat_customer[k];
-						station_lng_customer[station_counter_customer] =lng_customer[k];
-						station_customer_1[station_counter_customer] = customer_station_no[k];
-						station_type_customer[station_counter_customer] = type_customer[k];       		    	
-						//station_marker_customer[station_counter_customer] = markerCustomerS[k];
-						station_counter_customer++; 				
-					} 
-				}
-				
-				xml_data_this="";
-				var user_type_plant = "<?php echo $_SESSION['unique_client_plant']; ?>";
-				xmlObj = null; 			
-				var dest_station_test="src/php/client_map_feature_data/"+user_type_plant+".xml";
-				//alert("dest_station_test="+dest_station_test);
-				xmlObj = loadXML(dest_station_test);
-				dataReceived=false;
-				if (bname == "Microsoft Internet Explorer")
-				{    
-					if(xmlObj!=null)	
-					{                                      
-						xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-						if(xml_data_this1.length>0)
-						{
-							dataReceived=true;
-						}
-					}                                     
-				}
-				else
-				{   
-					xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-					//alert("length 1:"+xml_data.length);    
-					var xml_data_this1 = xmlObj.documentElement.getElementsByTagName("a1");
-					// alert("length 2:"+xml_data1.length);
-					if(xml_data_this1.length>0)
-					{
-						dataReceived=true;
-					}
-				}
-				if(dataReceived==true)
-				{
-					for (var k = 0; k < xml_data_this.length; k++) 
-					{																													
-						lat_plant[k] = xml_data_this[k].getAttribute("lat");
-						lng_plant[k] = xml_data_this[k].getAttribute("lng");			
-						station_plant[k] = xml_data_this[k].getAttribute("station");					
-						customer_plant[k] = xml_data_this[k].getAttribute("customer");
-						type_plant[k] = xml_data_this[k].getAttribute("type");	
-
-						station_name_plant[station_counter_plant] = station_plant[k];
-						station_lat_plant[station_counter_plant] =lat_plant[k];
-						station_lng_plant[station_counter_plant] =lng_plant[k];
-						station_customer_plant[station_counter_plant] = customer_plant[k];
-						station_type_plant[station_counter_plant] = type_plant[k];       		    	
-						//station_marker_customer[station_counter_plant] = markerCustomerS[k];
-						station_counter_plant++; 
-					} 
-				}
-				
-				xml_data_this="";
-				var uniqueChillingPlant = "<?php echo $_SESSION['uniqueChillingPlant']; ?>";
-				xmlObj = null;
-				xmlObj = loadXML(uniqueChillingPlant);
-				dataReceived=false;
-				if (bname == "Microsoft Internet Explorer")
-				{    
-					if(xmlObj!=null)	
-					{                                      
-						xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-						if(xml_data_this1.length>0)
-						{
-							dataReceived=true;
-						}
-					}                                     
-				}
-				else
-				{   
-					xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-					//alert("length 1:"+xml_data.length);    
-					var xml_data_this1 = xmlObj.documentElement.getElementsByTagName("a1");
-					// alert("length 2:"+xml_data1.length);
-					if(xml_data_this1.length>0)
-					{
-						dataReceived=true;
-					}
-				}
-				if(dataReceived==true)
-				{
-					for (var k = 0; k < xml_data_this.length; k++) 
-					{																													
-						chillingLatPlant[k] = xml_data_this[k].getAttribute("lat");
-						chillingLngPlant[k] = xml_data_this[k].getAttribute("lng");			
-						chillingStationPlant[k] = xml_data_this[k].getAttribute("station");					
-						chillingCustomerPlant[k] = xml_data_this[k].getAttribute("customer");
-						chillingTypePlant[k] = xml_data_this[k].getAttribute("type");
-					} 
-				}				
-				
-				xml_data_this="";
-				var customerRouteEvening = "<?php echo $_SESSION['uniqueCustomerRouteEvening']; ?>";
-				xmlObj = null; 			
-				var dest_station_test=customerRouteEvening;
-				//alert("dest_station_test="+dest_station_test);
-				xmlObj = loadXML(dest_station_test);
-				dataReceived=false;
-				if (bname == "Microsoft Internet Explorer")
-				{    
-					if(xmlObj!=null)	
-					{                                      
-						xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-						if(xml_data_this1.length>0)
-						{
-							dataReceived=true;
-						}
-					}                                     
-				}
-				else
-				{   
-					xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-					//alert("length 1:"+xml_data_this.length);    
-					var xml_data_this1 = xmlObj.documentElement.getElementsByTagName("a1");
-					// alert("length 2:"+xml_data1.length);
-					if(xml_data_this1.length>0)
-					{
-						dataReceived=true;
-					}
-				}
-				if(dataReceived==true)
-				{
-					for (var k = 0; k < xml_data_this.length; k++) 
-					{
-						RouteNECustomer[k] = xml_data_this[k].getAttribute("routeNo");
-						RouteECustomerLat[k] = xml_data_this[k].getAttribute("lat");
-						RouteECustomerLng[k] = xml_data_this[k].getAttribute("lng");			
-						RouteECustomerStationNo[k] = xml_data_this[k].getAttribute("station");					
-						RouteECustomerNo[k] = xml_data_this[k].getAttribute("customer");
-						RouteECustomerType[k] = xml_data_this[k].getAttribute("type");	
-					} 
-				}
-				
-				xml_data_this="";
-				var customerRouteMorning ="<?php echo $_SESSION['uniqueCustomerRouteMorning']; ?>";
-				xmlObj = null; 			
-				var dest_station_test=customerRouteMorning;
-				//alert("dest_station_test="+dest_station_test);
-				xmlObj = loadXML(dest_station_test);
-				dataReceived=false;
-				if (bname == "Microsoft Internet Explorer")
-				{    
-					if(xmlObj!=null)	
-					{                                      
-						xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-						if(xml_data_this1.length>0)
-						{
-							dataReceived=true;
-						}
-					}                                     
-				}
-				else
-				{   
-					xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-					//alert("length 1:"+xml_data_this.length);    
-					var xml_data_this1 = xmlObj.documentElement.getElementsByTagName("a1");
-					// alert("length 2:"+xml_data1.length);
-					if(xml_data_this1.length>0)
-					{
-						dataReceived=true;
-					}
-				}
-				if(dataReceived==true)
-				{
-					for (var k = 0; k < xml_data_this.length; k++) 
-					{																													
-						RouteNMCustomer[k] = xml_data_this[k].getAttribute("routeNo");
-						RouteMCustomerLat[k] = xml_data_this[k].getAttribute("lat");
-						RouteMCustomerLng[k] = xml_data_this[k].getAttribute("lng");			
-						RouteMCustomerStationNo[k] = xml_data_this[k].getAttribute("station");					
-						RouteMCustomerNo[k] = xml_data_this[k].getAttribute("customer");
-						RouteMCustomerType[k] = xml_data_this[k].getAttribute("type");
-					} 
-				}
-				
 				/*xml_data_this="";
 				var plantRouteEvening = "<?php echo $_SESSION['uniquePlantRouteEvening']; ?>";
 				xmlObj = null; 			
@@ -857,213 +623,6 @@ function show_data_on_map(report_format)
 }  // function closed
 // for storing all point of plant and custormer
 
-
-
-
-/*function DateCheck_1(b)
-{
-	var currentTime = new Date();
-	var month = currentTime.getMonth() + 1
-	var day = currentTime.getDate()
-	var year = currentTime.getFullYear() 
-  
-	  var startdate1;
-	  var enddate1;
-
-	  if(b==1 || b==2)
-	  {
-  		startdate1=document.thisform.start_date.value;		
-  		enddate1=document.thisform.end_date.value;
-		}
-		else
-		{
-			startdate1 = "";
-			enddate1 = "";  
-	  }
-	
-	//alert(" b="+b+" startdate="+startdate1+" enddate="+enddate1);
-	
-	var startlen = startdate1.length;
-	var endlen = enddate1.length;
-
-	if(((startlen > 0)&&(startlen < 10))||((endlen > 0)&&(endlen < 10)))
-	{
-		alert("Incorrect date  format...enter yyyy-mm-dd");
-		return false;
-	}
-
-	if(startlen > 0)
-	{
-		var startday = startdate1.substr(8,2);
-		var startmonth = startdate1.substr(5,2);
-		var startyr = startdate1.substr(0,4);
-		
-	//alert("startday="+ startday +" startmonth="+startmonth+" startyr="+startyr);
-		if(startyr > year)
-		{
-			alert("Incorrect Date From Value...Please Enter Again");
-			document.thisform.start_date.focus();
-			return false;
-		}
-		if(year == startyr)
-		{
-			if(startmonth == month)
-				if(startday > day)
-				{
-					alert("Incorrect Date From Value...Please Enter Again");
-					document.thisform.end_date.focus();
-					return false;
-				}
-			if(startmonth > month)
-			{
-				alert("Incorrect Date From Value...Please Enter Again");
-				document.thisform.start_date.focus();	
-				return false;
-			}
-		}
-		var leapyr=0;
-		if(startyr%4 == 0)
-		{
-			if(startyr%100 != 0)
-			{
-				leapyr = 1;
-			}
-			else
-			{
-				if(startyr%400 == 0)
-					leapyr = 1;
-				else
-					leapyr = 0;
-			}
-		}
-		if((leapyr == 1)&&(startmonth == "02"))
-		{
-			if(startday > 29)
-			{
-				alert("Incorrect Date From Value...Please Enter Again");
-				document.thisform.start_date.focus();
-				return false;
-			}
-		}
-		if((leapyr == 0)&&(startmonth == "02"))
-		{
-			if(startday > 28)
-			{
-				alert("Incorrect Date From Value...Please Enter Again");
-				document.thisform.start_date.focus();
-				return false;
-			}
-		}
-		if((startmonth == "04")||(startmonth == "06")||(startmonth == "09")||(startmonth == "11"))
-		{
-			if(startday > 30)
-			{
-				alert("Incorrect Date From Value...Please Enter Again");
-				document.thisform.start_date.focus();						
-				return false;
-			}
-		}
-	}
-
-	if(endlen > 0)
-	{
-		var endday = enddate1.substr(8,2);
-		var endmonth = enddate1.substr(5,2);
-		var endyr = enddate1.substr(0,4);
-		if(endyr > year)
-		{
-			alert("Incorrect Date To Value...Please Enter Again");
-			document.thisform.end_date.focus();
-			return false;
-		}
-		if(year == endyr)
-		{
-			if(endmonth == month)
-				if(endday > day)
-				{
-					alert("Incorrect Date To Value...Please Enter Again");
-					document.thisform.end_date.focus();
-					return false;
-				}
-			if(endmonth > month)
-			{
-				alert("Incorrect Date To Value...Please Enter Again");
-				document.thisform.end_date.focus();	
-				return false;
-			}
-		}
-		var leapyr=0;
-		if(endyr%4 == 0)
-		{
-			if(endyr%100 != 0)
-			{
-				leapyr = 1;
-			}
-			else
-			{
-				if(endyr%400 == 0)
-					leapyr = 1;
-				else
-					leapyr = 0;
-			}
-		}
-		if((leapyr == 1)&&(endmonth == "02"))
-		{
-			if(endday > 29)
-			{
-				alert("Incorrect Date To Value...Please Enter Again");
-				document.thisform.end_date.focus();
-				return false;
-			}
-		}
-		if((leapyr == 0)&&(endmonth == "02"))
-		{
-			if(endday > 28)
-			{
-				alert("Incorrect Date To Value...Please Enter Again");
-				document.thisform.end_date.focus();
-				return false;
-			}
-		}
-		if((endmonth == "04")||(endmonth == "06")||(endmonth == "09")||(endmonth == "11"))
-		{
-			if(endday > 30)
-			{
-				alert("Incorrect Date To Value...Please Enter Again");
-				document.thisform.end_date.focus();
-				return false;
-			}
-		}
-	}
-	if((startlen > 0)&&(endlen > 0))
-	{
-		if(startyr > endyr)
-		{
-			alert("Incorrect Duration Entered...Please Enter Again");
-			document.thisform.start_date.focus();
-			return false;
-		}
-		if(startyr == endyr)
-		{
-
-			if(endmonth == startmonth)
-				if(startday > endday)
-				{
-					alert("Incorrect Duration Entered...Please Enter Again");
-					document.thisform.start_date.focus();
-					return false;
-				}
-			if(startmonth > endmonth)
-			{
-				alert("Incorrect Duration Entered...Please Enter Again");
-				document.thisform.start_date.focus();
-				return false;
-			}
-		}
-	}
-	return true;
-}*/
-
   function trim(str) 
   {
           return str.replace(/^\s+|\s+$/g,"");
@@ -1223,186 +782,6 @@ function getLandMark1(event,newzoomlevel)
 	});	 // GDownload url closed		
 } 
 
-////****** FUNCTION LANDMARK CLOSED
-
-
-/////****** FUNCTION TO GET STATION 
-/*var markerS = new Array();
-var dest_station_tmp ="";
-var dest_station ="";
-
-function getStation1(select_value)
-{
-	//alert("StationPrev");  
-  var date = new Date();    
-  dest_station = "../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";        
-  dest_station_tmp = dest_station;
-  
-  var poststr = "xml_file_station="+dest_station+"&select_val="+select_value;				
-  //alert("exists="+exists);
-  makePOSTRequestMap('src/php/select_station.php', poststr);			
-     
-  TryCnt =0;
-  clearTimeout(timer);
-  timer = setTimeout('display_station()',1000);	 
- 
- /*  				
-	GDownloadUrl("src/php/select_station.php", function(data)
-    {								
-		var xml = GXml.parse(data);
-		var lnmark_data = xml.documentElement.getElementsByTagName("marker");	
-		//alert("landmark length="+lnmark_data.length);
-		var i;
-		var station;	
-		var markerL;
-		var customer;
-		var point;	
-																							
-		for(i=0; i <lnmark_data.length; i++) 
-		{									 					
-			point = new GLatLng(parseFloat(lnmark_data[i].getAttribute("lat")),
-			parseFloat(lnmark_data[i].getAttribute("lng")));				
-
-			station = lnmark_data[i].getAttribute("station");					
-			customer = lnmark_data[i].getAttribute("customer");
-													
-			//alert(point+","+station+","+customer);
-      markerS[i] = ShowStation(point, station, customer);	   //RR
-			map.addOverlay(markerS[i]);			
-		}																																
-	});	 // GDownload url closed		
-	*/
-//} 
-
-/*var station_name_list = new Array();
-var station_point_list = new Array();
-var station_type_list = new Array();
-var station_customer_list = new Array();
-var station_marker_list = new Array();
-var station_counter = 0;
-
-var landmark_name_list = new Array();
-var landmark_point_list = new Array();
-var landmark_marker_list = new Array();
-var landmark_counter = 0;
-
-function display_station()
-{
-  station_name_list = new Array();
-  station_point_list = new Array();
-  station_type_list = new Array();
-  station_customer_list = new Array();
-  station_marker_list = new Array(); 
-  station_counter = 0;
-
-  //alert("displaystationok");
-  markerS = new Array();  
-	var station;	
-	var markerL;
-	var customer;
-	var point;
-  var type;	
-  
-  var xml_data; 
-  var DataReceived = false;  
-  try
-  {
-    var bname = navigator.appName;
-          
-    /*if (bname == "Microsoft Internet Explorer")
-    {
-      alert("Wait for data, please use Mozilla for better compatibility");
-    }//alert(bname);   */
-              
-    //var xmlObj = null;        
-   // alert("thisdest="+thisdest);
-    /*xmlObj = loadXML(dest_station_tmp);
-     
-    if (bname == "Microsoft Internet Explorer")
-    {
-      //alert("In IE:"+xmlObj);
-      if(xmlObj!=null)	
-      {                                      
-        xml_data = xmlObj.documentElement.getElementsByTagName("marker");
-        DataReceived = true;
-      } 
-      else
-      {
-        if(TryCnt<=MAX_TIMELIMIT)
-        {
-          TryCnt++;
-          clearTimeout(timer);
-          timer = setTimeout('display_station()',1000);
-        }
-      }                                
-    }
-    else
-    {
-      //alert("In Mozilla");
-      xml_data = xmlObj.documentElement.getElementsByTagName("marker");
-      //alert("length 1:"+xml_data.length);
-      //var xml_data1 = xmlObj.getElementsByTagName("t1");
-      var xml_data1 = xmlObj.documentElement.getElementsByTagName("a1");
-	    // alert("length 2:"+xml_data1.length);
-      if(xml_data1.length>0)
-      {
-        //alert("A");
-        DataReceived = true;
-      }
-      else
-      {
-        //alert("B:"+TryCnt);
-        if(TryCnt<=MAX_TIMELIMIT)
-        {
-          TryCnt++;
-          clearTimeout(timer);
-          timer = setTimeout('display_station()',1000);
-        }
-      }
-    }   
-    //alert("xml_data="+xml_data);             
-	}
-	catch(err)
-	{
-		alert("sorry!unable to get station information");
-	}	
-	    
-	//alert("data recieved:"+DataReceived+" ,xml_data.length="+xml_data.length);
-	
-  if(DataReceived)
-	{
-    clearTimeout(timer);
-    
-    //alert("len="+xml_data.length);
-    for (var k = 0; k < xml_data.length; k++) 
-  	{																													
-  		point = new GLatLng(parseFloat(xml_data[k].getAttribute("lat")),
-  		parseFloat(xml_data[k].getAttribute("lng")));				
-  
-  		station = xml_data[k].getAttribute("station");					
-  		customer = xml_data[k].getAttribute("customer");
-  		type = xml_data[k].getAttribute("type");
-  												
-  		//alert(point+","+station+","+customer);
-      markerS[k] = ShowStation(point, station, customer, type);	   //RR
-  		map.addOverlay(markerS[k]);
-      
-      //STORE VARIABLE IN ARRAYS FOR STATION SEARCH
-      station_name_list[station_counter] = station;
-      station_point_list[station_counter] = point;
-      station_customer_list[station_counter] = customer;
-      station_type_list[station_counter] = type;        		    	
-      station_marker_list[station_counter] = markerS[k];
-    	station_counter++; 
-      ///////////////// ///////////////////////////                	      	      		
-    }  
-     
-    var poststr = "dest=" + encodeURI( dest_station );
-    makePOSTRequestMap('src/php/del_xml.php', poststr);	
-  }							   
-}
-/// **** FUNCTION STATION CLOSED */
-
 
 var markerS = new Array();
 var dest_station_tmp ="";
@@ -1410,45 +789,10 @@ var dest_station ="";
 
 function getStation1(select_value)
 {
-	//alert("StationPrev");  
-  var date = new Date();    
-  /*dest_station = "../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";        
-  dest_station_tmp = dest_station;
-  
-  var poststr = "xml_file_station="+dest_station+"&select_val="+select_value;				
-  //alert("exists="+exists);
-  makePOSTRequestMap('src/php/select_station.php', poststr);*/			
-     
+  var date = new Date();
   TryCnt =0;
   clearTimeout(timer);
   timer = setTimeout('display_station()',1000);	 
- 
- /*  				
-	GDownloadUrl("src/php/select_station.php", function(data)
-    {								
-		var xml = GXml.parse(data);
-		var lnmark_data = xml.documentElement.getElementsByTagName("marker");	
-		//alert("landmark length="+lnmark_data.length);
-		var i;
-		var station;	
-		var markerL;
-		var customer;
-		var point;	
-																							
-		for(i=0; i <lnmark_data.length; i++) 
-		{									 					
-			point = new GLatLng(parseFloat(lnmark_data[i].getAttribute("lat")),
-			parseFloat(lnmark_data[i].getAttribute("lng")));				
-
-			station = lnmark_data[i].getAttribute("station");					
-			customer = lnmark_data[i].getAttribute("customer");
-													
-			//alert(point+","+station+","+customer);
-      markerS[i] = ShowStation(point, station, customer);	   //RR
-			map.addOverlay(markerS[i]);			
-		}																																
-	});	 // GDownload url closed		
-	*/
 } 
 
 
@@ -1577,7 +921,7 @@ function getStation1(select_value)
 	var customerMarkers=new Array();
 	function search_station()
 	{  
-		var search_text = document.getElementById('station_search_text').value;
+		var search_text = document.getElementById('station_search_text').value.trim();
 		var found_station_name;
 		var found_customer_no;
 		var found_lat;
@@ -1587,43 +931,15 @@ function getStation1(select_value)
 		var client_type_combo=document.getElementById('station_chk').value;
 		if(client_type_combo=="0")
 		{		
-			found_station_name="";
-			found_customer_no="";
-			found_lat="";
-			found_lng="";
-			found_type="";	
+				
 			var tmp_flag = false;
-			if(station_counter_customer>0)
-			{
-				for(var i=0;i<station_counter_customer;i++)
-				{
-					search_text = trim(search_text);
-					//station_name_customer[i] = trim(station_name_customer[i]);
-					station_customer_1[i] = trim(station_customer_1[i]); 
-					//if((search_text == station_name_customer[i]) || (search_text == station_customer_1[i]) )
-					
-                                        if(search_text.trim() == station_customer_1[i].trim())
-					{
-						//alert("found");
-						tmp_flag=true;
-						found_station_name = station_name_customer[i];
-                                                //alert('found_station_name'+station_name_customer[i]);
-						found_lat = station_lat_customer[i];
-                                                //alert('found_lat'+found_lat);
-						found_lng = station_lng_customer[i];
-						found_customer_no = station_customer_1[i];
-						found_type = station_type_customer[i]; 					
-						break;
-					}    
-				}  
-				if(found_station_name!="")
-				{	
-					var lt_1 = found_lat; 
-					var ln_1 = found_lng;
-					//alert("lt_1="+lt_1+"ln_g="+ln_1);
-					Show_Search_Station(lt_1,ln_1, found_station_name, found_customer_no, found_type);
-				}
-			}
+                        //alert("searchedCustomerNo="+search_text);
+                        if(uniqueCustomerParseJson[search_text]!=undefined)
+                        {
+                            tmp_flag=true;
+                            var customerArrDetail=uniqueCustomerParseJson[search_text].split("^");
+                            Show_Search_Station(customerArrDetail[0],customerArrDetail[1], customerArrDetail[2], search_text, customerArrDetail[3]);
+                        }
 			if(!tmp_flag)
 			{
 				alert("Error! Unable to Find the Customer");
@@ -1633,87 +949,34 @@ function getStation1(select_value)
 		
 		if(client_type_combo=="1")
 		{
-			found_station_name="";
-			found_customer_no="";
-			found_lat="";
-			found_lng="";
-			found_type="";	
-			
-			if(station_counter_plant>0)
-			{	
-				var tmp_flag = false;
-				for(var i=0;i<station_counter_plant;i++)
-				{
-					search_text = trim(search_text);
-					//station_name_plant[i] = trim(station_name_plant[i]);
-					station_customer_plant[i] = trim(station_customer_plant[i]); 
-					//if( (search_text == station_name_plant[i]) || (search_text == station_customer_plant[i]) )
-					if(search_text == station_customer_plant[i])
-					{
-						//alert("found");
-						var tmp_flag = true;
-						found_station_name = station_name_plant[i];
-						found_lat = station_lat_plant[i];
-						found_lng = station_lng_plant[i];
-						found_customer_no = station_customer_plant[i];
-						found_type = station_type_plant[i]; 					
-						break;
-					}    
-				}  
-				if(found_station_name!="")
-				{	
-					var lt_1 = found_lat; 
-					var ln_1 = found_lng;
-					Show_Search_Station(lt_1,ln_1, found_station_name, found_customer_no, found_type);
-				}
-			}
-			if(!tmp_flag)
-			{
-				alert("Error! Unable to Find the Plant");
-				return false;
-			}
+                    var tmp_flag = false;
+                    if(uniquePlantParseJson[search_text]!=undefined)
+                    {
+                        tmp_flag=true;
+                        var plantArrDetail=uniquePlantParseJson[search_text].split("^");
+                        Show_Search_Station(plantArrDetail[0],plantArrDetail[1], plantArrDetail[2], search_text, plantArrDetail[3]);
+                    }
+                    if(!tmp_flag)
+                    {
+                            alert("Error! Unable to Find the Plant");
+                            return false;
+                    }
 		}
 		
 		if(client_type_combo=="4")
 		{
-			found_station_name="";
-			found_customer_no="";
-			found_lat="";
-			found_lng="";
-			found_type="";
-			if(station_counter_plant>0)
-			{	
-				var tmp_flag = false;
-				for(var i=0;i<chillingLngPlant.length;i++)
-				{
-					search_text = trim(search_text);
-					//station_name_plant[i] = trim(station_name_plant[i]);
-					chillingCustomerPlant[i] = trim(chillingCustomerPlant[i]); 
-					//if( (search_text == station_name_plant[i]) || (search_text == station_customer_plant[i]) )
-					if(search_text == chillingCustomerPlant[i])
-					{
-						//alert("found");
-						var tmp_flag = true;
-						found_station_name = chillingStationPlant[i];
-						found_lat = chillingLatPlant[i];
-						found_lng = chillingLngPlant[i];
-						found_customer_no = chillingCustomerPlant[i];
-						found_type = chillingTypePlant[i]; 					
-						break;
-					}    
-				}  
-				if(found_station_name!="")
-				{	
-					var lt_1 = found_lat; 
-					var ln_1 = found_lng;
-					Show_Search_Station(lt_1,ln_1, found_station_name, found_customer_no, found_type);
-				}
-			}
-			if(!tmp_flag)
-			{
-				alert("Error! Unable to Find the Plant");
-				return false;
-			}
+                    var tmp_flag = false;   
+                    if(uniqueChillingParseJson[search_text]!=undefined)
+                    {
+                        tmp_flag=true;
+                        var chillingArrDetail=uniqueChillingParseJson[search_text].split("^");
+                        Show_Search_Station(chillingArrDetail[0],chillingArrDetail[1], chillingArrDetail[2], search_text, chillingArrDetail[3]);
+                    }
+                    if(!tmp_flag)
+                    {
+                            alert("Error! Unable to Find the Plant");
+                            return false;
+                    }
 		}
 		
 		var rFoundRNumber=[];
@@ -1728,7 +991,7 @@ function getStation1(select_value)
 	
 		if(client_type_combo=="2")
 		{				
-			routeLength=RouteNMCustomer.length;
+			routeLength=uniqueRouteMorningParseJson.length;
 			//alert("routeLengthaa="+routeLength+" search_text="+search_text);
 			if(parseInt(routeLength)>0)
 			{
@@ -1736,22 +999,24 @@ function getStation1(select_value)
 				for(var i=0;i<routeLength;i++)
 				{
 					search_text = search_text.trim();
-					//alert("route1="+RouteNMCustomer[i]+" route2="+search_text);
-					if(search_text == RouteNMCustomer[i].trim())                                        
+					//alert("route1="+uniqueRouteMorningParseJson[i]['routeNo']+" route2="+search_text);
+					if(search_text.trim() == uniqueRouteMorningParseJson[i]['routeNo'].trim())                                        
 					{
+                                           
 						routeTmpFlag=true;
-						rFoundRNumber[tmpCnt]=RouteNMCustomer[i]
-						rFoundLat[tmpCnt] = RouteMCustomerLat[i];
-						rFoundLng[tmpCnt] = RouteMCustomerLng[i];
-						rFoundStationName[tmpCnt] = RouteMCustomerStationNo[i];
-						rFoundCustomerNo[tmpCnt] = RouteMCustomerNo[i];
-						rFoundType[tmpCnt] = RouteMCustomerType[i];
+						rFoundRNumber[tmpCnt]=uniqueRouteMorningParseJson[i]['routeNo'];
+						rFoundLat[tmpCnt] = uniqueRouteMorningParseJson[i]['lat'];
+						rFoundLng[tmpCnt] = uniqueRouteMorningParseJson[i]['lng'];
+						rFoundStationName[tmpCnt] = uniqueRouteMorningParseJson[i]['stationName'];
+						rFoundCustomerNo[tmpCnt] = uniqueRouteMorningParseJson[i]['customerNo'];
+						rFoundType[tmpCnt] = uniqueRouteMorningParseJson[i]['type'];
 						tmpCnt++;
 					}    
 				}  
 				if(routeTmpFlag==true)
 				{
-					plotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType, rFoundLat, rFoundLng);
+                                    //alert("found");
+                                    plotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType, rFoundLat, rFoundLng);
 				}
 			}
 			if(routeTmpFlag==false)
@@ -1772,7 +1037,7 @@ function getStation1(select_value)
 		var routeTmpFlag = false;
 		if(client_type_combo=="3")
 		{				
-			routeLength=RouteNECustomer.length;
+			routeLength=uniqueRouteEveningParseJson.length;
 			//alert("routeLength="+routeLength+" search_text="+search_text);
 			
 			if(routeLength>0)
@@ -1780,16 +1045,16 @@ function getStation1(select_value)
 				for(var i=0;i<routeLength;i++)
 				{
 					search_text = search_text.trim();
-					if(search_text == RouteNECustomer[i].trim())                                        
+					if(search_text == uniqueRouteEveningParseJson[i]['routeNo'].trim())                                        
 					{
 						//alert("routeNo="+RouteNECustomer[i].trim());
 						routeTmpFlag=true;
-						rFoundRNumber[tmpCnt]=RouteNECustomer[i]
-						rFoundLat[tmpCnt] = RouteECustomerLat[i];
-						rFoundLng[tmpCnt] = RouteECustomerLng[i];
-						rFoundStationName[tmpCnt] = RouteECustomerStationNo[i];
-						rFoundCustomerNo[tmpCnt] = RouteECustomerNo[i];
-						rFoundType[tmpCnt] = RouteECustomerType[i];
+						rFoundRNumber[tmpCnt]=uniqueRouteEveningParseJson[i]['routeNo'];
+						rFoundLat[tmpCnt] = uniqueRouteEveningParseJson[i]['lat'];
+						rFoundLng[tmpCnt] = uniqueRouteEveningParseJson[i]['lng'];
+						rFoundStationName[tmpCnt] = uniqueRouteEveningParseJson[i]['stationName'];
+						rFoundCustomerNo[tmpCnt] = uniqueRouteEveningParseJson[i]['customerNo'];
+						rFoundType[tmpCnt] = uniqueRouteEveningParseJson[i]['type'];
 						tmpCnt++;
 					}    
 				}  
@@ -1910,7 +1175,9 @@ function getStation1(select_value)
 		
 		for(var i=0;i<rFoundLat.length;i++)
 		{
-			icon='images/routes_customer.png';
+			icon='images/customer2.png';
+                        //var exists = isFile(icon);
+                        //alert("exists="+exists);
 			routeLatTmp=rFoundLat[i];
 			routeLngTmp=rFoundLng[i];
 			
@@ -1921,7 +1188,8 @@ function getStation1(select_value)
 			title='abc';
 			routeNumberTmp=rFoundRNumber[i];
 			routeStationNoTmp=rFoundStationName[i];
-			routeCustomerNoTmp=rFoundCustomerNo[i];		
+			routeCustomerNoTmp=rFoundCustomerNo[i];	
+                        //alert('routeCustomerNoTmp='+routeCustomerNoTmp);
 			routeTypeTmp=rFoundType[i];		
 			
 			var marker = new google.maps.Marker

@@ -16,9 +16,7 @@
 	include_once('parameterizeData.php');
 	//echo "Three";
 	include_once('data.php');
-	//echo "four";
-	include_once("sortXmlData.php");
-	//echo "five";
+
 	include_once("getXmlData.php");
 	//echo "six";
 	include_once('googleMapApi.php');	
@@ -93,6 +91,7 @@
 	$finalVNameArr=array();
 	$finalVTypeArr=array();	
 	$finalVNumArr=array();
+	
 	for($i=0;$i<$vsize;$i++)
 	{
 		$dataCnt=0;
@@ -107,108 +106,41 @@
 			
 		$LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
 		$SortedDataObject=new data();
-		$UnSortedDataObject=new data();
+		readFileXmlNew($vserial[$i], $datefrom,  $requiredData, $sortBy, $parameterizeData,$SortedDataObject);
 		
-		if(($LastSortedDate+24*60*60)>=$endDateTS) //All sorted data
-		{	
-			//echo "in if1";
-			$type="sorted";
-			readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-		}
-		else if($LastSortedDate==null) //All Unsorted data
-		{
-			//echo "in if2";
-			$type="unSorted";
-			readFileXml($vserial[$i],$date1,$date2,$datefrom,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-		}
-		else //Partially Sorted data
-		{
-			$LastSDate=date("Y-m-d",$LastSortedDate+24*60*60);
-			//echo "in else";
-			$type="sorted";					
-			readFileXml($vserial[$i],$date1,$date2,$datefrom,$LastSDate,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$SortedDataObject);
-		
-			$type="unSorted";
-			readFileXml($vserial[$i],$date1,$date2,$LastSDate,$dateto,$userInterval,$requiredData,$sortBy,$type,$parameterizeData,$firstDataFlag,$UnSortedDataObject);
-		}
-
-		/*echo "udt1=".$UnSortedDataObject->deviceDatetime[0]."<br>";
-		echo "udt2=".$UnSortedDataObject->deviceDatetime[1]."<br>";	
-		echo "udt1=".$UnSortedDataObject->speedData[0]."<br>";
-		echo "udt2=".$UnSortedDataObject->speedData[1]."<br>";
-		
-		echo "sodt1=".$SortedDataObject->deviceDatetime[0]."<br>";
-		echo "sodt2=".$SortedDataObject->deviceDatetime[1]."<br>";	
-		echo "sodt1=".$SortedDataObject->speedData[0]."<br>";
-		echo "sodt2=".$SortedDataObject->speedData[1]."<br>";
-		echo "<br><br>";*/
-		
-		/*if(count($SortedDataObject->deviceDatetime)>0)
-		{
-			//echo "in sorted=".$SortedDataObject->deviceDatetime."<br><br><br><br><br><br>";
-			$prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
-			for($obi=0;$obi<$prevSortedSize;$obi++)
-			{			
-				$finalDateTimeArr[$i][$dataCnt]=$SortedDataObject->deviceDatetime[$obi];
-				$finalSDateTimeArr[$i][$dataCnt]=$SortedDataObject->serverDatetime[$obi];
-				$finalLatitudeArr[$i][$dataCnt]=$SortedDataObject->latitudeData[$obi];
-				$finalLongitudeArr[$i][$dataCnt]=$SortedDataObject->longitudeData[$obi];
-				$finalSpeedArr[$i][$dataCnt]=$SortedDataObject->speedData[$obi];
-				$finalMTArr[$i][$dataCnt]=$SortedDataObject->messageTypeData[$obi];
-				$finalVerArr[$i][$dataCnt]=$SortedDataObject->versionData[$obi];
-				$finalFixArr[$i][$dataCnt]=$SortedDataObject->fixData[$obi];
-				$finalCNArr[$i][$dataCnt]=$SortedDataObject->cellNameData[$obi];
-				$finalSSArr[$i][$dataCnt]=$SortedDataObject->sigStrData[$obi];
-				$finalSVArr[$i][$dataCnt]=$SortedDataObject->supVoltageData[$obi];
-				$finalDMSVArr[$i][$dataCnt]=$SortedDataObject->dayMaxSpeedData[$obi];
-				$finalLHTArr[$i][$dataCnt]=$SortedDataObject->lastHaltTimeData[$obi];
-				$finalio1Arr[$i][$dataCnt]=$SortedDataObject->io1Data[$obi];
-				$finalio2Arr[$i][$dataCnt]=$SortedDataObject->io2Data[$obi];
-				$finalio3Arr[$i][$dataCnt]=$SortedDataObject->io3Data[$obi];
-				$finalio4Arr[$i][$dataCnt]=$SortedDataObject->io4Data[$obi];
-				$finalio5Arr[$i][$dataCnt]=$SortedDataObject->io5Data[$obi];
-				$finalio6Arr[$i][$dataCnt]=$SortedDataObject->io6Data[$obi];
-				$finalio7Arr[$i][$dataCnt]=$SortedDataObject->io7Data[$obi];
-				$finalio8Arr[$i][$dataCnt]=$SortedDataObject->io8Data[$obi];				
-				$dataCnt++;
-			}
-		}*/
-		if(count($UnSortedDataObject->deviceDatetime)>0)
-		{
-			$sortObjTmp=sortData($UnSortedDataObject,$sortBy,$parameterizeData);			
-			$sortedSize=sizeof($sortObjTmp->deviceDatetime);			
-			for($obi=0;$obi<$sortedSize;$obi++)
-			{				
-				$finalDateTimeArr[$i][$dataCnt]=$sortObjTmp->deviceDatetime[$obi];
-				$finalSDateTimeArr[$i][$dataCnt]=$sortObjTmp->serverDatetime[$obi];				
-				$finalLatitudeArr[$i][$dataCnt]=$sortObjTmp->latitudeData[$obi];
-				$finalLongitudeArr[$i][$dataCnt]=$sortObjTmp->longitudeData[$obi];	
-				$finalSpeedArr[$i][$dataCnt]=$sortObjTmp->speedData[$obi];
-				//echo "speedData=".$sortObjTmp->speedData[$obi]."<br>";
-				$finalMTArr[$i][$dataCnt]=$sortObjTmp->messageTypeData[$obi];
-				$finalVerArr[$i][$dataCnt]=$sortObjTmp->versionData[$obi];
-				$finalFixArr[$i][$dataCnt]=$sortObjTmp->fixData[$obi];
-				$finalCNArr[$i][$dataCnt]=$sortObjTmp->cellNameData[$obi];
-				$finalSSArr[$i][$dataCnt]=$sortObjTmp->sigStrData[$obi];
-				$finalSVArr[$i][$dataCnt]=$sortObjTmp->supVoltageData[$obi];
-				$finalDMSVArr[$i][$dataCnt]=$sortObjTmp->dayMaxSpeedData[$obi];
-				$finalLHTArr[$i][$dataCnt]=$sortObjTmp->lastHaltTimeData[$obi];
-				$finalio1Arr[$i][$dataCnt]=$sortObjTmp->io1Data[$obi];
-				$finalio2Arr[$i][$dataCnt]=$sortObjTmp->io2Data[$obi];
-				$finalio3Arr[$i][$dataCnt]=$sortObjTmp->io3Data[$obi];
-				$finalio4Arr[$i][$dataCnt]=$sortObjTmp->io4Data[$obi];
-				$finalio5Arr[$i][$dataCnt]=$sortObjTmp->io5Data[$obi];
-				$finalio6Arr[$i][$dataCnt]=$sortObjTmp->io6Data[$obi];
-				$finalio7Arr[$i][$dataCnt]=$sortObjTmp->io7Data[$obi];
-				$finalio8Arr[$i][$dataCnt]=$sortObjTmp->io8Data[$obi];
-				$dataCnt++;				
-			}
-		}
-		$innerSize=sizeof($finalDateTimeArr[$i]);
-		//echo"size=".$innerSize."<br>";
-		//$SortedDataObject=null;			
-		$sortObjTmp=null;
-		$UnsortedDataObject =null;
+		//var_dump($SortedDataObject);
+	
+		if(count($SortedDataObject->deviceDatetime)>0)
+		{						
+                    $sortedSize=sizeof($SortedDataObject->deviceDatetime);			
+                    for($obi=0;$obi<$sortedSize;$obi++)
+                    {				
+                            $finalDateTimeArr[$i][$dataCnt]=$SortedDataObject->deviceDatetime[$obi];
+                            $finalSDateTimeArr[$i][$dataCnt]=$SortedDataObject->serverDatetime[$obi];				
+                            $finalLatitudeArr[$i][$dataCnt]=$SortedDataObject->latitudeData[$obi];
+                            $finalLongitudeArr[$i][$dataCnt]=$SortedDataObject->longitudeData[$obi];	
+                            $finalSpeedArr[$i][$dataCnt]=$SortedDataObject->speedData[$obi];
+                            //echo "speedData=".$sortObjTmp->speedData[$obi]."<br>";
+                            $finalMTArr[$i][$dataCnt]=$SortedDataObject->messageTypeData[$obi];
+                            $finalVerArr[$i][$dataCnt]=$SortedDataObject->versionData[$obi];
+                            $finalFixArr[$i][$dataCnt]=$SortedDataObject->fixData[$obi];
+                            $finalCNArr[$i][$dataCnt]=$SortedDataObject->cellNameData[$obi];
+                            $finalSSArr[$i][$dataCnt]=$SortedDataObject->sigStrData[$obi];
+                            $finalSVArr[$i][$dataCnt]=$SortedDataObject->supVoltageData[$obi];
+                            $finalDMSVArr[$i][$dataCnt]=$SortedDataObject->dayMaxSpeedData[$obi];
+                            $finalLHTArr[$i][$dataCnt]=$SortedDataObject->lastHaltTimeData[$obi];
+                            $finalio1Arr[$i][$dataCnt]=$SortedDataObject->io1Data[$obi];
+                            $finalio2Arr[$i][$dataCnt]=$SortedDataObject->io2Data[$obi];
+                            $finalio3Arr[$i][$dataCnt]=$SortedDataObject->io3Data[$obi];
+                            $finalio4Arr[$i][$dataCnt]=$SortedDataObject->io4Data[$obi];
+                            $finalio5Arr[$i][$dataCnt]=$SortedDataObject->io5Data[$obi];
+                            $finalio6Arr[$i][$dataCnt]=$SortedDataObject->io6Data[$obi];
+                            $finalio7Arr[$i][$dataCnt]=$SortedDataObject->io7Data[$obi];
+                            $finalio8Arr[$i][$dataCnt]=$SortedDataObject->io8Data[$obi];
+                            $dataCnt++;				
+                    }
+		}			
+		$SortedDataObject=null;
 	}
 	
 	//print_r($finalDateTimeArr[$i]);

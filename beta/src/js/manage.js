@@ -9292,6 +9292,7 @@ function setclosetime(sno){
 		
 		document.getElementById('temp_unload_estimate_datetime').style.display=''; /*tempo not visible */
 		document.getElementById('temp_unload_estimate_datetime').value =''; /*tempo not visible */
+		document.getElementById('temp_unload_estimate_datetime').value =document.getElementById('unload_estimated_datetime_'+sno).value; 
 		document.getElementById('temp_unload_estimate_time').value = document.getElementById('unload_estimated_time_'+sno).value;
 		document.getElementById('temp_unload_estimate_datetime_label').style.display='none';
 		document.getElementById('temp_unload_estimate_time').readOnly = true;
@@ -9343,7 +9344,27 @@ function setclosetime(sno){
 			{
 				final_ss="0"+ ss;				
 			}
-			var resverseDate=theDate.getFullYear()+ "/" +   theDate.getMonth()+1 + "/" + final_dd + " " + final_hr + ":" + final_mi + ":" + final_ss;
+			
+			if(theDate.getMonth()<10)
+			{
+				var cMonth="0"+theDate.getMonth();
+				cMonth= +cMonth+1;
+				//cMonth=cMonth.substr(1);
+				//alert(cMonth);
+			}
+			else
+			{
+				var cMonth=theDate.getMonth();
+				cMonth= +cMonth+1;
+			}
+			
+			if(cMonth<10)
+			{
+				cMonth="0"+cMonth;
+			}
+			
+			//var resverseDate=theDate.getFullYear()+ "/" +   theDate.getMonth()+1 + "/" + final_dd + " " + final_hr + ":" + final_mi + ":" + final_ss;
+			var resverseDate=theDate.getFullYear()+ "/" +   cMonth + "/" + final_dd + " " + final_hr + ":" + final_mi + ":" + final_ss;
 			//alert(resverseDate);
 			document.getElementById('temp_unload_estimate_datetime').value=resverseDate;
 			document.getElementById('temp_unload_accept_time').value=(document.getElementById('temp_unload_accept_time').value).replace(/-/g, "/"); 
@@ -9414,7 +9435,6 @@ function setclosetime(sno){
 		document.getElementById(param2).style.display = "none";
 	}
 }
-
 
 function setclosetimeedit(sno){
 	
@@ -9510,7 +9530,6 @@ function setclosetimeedit(sno){
 		
 	
 }
-
 function close_milkage()
 {
 		var temp_fat_per_rt="";
@@ -9572,7 +9591,7 @@ function close_milkage()
 		
 		//alert(temp_unload_estimate_time);
 		//alert(temp_unload_accept_time);
-		if((temp_unload_estimate_time.trim()=="" ) || (temp_unload_accept_time.trim()=="") || (temp_fat_per_ft.trim()=="")|| (temp_snf_per_ft.trim()==""))
+		/*if((temp_unload_estimate_time.trim()=="" ) || (temp_unload_accept_time.trim()=="") || (temp_fat_per_ft.trim()=="")|| (temp_snf_per_ft.trim()==""))
 		{
 			document.getElementById('close_chk_'+serial).checked=false;
 			//document.getElementById('unload_estimated_time_'+serial).value="";
@@ -9582,7 +9601,8 @@ function close_milkage()
 		    return false;
 			
 		}
-		else{
+		else*/
+		{
 			document.getElementById('unload_estimated_time_'+serial).value=temp_unload_estimate_time;
 			document.getElementById('unload_estimated_datetime_'+serial).value=temp_unload_estimate_datetime;
 			document.getElementById('unload_accept_time_'+serial).value=temp_unload_accept_time;
@@ -9708,6 +9728,7 @@ function cancel_milkage()
 	document.getElementById(param2).style.display = "none";
 	document.getElementById('temp_unload_accept_time_label').style.display='none';/*dummy not visiblity*/
 }
+
 
 function show_resampling_block(status)
 {
@@ -10083,6 +10104,7 @@ function close_vehicle_list_pending_tanker(value)
 function action_manage_invoice_update_prev(file_name)
 {	
 	var order = document.getElementById('order').value;
+	var targetplant=document.getElementById('targetplant').value;
 	//alert("o"+order);
 	if(order==6)
 	{
@@ -10099,7 +10121,8 @@ function action_manage_invoice_update_prev(file_name)
 	}
 	var poststr = "startdate="+startdate+
 				"&enddate="+enddate+
-				"&order="+order;
+				"&order="+order+
+				"&targetplant="+targetplant;
 	//alert("poststr="+poststr);
 	showManageLoadingMessage();
 	makePOSTRequest(file_name,poststr);
@@ -14167,4 +14190,25 @@ function show_location_coord_upl(obj)
  
  }
  
-
+function show_targetplantwise(val)
+{
+	//alert(val);
+	if(val=="7")
+	{
+		document.getElementById('target_plant').style.display='';
+	}
+	else
+	{
+		document.getElementById('target_plant').style.display='none';
+	}
+	if(val=="6")
+	{
+		document.getElementById('startdatefrom').style.display='none';
+		document.getElementById('enddateto').style.display='none';
+	}
+	else
+	{
+		document.getElementById('startdatefrom').style.display='';
+		document.getElementById('enddateto').style.display='';
+	}
+}
