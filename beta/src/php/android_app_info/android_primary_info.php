@@ -4,9 +4,17 @@
         require_once "lib/nusoap.php"; 
 	include_once('active_vehicle_func.php');
         require_once "lib/nusoap.php";
+        /*$groupId="";
+        $userId="KTC";
+        $password="BEEKAY";
+        $sync="login";
+                
+        $result=primaryDeviceInfo($groupId,$userId,$password,$sync);
+        echo  $result;*/
 	
         function primaryDeviceInfo($groupId,$userId,$password,$sync)
         {
+        global $DbConnection;
         $android_group_id = trim($groupId);
 	$android_user_id =trim($userId);
 	$android_password=md5(trim($password));
@@ -24,7 +32,7 @@
 	
 	$query ="SELECT account_id FROM account WHERE (group_id='$android_group_id' OR group_id IS NULL)".
 		"AND user_id='$android_user_id' AND password='$android_password' AND (status=1 OR status=4)";
-		//echo "query=".$query."<br>";
+		//echo "query111=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);
 	$row=mysql_fetch_row($result);
 	$account_id=$row[0];
@@ -40,7 +48,7 @@
 	
 	if($sync=="login")
 	{
-		$query ="SELECT account_id,user_type,group_id FROM account WHERE (group_id='$android_group_id' OR group_id IS NULL)".
+		$query ="SELECT account_id,user_type,group_id FROM account WHERE (group_id='$android_group_id' OR group_id IS NULL) ".
 		"AND user_id='$android_user_id' AND password='$android_password' AND (status=1 OR status=4)";
 		//echo "query=".$query."<br>";
 		$result=mysql_query($query,$DbConnection);		
@@ -51,7 +59,7 @@
 			//echo "account_id=".$row[0]."<br>";
 			$query1="SELECT account_feature.user_type_id,account_detail.name FROM account_feature,account_detail WHERE ".
 			"account_detail.account_id=account_feature.account_id AND account_feature.account_id='$row[0]'";
-			if($DEBUG){print $query1;}
+			//echo "query1=".$query1."<br>";
 			$result1=mysql_query($query1,$DbConnection);
 			$row1=mysql_fetch_object($result1);
 			//echo "usrtyoe=".$row1->user_type_id;
@@ -196,7 +204,7 @@
 		return json_encode($data);
             }
         }
-        $server = new soap_server();
+$server = new soap_server();
 $server->register("primaryDeviceInfo");
 $server->service($HTTP_RAW_POST_DATA);
 	
