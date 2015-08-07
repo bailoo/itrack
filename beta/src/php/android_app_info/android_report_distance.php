@@ -5,8 +5,8 @@
 set_time_limit(3000);
 $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 //print_r($pathInPieces);
-//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
-$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]."/".$pathInPieces[4];
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]."/".$pathInPieces[4];
 //echo "pathToRoot=".$pathToRoot."<br>";
 include_once('util_android_php_mysql_connectivity.php');  	   //util_session_variable.php sets values in session
 include_once('util_android_session_variable.php');   //util_php_mysql_connectivity.php make set connection of user to database  
@@ -21,12 +21,12 @@ require_once "lib/nusoap.php";
     
 ////////////////////////
 
-    /*$deviceImeiNo="862170017134329";
+    $deviceImeiNo="862170017134329";
             $startDate="2015/08/06 00:00:00";
             $endDate="2015/08/06 16:38:36";
             $userInterval="60";
 $result=getDistanceDeviceData($deviceImeiNo, $startDate, $endDate, $userInterval);
-echo $result;*/
+echo $result;
 
 $DEBUG = 0;		
 global $distance_data;

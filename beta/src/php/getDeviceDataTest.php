@@ -9,12 +9,13 @@ if($isReport) {
    include_once("../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
 } else {  
     $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
-//print_r($pathInPieces);
+print_r($pathInPieces);
 $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]."/".$pathInPieces[4];
 //echo "pathToRoot11=".$pathToRoot."<br>";
    // echo "in else";
+   // $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
     include_once($pathToRoot."/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
-   
+   echo "fileExists=".file_exists($pathToRoot."/phpApi/libLogNew.php");
     include_once($pathToRoot."/phpApi/libLogNew.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
 }
 //echo "EXISTS=".file_exists("../../../../../phpApi/libLog.php")."<br>";
