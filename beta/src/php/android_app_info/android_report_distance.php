@@ -1,13 +1,31 @@
 <?php
     
-    error_reporting(-1);
-ini_set('display_errors', 'On');
+    //error_reporting(-1);
+//ini_set('display_errors', 'On');
 set_time_limit(3000);
 $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
-//print_r($pathInPieces);
-//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
-$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]."/".$pathInPieces[4];
 print_r($pathInPieces);
+//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
+if(file_exists($pathToRoot."/phpApi/libLogNew.php"))
+{
+    echo "true<br>";
+}
+else 
+{
+    echo "false<br>";
+}
+echo "<br><br>";
+$pathToRoot=$pathInPieces[1]."/".$pathInPieces[2];
+if(file_exists($pathToRoot."/phpApi/libLogNew.php"))
+{
+    echo "true1<br>";
+}
+else 
+{
+    echo "false1<br>";
+}
+ echo "fileExists=".file_exists($pathToRoot."/phpApi/libLogNew.php");
 //echo "pathToRoot=".$pathToRoot."<br>";
 include_once('util_android_php_mysql_connectivity.php');  	   //util_session_variable.php sets values in session
 include_once('util_android_session_variable.php');   //util_php_mysql_connectivity.php make set connection of user to database  
