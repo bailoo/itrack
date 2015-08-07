@@ -10,12 +10,15 @@ include_once("androidPointLocation.php");
 include_once("util_android_hr_min_sec.php");
 require_once "lib/nusoap.php"; 
 
-//====cassamdra //////////////
-    include_once('../xmlParameters.php');
-    include_once('../parameterizeData.php'); /////// for seeing parameters
-    include_once('../data.php');   
-    include_once('../getXmlData.php');
-////////////////////////
+ $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+//print_r($pathInPieces);
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+//echo "pathToRoot=".$pathToRoot."<br>";
+	//====cassamdra //////////////
+   include_once($pathToRoot.'/beta/src/php/xmlParameters.php');
+    include_once($pathToRoot.'/beta/src/php/parameterizeData.php'); /////// for seeing parameters
+    include_once($pathToRoot.'/beta/src/php/data.php');   
+    include_once($pathToRoot.'/beta/src/php/getXmlData.php');
 function get_halt_xml_data_prev($vehicleserialWithIo,$startDate,$endDate,$userInterval)
 {
 
@@ -165,23 +168,7 @@ function get_halt_xml_data($vehicle_serial, $iotype_element_1 , $vname_local, $s
                                                 if($DataValid==1 && ($SortedDataObject->deviceDatetime[$obi]>$startdate && $SortedDataObject->deviceDatetime[$obi]<$enddate))
 						{							           	
 						               
-							$status = preg_match('/'.$vd.'="[^" ]+/', $line, $lat_tmp);
-							if($status==0)
-							{
-							  continue;               
-							}
-							//echo "test6".'<BR>';
-							$status = preg_match('/'.$ve.'="[^" ]+/', $line, $lng_tmp);
-							if($status==0)
-							{
-							  continue;
-							}     
 							
-							$status = preg_match('/'.$vf.'="[^" ]+/', $line, $speed_tmp);
-							if($status==0)
-							{
-							  continue;
-							}  
                                                         if($ioFoundFlag==1)
                                                         {
                                                             $temperature=$SortedDataObject->temperatureIOData[$obi];                
