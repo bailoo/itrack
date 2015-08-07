@@ -17,10 +17,12 @@ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
 //$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
 //echo "pathToRoot=".$pathToRoot."<br>";
 	//====cassamdra //////////////
-   include_once($pathToRoot.'/beta/src/php/xmlParameters.php');
-    include_once($pathToRoot.'/beta/src/php/parameterizeData.php'); /////// for seeing parameters
-    include_once($pathToRoot.'/beta/src/php/data.php');   
-    include_once($pathToRoot.'/beta/src/php/getDeviceDataTest.php');
+ include_once($pathToRoot."/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    include_once($pathToRoot."/phpApi/libLogNew.php");     //##### INCLUDE CASSANDRA API*/
+	
+	 $o_cassandra = new Cassandra();	
+    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+	
 	
         function primaryDeviceInfo($groupId,$userId,$password,$sync)
         {
@@ -93,9 +95,9 @@ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
 	}
 	else if($sync=="vehicleList")
 	{
-	  $o_cassandra = new Cassandra();	
-    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+	 
 		//echo "vehiclelist=";
+		global $o_cassandra;
 		$logDate=date('Y-m-d');
 		$query5 = "SELECT vehicle_id FROM vehicle_grouping USE INDEX (vg_accountid_status) WHERE account_id = '$account_id' AND status=1";
 		$result5=mysql_query($query5,$DbConnection);
