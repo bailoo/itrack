@@ -52,6 +52,7 @@ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
 
             $parameterizeData->latitude="d";
             $parameterizeData->longitude="e";
+            $parameterizeData->speed="f";
             $current_dt = date("Y_m_d_H_i_s");	
             //$xmltowrite = "/../../../xml_tmp/filtered_xml/tmp_".$current_dt.".xml";
             for($i=0;$i<sizeof($vserial);$i++)
