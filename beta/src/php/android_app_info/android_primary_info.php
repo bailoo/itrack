@@ -4,13 +4,23 @@
         require_once "lib/nusoap.php"; 
 	include_once('active_vehicle_func.php');
         require_once "lib/nusoap.php";
-        $groupId="";
+       /* $groupId="";
         $userId="KTC";
         $password="BEEKAY";
         $sync="vehicleList";
                 
         $result=primaryDeviceInfo($groupId,$userId,$password,$sync);
-        echo  $result;
+        echo  $result;*/
+	 $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+//print_r($pathInPieces);
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
+//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+//echo "pathToRoot=".$pathToRoot."<br>";
+	//====cassamdra //////////////
+   include_once($pathToRoot.'/beta/src/php/xmlParameters.php');
+    include_once($pathToRoot.'/beta/src/php/parameterizeData.php'); /////// for seeing parameters
+    include_once($pathToRoot.'/beta/src/php/data.php');   
+    include_once($pathToRoot.'/beta/src/php/getDeviceDataTest.php');
 	
         function primaryDeviceInfo($groupId,$userId,$password,$sync)
         {
@@ -83,7 +93,10 @@
 	}
 	else if($sync=="vehicleList")
 	{
+	  $o_cassandra = new Cassandra();	
+    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 		//echo "vehiclelist=";
+		$logDate=date('Y-m-d');
 		$query5 = "SELECT vehicle_id FROM vehicle_grouping USE INDEX (vg_accountid_status) WHERE account_id = '$account_id' AND status=1";
 		$result5=mysql_query($query5,$DbConnection);
 		$num_rows1=mysql_num_rows($result5);
@@ -175,8 +188,11 @@
 				if($vehicle_active_flag==0)
 				{	
 					//echo "in insert and update flag<br>";
-					$xml_current = "../../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-					if(file_exists($xml_current))
+					 $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                            //$st_results = getCurrentDateTime($o_cassandra,$vehicle_imei,$sortFetchData);
+                            //var_dump($st_results);
+                            //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
+					if($logResult!='')
 					{
 						$vehicle_active_flag=1;
 						$active_vehicle_imei=get_active_imeino($vehicle_imei,$DbConnection);
