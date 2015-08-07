@@ -59,7 +59,7 @@
 	else if($post_action_type == "deassign")
 	{		
 		$transporter = $_POST['transporter'];		
-		$result = updateTransChillingPlantAssign(0,$transporter,0,$DbConnection);
+		$result = updateTransChillingPlantAssign(0,$transporter,1,$DbConnection);
 		if($result)
 		{
 			$message="De-Assigned action performed successfully";
