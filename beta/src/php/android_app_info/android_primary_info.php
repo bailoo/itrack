@@ -1,28 +1,32 @@
 <?php
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 	include_once('util_android_php_mysql_connectivity.php');  	   //util_session_variable.php sets values in session
 	include_once('util_android_session_variable.php');   //util_php_mysql_connectivity.php make set connection of user to database  
         require_once "lib/nusoap.php"; 
 	include_once('active_vehicle_func.php');
         require_once "lib/nusoap.php";
-       /* $groupId="";
+      
+        $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+        //print_r($pathInPieces);
+        $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
+        //$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+        //echo "pathToRoot=".$pathToRoot."<br>";
+        //====cassamdra //////////////
+        include_once($pathToRoot."/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+        //echo "fileExists=".file_exists($pathToRoot."/phpApi/Cassandra/Cassandra.php");
+        include_once($pathToRoot."/phpApi/libLogNew.php");     //##### INCLUDE CASSANDRA API*/
+
+        $o_cassandra = new Cassandra();	
+        $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+
+
+        /* $groupId="";
         $userId="KTC";
         $password="BEEKAY";
-        $sync="vehicleList";
-                
+        $sync="vehicleList";    
         $result=primaryDeviceInfo($groupId,$userId,$password,$sync);
         echo  $result;*/
-	 $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
-//print_r($pathInPieces);
-$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
-//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
-//echo "pathToRoot=".$pathToRoot."<br>";
-	//====cassamdra //////////////
- include_once($pathToRoot."/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
-    include_once($pathToRoot."/phpApi/libLogNew.php");     //##### INCLUDE CASSANDRA API*/
-	
-	 $o_cassandra = new Cassandra();	
-    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
-	
 	
         function primaryDeviceInfo($groupId,$userId,$password,$sync)
         {
@@ -190,7 +194,9 @@ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
 				if($vehicle_active_flag==0)
 				{	
 					//echo "in insert and update flag<br>";
+                                    //$vehicle_imei="862170017134329";
 					 $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                         //echo "logResult=".$logResult."<br>";
                             //$st_results = getCurrentDateTime($o_cassandra,$vehicle_imei,$sortFetchData);
                             //var_dump($st_results);
                             //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
