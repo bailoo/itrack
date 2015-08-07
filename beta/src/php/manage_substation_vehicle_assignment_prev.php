@@ -11,7 +11,12 @@
 	$DEBUG=0;
 	$common_id1 = $account_id;
 	
-
+	 include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
+	$logDate=date('Y-m-d');
+    
+    $o_cassandra = new Cassandra();	
+    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 
 	include_once('tree_hierarchy_information.php');
 	
@@ -93,12 +98,13 @@
 		{
 			
 			$dataAU = getDetailAllAcIDUID($admin_id1,$DbConnection);		
+			//print_r($dataAU);
 			echo '<div align="center">';
 			echo '<strong>Select SubStation User &nbsp;:&nbsp;</strong> <select name="substation_user" id="substation_user">';
-			foreach($data as $dt)
+			foreach($dataAU as $dt)
 			{   
 				$account_id_sub = $dt['account_id_sub'];
-				$user_id_sub = $$dt['user_id_sub'];
+				$user_id_sub = $dt['user_id_sub'];
 				echo '<option value="'.$account_id_sub.'">'.$user_id_sub.'</option>';
 			}
 			echo '</select>';
@@ -149,18 +155,20 @@
 	{	
 		//$td_cnt++;
 		global $td_cnt;
+		global $o_cassandra;
+		global $logDate;
 		if($td_cnt==1)
 		{
 			echo'<tr>';
 		}
 		
 		//date_default_timezone_set('Asia/Calcutta');
-		$current_date = date('Y-m-d');
+		
 
-		$xml_file = "../../../xml_vts/xml_data/".$current_date."/".$vehicle_imei.".xml";
-		//echo "xml_file=".$xml_file."<br>";
 	
-		if(file_exists($xml_file))
+		//echo "xml_file=".$xml_file."<br>";
+		$logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+		if($logResult!='')
 		{
 		echo'<td align="left">&nbsp;<INPUT TYPE="checkbox"  name="vehicle_id[]" VALUE="'.$vehicle_id.'"></td>
 			   <td class=\'text\'>
