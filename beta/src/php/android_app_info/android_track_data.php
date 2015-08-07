@@ -4,6 +4,7 @@ include_once('util_android_php_mysql_connectivity.php');  	   //util_session_var
 include_once('util_android_session_variable.php');   //util_php_mysql_connectivity.php make set connection of user to database  
 include_once("android_calculate_distance.php");
 include_once("util_android_hr_min_sec.php");
+require_once "lib/nusoap.php"; 
  $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 //print_r($pathInPieces);
 $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
