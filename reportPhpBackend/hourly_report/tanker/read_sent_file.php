@@ -31,6 +31,7 @@ function read_sent_file($read_excel_path)
 	global $IMEI;
 	global $RouteType;
 	global $NO_GPS;
+	global $VisitStatus;
 
 	//global $PlantLat;
 	//global $PlantLng;
@@ -53,7 +54,8 @@ function read_sent_file($read_excel_path)
 	//####################*/	
 
 	global $RedRoute;
-	global $RedCustomer;	
+	global $RedCustomer;
+	global $unmapped_customers;
 	
 	echo "\nREAD_SENT_FILE";
 	//echo "\nPath=".$path;
@@ -232,6 +234,25 @@ function read_sent_file($read_excel_path)
 					$tmp_val="AM".$row;
 					$ReportTime2[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
 	
+					$pos_c = strpos($station_tmp, "@");
+					if($pos_c !== false)
+					{
+						//echo "\nNegative Found";
+						$customer_at_the_rate1 = explode("@", $station_tmp);											
+					}
+					else
+					{
+						$customer_at_the_rate1[0] = $station_tmp;
+					}
+					//echo "<br>CustomerRead=".$customer_at_the_rate1[0];
+					$tmp_val="AN".$row;
+					//$VisitStatus[trim($vehicle_tmp)][trim($customer_at_the_rate1[0])] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					//$VisitStatus[trim($route_tmp)][trim($customer_at_the_rate1[0])] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					$status_pink = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+					if($status_pink=="1")
+					{
+						$VisitStatus[trim($route_tmp)][trim($customer_at_the_rate1[0])] = $status_pink;
+					}
 					break;
 				}				
 			//}		
@@ -243,6 +264,28 @@ function read_sent_file($read_excel_path)
 	}	
 	//#### READ FIRST TAB CLOSED ################################################	
 
+
+	//################  READ THIRD SHEET ###################################
+	$column = null;
+	$row = null;
+	foreach ($objPHPExcel_1->setActiveSheetIndex(2)->getRowIterator() as $row) 
+	{
+		$cellIterator = $row->getCellIterator();
+		$cellIterator->setIterateOnlyExistingCells(false);
+		$i=0;
+		foreach ($cellIterator as $cell) 
+		{
+			$column = $cell->getColumn();
+			$row = $cell->getRow();
+			//if($row > $sheet2_row_count)				
+			
+			$tmp_val="A".$row;
+			$route_tmp = $objPHPExcel_1->getActiveSheet(2)->getCell($tmp_val)->getValue();
+			
+			$tmp_val="E".$row;
+			$unmapped_customers[$route_tmp] = $objPHPExcel_1->getActiveSheet(2)->getCell($tmp_val)->getValue();
+		}
+	}
 	//######### SORT WITH RESPECT TO ROUTES ###########################
 	/*$Vehicle_CI = $Vehicle;
 	$StationNo_CI = $StationNo;

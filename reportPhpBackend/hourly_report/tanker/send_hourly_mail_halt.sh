@@ -1,5 +1,5 @@
-#!/usr/bin/php
-cd cd /mnt/itrack/ReportPhpBackend/hourly_report/tanker
+#!/bin/bash
+cd /mnt/itrack/reportPhpBackend/test_hourly_report/delhi
 php mail_hourly_halt_report.php
 
 

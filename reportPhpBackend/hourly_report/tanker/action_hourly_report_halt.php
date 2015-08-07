@@ -9,18 +9,24 @@ $lat_sel = array();
 $lng_sel = array();
 $speed_sel = array();
 
-function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $time2_ev, $shift_1, $difftime) {
-
+function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $time2_ev, $shift_1, $difftime,$route_type) {    
     //###### OPEN CASSANDRA CONNECTION
-   $o_cassandra = openCassandraConnection();
-   
+    global $last_processed_time;
+    $o_cassandra = openCassandraConnection();
     //##### DEBUG MSG
-    $title = "tanker";
+    $title = "delhi";
     $debug_msg = "";   
- 
-    echo "\nInAction";    
-    global $abspath;
+    
+    echo "\nInAction";
+    //echo "\nEnddate	=".$enddate." ,time1_ev=".$time1_ev." ,time2_ev=".$time2_ev;	
+    //$date_curr = explode(' ',$enddate);
+    //$date_curr_tmp = $date_curr[0]." 03:00:00";
+    global $va, $vb, $vc, $vd, $ve, $vf, $vg, $vh, $vi, $vj, $vk, $vl, $vm, $vn, $vo, $vp, $vq, $vr, $vs, $vt, $vu, $vv, $vw, $vx, $vy, $vz, $vaa, $vab;
+    global $old_xml_date;
+    global $DEBUG_OFFLINE;
+    global $DEBUG_ONLINE;
     global $LOG;
+    global $abspath;
     echo "\nSD=" . $startdate . " ,ED=" . $enddate . " ,Time1=" . $time1_ev;
     global $Vehicle;   //SENT FILE
     global $SNo;
@@ -52,6 +58,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     global $IMEI;
     global $RouteType;
     global $NO_GPS;
+    global $VisitStatus;
     //global $PlantIn;
 
     /* global $PlantLat;
@@ -83,6 +90,15 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     global $ArrivalTime_CI;
     global $TransporterI_CI;
 
+    global $unmapped_customers;
+    
+    $date_tmp1 = explode(" ", $startdate);
+    $date_tmp2 = explode(" ", $enddate);
+    $report_date1 = $date_tmp1[0];
+    $report_time1 = $date_tmp1[1];
+    $report_date2 = $date_tmp2[0];
+    $report_time2 = $date_tmp2[1];    
+
     $current_halt_time = 0;
     $objPHPExcel_1 = null;
     //$objPHPExcel_1 = new PHPExcel();
@@ -96,7 +112,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     //echo date('H:i:s') , " Write to Excel2007 format" , EOL;
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel_1, 'Excel2007');
     $objWriter->save($read_excel_path);
-    echo date('H:i:s'), " File written to ", $read_excel_path, EOL;
+    //echo date('H:i:s'), " File written to ", $read_excel_path, EOL;
 
     //###### RELOAD SHEET
     $objPHPExcel_1 = null;
@@ -104,20 +120,31 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
 
     //####### RECREATE EXTRA SHEETS #####################
     //###################################################	
+    /* $header_font = array(
+      'font'  => array(
+      'bold'  => true,
+      'color' => array('rgb' => '000000'), //RED
+      'size'  => 10
+      //'name'  => 'Verdana'
+      )); */
     $header_font = array(
-        'font' => array(
-            'bold' => true,
-            'color' => array('rgb' => '000000'), //RED
-            'size' => 10
-        //'name'  => 'Verdana'
-    ));
+        'fill' => array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'color' => array('argb' => 'd3d3d3')            //grey
+        //'text' => array('argb' => 'FFFC64')
+        ),
+        'borders' => array(
+            'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+        )
+    );
 
     $objPHPExcel_1->createSheet();
     $objPHPExcel_1->setActiveSheetIndex(1)->setTitle('Route Completed');
 
     $objPHPExcel_1->createSheet();
     $objPHPExcel_1->setActiveSheetIndex(2)->setTitle('Route Pending');
-    echo "\nSecond tab";
+    //echo "\nSecond tab";
     $row = 1;
     //###### HEADER
     $col_tmp = 'A' . $row;
@@ -138,7 +165,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     $row++;
     //#### SECOND TAB CLOSED ##################################################################	
     //############################### THIRD TAB ###############################################
-    echo "\nThird tab";
+    //echo "\nThird tab";
     $row = 1;
     //####### DEFINE HEADER
     $col_tmp = 'A' . $row;
@@ -153,20 +180,25 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     $col_tmp = 'D' . $row;
     $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, "Customer Incompleted");
     $objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+
     $col_tmp = 'E' . $row;
+    $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, "Unmapped Customers");
+    $objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+
+    $col_tmp = 'F' . $row;
     $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, "Transporter(I)");
     $objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
-    $col_tmp = 'F' . $row;
+    $col_tmp = 'G' . $row;
     $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, "RouteType");
     $objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
-    $col_tmp = 'G' . $row;
+    $col_tmp = 'H' . $row;
     $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, "Remark");
     $objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
 
     $row++;
     //######## EXTRA SHEET CLOSED
     //echo "\nSD=".$startdate." ,ED=".$enddate." ,read_excel_path=".$read_excel_path." ,VehicleSize=".sizeof($Vehicle);
-    echo "\nSizeVehicle=" . sizeof($Vehicle);
+    //echo "\nSizeVehicle=" . sizeof($Vehicle);
     
    //###### CASSANDRA BLOCK1 ###########
     global $sts_date_sel;
@@ -197,11 +229,18 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     $parameterizeData->speed = "f";
 
     $finalVNameArr = array();
+    echo "\nSIZEV=" . sizeof($Vehicle);
     //###### CASSANDRA BLOCK1 CLOSED
     
     for ($i = 0; $i < sizeof($Vehicle); $i++) {
-
-        echo "\nVehicle=" . $i . "::" . $Vehicle[$i];      
+        
+        //$device_all_date_time = array();    //ALL DEVICE TIME
+        
+        if($last_processed_time[$imei]!="") {
+            $date1 = $last_processed_time[$imei];
+        } 
+      
+        echo "\nVehicle=" . $i . "::" . $Vehicle[$i];        
         //######### CASSANDRA BLOCK2 OPENS
         $sts_date_sel = array();
         $xml_date_sel = array();
@@ -211,10 +250,10 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
 
         //##### DEBUG MSG
         $msg = "\nReadSno:" . $i . " ,imei=" . $IMEI[$i] . " ,date1=" . $date1 . " ,date2=" . $date2;
+        
         if($LOG) {$debug_msg.=$msg."\n";}
-        echo $msg; 
-         
-        //echo "\nReadSno:" . $i . " ,imei2=" . $IMEI[$i] . " ,datefrom=" . $datefrom . " ,dateto=" . $dateto;
+        //echo $msg; 
+                
         $dataCnt = 0;
         $LastSortedDate = null;
         $SortedDataObject = new data();
@@ -222,10 +261,12 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
 
         readDataBetweenDatetime($IMEI[$i], $date1, $date2, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $o_cassandra, $SortedDataObject);
 
-        //echo "\nCount=".count($SortedDataObject->deviceDatetime);
-        if (count($SortedDataObject->deviceDatetime) > 0) {
+        echo "\nCount=".count($SortedDataObject->deviceDatetime);
+   
+	//exit(0);
+     if (count($SortedDataObject->deviceDatetime) > 0) {
             //$sortObjTmp = sortData($UnSortedDataObject, $sortBy, $parameterizeData);
-            //echo "::Data Read";
+            echo "::Data Read";
             //var_dump($sortObjTmp);
             /* echo"sdt1=".$sortObjTmp->deviceDatetime[0]."<br>";
               echo "sdt2=".$sortObjTmp->deviceDatetime[1]."<br>";
@@ -233,28 +274,35 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
               echo "ss2=".$sortObjTmp->speedData[1]."<br>";
               echo "<br><br>"; */
             $sortedSize = sizeof($SortedDataObject->deviceDatetime);
+            echo "\nSortedSize=".$sortedSize;
             for ($obi = 0; $obi < $sortedSize; $obi++) {
                 /* $finalDateTimeArr[$IMEI[$i]][]=$SortedDataObject->deviceDatetime[$obi];
                   $finalLatitudeArr[$IMEI[$i]][]=$SortedDataObject->latitudeData[$obi];
                   $finalLongitudeArr[$IMEI[$i]][]=$SortedDataObject->longitudeData[$obi];
                   $finalSpeedArr[$IMEI[$i]][]=$SortedDataObject->speedData[$obi]; */
+                //echo "\nSTORED";
                 $sts_date_sel[] = $SortedDataObject->serverDatetime[$obi];
                 $xml_date_sel[] = $SortedDataObject->deviceDatetime[$obi];
                 $lat_sel[] = $SortedDataObject->latitudeData[$obi];
                 $lng_sel[] = $SortedDataObject->longitudeData[$obi];
                 $speed_sel[] = $SortedDataObject->speedData[$obi];
-			}
-		}
+            }
+	}
+        else
+        {
+	    echo "\nContinue";
+            continue;
+        }
         
         $SortedDataObject = null;
         $sortObjTmp = null;
-        $UnsortedDataObject = null;
+        $UnsortedDataObject = null;     
         
         //##### DEBUG MSG
         $msg = "\nVehicle=".$Vehicle[$i]." ,SizeXmlDate=".sizeof($xml_date_sel);
         if($LOG) {$debug_msg.=$msg."\n";}
-        echo $msg;
-        
+        //echo $msg;
+
         ######## CASSANDRA BLOCK2 CLOSED
         
         $lat_ref = 0.0;
@@ -280,7 +328,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         $nodata = true;
         $nodata_last = true;
         $nogps = true;
-        //echo "<br>Vehicle=" . $i . "," . $Vehicle[$i];
+        
         $row = $i + 2;
         //###### GET LAST HALT TIME
         $vehicle_serial = $IMEI[$i];
@@ -363,14 +411,6 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         global $distance_variable;
         global $google_location;
 
-        /* for($k=0;$k<sizeof($station_coord);$k++)       //INITIALISE VARIABLES
-          {
-          $halt_flag[$k] = 0;
-          $firstdata_flag_halt[$k] = 0;
-          $substr_count[$k] =0;
-          //$total_halt_time[$k] = 0;
-          } */
-
         //$interval=$user_interval*60;
         //echo "interval=".$interval."<br>";
         $fix_tmp = 1;
@@ -387,78 +427,44 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         $arrivale_time = "";
         $depature_time = "";
         $hrs_min = "";
-
-        $date_1 = explode(" ", $startdate);
-        $datefrom = $date_1[0];
-        $timefrom = $date_1[1];
-        $date_2 = explode(" ", $enddate);
-        $dateto = $date_2[0];
-        $timeto = $date_2[1];
         $cum_dist = 0;
         //echo "\nTEST3";
+	//date_default_timezone_set("Asia/Calcutta");
+        $current_datetime = date("Y-m-d H:i:s");
+        $current_date = date("Y-m-d");
 
-        //###### SORT THE ARRAYS
-        //echo "\nSizeSEL=" . sizeof($xml_date_sel[$IMEI[$i]]);    
-        for ($x = 1; $x < sizeof($xml_date_sel); $x++) {
+        $date_size = sizeof($userdates);
+        $substr_count = 0;
 
-            $value = $xml_date_sel[$x];
-
-            $tmp_datetime = $xml_date_sel[$x];
-            $tmp_sts = $sts_date_sel[$x];
-            $tmp_lat = $lat_sel[$x];
-            $tmp_lng = $lng_sel[$x];
-            $tmp_speed = $speed_sel[$x];
-
-            $z = $x - 1;
-            $done = false;
-            while ($done == false) {
-                $date_tmp1 = $xml_date_sel[$z];
-
-                if (strtotime($date_tmp1) > strtotime($value)) {
-                    $xml_date_sel[$z + 1] = $xml_date_sel[$z];
-                    $sts_date_sel[$z + 1] = $sts_date_sel[$z];
-                    $lat_sel[$z + 1] = $lat_sel[$z];
-                    $lng_sel[$z + 1] = $lng_sel[$z];
-                    $speed_sel[$z + 1] = $speed_sel[$z];
-
-                    $z = $z - 1;
-                    if ($z < 0) {
-                        $done = true;
-                    }
-                } else {
-                    $done = true;
-                }
-            }
-            $xml_date_sel[$z + 1] = $tmp_datetime;
-            $sts_date_sel[$z + 1] = $tmp_sts;
-            $lat_sel[$z + 1] = $tmp_lat;
-            $lng_sel[$z + 1] = $tmp_lng;
-            $speed_sel[$z + 1] = $tmp_speed;
-        }
-        //###### SORTING CLOSED	
+        $AddEntryinrReport = false;
 
         $total_lines = sizeof($xml_date_sel);
+        //echo "\nAfter Sorting:size=".$total_lines;
         $DataComplete = false;
         $vehicleserial_tmp = null;
         $f = 0;
         $tmp = 0;
 
+        //exit(0);
+        
         if (sizeof($xml_date_sel) > 0) {
-            //echo "\nFile Exist";
+            echo "\nFile ExistFinal";
             $halt_once = false;
 
             $p_in = false;
             $p_out = false;
 
-            for ($y = 0; $y < sizeof($xml_date_sel); $y++) {          // WHILE LINE != NULL
+            for ($y = 0; $y < sizeof($xml_date_sel); $y++) {          // WHILE LINE != NULL                
                 //echo "\nXML_DATE_SEL=".$datetime." ,time1=".$time1_ev." ,enddate=".$enddate;
                 //########## STORE VEHICLE COUNTER																	  					
                 $nodata = false;
                 //echo "\nNodata2=".$nodata;
 
                 $datetime = $xml_date_sel[$y];
+                //$device_all_date_time[] = $datetime;
 
-                if ((strtotime($datetime) > strtotime($time1_ev)) && (strtotime($datetime) < strtotime($enddate))) {
+//                if ((strtotime($datetime) > strtotime($time1_ev)) && (strtotime($datetime) < strtotime($enddate))) {
+		if ((strtotime($datetime) < strtotime($enddate))) {
                     $nodata_last = false;
 
                     //echo "\nStatus=".$plant_status_local[$Vehicle[$i]][$RouteNo[$i]]." ,lat=".$plant_lat_local[$Vehicle[$i]][$RouteNo[$i]]." ,lng=".$plant_lng_local[$Vehicle[$i]][$RouteNo[$i]];						
@@ -492,11 +498,8 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                                 if ($plant_intime_local[$Vehicle[$i]][$RouteNo[$i]] == "") {
                                     //echo "\nIN:Plant2=".$datetime;
                                     //if( ($shift_1=="ZPMM") || (($shift_1=="ZPME") && ($plant_time_ev=="currentday")) || (($shift_1=="ZPME") && ($plant_time_ev=="nextday") && (strtotime($datetime) < strtotime($date_curr_tmp))))
-                                    //echo "\nSHIFT=".$shift_1." ,DiffTime=".$difftime;
-
-                                    if ((($shift_1 == "ZBVM") && ($difftime > 10800 && $difftime < 43200)) || ( ($shift_1 == "ZBVE") && ($difftime > 43200 || $difftime < 10800) )) {
-                                    //if( (($shift_1=="ZPMM") && ($difftime>10800 && $difftime<43200)) || ($shift_1=="ZPME"))
-                                        //echo "\nIN PlantMain";
+                                    if ((($shift_1 == "ZPMM") && ($difftime > 10800 && $difftime < 43200)) || ( ($shift_1 == "ZPME") && ($difftime > 43200 || $difftime < 10800) )) {
+                                    //if( (($shift_1=="ZPMM") && ($difftime>10800 && $difftime<43200)) || ($shift_1=="ZPME"))           //echo "\nPlantIN";
                                         $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]] = $datetime;
                                         $plant_status_local[$Vehicle[$i]][$RouteNo[$i]] = 1;
                                         $p_in = true;
@@ -549,9 +552,8 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                                 if ($distance_plant > $tmp_radius[$p]) {
                                     //echo "\nOUT-Plant2:".$datetime." ,plant_indate=".$plant_in_datetime;
 // if( ($shift_1=="ZPMM") || (($shift_1=="ZPME") && ($plant_time_ev=="currentday")) || (($shift_1=="ZPME") && ($plant_time_ev=="nextday") && (strtotime($datetime) < strtotime($date_curr_tmp))))											
-                                    if ((($shift_1 == "ZBVM") && ($difftime > 10800 && $difftime < 43200)) || ( ($shift_1 == "ZBVE") && ($difftime > 43200 || $difftime < 10800) )) {
+                                    if ((($shift_1 == "ZPMM") && ($difftime > 10800 && $difftime < 43200)) || ( ($shift_1 == "ZPME") && ($difftime > 43200 || $difftime < 10800) )) {
 //if( (($shift_1=="ZPMM") && ($difftime>10800 && $difftime<43200)) || ($shift_1=="ZPME") )
-                                        //echo "\nOutPlantMain";
 
                                         $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]] = $datetime;
 
@@ -707,8 +709,35 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                 }
                 $f++;
             }   // CLOSED- SORTED DATA FOR LOOP
-        } // if original_tmp closed 
-        
+            
+            //#### GET MAX TIME OF CURRENT VEHICLE
+            //$max_device_time = max($device_all_date_time);
+            $max_device_time = $datetime;
+            echo "\nMaxDeviceTime=".$max_device_time." type=".$shift_1." routetype=".$route_type;
+            update_last_processed_time($shift_1,$max_device_time, $IMEI[$i],$route_type);
+        }
+
+        /* //######## COLOR BLANK ENTRIES
+          for($k=$i;$k<$j;$k++)
+          {
+          $row2 = $k+2;
+          $pos_c = strpos($StationNo[$k], "@");
+          if($pos_c !== false)
+          {
+          //echo "\nNegative Found";
+          $customer_at_the_rate1 = explode("@", $StationNo[$k]);
+          }
+          else
+          {
+          $customer_at_the_rate1[0] = $StationNo[$k];
+          }
+          //else if($VisitStatus[trim($Vehicle)][trim($customer_at_the_rate1[0])]==1)
+          if(($VisitStatus[trim($RouteNo[$k])][trim($customer_at_the_rate1[0])]==1) && ($ArrivalTime[$k]==""))
+          {
+          cellColor('A'.$row2.':AN'.$row2, 'FFD2E8');
+          }
+          } */
+        //############################
         //### STORE LAST HALT TIME OF VEHICLE		
         $last_vehicle_name[] = $Vehicle[$i];
         $last_halt_time_new[] = $current_halt_time;
@@ -719,17 +748,17 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         if ($nodata) {
             $msg = "INACTIVE";
         } else if (!$nogps) {   //GPS FOUND
-            update_nogps($objPHPExcel_1, "0", $i);
+            //update_nogps($objPHPExcel_1, "0", $i);
             $NO_GPS[$i] = "0";
             $msg = "";
         } else if (($NO_GPS[$i] == "") && ($nogps)) {  //FIRST TIME : GPS NOT FOUND
-            update_nogps($objPHPExcel_1, "1", $i);
+            //update_nogps($objPHPExcel_1, "1", $i);
             $NO_GPS[$i] = "1";
             $msg = "NO GPS";
         }
 
         $Remark[$i] = $msg;
-        update_remark($objPHPExcel_1, $msg, $i);
+        //update_remark($objPHPExcel_1, $msg, $i);
 
         //######### UPDATE EXTRA SHEETS
         $customer_visited = array();
@@ -757,17 +786,48 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
             $i = $j - 1;
         }
     } //##### EXCEL VEHICLE LOOP CLOSED
-    //
+    
     ######## CLOSE CASSANDRA CONNECTION	
     closeCassandraConnection($o_cassandra);
-    
+     
+//exit(0);
     //##### DEBUG MSG
     if(!$DEBUG_OFFLINE && !$DEBUG_ONLINE && $LOG) {
         write_log($title,$difftime);
     }
-    
-    ######## CASSANDRA BLOCK3 CLOSED				
-    
+ 
+
+   ######## CASSANDRA BLOCK3 CLOSED	
+                #    
+    //######## COLOR BLANK ENTRIES
+    for ($i = 0; $i < sizeof($Vehicle); $i++) {
+        $j = $i;
+        while ($Vehicle[$j] == $Vehicle[$i]) {
+            $j++;   //J LIMIT
+        }
+
+        for ($k = $i; $k < $j; $k++) {
+            $row2 = $k + 2;
+            $pos_c = strpos($StationNo[$k], "@");
+            if ($pos_c !== false) {
+                //echo "\nNegative Found";
+                $customer_at_the_rate1 = explode("@", $StationNo[$k]);
+            } else {
+                $customer_at_the_rate1[0] = $StationNo[$k];
+            }
+            //else if($VisitStatus[trim($Vehicle)][trim($customer_at_the_rate1[0])]==1)
+
+            if (($VisitStatus[trim($RouteNo[$k])][trim($customer_at_the_rate1[0])] == 1) && ($ArrivalTime[$k] == "")) {
+                //echo "\nIn UpdateColor";
+                cellColor('A' . $row2 . ':AN' . $row2, 'FFD2E8');
+            }
+        }
+
+        if ($j > $i) {
+            $i = $j - 1;
+        }
+    }
+    //####### END COLOR- BLANK ENTRIES	
     //######### CALL SORT ROUTES FUNCTION
     sort_all_routes();
 
@@ -978,11 +1038,21 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
             $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, $customer_completed_str);
             $col_tmp = 'D' . $sheet2_row;
             $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, $customer_incompleted_str);
-            $col_tmp = 'E' . $sheet2_row;
-            $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, $TransporterITotal[$RouteTotal[$i]]);
+
+            $RouteTotal[$i] = trim($RouteTotal[$i]);
+            //echo "\nBeforeUC=".$unmapped_customers[$RouteTotal[$i]];
+            $unmapped_customers_1 = substr($unmapped_customers[$RouteTotal[$i]], 0, -1);
+            //echo "\nRouteTotal[i]=".$RouteTotal[$i]." ,unmapped_cust=".$unmapped_customers_1;
+            if ($unmapped_customers_1) {
+                $col_tmp = 'E' . $sheet2_row;
+                $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, $unmapped_customers_1);
+            }
+
             $col_tmp = 'F' . $sheet2_row;
-            $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, $RouteTypeTotal[$RouteTotal[$i]]);
+            $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, $TransporterITotal[$RouteTotal[$i]]);
             $col_tmp = 'G' . $sheet2_row;
+            $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, $RouteTypeTotal[$RouteTotal[$i]]);
+            $col_tmp = 'H' . $sheet2_row;
             $objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp, $remark_str);
             $sheet2_row++;
         }
@@ -1034,6 +1104,7 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
     global $DepartureDate;
     global $ArrivalTime;
     global $DepartureTime;
+    global $VisitStatus;
 
     global $transporter_m;
     global $vehicle_m;
@@ -1116,6 +1187,8 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
     } else {
         $customer_at_the_rate1[0] = $station_no;
     }
+
+    //echo "<br>CustomerWrite=".$customer_at_the_rate1[0];
 
     $valid_halt = false;
     $route_no = "";
@@ -1244,10 +1317,21 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
         $col_tmp = 'AM' . $row;
         $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time2[1]);
 
+        //####### FILL COLOR IF CUSTOMER REVISITED
+        //if($VisitStatus[trim($Vehicle)][trim($customer_at_the_rate1[0])] =="")
+        if ($VisitStatus[trim($RouteNo)][trim($customer_at_the_rate1[0])] == "") {
+            $col_tmp = 'AN' . $row;
+            $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, "1");
+            $VisitStatus[trim($RouteNo)][trim($customer_at_the_rate1[0])] = "1";
+        }
+        //else if($VisitStatus[trim($Vehicle)][trim($customer_at_the_rate1[0])]==1)
+        else if ($VisitStatus[trim($RouteNo)][trim($customer_at_the_rate1[0])] == 1) {
+            cellColor('A' . $row . ':AN' . $row, 'FFFF99');
+        }
+        //########################################
         $ArrivalDate[$k] = $arrival_time1[0];
         $ArrivalTime[$k] = $arrival_time1[1];
         $unchanged = false;
-
         //echo "\nEntered=".$plant_status;
         //###############																						
     }
@@ -1521,6 +1605,14 @@ function sort_all_routes() {
         $ArrivalTime_CI[$z + 1] = $tmp_arrival_ci;
         $TransporterI_CI[$z + 1] = $tmp_transporter_ci;
     }
+}
+
+function cellColor($cells, $color) {
+    global $objPHPExcel_1;
+    $objPHPExcel_1->getActiveSheet()->getStyle($cells)->getFill()
+            ->applyFromArray(array('type' => PHPExcel_Style_Fill::FILL_SOLID,
+                'startcolor' => array('rgb' => $color)
+    ));
 }
 
 function write_log($title,$difftime) {

@@ -1,5 +1,5 @@
 <?php
-function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startdate)
+function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startdate, $shift_type)
 {
 	$DEBUG_HRLY = false;
 	echo "\nInCreateHrly";
@@ -32,7 +32,6 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 	global $plant_distance_variable;
 	
 	//######### SENT FILE NAME CLOSED 			
-	global $objPHPExcel_1;
 	$objPHPExcel_1 = null;
 	$objPHPExcel_1 = new PHPExcel();
 	//echo "\nobjPHPExcel_1=".$objPHPExcel_1;
@@ -62,13 +61,24 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 	$row=1;
 	
 	//###### COLOR STYLES
-	$header_font = array(
+	/*$header_font = array(
 		'font'  => array(
 		'bold'  => true,
 		'color' => array('rgb' => '000000'), //RED
 		'size'  => 10
 		//'name'  => 'Verdana'
-	));
+	));*/
+	$header_font = array(
+	'fill'  => array(
+			'type'          => PHPExcel_Style_Fill::FILL_SOLID,
+			'color'         => array('argb' => 'd3d3d3')            //grey
+			//'text' => array('argb' => 'FFFC64')
+	),
+	'borders' => array(
+			'bottom'        => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+			'right'         => array('style' => PHPExcel_Style_Border::BORDER_MEDIUM)
+	)
+	);	
 	$styleFontRed = array(
 	'font'  => array(
 		'bold'  => true,
@@ -195,15 +205,30 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 	$col_tmp = 'AM'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "ReportTime2");
 	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
-
-	$row++;		
-	//echo "\nSizeRouteH=".sizeof($route_name_rdb);
+	$col_tmp = 'AN'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "VisitStatus");
+	$objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
 	
-	if($shift=="ZBVE")
+
+	$row++;
+	echo "\nSizeRoute=".sizeof($route_name_rdb);
+	
+	if($shift=="ZPME")
 	{
-		$date_tmp = explode(' ',$startdate);
-		$cdate = date($date_tmp[0]);
-		$nextdate = date('Y-m-d', strtotime($cdate .' +1 day'));
+		if($shift_type=="focal")
+		{
+			$date_tmp = explode(' ',$startdate);
+			//$cdate = date($date_tmp[0]);
+			$nextdate = date($date_tmp[0]);
+			//$nextdate = date('Y-m-d', strtotime($cdate .' +1 day'));
+			$cdate = date('Y-m-d', strtotime($nextdate .' -1 day'));
+		}
+		else
+		{
+			$date_tmp = explode(' ',$startdate);
+			$cdate = date($date_tmp[0]);
+			$nextdate = date('Y-m-d', strtotime($cdate .' +1 day'));
+		}
 	}
 	else
 	{
@@ -221,7 +246,10 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 		$size_rdb1 = 0;
 		$size_rdb1 = sizeof($route_name_rdb_1);
 		//echo "<br>size_rdb1=".sizeof($route_name_rdb_1);
-	
+		/*if($size_rdb1>1)
+		{
+			echo "<br>RouteNameRDBSize2=".sizeof($route_name_rdb_1);
+		}*/		
 		for($k=0;$k<sizeof($route_name_rdb_1);$k++)
 		{
 			$route_name_rdb_3="";
@@ -293,7 +321,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 					//echo "\nExpectedTimeSel=".$expected_time_sel[$route_name_rdb_3][$j];
 					$cshift_date = "";
 					
-					if($shift=="ZBVE")
+					if($shift=="ZPME")
 					{
 						$cdatetime1 = strtotime(date('00:00:00'));
 						$cdatetime2 = strtotime(date($expected_time_sel[$route_name_rdb_3][$j]));
@@ -327,7 +355,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 					
 					//####### PLANT SHIFT
 					$cshift_date2 = "";
-					if($shift=="ZBVE")
+					if($shift=="ZPME")
 					{
 						$cdatetime1 = strtotime(date('00:00:00'));
 						$cdatetime2 = strtotime(date($expected_time_plant_out_sel[$route_name_rdb_3][$j]));
@@ -401,11 +429,9 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValueExplicit($col_tmp, $vehicle_imei_rdb[$i], PHPExcel_Cell_DataType::TYPE_STRING);
 
 					//#####
-					//echo "<br>Plant1=".$plant_sel[$route_name_rdb_3][$j]." ,Route=".$route_name_rdb_3;
 					$temp_plant = explode('/',$plant_sel[$route_name_rdb_3][$j]);
 					$coord_tmp="";
 					$radius_tmp="";
-					//echo "<br>SizeTempPlant=".sizeof($temp_plant);
 					for($p=0;$p<sizeof($temp_plant);$p++)
 					{
 						$coord_tmp.=$plant_station_coord[$temp_plant[$p]]."#";
@@ -413,7 +439,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 					}
 					$coord_tmp = substr($coord_tmp,0,-1);
 					$radius_tmp = substr($radius_tmp,0,-1);
-					//echo "<br>Plant2=".$plant_station_coord[$plant_sel[$route_name_rdb_3][$j]];					
+					//echo "\nDistPlant=".$plant_station_coord[$plant_sel[$route_name_rdb_3][$j]];					
 										
 					$col_tmp = 'AG'.$row;
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $coord_tmp);
@@ -422,7 +448,6 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $radius_tmp);
 						
 					$col_tmp = 'AI'.$row;
-					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "0");
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , "0");
 					
 					$row++;
@@ -448,7 +473,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 	$result_all_routes = array_unique($all_routes);	
 	//foreach($all_routes as $array_key => $array_value)	
 	foreach($result_all_routes as $array_key => $array_value)	
-    {
+        {
         $found = false;		
 		
 		//echo "<br>".$array_value;		
@@ -581,7 +606,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Vehicle");
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'B'.$row;					
-	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Route");			
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Route"); 			
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);	
 	$col_tmp = 'C'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Customer Completed");
@@ -590,12 +615,15 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Customer Incompleted");					
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
 	$col_tmp = 'E'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Unmapped Customers");					
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);	
+	$col_tmp = 'F'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Transporter(I)");					
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'F'.$row;
+	$col_tmp = 'G'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "RouteType");					
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
-	$col_tmp = 'G'.$row;
+	$col_tmp = 'H'.$row;
 	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Remark");					
 	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);	
 	$row++;		
@@ -603,10 +631,12 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 	//#### THIRD TAB CLOSED ########################################
 	
 	//#### WRITE FINAL XLSX
-	echo "<br>Create hrly written";
+	echo date('H:i:s') , " Write to Excel2007 format" , EOL;
+echo "\nPATH=".$read_excel_path;
+	@chmod($read_excel_path, 0777);
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel_1, 'Excel2007');
 	$objWriter->save($read_excel_path);
-	//echo date('H:i:s') , " File written to " , $read_excel_path , EOL;	
+	echo date('H:i:s') , " File written to " , $read_excel_path , EOL;	
 }
 
 ?>
