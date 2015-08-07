@@ -183,38 +183,20 @@
 						$final_iotypevalue_str=substr($final_iotypevalue_str,0,-1);					
 					}					
 				}
-				$last_date=get_acitve_vlastdate($row_1->device_imei_no,$DbConnection);
-				//echo "last_date=".$last_date."today_date2=".$today_date2."<br>";
+			
 				$vehicle_active_flag=0;
-				if(($last_date!="") && ($last_date==$today_date2))
-				{
-					//echo "in if1<br>";
-					$vehicle_active_flag=1;
-				}
-				if($vehicle_active_flag==0)
-				{	
-					//echo "in insert and update flag<br>";
-                                    //$vehicle_imei="862170017134329";
-					 $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                //echo "in insert and update flag<br>";
+                                //$vehicle_imei="862170017134329";
+                                $logResult=hasImeiLogged($o_cassandra, $row_1->device_imei_no, $logDate);
                                          //echo "logResult=".$logResult."<br>";
                             //$st_results = getCurrentDateTime($o_cassandra,$vehicle_imei,$sortFetchData);
                             //var_dump($st_results);
                             //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-					if($logResult!='')
-					{
-						$vehicle_active_flag=1;
-						$active_vehicle_imei=get_active_imeino($vehicle_imei,$DbConnection);
-						//echo "active_active_imei=".$active_vehicle_imei."<br>";
-						if($active_vehicle_imei!="")
-						{										
-							update_active_vehicle($vehicle_imei,$today_date2,$DbConnection);
-						}
-						else
-						{										
-							insert_active_vehicle($vehicle_imei,$today_date2,$DbConnection);	
-						}
-					}
-				}
+                                if($logResult!='')
+                                {
+                                    $vehicle_active_flag=1;                                      
+                                }
+				
 				if($vehicle_active_flag==1)
 				{
 					$data[]=array("deviceImeiNo"=>$row_1->device_imei_no,"vehicleName"=>$row_1->vehicle_name,"status"=>"green","vehicleIO"=>$final_iotypevalue_str);
