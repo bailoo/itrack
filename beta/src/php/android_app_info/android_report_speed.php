@@ -2,17 +2,17 @@
 include_once('util_android_php_mysql_connectivity.php');  	   //util_session_variable.php sets values in session
 include_once('util_android_session_variable.php');   //util_php_mysql_connectivity.php make set connection of user to database  
 include_once("android_calculate_distance.php");
-//require_once "lib/nusoap.php"; 
+require_once "lib/nusoap.php"; 
 
 $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 //print_r($pathInPieces);
-//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
 //echo "pathToRoot=".$pathToRoot."<br>";
 	//====cassamdra //////////////
-   include_once($pathToRoot.'/beta/src/php/xmlParameters.php');
+  include_once($pathToRoot.'/beta/src/php/xmlParameters.php');
     include_once($pathToRoot.'/beta/src/php/parameterizeData.php'); /////// for seeing parameters
     include_once($pathToRoot.'/beta/src/php/data.php');   
-    include_once($pathToRoot.'/beta/src/php/getXmlData.php');
+    include_once($pathToRoot.'/beta/src/php/getDeviceDataTest.php');
 ////////////////////////
     /*$deviceImeiNo="862170017134329";
     $startDate="2015/08/06 00:00:00";
@@ -27,7 +27,7 @@ $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 	set_time_limit(800);
 	$DEBUG = 0;
 	$device_str = $vehicleSerial;
-	$device_str="862170017134329:";
+	//$device_str="862170017134329:";
 	$device_str=substr($device_str,0,-1); 
 	//echo "<br>devicestr=".$device_str;
 	$vserial = explode(':',$device_str);
@@ -375,8 +375,8 @@ $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 	}
 	//global $speed_data;
 	//print_r($speed_data);
-	/*$server = new soap_server();
+	$server = new soap_server();
 $server->register("getSpeedDeviceDataPrev");
-$server->service($HTTP_RAW_POST_DATA);*/
+$server->service($HTTP_RAW_POST_DATA);
 
 ?>
