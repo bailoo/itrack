@@ -172,7 +172,14 @@ function show_option_with_value(type, option)      // type="manage/report/settin
           //alert("result="+result1[1]);          
           document.getElementById('main_vehicle_information').style.display ="";              
           document.getElementById('main_vehicle_information').innerHTML = result1[1];                           
-          } 	  
+          } 
+          
+            else if (result1[0].trim()=="edit")
+            {
+            hideManageLoadingMessage();
+            document.getElementById('edit_div').style.display =""; 
+            document.getElementById('edit_div').innerHTML = result1[1]; 
+            }
           else 
           {
 			hideManageLoadingMessage();
