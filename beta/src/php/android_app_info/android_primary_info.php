@@ -4,13 +4,13 @@
         require_once "lib/nusoap.php"; 
 	include_once('active_vehicle_func.php');
         require_once "lib/nusoap.php";
-        /*$groupId="";
+        $groupId="";
         $userId="KTC";
         $password="BEEKAY";
-        $sync="login";
+        $sync="vehicleList";
                 
         $result=primaryDeviceInfo($groupId,$userId,$password,$sync);
-        echo  $result;*/
+        echo  $result;
 	
         function primaryDeviceInfo($groupId,$userId,$password,$sync)
         {

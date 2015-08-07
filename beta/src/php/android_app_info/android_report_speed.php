@@ -161,7 +161,7 @@ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
 								//echo "<br>One";             
 								//$vserial = get_xml_data('/'.$vv.'="[^"]+"/', $line);
 								$vserial=$vehicle_serial;							          	
-								$speed =    $speed =$SortedDataObject->speedData[$obi];
+								$speed =$SortedDataObject->speedData[$obi];
 												   
 								//echo "<br>first=".$firstdata_flag;                                        
 								if($firstdata_flag==0)

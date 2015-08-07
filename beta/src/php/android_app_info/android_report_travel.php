@@ -1,4 +1,6 @@
 <?php
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 include_once('util_android_php_mysql_connectivity.php');  	   //util_session_variable.php sets values in session
 include_once('util_android_session_variable.php');   //util_php_mysql_connectivity.php make set connection of user to database  
 
@@ -10,15 +12,22 @@ require_once "lib/nusoap.php";
 
  $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 //print_r($pathInPieces);
-$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
+//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
 //echo "pathToRoot=".$pathToRoot."<br>";
 	//====cassamdra //////////////
    include_once($pathToRoot.'/beta/src/php/xmlParameters.php');
     include_once($pathToRoot.'/beta/src/php/parameterizeData.php'); /////// for seeing parameters
     include_once($pathToRoot.'/beta/src/php/data.php');   
-    include_once($pathToRoot.'/beta/src/php/getXmlData.php');
+    include_once($pathToRoot.'/beta/src/php/getDeviceDataTest.php');
 
-function getTraveDeviceDataPrev($vehicleSerial,$startDate,$endDate)
+   /* $vehicleSerial="862170017134329:";
+            $startDate="2015/08/06 00:00:00";
+            $endDate="2015/08/06 16:38:36";
+           
+    $result=getTraveDeviceDataPrev($vehicleSerial,$startDate,$endDate,$threshold);
+echo $result;*/ 
+function getTraveDeviceDataPrev($vehicleSerial,$startDate,$endDate,$threshold)
 {
 global $DbConnection;
 $device_str= $vehicleSerial;
@@ -62,7 +71,7 @@ $m_start=0;
 $date1tmp = strtotime($date1);
 $date2tmp = strtotime($date2);
 
-//$threshold = $_POST['threshold'];
+$threshold = $threshold;
 //$threshold = '15';
 $threshold = $threshold * 60;
 //echo "threshold:".$threshold;
@@ -143,8 +152,13 @@ function getTravelDeviceData($vehicle_serial, $vname, $startdate,$enddate,$datet
 	$distance_travel=0; 
 
 	for($i=0;$i<=($date_size-1);$i++)
-	{ $SortedDataObject=new data();
-            readFileXmlNew($vehicle_serial,$userdates[$i],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+	{ 
+            $SortedDataObject=new data();
+       /* echo "vSerial=".$vehicle_serial."<br>"; 
+        echo "requiredData=".$requiredData."<br>";
+        echo "requiredData=".$sortBy."<br>";
+         echo "userdates=".$userdates[$i]."<br>";*/
+        readFileXmlNew($vehicle_serial,$userdates[$i],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
             //var_dump($SortedDataObject);	
 		    	
 			if(count($SortedDataObject->deviceDatetime)>0)
@@ -157,7 +171,6 @@ function getTravelDeviceData($vehicle_serial, $vname, $startdate,$enddate,$datet
 				$f =0;      
 				if(count($SortedDataObject->deviceDatetime)>0) 
 				{  
-					set_master_variable($userdates[$i]);
 					$start_time_flag = 0;
 					$distance_total = 0;
 					$distance_threshold = 0.200;
@@ -170,6 +183,7 @@ function getTravelDeviceData($vehicle_serial, $vname, $startdate,$enddate,$datet
 					$distance_travel=0;                        
 					//echo "<br>file_exists2";                
 					$prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+                                       // echo "dataSize=".$prevSortedSize."<br>";
                             for($obi=0;$obi<$prevSortedSize;$obi++)
                             {
 						$DataValid = 0;
@@ -180,6 +194,7 @@ function getTravelDeviceData($vehicle_serial, $vname, $startdate,$enddate,$datet
                                     $DataValid = 1;
                                 }
 				 $datetime=$SortedDataObject->deviceDatetime[$obi];
+                                 //echo "datetime=".$datetime."<br>";
                                 $xml_date=$datetime;				
 				         
 					if($xml_date!=null)
@@ -309,19 +324,16 @@ function getTravelDeviceData($vehicle_serial, $vname, $startdate,$enddate,$datet
 						$lng_travel_end = $lng_S;
 						//$max_speed = max($speed_arr);
 						//$max_speed = round($max_speed,2);
-						newTravel($vserial, $vname, $datetime_travel_start, $datetime_travel_end, $distance_travel, $lat_travel_start, $lng_travel_start, $lat_travel_end, $lng_travel_end, $distance_travel, $max_speed, $fh, $linetowrite);
+						newTravel($vserial, $vname, $datetime_travel_start, $datetime_travel_end, $distance_travel, $lat_travel_start, $lng_travel_start, $lat_travel_end, $lng_travel_end, $distance_travel, $max_speed);
 					}
-				} // if original_tmp closed       
-				fclose($xml);            
-				unlink($xml_original_tmp);
+				} // if original_tmp closed      
+			
 			} // if (file_exists closed
-		}  // for closed 	
-		//echo "Test1";
-		fclose($fh);
-		//fclose($xmllog);
+		}  // for closed 
+	
 	} 
 	
-	function newTravel($vserial, $vname, $datetime_S, $datetime_E, $distance, $lat_travel_start, $lng_travel_start, $lat_travel_end, $lng_travel_end, $distance_travel)
+	function newTravel($vserial, $vname, $datetime_S, $datetime_E, $distance, $lat_travel_start, $lng_travel_start, $lat_travel_end, $lng_travel_end, $distance_travel, $max_speed)
 	{
 		//echo "in function<br>";
 		global $travel_report_data;
@@ -329,7 +341,7 @@ function getTravelDeviceData($vehicle_serial, $vname, $startdate,$enddate,$datet
 		$hms = secondsToTime($travel_dur);
 		$travel_time = $hms[h].":".$hms[m].":".$hms[s];
 		$distance_travel = round($distance_travel,2);
-		$travel_report_data[]=array("deviceImeiNo"=>$vserial,"vehicleName"=>$vname,"dateFrom"=>$datetime_S,"dateTo"=>$datetime_E,"latStart"=>$lat_travel_start,"lngStart"=>$lng_travel_start,"latEnd"=>$lat_travel_end,"lngEnd"=>$lng_travel_end,"distance_travelled"=>$distance_travel,"travelTime"=>$travel_time);  
+		$travel_report_data[]=array("deviceImeiNo"=>$vserial,"vehicleName"=>$vname,"dateFrom"=>$datetime_S,"dateTo"=>$datetime_E,"latStart"=>$lat_travel_start,"lngStart"=>$lng_travel_start,"latEnd"=>$lat_travel_end,"lngEnd"=>$lng_travel_end,"distance_travelled"=>$distance_travel,"travelTime"=>$travel_time,"max_speed"=>$max_speed);  
 		//print_r($travel_report_data);
 	} 
   	
@@ -349,3 +361,7 @@ function getTravelDeviceData($vehicle_serial, $vname, $startdate,$enddate,$datet
 		return $tmp[$i];
 	}
 			
+$server = new soap_server();
+$server->register("getTraveDeviceDataPrev");
+$server->service($HTTP_RAW_POST_DATA);
+?>

@@ -1,4 +1,6 @@
 <?php 
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 include_once('util_android_php_mysql_connectivity.php');  	   //util_session_variable.php sets values in session
 include_once('util_android_session_variable.php');   //util_php_mysql_connectivity.php make set connection of user to database  
 set_time_limit(300);
@@ -12,16 +14,25 @@ require_once "lib/nusoap.php";
 
  $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 //print_r($pathInPieces);
-$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
+//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
 //echo "pathToRoot=".$pathToRoot."<br>";
 	//====cassamdra //////////////
    include_once($pathToRoot.'/beta/src/php/xmlParameters.php');
     include_once($pathToRoot.'/beta/src/php/parameterizeData.php'); /////// for seeing parameters
     include_once($pathToRoot.'/beta/src/php/data.php');   
-    include_once($pathToRoot.'/beta/src/php/getXmlData.php');
-function get_halt_xml_data_prev($vehicleserialWithIo,$startDate,$endDate,$userInterval)
+    include_once($pathToRoot.'/beta/src/php/getDeviceDataTest.php');
+    
+    
+    /*$vehicleserialWithIo="862170017134329:#,";
+    $startDate="2015/08/06 00:00:00";
+    $endDate="2015/08/06 16:38:36";
+    $userInterval="30";
+    $result=getHaltDeviceDataPrev($vehicleserialWithIo,$startDate,$endDate,$userInterval);
+    echo $result;*/
+function getHaltDeviceDataPrev($vehicleserialWithIo,$startDate,$endDate,$userInterval)
 {
-
+global $DbConnection;
 $device_str= $vehicleserialWithIo;
 //$device_str="862170018371961:862170018369908:# , ,";
 $device_str = explode('#',$device_str);
@@ -73,16 +84,17 @@ for($i=0;$i<sizeof($vserial);$i++)
 		"vehicle_id AND vehicle.status=1 AND vehicle_assignment.status=1 AND vehicle_assignment.device_imei_no='$vserial[$i]'";
 	$Result=mysql_query($Query,$DbConnection);
 	$Row=mysql_fetch_row($Result);
-	get_halt_xml_data($vserial[$i], $iotype_element[$i], $Row[0], $date1, $date2, $user_interval, $xmltowrite);
+	getHaltDeviceData($vserial[$i], $iotype_element[$i], $Row[0], $date1, $date2, $user_interval);
 }
 	return json_encode($halt_report_data); 	
 }
 
 
-function get_halt_xml_data($vehicle_serial, $iotype_element_1 , $vname_local, $startdate,$enddate,$user_interval, $xmltowrite)
+function getHaltDeviceData($vehicle_serial, $iotype_element_1 , $vname_local, $startdate,$enddate,$user_interval)
 {
 	global $halt_report_data;
-	
+	   $requiredData="All";
+     $sortBy='h';
 	$interval = $user_interval*60; 
 	global $DbConnection;
 	global $account_id;
@@ -137,7 +149,7 @@ function get_halt_xml_data($vehicle_serial, $iotype_element_1 , $vname_local, $s
 	for($i=0;$i<=($date_size-1);$i++)
 	{
             $SortedDataObject=new data();
-            readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+            readFileXmlNew($vehicle_serial,$userdates[$i],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
             //var_dump($SortedDataObject);	    	
 		if(count($SortedDataObject->deviceDatetime)>0)
 		{			
@@ -199,7 +211,7 @@ function get_halt_xml_data($vehicle_serial, $iotype_element_1 , $vname_local, $s
                                                             $datetime_cr = $datetime;
                                                             $tmp_cr = $temperature;																	
                                                             $date_secs2 = strtotime($datetime_cr);						
-                                                            calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, &$distance);							
+                                                            calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, $distance);							
 								if($distance > 0.1)
 								{									
 									if ($halt_flag == 1)
@@ -222,7 +234,7 @@ function get_halt_xml_data($vehicle_serial, $iotype_element_1 , $vname_local, $s
 													include('android_halt_exclusion.php');
 													if($geo_coord!="")
 													{                
-														check_with_range($lat_ref, $lng_ref, $geo_coord, &$geo_status);
+														check_with_range($lat_ref, $lng_ref, $geo_coord, $geo_status);
 														//echo "<Br>geo_status1:".$geo_status;                                        
 													}
 													if($geo_status == 1)
@@ -340,7 +352,7 @@ function get_halt_xml_data($vehicle_serial, $iotype_element_1 , $vname_local, $s
 				
 				if($geo_coord!="")
 				{                
-					check_with_range($lat_ref, $lng_ref, $geo_coord, &$geo_status);
+					check_with_range($lat_ref, $lng_ref, $geo_coord, $geo_status);
 					//echo "<Br>geo_status1:".$geo_status;                                        
 				}
 				if($geo_status == 1)
@@ -405,6 +417,6 @@ function get_halt_xml_data($vehicle_serial, $iotype_element_1 , $vname_local, $s
 	}   //IF HALT FLAG
 }  
 $server = new soap_server();
-$server->register("get_halt_xml_data_prev");
+$server->register("getHaltDeviceDataPrev");
 $server->service($HTTP_RAW_POST_DATA);
 ?>			
