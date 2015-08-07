@@ -7,10 +7,15 @@ if($isReport) {
 } else if($isReport2) {
    include_once("../../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
    include_once("../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
-} else {      
+} else {  
+    $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+//print_r($pathInPieces);
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]."/".$pathInPieces[4];
+//echo "pathToRoot11=".$pathToRoot."<br>";
    // echo "in else";
-    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
-    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
+    include_once($pathToRoot."/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+   
+    include_once($pathToRoot."/phpApi/libLogNew.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
 }
 //echo "EXISTS=".file_exists("../../../../../phpApi/libLog.php")."<br>";
 $o_cassandra = new Cassandra();	
@@ -278,10 +283,10 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
    {
         $deviceTime=FALSE;
    }
-    //echo "deviceTime=".$deviceTime."<br>";
-    //echo "dateToData=".$dateToData."<br>";
-    //echo "requiredData=".$requiredData."<br>";
-    //echo "imei=".$imei."<br>"; 
+    /*echo "deviceTime=".$deviceTime."<br>";
+    echo "dateToData=".$dateToData."<br>";
+    echo "requiredData=".$requiredData."<br>";
+    echo "imei=".$imei."<br>"; */
 	
     $orderAsc = TRUE;
     $st_results = getLogByDate($o_cassandra, $imei, $dateToData, $deviceTime, $orderAsc);
@@ -793,7 +798,7 @@ function get_All_Dates($fromDate, $toDate, &$userdates) {
         // use date() and $currentDateTS to format the dates in between
         $currentDateStr = date("Y-m-d", $currentDateTS);
         $dateMonthYearArr[] = $currentDateStr;
-        //print $currentDateStr.�<br />�;
+        //print $currentDateStr.?<br />?;
     }
     $userdates = $dateMonthYearArr;    
 }

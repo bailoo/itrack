@@ -1,12 +1,12 @@
 <?php
-	include_once('util_android_php_mysql_connectivity.php');  	   //util_session_variable.php sets values in session
-	include_once('util_android_session_variable.php');   //util_php_mysql_connectivity.php make set connection of user to database  
-        include_once("android_calculate_distance.php");
-        //require_once "lib/nusoap.php"; 
+include_once('util_android_php_mysql_connectivity.php');  	   //util_session_variable.php sets values in session
+include_once('util_android_session_variable.php');   //util_php_mysql_connectivity.php make set connection of user to database  
+include_once("android_calculate_distance.php");
+//require_once "lib/nusoap.php"; 
 
-        $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+$pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 //print_r($pathInPieces);
-$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
 //echo "pathToRoot=".$pathToRoot."<br>";
 	//====cassamdra //////////////
    include_once($pathToRoot.'/beta/src/php/xmlParameters.php');

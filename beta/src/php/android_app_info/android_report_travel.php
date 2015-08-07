@@ -1,30 +1,35 @@
 <?php
 include_once('util_android_php_mysql_connectivity.php');  	   //util_session_variable.php sets values in session
 include_once('util_android_session_variable.php');   //util_php_mysql_connectivity.php make set connection of user to database  
-include_once("android_common_xml_element.php");
+
 set_time_limit(1000);
 include_once("android_calculate_distance.php");
 include_once("android_check_with_range.php");
-include_once("android_get_all_dates_between.php");
-include_once("android_new_xml_string_io.php");
-include_once("android_sort_xml.php");
 include_once("util_android_hr_min_sec.php");
-include_once("android_new_xml_string_io.php");
+require_once "lib/nusoap.php"; 
 
+ $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+//print_r($pathInPieces);
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+//echo "pathToRoot=".$pathToRoot."<br>";
+	//====cassamdra //////////////
+   include_once($pathToRoot.'/beta/src/php/xmlParameters.php');
+    include_once($pathToRoot.'/beta/src/php/parameterizeData.php'); /////// for seeing parameters
+    include_once($pathToRoot.'/beta/src/php/data.php');   
+    include_once($pathToRoot.'/beta/src/php/getXmlData.php');
 
-$DEBUG = 0;
-$v_size=count($vehicle_serial);
-if($DEBUG) echo "vsize=".$v_size;
-
-$device_str= $_POST["vehicleSerial"];
+function getTraveDeviceDataPrev($vehicleSerial,$startDate,$endDate)
+{
+global $DbConnection;
+$device_str= $vehicleSerial;
 //$device_str="862170018369908:";
 $device_str=substr($device_str,0,-1);
 $vserial = explode(':',$device_str);
 //echo $vserial[0];
 //$vehicleid_size=sizeof($vehicleid);
 
-$date1 = $_POST["startDate"];
-$date2 =  $_POST["endDate"];
+$date1 = $startDate;
+$date2 =  $endDate;
 
 /*$date1 ="2013/11/01";
 $date2 =  "2013/11/04";*/
@@ -72,13 +77,17 @@ $travel_report_data=array();
 		"vehicle_id AND vehicle.status=1 AND vehicle_assignment.status=1 AND vehicle_assignment.device_imei_no='$vserial[$i]'";
 	$Result=mysql_query($Query,$DbConnection);
 	$Row=mysql_fetch_row($Result);
-     get_travel_xml_data($vserial[$i], $Row[0], $date1,$date2,$threshold);
+     getTravelDeviceData($vserial[$i], $Row[0], $date1,$date2,$threshold);
     //echo   "t2".' '.$i;
-	}  
+	} 
+        
+        return json_encode($travel_report_data); 
  
-
-function get_travel_xml_data($vehicle_serial, $vname, $startdate,$enddate,$datetime_threshold)
+}
+function getTravelDeviceData($vehicle_serial, $vname, $startdate,$enddate,$datetime_threshold)
 {
+    $requiredData="All";
+     $sortBy='h';
 	//echo "in function<br>";
 	global $travel_report_data;
 	global $va,$vb,$vc,$vd,$ve,$vf,$vg,$vh,$vi,$vj,$vk,$vl,$vm,$vn,$vo,$vp,$vq,$vr,$vs,$vt,$vu,$vv,$vw,$vx,$vy,$vz,$vaa,$vab;
@@ -91,6 +100,13 @@ function get_travel_xml_data($vehicle_serial, $vname, $startdate,$enddate,$datet
 	$LastLong = 0.0;
 	$firstData = 0;
 	$linetowrite="";
+        $parameterizeData=new parameterizeData();
+    $ioFoundFlag=0;
+    global $o_cassandra;
+
+    $parameterizeData->latitude="d";
+    $parameterizeData->longitude="e";
+    $parameterizeData->speed="f";
 	//$date_1 = explode(" ",$startdate);
 	//$date_2 = explode(" ",$enddate);
 
@@ -100,19 +116,20 @@ function get_travel_xml_data($vehicle_serial, $vname, $startdate,$enddate,$datet
 	//$datefrom = $date_1[0];
 	//$dateto = $date_2[0];
 
-	$datefrom = $startdate;
-	$dateto = $enddate;		
+	$dateRangeStart = $startdate;
+	$dateRangeEnd = $enddate;		
 	$startdate = $startdate." 00:00:00";
 	$enddate = $enddate." 23:59:59";
 	//$timefrom = $date_1[1];
 	//$timeto = $date_2[1];
 	//echo "dateto=".$dateto."dateFrom=".$datefrom."<br>";
-	get_All_Dates($datefrom, $dateto, &$userdates);
+	get_All_Dates($dateRangeStart, $dateRangeEnd, $userdates);    
+        $date_size = sizeof($userdates);
 	//date_default_timezone_set("Asia/Calcutta");
 	$current_datetime = date("Y-m-d H:i:s");
 	$current_date = date("Y-m-d");
 	//print "<br>CurrentDate=".$current_date;
-	$date_size = sizeof($userdates);
+	
 	
 	$start_time_flag = 0;
 	$distance_total = 0;
@@ -126,54 +143,19 @@ function get_travel_xml_data($vehicle_serial, $vname, $startdate,$enddate,$datet
 	$distance_travel=0; 
 
 	for($i=0;$i<=($date_size-1);$i++)
-	{
-		$xml_current = "../../../../xml_vts/xml_data/".$userdates[$i]."/".$vehicle_serial.".xml";   
-//echo "userdates=".$userdates[$i]."<br>";
-		if (file_exists($xml_current))      
-		{		    		
-				//echo "in else";
-				$xml_file = $xml_current;
-				$CurrentFile = 1;
-			}		
-			else
-			{
-				$xml_file = "../../../../sorted_xml_data/".$userdates[$i]."/".$vehicle_serial.".xml";
-				$CurrentFile = 0;
-			}		
-			//echo "<br>xml in get_halt_xml_data =".$xml_file;	    	
-			if(file_exists($xml_file)) 
-			{			
+	{ $SortedDataObject=new data();
+            readFileXmlNew($vehicle_serial,$userdates[$i],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+            //var_dump($SortedDataObject);	
+		    	
+			if(count($SortedDataObject->deviceDatetime)>0)
+		{			
 				//echo "<br>file_exists1";     
 				$t=time();
-				$xml_original_tmp = "../../../../xml_tmp/original_xml/tmp_".$vehicle_serial."_".$t."_".$i.".xml";
-				//$xml_log = "../../../xml_tmp/filtered_xml/tmp_".$current_datetime1.".xml";
-				//echo "<br>xml_file=".$xml_file." <br>tmpxml=".$xml_original_tmp."<br>";
-									      
-				if($CurrentFile == 0)
-				{
-					//echo "<br>ONE<br>";
-					copy($xml_file,$xml_original_tmp);
-				}
-				else
-				{
-					//echo "<br>TWO<br>";
-					$xml_unsorted = "../../../../xml_tmp/unsorted_xml/tmp_".$vehicle_serial."_".$t."_".$i."_unsorted.xml";
-					//echo  "<br>".$xml_file." <br>".$xml_unsorted."<br><br>";
-
-					copy($xml_file,$xml_unsorted);        // MAKE UNSORTED TMP FILE
-					SortFile($xml_unsorted, $xml_original_tmp,$userdates[$i]);    // SORT FILE
-					unlink($xml_unsorted);                // DELETE UNSORTED TMP FILE
-				}
-      
-				$total_lines = count(file($xml_original_tmp));
-				//echo "<br>Total lines orig=".$total_lines;      
-				$xml = @fopen($xml_original_tmp, "r") or $fexist = 0;  
-				//$xmllog = fopen($xml_log, "w") or $fexist1 = 0;
-				$logcnt=0;
+				
 				$DataComplete=false;                  
 				$vehicleserial_tmp=null;
 				$f =0;      
-				if (file_exists($xml_original_tmp)) 
+				if(count($SortedDataObject->deviceDatetime)>0) 
 				{  
 					set_master_variable($userdates[$i]);
 					$start_time_flag = 0;
@@ -187,95 +169,29 @@ function get_travel_xml_data($vehicle_serial, $vname, $startdate,$enddate,$datet
 					$haltFlag==True;
 					$distance_travel=0;                        
 					//echo "<br>file_exists2";                
-					while(!feof($xml))          // WHILE LINE != NULL
-					{
+					$prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+                            for($obi=0;$obi<$prevSortedSize;$obi++)
+                            {
 						$DataValid = 0;
-						//echo fgets($file). "<br />";
-						$line = fgets($xml);        // STRING SHOULD BE IN SINGLE QUOTE			
-						if(strlen($line)>20)
-						{
-							$linetmp =  $line;
-						}  				
-						$linetolog =  $logcnt." ".$line;
-						$logcnt++;
-						//echo "vc=".$vc."<br>";
-						//fwrite($xmllog, $linetolog);  
-						if(strpos($line,''.$vc.'="1"'))     // RETURN FALSE IF NOT FOUND
-						{
-							$format = 1;
-							$fix_tmp = 1;
-						}                
-						if(strpos($line,''.$vc.'="0"'))
-						{
-							$format = 1;
-							$fix_tmp = 0;
-						}
-						else
-						{
-							$format = 2;
-						}  				
-						if((preg_match('/'.$vd.'="\d+.\d+[a-zA-Z0-9]\"/', $line, $lat_match)) &&  (preg_match('/'.$ve.'="\d+.\d+[a-zA-Z0-9]\"/', $line, $lng_match)))
-						{ 
-							$lat_value = explode('=',$lat_match[0]);
-							$lng_value = explode('=',$lng_match[0]);
-							//echo " lat_value=".$lat_value[1];         
-							if( (strlen($lat_value[1])>5) && ($lat_value[1]!="-") && (strlen($lng_value[1])>5) && ($lng_value[1]!="-") )
-							{
-								$DataValid = 1;
-							}
-						}       
-						//if( (substr($line, 0,1) == '<') && (substr( (strlen($line)-1), 0,1) == '>') && ($fix_tmp==1) && ($f>0) && ($f<$total_lines-1) )        
-						if( ($line[0] == '<') && ($line[strlen($line)-2] == '>') && ($DataValid == 1) )   // FIX_TMP =1 COMES IN BOTH CASE     
-						{
-							$datetime = get_xml_data('/'.$vh.'="[^"]+"/', $line);
-							$xml_date = $datetime;
-						}				
-						//echo "Final0=".$xml_date." datavalid=".$DataValid." datetime=".$datetime."<br>";          
-						if($xml_date!=null)
-						{				  					
-							if(($xml_date >= $startdate && $xml_date <= $enddate) && ($xml_date!="-") && ($DataValid==1))
-							{							           	                            
-								$xml_date_latest = $xml_date;
+						$lat = $SortedDataObject->latitudeData[$obi];
+                                $lng = $SortedDataObject->longitudeData[$obi];
+                                if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))
+                                {
+                                    $DataValid = 1;
+                                }
+				 $datetime=$SortedDataObject->deviceDatetime[$obi];
+                                $xml_date=$datetime;				
+				         
+					if($xml_date!=null)
+					{
+                                                if($DataValid==1 && ($SortedDataObject->deviceDatetime[$obi]>$startdate && $SortedDataObject->deviceDatetime[$obi]<$enddate))
+						{							           	                            
+								
 								//$vserial = get_xml_data('/vehicleserial="[^"]+"/', $line);
 								$vserial = $vehicle_serial;								
-								//$lat = get_xml_data('/'.$vd.'="\d+\.\d+[NS]\"/', $line);
-								//$lng = get_xml_data('/'.$ve.'="\d+\.\d+[EW]\"/', $line);
 								
-								$status = preg_match('/'.$vd.'="[^" ]+/', $line, $lat_tmp);
-								if($status==0)
-								{
-								  //continue;               
-								}
-								//echo "test6".'<BR>';
-								$status = preg_match('/'.$ve.'="[^" ]+/', $line, $lng_tmp);
-								if($status==0)
-								{
-								  //continue;
-								}  
-
-								$status = preg_match('/'.$vf.'="[^" ]+/', $line, $speed_tmp);
-								if($status==0)
-								{
-								  //continue;
-								} 
-								  
-								$speed_tmp1 = explode("=",$speed_tmp[0]);
-								$speed = preg_replace('/"/', '', $speed_tmp1[1]);
-								
-								//print_r($speed);
-								
-								//echo "test4".'<BR>';
-								/*$status = preg_match('/datetime="[^" ]+/', $line, $datetime_tmp);
-								if($status==0)
-								{
-								  continue;
-								} */
-										   
-								$lat_tmp1 = explode("=",$lat_tmp[0]);
-								$lat = preg_replace('/"/', '', $lat_tmp1[1]);
-			
-								$lng_tmp1 = explode("=",$lng_tmp[0]);
-								$lng = preg_replace('/"/', '', $lng_tmp1[1]);
+								$speed = $SortedDataObject->speedData[$obi];
+							
 								                           
 								if($firstdata_flag==0)
 								{                                
@@ -416,7 +332,7 @@ function get_travel_xml_data($vehicle_serial, $vname, $startdate,$enddate,$datet
 		$travel_report_data[]=array("deviceImeiNo"=>$vserial,"vehicleName"=>$vname,"dateFrom"=>$datetime_S,"dateTo"=>$datetime_E,"latStart"=>$lat_travel_start,"lngStart"=>$lng_travel_start,"latEnd"=>$lat_travel_end,"lngEnd"=>$lng_travel_end,"distance_travelled"=>$distance_travel,"travelTime"=>$travel_time);  
 		//print_r($travel_report_data);
 	} 
-  	echo json_encode($travel_report_data); 
+  	
 	function get_xml_data($reg, $line)
 	{
 		$data = "";
