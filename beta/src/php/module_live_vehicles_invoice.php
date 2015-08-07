@@ -1,8 +1,15 @@
 <?php 
 
 	include_once('util_php_mysql_connectivity.php');	
+	include_once('coreDb.php');
+        include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+        include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
 	
-	$DEBUG = 0;    
+        $o_cassandra = new Cassandra();	
+        $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+        global $o_cassandra;
+        //print_r($o_cassandra);
+        $DEBUG = 0;    
 	$display_type = $_POST['display_type1']; 
 	$tot_vehicle_live=$_POST['tot_vehicle_live'];
 	
@@ -22,7 +29,7 @@
 	} 
 	 
 	echo"</table>";
-    
+        $o_cassandra->close();
 
   function show_all_vehicle_live($tot_vehicle_live)
   {	
@@ -32,6 +39,7 @@
 		global $vcolor2;
 		global $vcolor3;
 		global $DbConnection;
+                global $o_cassandra;
 		$vehicle_name_arr=array();
 		$imei_arr=array();
 		$vehicle_color=array();
@@ -40,7 +48,7 @@
 		{
 			//echo $vehicle_name1;
 			$vehicle_name_info=explode("/",$vehicle_name1);
-			$vehicle_name=$vehicle_name_info[0];
+			$vehicle_name=$vehicle_name_info[0];//'HR28G3286';//
 			$dispatch_time=$vehicle_name_info[1];
 			//echo $dispatch_time;
 			$target_time=$vehicle_name_info[2];
@@ -52,19 +60,27 @@
                         */
                         $resultvehicle=getVehicleAndImeiFromName($vehicle_name,$DbConnection);
 			//if(mysql_num_rows($resultvehicle) >0)
+                        //print_r($resultvehicle);
                         if(count($resultvehicle) >0)
 			{		
-				//$rowv=mysql_fetch_object($resultvehicle);
+				//echo $today_date2;
+                                //$rowv=mysql_fetch_object($resultvehicle);
 				//$vehicle_id=$rowv->vehicle_id;
 				//$vehicle_imei=$rowv->device_imei_no;
                                 foreach($resultvehicle as $rowv)
                                 {
                                     $vehicle_id=$rowv['vehicle_id'];
                                     $vehicle_imei=$rowv['device_imei_no'];
-                                    $xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
+                                    //echo"VIEM=". $vehicle_imei."<br>";
+                                    $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $today_date2);
+                                    //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
                                     //echo $xml_current;
-                                    if (file_exists($xml_current))
-                                    {			
+                                    //if (file_exists($xml_current))
+                                    if($logResult!='')
+                            
+                                    {
+                                       // $st_results = getLastSeen($o_cassandra,$vehicle_imei);
+                                       // print_r($st_results);
                                      $color="green";
                                      //$vehicle_name_arr[$color][] =$vehicle_name; 
                                      //$imei_arr[$color][$vehicle_name]=$vehicle_imei;

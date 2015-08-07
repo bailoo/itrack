@@ -7,13 +7,54 @@ include_once('common_xml_element.php');
 include_once("select_landmark_report.php");
 include_once('calculate_distance.php');
 include_once('get_location_lp_track_report_2.php');
+include_once('coreDb.php');
+/*
+include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+include_once("../../../phpApi/libLog.php");    
+$o_cassandra = new Cassandra();	
+$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+global $o_cassandra;
+*/
+include_once('xmlParameters.php');
+include_once('parameterizeData.php');
+include_once('lastRecordData.php');
+include_once("getXmlData.php");	
+
+$parameterizeData=new parameterizeData();
+$parameterizeData->messageType='a';
+$parameterizeData->version='b';
+$parameterizeData->fix='c';
+$parameterizeData->latitude='d';
+$parameterizeData->longitude='e';
+$parameterizeData->speed='f';	
+$parameterizeData->io1='i';
+$parameterizeData->io2='j';
+$parameterizeData->io3='k';
+$parameterizeData->io4='l';
+$parameterizeData->io5='m';
+$parameterizeData->io6='n';
+$parameterizeData->io7='o';
+$parameterizeData->io8='p';	
+$parameterizeData->sigStr='q';
+$parameterizeData->supVoltage='r';
+$parameterizeData->dayMaxSpeed='s';
+$parameterizeData->dayMaxSpeedTime='t';
+$parameterizeData->lastHaltTime='u';
+$parameterizeData->cellName='ab';	
+$sortBy="h";
+//date_default_timezone_set('Asia/Calcutta');
+$current_date=date("Y-m-d");
+    ////////////////////////
 
 $pathtowrite = $_REQUEST['xml_file']; 
 $mode = $_REQUEST['mode'];
 $vserial = $_REQUEST['vserial'];
 $vdispatch_time = $_REQUEST['vdispatch_time'];
+///echo $vdispatch_time."<br>";
 $vtarget_time = $_REQUEST['vtarget_time'];
+//echo $vtarget_time."<br>";
 $vplant_number = $_REQUEST['vplant_number'];
+//echo $vplant_number."<br>";
 //echo "vserial=".$vserial."<br>";
 $startdate = $_REQUEST['startdate'];
 $enddate = $_REQUEST['enddate'];
@@ -31,9 +72,10 @@ $vplant_number_arr = explode(',',$vplant_number);
 $vname1 ="";
 //echo "t1=";
 $liveXmlData="";
+$data=array();
 for($i=0;$i<sizeof($vserial_arr);$i++)
-{
-	/*$query_vehicle = "SELECT vehicle_assignment.device_imei_no, vehicle.vehicle_name, vehicle.vehicle_type FROM vehicle_assignment, vehicle WHERE  vehicle_assignment.device_imei_no = '$vserial_arr[$i]' AND vehicle.status =1 AND vehicle.vehicle_id = vehicle_assignment.vehicle_id AND vehicle_assignment.status=1";
+{       /*
+	$query_vehicle = "SELECT vehicle_assignment.device_imei_no, vehicle.vehicle_name, vehicle.vehicle_type FROM vehicle_assignment, vehicle WHERE  vehicle_assignment.device_imei_no = '$vserial_arr[$i]' AND vehicle.status =1 AND vehicle.vehicle_id = vehicle_assignment.vehicle_id AND vehicle_assignment.status=1";
 	//echo $query_vehicle."<br>";
 	$resultvehicle=mysql_query($query_vehicle,$DbConnection);
 	$rowv=mysql_fetch_object($resultvehicle);
@@ -51,24 +93,85 @@ for($i=0;$i<sizeof($vserial_arr);$i++)
 	$dispatch_time=$vdispatch_time_arr[$i];
 	$target_time=$vtarget_time_arr[$i];
 	$plant_number=$vplant_number_arr[$i];
-	//echo $dispatch_time.'/'.$target_time."/".$plant_number."<br>";
+	/*//echo $dispatch_time.'/'.$target_time."/".$plant_number."<br>";
 	//echo"Before".$vehicle_name;
-	get_vehicle_last_data($current_date, $imei, $last_time, $vehicle_name,$vtype,$dispatch_time,$target_time,$plant_number, &$liveXmlData);
-	/*$tmp = explode('#',$vserial_arr[$i]);
-	$imei = $tmp[0];	
-	$vehicle_route_arr[]=$tmp[1];		//13
-	//$last_time = $tmp[1];
-	$vehicle_info=get_vehicle_info($root,$imei);
-	//echo "vehicle_info=".$vehicle_info."<br>";
-	$vehicle_detail_local=explode(",",$vehicle_info);
-	$imei_ios[$imei] = $vehicle_detail_local[7];	
-	//echo "veserial=".$imei_ios[$imei]."<br>";
-	get_vehicle_last_data($current_date, $imei, $last_time, $vehicle_detail_local[0],$vehicle_detail_local[1], &$liveXmlData);
-	*/
+	get_vehicle_last_data($current_date, $imei, $last_time, $vehicle_name,$vtype,$dispatch_time,$target_time,$plant_number, &$liveXmlData);	
+         */
+        
+        $LastRecordObject=new lastRecordData();	
+	//echo "imei=".$imei."<br>";
+	$LastRecordObject=getLastRecord($imei,$sortBy,$parameterizeData);
+        if(!empty($LastRecordObject))
+	{
+                //echo "inOBJ";
+		$current_time = date('Y-m-d H:i:s');
+		$last_halt_time_sec = strtotime($LastRecordObject->lastHaltTimeLR[0]);			
+		$current_time_sec = strtotime($current_time);
+		$diff = ($current_time_sec - $last_halt_time_sec); 
+		
+		if($LastRecordObject->speedLR[0]>=5 && $diff <=600)
+		{
+			$status = "Running";
+		}
+		else
+		{
+			$status = "Stopped";
+		}
+                
+            $data[]=array(
+                            'messageTypeLR'=>$LastRecordObject->messageTypeLR[0],
+                            'versionLR'=>$LastRecordObject->versionLR[0],
+                            'fixLR'=>$LastRecordObject->fixLR[0],
+                            'latitudeLR'=>$LastRecordObject->latitudeLR[0],
+                            'longitudeLR'=>$LastRecordObject->longitudeLR[0],
+                            'speedLR'=>$LastRecordObject->speedLR[0],
+                            'serverDatetimeLR'=>$LastRecordObject->serverDatetimeLR[0],
+                            'deviceDatetimeLR'=>$LastRecordObject->deviceDatetimeLR[0],
+                            'io1LR'=>$LastRecordObject->io1LR[0],
+                            'io2LR'=>$LastRecordObject->io1LR[0],
+                            'io3LR'=>$LastRecordObject->io1LR[0],
+                            'io4LR'=>$LastRecordObject->io1LR[0],
+                            'io5LR'=>$LastRecordObject->io1LR[0],
+                            'io6LR'=>$LastRecordObject->io1LR[0],
+                            'io7LR'=>$LastRecordObject->io1LR[0], 
+                            'io8LR'=>$LastRecordObject->io1LR[0], 
+                            'sigStrLR'=>$LastRecordObject->sigStrLR[0], 
+                            'suplyVoltageLR'=>$LastRecordObject->suplyVoltageLR[0], 
+                            'dayMaxSpeedLR'=>$LastRecordObject->dayMaxSpeedLR[0], 
+                            'dayMaxSpeedTimeLR'=>$LastRecordObject->dayMaxSpeedTimeLR[0],
+                            'lastHaltTimeLR'=>$LastRecordObject->lastHaltTimeLR[0],
+                            'deviceImeiNo'=>$imei,
+                            'vehicleName'=>$vehicle_detail_local[0],
+                            'vehilceType'=>$vehicle_detail_local[2],
+                            'vehilceNumber'=>$vehicle_detail_local[2],                               
+                            'status'=>$status,
+                            'dispatch_time'=>$dispatch_time,
+                            'target_time'=>$target_time,
+                            'plant_number'=>$plant_number
+                        );
+                        $lat_arr_last[]=$LastRecordObject->latitudeLR[0];
+                        $lng_arr_last[]=$LastRecordObject->longitudeLR[0];
+                        $vehiclename_arr_last[]=$vehicle_name;
+                        $vserial_arr_last[]=$imei;
+                        $speed_arr_last[]=$LastRecordObject->speedLR[0];
+                        $datetime_arr_last[]=$LastRecordObject->deviceDatetimeLR[0];
+                        $day_max_speed_arr_last[]=$LastRecordObject->dayMaxSpeedLR[0];
+                        $last_halt_time_arr_last[]=$LastRecordObject->lastHaltTimeLR[0];
+                        $vehilce_status_arr[]=$status;
+                        $fault_status_arr[] = "";
+                        $dispatch_time_arr[]=$dispatch_time;
+                        $target_time_arr[]=$target_time;
+                        $plant_number_arr[]=$plant_number;
+	}
+	$LastRecordObject=null;
 }
 
+//print_r($data);
 //echo "<textarea>".$liveXmlData."</textarea>";
 
+
+       
+/*
 $lineF=explode("@",substr($liveXmlData,0,-1));					
 for($n=0;$n<sizeof($lineF);$n++)
 {
@@ -238,141 +341,9 @@ for($n=0;$n<sizeof($lineF);$n++)
 		$fault_status_arr[] = "-";
 	}
 	
-	/*$io_str="";
 	
-	if($imei_ios[$vehicle_serial]!="tmp_str")
-	{
-		//echo "<br>IO_TYPE_VAL=".$imei_ios[$vehicle_serial];
-		$iotype_iovalue_str=explode(":",$imei_ios[$vehicle_serial]);
-		for($i=0;$i<sizeof($iotype_iovalue_str);$i++)
-		{
-			$iotype_iovalue_str1=explode("^",$iotype_iovalue_str[$i]);							
-			if($iotype_iovalue_str1[0]=="1")
-			{
-				$io_values=$io1;
-			}
-			else if($iotype_iovalue_str1[0]=="2")
-			{
-				$io_values=$io2;
-			}
-			else if($iotype_iovalue_str1[0]=="3")
-			{
-				$io_values=$io3;
-			}
-			else if($iotype_iovalue_str1[0]=="4")
-			{
-				$io_values=$io4;
-			}
-			else if($iotype_iovalue_str1[0]=="5")
-			{
-				$io_values=$io5;
-			}
-			else if($iotype_iovalue_str1[0]=="6")
-			{
-				$io_values=$io6;
-			}
-			else if($iotype_iovalue_str1[0]=="7")
-			{
-				$io_values=$io7;
-			}
-			else if($iotype_iovalue_str1[0]=="8")
-			{
-				$io_values=$io8;
-			}
-			//echo "temperature=".$iotype_iovalue_str1[1]."<br>";
-			if($iotype_iovalue_str1[1]=="temperature")
-			{					
-				$iotype_iovalue_str1[1]="Temperature";
-				
-				if($io_values!="")
-				{
-					if($io_values>=-30 && $io_values<=70)
-					{					
-						$io_str=$io_str.$iotype_iovalue_str1[1].' : <font color=red>'.preg_replace('/[^0-9-]/s','.',$io_values).'</font>, ';						
-					}
-					else
-					{
-						$io_str=$io_str.'Temperature : -, ';	
-					
-					}
-				}
-				else
-				{
-					//echo "in if 2";
-					$io_str=$io_str.'Temperature : -, ';
-				}
-			}
-			else if($iotype_iovalue_str1[1]=="engine")
-			{
-				$iotype_iovalue_str1[1] = "Engine";
-				if($io_values!="")
-				{
-					if($io_values < 500)
-					{
-						$io_str=$io_str.$iotype_iovalue_str1[1].' : <font color=red>OFF</font>, ';					
-					}
-					else if($io_values > 500)
-					{
-						$io_str=$io_str.$iotype_iovalue_str1[1].' : <font color=green>ON</font>, ';					
-					}						
-				}
-				else
-				{
-					$io_str=$io_str.$iotype_iovalue_str1[1].' : -, ';						
-				}			
-			}
-			else if($iotype_iovalue_str1[1]=="ac")
-			{
-				$iotype_iovalue_str1[1] = "AC";
-				if($io_values!="")
-				{
-					if($io_values > 500)
-					{
-						$io_str=$io_str.$iotype_iovalue_str1[1].' : <font color=red>OFF</font>, ';					
-					}
-					else if($io_values > 500)
-					{
-						$io_str=$io_str.$iotype_iovalue_str1[1].' : <font color=green>ON</font>, ';					
-					}						
-				}
-				else
-				{
-					$io_str=$io_str.$iotype_iovalue_str1[1].' : -, ';						
-				}			
-			}		
-			else if($iotype_iovalue_str1[1]!="")
-			{
-				if($io_values!="")
-				{
-					$io_str=$io_str.$iotype_iovalue_str1[1].' : '.preg_replace('/[^0-9-]/s','.',$io_values).', ';					
-				}
-				else
-				{
-					$io_str=$io_str.$iotype_iovalue_str1[1].' : -,';						
-				}			
-			}				
-		}
-	}
-	$io_str = substr_replace($io_str, "", -1);
-	$io_str_last[]=$io_str;     //8*/
-//echo "<br>IOSTR=".$io_str;
-
-//echo "<br>".$io_str1;		
 }
 
-//print_r($lat_arr_last);
-//print_r($lng_arr_last);
-//print_r($io_str_last);
-//print_r($day_max_speed_time_arr);
-//print_r($vehilce_status_arr);
-//$vehilce_status_arr
-/*
-$query1="SELECT user_type_id FROM account_feature WHERE account_id='$account_id'";
-if($DEBUG){print $query1;}
-$result1=mysql_query($query1,$DbConnection);
-$row1=mysql_fetch_object($result1);
-//echo "usrtyoe=".$row1->user_type_id;
-*/
 $user_type_id=getUserTypeIdAccountFeature($accountId,$DbConnection);
 //$user_type_id=substr($row1->user_type_id,-1);
 $user_type_id=substr($user_type_id,-1);
@@ -384,8 +355,5 @@ else
 {
 	$type="V";
 }
-
-//echo "<br>LatARR_Size1=".sizeof($lat_arr_last);
-	/*echo "$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$io_str_last,$vehilce_type_arr,$day_max_speed_arr_last,$day_max_speed_time_arr,$last_halt_time_arr_last,$vehicle_route_arr,$vehilce_status_arr,$type";
 */
 ?>
