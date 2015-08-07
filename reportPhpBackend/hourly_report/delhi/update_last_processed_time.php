@@ -17,7 +17,7 @@ function updateAll_last_processed_time($type, $last_time,$route_type) {
             $result_insert = mysql_query($query_insert,$DbConnection); 
             echo "\nQA2=".$query_insert;
         } else {
-            $query_update = "UPDATE last_processed_time SET last_time='$last_time' WHERE account_id='$account_id' AND imei='$imei' AND type='$type'' AND routetype='$route_type'";
+            $query_update = "UPDATE last_processed_time SET last_time='$last_time' WHERE account_id='$account_id' AND imei='$imei' AND type='$type' AND routetype='$route_type'";
             $result_update = mysql_query($query_update,$DbConnection); 
             echo "\nQA3=".$query_update;
         }
