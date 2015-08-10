@@ -221,7 +221,7 @@ function getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc)
 }
 
 /***
-* Runs CQL query on Cassandra datastore
+* Bad Hack: Runs multiple CQL query on Cassandra datastore
 * 
 * @param object $o_cassandra	Cassandra object 
 * @param string $imei		IMEI
@@ -231,6 +231,51 @@ function getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc)
 * @return array 	Results of the query 
 */
 function getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc)
+{
+
+	$TZ = '0530';
+
+	$table = ($deviceTime)?'log1':'log2';
+	$qtime = ($deviceTime)?'dtime':'stime';
+
+	$dateArray = getDateArray($datetime1,$datetime2);
+	
+	$all_results = Array();
+	$dateLen = count($dateArray);
+	for ($i=0; $i < $dateLen; $i++)
+	{
+		$date = $dateArray[$i];
+		$s_cql = "SELECT * FROM $table
+			WHERE
+			imei = '$imei'
+			AND
+			date = '$date'
+			AND
+			$qtime >= '$datetime1+$TZ'
+			AND
+			$qtime <= '$datetime2+$TZ'
+			;";
+		$st_results = $o_cassandra->query($s_cql);
+		$all_results = array_merge($all_results, $st_results);
+	}
+
+	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
+	$st_obj = logParser($all_results, $dataType, $orderAsc);
+		
+	return $st_obj;
+}
+
+/***
+* Runs single CQL query on Cassandra datastore
+* 
+* @param object $o_cassandra	Cassandra object 
+* @param string $imei		IMEI
+* @param string $datetime1	YYYY-MM-DD HH:MM:SS
+* @param string $datetime2	YYYY-MM-DD HH:MM:SS
+* 
+* @return array 	Results of the query 
+*/
+function getImeiDateTimesSQ($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc)
 {
 
 	$TZ = '0530';
@@ -256,7 +301,6 @@ function getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTi
 		
 	return $st_obj;
 }
-
 /***
 * Runs CQL query on Cassandra datastore
 * 
