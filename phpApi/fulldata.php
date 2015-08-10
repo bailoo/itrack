@@ -9,10 +9,10 @@
 	
 	
 	$imei = '862170018383602';
-	$datetime1 = '2015-08-08 23:59:00';
-	$datetime2 = '2015-08-09 00:01:00';
+	$datetime1 = '2015-08-08 23:59:50';
+	$datetime2 = '2015-08-09 00:00:10';
 	$deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
-	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
+	$orderAsc = TRUE;	// TRUE for ascending, otherwise descending (default) 
 
 	$st_results = getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc);
 	$o_cassandra->close();
