@@ -82,7 +82,7 @@ for($i=0;$i<sizeof($vserial_arr);$i++)
 	$vehicle_name=$rowv->vehicle_name;
 	$vtype=$rowv->vehicle_type;
         */
-        $resultvehicle=getVehicleAndTypeFromVserial($vserial,$DbConnection);
+        $resultvehicle=getVehicleAndTypeFromVserial($vserial_arr[$i],$DbConnection);
         foreach($resultvehicle as $rowv ) //because it return single
         {
             $vehicle_name=$rowv['vehicle_name'];

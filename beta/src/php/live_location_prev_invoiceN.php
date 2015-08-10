@@ -306,7 +306,8 @@ $for_action1=$_POST['title'];
 		{
 			//alert("distance="+distance+"address2="+address2);
 			//alert("latLng="+latLng);
-			var strURL="src/php/get_location_tmp_file.php?point_test="+latLng;
+			//var strURL="src/php/get_location_tmp_file.php?point_test="+latLng;
+                        var strURL="get_location_tmp_file.php?point_test="+latLng;
 			//alert("strurl:"+strURL);
 			var req = getXMLHTTP();
 			req.open("GET", strURL, false); //third parameter is set to false here
