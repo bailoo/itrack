@@ -486,7 +486,7 @@ if ($shift_mor) {
         //echo "\nCreateFile:Morning";
         $morning_last_processed_time = "";
 
-        get_route_db_detail("ZPMM");
+        get_route_db_detail("ZPMM",$route_type);
         //echo "\nSizeRoute=".sizeof($route_name_rdb);
         get_customer_db_detail($account_id, "ZPMM", $route_type);
         //echo "\nSizeAllRoutes=".sizeof($all_routes);
@@ -953,7 +953,7 @@ if ($shift_ev2) {
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
 
-        get_route_db_detail("ZPME");
+        get_route_db_detail("ZPME",$route_type);
         //echo "\nSizeRoute=".sizeof($route_name_rdb);
         get_customer_db_detail($account_id, "ZPME", $route_type);
         //echo "\nSizeAllRoutes=".sizeof($all_routes);

@@ -5,6 +5,7 @@ function get_route_db_detail($shift,$route_type)
 	global $account_id;
 	global $vehicle_name_rdb;		//VEHICLE ROUTE DETAIL
 	global $route_name_rdb;
+echo "\nRouteTypeDB=".$route_type;
 	//global $remark_rdb;
 	global $vehicle_imei_rdb;
 
@@ -62,6 +63,7 @@ function get_route_db_detail($shift,$route_type)
 	}
         
         $last_time ="";
+echo "\nROUTEDB=".$route_type;
         updateAll_last_processed_time($shift,$last_time,$route_type);
 }
 
