@@ -7,12 +7,14 @@
     include_once('Hierarchy.php');
     $root=$_SESSION["root"];
     include_once('util_session_variable.php');
-    include_once('xmlParameters.php');
+   
     include_once("report_title.php");
+    
+    include_once('xmlParameters.php');
     include_once('parameterizeData.php');
-    include_once('data.php');
-    include_once("sortXmlData.php");
+    include_once('data.php');   
     include_once("getXmlData.php");
+    
     include_once("util.hr_min_sec.php");
 
     $DEBUG = 0;
@@ -49,7 +51,7 @@
         $vehicle_info=get_vehicle_info($root,$vserial[$i]);
         $vehicle_detail_local=explode(",",$vehicle_info);
         //echo "vehicle_detail_local=".$vehicle_detail_local[7]."<br>";
-        $finalVNameArr[$i]=$vehicle_detail_local[0];
+        
         $ioArr=explode(":",$vehicle_detail_local[7]);
         $ioArrSize=sizeof($ioArr);
         
@@ -93,24 +95,19 @@
                 $SortedDataObject=new data();
                 readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
                 //var_dump($SortedDataObject);
-
+                //echo "cnt=".count($SortedDataObject->deviceDatetime)."<br>";
                 if(count($SortedDataObject->deviceDatetime)>0)
                 {
+                    $c = -1;
                     $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
                     for($obi=0;$obi<$prevSortedSize;$obi++)
                     {
-                        $finalVNameArr[$i][$dataCnt]=$vehicle_detail_local[0]; // store vehicle name
-                        $finalVSerialArr[$i][$dataCnt]=$vserial[$i];
-                        $finalDateTimeArr[$i][$dataCnt]=$SortedDataObject->deviceDatetime[$obi];				
-                        $finalIODataArr[$i][$dataCnt]=$SortedDataObject->engineIOData[$obi];
-                      
-                        
-                        $datetime ==$SortedDataObject->deviceDatetime[$obi];                     
-
-                        $enginecount_tmp1 = explode("=",$enginecount_tmp[0]);  
-                        $engine_count = preg_replace('/"/', '', $enginecount_tmp1[1]);                                                                            	                         
+                        $c++;
+                        $datetime =$SortedDataObject->deviceDatetime[$obi];  
+                        $engine_count = $SortedDataObject->engineIOData[$obi];                                                                            	                         
                         if($finalInverseType==0)
-                        {				
+                        {
+                            //echo "engine_count".$engine_count."<br>";
                             if($engine_count>500)
                             {
                                 $continuous_running_flag = 1;
@@ -119,15 +116,19 @@
                             if($engine_count>500 && $StartFlag==0)  //500
                             {                						
                                 $time1 = $datetime;
+                                //echo "datetime=".$time1."<br>";
                                 $StartFlag = 1;
+                               // echo "in start flag<br>";
                             } 
-                            else if( ($engine_count<500 && $StartFlag==1) || ( ($c==($total_lines-1)) && ($continuous_running_flag ==1) ) )   //500
+                            else if( ($engine_count<500 && $StartFlag==1) || ( ($c==($prevSortedSize-1)) && ($continuous_running_flag ==1) ))   //500
                             {
                                 $StartFlag = 2;
+                                //echo "in end flag<br>";
                             }
                         }
                         else
                         {
+                            //echo "engine_count else ".$engine_count."<br>";
                             if($engine_count<500)
                             {
                                 $continuous_running_flag = 1;
@@ -138,21 +139,24 @@
                                 $time1 = $datetime;
                                 $StartFlag = 1;
                             } 
-                            else if( ($engine_count>500 && $StartFlag==1) || ( ($c==($total_lines-1)) && ($continuous_running_flag ==1) ) )   //500
+                            else if( ($engine_count>500 && $StartFlag==1) || ( ($c==($prevSortedSize-1)) && ($continuous_running_flag ==1) ) )   //500
                             {
                                 $StartFlag = 2;
                             }
                         }
                         $time2 = $datetime;
+                        //echo "time1=".$time1."time2=".$time2."<br>";
 
                         if($StartFlag == 2)
                         {
                             $StartFlag=0;
                             $runtime = strtotime($time2) - strtotime($time1);
+                            //echo "runtime=".$runtime."<br>";
                             if($runtime > 60)
                             {
+                                //echo "runtime1=".$runtime."<br>";
                                $imei[]=$vserial[$i];
-                               $vname[]=$finalVNameArr[$i];
+                               $vname[]=$vehicle_detail_local[0];
                                $dateFromDisplay[]=$time1;
                                $dateToDisplay[]=$time2;
                                $engine_runhr[]=$runtime;
@@ -168,7 +172,7 @@
                         if($runtime > 60)
                         {
                             $imei[]=$vserial[$i];
-                            $vname[]=$finalVNameArr[$i];
+                            $vname[]=$vehicle_detail_local[0];
                             $dateFromDisplay[]=$time1;
                             $dateToDisplay[]=$time2;
                             $engine_runhr[]=$runtime;
@@ -192,13 +196,7 @@ $m1=date('M',mktime(0,0,0,$month,1));
   report_title("Engine Run Hour Report",$date1,$date2);   
 	echo'<div style="overflow: auto;height: 285px; width: 600px;" align="center">';
    
-  ///////////////////  READ SPEED XML 	//////////////////////////////				                      
-  $xml_path = $xmltowrite;
-  //echo "<br>xml_path=".$xml_path;
-	read_engine_runhr_xml($xml_path, &$imei, &$vname, &$datefrom, &$dateto, &$engine_runhr);
-	//convert_in_two_dimension
-  //echo "<br><br>size, vname=".sizeof($imei).", dt=".$datefrom[0];
-	//////////////////////////////////////////////////////////////////////
+ 
   			             
   $j=-1;
   $k=0;
@@ -207,6 +205,8 @@ $m1=date('M',mktime(0,0,0,$month,1));
   $datefrom1=array();
  $dateto1=array();
  $engine_runhr1=array(); 
+ //echo "vehicleSize=".sizeof($imei)."<br>";
+ //print_r($dateFromDisplay);
   for($i=0;$i<sizeof($imei);$i++)
 	{	    						                  
     if(($i==0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )

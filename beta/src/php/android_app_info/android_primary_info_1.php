@@ -13,10 +13,10 @@
 	$today_date1=$today_date[0];
 	$today_date2 = str_replace("/","-",$today_date1);
 	
-	/*$android_group_id="";
-	$android_user_id="Sales2";
-	$android_password=md5("odisha");
-	$sync="login";*/
+	$android_group_id="0064";
+	$android_user_id="local_user";
+	$android_password=md5("local_user");
+	$sync="vehicleList";
 	
 	$query ="SELECT account_id FROM account WHERE (group_id='$android_group_id' OR group_id IS NULL)".
 		"AND user_id='$android_user_id' AND password='$android_password' AND (status=1 OR status=4)";
@@ -43,32 +43,16 @@
 		$num_rows=mysql_num_rows($result);
 		if($num_rows>0)
 		{
-			$row=mysql_fetch_row($result);
-			//echo "account_id=".$row[0]."<br>";
-			$query1="SELECT user_type_id FROM account_feature WHERE account_id='$row[0]'";
-			if($DEBUG){print $query1;}
-			$result1=mysql_query($query1,$DbConnection);
-			$row1=mysql_fetch_object($result1);
-			//echo "usrtyoe=".$row1->user_type_id;
-			$user_type_id=substr($row1->user_type_id,-1);
-			if($user_type_id=="6")
-			{
-				$type="P";
-			}
-			else
-			{
-				$type="V";
-			}
-			echo "success,".$type;						
+			echo "success";						
 		}
 		else
 		{
 			echo "failure";
 		}		
 	}
-	else if($sync=="vehicleList")
+	if($sync=="vehicleList")
 	{
-		//echo "vehiclelist=";
+		echo "vehiclelist=";
 		$query5 = "SELECT vehicle_id FROM vehicle_grouping USE INDEX (vg_accountid_status) WHERE account_id = '$account_id' AND status=1";
 		$result5=mysql_query($query5,$DbConnection);
 		$num_rows1=mysql_num_rows($result5);
@@ -81,11 +65,12 @@
 				$j++;   
 			}
 		}	
-
+ echo "<br>".$query5;
 		$query_test1 = "SELECT vehicle.vehicle_id,vehicle.vehicle_name,vehicle.vehicle_type,vehicle.category,vehicle.vehicle_tag,vehicle.vehicle_number,".
 		"vehicle.max_speed,vehicle.fuel_voltage,vehicle.tank_capacity,vehicle_assignment.device_imei_no FROM vehicle ".
 		"USE INDEX (v_vehicleid_status),vehicle_assignment USE INDEX (va_vehicleid_status) WHERE".
 		" vehicle.vehicle_id=vehicle_assignment.vehicle_id AND ( ";
+		
 		$join_query="";
 		if($j!=0)
 		{
@@ -101,7 +86,7 @@
 				}  
 			}
 			$query_test=$query_test1.$join_query.") AND vehicle.status=1 AND vehicle_assignment.status=1";
-			// echo "<br>".$query_test;
+		 echo "<br>".$query_test;
 			$result_test=mysql_query($query_test,$DbConnection);
 			while ($row_1=mysql_fetch_object($result_test))
 			{
@@ -128,7 +113,7 @@
 					$query_iovalue = "SELECT ".$feature_names." FROM io_assignment USE INDEX (ioa_vehicle_id_status),".
 					"vehicle_assignment USE INDEX (va_vehicleid_imei_status) WHERE io_assignment.vehicle_id=vehicle_assignment".
 					".vehicle_id AND vehicle_assignment.device_imei_no='$row_1->device_imei_no' AND vehicle_assignment.status=1".
-					" AND io_assignment.status=1";
+					"AND io_assignment.status=1";
 					//echo "query=".$query_iovalue."<br>";
 					$result_iovalue=mysql_query($query_iovalue,$DbConnection);
 					$feature_names1="";

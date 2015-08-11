@@ -8,6 +8,8 @@ include_once("android_get_all_dates_between.php");
 include_once("android_new_xml_string_io.php");
 include_once("util_android_hr_min_sec.php");
 $reportType= $_POST["reportType"];
+$reportType="P";
+echo "reportType=".$reportType;
 if($reportType=="V")
 {
 include_once("android_sort_xml.php");
@@ -18,7 +20,7 @@ include_once("android_sort_person_xml.php");
 }
 
 $device_str= $_POST["vehicleserialWithIo"];
-//$device_str="862170018369908:# ,";
+$device_str="352373055679315:# ,";
 $device_str = explode('#',$device_str);
 //echo "device_str1=".$device_str[0]."<br>";
 //echo "device_str2=".$device_str[1]."<br>";
@@ -27,8 +29,8 @@ $iotype_element = explode(',',substr($device_str[1],0,-1));
 $startdate = $_POST['startDate'];
 $enddate = $_POST['endDate']; 
 
-/*$startdate = "2013/11/05 10:58:57";
-$enddate = "2013/11/06 10:58:59"; */
+$startdate = "2014/02/19 00:00:00";
+$enddate = "2014/02/19 15:48:59"; 
 
 $startdate = str_replace('/', '-', $startdate);  
 $enddate = str_replace('/', '-', $enddate); 
@@ -299,50 +301,9 @@ for($i=0;$i<sizeof($vserial);$i++)
 											}																	
 										}
 									}
-									if($userdates[$i]<$old_xml_date)
-									{
-										//echo "in replace 1";
-										$line=str_replace("marker","x",$line);
-										$line=str_replace("msgtype=","a=",$line);
-										$line=str_replace("vehicleserial=","v=",$line);
-										$line=str_replace("ver=","b=",$line);
-										$line=str_replace("fix=","c=",$line);
-										$line=str_replace("lat=","d=",$line);
-										$line=str_replace("lng=","e=",$line);
-										$line=str_replace("speed=","f=",$line);
-										$line=str_replace("sts=","g=",$line);
-										$line=str_replace("datetime=","h=",$line);
-										$line=str_replace("io1=","i=",$line);
-										$line=str_replace("io2=","j=",$line);
-										$line=str_replace("io3=","k=",$line);
-										$line=str_replace("io4=","l=",$line);
-										$line=str_replace("io5=","m=",$line);
-										$line=str_replace("io6=","n=",$line);
-										$line=str_replace("io7=","o=",$line);
-										$line=str_replace("io8=","p=",$line);
-										$line=str_replace("sig_str=","q=",$line);
-										$line=str_replace("sup_v=","r=",$line);
-										$line=str_replace("day_max_speed=","s=",$line);
-										$line=str_replace("day_max_speed_time=","t=",$line);
-										$line=str_replace("last_halt_time=","u=",$line);
-										$line=str_replace("cellname=","ab=",$line);
-										
-										$track_report_data[]=array("deviceImeiNo"=>$vehicle_serial,"vehicleName"=>$vname,"vehicleNumber"=>$vehicle_number,"datetime"=>$datetime,"temperature"=>$temperature,"cumdist"=>round($finalDistance,2),"latitude"=>$lat_value_1,"longitude"=>$lng_value_1,"speed"=>$speed_local);
-										//$linetowrite = "\n".$line.' w="'.$vname.'" x="'.$vehicle_number.'" z="'.round($finalDistance,2).'"/>'; // for distance       // ADD DISTANCE
-									}
-									else
-									{
-										$track_report_data[]=array("deviceImeiNo"=>$vehicle_serial,"vehicleName"=>$vname,"vehicleNumber"=>$vehicle_number,"datetime"=>$datetime,"temperature"=>$temperature,"cumdist"=>round($finalDistance,2),"latitude"=>$lat_value_1,"longitude"=>$lng_value_1,"speed"=>$speed_local);
-										//$linetowrite = "\n".$line.' v="'.$vehicle_serial.'" w="'.$vname.'" x="'.$vehicle_number.'" z="'.round($finalDistance,2).'"/>'; // for distance       // ADD DISTANCE
-									}
-									//echo "<br>finalDistance=".$finalDistance;
-									//$linetowrite = "\n".$line.' cumdist="'.$finalDistance.'"./>'; // for distance       // ADD DISTANCE
-									//$linetowrite = "\n".$line.'/>';
-									//echo "<textarea>".$linetowrite."</textarea>";
-									//echo "lintowrite=".$linetowrite;
+									$track_report_data[]=array("deviceImeiNo"=>$vehicle_serial,"vehicleName"=>$vname,"vehicleNumber"=>$vehicle_number,"datetime"=>$datetime,"temperature"=>$temperature,"cumdist"=>round($finalDistance,2),"latitude"=>$lat_value_1,"longitude"=>$lng_value_1,"speed"=>$speed_local);
 									$firstData = 1;  
-									//$fh = fopen($xmltowrite, 'a') or die("can't open file 4"); //append
-									fwrite($fh, $linetowrite);  
+									//$fh = fopen($xmltowrite, 'a') or die("can't open file 4"); //append									
 								}
 							}
 							else if(($xml_date_current > $enddate) && ($xml_date_current!="-") && ($DataValid==1) )
@@ -371,41 +332,7 @@ for($i=0;$i<sizeof($vserial);$i++)
 										}																	
 									}
 								}
-								if($userdates[$i]<$old_xml_date)
-								{
-									$line=str_replace("marker","x",$line);
-									$line=str_replace("msgtype=","a=",$line);
-									$line=str_replace("vehicleserial=","v=",$line);
-									$line=str_replace("ver=","b=",$line);
-									$line=str_replace("fix=","c=",$line);
-									$line=str_replace("lat=","d=",$line);
-									$line=str_replace("lng=","e=",$line);
-									$line=str_replace("speed=","f=",$line);
-									$line=str_replace("sts=","g=",$line);
-									$line=str_replace("datetime=","h=",$line);
-									$line=str_replace("io1=","i=",$line);
-									$line=str_replace("io2=","j=",$line);
-									$line=str_replace("io3=","k=",$line);
-									$line=str_replace("io4=","l=",$line);
-									$line=str_replace("io5=","m=",$line);
-									$line=str_replace("io6=","n=",$line);
-									$line=str_replace("io7=","o=",$line);
-									$line=str_replace("io8=","p=",$line);
-									$line=str_replace("sig_str=","q=",$line);
-									$line=str_replace("sup_v=","r=",$line);
-									$line=str_replace("day_max_speed=","s=",$line);
-									$line=str_replace("day_max_speed_time=","t=",$line);
-									$line=str_replace("last_halt_time=","u=",$line);
-									
-									$track_report_data[]=array("deviceImeiNo"=>$vehicle_serial,"vehicleName"=>$vname,"vehicleNumber"=>$vehicle_number,"datetime"=>$datetime,"temperature"=>$temperature,"cumdist"=>round($finalDistance,2),"latitude"=>$lat_value_1,"longitude"=>$lng_value_1,"speed"=>$speed_local);
-									//$linetowrite = "\n".$line.' w="'.$vname.'" x="'.$vehicle_number.'" z="'.round($finalDistance,2).'"/>'; // for distance       // ADD DISTANCE
-								}
-								else
-								{
-									$track_report_data[]=array("deviceImeiNo"=>$vehicle_serial,"vehicleName"=>$vname,"vehicleNumber"=>$vehicle_number,"datetime"=>$datetime,"temperature"=>$temperature,"cumdist"=>round($finalDistance,2),"latitude"=>$lat_value_1,"longitude"=>$lng_value_1,"speed"=>$speed_local);
-									//$linetowrite = "\n".$line.' v="'.$vehicle_serial.'" w="'.$vname.'" x="'.$vehicle_number.'" z="'.round($finalDistance,2).'"/>'; // for distance       // ADD DISTANCE
-								}//echo "lintowrite=".$linetowrite;
-								fwrite($fh, $linetowrite);
+								$track_report_data[]=array("deviceImeiNo"=>$vehicle_serial,"vehicleName"=>$vname,"vehicleNumber"=>$vehicle_number,"datetime"=>$datetime,"temperature"=>$temperature,"cumdist"=>round($finalDistance,2),"latitude"=>$lat_value_1,"longitude"=>$lng_value_1,"speed"=>$speed_local);
 								$DataComplete=true;
 								break;
 							}
@@ -461,40 +388,7 @@ for($i=0;$i<sizeof($vserial);$i++)
 								}																	
 							}
 						}
-						if($userdates[$i]<$old_xml_date)
-						{
-							//echo "1in2";
-							$line=str_replace("marker","x",$line);
-							$line=str_replace("msgtype=","a=",$line);
-							$line=str_replace("vehicleserial=","v=",$line);
-							$line=str_replace("ver=","b=",$line);
-							$line=str_replace("fix=","c=",$line);
-							$line=str_replace("lat=","d=",$line);
-							$line=str_replace("lng=","e=",$line);
-							$line=str_replace("speed=","f=",$line);
-							$line=str_replace("sts=","g=",$line);
-							$line=str_replace("datetime=","h=",$line);
-							$line=str_replace("io1=","i=",$line);
-							$line=str_replace("io2=","j=",$line);
-							$line=str_replace("io3=","k=",$line);
-							$line=str_replace("io4=","l=",$line);
-							$line=str_replace("io5=","m=",$line);
-							$line=str_replace("io6=","n=",$line);
-							$line=str_replace("io7=","o=",$line);
-							$line=str_replace("io8=","p=",$line);
-							$line=str_replace("sig_str=","q=",$line);
-							$line=str_replace("sup_v=","r=",$line);
-							$line=str_replace("day_max_speed=","s=",$line);
-							$line=str_replace("day_max_speed_time=","t=",$line);
-							$line=str_replace("last_halt_time=","u=",$line);
-							$line=str_replace("cellname=","ab=",$line);							
-							$track_report_data[]=array("deviceImeiNo"=>$vehicle_serial,"vehicleName"=>$vname,"vehicleNumber"=>$vehicle_number,"datetime"=>$datetime,"temperature"=>$temperature,"cumdist"=>round($finalDistance,2),"latitude"=>$lat_value_1,"longitude"=>$lng_value_1,"speed"=>$speed_local);
-						}
-						else
-						{
-							$track_report_data[]=array("deviceImeiNo"=>$vehicle_serial,"vehicleName"=>$vname,"vehicleNumber"=>$vehicle_number,"datetime"=>$datetime,"temperature"=>$temperature,"cumdist"=>round($finalDistance,2),"latitude"=>$lat_value_1,"longitude"=>$lng_value_1,"speed"=>$speed_local);
-						}//echo "lintowrite=".$linetowrite;
-						fwrite($fh, $linetowrite);
+						$track_report_data[]=array("deviceImeiNo"=>$vehicle_serial,"vehicleName"=>$vname,"vehicleNumber"=>$vehicle_number,"datetime"=>$datetime,"temperature"=>$temperature,"cumdist"=>round($finalDistance,2),"latitude"=>$lat_value_1,"longitude"=>$lng_value_1,"speed"=>$speed_local);
 					}
 				}         
 				fclose($xml);            
