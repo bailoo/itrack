@@ -21,7 +21,7 @@ function get_report_location($lat,$lng,&$placename)
 
 	//echo "lat1=".$lat."lng1=".$lng."lat2=".$lat_local."long2=".$lon_local."<br>";
 	$distance="";
-	calculate_report_distance($lat,$lat_local,$lng,$lon_local,&$distance);
+	calculate_report_distance($lat,$lat_local,$lng,$lon_local,$distance);
 	$placename=round($distance,2)." km from ".$xml->result;
 }
 

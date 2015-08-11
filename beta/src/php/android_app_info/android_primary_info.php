@@ -1,12 +1,40 @@
 <?php
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 	include_once('util_android_php_mysql_connectivity.php');  	   //util_session_variable.php sets values in session
 	include_once('util_android_session_variable.php');   //util_php_mysql_connectivity.php make set connection of user to database  
-
+        require_once "lib/nusoap.php"; 
 	include_once('active_vehicle_func.php');
-	$android_group_id = trim($_POST['group_id']);
-	$android_user_id =trim($_POST['user_id']);
-	$android_password=md5(trim($_POST['password']));
-	$sync = $_POST['sync'];
+        require_once "lib/nusoap.php";
+      
+        $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+        //print_r($pathInPieces);
+        $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
+        //$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+        //echo "pathToRoot=".$pathToRoot."<br>";
+        //====cassamdra //////////////
+        include_once($pathToRoot."/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+        //echo "fileExists=".file_exists($pathToRoot."/phpApi/Cassandra/Cassandra.php");
+        include_once($pathToRoot."/phpApi/libLogNew.php");     //##### INCLUDE CASSANDRA API*/
+
+        $o_cassandra = new Cassandra();	
+        $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+
+
+        /* $groupId="";
+        $userId="KTC";
+        $password="BEEKAY";
+        $sync="vehicleList";    
+        $result=primaryDeviceInfo($groupId,$userId,$password,$sync);
+        echo  $result;*/
+	
+        function primaryDeviceInfo($groupId,$userId,$password,$sync)
+        {
+        global $DbConnection;
+        $android_group_id = trim($groupId);
+	$android_user_id =trim($userId);
+	$android_password=md5(trim($password));
+	$sync = $sync;
 	//date_default_timezone_set('Asia/Calcutta');
 	$current_time = date('Y/m/d H:i:s');
 	$today_date=explode(" ",$current_time);
@@ -20,7 +48,7 @@
 	
 	$query ="SELECT account_id FROM account WHERE (group_id='$android_group_id' OR group_id IS NULL)".
 		"AND user_id='$android_user_id' AND password='$android_password' AND (status=1 OR status=4)";
-		//echo "query=".$query."<br>";
+		//echo "query111=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);
 	$row=mysql_fetch_row($result);
 	$account_id=$row[0];
@@ -36,17 +64,18 @@
 	
 	if($sync=="login")
 	{
-		$query ="SELECT account_id,user_type,group_id FROM account WHERE (group_id='$android_group_id' OR group_id IS NULL)".
+		$query ="SELECT account_id,user_type,group_id FROM account WHERE (group_id='$android_group_id' OR group_id IS NULL) ".
 		"AND user_id='$android_user_id' AND password='$android_password' AND (status=1 OR status=4)";
 		//echo "query=".$query."<br>";
-		$result=mysql_query($query,$DbConnection);
+		$result=mysql_query($query,$DbConnection);		
 		$num_rows=mysql_num_rows($result);
 		if($num_rows>0)
 		{
 			$row=mysql_fetch_row($result);
 			//echo "account_id=".$row[0]."<br>";
-			$query1="SELECT user_type_id FROM account_feature WHERE account_id='$row[0]'";
-			if($DEBUG){print $query1;}
+			$query1="SELECT account_feature.user_type_id,account_detail.name FROM account_feature,account_detail WHERE ".
+			"account_detail.account_id=account_feature.account_id AND account_feature.account_id='$row[0]'";
+			//echo "query1=".$query1."<br>";
 			$result1=mysql_query($query1,$DbConnection);
 			$row1=mysql_fetch_object($result1);
 			//echo "usrtyoe=".$row1->user_type_id;
@@ -59,16 +88,21 @@
 			{
 				$type="V";
 			}
-			echo "success,".$type;						
+                        $data[]=array("actionStatus"=>"success","deviceType"=>$type,"accountName"=>$row1->name,"accountType"=>$row[1]);
+									
 		}
 		else
-		{
-			echo "failure";
-		}		
+		{		
+                    $data[]=array("actionStatus"=>"failure","deviceType"=>"","accountName"=>"","accountType"=>"");
+		}
+                return json_encode($data);
 	}
 	else if($sync=="vehicleList")
 	{
+	 
 		//echo "vehiclelist=";
+		global $o_cassandra;
+		$logDate=date('Y-m-d');
 		$query5 = "SELECT vehicle_id FROM vehicle_grouping USE INDEX (vg_accountid_status) WHERE account_id = '$account_id' AND status=1";
 		$result5=mysql_query($query5,$DbConnection);
 		$num_rows1=mysql_num_rows($result5);
@@ -81,8 +115,8 @@
 				$j++;   
 			}
 		}	
-
-		$query_test1 = "SELECT vehicle.vehicle_id,vehicle.vehicle_name,vehicle.vehicle_type,vehicle.category,vehicle.vehicle_tag,vehicle.vehicle_number,".
+		$data=array();
+		$query_test1 = "SELECT DISTINCT vehicle.vehicle_id,vehicle.vehicle_name,vehicle.vehicle_type,vehicle.category,vehicle.vehicle_tag,vehicle.vehicle_number,".
 		"vehicle.max_speed,vehicle.fuel_voltage,vehicle.tank_capacity,vehicle_assignment.device_imei_no FROM vehicle ".
 		"USE INDEX (v_vehicleid_status),vehicle_assignment USE INDEX (va_vehicleid_status) WHERE".
 		" vehicle.vehicle_id=vehicle_assignment.vehicle_id AND ( ";
@@ -149,33 +183,20 @@
 						$final_iotypevalue_str=substr($final_iotypevalue_str,0,-1);					
 					}					
 				}
-				$last_date=get_acitve_vlastdate($row_1->device_imei_no,$DbConnection);
-				//echo "last_date=".$last_date."today_date2=".$today_date2."<br>";
+			
 				$vehicle_active_flag=0;
-				if(($last_date!="") && ($last_date==$today_date2))
-				{
-					//echo "in if1<br>";
-					$vehicle_active_flag=1;
-				}
-				if($vehicle_active_flag==0)
-				{	
-					//echo "in insert and update flag<br>";
-					$xml_current = "../../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-					if(file_exists($xml_current))
-					{
-						$vehicle_active_flag=1;
-						$active_vehicle_imei=get_active_imeino($vehicle_imei,$DbConnection);
-						//echo "active_active_imei=".$active_vehicle_imei."<br>";
-						if($active_vehicle_imei!="")
-						{										
-							update_active_vehicle($vehicle_imei,$today_date2,$DbConnection);
-						}
-						else
-						{										
-							insert_active_vehicle($vehicle_imei,$today_date2,$DbConnection);	
-						}
-					}
-				}
+                                //echo "in insert and update flag<br>";
+                                //$vehicle_imei="862170017134329";
+                                $logResult=hasImeiLogged($o_cassandra, $row_1->device_imei_no, $logDate);
+                                         //echo "logResult=".$logResult."<br>";
+                            //$st_results = getCurrentDateTime($o_cassandra,$vehicle_imei,$sortFetchData);
+                            //var_dump($st_results);
+                            //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
+                                if($logResult!='')
+                                {
+                                    $vehicle_active_flag=1;                                      
+                                }
+				
 				if($vehicle_active_flag==1)
 				{
 					$data[]=array("deviceImeiNo"=>$row_1->device_imei_no,"vehicleName"=>$row_1->vehicle_name,"status"=>"green","vehicleIO"=>$final_iotypevalue_str);
@@ -185,8 +206,12 @@
 					$data[]=array("deviceImeiNo"=>$row_1->device_imei_no,"vehicleName"=>$row_1->vehicle_name,"status"=>"gray","vehicleIO"=>$final_iotypevalue_str);
 				}
 			}
-			echo json_encode($data);
-		}		
-	}
+		}
+		return json_encode($data);
+            }
+        }
+$server = new soap_server();
+$server->register("primaryDeviceInfo");
+$server->service($HTTP_RAW_POST_DATA);
 	
 ?>
