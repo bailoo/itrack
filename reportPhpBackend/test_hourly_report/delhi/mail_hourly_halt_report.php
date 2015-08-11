@@ -17,7 +17,7 @@ $LOG = false;
 
 $isReport = true;
 //$HOST = "111.118.181.156";
-$DBASE = "iespl_vts_beta";
+/*$DBASE = "iespl_vts_beta";
 if ($DEBUG_OFFLINE) {
     $HOST = "localhost";
 } else if ($DEBUG_ONLINE) {
@@ -30,13 +30,14 @@ if ($DEBUG_OFFLINE) {
     $PASSWD = "mysql";
 } else {
     $PASSWD = 'neon04$VTS';
-}
+}*/
+include_once("../../db_connection.php");
 //$HOST = "localhost";
 $account_id = "231";
 if ($account_id == "231")
     $user_name = "delhi";
 //if($account_id == "231") $user_name = "delhi@";
-//echo "\nDBASE=".$DBASE." ,USER=".$USER." ,PASS=".$PASSWD;
+echo "\nDBASE=".$DBASE." ,USER=".$USER." ,PASS=".$PASSWD;
 $DbConnection = mysql_connect($HOST, $USER, $PASSWD) or die("Connection to server is down. Please try after few minutes.");
 mysql_select_db($DBASE, $DbConnection) or die("could not find DB");
 
@@ -51,37 +52,38 @@ if ($DEBUG_OFFLINE) {
     $abspath = "/var/www/html/vts/beta/src/php";
     $report_path = "/mnt/itrack/reportPhpBackend";
 }
-//echo "<br>AbsPath=" . $abspath;
+echo "<br>AbsPath=" . $abspath;
 include_once($abspath . "/common_xml_element.php");
-//echo "\nD1";
+echo "\nD1";
 include_once($abspath . '/ioParameters.php');
-//echo "\nD2";
+echo "\nD2";
 include_once($abspath . '/dataParameters.php');
-//echo "\nD3";
+echo "\nD3";
 include_once($abspath . '/dataArrays.php');
 if (file_exists($tmp)) {
     echo "File Exists1";
 } else {
     "Does not exist";
 }
-//echo "\nD4";
+echo "\nD4";
 include_once($abspath . '/sortXmlData.php');
-//echo "\nD5:" . $abspath;
+echo "\nD5:" . $abspath;
 //$tmp = $abspath.'/getXmlData.php';
 //if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
 include_once($abspath . '/getDeviceData.php');
-//echo "\nD6";
+echo "\nD6";
 
 include_once($abspath . "/calculate_distance.php");
 include_once($abspath . "/report_title.php");
 include_once($abspath . "/read_filtered_xml.php");
 include_once($abspath . "/user_type_setting.php");
-
+echo "\nD7";
 include_once($abspath . "/util.hr_min_sec.php");
 if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun.php"))
     ;
 include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
 
+echo "\nD8";
 //include_once($abspath."/hourly_report/".$user_name."/get_master_detail.php");
 //### IMPORT XLSX LIBRARY
 //error_reporting(E_ALL);
@@ -97,17 +99,17 @@ PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
 
 $objPHPExcel_1 = null;
 
-//echo "TEST1";
+echo "TEST1";
 include_once("read_master_file.php");
 include_once("read_sent_file.php");
-//echo "\nS1";
+echo "\nS1";
 include_once("read_secondary_vehicles.php");
-//echo "\nS2";
+echo "\nS2";
 //include_once("update_sent_file.php");
 include_once("create_hrly_excel_file.php");
-//echo "\nS3";
+echo "\nS3";
 include_once("create_secondary_vehicle_excel_file.php");
-//echo "\nS4";
+echo "\nS4";
 
 include_once("action_hourly_report_halt.php");
 
@@ -146,14 +148,15 @@ include_once("get_route_db_detail.php");
 //$pdate = date('Y-m-d', strtotime($date .' -1 day'));
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-08-05');
-    $date = date('2015-08-06');
+    $pdate = date('2015-08-10');
+    $date = date('2015-08-11');
 } else {
     $date = date('Y-m-d');
 }
 $unchanged = true;
 //######## MAKE TWO SHIFTS
 if ($MAIN_DEBUG) {
+    //$shift_ev_date1 = $pdate . " 12:00:00";
     $shift_ev_date1 = $pdate . " 12:00:00";
     $shift_ev_date2 = $pdate . " 23:59:59";
 } else {
@@ -166,19 +169,19 @@ $shift_ev_date4 = $date . " 12:00:00";
 //$shift_ev_date4 = $date." 06:40:00";
 
 $shift_mor_date1 = $date . " 03:00:00";
-//$shift_mor_date2 = $date." 19:00:00";
-$shift_mor_date2 = $date . " 22:00:00";
+$shift_mor_date2 = $date." 19:00:00";
+//$shift_mor_date2 = $date . " 22:00:00";
 
 if ($MAIN_DEBUG) {
     //$current_time = $date." 10:22:00";	//current date ev
-    //$current_time = $date . " 12:00:00";      //current date mor
-    $current_time = date('Y-m-d H:i:s');
+    $current_time = $date . " 12:00:00";      //current date mor
+    //$current_time = date('Y-m-d H:i:s');
 } else {
     $current_time = date('Y-m-d H:i:s');
 }
 
-//$ev_run_start_time1 = $date." 18:00:00";
-$ev_run_start_time1 = $date . " 21:00:00";
+$ev_run_start_time1 = $date." 20:30:00";
+//$ev_run_start_time1 = $date . " 21:00:00";
 #$ev_run_start_time2 = $date." 22:00:00";
 $ev_run_start_time2 = $date . " 01:00:00";
 $mor_run_start_time = $date . " 10:00:00";
@@ -208,7 +211,8 @@ if ($MAIN_DEBUG) {
 $cdatetime1 = strtotime(date('00:00:00'));
 $cdatetime2 = strtotime(date('H:i:s'));
 $difftime = $cdatetime2 - $cdatetime1;
-$difftime = 79200;	//EVENING COMMENT IT LATER
+//$difftime = 7200;	//EVENING COMMENT IT LATER-focal
+$difftime = 79200;
 //$difftime = 36000;	//MORNING
 echo "\nDiff=".$difftime;
 
@@ -450,7 +454,7 @@ if ($shift_mor) {
 
     //$last_time = $current_time;
 
-    $last_time_processed = "";
+    $last_processed_time = array();
     $csv_string_halt_final = "";
 
     //$vehicle_arr = array();
@@ -468,7 +472,7 @@ if ($shift_mor) {
     //######## READ EVENING SENT FILE #############		
     if (file_exists($morning_last_processed_time_path)) {
         //echo "\nLast Processed";
-        read_last_processed_time($morning_last_processed_time_path);
+        read_last_processed_time("ZPMM",$route_type);
         //echo "\nBefore Read LastHaltTime";
         read_last_halt_time($morning_last_halt_time_path);
         //read_all_routes($account_id,"ZPMM");
@@ -483,7 +487,7 @@ if ($shift_mor) {
         //echo "\nCreateFile:Morning";
         $morning_last_processed_time = "";
 
-        get_route_db_detail("ZPMM");
+        get_route_db_detail("ZPMM",$route_type);
         //echo "\nSizeRoute=".sizeof($route_name_rdb);
         get_customer_db_detail($account_id, "ZPMM", $route_type);
         //echo "\nSizeAllRoutes=".sizeof($all_routes);
@@ -504,10 +508,11 @@ if ($shift_mor) {
     read_secondary_vehicles($morning_sv_file_path);
     //echo "\nAfter ReadSentFile3";
     if (!$CREATE_MASTER) {
-        get_halt_xml_data($Last_Time, $current_time, $morning_sent_file_path, $shift_mor_date1, $shift_mor_date2, "ZPMM", $difftime);
+        echo "\nroutetype4=" . $route_type;
+        get_halt_xml_data($Last_Time, $current_time, $morning_sent_file_path, $shift_mor_date1, $shift_mor_date2, "ZPMM", $difftime,$route_type);
         //echo "\nAfter Data Process";
         //######### UPDATE LAST TIME PROCESSED -ALWAYS UPDATED #############	
-        update_last_processed_time($morning_last_processed_time_path, $current_time);
+        //update_last_processed_time($morning_last_processed_time_path, $current_time);
         update_last_halt_time($morning_last_halt_time_path);
 
         //echo "\nAfter Last ProcessedDetail:Morning";
@@ -687,7 +692,7 @@ if ($shift_ev1) {
 
     //$last_time = $current_time;
 
-    $last_time_processed = "";
+    $last_processed_time = array();    
     $csv_string_halt_final = "";
 
     //$vehicle_arr = array();
@@ -706,7 +711,7 @@ if ($shift_ev1) {
     //echo "\nLastProcessedFile=".$evening_last_processed_time_path1;
     if (file_exists($evening_last_processed_time_path1)) {
         //echo "\nFile Exists";
-        read_last_processed_time($evening_last_processed_time_path1);
+        read_last_processed_time("ZPME",$route_type);
         //echo "\nLast ProcessedTime";
         read_last_halt_time($evening_last_halt_time_path1);
         //read_all_routes($account_id,"ZPME");
@@ -722,7 +727,7 @@ if ($shift_ev1) {
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
 
-        get_route_db_detail("ZPME");
+        get_route_db_detail("ZPME",$route_type);
         //echo "\nSizeRoute=".sizeof($route_name_rdb);
         get_customer_db_detail($account_id, "ZPME", $route_type);
         //echo "\nSizeAllRoutes=".sizeof($all_routes);
@@ -743,17 +748,18 @@ if ($shift_ev1) {
     //echo "\nAfter ReadSentFile";
     //if(!$CREATE_MASTER)
     {
-        get_halt_xml_data($Last_Time, $current_time, $evening_sent_file_path1, $time1, $time2, "ZPME", $difftime);
+        echo "\nroutetype3=" . $route_type;
+        get_halt_xml_data($Last_Time, $current_time, $evening_sent_file_path1, $time1, $time2, "ZPME", $difftime,$route_type);
         //echo "\nAfter Data Process";
 
         //######### UPDATE LAST TIME PROCESSED -ALWAYS UPDATED #############	
-        update_last_processed_time($evening_last_processed_time_path1, $current_time);
+        //update_last_processed_time($evening_last_processed_time_path1, $current_time);
         update_last_halt_time($evening_last_halt_time_path1);
         //echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL ##############
-        $to = 'rizwan@iembsys.com';
-     //   $to = 'gpsreporthourly@gmail.com';
+        //$to = 'rizwan@iembsys.com';
+        $to = 'gpsreporthourly@gmail.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -788,7 +794,7 @@ if ($shift_ev1) {
             'html' => '<html></html>'
                 ), array(
             'attachment' => array($file_path)
-        ));        
+        ));
         ////include("send_mail_api.php");
         //######################################
     }
@@ -921,7 +927,7 @@ if ($shift_ev2) {
 
     //$last_time = $current_time;
 
-    $last_time_processed = "";
+    $last_processed_time = array();  
     $csv_string_halt_final = "";
 
 //if($shift_ev2)
@@ -930,7 +936,7 @@ if ($shift_ev2) {
     $route_type = "FOCAL";
     //######## READ EVENING SENT FILE #############		
     if (file_exists($evening_last_processed_time_path2)) {
-        read_last_processed_time($evening_last_processed_time_path2);
+        read_last_processed_time("ZPME",$route_type);
         //echo "\nLast ProcessedTime";
         read_last_halt_time($evening_last_halt_time_path2);
         //read_all_routes($account_id,"ZPME");
@@ -948,7 +954,7 @@ if ($shift_ev2) {
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
 
-        get_route_db_detail("ZPME");
+        get_route_db_detail("ZPME",$route_type);
         //echo "\nSizeRoute=".sizeof($route_name_rdb);
         get_customer_db_detail($account_id, "ZPME", $route_type);
         //echo "\nSizeAllRoutes=".sizeof($all_routes);
@@ -973,10 +979,11 @@ if ($shift_ev2) {
     //echo "\nAfter ReadSentFile";
     //echo "\nSizeSecondaryVehicle=".sizeof($SecondaryVehicle);
     if (!$CREATE_MASTER) {
-        get_halt_xml_data($Last_Time, $current_time, $evening_sent_file_path2, $time1, $time2, "ZPME", $difftime);
+        echo "\nroutetype5=" . $route_type;
+        get_halt_xml_data($Last_Time, $current_time, $evening_sent_file_path2, $time1, $time2, "ZPME", $difftime,$route_type);
         //echo "\nAfter Data Process";
         //######### UPDATE LAST TIME PROCESSED -ALWAYS UPDATED #############	
-        update_last_processed_time($evening_last_processed_time_path2, $current_time);
+        //update_last_processed_time($evening_last_processed_time_path2, $current_time);
         update_last_halt_time($evening_last_halt_time_path2);
         //echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############

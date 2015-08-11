@@ -214,7 +214,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
 
     $userInterval = 0;
 
-    $sortBy = 'g';
+    $sortBy = 'h';
     $firstDataFlag = 0;
     $endDateTS = strtotime($date2);
     $dataCnt = 0;
