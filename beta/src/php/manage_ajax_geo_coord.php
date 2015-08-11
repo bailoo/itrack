@@ -29,6 +29,10 @@
     {
       $station_type = "Plant";
     }
+    else if($type1 == "2")
+    {
+      $station_type = "Chilling Plant";
+    }
     echo "manage_station_coord##".$geo_name1."##".$customer_no1."##".$coord_1."##".$distance_variable1."##".$station_type;
   }  
   

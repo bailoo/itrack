@@ -99,7 +99,7 @@ echo '
   <tr>	
     <td>File Type</td>
     <td>:</td>
-    <td><select name="file_type"></option><option value="0" selected>Customer</option><option value="1">Plant</option><option value="2">Chilling Plant</option></select></td>  
+    <td><select name="file_type" id="file_type"></option><option value="0" selected>Customer</option><option value="1">Plant</option><option value="2">Chilling Plant</option></select></td>  
   </tr>  
 	<tr>
 		<td colspan="3" align="center"><input type="button" value="Save" id="enter_button" onclick="javascript:return action_manage_station(\'add\')"/>&nbsp;<input type="reset"" value="Clear" /></td>
