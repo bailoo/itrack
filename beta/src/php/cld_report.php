@@ -4,17 +4,13 @@
     set_time_limit(2000);
     include_once('util_session_variable.php');
     include_once('util_php_mysql_connectivity.php');
-    include_once("get_io.php");
     include_once("util.fuel_calibration.php");
     include_once("calculate_distance.php");   
     include_once("user_type_setting.php");
+    include_once("coreDb.php");
     include_once("select_landmark_report.php");
-
-    $query="SELECT field22 FROM account_feature WHERE account_id=$account_id";   
-    $result = mysql_query($query,$DbConnection);
-    $row=mysql_fetch_row($result);
-    $lat_lng_permission=$row[0];
-  
+    
+    $lat_lng_permission=getLatLngPermission($account_id,$DbConnection);  
     $geocodes_string = $_POST['geocodedPostcodes'];  
     $geocodes_string = substr($geocodes_string, 0, -1);
     //echo "geoStr=".$geocodes_string."<br>";
@@ -29,9 +25,9 @@
     
     /////// this all vehicle detail in which data present ///////
     $vehicleserial=unserialize($vehicleserial);
-    //print_r($vserial_post);
-    $vehiclename=unserialize($vehiclename); 
-   // print_r($vname_post);
+    //print_r($vehicleserial);
+    $vehiclename=unserialize(base64_decode($vehiclename)); 
+    //print_r($vehiclename);
     $vehiclenumber=unserialize($vehiclenumber);
      //print_r($vnumber_post);
     $speed=unserialize($speed);
@@ -448,7 +444,7 @@
                             <td class="text">'.$tmp_vname.'</td>
                             <td class="text">'.$vserial_post[$k].'</td>
                             <td colspan="7" class="text">
-                                <font color="red">Inactive</font>
+                                <font color="red">No Data Found</font>
                             </td>
                         </tr>';
                     }
