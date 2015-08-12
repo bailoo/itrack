@@ -84,7 +84,7 @@ else
                 $distanceinterval = 0.02;
         }
 }
-$distanceinterval=0.0;
+//$distanceinterval=0.0;
 
 
 get_All_Dates($datefrom, $dateto, $userdates);    
@@ -116,7 +116,27 @@ for($i=0;$i<$vsize;$i++)
             {
                 //echo "userdate=".$userdates[$di]."<br>";
                 $SortedDataObject=new data();
-                readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+                if($date_size==1)
+                {
+                    $dateRangeStart=$date1;
+                    $dateRangeEnd=$date2;
+                }
+                else if($di==($date_size-1))
+                {
+                    $dateRangeStart=$userdates[$di]." 00:00:00";
+                    $dateRangeEnd=$date2;
+                }
+                else if($di==0)
+                {
+                    $dateRangeStart=$date1;
+                    $dateRangeEnd=$userdates[$di]." 23:59:59";
+                }
+                else
+                {
+                   $dateRangeStart=$userdates[$di]." 00:00:00";
+                    $dateRangeEnd=$userdates[$di]." 23:59:59";
+                }
+                deviceDataBetweenDates($vserial[$i],$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);
                 //var_dump($SortedDataObject);
                 if(count($SortedDataObject->deviceDatetime)>0)
                 {
@@ -134,7 +154,7 @@ for($i=0;$i<$vsize;$i++)
                         }
                         if(($DataValid==1) && ($datetime>$date1 && $datetime<$date2))
                         { 
-                            
+                            //echo "lat=".$CurrentLat." lng=".$CurrentLat."<br><br>";
                             $xml_date_current = $datetime;
                             //echo "xml_date_current=".$xml_date_current."<br>";
                             if((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval)
@@ -159,11 +179,11 @@ for($i=0;$i<$vsize;$i++)
                                     {
                                         $maxlong = $CurrentLong;
                                     }                
-                                    $tmp1lat = round(substr($CurrentLat,1,(strlen($CurrentLat)-3)),4);
-                                    $tmp2lat = round(substr($LastLat,1,(strlen($LastLat)-3)),4);
-                                    $tmp1lng = round(substr($CurrentLong,1,(strlen($CurrentLong)-3)),4);
-                                    $tmp2lng = round(substr($LastLong,1,(strlen($LastLong)-3)),4);  							
-                                    //echo  "Coord: ".$tmp1lat.' '.$tmp2lat.' '.$tmp1lng.' '.$tmp2lng.'<BR>'; 
+                                    $tmp1lat = substr($CurrentLat,0,-1);
+                                    $tmp2lat = substr($LastLat,0,-1);
+                                    $tmp1lng = substr($CurrentLong,0,-1);
+                                    $tmp2lng = substr($LastLong,0,-1);  							
+                                   // echo  "Coord: ".$tmp1lat.' '.$tmp2lat.' '.$tmp1lng.' '.$tmp2lng.'<BR>'; 
                                     //echo "lastDate=".$LastDTForDif."<br>";
                                     $LastDTForDiffTS=strtotime($LastDTForDif);									
                                     $dateDifference=($CurrentDTForDiffTmp-$LastDTForDiffTS)/3600;
@@ -172,23 +192,24 @@ for($i=0;$i<$vsize;$i++)
                                     //echo  "dateDifference: ".$dateDifference.'<BR>'; 									
                                     calculate_distance($tmp1lat,$tmp2lat,$tmp1lng,$tmp2lng,$distance);									
                                     $overSpeed=$distance/$dateDifference_1;
+                                   
                                 }
                                 if($distance<$distanceinterval)
-                                {
+                                {                                   
                                     $LastDTForDif=$xml_date_current;
                                 }
                                 /*if((((((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval) && ($distance>=$distanceinterval)) || ($firstData==0)) && 
                                 (($xml_date_current<=$enddate) && ($xml_date_current>=$startdate))) || ($f==$total_lines-2) )*/
+                                //echo "distance=".$distance." distanceinterval=".$distanceinterval."<br><br>";
                                 if(($distance>=$distanceinterval) || ($firstData==0))
                                 {
-                                    //echo "in distance<br>";
+                                    //echo "distance1=".$distance." distanceinterval1=".$distanceinterval."<br><br>";
                                     if($overSpeed<200)
-                                    {
-                                        //echo "overSpeed<br>";
+                                    {                                       
                                         $xml_date_last = $xml_date_current;
                                         $LastLat =$CurrentLat;
                                         $LastLong =$CurrentLong;									
-                                        $linetolog = "Data Written\n";
+                                        //$linetolog = "Data Written\n";
                                         $LastDTForDif=$xml_date_current;
                                         $line = substr($line, 0, -3);   // REMOVE LAST TWO /> CHARARCTER
                                         $finalDistance = $finalDistance + $distance;	
@@ -198,6 +219,12 @@ for($i=0;$i<$vsize;$i++)
                                         //$fh = fopen($xmltowrite, 'a') or die("can't open file 4"); //append
                                         //fwrite($fh, $linetowrite); 
                                     }
+                                    /*if($obi==0)
+                                    {
+                                        $LastLat =$CurrentLat;
+                                        $LastLong =$CurrentLong;
+                                        $firstData = 1; 
+                                    }*/
                                 }
                             }
                         }
