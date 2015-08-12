@@ -10,7 +10,7 @@ date_default_timezone_set("Asia/Kolkata");
 global $DEBUG_OFFLINE;
 $DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = true;
-$CREATE_MASTER = false;
+$CREATE_MASTER = true;
 $MAIN_DEBUG = true;
 $LOG = false;
 //#################
@@ -148,8 +148,8 @@ include_once("get_route_db_detail.php");
 //$pdate = date('Y-m-d', strtotime($date .' -1 day'));
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-08-10');
-    $date = date('2015-08-11');
+    $pdate = date('2015-08-11');
+    $date = date('2015-08-12');
 } else {
     $date = date('Y-m-d');
 }
@@ -188,8 +188,8 @@ $mor_run_start_time = $date . " 10:00:00";
 //$mor_run_start_time = $date." 06:00:00";
 
 if ($MAIN_DEBUG) {
-    $shift_ev1 = false;
-    $shift_ev2 = true;
+    $shift_ev1 = true;
+    $shift_ev2 = false;
     $shift_mor = false;
 } else {
     $shift_ev1 = false;

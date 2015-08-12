@@ -390,7 +390,7 @@ if($dwt=="1")
   call_geocode($point); 
 
 }    
- // print_r($vehicleserial);  
+ // print_r($vehiclename);  
   echo' 
    <input type="hidden" name="startdate" value="'.$startdate.'">
    <input type="hidden" name="enddate" value="'.$enddate.'">
@@ -398,7 +398,7 @@ if($dwt=="1")
    <input type="hidden" name="vname" value="'.$vname1.'">
    <input type="hidden" name="vnumber" value="'.$vnumber1.'"> 
    <input type="hidden" name="vehicleserial" value='.serialize($vehicleserial).'>
-   <input type="hidden" name="vehiclename" value='.serialize($vehiclename).'>
+   <input type="hidden" name="vehiclename" value='.base64_encode(serialize($vehiclename)).'>
    <input type="hidden" name="vehicletype" value='.serialize($vehicletype).'>
    <input type="hidden" name="vehiclenumber" value='.serialize($vehiclenumber).'>
     <input type="hidden" name="speed" value='.serialize($speed).'>
