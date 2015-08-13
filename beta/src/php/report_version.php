@@ -1,4 +1,5 @@
 <?php
+echo"reportPrevPage##";
   include_once("report_hierarchy_header.php");
 	include_once("user_type_setting.php");
 	
