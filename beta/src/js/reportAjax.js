@@ -152,6 +152,12 @@ function show_option_with_value(type, option)      // type="manage/report/settin
 							load_map(lat1,lng1,lat2,lng2);
 						}
 					} 
+                                        else if (result1[0].trim()=="edit")
+                                        {
+                                            hideManageLoadingMessage();
+                                            document.getElementById('edit_div').style.display =""; 
+                                            document.getElementById('edit_div').innerHTML = result1[1]; 
+                                        }
 					else 
 					{
                                             //alert("result="+result);
@@ -162,12 +168,7 @@ function show_option_with_value(type, option)      // type="manage/report/settin
                                             document.getElementById('bodyspan').innerHTML =result;
 					}                  
 				}
-                                else if (result1[0].trim()=="edit")
-                                {
-                                    hideManageLoadingMessage();
-                                    document.getElementById('edit_div').style.display =""; 
-                                    document.getElementById('edit_div').innerHTML = result1[1]; 
-                                }
+                                
 				else 
 				{
 					alert('There was a problem with the request.');
