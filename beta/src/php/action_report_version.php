@@ -11,7 +11,7 @@ $root=$_SESSION["root"];
 set_time_limit(200);
 
 include_once('parameterizeData.php');
-include_once('lastRecordData.php');  
+include_once('data.php');  
 include_once("getXmlData.php");
 include_once("calculate_distance.php");
 
@@ -32,16 +32,26 @@ if($vsize>0)
         $dataCnt=0;
         $vehicle_info=get_vehicle_info($root,$vserial[$i]);
         $vehicle_detail_local=explode(",",$vehicle_info);
-        $LastRecordObject=new lastRecordData();	
-        $LastRecordObject=getLastRecord($vserial[$i],$sortBy,$parameterizeData);
+        $SortedDataObject=new data();
+        readFileXmlNew($vserial[$i],$current_date,$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
         //var_dump($SortedDataObject);
-        if($LastRecordObject->versionLR[0]!='')
+        if(count($SortedDataObject->deviceDatetime)>0)
         {
-            $imei[]=$vserial[$i];
-            $vname[]=$vehicle_detail_local[0];
-            $version[]=$LastRecordObject->versionLR[0];
-        }       
-        $LastRecordObject=null;
+            $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+            for($obi=0;$obi<$prevSortedSize;$obi++)
+            {           
+                $versionThis = $SortedDataObject->versionData[$obi];  
+                if($versionThis)
+                {
+                    $imei[]=$vserial[$i];
+                    $vname[]=$vehicle_detail_local[0];
+                    $version[]=$versionThis;
+                    $versionThis =0;
+                    break; 		                		                     
+                }
+            }
+        }
+         $SortedDataObject=null;
     }
     $parameterizeData=null;
     $o_cassandra->close();

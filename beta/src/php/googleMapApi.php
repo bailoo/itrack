@@ -588,6 +588,10 @@ var input = (document.getElementById('pac-input'));
 						}); 						
 					};
 				}
+                                
+                                function arrayHasOwnIndex(array, prop) {
+    return array.hasOwnProperty(prop) && /^0$|^[1-9]\d*$/.test(prop) && prop <= 4294967294; // 2^32 - 2
+}
 				
 				function infoCallbackLandmark(landmark,lat,lng,markerL) 
 				{				
@@ -624,6 +628,7 @@ var input = (document.getElementById('pac-input'));
 						var customer_plant_str='';
 						var customer_plant_str1='';
 						var feature_id_map = document.getElementById('station_flag_map').value;
+                                                //alert('feature_id_map='+feature_id_map);
 						if(feature_id_map==1)
 						{						
 							var client_type_combo=document.getElementById('station_chk').value;
@@ -631,57 +636,63 @@ var input = (document.getElementById('pac-input'));
 							{			
 								/*if(client_type_combo=='0')
 								{*/
-									var customerDataLength=lat_customer.length;
-									var customer_min_distance;	
-
+									var customer_min_distance;
 									var customer_distance_arr=new Array();
-									var customer_print_str=new Array();
-										
-									if(customerDataLength>0)
-									{
-										//var customer_distance_arr=new Array();
-										//var customer_print_str=new Array();
-										for(var i=0;i<customerDataLength;i++)
-										{					
-											var customer_distance = calculate_distance(lat, lat_customer[i], lng, lng_customer[i]);
-											customer_distance_arr[i]=customer_distance;
-											customer_print_str[customer_distance]=station_customer[i]+':'+customer_station_no[i];
-										}
-										customer_distance_arr.sort();
-										customer_min_distance=customer_distance_arr[0];
-										var customer_print_str1=customer_print_str[customer_min_distance];
-										///customer_plant_str='<tr><td>Place From Customer</td><td>:</td><td>'+customer_distance_arr[0]+'From '+customer_print_str[customer_distance_arr[0]]+'</td></tr>';
-									}				
+									var customer_print_str=new Array();										
+									
+                                                                        for (key in uniqueCustomerParseJson) 
+                                                                        {
+                                                                            if (arrayHasOwnIndex(uniqueCustomerParseJson, key)) 
+                                                                            {
+                                                                                var customerArrDetail=uniqueCustomerParseJson[key].split('^');
+                                                                                var customer_distance = calculate_distance(lat, customerArrDetail[0], lng, customerArrDetail[1]);
+                                                                                customer_distance_arr[i]=customer_distance;
+                                                                                customer_print_str[customer_distance]=customerArrDetail[2];
+                                                                                //alert('len='+uniqueCustomerParseJson[key]);                                                                            
+                                                                            }
+                                                                        }
+                                                                        //var customer_distance_arr=new Array();
+                                                                        //var customer_print_str=new Array();
+                                                                        customer_distance_arr.sort();
+                                                                        customer_min_distance=customer_distance_arr[0];
+                                                                        var customer_print_str1=customer_print_str[customer_min_distance];
+                                                                        ///customer_plant_str='<tr><td>Near From Customer</td><td>:</td><td>'+customer_distance_arr[0]+'From '+customer_print_str[customer_distance_arr[0]]+'</td></tr>';
+													
 								/*}
 								else if(client_type_combo=='1')
 								{*/
-									var planDataLength=lat_plant.length;
+									
 									var plant_min_distance;		
-									if(planDataLength>0)
-									{
-										var plant_distance_arr=new Array();
-										var plant_print_str=new Array();
-										for(var i=0;i<planDataLength;i++)
-										{					
-											var customer_distance = calculate_distance(lat, lat_plant[i], lng, lng_plant[i]);
-											plant_distance_arr[i]=customer_distance;
-											plant_print_str[customer_distance]=station_plant[i]+':'+customer_plant[i];
-										}
-										plant_distance_arr.sort();
-										plant_min_distance=plant_distance_arr[0];
-										var plant_print_str1=customer_print_str[plant_min_distance];
-										//customer_plant_str='<tr><td>Place From Plant</td><td>:</td><td>'+plant_distance_arr[0]+'From '+plant_print_str[plant_distance_arr[0]]+'</td></tr>';
-									}
+									
+                                                                        var plant_distance_arr=new Array();
+                                                                        var plant_print_str=new Array();
+                                                                      
+                                                                        for (key in uniqueCustomerParseJson) 
+                                                                        {
+                                                                            if (arrayHasOwnIndex(uniquePlantParseJson, key)) 
+                                                                            {
+                                                                                var plantArrDetail=uniquePlantParseJson[key].split('^');
+                                                                                var customer_distance = calculate_distance(lat, plantArrDetail[0], lng, plantArrDetail[1]);
+                                                                                customer_distance_arr[i]=customer_distance;
+                                                                                customer_print_str[customer_distance]=plantArrDetail[2];
+                                                                                //alert('len='+uniquePlantParseJson[key]);                                                                            
+                                                                            }
+                                                                        }
+                                                                        plant_distance_arr.sort();
+                                                                        plant_min_distance=plant_distance_arr[0];
+                                                                        var plant_print_str1=customer_print_str[plant_min_distance];
+                                                                        //customer_plant_str='<tr><td>Place From Plant</td><td>:</td><td>'+plant_distance_arr[0]+'From '+plant_print_str[plant_distance_arr[0]]+'</td></tr>';
+
 									//alert('plant_min_distance='+plant_min_distance+'customer_min_distance='+customer_min_distance);
 									if(plant_min_distance==undefined && customer_min_distance!=undefined)
 									{
 										//alert('in if');
-										customer_plant_str='<tr><td class=\"live_td_css1\">Place From Customer</td><td>:</td><td class=\"live_td_css2\">'+customer_min_distance+ ' From '+customer_print_str1+'</td></tr>';
+										customer_plant_str='<tr><td class=\"live_td_css1\">Near From Customer</td><td>:</td><td class=\"live_td_css2\">'+customer_min_distance+ ' From '+customer_print_str1+'</td></tr>';
 									}
 									else if(customer_min_distance==undefined && plant_min_distance!=undefined)
 									{
 										//alert('in else if 1');
-										customer_plant_str='<tr><td class=\"live_td_css1\">Place From Plant</td><td>:</td><td class=\"live_td_css2\">'+plant_min_distance+' From '+plant_print_str1+'</td></tr>';
+										customer_plant_str='<tr><td class=\"live_td_css1\">Near From Plant</td><td>:</td><td class=\"live_td_css2\">'+plant_min_distance+' From '+plant_print_str1+'</td></tr>';
 									}
 									else if(plant_min_distance==undefined && customer_min_distance==undefined)
 									{
@@ -693,11 +704,11 @@ var input = (document.getElementById('pac-input'));
 										//alert('else');
 										if(plant_min_distance<customer_min_distance)
 										{				
-											customer_plant_str='<tr><td class=\"live_td_css1\">Place From Plant</td><td>:</td><td class=\"live_td_css2\">'+plant_min_distance+' From '+plant_print_str1+'</td></tr>';
+											customer_plant_str='<tr><td class=\"live_td_css1\">Near From Plant</td><td>:</td><td class=\"live_td_css2\">'+plant_min_distance+' From '+plant_print_str1+'</td></tr>';
 										}
 										else if(customer_min_distance<plant_min_distance)
 										{					
-											customer_plant_str='<tr><td class=\"live_td_css1\">Place From Customer</td><td>:</td><td class=\"live_td_css2\">'+customer_min_distance+' From '+customer_print_str1+'</td></tr>';
+											customer_plant_str='<tr><td class=\"live_td_css1\">Near From Customer</td><td>:</td><td class=\"live_td_css2\">'+customer_min_distance+' From '+customer_print_str1+'</td></tr>';
 										}
 									}
 								//}
