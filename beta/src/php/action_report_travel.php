@@ -410,7 +410,7 @@ for($i=0;$i<$vsize;$i++)
                     {
                         $DataValid = 1;
                     }
-                    if($DataValid==1)
+                    if(($DataValid==1) && ($SortedDataObject->deviceDatetime[$obi]>$date1 && $SortedDataObject->deviceDatetime[$obi]<$date2))
                     {
                         $datetime=$SortedDataObject->deviceDatetime[$obi];
                         $speed = $SortedDataObject->speedData[$obi];

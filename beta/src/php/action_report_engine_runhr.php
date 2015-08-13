@@ -102,6 +102,8 @@
                     $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
                     for($obi=0;$obi<$prevSortedSize;$obi++)
                     {
+                         if($SortedDataObject->deviceDatetime[$obi]>$date1 && $SortedDataObject->deviceDatetime[$obi]<$date2)
+                         {
                         $c++;
                         $datetime =$SortedDataObject->deviceDatetime[$obi];  
                         $engine_count = $SortedDataObject->engineIOData[$obi];                                                                            	                         
@@ -161,7 +163,8 @@
                                $dateToDisplay[]=$time2;
                                $engine_runhr[]=$runtime;
                             } 
-                        } 
+                        }
+                    }
                     }
                     if($StartFlag == 1)
                     {
