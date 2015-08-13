@@ -1,6 +1,4 @@
 <?php
-
-
 class GoogleMapHelper{
 	//DEFAULT MAP OPTIONS (method map())
 	var $defaultId = "map_canvas";								// Map canvas ID
@@ -647,7 +645,7 @@ var input = (document.getElementById('pac-input'));
                                                                                 var customerArrDetail=uniqueCustomerParseJson[key].split('^');
                                                                                 var customer_distance = calculate_distance(lat, customerArrDetail[0], lng, customerArrDetail[1]);
                                                                                 customer_distance_arr[i]=customer_distance;
-                                                                                customer_print_str[customer_distance]=customerArrDetail[2];
+                                                                                customer_print_str[customer_distance]=key;
                                                                                 //alert('len='+uniqueCustomerParseJson[key]);                                                                            
                                                                             }
                                                                         }
@@ -674,7 +672,7 @@ var input = (document.getElementById('pac-input'));
                                                                                 var plantArrDetail=uniquePlantParseJson[key].split('^');
                                                                                 var customer_distance = calculate_distance(lat, plantArrDetail[0], lng, plantArrDetail[1]);
                                                                                 customer_distance_arr[i]=customer_distance;
-                                                                                customer_print_str[customer_distance]=plantArrDetail[2];
+                                                                                customer_print_str[customer_distance]=key;
                                                                                 //alert('len='+uniquePlantParseJson[key]);                                                                            
                                                                             }
                                                                         }
