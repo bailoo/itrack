@@ -218,17 +218,16 @@ for($i=0;$i<$vsize;$i++)
                                         $lineTmpTrack=$lineTmpTrack.$linetowrite."@";
                                         //$fh = fopen($xmltowrite, 'a') or die("can't open file 4"); //append
                                         //fwrite($fh, $linetowrite); 
-                                    }
-                                    /*if($obi==0)
-                                    {
-                                        $LastLat =$CurrentLat;
-                                        $LastLong =$CurrentLong;
-                                        $firstData = 1; 
-                                    }*/
+                                    }                                    
                                 }
                             }
                         }
                     }
+                    $obi=$obi-1;
+                    $linetowrite='<x a="'.$SortedDataObject->messageTypeData[$obi].'" b="'.$SortedDataObject->versionData[$obi].'" c="'.$SortedDataObject->fixData[$obi].'" d="'.$SortedDataObject->latitudeData[$obi].'" e="'.$SortedDataObject->longitudeData[$obi].'" f="'.$SortedDataObject->speedData[$obi].'" g="'.$SortedDataObject->serverDatetime[$obi].'" h="'.$SortedDataObject->deviceDatetime[$obi].'" i="'.$SortedDataObject->io1Data[$obi].'" j="'.$SortedDataObject->io2Data[$obi].'" k="'.$SortedDataObject->io3Data[$obi].'" l="'.$SortedDataObject->io4Data[$obi].'" m="'.$SortedDataObject->io5Data[$obi].'" n="'.$SortedDataObject->io6Data[$obi].'" o="'.$SortedDataObject->io7Data[$obi].'" p="'.$SortedDataObject->io8Data[$obi].'" q="'.$SortedDataObject->sigStrData[$obi].'" r="'.$SortedDataObject->supVoltageData[$obi].'" s="'.$SortedDataObject->dayMaxSpeedData[$obi].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" z="'.round($finalDistance,2).'"/>';
+                    $firstData = 1;  
+                    $lineTmpTrack=$lineTmpTrack.$linetowrite."@";
+                    $SortedDataObject =null;
                     $SortedDataObject =null;
                 }
             }
