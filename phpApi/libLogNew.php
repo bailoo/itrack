@@ -1,6 +1,6 @@
 <?php
 
-require_once 'libCommon.php';
+require_once ($pathToRoot.'/phpApi/libCommon.php');
 
 
 /***
@@ -72,7 +72,7 @@ function getLastSeenDateTime($o_cassandra,$imei,$datetime)
 			  AND
 			  date = '$strDate'
 			  AND	
-			  dtime <= '$datetime+$TZ'
+			  dtime < '$datetime+$TZ'
 			  LIMIT 1
 			  ;";
 		$st_results = $o_cassandra->query($s_cql);
@@ -86,60 +86,13 @@ function getLastSeenDateTime($o_cassandra,$imei,$datetime)
 	return $st_obj;
 }
 
-/***
-* Returns last seen data between given date times
-* 
-* @param object $o_cassandra	Cassandra object 
-* @param string $imei		IMEI
-* @param string $datetime1	YYYY-MM-DD HH:MM:SS
-* @param string $datetime2 (>$datetime1)	YYYY-MM-DD HH:MM:SS
-* 
-* @return array 	Results of the query 
-*/
-function getLastSeenDateTimes($o_cassandra, $imei, $datetime1, $datetime2)
-{
-	$TZ = '0530';
-
-	$date1 = substr($datetime1,0,10);
-	$date2 = substr($datetime2,0,10);
-
-	$interval = new DateInterval('P1D');
-	$start = new DateTime($date2);
-	$end = new DateTime($date1);
-	$start->add($interval);
-
-	$st_results = array(); // initialize with empty array
- 
-	for ($date = $start; $date->sub($interval); $date >= $end)
-	{
-		$strDate = $date->format('Y-m-d');
-		$s_cql = "SELECT * FROM log1 
-			  WHERE 
-			  imei = '$imei'
-			  AND
-			  date = '$strDate'
-			  AND	
-			  dtime <= '$datetime2+$TZ'
-			  AND	
-			  dtime >= '$datetime1+$TZ'
-			  LIMIT 1
-			  ;";
-		$st_results = $o_cassandra->query($s_cql);
-		if (!empty($st_results))
-			break;
-	}
-
-	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
-	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
-	$st_obj = logParser($st_results, $dataType, $orderAsc);
-	return $st_obj;
-}
 
 /***
 * Returns last seen data from last data table lastlog
 * 
 * @param object $o_cassandra	Cassandra object 
 * @param string $imei	IMEI
+* @param string $date	YYYY-MM-DD
 * 
 * @return array 	Results of the query 
 */
@@ -155,43 +108,6 @@ function getLastSeen($o_cassandra,$imei)
 	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
 	$st_obj = logParser($st_results, $dataType, $orderAsc);
 	return $st_obj;
-}
-
-
-/***
-* Deletes last seen data from last data table lastlog
-* 
-* @param object $o_cassandra	Cassandra object 
-* @param string $imei	IMEI
-* 
-* @return array 	Results of the query 
-*/
-function rmLastSeen($o_cassandra,$imei)
-{
-	$s_cql = "DELETE FROM lastlog 
-		  WHERE 
-		  imei = '$imei'
-		  ;";
-
-	$st_results = $o_cassandra->query($s_cql);
-	return $st_results;
-}
-
-
-/***
-* Truncate last data table lastlog
-* 
-* @param object $o_cassandra	Cassandra object 
-* 
-* @return array 	Results of the query 
-*/
-function truncLastLog($o_cassandra)
-{
-	$s_cql = "TRUNCATE lastlog 
-		  ;";
-
-	$st_results = $o_cassandra->query($s_cql);
-	return $st_results;
 }
 
 
@@ -269,7 +185,7 @@ function getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc)
 }
 
 /***
-* Bad Hack: Runs multiple CQL query on Cassandra datastore
+* Runs CQL query on Cassandra datastore
 * 
 * @param object $o_cassandra	Cassandra object 
 * @param string $imei		IMEI
@@ -279,51 +195,6 @@ function getLogByDate($o_cassandra, $imei, $date, $deviceTime, $orderAsc)
 * @return array 	Results of the query 
 */
 function getImeiDateTimes($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc)
-{
-
-	$TZ = '0530';
-
-	$table = ($deviceTime)?'log1':'log2';
-	$qtime = ($deviceTime)?'dtime':'stime';
-
-	$dateArray = getDateArray($datetime1,$datetime2);
-	
-	$all_results = Array();
-	$dateLen = count($dateArray);
-	for ($i=0; $i < $dateLen; $i++)
-	{
-		$date = $dateArray[$i];
-		$s_cql = "SELECT * FROM $table
-			WHERE
-			imei = '$imei'
-			AND
-			date = '$date'
-			AND
-			$qtime >= '$datetime1+$TZ'
-			AND
-			$qtime <= '$datetime2+$TZ'
-			;";
-		$st_results = $o_cassandra->query($s_cql);
-		$all_results = array_merge($all_results, $st_results);
-	}
-
-	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
-	$st_obj = logParser($all_results, $dataType, $orderAsc);
-		
-	return $st_obj;
-}
-
-/***
-* Runs single CQL query on Cassandra datastore
-* 
-* @param object $o_cassandra	Cassandra object 
-* @param string $imei		IMEI
-* @param string $datetime1	YYYY-MM-DD HH:MM:SS
-* @param string $datetime2	YYYY-MM-DD HH:MM:SS
-* 
-* @return array 	Results of the query 
-*/
-function getImeiDateTimesSQ($o_cassandra, $imei, $datetime1, $datetime2, $deviceTime, $orderAsc)
 {
 
 	$TZ = '0530';
@@ -349,6 +220,7 @@ function getImeiDateTimesSQ($o_cassandra, $imei, $datetime1, $datetime2, $device
 		
 	return $st_obj;
 }
+
 /***
 * Runs CQL query on Cassandra datastore
 * 
