@@ -774,7 +774,8 @@ public class RequestHandler {
 			System.out.println("curr_device_millis="+curr_device_millis+" ,last_device_millis="+last_device_millis+" ,server_millis="+server_millis);
 			
 			//if ( (System.currentTimeMillis() - TransactionServer.last_update_time.get(vserial)) > 60000) {				
-			if ( (curr_device_millis - last_device_millis > 60000) && (server_millis - curr_device_millis < 600000) ){  //about 10 min
+			//if ( (curr_device_millis - last_device_millis > 60000) && (server_millis - curr_device_millis < 600000) ){  //about 10 min
+			if ( (curr_device_millis - last_device_millis > 60000) && (curr_device_millis - server_millis  < 600000) ){  //about 10 min			
 				/*out_a2 = new RandomAccessFile(filename, "rwd");
 				//out_a2 = new RandomAccessFile(filename, "rw");
 				FileLength = out_a2.length();

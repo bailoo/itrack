@@ -34,8 +34,8 @@ public class InsertVehicleAlerts {
 	public CassandraConn conn;
 	
 	public InsertVehicleAlerts(){
-		String propFileName = "config.properties";
-		//String propFileName = "resources/config.properties";
+		//String propFileName = "config.properties";
+		String propFileName = "resources/config.properties";
 		Properties prop = new Properties();
 		
 		try {

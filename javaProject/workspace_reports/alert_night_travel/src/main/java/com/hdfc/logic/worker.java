@@ -24,7 +24,7 @@ import com.datastax.driver.core.Session;
 import com.hdfc.db.mysql.connection;
 import com.hdfc.db.mysql.mysql_handler;
 import com.hdfc.init.init;
-import com.hdfc.report.report_travel;
+import com.hdfc.report.report_night_movement;
 import com.hdfc.utils.utility_class;
 import com.iespl.gisgraphy.LatLng;
 import com.iespl.gisgraphy.class_pop_road;
@@ -73,48 +73,46 @@ public class worker {
 		previous_date1 = day_before_previous_day+" 23:00:00";
 		previous_date2 = previous_day+" 04:00:00";
 
-		System.out.println("p1="+previous_date1+" ,p2="+previous_date2);
-		//previous_date1 = "2015-06-14 13:19:35";
-		//previous_date2 = "2015-06-14 13:20:08";	
-		previous_date1 = "2015-07-15 23:00:00";
-		previous_date2 = "2015-07-16 04:00:00";
-//		previous_date1 = "2015-04-26 00:00:00";
-//		previous_date2 = "2015-06-15 23:59:00";
+		//System.out.println("p1="+previous_date1+" ,p2="+previous_date2);
+	//	previous_date1 = "2015-06-01 00:00:00";
+	//	previous_date2 = "2015-07-31 23:59:59";
+		previous_date1 = "2015-07-29 00:00:00";
+		previous_date2 = "2015-07-31 23:59:59";		
 				
 		System.out.println("SizeIMEI="+init.device_imei_no.size());
 		for(int i=0;i<(init.device_imei_no.size());i++) {			
 			
 			//####### TEMPORARY
 			//report_distance.set_variables();
-			report_travel.set_variables();
+			report_night_movement.set_variables();
 			//report_speed_violation.set_variables();
 			//####### RESET ARRAY LISTS -TURN
 			
 			//####### RESET ARRAY LISTS -TRAVEL VIOLATION
-			report_travel.IMEI_No = new ArrayList<String>();    
-			report_travel.ServerTime = new ArrayList<String>();
-			report_travel.AvgSpeed = new ArrayList<Double>();
-			report_travel.Distance = new ArrayList<Double>();
-			report_travel.MaxSpeed = new ArrayList<Double>();
-		    report_travel.StartDeviceTime = new ArrayList<String>();
-		    report_travel.EndDeviceTime = new ArrayList<String>();
-		    report_travel.StartLatitude = new ArrayList<Double>();
-		    report_travel.StartLongitude = new ArrayList<Double>();
-		    report_travel.StartlatLngObj = new ArrayList<LatLng>();
-		    report_travel.StartlocationId = new ArrayList<String>();
-		    report_travel.Startlocation = new ArrayList<String>();
-		    report_travel.EndLatitude = new ArrayList<Double>();
-		    report_travel.EndLongitude = new ArrayList<Double>();
-		    report_travel.EndlatLngObj = new ArrayList<LatLng>();
-		    report_travel.EndlocationId = new ArrayList<String>();
-		    report_travel.Endlocation = new ArrayList<String>(); 
-		    report_travel.TravelDuration = new ArrayList<Integer>();
+			report_night_movement.IMEI_No = new ArrayList<String>();    
+			report_night_movement.ServerTime = new ArrayList<String>();
+			report_night_movement.AvgSpeed = new ArrayList<Double>();
+			report_night_movement.Distance = new ArrayList<Double>();
+			report_night_movement.MaxSpeed = new ArrayList<Double>();
+			report_night_movement.StartDeviceTime = new ArrayList<String>();
+			report_night_movement.EndDeviceTime = new ArrayList<String>();
+			report_night_movement.StartLatitude = new ArrayList<Double>();
+			report_night_movement.StartLongitude = new ArrayList<Double>();
+			report_night_movement.StartlatLngObj = new ArrayList<LatLng>();
+			report_night_movement.StartlocationId = new ArrayList<String>();
+			report_night_movement.Startlocation = new ArrayList<String>();
+			report_night_movement.EndLatitude = new ArrayList<Double>();
+			report_night_movement.EndLongitude = new ArrayList<Double>();
+			report_night_movement.EndlatLngObj = new ArrayList<LatLng>();
+			report_night_movement.EndlocationId = new ArrayList<String>();
+			report_night_movement.Endlocation = new ArrayList<String>(); 
+			report_night_movement.TravelDuration = new ArrayList<Integer>();
 			
 			//System.out.println("Device="+init.device_imei_no.get(i));
 			pull_and_process_data(init.vehicle_name.get(i), init.max_speed.get(i), init.device_imei_no.get(i), previous_date1, previous_date2);
 			System.out.println("Pullprocess completed..");
 			//### PUSH ::DISTANCE REPORT :: ARRAYLIST TO CASSANDRA
-			push_vehicle_travel_to_database(init.device_imei_no.get(i), session);
+			push_vehicle_night_travel_to_database(init.device_imei_no.get(i), session);
 //			push_chauraha_to_database(init.device_imei_no.get(i), session);
 //			System.out.println("Processed IMEI:"+init.device_imei_no.get(i)+" -"+i);
 		}
@@ -131,7 +129,7 @@ public class worker {
 
 		Float ax = 0.0f, ay = 0.0f, az =0.0f,	bx=0.0f, by=0.0f, bz=0.0f, cx=0.0f, cy=0.0f, cz=0.0f;
 		//report_distance rep_distance = new report_distance();
-		report_travel rep_travel = new report_travel();
+		report_night_movement rep_travel = new report_night_movement();
 		//System.out.println("Point2");
 		//data.setImei("862170011627815"); //Make sure this imei exists
 		//data.setDate("2015-01-29");
@@ -143,7 +141,7 @@ public class worker {
 		Boolean deviceTime = true;	// true for device time index, otherwise server time
 		Boolean orderAsc = true;	// true for ascending , otherwise descending (default) 
 
-		System.out.println("IMEI="+imei+" ,StartDate="+startDateTime+" ,EndDate="+endDateTime+" ,DeiveTime="+deviceTime);
+		//System.out.println("IMEI="+imei+" ,StartDate="+startDateTime+" ,EndDate="+endDateTime+" ,DeiveTime="+deviceTime);
 		ArrayList<FullData> fullDataList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, deviceTime, orderAsc);
 
 		String tmp_lat ="", tmp_lng="";
@@ -166,17 +164,17 @@ public class worker {
 			System.out.print("f: "+pMap1.get("f")+" ");
 			System.out.println();*/
 				
-			System.out.println("Lat="+pMap1.get("d")+" ,Lng="+pMap1.get("e"));
+			//System.out.println("Lat="+pMap1.get("d")+" ,Lng="+pMap1.get("e"));
 			tmp_lat = (String) pMap1.get("d");
 			tmp_lng = (String) pMap1.get("e");
 			
 			//System.out.println("Lat="+tmp_lat+" ,Lng="+tmp_lng);
 			if( (!tmp_lat.equals("")) && (!tmp_lng.equals("")) ) {
 					
-				/*System.out.print("imei: "+fullData.getImei()+" ");
+				System.out.print("imei: "+fullData.getImei()+" ");
 				System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
 				System.out.print("server time: "+sdf.format(fullData.getSTime())+" ");
-				System.out.print("a: "+pMap1.get("a")+" ");
+				/*System.out.print("a: "+pMap1.get("a")+" ");
 				System.out.print("b: "+pMap1.get("b")+" ");
 				System.out.print("c: "+pMap1.get("c")+" ");
 				System.out.print("d: "+pMap1.get("d")+" ");
@@ -200,17 +198,17 @@ public class worker {
 	}
 
 	
-	public static void CHECK_ALERTS(String imei, String startdate, String enddate, double interval, String device_time, String sts, double lat, double lng, double speed, Float max_speed, int data_size, int record_count, report_travel rep_travel) {
+	public static void CHECK_ALERTS(String imei, String startdate, String enddate, double interval, String device_time, String sts, double lat, double lng, double speed, Float max_speed, int data_size, int record_count, report_night_movement rep_travel) {
 		//CHECK AND PUSH
 		//report_distance.action_report_distance(imei, device_time, sts, startdate, enddate, interval, lat, lng, speed, data_size, record_count);
-		report_travel.action_report_travel(imei, device_time, sts, startdate, enddate, interval, lat, lng, speed, data_size, record_count);
+		report_night_movement.action_report_travel(imei, device_time, sts, startdate, enddate, interval, lat, lng, speed, data_size, record_count);
 //		report_turning_violation.action_report_truning_violation(imei, device_time, sts, startdate, enddate, interval, lat, lng, speed, data_size, record_count);
 //		report_travel.action_report_travel(imei, device_time, sts, startdate, enddate, interval, lat, lng, speed, data_size, record_count);
 		
 	}
 	
 	//######## VEHICLE TRAVEL -PUSH 
-	public static void push_vehicle_travel_to_database(String imei, Session session) {
+	public static void push_vehicle_night_travel_to_database(String imei, Session session) {
 		
 		String starttime="",endtime="", startlatitude="",startlongitude="",endlatitude="",endlongitude="";
 		String startlocationid="",endlocationid="",startlocation="",startlocationname="",endlocationname="";
@@ -255,8 +253,8 @@ public class worker {
 		System.out.println("GIS Data After="+report_turning_violation.roadName.size());*/
 		//#############
 		
-		String filename= "D:\\itrack_vts/alert_report/kundali/night_driving/"+imei+".csv";
-		//String filename= "/mnt/hdfc_report/csv/"+imei+".csv";
+		String filename= "D:\\HDFC/hdfc_alert_report/night_driving/"+imei+".csv";
+		//String filename= "/mnt/hdfc_report/night_driving/"+imei+".csv";
 		line = "ServerTime,StartTime,EndTime,TravelDuration(Mins),AvgSpeed(Km/hr),Distance(Km),MaxSpeed(Km/hr)\n";
 		try {
 			fw = new FileWriter(filename,true);
@@ -265,39 +263,39 @@ public class worker {
 			e3.printStackTrace();
 		} //the true will append the new data*/		
 		
-		System.out.println("Size="+report_travel.IMEI_No.size());
+		//System.out.println("Size="+report_night_movement.IMEI_No.size());
 		
-		if(report_travel.IMEI_No.size() > 0) {
+		if(report_night_movement.IMEI_No.size() > 0) {
 			
-			NightLogDao nightLogDao = new NightLogDao(session);		
+//			NightLogDao nightLogDao = new NightLogDao(session);		
 			
-			for(int i=0;i<report_travel.IMEI_No.size();i++) {
+			for(int i=0;i<report_night_movement.IMEI_No.size();i++) {
 				
-				starttime = report_travel.StartDeviceTime.get(i);
-				endtime = report_travel.EndDeviceTime.get(i);
-				stime = report_travel.ServerTime.get(i);
-				distance = (float)((double)Double.valueOf(report_travel.Distance.get(i)));
-				avgspeed = (float)((double)Double.valueOf(report_travel.AvgSpeed.get(i)));
-				maxspeed = (float)((double)Double.valueOf(report_travel.MaxSpeed.get(i)));		
+				starttime = report_night_movement.StartDeviceTime.get(i);
+				endtime = report_night_movement.EndDeviceTime.get(i);
+				stime = report_night_movement.ServerTime.get(i);
+				distance = (float)((double)Double.valueOf(report_night_movement.Distance.get(i)));
+				avgspeed = (float)((double)Double.valueOf(report_night_movement.AvgSpeed.get(i)));
+				maxspeed = (float)((double)Double.valueOf(report_night_movement.MaxSpeed.get(i)));		
 
 				//locationId = "";
 				//locationName = "";
-				startlatitude = report_travel.StartLatitude.get(i).toString();
-				startlongitude = report_travel.StartLongitude.get(i).toString();
-				endlatitude = report_travel.EndLatitude.get(i).toString();
-				endlongitude = report_travel.EndLongitude.get(i).toString();				
+				startlatitude = report_night_movement.StartLatitude.get(i).toString();
+				startlongitude = report_night_movement.StartLongitude.get(i).toString();
+				endlatitude = report_night_movement.EndLatitude.get(i).toString();
+				endlongitude = report_night_movement.EndLongitude.get(i).toString();				
 
 				/*startlocationid = report_travel.StartlocationId.get(i);
 				endlocationid = report_travel.EndlocationId.get(i);		
 				startlocationname = report_travel.Startlocation.get(i);		
 				endlocationname = report_travel.EndlocationId.get(i);*/				
-				travel_duration = report_travel.TravelDuration.get(i);
+				travel_duration = report_night_movement.TravelDuration.get(i);
 				
 				//line += tDeviceTime+q+tServerTime+q+tSpeed+q+tAngle+q+tLatitude+q+tLongitude+"\n";
 				line += stime+","+starttime+","+endtime+","+travel_duration+","+avgspeed+","+distance+","+maxspeed+"\n";
-				nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, travel_duration, avgspeed, distance, maxspeed);
+//				nightLogDao.insertNightLog(imei, starttime, startlatitude, startlongitude, startlocationid, startlocationname, endtime, endlatitude, endlongitude, endlocationid, endlocationname, travel_duration, avgspeed, distance, maxspeed);
 				
-				//System.out.println("filename="+filename+" ,line="+line);
+				//System.out.println("line="+line);
 			}
 		    
 			try {

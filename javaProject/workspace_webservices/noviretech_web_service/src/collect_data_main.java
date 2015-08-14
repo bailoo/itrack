@@ -148,7 +148,7 @@ public class collect_data_main {
 		//##### GET PREVIOUS AND CURRENT TIME
 						
 		//if(last_time_tmp.equals("-"))
-		{
+		//{
 			//startdate = "2015-01-30%2005:00:00";
 			Date currentDate = new Date();
 			Calendar cal = Calendar.getInstance();
@@ -160,11 +160,11 @@ public class collect_data_main {
 			startdate = dDF.format(tenMinutesBack);		//Get StartTime as 00:00:00 of the date			
 			//startdate = startdate + " 00:00:00";
 			//System.out.println("startdate="+startdate);
-		}
+		//}
 		//else
-		{
+		//{
 			//startdate = last_time_tmp;
-		}		
+		//}		
         //String enddate = "2015-01-30%2006:10:00";
 		Date date = new Date();
 		enddate = dDF.format(date);
