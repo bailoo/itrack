@@ -42,7 +42,8 @@ public class GetVehicleAlerts
 	
 	public GetVehicleAlerts()
 	{
-		String propFileName = "config.properties";
+		//String propFileName = "config.properties";
+		String propFileName = "resources/config.properties";
 		Properties prop = new Properties();
 		
 		try {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="51" version="2.0">
+<workbench progressCount="11" version="2.0">
 <workbenchAdvisor/>
 <window height="728" maximized="true" width="1024" x="50" y="0">
 <fastViewData fastViewLocation="1024"/>
@@ -25,7 +25,7 @@
 <coolItem id="org.eclipse.ant.ui.internal.editor.AntEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -34,10 +34,16 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
 </folder>
 </info>
 </editorArea>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" partName="TransactionServer.java" path="D:/ECLIPSE_PROJECTS/itrack/javaProject/workspace_webservices/webservice_rts_riddhi/src/com/wanhive/rts/TransactionServer.java" title="TransactionServer.java" tooltip="webservice_rts_riddhi/src/com/wanhive/rts/TransactionServer.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/webservice_rts_riddhi/src/com/wanhive/rts/TransactionServer.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5499" selectionTopPixel="1071"/>
+</editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
@@ -50,9 +56,9 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Warnings (100 of 1256 items)"/>
+<category IMemento.internal.id="Warnings (100 of 1281 items)"/>
 </expanded>
-<columnWidths org.eclipse.ui.ide.locationField="0" org.eclipse.ui.ide.markerType="0" org.eclipse.ui.ide.pathField="0" org.eclipse.ui.ide.resourceField="0" org.eclipse.ui.ide.severityAndDescriptionField="0"/>
+<columnWidths org.eclipse.ui.ide.locationField="64" org.eclipse.ui.ide.markerType="94" org.eclipse.ui.ide.pathField="124" org.eclipse.ui.ide.resourceField="94" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
@@ -79,7 +85,9 @@
 <filteredTreeFindHistory/>
 </viewState>
 </view>
-<view id="org.eclipse.jdt.ui.SourceView" partName="Declaration"/>
+<view id="org.eclipse.jdt.ui.SourceView" partName="Declaration">
+<viewState/>
+</view>
 <view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
 <viewState/>
 </view>
@@ -256,12 +264,12 @@
 <perspective_action id="org.eclipse.wst.jsdt.ui.JavaPerspective"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="org.eclipse.ui.navigator.ProjectExplorer"/>
 <view id="org.eclipse.ui.views.ProblemView"/>
 <view id="org.eclipse.jdt.ui.JavadocView"/>
 <view id="org.eclipse.jdt.ui.SourceView"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="org.eclipse.jdt.callhierarchy.view"/>
-<view id="org.eclipse.ui.navigator.ProjectExplorer"/>
 <fastViewBars/>
 <layout>
 <mainWindow>
@@ -277,6 +285,22 @@
 </presentation>
 </folder>
 </info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@6d6a3759" ratio="0.8483871" ratioLeft="526" ratioRight="94" relationship="4" relative="left">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
+<page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
+<page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="org.eclipse.jdt.callhierarchy.view" label="Call Hierarchy"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+<part id="4"/>
+</presentation>
+</folder>
+</info>
 <info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1014" ratioRight="338" relationship="2" relative="left">
 <folder appearance="2" expanded="2">
 <page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
@@ -285,7 +309,7 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.19347665" ratioLeft="261" ratioRight="1088" relationship="2" relative="left"/>
+<info part="org.eclipse.ui.editorss" ratio="0.19570053" ratioLeft="264" ratioRight="1085" relationship="2" relative="left"/>
 <info folder="true" part="bottom" ratio="0.566129" ratioLeft="351" ratioRight="269" relationship="4" relative="org.eclipse.ui.editorss">
 <folder appearance="2" expanded="2">
 <page content="org.eclipse.search.ui.views.SearchView" label="LabelNotFound"/>
@@ -308,28 +332,46 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@5e66de77" ratio="0.62903225" ratioLeft="390" ratioRight="230" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
-<page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
-<page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
-<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
-<page content="org.eclipse.jdt.callhierarchy.view" label="Call Hierarchy"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-<part id="4"/>
-</presentation>
-</folder>
-</info>
 </mainWindow>
 </layout>
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/webservice_rts_riddhi/src/com/wanhive/rts/TransactionServer.java"/>
+</editors>
+<item historyLabel="TransactionServer.java" index="0">
+<position info="not_deleted" x="61" y="0"/>
+</item>
+<item historyLabel="TransactionServer.java" index="0">
+<position info="not_deleted" x="27246" y="0"/>
+</item>
+<item historyLabel="TransactionServer.java" index="0">
+<position info="not_deleted" x="28443" y="0"/>
+</item>
+<item historyLabel="TransactionServer.java" index="0">
+<position info="not_deleted" x="29892" y="0"/>
+</item>
+<item historyLabel="TransactionServer.java" index="0">
+<position info="not_deleted" x="13528" y="0"/>
+</item>
+<item historyLabel="TransactionServer.java" index="0">
+<position info="not_deleted" x="28443" y="0"/>
+</item>
+<item historyLabel="TransactionServer.java" index="0">
+<position info="not_deleted" x="28617" y="0"/>
+</item>
+<item historyLabel="TransactionServer.java" index="0">
+<position info="not_deleted" x="28859" y="0"/>
+</item>
+<item historyLabel="TransactionServer.java" index="0">
+<position info="not_deleted" x="28576" y="0"/>
+</item>
+<item active="true" historyLabel="TransactionServer.java" index="0">
+<position info="not_deleted" x="28585" y="0"/>
+</item>
+</navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
@@ -345,55 +387,49 @@
 <trimItem IMemento.internal.id="org.eclise.ui.internal.FastViewBar"/>
 <trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
-<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@5e66de77"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@6d6a3759"/>
 </trimArea>
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ItcWebClient.java" tooltip="AccessWebService/src/com/iespl/ItcWebClient.java">
-<persistable path="/AccessWebService/src/com/iespl/ItcWebClient.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_rts_riddhi/src/com/wanhive/rts/TransactionServer.java">
+<persistable path="/webservice_rts_riddhi/src/com/wanhive/rts/TransactionServer.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="collect_data_main.java" tooltip="sqs_titanictracker/src/collect_data_main.java">
-<persistable path="/sqs_titanictracker/src/collect_data_main.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/TransactionServer.java">
+<persistable path="/webservice_rts_newwaves/src/com/wanhive/rts/TransactionServer.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="collect_data_main.java" tooltip="WebServiceNewWaves/src/collect_data_main.java">
-<persistable path="/WebServiceNewWaves/src/collect_data_main.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RequestHandler.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/handler/RequestHandler.java">
+<persistable path="/webservice_rts_newwaves/src/com/wanhive/rts/handler/RequestHandler.java"/>
 </file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="SQLError.class" tooltip="com.mysql.jdbc.SQLError">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=AccessWebService/E:\/ESSENTIALS\/com.mysql.jdbc_5.1.5.jar&lt;com.mysql.jdbc(SQLError.class"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_rts_sqs/src/com/wanhive/rts/TransactionServer.java">
+<persistable path="/webservice_rts_sqs/src/com/wanhive/rts/TransactionServer.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ServiceLocator.java" tooltip="Arya_omnitalk_webservice/src/org/tempuri/ServiceLocator.java">
-<persistable path="/Arya_omnitalk_webservice/src/org/tempuri/ServiceLocator.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AppInit.java" tooltip="webservice_rts_riddhi/src/com/wanhive/rts/init/AppInit.java">
+<persistable path="/webservice_rts_riddhi/src/com/wanhive/rts/init/AppInit.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RequestHandler.java" tooltip="webservice_rts_sqs/src/com/wanhive/rts/handler/RequestHandler.java">
+<persistable path="/webservice_rts_sqs/src/com/wanhive/rts/handler/RequestHandler.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="AppInit.java" tooltip="webservice_rts_sqs/src/com/wanhive/rts/init/AppInit.java">
+<persistable path="/webservice_rts_sqs/src/com/wanhive/rts/init/AppInit.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="collect_data_main.java" tooltip="noviretech_web_service/src/collect_data_main.java">
 <persistable path="/noviretech_web_service/src/collect_data_main.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ridhiWebServiceClient.java" tooltip="RiddhiWebService/src/com/iespl/ridhiWebServiceClient.java">
-<persistable path="/RiddhiWebService/src/com/iespl/ridhiWebServiceClient.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RequestHandler.java" tooltip="webservice_rts_riddhi/src/com/wanhive/rts/handler/RequestHandler.java">
+<persistable path="/webservice_rts_riddhi/src/com/wanhive/rts/handler/RequestHandler.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TrackLocator.java" tooltip="RiddhiWebService/src/org/tempuri/TrackLocator.java">
-<persistable path="/RiddhiWebService/src/org/tempuri/TrackLocator.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_rts_arya_omnitalk/src/com/wanhive/rts/TransactionServer.java">
+<persistable path="/webservice_rts_arya_omnitalk/src/com/wanhive/rts/TransactionServer.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GetVehiclesDetailsResponse.java" tooltip="RiddhiWebService/src/org/tempuri/GetVehiclesDetailsResponse.java">
-<persistable path="/RiddhiWebService/src/org/tempuri/GetVehiclesDetailsResponse.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ServiceLocator.java" tooltip="webservice_rts_arya_omnitalk/src/org/tempuri/ServiceLocator.java">
+<persistable path="/webservice_rts_arya_omnitalk/src/org/tempuri/ServiceLocator.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GetVehiclesDetails.java" tooltip="RiddhiWebService/src/org/tempuri/GetVehiclesDetails.java">
-<persistable path="/RiddhiWebService/src/org/tempuri/GetVehiclesDetails.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="collect_data_main.java" tooltip="webservice_newwaves/src/collect_data_main.java">
+<persistable path="/webservice_newwaves/src/collect_data_main.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GetVehicleLatestDataResponseGetVehicleLatestDataResult.java" tooltip="RiddhiWebService/src/org/tempuri/GetVehicleLatestDataResponseGetVehicleLatestDataResult.java">
-<persistable path="/RiddhiWebService/src/org/tempuri/GetVehicleLatestDataResponseGetVehicleLatestDataResult.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GetVehiclesDetailsResponseGetVehiclesDetailsResult.java" tooltip="RiddhiWebService/src/org/tempuri/GetVehiclesDetailsResponseGetVehiclesDetailsResult.java">
-<persistable path="/RiddhiWebService/src/org/tempuri/GetVehiclesDetailsResponseGetVehiclesDetailsResult.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TrackSoapStub.java" tooltip="RiddhiWebService/src/org/tempuri/TrackSoapStub.java">
-<persistable path="/RiddhiWebService/src/org/tempuri/TrackSoapStub.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TrackSoapProxy.java" tooltip="RiddhiWebService/src/org/tempuri/TrackSoapProxy.java">
-<persistable path="/RiddhiWebService/src/org/tempuri/TrackSoapProxy.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TrackSoap.java" tooltip="RiddhiWebService/src/org/tempuri/TrackSoap.java">
-<persistable path="/RiddhiWebService/src/org/tempuri/TrackSoap.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="collect_data_main.java" tooltip="webservice_sqs/src/collect_data_main.java">
+<persistable path="/webservice_sqs/src/collect_data_main.java"/>
 </file>
 </mruList>
 </workbench>

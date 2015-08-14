@@ -59,14 +59,14 @@ public class push_xml_to_cassandra {
 	   //get_all_imeis(1180);
 	   get_all_imeis();
 	
-	   String sdate = "2015-06-16", edate ="2015-07-15";
+	   String sdate = "2015-06-01", edate ="2015-07-30";
 	   userdates = utility_classes.get_All_Dates(sdate,edate);
 	
 	   int date_size = userdates.size();
 	   //date_size = 1; //COMMENT IT
 		
-	   //String abspath_sorted = "/home/current_data/sorted_xml_data";
-	   String abspath_sorted = "D:\\itrack_vts/sorted_xml_data";
+	   String abspath_sorted = "/mnt/csv_creator/xml_hdfc_july";
+	   //String abspath_sorted = "D:\\itrack_vts/sorted_xml_data";
 	   FileWriter fw = null;
 	   String newStr ="";
 	   System.out.println("date_size:"+date_size);
@@ -79,10 +79,9 @@ public class push_xml_to_cassandra {
 			   System.out.println("PATH:"+xml_sorted);
 			   
 			   //CREATE FILE
-			    String filename= "D:\\itrack_vts/csv_hdfc_16Jun_15Jul/"+imei.get(j)+".csv";
-			    //String filename= "D:\\itrack_vts/csv_mumbai/"+imei.get(j)+".csv";
-			    
-			    
+			    //String filename= "D:\\itrack_vts/csv_hdfc_16Jun_15Jul/"+imei.get(j)+".csv";
+			    String filename= "/mnt/csv_creator/csv_hdfc_july/"+imei.get(j)+".csv";
+			    			    
 				try {
 					fw = new FileWriter(filename,true);
 				} catch (IOException e3) {
@@ -209,66 +208,10 @@ public class push_xml_to_cassandra {
 	}*/
    
    public static void get_all_imeis() {		
-		/*imei.add("865733021562939"); //HDFC
-		imei.add("865733021569173");
-		imei.add("865733021563051");
-		imei.add("865733021569389");
-		imei.add("865733021571229");
-		imei.add("865733021568787");
-		imei.add("865733021570411");
-		imei.add("865733021568506");
-		imei.add("865733021571096");
-		imei.add("865733021571237");
-		imei.add("865733021571211");
-		imei.add("865733021569413");
-		imei.add("865733021569959");
-		imei.add("865733021569447");
-		imei.add("865733021571088");
-		imei.add("865733021570577");
-		imei.add("865733021569231");*/
 	   
-	   /*imei.add("862170017133743");
-	   imei.add("862170018313864");
-	   imei.add("862170018383289");
-	   imei.add("862170017810241");
-	   imei.add("862170018367480");
-	   imei.add("862170018382455");
-	   imei.add("862170017136738");
-	   imei.add("862170017811629");
-	   imei.add("862170014330466");
-	   imei.add("862170017809201");
-	   imei.add("861074025248769");
-	   imei.add("862170018365773");
-	   imei.add("862170017809789");
-	   imei.add("862170017134105");
-	   imei.add("862170017809896");
-	   imei.add("862170017135763");
-	   imei.add("862170017134725");
-	   imei.add("862170017809383");
-	   imei.add("862170017811306");
-	   imei.add("862170017810308");
-	   imei.add("861074025249445");
-	   imei.add("862170017810704");
-	   imei.add("862170014374043");
-	   imei.add("862170018381903");
-	   imei.add("862170017811488");
-	   imei.add("862170017810456");
-	   imei.add("862170017809169");
-	   imei.add("862170017809136");
-	   imei.add("862170018367365");
-	   imei.add("862170017808674");
-	   imei.add("862170017809714");
-	   imei.add("862170017809359");
-	   imei.add("862170017811165");
-	   imei.add("862170018367134");
-	   imei.add("862170018323202");
-	   imei.add("862170018322881");
-	   imei.add("862170017811645");
-	   imei.add("862170017811611");
-	   imei.add("862170018367217");
-	   imei.add("862170017810852");
-	   imei.add("862170017134287");*/
-	   
+	   imei.add("865733021570411");
+	   imei.add("865733021569447");
+	   imei.add("865733021567698");
 	   imei.add("865733021571229");
 	   imei.add("865733021563051");
 	   imei.add("865733021564257");
@@ -276,12 +219,7 @@ public class push_xml_to_cassandra {
 	   imei.add("865733021563481");
 	   imei.add("865733021563622");
 	   imei.add("865733021564133");
-	   imei.add("865733021563846");
-	   imei.add("865733021563416");
-	   imei.add("865733021564208");
-	   imei.add("865733021563515");
 	   imei.add("865733021571099");
-	   imei.add("865733021563705");
 	   imei.add("865733021569413");
 	   imei.add("865733021569123");
 	   imei.add("865733021569959");
@@ -293,15 +231,7 @@ public class push_xml_to_cassandra {
 	   imei.add("865733021564000");
 	   imei.add("865733021563729");
 	   imei.add("865733021563747");
-	   imei.add("865733024519027");
-	   imei.add("865733024519563");
-	   imei.add("865733024519035");
 	   imei.add("865733021564125");
-	   imei.add("865733021563259");
-	   imei.add("865733021564141");
-	   imei.add("865733021563549");
-	   imei.add("865733021563697");
-	   imei.add("865733021564075");	   	
    }
 	
 }
