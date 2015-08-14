@@ -72,7 +72,7 @@ function getLastSeenDateTime($o_cassandra,$imei,$datetime)
 			  AND
 			  date = '$strDate'
 			  AND	
-			  dtime < '$datetime+$TZ'
+			  dtime <= '$datetime+$TZ'
 			  LIMIT 1
 			  ;";
 		$st_results = $o_cassandra->query($s_cql);
@@ -86,6 +86,54 @@ function getLastSeenDateTime($o_cassandra,$imei,$datetime)
 	return $st_obj;
 }
 
+/***
+* Returns last seen data between given date times
+* 
+* @param object $o_cassandra	Cassandra object 
+* @param string $imei		IMEI
+* @param string $datetime1	YYYY-MM-DD HH:MM:SS
+* @param string $datetime2 (>$datetime1)	YYYY-MM-DD HH:MM:SS
+* 
+* @return array 	Results of the query 
+*/
+function getLastSeenDateTimes($o_cassandra, $imei, $datetime1, $datetime2)
+{
+	$TZ = '0530';
+
+	$date1 = substr($datetime1,0,10);
+	$date2 = substr($datetime2,0,10);
+
+	$interval = new DateInterval('P1D');
+	$start = new DateTime($date2);
+	$end = new DateTime($date1);
+	$start->add($interval);
+
+	$st_results = array(); // initialize with empty array
+ 
+	for ($date = $start; $date->sub($interval); $date >= $end)
+	{
+		$strDate = $date->format('Y-m-d');
+		$s_cql = "SELECT * FROM log1 
+			  WHERE 
+			  imei = '$imei'
+			  AND
+			  date = '$strDate'
+			  AND	
+			  dtime <= '$datetime2+$TZ'
+			  AND	
+			  dtime >= '$datetime1+$TZ'
+			  LIMIT 1
+			  ;";
+		$st_results = $o_cassandra->query($s_cql);
+		if (!empty($st_results))
+			break;
+	}
+
+	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
+	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
+	$st_obj = logParser($st_results, $dataType, $orderAsc);
+	return $st_obj;
+}
 
 /***
 * Returns last seen data from last data table lastlog
