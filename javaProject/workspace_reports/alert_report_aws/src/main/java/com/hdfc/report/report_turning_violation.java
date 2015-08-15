@@ -117,8 +117,8 @@ public class report_turning_violation {
 						turningLatitude.add(lat_middle);
 						turningLongitude.add(lng_middle);
 						
-						LatLng tmpobj = new LatLng(Double.toString(lat_middle), Double.toString(lng_middle),"","","","");
-						latLngObj.add(tmpobj);
+						//LatLng tmpobj = new LatLng(Double.toString(lat_middle), Double.toString(lng_middle),"","","","");
+						//latLngObj.add(tmpobj);
 					}				
 					
 					lat_start = lat_middle;

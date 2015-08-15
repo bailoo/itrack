@@ -15,6 +15,7 @@ public class report_night_movement {		//night travel
 	public static boolean haltFlag = false;
 	public static double xml_date_latest_sec = 0.0, device_time_sec =0.0, startdate_sec =0.0, enddate_sec =0.0, tmp_time_diff=0.0, tmp_time_diff1=0.0, distance1=0.0, tmpdiff=0.0;
 	public static double tmp_speed=0.0, tmp_speed1=0.0, distance_travel=0.0, distance_total=0.0, distance_incrimenttotal=0.0, datetime_diff=0.0, lat_travel_end=0.0, lng_travel_end=0.0;
+	public static double night_sec1 = 0.0, night_sec2 = 0.0, night_sec3 = 0.0, night_sec4 = 0.0;
 	
     //###### FINAL ARRAY
     public static ArrayList<String> IMEI_No = new ArrayList<String>();    
@@ -46,8 +47,21 @@ public class report_night_movement {		//night travel
 			device_time_sec = utility_class.get_seconds(device_time);
 			startdate_sec = utility_class.get_seconds(startdate);
 			enddate_sec = utility_class.get_seconds(enddate);
+			String[] temp_date = device_time.split(" ");
+			String night_time1 = temp_date[0]+" 23:00:00";
+			String night_time2 = temp_date[0]+" 23:59:59";
+			String night_time3 = temp_date[0]+" 00:00:00";
+			String night_time4 = temp_date[0]+" 04:00:00";
+						
+			night_sec1 = utility_class.get_seconds(night_time1);
+			night_sec2 = utility_class.get_seconds(night_time2);
+			night_sec3 = utility_class.get_seconds(night_time3);
+			night_sec4 = utility_class.get_seconds(night_time4);
+						
 			
-			if( (device_time_sec >= startdate_sec) && (device_time_sec <= enddate_sec) ) {
+			if( ( ((device_time_sec >= night_sec1) && (device_time_sec <= night_sec2)) || ((device_time_sec >= night_sec3) && (device_time_sec <= night_sec4)) ) && ((device_time_sec >= startdate_sec) && (device_time_sec <= enddate_sec)) ) {
+				
+				//System.out.println("device_time="+device_time+" ,night_time1="+night_time1+" ,night_time2="+night_time2+", night_time3="+night_time3+" ,night_time4="+night_time4);
 				
 				if(firstdata_flag==0) {                                
 					firstdata_flag = 1;
@@ -189,7 +203,7 @@ public class report_night_movement {		//night travel
 		{
 			max_speed = avg_speed;
 		}
-		System.out.println("imei="+imei+" ,datetime_S="+datetime_S+" ,datetime_E="+datetime_E+", lat_travel_start="+lat_travel_start+" ,lng_travel_start="+lng_travel_start+" ,lat_travel_end="+lat_travel_end+" ,lng_travel_end="+lng_travel_end+" ,distance_travel="+distance_travel+" ,travel_dur="+travel_dur+" ,max_speed="+max_speed+" ,avg_speed="+avg_speed);
+		//System.out.println("imei="+imei+" ,datetime_S="+datetime_S+" ,datetime_E="+datetime_E+", lat_travel_start="+lat_travel_start+" ,lng_travel_start="+lng_travel_start+" ,lat_travel_end="+lat_travel_end+" ,lng_travel_end="+lng_travel_end+" ,distance_travel="+distance_travel+" ,travel_dur="+travel_dur+" ,max_speed="+max_speed+" ,avg_speed="+avg_speed);
 		
 		IMEI_No.add(imei);		
 		ServerTime.add(sts);

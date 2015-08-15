@@ -44,26 +44,99 @@ public class mysql_handler {
 	      rs.close();
 	      conn.stmt.close();
 	      }catch(SQLException se2){}*/
-	    	  
-	 	  //init.vehicle_id.add(10);
-	 	  init.vehicle_name.add("test_hdfc1");
-	 	  init.max_speed.add(30.0f);
-	 	  init.device_imei_no.add("862170018383602");
-	 	  
-	 	  //init.vehicle_id.add(20);
-	 	  init.vehicle_name.add("test_hdfc2");
-	 	  init.max_speed.add(30.0f);
-	 	  init.device_imei_no.add("862170018368132");
 
-	 	  /*init.vehicle_id.add(30);
-	 	  init.vehicle_name.add("test_hdfc3");
-	 	  init.max_speed.add(30.0f);
-	 	  init.device_imei_no.add("865733021569959");*/	
-	   
-	 	  /*init.vehicle_name.add("DL1LR7112");
+	 	  init.vehicle_name.add("PB03Y7372");
 	 	  init.max_speed.add(80.0f);
-	 	  init.device_imei_no.add("862170018382109");*/	   
- 	 	  
+	 	  init.device_imei_no.add("865733021570411");
+		
+	 	  init.vehicle_name.add("MH02DN6584");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021569447");
+
+	 	  init.vehicle_name.add("MH01BU3421");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021567698");
+
+	 	  init.vehicle_name.add("MH02BR7310");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021571229");
+
+	 	  init.vehicle_name.add("MH48 S 6248");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021563051");
+
+	 	  init.vehicle_name.add("MH43AB8750");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021564257");
+
+	 	  init.vehicle_name.add("MH02DN8274");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021563374");
+
+	 	  init.vehicle_name.add("MH04DJ6758");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021563481");
+
+	 	  init.vehicle_name.add("MH04GE6952");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021563622");
+
+	 	  init.vehicle_name.add("MH03BS3616");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021564133");
+
+	 	  init.vehicle_name.add("DL3CBC9978");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021571096");
+
+	 	  init.vehicle_name.add("DL5CJ9616");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021569413");
+
+	 	  init.vehicle_name.add("UP14CL2463");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021569173");
+
+	 	  init.vehicle_name.add("up16aw2866");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021569959");
+
+	 	  init.vehicle_name.add("DL.09.CAG.7982");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021571088");
+
+	 	  init.vehicle_name.add("HR51AB9338");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021568787");
+
+	 	  init.vehicle_name.add("UP14CH9882");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021571237");
+
+	 	  init.vehicle_name.add("UP14CJ2833");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021564323");
+
+	 	  init.vehicle_name.add("DL1CS4316");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021562939");
+
+	 	  init.vehicle_name.add("HRCJ6083");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021564000");
+
+	 	  init.vehicle_name.add("UP16AQ5640");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021563739");
+
+	 	  init.vehicle_name.add("DL3CCC4392");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021563747");
+
+	 	  init.vehicle_name.add("HR72B3024");
+	 	  init.max_speed.add(80.0f);
+	 	  init.device_imei_no.add("865733021564125");
+	 	  
 	   return null;
 	}
 	

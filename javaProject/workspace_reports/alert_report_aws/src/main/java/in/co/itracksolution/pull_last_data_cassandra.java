@@ -21,7 +21,8 @@ public class pull_last_data_cassandra {
 	public CassandraConn conn;
 	
 	public pull_last_data_cassandra(){
-		String propFileName = "config.properties";
+		//String propFileName = "config.properties";
+		String propFileName = "resources/config.properties";
 		Properties prop = new Properties();
 		
 		try {

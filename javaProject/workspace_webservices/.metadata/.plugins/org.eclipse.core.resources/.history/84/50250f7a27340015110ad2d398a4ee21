@@ -1,0 +1,62 @@
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+
+public class test {
+	public static SimpleDateFormat dDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+	public static void main(String args[])
+	{
+		/*String last_datetime="",current_datetime="";
+		Date currentDate = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.MINUTE, -10);
+		Date oneHourBack = cal.getTime();
+		   
+		Calendar cal = Calendar.getInstance(); // creates calendar
+		cal.setTime(new Date()); // sets calendar time/date=====> you can set your own date here
+		cal.add(Calendar.HOUR_OF_DAY, 5); // adds one hour
+		cal.add(Calendar.MINUTE, 30); // adds one Minute
+		cal.getTime(); // returns new date object, one hour in the future
+		
+		System.out.println("oneHourBack="+oneHourBack);
+		
+		last_datetime = dDF.format(oneHourBack);
+		System.out.println("last_datetime="+last_datetime);
+		
+		Date date = new Date();
+		current_datetime = dDF.format(date);
+		System.out.println("current_datetime="+current_datetime);*/
+		
+		get_time();
+	}
+	
+	public static void get_time() {
+		String myString =  "2015-07-27 10:30:00";
+	    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    Date myDateTime = null;
+
+	    //Parse your string to SimpleDateFormat
+	    try {
+	        myDateTime = simpleDateFormat.parse(myString);
+	    }
+	    catch (Exception e) {
+	         e.printStackTrace();
+	    }
+	    System.out.println("This is the Actual Date:"+myString);
+	    //Calendar cal = new GregorianCalendar();
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(myDateTime);
+
+	    //Adding 5:30 Hours to your Date	    
+		cal.add(Calendar.HOUR_OF_DAY, -5); // adds one hour
+		cal.add(Calendar.MINUTE, -30); // adds one Minute
+		
+		String last_datetime = dDF.format(cal.getTime());
+		
+	    System.out.println("This is Hours Added Date:"+last_datetime);		
+	}
+}
