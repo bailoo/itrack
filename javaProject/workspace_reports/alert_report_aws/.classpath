@@ -27,7 +27,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/ESSENTIALS/libCassandra-0.0.1.jar"/>
+	<classpathentry kind="lib" path="E:/ESSENTIALS/libCassandra-0.0.2.jar"/>
 	<classpathentry kind="lib" path="E:/ESSENTIALS/libGIS_0.0.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

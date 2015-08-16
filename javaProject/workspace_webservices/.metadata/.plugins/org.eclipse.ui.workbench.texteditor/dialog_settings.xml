@@ -2,8 +2,8 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="37" key="DIALOG_Y_ORIGIN"/>
-		<item value="583" key="DIALOG_X_ORIGIN"/>
+		<item value="45" key="DIALOG_Y_ORIGIN"/>
+		<item value="1081" key="DIALOG_X_ORIGIN"/>
 		<item value="380" key="DIALOG_HEIGHT"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="HR55F8777" key="selection"/>
+		<item value="dispatch" key="selection"/>
 		<list key="findhistory">
-			<item value="HR55F8777"/>
-			<item value="HR38R2777"/>
-			<item value="HR38N3577"/>
-			<item value="last_date"/>
-			<item value="ReceiveDateFormat"/>
-			<item value="sql_remote="/>
-			<item value="out_a2"/>
-			<item value="SQL2="/>
+			<item value="dispatch"/>
+			<item value="tracker"/>
+			<item value="get_vendor_vehicles"/>
+			<item value="dispatch("/>
+			<item value="conn_remote"/>
+			<item value="get_connection"/>
+			<item value="sql_remote"/>
+			<item value="sDF"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -410,7 +410,7 @@ for($i=0;$i<$vsize;$i++)
                     {
                         $DataValid = 1;
                     }
-                    if(($DataValid==1) && ($SortedDataObject->deviceDatetime[$obi]>$date1 && $SortedDataObject->deviceDatetime[$obi]<$date2))
+                    if($DataValid==1)
                     {
                         $datetime=$SortedDataObject->deviceDatetime[$obi];
                         $speed = $SortedDataObject->speedData[$obi];
@@ -427,7 +427,8 @@ for($i=0;$i<$vsize;$i++)
                                 $datetime_travel_start = $datetime_S;              		
                                 $lat_travel_start = $lat_S;
                                 $lng_travel_start = $lng_S;                  
-                                $start_point_display =0;                  
+                                $start_point_display =0;  
+                                $last_time = $datetime;
                                 $last_time1 = $datetime;
                                 $latlast = $lat;
                                 $lnglast =  $lng;  
@@ -439,10 +440,10 @@ for($i=0;$i<$vsize;$i++)
                                 $lng_E = $lng; 
                                 $datetime_E = $datetime; 
                                 calculate_distance($lat_S, $lat_E, $lng_S, $lng_E, $distance_incriment);								         		
-                                $tmp_time_diff1 = (double)(strtotime($datetime) - strtotime($last_time1)) / 3600;                
+                                $tmp_time_diff = (double)(strtotime($datetime) - strtotime($last_time)) / 3600;                
 
                                 calculate_distance($latlast, $lat_E, $lnglast, $lng_E, $distance1);
-                                $tmp_time_diff = ((double)( strtotime($datetime) - strtotime($last_time) )) / 3600; 
+                                $tmp_time_diff1 = ((double)( strtotime($datetime) - strtotime($last_time1) )) / 3600; 
 
                                 if($tmp_time_diff1>0)
                                 {
@@ -470,7 +471,7 @@ for($i=0;$i<$vsize;$i++)
                                 $latlast = $lat_E;
                                 $lnglast =  $lng_E;
                                 //echo"maxspeed=".$max_speed."speed=".$speed."<br>";
-                                if($max_speed<$speed)
+                                if(($max_speed<$speed) && ($speed<200))
                                 {
                                         $max_speed = $speed;
                                 }
@@ -493,6 +494,7 @@ for($i=0;$i<$vsize;$i++)
                                         $distance_travel += $distance_incriment;
                                         $lat_S = $lat_E;
                                         $lng_S = $lng_E;
+                                        $last_time = $datetime_E;
                                         $datetime_S = $datetime_E;
 
                                         $start_point_display =1;
