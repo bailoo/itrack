@@ -46,7 +46,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param) {
     read_transporter($account_id, $shift_time);
     //echo "\nSizeExpectedCustomer=".sizeof($expected_customer_csv)." ,SizeExpectedTime=".sizeof($expected_time_csv);
     //##### READ MAIN MASTER FILE
-    if ($shift_time == "ZPMM") {
+    if ($shift_time == "ZBVM") {
         echo "\nMor:Master";
         if ($DEBUG_OFFLINE) {
             $path = "C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
@@ -55,7 +55,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param) {
         } else {
             $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/morning_plant_customer#1#8.csv";
         }
-    } else if ($shift_time == "ZPME") {
+    } else if ($shift_time == "ZBVE") {
         echo "\nEv:Master";
         if ($DEBUG_OFFLINE) {
             $path = "C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";

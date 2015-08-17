@@ -7,7 +7,7 @@ function updateAll_last_processed_time($type, $last_time,$route_type) {
     global $vehicle_imei_rdb;
     echo "\nSize=".sizeof($vehicle_imei_rdb);
     foreach($vehicle_imei_rdb as $imei) {
-        $query = "SELECT imei FROM last_processed_time WHERE account_id='$account_id' AND imei='$imei' AND type='$type' AND routetype='$route_type'" ;
+        $query = "SELECT imei FROM last_processed_time USE INDEX(last_processed_time_key) WHERE account_id='$account_id' AND imei='$imei' AND type='$type' AND routetype='$route_type'" ;
         echo "\nQA1=".$query;
         $result = mysql_query($query,$DbConnection);
         $numrows = mysql_num_rows($result);
@@ -17,7 +17,7 @@ function updateAll_last_processed_time($type, $last_time,$route_type) {
             $result_insert = mysql_query($query_insert,$DbConnection); 
             echo "\nQA2=".$query_insert;
         } else {
-            $query_update = "UPDATE last_processed_time SET last_time='$last_time' WHERE account_id='$account_id' AND imei='$imei' AND type='$type'' AND routetype='$route_type'";
+            $query_update = "UPDATE last_processed_time SET last_time='$last_time' WHERE account_id='$account_id' AND imei='$imei' AND type='$type' AND routetype='$route_type'";
             $result_update = mysql_query($query_update,$DbConnection); 
             echo "\nQA3=".$query_update;
         }
@@ -30,7 +30,7 @@ function update_last_processed_time($type, $last_time, $imei,$route_type) {
     global $DbConnection;
     global $account_id;
     global $vehicle_imei_rdb;
-        $query = "SELECT imei FROM last_processed_time WHERE account_id='$account_id' AND imei='$imei' AND type='$type' AND routetype='$route_type'";
+        $query = "SELECT imei FROM last_processed_time USE INDEX(last_processed_time_key) WHERE account_id='$account_id' AND imei='$imei' AND type='$type' AND routetype='$route_type'";
         echo "\nQ1=".$query;
         $result = mysql_query($query,$DbConnection);
         $numrows = mysql_num_rows($result);
