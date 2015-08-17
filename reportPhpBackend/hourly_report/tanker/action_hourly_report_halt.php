@@ -498,7 +498,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                                 if ($plant_intime_local[$Vehicle[$i]][$RouteNo[$i]] == "") {
                                     //echo "\nIN:Plant2=".$datetime;
                                     //if( ($shift_1=="ZPMM") || (($shift_1=="ZPME") && ($plant_time_ev=="currentday")) || (($shift_1=="ZPME") && ($plant_time_ev=="nextday") && (strtotime($datetime) < strtotime($date_curr_tmp))))
-                                    if ((($shift_1 == "ZPMM") && ($difftime > 10800 && $difftime < 43200)) || ( ($shift_1 == "ZPME") && ($difftime > 43200 || $difftime < 10800) )) {
+                                    if ((($shift_1 == "ZBVM") && ($difftime > 10800 && $difftime < 43200)) || ( ($shift_1 == "ZBVE") && ($difftime > 43200 || $difftime < 10800) )) {
                                     //if( (($shift_1=="ZPMM") && ($difftime>10800 && $difftime<43200)) || ($shift_1=="ZPME"))           //echo "\nPlantIN";
                                         $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]] = $datetime;
                                         $plant_status_local[$Vehicle[$i]][$RouteNo[$i]] = 1;
@@ -552,7 +552,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                                 if ($distance_plant > $tmp_radius[$p]) {
                                     //echo "\nOUT-Plant2:".$datetime." ,plant_indate=".$plant_in_datetime;
 // if( ($shift_1=="ZPMM") || (($shift_1=="ZPME") && ($plant_time_ev=="currentday")) || (($shift_1=="ZPME") && ($plant_time_ev=="nextday") && (strtotime($datetime) < strtotime($date_curr_tmp))))											
-                                    if ((($shift_1 == "ZPMM") && ($difftime > 10800 && $difftime < 43200)) || ( ($shift_1 == "ZPME") && ($difftime > 43200 || $difftime < 10800) )) {
+                                    if ((($shift_1 == "ZBVM") && ($difftime > 10800 && $difftime < 43200)) || ( ($shift_1 == "ZBVE") && ($difftime > 43200 || $difftime < 10800) )) {
 //if( (($shift_1=="ZPMM") && ($difftime>10800 && $difftime<43200)) || ($shift_1=="ZPME") )
 
                                         $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]] = $datetime;
