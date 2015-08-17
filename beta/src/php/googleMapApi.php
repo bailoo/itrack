@@ -462,6 +462,7 @@ var input = (document.getElementById('pac-input'));
 										'<td>:</td>'+
 										'<td class=\"live_td_css2\">'+maxSpeed+'</td>'+ 
 										'<tr>-->'+
+                                                                                '<tr>'+
 										'<td class=\"live_td_css1\">Last Halt Time</td>'+
 										'<td>:</td>'+
 										'<td class=\"live_td_css2\">'+maxHaltTime+'</td>'+
