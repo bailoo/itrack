@@ -403,7 +403,8 @@ for($i=0;$i<$vsize;$i++)
             if(count($SortedDataObject->deviceDatetime)>0)
             {
                 for($obi=0;$obi<$prevSortedSize;$obi++)
-                {	
+                {
+                    $DataValid = 0;
                     $lat = $SortedDataObject->latitudeData[$obi];
                     $lng = $SortedDataObject->longitudeData[$obi];
                     if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))

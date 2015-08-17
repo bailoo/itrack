@@ -518,7 +518,7 @@ echo'
 		<td bgcolor="#CCCCCC">IMEI</td>
 		<td bgcolor="#CCCCCC">Speed</td>
 		<td bgcolor="#CCCCCC">DateTime</td>
-		<td bgcolor="#CCCCCC">Day MaxSpeed</td>
+		<!--<td bgcolor="#CCCCCC">Day Max Speed</td>-->
 		<td bgcolor="#CCCCCC">Last Halt Time </td>
 		<td bgcolor="#CCCCCC">IO Status </td>
 		<td bgcolor="#CCCCCC">Location</td>
@@ -552,7 +552,7 @@ for($i=0;$i<sizeof($vehiclename_arr_last);$i++)
 		echo '<td><span class="style_v6">'.$vserial_arr_last[$i].'</span></td>';
 		echo '<td><span class="style_v8">'.$speed_arr_last[$i].'</span></td>';
 		echo '<td><span class="style_v8">'.$datetime_arr_last[$i].'</span></td>';
-		echo '<td><span class="style_v8">'.$day_max_speed_arr_last[$i].'</span></td>';
+		//echo '<td><span class="style_v8">'.$day_max_speed_arr_last[$i].'</span></td>';
 		echo '<td><span class="style_v8">'.$last_halt_time_arr_last[$i].'</span></td>';		
 		echo '<td><span class="style_v8">'.substr($io_str_last[$i],0,-1).'</span></td>';	
 		
