@@ -33,9 +33,9 @@ if ($DEBUG_OFFLINE) {
 }*/
 include_once("../../db_connection.php");
 //$HOST = "localhost";
-$account_id = "568";
-if ($account_id == "568")
-    $user_name = "tanker";
+$account_id = "231";
+if ($account_id == "231")
+    $user_name = "delhi";
 //if($account_id == "231") $user_name = "delhi@";
 echo "\nDBASE=".$DBASE." ,USER=".$USER." ,PASS=".$PASSWD;
 $DbConnection = mysql_connect($HOST, $USER, $PASSWD) or die("Connection to server is down. Please try after few minutes.");
@@ -54,20 +54,20 @@ if ($DEBUG_OFFLINE) {
 }
 echo "<br>AbsPath=" . $abspath;
 include_once($abspath . "/common_xml_element.php");
-//echo "\nD1";
+echo "\nD1";
 include_once($abspath . '/ioParameters.php');
-//echo "\nD2";
+echo "\nD2";
 include_once($abspath . '/dataParameters.php');
-//echo "\nD3";
+echo "\nD3";
 include_once($abspath . '/dataArrays.php');
 if (file_exists($tmp)) {
     echo "File Exists1";
 } else {
     "Does not exist";
 }
-//echo "\nD4";
+echo "\nD4";
 include_once($abspath . '/sortXmlData.php');
-//echo "\nD5:" . $abspath;
+echo "\nD5:" . $abspath;
 //$tmp = $abspath.'/getXmlData.php';
 //if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
 include_once($abspath . '/getDeviceData.php');
@@ -99,17 +99,17 @@ PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
 
 $objPHPExcel_1 = null;
 
-//echo "TEST1";
+echo "TEST1";
 include_once("read_master_file.php");
 include_once("read_sent_file.php");
-//echo "\nS1";
+echo "\nS1";
 include_once("read_secondary_vehicles.php");
-//echo "\nS2";
+echo "\nS2";
 //include_once("update_sent_file.php");
 include_once("create_hrly_excel_file.php");
-//echo "\nS3";
+echo "\nS3";
 include_once("create_secondary_vehicle_excel_file.php");
-//echo "\nS4";
+echo "\nS4";
 
 include_once("action_hourly_report_halt.php");
 
@@ -124,9 +124,9 @@ include_once("delete_file.php");
 $sent_root_path = $report_path . "/hourly_report/" . $user_name . "/sent_file";
 echo "\nSent_RootPath=" . $sent_root_path;
 
-$evening_sent_file_path1 = $sent_root_path . "/V6_HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_TANKER_ROUTE.xlsx";
+$evening_sent_file_path1 = $sent_root_path . "/V6_HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_DELHI_CASH_ROUTE.xlsx";
 $evening_sent_file_path2 = $sent_root_path . "/V6_HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_DELHI_FOCAL_ROUTE.xlsx";
-$morning_sent_file_path = $sent_root_path . "/V6_HOURLY_MAIL_VTS_HALT_REPORT_MORNING_MOTHER_TANKER.xlsx";
+$morning_sent_file_path = $sent_root_path . "/V6_HOURLY_MAIL_VTS_HALT_REPORT_MORNING_MOTHER_DELHI.xlsx";
 
 $evening_last_processed_time_path1 = $sent_root_path . "/evening_last_processed_time_1.xlsx";
 $evening_last_processed_time_path2 = $sent_root_path . "/evening_last_processed_time_2.xlsx";
@@ -136,7 +136,7 @@ $evening_last_halt_time_path1 = $sent_root_path . "/evening_last_halt_time_1.xls
 $evening_last_halt_time_path2 = $sent_root_path . "/evening_last_halt_time_2.xlsx";
 $morning_last_halt_time_path = $sent_root_path . "/morning_last_halt_time.xlsx";
 
-$evening_sv_file_path1 = $sent_root_path . "/SV_EVENING_MOTHER_DELHI_TANKER.xlsx";
+$evening_sv_file_path1 = $sent_root_path . "/SV_EVENING_MOTHER_DELHI_CASH_ROUTE.xlsx";
 $evening_sv_file_path2 = $sent_root_path . "/SV_EVENING_MOTHER_DELHI_FOCAL_ROUTE.xlsx";
 $morning_sv_file_path = $sent_root_path . "/SV_MORNING_MOTHER_DELHI.xlsx";
 
@@ -251,7 +251,7 @@ if ($MAIN_DEBUG) {
     //######## CHECK EVENING SHIFT2 ###########
     //if( ($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4) )
     //if( (($current_time >= $shift_ev_date1) && ($current_time <= $shift_ev_date2) && ($current_time >= $ev_run_start_time2) ) || (($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4)) )
- /*   if (($current_time >= $shift_ev_date1_focal) && ($current_time >= $ev_run_start_time2) && ($current_time <= $shift_ev_date4)) {
+    if (($current_time >= $shift_ev_date1_focal) && ($current_time >= $ev_run_start_time2) && ($current_time <= $shift_ev_date4)) {
         $shift_ev2 = true;
         //echo "\nEv-Shift";
     } else {
@@ -267,7 +267,7 @@ if ($MAIN_DEBUG) {
         if (file_exists($evening_sv_file_path2))
             delete_file($evening_sv_file_path2);
     }
-*/
+
     //echo "\ncurrent_time=".$current_time.",shift_mor_date1=".$shift_mor_date1.", shift_mor_date2=".$shift_mor_date2;
     if (($current_time >= $shift_mor_date1) && ($current_time <= $shift_mor_date2)) {
         if ($current_time >= $mor_run_start_time) {
@@ -299,13 +299,13 @@ if (!$MAIN_DEBUG) {
         }
     }
 
- /*   if ($shift_ev2) {
+    if ($shift_ev2) {
         $result = exec("lsof +d $sent_root_path | grep -c -i HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_DELHI_FOCAL_ROUTE.xlsx");
         if ($result == "1") {
             $shift_ev2 = false;
         }
     }
-*/
+
     if ($shift_mor) {
         $result = exec("lsof +d $sent_root_path | grep -c -i HOURLY_MAIL_VTS_HALT_REPORT_MORNING_MOTHER_DELHI.xlsx");
         if ($result == "1") {
@@ -319,6 +319,10 @@ $transporter_m = array();
 $vehicle_m = array();
 //########################## MORNING SHIFT STARTS #########################
 //#########################################################################
+    $shift_ev1 = false;
+    $shift_ev2 = false;
+ 
+
 //#### INITIALIZE ARRAYS
 if ($shift_mor) {
     $sheet1_row = 2;
@@ -486,7 +490,7 @@ if ($shift_mor) {
         //echo "\nCreateFile:Morning";
         $morning_last_processed_time = "";
 
-        get_route_db_detail("ZPMM");
+        get_route_db_detail("ZPMM",$route_type);
         //echo "\nSizeRoute=".sizeof($route_name_rdb);
         get_customer_db_detail($account_id, "ZPMM", $route_type);
         //echo "\nSizeAllRoutes=".sizeof($all_routes);
@@ -518,7 +522,7 @@ if ($shift_mor) {
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL :MORNING ##############
 //       $to = 'rizwan@iembsys.com';			
-        $to = 'hourlyreportbvm@gmail.com';
+        $to = 'gpsreporthourly@gmail.com';
 
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
@@ -528,8 +532,8 @@ if ($shift_mor) {
         } else {
             $msg = "CHANGED";
         }
-        $subject = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_MORNING(MOTHER_TANKER)_" . $msg . "_" . $time_1 . "_" . $time_2;
-        $message = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_MORNING(MOTHER_TANKER)_" . $msg . "_" . $time_1 . "_" . $time_2 . "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
+        $subject = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_MORNING(MOTHER_DELHI)_" . $msg . "_" . $time_1 . "_" . $time_2;
+        $message = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_MORNING(MOTHER_DELHI)_" . $msg . "_" . $time_1 . "_" . $time_2 . "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
         $random_hash = md5(date('r', time()));
         $headers = "From: support@iembsys.co.in\r\n";
         $headers .= "Cc: hourlyreport4@gmail.com";
@@ -538,7 +542,7 @@ if ($shift_mor) {
         //$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com,support1@iembsys.com,support2@iembsys.com";
         //$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com";
         $headers .= "\r\nContent-Type: multipart/mixed; boundary=\"PHP-mixed-" . $random_hash . "\"";
-        $filename_title = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_MORNING_MOTHER_TANKER_" . $msg . "_" . $time_1 . "_" . $time_2 . ".xlsx";
+        $filename_title = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_MORNING_MOTHER_DELHI_" . $msg . "_" . $time_1 . "_" . $time_2 . ".xlsx";
         $file_path = $morning_sent_file_path;
         //echo "\nFILE PATH:Mor=".$file_path;
         
@@ -705,7 +709,7 @@ if ($shift_ev1) {
 //if($shift_ev1)
 //{
     //echo "\nEV1-CASH ROUTE";
-    $route_type = "EVE";
+    $route_type = "CASH";
     //######## READ EVENING SENT FILE #############		
     //echo "\nLastProcessedFile=".$evening_last_processed_time_path1;
     if (file_exists($evening_last_processed_time_path1)) {
@@ -758,7 +762,7 @@ if ($shift_ev1) {
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL ##############
         //$to = 'rizwan@iembsys.com';
-        $to = 'hourlyreportbvm@gmail.com';
+        $to = 'gpsreporthourly@gmail.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -767,8 +771,8 @@ if ($shift_ev1) {
         } else {
             $msg = "CHANGED";
         }
-        $subject = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_EVENING(MOTHER_TANKER)_CASH_ROUTE_" . $msg . "_" . $time_1 . "_" . $time_2;
-        $message = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_EVENING(MOTHER_TANKER)_CASH_ROUTE_" . $msg . "_" . $time_1 . "_" . $time_2 . "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
+        $subject = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_EVENING(MOTHER_DELHI)_CASH_ROUTE_" . $msg . "_" . $time_1 . "_" . $time_2;
+        $message = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_EVENING(MOTHER_DELHI)_CASH_ROUTE_" . $msg . "_" . $time_1 . "_" . $time_2 . "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
         $random_hash = md5(date('r', time()));
         $headers = "From: support@iembsys.co.in\r\n";
         //$headers .= "Cc: hourlyreport4@gmail.com";
@@ -776,7 +780,7 @@ if ($shift_ev1) {
         //pass:8090025844
         //$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com";
         $headers .= "\r\nContent-Type: multipart/mixed; boundary=\"PHP-mixed-" . $random_hash . "\"";
-        $filename_title = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_TANKER_" . $msg . "_" . $time_1 . "_" . $time_2 . ".xlsx";
+        $filename_title = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_DELHI_CASH_ROUTE_" . $msg . "_" . $time_1 . "_" . $time_2 . ".xlsx";
         $file_path = $evening_sent_file_path1;
 
         //echo "\nFILE PATH:Ev=".$file_path; 	
@@ -953,7 +957,7 @@ if ($shift_ev2) {
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
 
-        get_route_db_detail("ZPME");
+        get_route_db_detail("ZPME",$route_type);
         //echo "\nSizeRoute=".sizeof($route_name_rdb);
         get_customer_db_detail($account_id, "ZPME", $route_type);
         //echo "\nSizeAllRoutes=".sizeof($all_routes);
