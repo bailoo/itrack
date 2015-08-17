@@ -8,10 +8,10 @@ ini_set('display_startup_errors', TRUE);*/
 date_default_timezone_set("Asia/Kolkata");
 //### DEBUG BOOLEAN
 global $DEBUG_OFFLINE;
-$DEBUG_OFFLINE = false;
+$DEBUG_OFFLINE = true;
 $DEBUG_ONLINE = false;
-$CREATE_MASTER = false;
-$MAIN_DEBUG = false;
+$CREATE_MASTER = true;
+$MAIN_DEBUG = true;
 $LOG = false;
 //#################
 
@@ -513,8 +513,8 @@ if ($shift_mor) {
         //echo "\nAfter Last ProcessedDetail:Morning";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL :MORNING ##############
-//       $to = 'rizwan@iembsys.com';			
-        $to = 'hourlyreportbvm@gmail.com';
+       $to = 'rizwan@iembsys.com';			
+      //$to = 'hourlyreportbvm@gmail.com';
 
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
@@ -753,8 +753,8 @@ if ($shift_ev1) {
         //echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL ##############
-        //$to = 'rizwan@iembsys.com';
-        $to = 'hourlyreportbvm@gmail.com';
+        $to = 'rizwan@iembsys.com';
+        //$to = 'hourlyreportbvm@gmail.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -983,8 +983,8 @@ if ($shift_ev2) {
         //echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL ##############
-        //$to = 'rizwan@iembsys.com';		
-        $to = 'hourlyreportbvm@gmail.com';
+        $to = 'rizwan@iembsys.com';		
+        //$to = 'hourlyreportbvm@gmail.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
