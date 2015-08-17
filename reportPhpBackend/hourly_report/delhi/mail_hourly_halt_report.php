@@ -144,41 +144,54 @@ $morning_sv_file_path = $sent_root_path . "/SV_MORNING_MOTHER_DELHI.xlsx";
 include_once("get_customer_db_detail.php");
 include_once("get_route_db_detail.php");
 //include_once("process_data.php");
-//$date = date('Y-m-d');
-//$pdate = date('Y-m-d', strtotime($date .' -1 day'));
+$date = date('Y-m-d');
+$pdate = date('Y-m-d', strtotime($date .' -1 day'));
+
+//## CHECK WORKING HOUR
+$cdatetime1 = strtotime(date('00:00:00'));
+$cdatetime2 = strtotime(date('H:i:s'));
+$difftime = $cdatetime2 - $cdatetime1;
+//$difftime = 7200;     //EVENING COMMENT IT LATER
+//$difftime = 36000;    //MORNING
+//$difftime = 75600 //9 PM
+echo "\nDiff=".$difftime;
 
 if ($MAIN_DEBUG) {
     $pdate = date('2015-08-02');
     $date = date('2015-08-03');
+    $shift_ev_date1 = $date . " 00:00:00";
+    $shift_ev_date2 = $pdate . " 23:59:59";
+    $shift_ev1 = true;
+    $shift_ev2 = false;
+    $shift_mor = false;
+    $current_time = $date . " 12:00:00";
+    $shift_ev_date1_focal = $pdate . " 12:00:00";
 } else {
-    $date = date('Y-m-d');
+//    $date = date('Y-m-d');
+    if($difftime > 75600) {
+     	$shift_ev_date1 = $date . " 12:00:00";
+    }else {
+    	$shift_ev_date1 = $pdate . " 12:00:00";
+    }
+    $shift_ev_date2 = $date . " 23:59:59";
+
+    $shift_ev1 = false;
+    $shift_ev2 = false;
+    $shift_mor = false;
+    $current_time = date('Y-m-d H:i:s');
+    $cdate = $date;
+    $shift_ev_date1_focal = $pdate . " 12:00:00";
 }
 $unchanged = true;
 //######## MAKE TWO SHIFTS
-if ($MAIN_DEBUG) {
-    //$shift_ev_date1 = $pdate . " 12:00:00";
-    $shift_ev_date1 = $date . " 00:00:00";
-    $shift_ev_date2 = $pdate . " 23:59:59";
-} else {
-    $shift_ev_date1 = $date . " 12:00:00";
-    $shift_ev_date2 = $date . " 23:59:59";
-}
 
 $shift_ev_date3 = $date . " 00:00:00";
-$shift_ev_date4 = $date . " 12:00:00";
+$shift_ev_date4 = $date . " 13:50:00"; //change it to 12:00:00
 //$shift_ev_date4 = $date." 06:40:00";
 
 $shift_mor_date1 = $date . " 03:00:00";
 $shift_mor_date2 = $date." 19:00:00";
 //$shift_mor_date2 = $date . " 22:00:00";
-
-if ($MAIN_DEBUG) {
-    //$current_time = $date." 10:22:00";	//current date ev
-    $current_time = $date . " 12:00:00";      //current date mor
-    //$current_time = date('Y-m-d H:i:s');
-} else {
-    $current_time = date('Y-m-d H:i:s');
-}
 
 $ev_run_start_time1 = $date." 20:30:00";
 //$ev_run_start_time1 = $date . " 21:00:00";
@@ -187,33 +200,6 @@ $ev_run_start_time2 = $date . " 01:00:00";
 $mor_run_start_time = $date . " 10:00:00";
 //$mor_run_start_time = $date." 06:00:00";
 
-if ($MAIN_DEBUG) {
-    $shift_ev1 = true;
-    $shift_ev2 = false;
-    $shift_mor = false;
-} else {
-    $shift_ev1 = false;
-    $shift_ev2 = false;
-    $shift_mor = false;
-}
-
-//## MAKE START AND END TIME TO ELIMINATE OLD DATES
-if ($MAIN_DEBUG) {
-    //$pdate = '2015-03-23';
-    //$cdate = '2015-03-24';
-    $shift_ev_date1_focal = $pdate . " 12:00:00";
-} else {
-    $cdate = date('Y-m-d');
-    $pdate = date('Y-m-d', strtotime($date . ' -1 day'));
-    $shift_ev_date1_focal = $pdate . " 12:00:00";
-}
-
-$cdatetime1 = strtotime(date('00:00:00'));
-$cdatetime2 = strtotime(date('H:i:s'));
-$difftime = $cdatetime2 - $cdatetime1;
-//$difftime = 7200;	//EVENING COMMENT IT LATER
-//$difftime = 36000;	//MORNING
-echo "\nDiff=".$difftime;
 
 if ($MAIN_DEBUG) {
     $time1 = $pdate . " 12:00:00";
@@ -290,6 +276,9 @@ if ($MAIN_DEBUG) {
 }
 
 //$shift_mor = false;
+//$shift_ev1 = false;
+//$shift_ev2 = false;
+
 //####### CHECK FOR ALREADY OPENED FILE/INSTANCE 
 if (!$MAIN_DEBUG) {
     if ($shift_ev1) {
@@ -317,11 +306,13 @@ if (!$MAIN_DEBUG) {
 
 $transporter_m = array();
 $vehicle_m = array();
+
+//$shift_mor = false;
+
 //########################## MORNING SHIFT STARTS #########################
 //#########################################################################
-    $shift_ev1 = false;
-    $shift_ev2 = false;
- 
+//$shift_ev1 = false;
+//$shift_ev2 = false;
 
 //#### INITIALIZE ARRAYS
 if ($shift_mor) {
