@@ -213,7 +213,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 	$row++;
 	echo "\nSizeRoute=".sizeof($route_name_rdb);
 	
-	if($shift=="ZPME")
+	if($shift=="ZBVE")
 	{
 		if($shift_type=="focal")
 		{
@@ -321,7 +321,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 					//echo "\nExpectedTimeSel=".$expected_time_sel[$route_name_rdb_3][$j];
 					$cshift_date = "";
 					
-					if($shift=="ZPME")
+					if($shift=="ZBVE")
 					{
 						$cdatetime1 = strtotime(date('00:00:00'));
 						$cdatetime2 = strtotime(date($expected_time_sel[$route_name_rdb_3][$j]));
@@ -355,7 +355,7 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 					
 					//####### PLANT SHIFT
 					$cshift_date2 = "";
-					if($shift=="ZPME")
+					if($shift=="ZBVE")
 					{
 						$cdatetime1 = strtotime(date('00:00:00'));
 						$cdatetime2 = strtotime(date($expected_time_plant_out_sel[$route_name_rdb_3][$j]));
@@ -429,17 +429,23 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValueExplicit($col_tmp, $vehicle_imei_rdb[$i], PHPExcel_Cell_DataType::TYPE_STRING);
 
 					//#####
-					$temp_plant = explode('/',$plant_sel[$route_name_rdb_3][$j]);
+					//echo "\nPlant1=".$plant_sel[$route_name_rdb_3][$j];
+					$temp_plant = explode('/',$plant_sel[$route_name_rdb_3][$j]);					
+
 					$coord_tmp="";
 					$radius_tmp="";
+//echo "\nSizeplant=".sizeof($temp_plant);
 					for($p=0;$p<sizeof($temp_plant);$p++)
 					{
 						$coord_tmp.=$plant_station_coord[$temp_plant[$p]]."#";
 						$radius_tmp.=$plant_distance_variable[$temp_plant[$p]]."#";
+						//echo "\nPlant2=".$temp_plant[$p];
+						//echo "\nCoordtmp=".$coord_tmp." ,Radius=".$radius_tmp;
 					}
 					$coord_tmp = substr($coord_tmp,0,-1);
 					$radius_tmp = substr($radius_tmp,0,-1);
 					//echo "\nDistPlant=".$plant_station_coord[$plant_sel[$route_name_rdb_3][$j]];					
+					//echo "\nCoordtmp=".$coord_tmp." ,Radius=".$radius_tmp;
 										
 					$col_tmp = 'AG'.$row;
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $coord_tmp);
