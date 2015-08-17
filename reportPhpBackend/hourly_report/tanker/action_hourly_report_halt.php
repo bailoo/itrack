@@ -14,7 +14,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     global $last_processed_time;
     $o_cassandra = openCassandraConnection();
     //##### DEBUG MSG
-    $title = "delhi";
+    $title = "tanker";
     $debug_msg = "";   
     
     echo "\nInAction";
@@ -448,7 +448,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         //exit(0);
         
         if (sizeof($xml_date_sel) > 0) {
-            echo "\nFile ExistFinal";
+            //echo "\nFile ExistFinal";
             $halt_once = false;
 
             $p_in = false;
@@ -476,6 +476,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                         //check(plantcord,current cord);
                         $total_coords = explode('#', $plant_coord_local[$Vehicle[$i]][$RouteNo[$i]]);
                         $tmp_radius = explode('#', $plant_distvar_local[$Vehicle[$i]][$RouteNo[$i]]);
+			//echo "\nRadius=".sizeof($tmp_radius)." ,total_coords=".sizeof($total_coords);
 
                         for ($p = 0; $p < sizeof($total_coords); $p++) {
                             $tmp_coord = explode(',', $total_coords[$p]);
@@ -499,7 +500,8 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                                     //echo "\nIN:Plant2=".$datetime;
                                     //if( ($shift_1=="ZPMM") || (($shift_1=="ZPME") && ($plant_time_ev=="currentday")) || (($shift_1=="ZPME") && ($plant_time_ev=="nextday") && (strtotime($datetime) < strtotime($date_curr_tmp))))
                                     if ((($shift_1 == "ZBVM") && ($difftime > 10800 && $difftime < 43200)) || ( ($shift_1 == "ZBVE") && ($difftime > 43200 || $difftime < 10800) )) {
-                                    //if( (($shift_1=="ZPMM") && ($difftime>10800 && $difftime<43200)) || ($shift_1=="ZPME"))           //echo "\nPlantIN";
+                                    //if( (($shift_1=="ZPMM") && ($difftime>10800 && $difftime<43200)) || ($shift_1=="ZPME"))           
+					echo "\nPlantIN3";
                                         $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]] = $datetime;
                                         $plant_status_local[$Vehicle[$i]][$RouteNo[$i]] = 1;
                                         $p_in = true;
