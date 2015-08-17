@@ -58,7 +58,7 @@ function read_sent_file($read_excel_path)
 	global $unmapped_customers;
 	
 	echo "\nREAD_SENT_FILE";
-	//echo "\nPath=".$path;
+	echo "\nPath=".$read_excel_path;
 	//######### SENT FILE NAME CLOSED 			
 	$objPHPExcel_1 = null;
 	$objPHPExcel_1 = PHPExcel_IOFactory::load($read_excel_path);	
