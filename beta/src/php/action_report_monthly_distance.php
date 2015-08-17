@@ -58,7 +58,23 @@
     //$finalVNameArr[$tdi]=$vehicle_detail_local[0];
     //echo "<br>DAYOPT,lastday=".$lastday;
     $finalEachDayDataArr=array();
-  
+    $CurrentLat = 0.0;
+    $CurrentLong = 0.0;
+    $LastLat = 0.0;
+    $LastLong = 0.0;
+    $firstData = 0;
+    $start_time_flag = 0;
+    $distance_total = 0;
+    $daily_dist=0;
+    $distance_threshold = 0.200;
+    $datetime_threshold = 300;
+    $distance_error = 0.100;
+    $distance_incriment =0.0;
+    $firstdata_flag =0;
+    $start_point_display =0;
+    $j=0;
+    $haltFlag=True;
+    $distance_travel=0;
     for($jm=1;$jm<=$lastday;$jm++)
     {
         $dataFoundFlag=0;
@@ -115,28 +131,11 @@
             }
 
             $SortedDataObject=new data();                
-
+            //echo "date=".$date."<br>";
             readFileXmlNew($vserial,$date,$requiredData,$sortBy,$parameterizeData,$SortedDataObject);           
             $sortedSize=sizeof($SortedDataObject->deviceDatetime);              
             if(count($SortedDataObject->deviceDatetime)>0)
-            {
-                $CurrentLat = 0.0;
-                $CurrentLong = 0.0;
-                $LastLat = 0.0;
-                $LastLong = 0.0;
-                $firstData = 0;
-                $start_time_flag = 0;
-                $distance_total = 0;
-                $daily_dist=0;
-                $distance_threshold = 0.200;
-                $datetime_threshold = 300;
-                $distance_error = 0.100;
-                $distance_incriment =0.0;
-                $firstdata_flag =0;
-                $start_point_display =0;
-                $j=0;
-                $haltFlag=True;
-                $distance_travel=0;
+            {               
                 $sortedSize=sizeof($SortedDataObject->deviceDatetime);                 
                 for($obi=0;$obi<$sortedSize;$obi++)
                 {                            
@@ -153,16 +152,18 @@
                         $datetime=$SortedDataObject->deviceDatetime[$obi];
                         if($firstdata_flag==0)
                         {                                
-                            $firstdata_flag = 1;
+                           $firstdata_flag = 1;
                             $distance_travel=0;                                    
 
                             $lat_S = $lat;
                             $lng_S = $lng;
                             $datetime_S = $datetime;
-                            $datetime_travel_start = $datetime_S;              		
+                            $datetime_travel_start = $datetime_S; 
+                            $datetime_E=$datetime;
                             $lat_travel_start = $lat_S;
                             $lng_travel_start = $lng_S;                  
-                            $start_point_display =0;                  
+                            $start_point_display =0;
+                            $last_time = $datetime;
                             $last_time1 = $datetime;
                             $latlast = $lat;
                             $lnglast =  $lng;  
@@ -171,143 +172,143 @@
                         else
                         {           
                             $lat_E = $lat;
-                            $lng_E = $lng; 
+                            $lng_E = $lng;
                             $datetime_prev = $datetime_E;
                             $datetime_E = $datetime; 
+
                             calculate_distance($lat_S, $lat_E, $lng_S, $lng_E, $distance_incriment);								         		
-                            $tmp_time_diff1 = (double)(strtotime($datetime) - strtotime($last_time1)) / 3600;                
+                            $tmp_time_diff = (double)(strtotime($datetime) - strtotime($last_time)) / 3600;                
 
                             calculate_distance($latlast, $lat_E, $lnglast, $lng_E, $distance1);
-                            $tmp_time_diff = ((double)( strtotime($datetime) - strtotime($last_time) )) / 3600; 
-
+                            $tmp_time_diff1 = ((double)( strtotime($datetime) - strtotime($last_time1) )) / 3600; 
+                                    
                             if($tmp_time_diff1>0)
                             {
-                                $tmp_speed = ((double) ($distance_incriment)) / $tmp_time_diff;
-                                $tmp_speed1 = ((double) ($distance1)) / $tmp_time_diff1;
+                                    $tmp_speed = ((double) ($distance_incriment)) / $tmp_time_diff;
+                                    $tmp_speed1 = ((double) ($distance1)) / $tmp_time_diff1;
                             }
                             else
                             {
-                                $tmp_speed1 = 1000.0; //very high value
+                                    $tmp_speed1 = 1000.0; //very high value
                             }
 
                             if($tmp_speed<300.0)
                             {
-                                $speeed_data_valid_time = $datetime;
+                                    $speeed_data_valid_time = $datetime;
                             }
 
                             if(( strtotime($datetime) - strtotime($speeed_data_valid_time) )>300) //data high speed for 5 mins
                             {
-                                $lat_S = $lat_E;
-                                $lng_S = $lng_E;
-                                $last_time = $datetime;
+                                    $lat_S = $lat_E;
+                                    $lng_S = $lng_E;
+                                    $last_time = $datetime;
                             }
 
                             $last_time1 = $datetime;
                             $latlast = $lat_E;
                             $lnglast =  $lng_E;
                             //echo"maxspeed=".$max_speed."speed=".$speed."<br>";
-                            if($max_speed<$speed)
+                            if(($max_speed<$speed) && ($speed<200))
                             {
-                                $max_speed = $speed;
+                                    $max_speed = $speed;
                             }
 
                             //echo "tmpSpeed=".round($tmp_speed,2)."tmpSpeed1=".round($tmp_speed1,2)."distanceIncreament=".$distance_incriment."tmpTimeDiff=".$tmp_time_diff." tmpTimeDiff1=".$tmp_time_diff1."<br>";								
                             if(round($tmp_speed,2)<300.0 && round($tmp_speed1,2)<300.0 && $distance_incriment>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
                             {
-                                //echo "halt out<br>";
-                                if($haltFlag==True)
-                                {
-                                   // echo "halt in<br>";
-                                    $datetime_travel_start = $datetime_prev;
-                                    //echo "datetime_travel_start=".$datetime_travel_start."<br>";
-                                    $lat_travel_start = $lat_E;
-                                    $lng_travel_start = $lng_E;
-                                    $distance_travel = 0;
-                                    $distance_total = 0;
-                                    $distance_incrimenttotal = 0;
-                                    $haltFlag = False;
-                                }
-                                $distance_total += $distance_incriment;
-                                $distance_travel += $distance_incriment;
-                                $daily_dist += $distance_incriment;
-                                $lat_S = $lat_E;
-                                $lng_S = $lng_E;
-                                $datetime_S = $datetime_E;
-                                //echo "daily_dist=".$daily_dist." daily_travel_time=".$daily_travel_time."<br>";
+                                    //echo "halt out<br>";
+                                    if($haltFlag==True)
+                                    {
+                                            //echo "halt in<br>";
+                                            $datetime_travel_start = $datetime_prev;
+                                            //echo "datetime_travel_start=".$datetime_travel_start."<br>";
+                                            $lat_travel_start = $lat_E;
+                                            $lng_travel_start = $lng_E;
+                                            $distance_travel = 0;
+                                            $distance_total = 0;
+                                            $distance_incrimenttotal = 0;
+                                            $haltFlag = False;
+                                    }
+                                    
+                                    $distance_total += $distance_incriment;
+                                    $distance_travel += $distance_incriment;
+                                    $daily_dist += $distance_incriment;
+                                    $lat_S = $lat_E;
+                                    $lng_S = $lng_E;
+                                    $last_time = $datetime_E;
+                                    $datetime_S = $datetime_E;
 
-                               // echo "dateTime=".$datetime_S."<br>";
+                                    //echo "dateTime=".$datetime_S."<br>";
 
-                                $start_point_display =1;
-                                //$distance_incrimenttotal += $distance_incriment;
-                                // echo $datetime_E . " -- " . $lat_E .",". $lng_E . "\tDelta Distance = " . $distance_incriment . "\tTotal Distance = " . $distance_total . "\n";
+                                    $start_point_display =1;
+                                    //$distance_incrimenttotal += $distance_incriment;
+                                    // echo $datetime_E . " -- " . $lat_E .",". $lng_E . "\tDelta Distance = " . $distance_incriment . "\tTotal Distance = " . $distance_total . "\n";
                             }
 
                             $datetime_diff = strtotime($datetime_E) - strtotime($datetime_S);
                             //echo "daily_dist=".$daily_dist."<br><br>";	
                             if(($datetime_diff > $datetime_threshold) && ($haltFlag==False))
                             {
-                                //echo "datetime_E=".$datetime_E." datetime_S=".$datetime_S."<br>";
-                                //echo "datetime_travel_start=".$datetime_travel_start." datetime_diff=".$datetime_diff."<br>";
-                                $datetime_travel_end = $datetime_S;
-                                //echo "datetime_travel_start=".$datetime_travel_start." datetime_travel_end=".$datetime_travel_end."<br>";
-                                $daily_travel_time += strtotime($datetime_travel_end) - strtotime($datetime_travel_start);
-                                //echo "daily_dist=".$daily_dist." daily_travel_time=".$daily_travel_time."<br>";
-                                $haltFlag = True;
-                                $j=0;
+                                    //echo "datetime_E=".$datetime_E." datetime_S=".$datetime_S."<br>";
+                                    //echo "datetime_travel_start=".$datetime_travel_start." datetime_diff=".$datetime_diff."<br>";
+                                    $datetime_travel_end = $datetime_S;
+                                    //echo "datetime_travel_start=".$datetime_travel_start." datetime_travel_end=".$datetime_travel_end."<br>";
+                                    $daily_travel_time += strtotime($datetime_travel_end) - strtotime($datetime_travel_start);
+                                    //echo "daily_dist=".$daily_dist." daily_travel_time=".$daily_travel_time."<br>";
+                                    $haltFlag = True;
+                                    $j=0;
                             }
                         }
                     }
-                    $j++;
-                }
-                if($haltFlag==False)
-		{
-			$datetime_travel_end = $datetime_S;
-			$daily_travel_time += strtotime($datetime_travel_end) - strtotime($datetime_travel_start);
-		}
-		if($daily_travel_time>0)
-		{		
+                }	
+            }
+            
+            if($haltFlag==False)
+            {
+                    $datetime_travel_end = $datetime_S;
+                    $daily_travel_time += strtotime($datetime_travel_end) - strtotime($datetime_travel_start);
+            }
+            if($daily_travel_time>0)
+            {		
                     //echo"daily_dist=".$daily_dist."daily_travel_time".$daily_travel_time."<br>";
                     $daily_avg_speed = ($daily_dist/$daily_travel_time)*3600;
                     $daily_avg_speed = round($daily_avg_speed,2);
                     //echo"daily_dist=".$daily_avg_speed."<br>";
-		}
-		else
-		{
-                    $daily_avg_speed=0;
-		}
-		$daily_dist = round($daily_dist,2);
-		if($daily_avg_speed>$max_speed)
-		{
+            }
+            else
+            {
+                $daily_avg_speed=0;
+            }
+            $daily_dist = round($daily_dist,2);
+            if($daily_avg_speed>$max_speed)
+            {
                     $daily_max_speed = $daily_avg_speed;
-		}
-		else
-		{
+            }
+            else
+            {
                     $daily_max_speed = $max_speed;
-		}
+            }
 		
-		if($daily_dist==0)
-		{
+            if($daily_dist==0)
+            {
                     $daily_max_speed=0;
                     $daily_avg_speed=0;
-		}
+            }
+            $imei[]=$vserial;
+            $vname[]=$vehicle_detail_local[0];
+            $mdate[]=$date;
+            $dailyDistDisplay[]=$daily_dist;
+            $maxSpeedArr[]=$daily_max_speed;
+            $avgSpeedArr[]=$daily_avg_speed;
 
-                $imei[]=$vserial;
-                $vname[]=$vehicle_detail_local[0];
-                $mdate[]=$date;
-                $dailyDistDisplay[]=$daily_dist;
-                $maxSpeedArr[]=$daily_max_speed;
-                $avgSpeedArr[]=$daily_avg_speed;
-
-                $daily_dist = 0;
-		$daily_travel_time=0;
-		$firstdata_flag=0;
-		$daily_avg_speed=0;
-		$daily_max_speed=0;
-		$max_speed=0;		
-            }		
-            $SortedDataObject=null;	
+            $daily_dist = 0;
+            $daily_travel_time=0;
+           // $firstdata_flag=0;
+            $daily_avg_speed=0;
+            $daily_max_speed=0;
+            $max_speed=0;
         }       
-	$parameterizeData=null;	
+	//$parameterizeData=null;	
         report_title("Monthly Distance",$dateStartDisplay,$dateEndDisplay);
     echo'<center>
             <div style="overflow: auto;height: 350px; width: 620px;" align="center">';

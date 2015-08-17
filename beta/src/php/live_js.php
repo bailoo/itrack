@@ -2376,16 +2376,16 @@ function PlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed
                             {
                                 alert("latPrev="+lt_v+"lngPrev="+ RouteECustomerLat[i]);
                             }*/
-                                var customer_distance = calculate_distance(lt_v, uniqueRouteEveningParseJson[i]['lat'], lng_v, uniqueRouteEveningParseJson[i]['lng']);
-                                e_customer_distance_arr[i]=customer_distance;
-                                e_customer_print_str[customer_distance]=uniqueRouteEveningParseJson[i]['customerNo'];
+                            var customer_distance = calculate_distance(lt_v, uniqueRouteEveningParseJson[i]['lat'], lng_v, uniqueRouteEveningParseJson[i]['lng']);
+                            e_customer_distance_arr[i]=customer_distance;
+                            e_customer_print_str[customer_distance]=uniqueRouteEveningParseJson[i]['customerNo'];
                         }
                         e_customer_distance_arr.sort();
                         //alert("minDistance="+e_customer_distance_arr[0]);
-                       e_customer_min_distance=e_customer_distance_arr[0];
+                        e_customer_min_distance=e_customer_distance_arr[0];
                         var e_customer_print_str=e_customer_print_str[e_customer_min_distance];
                        
-                      nearest_customer_string = "<tr><td "+window_style1+">RouteNo</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+route+"</td></tr><tr><td "+window_style1+">Nearest Customer</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+e_customer_min_distance+" From "+e_customer_print_str+"</td></tr>";
+                        nearest_customer_string = "<tr><td "+window_style1+">RouteNo</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+route+"</td></tr><tr><td "+window_style1+">Nearest Customer</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+e_customer_min_distance+" From "+e_customer_print_str+"</td></tr>";
                     }                    
                 }
                 if(morningFlag==1)
@@ -2398,9 +2398,9 @@ function PlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed
                         var m_customer_print_str=new Array();
                         for(var i=0;i<mCustomerLength;i++)
                         {					
-                                var customer_distance = calculate_distance(lt_v, uniqueRouteMorningParseJson[i]['lat'], lng_v, uniqueRouteMorningParseJson[i]['lng']);
-                                m_customer_distance_arr[i]=customer_distance;
-                                m_customer_print_str[customer_distance]=uniqueRouteMorningParseJson[i]['customerNo'];
+                            var customer_distance = calculate_distance(lt_v, uniqueRouteMorningParseJson[i]['lat'], lng_v, uniqueRouteMorningParseJson[i]['lng']);
+                            m_customer_distance_arr[i]=customer_distance;
+                            m_customer_print_str[customer_distance]=uniqueRouteMorningParseJson[i]['customerNo'];
                         }
                         m_customer_distance_arr.sort();
                         //alert("minDistance="+m_customer_distance_arr[0]);
@@ -2413,8 +2413,8 @@ function PlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed
                 //alert('vehiclename='+vehiclename);
                 if(morningFlag==1 || eveningFlag==1)
                 {
-		//transporter_remark_string = "<tr><td "+window_style1+">Transporter</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr><tr><td "+window_style1+">Remark</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";			
-                transporter_remark_string = "<tr><td "+window_style1+">Transporter</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+uniqueRouteParseJson[vehiclename]+"</td></tr>";			
+                    //transporter_remark_string = "<tr><td "+window_style1+">Transporter</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr><tr><td "+window_style1+">Remark</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";			
+                    transporter_remark_string = "<tr><td "+window_style1+">Transporter</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+uniqueRouteParseJson[vehiclename]+"</td></tr>";			
                 }
     /*if(remark_tmp.length>0 && transporter_tmp.length>0)
 		{

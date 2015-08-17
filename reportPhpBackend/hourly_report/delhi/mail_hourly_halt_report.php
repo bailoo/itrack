@@ -311,6 +311,10 @@ $vehicle_m = array();
 
 //########################## MORNING SHIFT STARTS #########################
 //#########################################################################
+    $shift_ev1 = false;
+    $shift_ev2 = false;
+ 
+
 //#### INITIALIZE ARRAYS
 if ($shift_mor) {
     $sheet1_row = 2;

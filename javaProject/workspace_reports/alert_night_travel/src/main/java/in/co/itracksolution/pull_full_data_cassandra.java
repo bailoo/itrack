@@ -26,8 +26,8 @@ public class pull_full_data_cassandra
 	
 	public pull_full_data_cassandra()
 	{
-		String propFileName = "config.properties";
-		//String propFileName = "resources/config.properties";
+		//String propFileName = "config.properties";
+		String propFileName = "resources/config.properties";
 		Properties prop = new Properties();
 		
 		try {
@@ -61,7 +61,7 @@ public class pull_full_data_cassandra
 
 	public static void main(String[] args) 
 	{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		/*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		TimeZone tz = TimeZone.getTimeZone("Asia/Kolkata");
 		sdf.setTimeZone(tz);	
 
@@ -69,9 +69,9 @@ public class pull_full_data_cassandra
 			
 		FullDataDao dao = new FullDataDao(st.conn.getSession());
 		
-		String imei = "865733021562939"; //Make sure this imei exists
-		String startDateTime = "2015-06-14 23:59:45";
-		String endDateTime = "2015-06-15 00:00:10";
+		String imei = "865733021569447"; //Make sure this imei exists
+		String startDateTime = "2015-07-29 00:00:00";
+		String endDateTime = "2015-07-30 23:59:59";
 		//true for dtime, false for stime
 		Boolean deviceTime = true;	// true for device time index, otherwise server time
 		Boolean orderAsc = true;	// true for ascending , otherwise descending (default) 
@@ -93,6 +93,6 @@ public class pull_full_data_cassandra
 			System.out.println();
 		}
 
-		st.close();
+		st.close();*/
 	}
 }

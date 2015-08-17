@@ -1,7 +1,6 @@
 package in.co.itracksolution;
 
 import in.co.itracksolution.db.CassandraConn;
-
 import in.co.itracksolution.dao.SpeedAlertDao;
 import in.co.itracksolution.dao.TurnAlertDao;
 import in.co.itracksolution.dao.XroadLogDao;
@@ -9,7 +8,6 @@ import in.co.itracksolution.dao.DistanceLogDao;
 import in.co.itracksolution.dao.TravelLogDao;
 import in.co.itracksolution.dao.NightLogDao;
 import in.co.itracksolution.dao.GapLogDao;
-
 import in.co.itracksolution.model.SpeedAlert;
 import in.co.itracksolution.model.TurnAlert;
 import in.co.itracksolution.model.XroadLog;
@@ -21,14 +19,12 @@ import in.co.itracksolution.model.GapLog;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Properties;
-
 import java.text.SimpleDateFormat;
 
 import com.datastax.driver.core.Session;
@@ -42,7 +38,8 @@ public class GetVehicleAlerts
 	
 	public GetVehicleAlerts()
 	{
-		String propFileName = "config.properties";
+		//String propFileName = "config.properties";
+		String propFileName = "resources/config.properties";
 		Properties prop = new Properties();
 		
 		try {

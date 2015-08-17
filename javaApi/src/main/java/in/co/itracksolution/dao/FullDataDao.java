@@ -24,8 +24,8 @@ import com.google.common.collect.Lists;
 
 public class FullDataDao {
 
-	protected PreparedStatement insertStatement1, deleteStatement1, selectbyImeiAndDateStatement1, selectbyImeiAndDateTimeSliceStatement1;
-	protected PreparedStatement insertStatement2, deleteStatement2, selectbyImeiAndDateStatement2, selectbyImeiAndDateTimeSliceStatement2;
+	protected PreparedStatement insertStatement1, deleteStatement1, selectbyImeiAndDateStatement1, selectbyImeiAndDateTimeSliceStatement1, selectbyImeiAndDayStatement1, selectbyImeiAndDayTimeSliceStatement1;
+	protected PreparedStatement insertStatement2, deleteStatement2, selectbyImeiAndDateStatement2, selectbyImeiAndDateTimeSliceStatement2, selectbyImeiAndDayStatement2, selectbyImeiAndDayTimeSliceStatement2;
 	protected Session session;
 	 
 	public FullDataDao(Session session) {
@@ -40,6 +40,7 @@ public class FullDataDao {
 		deleteStatement1 = session.prepare(getDeleteStatement1());
 		selectbyImeiAndDateStatement1 = session.prepare(getSelectByImeiAndDateStatement1());
 		selectbyImeiAndDateTimeSliceStatement1 = session.prepare(getSelectByImeiAndDateTimeSliceStatement1());
+		selectbyImeiAndDayTimeSliceStatement1 = session.prepare(getSelectByImeiAndDayTimeSliceStatement1());
 	}
 
 	protected void prepareStatement2(){
@@ -47,6 +48,7 @@ public class FullDataDao {
 		deleteStatement2 = session.prepare(getDeleteStatement2());
 		selectbyImeiAndDateStatement2 = session.prepare(getSelectByImeiAndDateStatement2());
 		selectbyImeiAndDateTimeSliceStatement2 = session.prepare(getSelectByImeiAndDateTimeSliceStatement2());
+		selectbyImeiAndDayTimeSliceStatement2 = session.prepare(getSelectByImeiAndDayTimeSliceStatement2());
 	}
 
 	protected String getInsertStatement1(){
@@ -87,6 +89,14 @@ public class FullDataDao {
 		return "SELECT * FROM "+FullData.TABLE_NAME2+" WHERE imei = ? AND date IN ? AND stime >= ? AND stime <= ? ;";
 	}
 	
+	protected String getSelectByImeiAndDayTimeSliceStatement1(){
+		return "SELECT * FROM "+FullData.TABLE_NAME1+" WHERE imei = ? AND date = ? AND dtime >= ? AND dtime <= ? ;";
+	}
+	
+	protected String getSelectByImeiAndDayTimeSliceStatement2(){
+		return "SELECT * FROM "+FullData.TABLE_NAME2+" WHERE imei = ? AND date = ? AND stime >= ? AND stime <= ? ;";
+	}
+
 	public void insert(FullData data){
 		BoundStatement boundStatement1 = new BoundStatement(insertStatement1);
 		BoundStatement boundStatement2 = new BoundStatement(insertStatement2);
@@ -123,8 +133,9 @@ public class FullDataDao {
 	
 	public ArrayList<FullData> selectByImeiAndDateTimeSlice(String imei, String startDateTime, String endDateTime, Boolean deviceTime, Boolean orderAsc)
 	{
-		BoundStatement boundStatement = (deviceTime)?new BoundStatement(selectbyImeiAndDateTimeSliceStatement1):new BoundStatement(selectbyImeiAndDateTimeSliceStatement2);
-		ArrayList dateList = new ArrayList();
+		BoundStatement boundStatement = (deviceTime)?new BoundStatement(selectbyImeiAndDayTimeSliceStatement1):new BoundStatement(selectbyImeiAndDayTimeSliceStatement2);
+		//ArrayList dateList = new ArrayList();
+		List<Row> bigList = new ArrayList<Row>();
 
 		int days = 1;
 		LocalDate sDate = new LocalDate();
@@ -149,12 +160,15 @@ public class FullDataDao {
 		for (int i=days; i>=0; i--)
 		{
 			LocalDate d = sDate.plusDays(i);
-			dateList.add(d.toString("yyyy-MM-dd"));
+			//dateList.add(d.toString("yyyy-MM-dd"));
+			String date = d.toString("yyyy-MM-dd");
+			ResultSet rs = session.execute(boundStatement.bind(imei, date, sDateTime, eDateTime));
+			bigList.addAll(rs.all());
 		}	
 
 		//System.out.println(dateList);
-		ResultSet rs = session.execute(boundStatement.bind(imei, dateList, sDateTime, eDateTime));
-		List<Row> rowList = rs.all();
+		//ResultSet rs = session.execute(boundStatement.bind(imei, dateList, sDateTime, eDateTime));
+		//List<Row> rowList = rs.all();
 	
 		FullData fullData = new FullData();
 		String[] tokens = null ;
@@ -162,7 +176,7 @@ public class FullDataDao {
 
 		String data;
 		final String DELIMITER = ";";
-		List<Row> rowListOrdered = (orderAsc)?Lists.reverse(rowList):rowList;
+		List<Row> rowListOrdered = (orderAsc)?Lists.reverse(bigList):bigList;
 		for (Row row : rowListOrdered)
 		{
 			fullData.setImei(row.getString("imei"));
