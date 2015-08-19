@@ -471,10 +471,10 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
    {
         $deviceTime=FALSE;
    }
-    /*echo "deviceTime=".$deviceTime."<br>";
-    echo "dateToData=".$dateToData."<br>";
-    echo "requiredData=".$requiredData."<br>";
-    echo "imei=".$imei."<br>"; */
+    //echo "deviceTime=".$deviceTime."<br>";
+    //echo "dateToData=".$dateToData."<br>";
+    //echo "requiredData=".$requiredData."<br>";
+    //echo "imei=".$imei."<br>"; 
 	
     $orderAsc = TRUE;
     $st_results = getLogByDate($o_cassandra, $imei, $dateToData, $deviceTime, $orderAsc);
@@ -482,8 +482,7 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
     //var_dump($st_results);
     foreach($st_results as $item) {
         $msg_type = $item->a;                 
-        $ver = $item->b;
-        //echo "ver=".$ver."<br>";
+        $ver = $item->b;              
         $fix = $item->c;
         $lat = $item->d;
         $lng = $item->e;
@@ -687,20 +686,33 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
     }
 	//var_dump($dataObject); 
 }
-function lastDataFromCassandra($vSerial, $startDate, $endDate,$parameterizeData,&$dataObject)
+
+function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate,$sortBy,$type,$parameterizeData,&$dataObject)
 {
-    global $o_cassandra; 
-    $lastRecordArr=getLastSeen($o_cassandra,$vSerial);
+   global $o_cassandra; 
+   if ($sortBy == "h")
+   {
+        $deviceTime=TRUE;
+   }
+   else if($sortBy == "g")
+   {
+        $deviceTime=FALSE;
+   }
+ 
+    $lastRecordArr=$st_results = getLastSeen($o_cassandra,$vSerial);
     //var_dump($lastRecordArr);
     foreach($lastRecordArr as $itemLR) 
     {
         $last_halt_time = $itemLR->u;
         $day_max_spd=$itemLR->s;
     }
-    //echo "vSerial=".$vSerial." startDate=".$startDate." $endDate=".$endDate."<br>";  
-    $st_results = getLastSeenDateTimes($o_cassandra, $vSerial, $startDate, $endDate);
-    //var_dump($st_results);
-   // echo "<br><br>";
+    
+    //echo "last_halt_time=".$last_halt_time."day_max_spd=".$day_max_spd."<br>";
+    
+    $deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
+    $orderAsc = TRUE;	// TRUE for ascending, otherwise descending (default)   
+    $st_results = getImeiDateTimes($o_cassandra, $vSerial, $startDate, $endDate, $deviceTime, $orderAsc);
+    
     foreach($st_results as $item) 
     {
         $msg_type = $item->a;                 
@@ -708,7 +720,6 @@ function lastDataFromCassandra($vSerial, $startDate, $endDate,$parameterizeData,
         $fix = $item->c;
         $lat = $item->d;
         $lng = $item->e;
-        
         $speed = $item->f;
         $datetime_server = str_replace('@',' ',$item->g);
         $datetime_device = str_replace('@',' ',$item->h);              
@@ -722,19 +733,7 @@ function lastDataFromCassandra($vSerial, $startDate, $endDate,$parameterizeData,
         $io8 = $item->p;
         $sig_str = $item->q;
         $sup_v = $item->r;
-        
-       /* echo "msg_type=".$msg_type;
-        echo "ver=".$ver;
-        echo "lat=".$lat;
-        echo "fix=".$fix;
-        echo "lat=".$lat;
-        echo "lng=".$lng;
-        echo "speed=".$speed;
-        echo "datetime_server=".$datetime_server;
-        echo "datetime_device=".$datetime_device;
-        echo "lat=".$lat."<br>";*/
-        
-        /*$DataValid = 0;
+        $DataValid = 0;
         if ($parameterizeData->latitude != null && $parameterizeData->longitude != null) 
         {
             if ((strlen($lat) > 5) && ($lat != "-") && (strlen($lng) > 5) && ($lng != "-")) 
@@ -748,7 +747,7 @@ function lastDataFromCassandra($vSerial, $startDate, $endDate,$parameterizeData,
             }
         }
         if($DataValid==1)
-        {*/
+        {
             $datetime_server1=$datetime_server;
             $datetime_device1=$datetime_device;
 
@@ -838,7 +837,7 @@ function lastDataFromCassandra($vSerial, $startDate, $endDate,$parameterizeData,
             {
                 $sup_v_1 = $sup_v;
             }
-        //}
+        }
     }
     $dataObject->serverDatetimeLD[] = $datetime_server;
     $dataObject->deviceDatetimeLD[]=$datetime_device1;	 
@@ -861,10 +860,9 @@ function lastDataFromCassandra($vSerial, $startDate, $endDate,$parameterizeData,
     $dataObject->cellNameLD[] ='-';
     $dataObject->dayMaxSpeedLD[]=$day_max_spd_1;
     $dataObject->lastHaltTimeLD[]=$last_halt_time_1;
-    //echo "finalObject<br>";
-    //var_dump($dataObject);
-	 
+	
 }
+
 
 function getLastRecord($vSerial,$sortBy,$parameterizeData)
 {
@@ -872,7 +870,7 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 	$imei = $vSerial;
 	
 	$st_results = getLastSeen($o_cassandra,$imei);
-	var_dump($st_results);
+	//var_dump($st_results);
 	//$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r');
 	//$st_obj = gpsParser($st_results,$params,TRUE);
 	// $st_obj = gpsParser($st_results);
