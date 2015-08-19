@@ -152,7 +152,7 @@ $cdatetime1 = strtotime(date('00:00:00'));
 $cdatetime2 = strtotime(date('H:i:s'));
 $difftime = $cdatetime2 - $cdatetime1;
 //$difftime = 7200;     //EVENING COMMENT IT LATER
-$difftime = 36000;    //MORNING
+//$difftime = 36000;    //MORNING
 //$difftime = 75600 //9 PM
 echo "\nDiff=".$difftime;
 
@@ -550,7 +550,8 @@ if ($shift_mor) {
             'text' => $message,
             'html' => '<html></html>'
                 ), array(
-            'attachment' => array($file_path)
+            //'attachment' => array($file_path)
+            'attachment' => array(array('filePath'=>$file_path,'remoteName'=>$filename_title))
         ));        
         ////include("send_mail_api.php");
         //######################################	
@@ -788,7 +789,8 @@ if ($shift_ev1) {
             'text' => $message,
             'html' => '<html></html>'
                 ), array(
-            'attachment' => array($file_path)
+           //'attachment' => array($file_path)
+           'attachment' => array(array('filePath'=>$file_path,'remoteName'=>$filename_title))
         ));
         ////include("send_mail_api.php");
         //######################################
@@ -1018,7 +1020,8 @@ if ($shift_ev2) {
             'text' => $message,
             'html' => '<html></html>'
                 ), array(
-            'attachment' => array($file_path)
+            //'attachment' => array($file_path)
+            'attachment' => array(array('filePath'=>$file_path,'remoteName'=>$filename_title))
         ));        
         
         //include("send_mail_api.php");
