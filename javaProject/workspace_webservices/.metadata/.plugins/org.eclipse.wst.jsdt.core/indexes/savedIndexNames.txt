@@ -1,6 +1,5 @@
-INDEX VERSION 1.122+D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_webservices\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-1995398295.index
-4243749870.index
-3954075802.index
+INDEX VERSION 1.122+D:\itrack\javaProject\workspace_webservices\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
 2541949345.index
-1057264287.index
+4222606619.index
+2336596581.index
+1669297914.index

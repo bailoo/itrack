@@ -74,10 +74,10 @@ public class worker {
 		previous_date2 = previous_day+" 04:00:00";
 
 		//System.out.println("p1="+previous_date1+" ,p2="+previous_date2);
-	//	previous_date1 = "2015-06-01 00:00:00";
-	//	previous_date2 = "2015-07-31 23:59:59";
-		previous_date1 = "2015-07-29 00:00:00";
-		previous_date2 = "2015-07-31 23:59:59";		
+		previous_date1 = "2015-06-01 00:00:00";
+		previous_date2 = "2015-07-31 23:59:59";
+	//	previous_date1 = "2015-07-29 00:00:00";
+	//	previous_date2 = "2015-07-31 23:59:59";		
 				
 		System.out.println("SizeIMEI="+init.device_imei_no.size());
 		for(int i=0;i<(init.device_imei_no.size());i++) {			
@@ -171,10 +171,10 @@ public class worker {
 			//System.out.println("Lat="+tmp_lat+" ,Lng="+tmp_lng);
 			if( (!tmp_lat.equals("")) && (!tmp_lng.equals("")) ) {
 					
-				System.out.print("imei: "+fullData.getImei()+" ");
+				/*System.out.print("imei: "+fullData.getImei()+" ");
 				System.out.print("device time: "+sdf.format(fullData.getDTime())+" ");
 				System.out.print("server time: "+sdf.format(fullData.getSTime())+" ");
-				/*System.out.print("a: "+pMap1.get("a")+" ");
+				System.out.print("a: "+pMap1.get("a")+" ");
 				System.out.print("b: "+pMap1.get("b")+" ");
 				System.out.print("c: "+pMap1.get("c")+" ");
 				System.out.print("d: "+pMap1.get("d")+" ");
@@ -253,8 +253,8 @@ public class worker {
 		System.out.println("GIS Data After="+report_turning_violation.roadName.size());*/
 		//#############
 		
-		String filename= "D:\\HDFC/hdfc_alert_report/night_driving/"+imei+".csv";
-		//String filename= "/mnt/hdfc_report/night_driving/"+imei+".csv";
+		//String filename= "D:\\HDFC/hdfc_alert_report/night_driving/"+imei+".csv";
+		String filename= "/mnt/hdfc_report/night_driving/"+imei+".csv";
 		line = "ServerTime,StartTime,EndTime,TravelDuration(Mins),AvgSpeed(Km/hr),Distance(Km),MaxSpeed(Km/hr)\n";
 		try {
 			fw = new FileWriter(filename,true);
