@@ -167,10 +167,12 @@
                         if($StartFlag == 2)
                         {
                             $StartFlag=0;
+                            $continuous_running_flag = 0;
                             $runtime = strtotime($time2) - strtotime($time1);
                             //echo "runtime=".$runtime."<br>";
                             if($runtime > 60)
                             {
+                               //echo "time1=".$time1." time2=".$time2."<br>";
                                 //echo "runtime1=".$runtime."<br>";
                                $imei[]=$vserial[$i];
                                $vname[]=$vehicle_detail_local[0];
@@ -188,6 +190,7 @@
                         //$runhr_duration = strtotime($runtime);
                         if($runtime > 60)
                         {
+                            //echo "time1=".$time1." time2=".$time2."<br>";
                             $imei[]=$vserial[$i];
                             $vname[]=$vehicle_detail_local[0];
                             $dateFromDisplay[]=$time1;
