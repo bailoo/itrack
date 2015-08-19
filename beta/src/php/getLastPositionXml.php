@@ -24,17 +24,8 @@
 	$date2 = $_REQUEST['enddate'];
 	$date1 = str_replace("/","-",$date1);
 	$date2 = str_replace("/","-",$date2);
-	$date_1 = explode(" ",$date1);
-	$date_2 = explode(" ",$date2);
-	$datefrom = $date_1[0];
-	$dateto = $date_2[0];
-	$userInterval = "0";
-	$sortBy="h";
-	$firstDataFlag=0;
-	$requiredData="All";
-	$endDateTS=strtotime($date2);
-
-	$parameterizeData=new parameterizeData();
+	
+        $parameterizeData=new parameterizeData();
 	
 	$parameterizeData->messageType='a';
 	$parameterizeData->version='b';
@@ -71,7 +62,8 @@
 		$LastDataObject=new lastDataObj();		
 		$type="unSorted";
 		//var_dump($LastDataObject);
-		getLastPositionXMl($vserial[$i],$date1,$date2,$datefrom,$dateto,$sortBy,$type,$parameterizeData,$LastDataObject);
+                lastDataFromCassandra($vserial[$i], $date1, $date2,$parameterizeData,$LastDataObject);
+		//getLastPositionXMl($vserial[$i],$date1,$date2,$datefrom,$dateto,$sortBy,$type,$parameterizeData,$LastDataObject);
 		//var_dump($LastDataObject);
 		if ($LastDataObject->messageTypeLD[0]!="" && $LastDataObject->deviceDatetimeLD[0]!="")
 		{
@@ -82,7 +74,8 @@
 	}
         $vname1=substr($vname_str,0,-1); /////////for last position text report
         $vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
-	$parameterizeData=null;	
+	$parameterizeData=null;
+        $o_cassandra->close;
 	
 
 	if($home_report_type=="map_report")
