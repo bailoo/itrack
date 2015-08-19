@@ -1429,14 +1429,14 @@ function getIoAssignmentNumRow($list_fname,$vehicle_ids_1,$DbConnection)
 function insertIoAssignmentStr($io_field_name,$io_field_value,$vehicle_ids_1,$status1,$DbConnection)
 {
 	$query="insert into io_assignment(".$io_field_name.",vehicle_id,status) values(".$io_field_value.",'$vehicle_ids_1','$status1')";
-		echo "query2=".$query."<br>";
+        //echo "query2=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);
 	return $result;
 }
 function updateIoAssignmentStr($query_string,$vehicle_ids_1,$DbConnection)
 {
 	$query="UPDATE io_assignment SET ".$query_string."vehicle_id=$vehicle_ids_1 WHERE vehicle_id='$vehicle_ids_1'";
-	echo "query2=".$query."<br>";
+	//echo "query2=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);
         Return $result;	
 }
