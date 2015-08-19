@@ -53,15 +53,18 @@
         //echo "vehicle_detail_local=".$vehicle_detail_local[7]."<br>";
         
         $ioArr=explode(":",$vehicle_detail_local[7]);
+        //print_r($vehicle_detail_local[7]);
         $ioArrSize=sizeof($ioArr);
         
         for($z=0;$z<$ioArrSize;$z++)
         {
             $tempIo=explode("^",$ioArr[$z]);
             //echo "io=".$ioArr[$z]."<br>";
+            //echo "ioTypeName=".$tempIo[1]."<br>";
             if($tempIo[1]=="engine")
             {
                 $ioFoundFlag=1;
+                //echo "ioPlace=".$finalIoArr[$tempIo[0]]."<br>";
                 $parameterizeData->engineRunHr=$finalIoArr[$tempIo[0]];
             }
             if($tempIo[1]=="engine_type")
@@ -73,41 +76,53 @@
                 $finalInverseType=0;
             }
         }
+        //echo "finalInverseType=".$finalInverseType."<br>";
         //echo "tmpio=".$parameterizeData->temperature."<br>";
         if($ioFoundFlag==1)
         {
-            $CurrentLat = 0.0;
-            $CurrentLong = 0.0;
-            $LastLat = 0.0;
-            $LastLong = 0.0;
-            $firstData = 0;
-            $distance =0.0;
-            $linetowrite="";
             $firstdata_flag =0;
             $runhr_duration =0 ;
-            $flag =0;
+           
             $StartFlag=0;
             $continuous_running_flag =0;
             
             for($di=0;$di<=($date_size-1);$di++)
             {
-                //echo "userdate=".$userdates[$di]."<br>";
+               
+                $SortedDataObject=null;
                 $SortedDataObject=new data();
-                readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
-                //var_dump($SortedDataObject);
-                //echo "cnt=".count($SortedDataObject->deviceDatetime)."<br>";
+                if($date_size==1)
+                {
+                    $dateRangeStart=$date1;
+                    $dateRangeEnd=$date2;
+                }
+                else if($di==($date_size-1))
+                {
+                    $dateRangeStart=$userdates[$di]." 00:00:00";
+                    $dateRangeEnd=$date2;
+                }
+                else if($di==0)
+                {
+                    $dateRangeStart=$date1;
+                    $dateRangeEnd=$userdates[$di]." 23:59:59";
+                }
+                else
+                {
+                   $dateRangeStart=$userdates[$di]." 00:00:00";
+                    $dateRangeEnd=$userdates[$di]." 23:59:59";
+                }
+                deviceDataBetweenDates($vserial[$i],$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);
+             
                 if(count($SortedDataObject->deviceDatetime)>0)
                 {
                     $c = -1;
                     $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
                     for($obi=0;$obi<$prevSortedSize;$obi++)
                     {
-                         if($SortedDataObject->deviceDatetime[$obi]>$date1 && $SortedDataObject->deviceDatetime[$obi]<$date2)
-                         {
                         $c++;
                         $datetime =$SortedDataObject->deviceDatetime[$obi];  
                         $engine_count = $SortedDataObject->engineIOData[$obi];                                                                            	                         
-                        if($finalInverseType==0)
+                       /* if($finalInverseType==0)
                         {
                             //echo "engine_count".$engine_count."<br>";
                             if($engine_count>500)
@@ -129,7 +144,7 @@
                             }
                         }
                         else
-                        {
+                        {*/
                             //echo "engine_count else ".$engine_count."<br>";
                             if($engine_count<500)
                             {
@@ -145,7 +160,7 @@
                             {
                                 $StartFlag = 2;
                             }
-                        }
+                        //}
                         $time2 = $datetime;
                         //echo "time1=".$time1."time2=".$time2."<br>";
 
@@ -163,8 +178,7 @@
                                $dateToDisplay[]=$time2;
                                $engine_runhr[]=$runtime;
                             } 
-                        }
-                    }
+                        } 
                     }
                     if($StartFlag == 1)
                     {
@@ -181,13 +195,8 @@
                             $engine_runhr[]=$runtime;
                          } 
                     }
-                    $SortedDataObject=null;
                 }
             }			
-        }
-        else
-        {
-            $SortedDataObject=null;				
         }
     }
 	$o_cassandra->close();
