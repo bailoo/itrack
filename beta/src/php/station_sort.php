@@ -234,7 +234,7 @@ function sort_station($plant_input, $customer_input, $transporter_input, $route_
 		//echo "linetowrite=".$linetowrite."\n";		         
 	}		
 	
-	//echo "linetowrite=".$linetowrite."\n";
+            //echo "linetowrite=".$linetowrite."\n";
 	//FINAL FILE WRITE
 	$file = fopen($plant_customer_write_path,"w");
 	fwrite($file,$linetowrite);

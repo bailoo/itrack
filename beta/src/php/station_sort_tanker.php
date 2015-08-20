@@ -11,10 +11,10 @@ $transporter_input_ev = array();
 
 function get_master_detail($account_id, $shift_time)
 {
-	//echo "<br>ShiftTime=".$shift_time;
-	$abspath = "/var/www/html/vts/test/src/php/gps_report";
-	//$abspath = $pathToRoot."/s3/itrack/gps_report/";
-	//$abspath = "C:\\xampp/htdocs/itrackDevelop/beta/src/php/gps_report";
+	echo "<br>ShiftTime=".$shift_time;
+	//$abspath = "/var/www/html/vts/test/src/php/gps_report";
+	$abspath = "/var/www/html/vts/beta/src/php/gps_report";
+	//$abspath = "D:\\test_app/gps_report";
 	
 	$tpt_path_ev = $abspath."/".$account_id."/master/tpt_ev#1#20.csv";	
 	$tpt_path_mor = $abspath."/".$account_id."/master/tpt_mor#1#30.csv";	
@@ -313,8 +313,6 @@ function get_master_detail($account_id, $shift_time)
 		$file = fopen($master_db_path,"w");
 		fwrite($file,$linetowrite);
 		fclose($file);
-                $s3FilePath="gps_report/".$account_id."/master/vehicle_route_db_ev#1#40.csv";
-                uploadFile($s3FilePath,$master_db_path,true);
 
                 //$lines = file($master_db_path);
                 //$lines = array_unique($lines);
@@ -353,8 +351,6 @@ function get_master_detail($account_id, $shift_time)
 		$file = fopen($tpt_path_ev,"w");
 		fwrite($file,$linetowrite);
 		fclose($file);
-                $s3FilePath="gps_report/".$account_id."/master/tpt_ev#1#20.csv";
-                uploadFile($s3FilePath,$tpt_path_ev,true);
 		//######### TRANSPORTER FILE CLOSED
 		
 		//################### EVENING FINAL MASTER		
@@ -432,9 +428,7 @@ function get_master_detail($account_id, $shift_time)
 		if(file_exists($master_db_path)) unlink($master_db_path);
 		$file = fopen($master_db_path,"w");
 		fwrite($file,$linetowrite);
-		fclose($file);	
-                $s3FilePath="gps_report/".$account_id."/master/vehicle_route_db_mor#1#50.csv";
-                uploadFile($s3FilePath,$master_db_path,true);
+		fclose($file);		
 
                 //$lines = file($master_db_path);
                 //$lines = array_unique($lines);
@@ -473,8 +467,6 @@ function get_master_detail($account_id, $shift_time)
 		$file = fopen($tpt_path_mor,"w");
 		fwrite($file,$linetowrite);
 		fclose($file);
-                $s3FilePath="gps_report/".$account_id."/master/tpt_mor#1#30.csv";
-                uploadFile($s3FilePath,$tpt_path_mor,true);
 		//######### TRANSPORTER FILE CLOSED
 		//################### MORNING FINAL MASTER
 		$plant_customer_write_path_mor = $abspath."/".$account_id."/master/morning_plant_customer#1#12.csv";
@@ -490,7 +482,6 @@ function get_master_detail($account_id, $shift_time)
 
 function sort_station($plant_input, $customer_input, $transporter_input, $route_input, $route_input_type, $plant_customer_write_path)
 {
-    global $account_id;
 	//echo "\nSORT STATION=".$plant_customer_write_path." ,size=".sizeof($customer_input)."\n";
 	for($x = 1; $x < sizeof($customer_input); $x++) 
 	{
@@ -631,12 +622,7 @@ function sort_station($plant_input, $customer_input, $transporter_input, $route_
 	//FINAL FILE WRITE
 	$file = fopen($plant_customer_write_path,"w");
 	fwrite($file,$linetowrite);
-	fclose($file); 
-        $filePathTempArr=explode("/",$plant_customer_write_path);
-        
-        $s3FilePath="gps_report/".$account_id."/master/".$filePathTempArr[sizeof($filePathTempArr)-1];
-        //echo "s3FilePath=".$s3FilePath." plant_customer_write_path=".$plant_customer_write_path."<br>";
-        uploadFile($s3FilePath,$plant_customer_write_path,true);
+	fclose($file);         
    
 } // FUNCTION CLOSED
 
@@ -854,8 +840,6 @@ function create_transporter($abspath, $account_id, $tpt_path_ev, $tpt_path_mor)
 	$file = fopen($master_transporter_path_mor,"w");
 	fwrite($file,$linetowrite);
 	fclose($file);
-        $s3FilePath="gps_report/".$account_id."/master/vehicle_transporter#1#6.csv";
-        uploadFile($s3FilePath,$master_transporter_path_mor,true);
 }
 
 function sort_all_transporter()
