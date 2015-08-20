@@ -12,7 +12,7 @@ $transporter_input_ev = array();
 function get_master_detail($account_id, $shift_time)
 {
 	//echo "<br>ShiftTime=".$shift_time;
-	$abspath = "/var/www/html/vts/test/src/php/gps_report";
+	$abspath = "/var/www/html/vts/beta/src/php/gps_report";
 	//$abspath = $pathToRoot."/s3/itrack/gps_report/";
 	//$abspath = "C:\\xampp/htdocs/itrackDevelop/beta/src/php/gps_report";
 	
