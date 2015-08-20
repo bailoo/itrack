@@ -4756,15 +4756,17 @@ function getInvoiceMDRMTargetDate($condition,$startdate,$enddate,$conditionStr,$
 		$plant_in=$conditionStr;
 		if($condition=='datebetweenonly_alldata') //$condition="datebetweenonly_alldata";$orderA="";$user_type="plant_raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type);
 		{
+                        //AND invoice_mdrm.invoice_status IN('1','5')
 			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
 							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-							AND invoice_mdrm.invoice_status IN('1','5') AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
+							 AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
                         }
 		else if($condition=='invoicestatus_plant_targetdate')  //$condition="invoicestatus_alldataNoDate";$orderA="1";$user_type="plant_raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type);
 		{
+                        //AND invoice_mdrm.invoice_status IN('1','5')
 			 $query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
 							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-							AND invoice_mdrm.invoice_status IN('1','5') AND invoice_mdrm.plant='$targetplant' AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
+							 AND invoice_mdrm.plant='$targetplant' AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
 		}
 		
 	}
@@ -4773,16 +4775,18 @@ function getInvoiceMDRMTargetDate($condition,$startdate,$enddate,$conditionStr,$
 	{
 		if($condition=='invoicestatus_allplant_targetdate') //$condition="datebetweenonly_alldata";$orderA="";$user_type="admin";$conditionStr=""; getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type);
 		{
+                        //AND invoice_mdrm.invoice_status IN('1','5')
 			 $query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
                                                     account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-                                                    AND invoice_mdrm.invoice_status IN('1','5') AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
+                                                     AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
                                                    // echo$query;		
 		}
 		else if($condition=='invoicestatus_plant_targetdate') //$condition="invoicestatus_alldataNoDate";$orderA="1";$user_type="admin";$conditionStr=""; getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type);
 		{
-			  $query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+                   // AND invoice_mdrm.invoice_status IN('1','5')
+                    $query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
                                                     account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-                                                    AND invoice_mdrm.invoice_status IN('1','5') AND invoice_mdrm.plant='$targetplant' AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
+                                                     AND invoice_mdrm.plant='$targetplant' AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
                                                    // echo$query;
 		}
 		
