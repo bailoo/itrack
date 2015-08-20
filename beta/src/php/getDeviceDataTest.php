@@ -716,7 +716,7 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 			$DataValid = 0;
 	//exit();
 
-			if ($parameterizeData->latitude != null && $parameterizeData->longitude != null) {
+			/*if ($parameterizeData->latitude != null && $parameterizeData->longitude != null) {
 				 if ((strlen($lat) > 5) && ($lat != "-") && (strlen($lng) > 5) && ($lng != "-")) {
 					$DataValid = 1;
 				}
@@ -725,7 +725,7 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 				if ($DataValid == 0) {
 					continue;
 				}
-			}
+			}*/
 
 			//echo "<br>DataValid=".$DataValid;
 			if ($parameterizeData->dataLog != null) {
@@ -741,7 +741,7 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 			}
 
 			//echo "switchDatetime=".$switchDatetime."<br>";
-			if ($DataValid) 
+			//if ($DataValid) 
 			{
 				$dataObject->serverDatetimeLR[] = $datetime_server;
 				$dataObject->deviceDatetimeLR[]=$datetime_device;
