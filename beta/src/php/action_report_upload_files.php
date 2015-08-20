@@ -1,60 +1,55 @@
 <html>
-    <head>
-        <style>
-            .file_upload_fieldset
-            {
-                font-size:11px;
-                font-family:Arial;
-                color:black;
-                font-weight:bold;
-            }
-            table.menu
-            {
-                font-size: 10pt;
-                margin: 0px;
-                padding: 0px;
-                font-weight: normal;
-            }
-        </style>
-    </head>
-<body>
+	<head>
+		<style>
+		.file_upload_fieldset
+		{
+		  font-size:11px;
+		  font-family:Arial;
+	      color:black;
+		  font-weight:bold;
+		}
+		table.menu
+		{
+			font-size: 10pt;
+			margin: 0px;
+			padding: 0px;
+			font-weight: normal;
+		}
+		</style>
+	</head>
+	<body>
 <?php
-
-//error_reporting(-1);
-//ini_set('display_errors', 'On');
 ini_set('auto_detect_line_endings',TRUE);
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
-$pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
-//print_r($pathInPieces);
-//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]; ////// local path
-$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]; /// server Path
-$filePathToS3Wrapper=$pathToRoot."/s3/S3Wrapper.php";
-include_once($filePathToS3Wrapper);
+
 if($account_id=="322" || $account_id=="1100" || $account_id=="1115" || $account_id=="1568")
 {
-    //echo "in if";
-    include_once('station_sort_mumbai.php');
+	include_once('station_sort_mumbai.php');
 }
 else if($account_id=="231" || $account_id=="232")
 {	
-    //include_once('station_sort.php');
-    include_once('station_sort_delhi.php');
+	//include_once('station_sort.php');
+	include_once('station_sort_delhi.php');
 }
 else if($account_id=="568")
 {	
-    //include_once('station_sort.php');
-    //echo "<br>Tanker";
-    include_once('station_sort_tanker.php');
+	//include_once('station_sort.php');
+	//echo "<br>Tanker";
+	include_once('station_sort_tanker.php');
 }
 else if($account_id=="718")
 {
-    include_once("station_sort_pdu.php");
+	include_once("station_sort_pdu.php");
 }
 else
 {
-    include_once('station_sort.php');
+	include_once('station_sort.php');
 }
+
+//error_reporting(E_ALL ^ E_NOTICE);
+//ini_set('display_errors', TRUE);
+//ini_set('display_startup_errors', TRUE);
 
 define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 //date_default_timezone_set('Europe/London');
@@ -64,184 +59,211 @@ set_time_limit(200);
 $date1=explode(" ",$date);
 if($account_id!="")
 {
-    echo"<table width='100%' height='10%'>
-            <tr>
-                <td>
-                </td>
-            </tr>
-        </table>";
-        if($upload_type=="master")
-        {	
-            $format_ids_1=explode(":",$format_ids);		
-            $j=0;
-            
-            $store_files=opendir("gps_report/".$account_id."/master");
-            while($file_name = readdir($store_files)) 
-            {
-                if($file_name!="." && $file_name!="..")
-                {
-                    $file_name_1=explode("#",$file_name);						
-                    $file_name_2 = explode(".",$file_name_1[2]); // returns "d"
-                    $post_formatid=$file_name_2[0];
-                    $post_formatid_arr[]="#".$post_formatid;
-                    $post_filename_arr[]=$file_name;
-                }
-            }
-            $delete_post_formatid_arr[]=$post_formatid_arr; // for delete the master file except format id #3
-            $delete_post_filename_arr[]=$post_filename_arr; // for delete the master file except format id #3
-            $file_ids_arr=explode(",",$format_ids_1[1]);	
-        }
-        else if($upload_type=="get_report")
-        {
-            $random_number=rand();
-            $format_ids_1=explode(":",$format_ids);
-            $j=0;
-            $file_ids_arr=explode(",",$format_ids_1[1]);
-        }
-        //print_r($file_ids_arr);
-        global $flag;
-        $flag=0;
-        for($i=0;$i<sizeof($file_ids_arr);$i++)
-        {		
-            $j++;							
-            $file_name=str_replace(" ","_",trim($_FILES['file_'.$format_ids_1[0]."_".$file_ids_arr[$i]]['name']));	
-            $file_name_1=explode(".",$file_name);
-            $cnt=count($file_name_1);
-            if($cnt>1)
-            {
-                $file_name_str = "";		
-                for($k=0;$k<sizeof($file_name_1);$k++)
-                {
-                    if($k==sizeof($file_name_1)-1)
-                    {
-                        $extension = $file_name_1[$k];
-                    }
-                    else
-                    {				
-                        $file_name_str = $file_name_str.$file_name_1[$k].".";
-                    }
-                }
-                $file_name_str=substr($file_name_str,0,-1);
+	$destfile="gps_report/".$account_id;
+	if(!file_exists($destfile))
+	{
+		mkdir($destfile);
+		@chmod( $destfile, 0777 );
+	}
+	if(!file_exists("gps_report/".$account_id."/download"))
+	{
+		mkdir("gps_report/".$account_id."/download");
+		@chmod( "gps_report/".$account_id."/download", 0777 );
+	}
+	if(!file_exists("gps_report/".$account_id."/master"))
+	{
+		mkdir("gps_report/".$account_id."/master");
+		@chmod( "gps_report/".$account_id."/master", 0777 );
+	}
+	if(!file_exists("gps_report/".$account_id."/upload"))
+	{
+		mkdir("gps_report/".$account_id."/upload");
+		@chmod( "gps_report/".$account_id."/upload", 0777 );
+	}
+	echo"<table width='100%' height='10%'>
+			<tr>
+				<td>
+				</td>
+			</tr>
+		</table>";
+		if($upload_type=="master")
+		{	
+			$format_ids_1=explode(":",$format_ids);		
+			$j=0;	
+			$store_files=opendir("gps_report/".$account_id."/master");
+			while($file_name = readdir($store_files)) 
+			{
+				if($file_name!="." && $file_name!="..")
+				{
+					$file_name_1=explode("#",$file_name);						
+					$file_name_2 = explode(".",$file_name_1[2]); // returns "d"
+					$post_formatid=$file_name_2[0];
+					$post_formatid_arr[]="#".$post_formatid;
+					$post_filename_arr[]=$file_name;
+				}
+			}
+			$delete_post_formatid_arr[]=$post_formatid_arr; // for delete the master file except format id #3
+			$delete_post_filename_arr[]=$post_filename_arr; // for delete the master file except format id #3
+			$file_ids_arr=explode(",",$format_ids_1[1]);	
+		}
+		else if($upload_type=="get_report")
+		{
+			$random_number=rand();
+			$format_ids_1=explode(":",$format_ids);	
+			if(!file_exists("gps_report/".$account_id."/upload/".$date1[0]))
+			{
+				mkdir("gps_report/".$account_id."/upload/".$date1[0]);
+				@chmod( "gps_report/".$account_id."/upload/".$date1[0], 0777 );
+			}		
+			$j=0;
+			$file_ids_arr=explode(",",$format_ids_1[1]);
+		}
+		//print_r($file_ids_arr);
+		global $flag;
+		$flag=0;
+		for($i=0;$i<sizeof($file_ids_arr);$i++)
+		{		
+			$j++;							
+			$file_name=str_replace(" ","_",trim($_FILES['file_'.$format_ids_1[0]."_".$file_ids_arr[$i]]['name']));	
+			$file_name_1=explode(".",$file_name);
+			$cnt=count($file_name_1);
+			if($cnt>1)
+			{
+				$file_name_str = "";		
+				for($k=0;$k<sizeof($file_name_1);$k++)
+				{
+					if($k==sizeof($file_name_1)-1)
+					{
+						$extension = $file_name_1[$k];
+					}
+					else
+					{				
+						$file_name_str = $file_name_str.$file_name_1[$k].".";
+					}
+				}
+				$file_name_str=substr($file_name_str,0,-1);
+				
+				if($upload_type=="master")
+				{
+					$final_file_name=$file_name_str.$file_ids_arr[$i].$format_ids_1[0].".".$extension;
+				}
+				else if($upload_type=="get_report")
+				{
+					$final_file_name=$file_name_str."#".$random_number.$file_ids_arr[$i].$format_ids_1[0].".".$extension;
+				}
+			}
+			else
+			{									
+				if($upload_type=="master")
+				{
+					$final_file_name=$file_name_1[0].$file_ids_arr[$i].$format_ids_1[0].".".$file_name_1[1];
+				}
+				else if($upload_type=="get_report")
+				{
+					$final_file_name=$file_name_1[0]."#".$random_number.$file_ids_arr[$i].$format_ids_1[0].".".$file_name_1[1];
+				}
+			}
+					
+			$tmp_upload_file="tmp_upload_file/".$final_file_name;
+			if($upload_type=="master")
+			{
+				$final_dest_file="gps_report/".$account_id."/master/".$final_file_name;	
+				if($format_ids_1[0]=="#3")
+				{						
+					delete_files($post_formatid_arr,$post_filename_arr,$format_ids_1[0]);
+					echo'<table border="0" align="center">
+							<tr>
+								<td>
+									<fieldset class="file_upload_fieldset">
+										<legend>File Upload Message</legend>';
+										upload_files($final_dest_file,$format_ids_1[0],$upload_type,$file_ids_arr[$i]);
+								echo'</fieldset>
+								</td>
+							</tr>
+						</table>';
+					$flag=1;
+				}
+				else
+				{	
+					$file_extension=explode('.',$final_file_name);
+					//print_r($file_extension);
+					if($file_extension[1]=="xls" || $file_extension[1]=="xlsx")
+					{										
+						validate_excel_fields($format_ids_1[0],$upload_type,$final_file_name,$file_ids_arr[$i],$tmp_upload_file);
+					//echo "flag_status=".$flag."<br>";
+					}
+					else if($file_extension[1]=="csv")
+					{	
+						//echo "in else if";
+						validate_csv_fields($format_ids_1[0],$upload_type,$final_file_name,$file_ids_arr[$i],$tmp_upload_file);
+					}					
+					unlink($tmp_upload_file);
+					//delete_files($post_formatid_arr,$post_filename_arr,$format_ids_1[0]);
+					//////// for delete all files simultaniously ////////
+					//$delete_post_formatid_arr[]=$post_formatid_arr;
+					//$delete_post_filename_arr[]=$post_filename_arr;
+					$delete_format_ids_1[]=$format_ids_1[0];
+				
+					
+					//////// for upload all files simultaniously ////////
+					$upload_final_dest_file[]=$final_dest_file;
+					$upload_format_ids_1[]= $format_ids_1[0];
+					$upload_upload_type[]=$upload_type;
+					$upload_file_ids_arr[]=$file_ids_arr[$i];
+					//upload_files($final_dest_file,$format_ids_1[0],$upload_type,$file_ids_arr[$i]);				
+				}
+			}
+			else if($upload_type=="get_report")
+			{			
+				$final_dest_file="gps_report/".$account_id."/upload/".$date1[0]."/".$final_file_name;	
+				$file_extension=explode('.',$final_file_name);
+				if($file_extension[1]=="xls" || $file_extension[1]=="xlsx")
+				{										
+					validate_excel_fields($format_ids_1[0],$upload_type,$final_file_name,$file_ids_arr[$i],$tmp_upload_file);
+				//echo "flag_status=".$flag."<br>";
+				}
+				else if($file_extension[1]=="csv")
+				{	
+					//echo "in else if";
+					validate_csv_fields($format_ids_1[0],$upload_type,$final_file_name,$file_ids_arr[$i],$tmp_upload_file);
+				}
+				//validate_excel_fields($format_ids_1[0],$upload_type,$final_file_name,$file_ids_arr[$i],$tmp_upload_file);
+				unlink($tmp_upload_file);	
+					//////// for upload all files simultaniously ////////										
+				$upload_final_dest_file[]=$final_dest_file;
+				$upload_format_ids_1[]=$format_ids_1[0];
+				$upload_upload_type[]=$upload_type;
+				$upload_file_ids_arr[]=$file_ids_arr[$i];
+			}										
+		}								
 
-                if($upload_type=="master")
-                {
-                    $final_file_name=$file_name_str.$file_ids_arr[$i].$format_ids_1[0].".".$extension;
-                }
-                else if($upload_type=="get_report")
-                {
-                    $final_file_name=$file_name_str."#".$random_number.$file_ids_arr[$i].$format_ids_1[0].".".$extension;
-                }
-            }
-            else
-            {									
-                if($upload_type=="master")
-                {
-                    $final_file_name=$file_name_1[0].$file_ids_arr[$i].$format_ids_1[0].".".$file_name_1[1];
-                }
-                else if($upload_type=="get_report")
-                {
-                    $final_file_name=$file_name_1[0]."#".$random_number.$file_ids_arr[$i].$format_ids_1[0].".".$file_name_1[1];
-                }
-            }
-					
-            $tmp_upload_file="tmp_upload_file/".$final_file_name;
-            if($upload_type=="master")
-            {
-                $final_dest_file="gps_report/".$account_id."/master/".$final_file_name;	
-                if($format_ids_1[0]=="#3")
-                {						
-                    //delete_files($post_formatid_arr,$post_filename_arr,$format_ids_1[0]);
-                    echo'<table border="0" align="center">
-                            <tr>
-                                <td>
-                                    <fieldset class="file_upload_fieldset">
-                                            <legend>File Upload Message</legend>';
-                                            upload_files($final_dest_file,$format_ids_1[0],$upload_type,$file_ids_arr[$i]);
-                                echo'</fieldset>
-                                </td>
-                            </tr>
-                        </table>';
-                    $flag=1;
-                }
-                else
-                {	
-                    $file_extension=explode('.',$final_file_name);
-                    //print_r($file_extension);
-                    if($file_extension[1]=="xls" || $file_extension[1]=="xlsx")
-                    {										
-                        validate_excel_fields($format_ids_1[0],$upload_type,$final_file_name,$file_ids_arr[$i],$tmp_upload_file);
-                        //echo "flag_status=".$flag."<br>";
-                    }
-                    else if($file_extension[1]=="csv")
-                    {	
-                        //echo "in else if";
-                        validate_csv_fields($format_ids_1[0],$upload_type,$final_file_name,$file_ids_arr[$i],$tmp_upload_file);
-                    }					
-                    unlink($tmp_upload_file);
-                    //delete_files($post_formatid_arr,$post_filename_arr,$format_ids_1[0]);
-                    //////// for delete all files simultaniously ////////
-                    //$delete_post_formatid_arr[]=$post_formatid_arr;
-                    //$delete_post_filename_arr[]=$post_filename_arr;
-                    $delete_format_ids_1[]=$format_ids_1[0];				
-					
-                    //////// for upload all files simultaniously ////////
-                    $upload_final_dest_file[]=$final_dest_file;
-                    $upload_format_ids_1[]= $format_ids_1[0];
-                    $upload_upload_type[]=$upload_type;
-                    $upload_file_ids_arr[]=$file_ids_arr[$i];
-                    //upload_files($final_dest_file,$format_ids_1[0],$upload_type,$file_ids_arr[$i]);				
-                }
-            }
-            else if($upload_type=="get_report")
-            {			
-                $final_dest_file="gps_report/".$account_id."/upload/".$date1[0]."/".$final_file_name;	
-                $file_extension=explode('.',$final_file_name);
-                if($file_extension[1]=="xls" || $file_extension[1]=="xlsx")
-                {										
-                    validate_excel_fields($format_ids_1[0],$upload_type,$final_file_name,$file_ids_arr[$i],$tmp_upload_file);
-                    //echo "flag_status=".$flag."<br>";
-                }
-                else if($file_extension[1]=="csv")
-                {	
-                    //echo "in else if";
-                    validate_csv_fields($format_ids_1[0],$upload_type,$final_file_name,$file_ids_arr[$i],$tmp_upload_file);
-                }
-                //validate_excel_fields($format_ids_1[0],$upload_type,$final_file_name,$file_ids_arr[$i],$tmp_upload_file);
-                unlink($tmp_upload_file);	
-                //////// for upload all files simultaniously ////////										
-                $upload_final_dest_file[]=$final_dest_file;
-                $upload_format_ids_1[]=$format_ids_1[0];
-                $upload_upload_type[]=$upload_type;
-                $upload_file_ids_arr[]=$file_ids_arr[$i];
-            }										
-        }
 }
 else
 {
-echo'<table border="0" align="center">
-        <tr>
-            <td>    
-                <fieldset class="file_upload_fieldset">
-                    <legend>File Upload Message</legend>';
-                    echo"<table width='100%' height='5%'>
-                            <tr>
-                                <td>
-                                </td>
-                            </tr>
-                        </table>
-                        <table align='center'>
-                            <tr>
-                                <td>
-                                    Session Logout Please Login Again
-                                </td>
-                            </tr>
-                        </table>
-                </fieldset>
-            </td>
-        </tr>
-    </table>";
-    $re_url="logout.php";
-    echo"<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=".$re_url."\">";
+	echo'<table border="0" align="center">
+			<tr>
+				<td>
+					<fieldset class="file_upload_fieldset">
+						<legend>File Upload Message</legend>';
+						echo"<table width='100%' height='5%'>
+								<tr>
+									<td>
+									</td>
+								</tr>
+								</table>
+								<table align='center'>
+									<tr>
+										<td>
+											Session Logout Please Login Again
+										</td>
+									</tr>
+								</table>
+					</fieldset>
+				</td>
+			</tr>
+		</table>";
+		$re_url="logout.php";
+		echo"<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=".$re_url."\">";
 }
 
 	function delete_file_with_error_message($f_code,$original_file_name,$tmp_upload_file,$tmp_val)
@@ -276,10 +298,10 @@ echo'<table border="0" align="center">
 
 	if($flag==0)
 	{
-		/*for($i=0;$i<sizeof($delete_post_formatid_arr);$i++)
+		for($i=0;$i<sizeof($delete_post_formatid_arr);$i++)
 		{		
 			delete_files($delete_post_formatid_arr[$i],$delete_post_filename_arr[$i],$delete_format_ids_1[$i]);	
-		}*/
+		}
 	echo'<table border="0" align="center">
 			<tr>
 				<td>
@@ -299,16 +321,10 @@ echo'<table border="0" align="center">
 		$account_id=$_SESSION['account_id'];
 		//echo "final_dest_file=".$final_dest_file." format_ids_cnd=".$format_ids_cnd."sub_files_ids=".$sub_files_ids." upload_type=".$upload_type."account_id=".$_SESSION['account_id']."<br>";
 		if(isset($final_dest_file))
-		{
-                    $overwrite=true;
-                    //echo "uploadPath=".$final_dest_file." tmpPath=".$_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name']."<br>";
-                    $fileUploadStatus=uploadFile($final_dest_file, $_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name'], $overwrite);
-		    //echo "fileUploadStatus=".$fileUploadStatus."<br>";
-                    //echo 'File1='.'file_'.$format_ids_cnd."_".$sub_files_ids.' ,File2='.$_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name']." ,final_dest=".$final_dest_file."<br>";	
-		    copy($_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name'],$final_dest_file);
-                    //if(copy($_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name'],$final_dest_file))
-			if($fileUploadStatus!='')
-                        {
+		{				
+			//echo 'File1='.'file_'.$format_ids_cnd."_".$sub_files_ids.' ,File2='.$_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name']." ,final_dest=".$final_dest_file."<br>";	
+			if(copy($_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name'],$final_dest_file))
+			{
 			echo'<table border="0" align="center" class="menu">
 					<tr>
 						<td>
@@ -321,7 +337,6 @@ echo'<table border="0" align="center">
 				chmod($final_dest_file, 0777);
 				if((($upload_type=="master" && $format_ids_cnd=="#4") || ($upload_type=="master" && $format_ids_cnd=="#9")) && ($account_id=='231' || $account_id=='322' || $account_id=='723' || $account_id=='568' || $account_id=='2' || $account_id=='1100'  || $account_id=='1115'  || $account_id=='718' || $account_id=="232") || $account_id=="1568")
 				{
-                                    echo "in if <br>";
 					if($account_id=='568')
 					{
 						$shift_time = "ZBVE";
@@ -334,7 +349,7 @@ echo'<table border="0" align="center">
 				}
 				if((($upload_type=="master" && $format_ids_cnd=="#5") || ($upload_type=="master" && $format_ids_cnd=="#10")) && ($account_id=='231' || $account_id=='322' || $account_id=='723' || $account_id=='568' || $account_id=='2' || $account_id=='1100' || $account_id=='1115'  || $account_id=='718' || $account_id=="232" || $account_id=="1568"))
 				{
-					echo "in if 1 <br>";
+					//echo "in if <br>";
                                         if($account_id=='568')
                                         {
                                                 $shift_time = "ZBVM";
