@@ -288,11 +288,11 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                 $speed_sel[] = $SortedDataObject->speedData[$obi];
             }
 	}
-        else
+        /*else
         {
 	    echo "\nContinue";
             continue;
-        }
+        }*/
         
         $SortedDataObject = null;
         $sortObjTmp = null;

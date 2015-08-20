@@ -8,7 +8,7 @@ function create_secondary_vehicles($read_excel_path, $shift, $route_type_param)
 	global $account_id;
 	
 	$query ="SELECT vehicle.vehicle_name FROM vehicle,secondary_vehicle WHERE secondary_vehicle.vehicle_id=vehicle.vehicle_id AND secondary_vehicle.status=1 AND vehicle.status=1 AND secondary_vehicle.shift='$shift' AND secondary_vehicle.create_id='$account_id'";
-	//echo $query."\n";
+	echo $query."\n";
 	$result = mysql_query($query,$DbConnection);
 	while($row = mysql_fetch_object($result))
 	{

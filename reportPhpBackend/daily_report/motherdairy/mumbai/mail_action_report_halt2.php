@@ -5,15 +5,14 @@ $lat_sel = array();
 $lng_sel = array();
 $speed_sel = array();
 
-//echo "MAIL ACTION";
+echo "MAIL ACTION";
 function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, $user_interval, $report_shift)
 {
+	//echo "\nBefore CAS";
     //###### OPEN CASSANDRA CONNECTION
-    global $last_processed_time;
     $o_cassandra = openCassandraConnection();
+	//echo "\nAfter CAS";
 
-    global $va,$vb,$vc,$vd,$ve,$vf,$vg,$vh,$vi,$vj,$vk,$vl,$vm,$vn,$vo,$vp,$vq,$vr,$vs,$vt,$vu,$vv,$vw,$vx,$vy,$vz,$vaa,$vab;
-    global $old_xml_date;
     global $abspath;
     //echo $vehicle_serial.",". $vid." ,".$vname." ,".$startdate." ,".$enddate." ,".$user_interval." ,".$report_shift;
     //$startdate = "2013-05-12 16:51:49";
@@ -21,7 +20,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
 
     //$abspath = "/var/www/html/vts/beta/src/php";
     include_once($abspath."/util.hr_min_sec.php");
-    //echo "\nHALT function before1";
+    echo "\nHALT function before1";
     global $customer_visited;
     global $shift;
     global $point;
@@ -56,7 +55,9 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
     //echo "\nReportDate1=".$date_tmp1;
 
     //$abspath = "/var/www/html/vts/beta/src/php";
+//echo "\nBeforeLPTrack";
     include_once($abspath."/get_location_lp_track_report.php");
+//echo "\nAfterLPTrack";
 
     global $DbConnection;
     global $account_id;
@@ -140,16 +141,10 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
     $parameterizeData->speed = "f";
 
     $finalVNameArr = array();
-    echo "\nSIZEV=" . sizeof($Vehicle);
     //###### CASSANDRA BLOCK1 CLOSED
           
     //$device_all_date_time = array();    //ALL DEVICE TIME
 
-    if($last_processed_time[$imei]!="") {
-        $date1 = $last_processed_time[$imei];
-    } 
-
-    echo "\nVehicle=" . $i . "::" . $Vehicle[$i];        
     //######### CASSANDRA BLOCK2 OPENS
     $sts_date_sel = array();
     $xml_date_sel = array();
@@ -158,7 +153,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
     $speed_sel = array();
 
     //##### DEBUG MSG
-    $msg = "\nReadSno:" . $i . " ,imei=" . $IMEI[$i] . " ,date1=" . $date1 . " ,date2=" . $date2;
+    $msg = "\nReadSno:" . $i . " ,imei=" . $vehicle_serial . " ,date1=" . $date1 . " ,date2=" . $date2;
 
     if($LOG) {$debug_msg.=$msg."\n";}
     //echo $msg; 
@@ -170,12 +165,12 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
 
     readDataBetweenDatetime($vehicle_serial, $date1, $date2, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $o_cassandra, $SortedDataObject);
 
-    echo "\nCount=".count($SortedDataObject->deviceDatetime);
+    //echo "\nCount=".count($SortedDataObject->deviceDatetime);
    
 	//exit(0);
      if (count($SortedDataObject->deviceDatetime) > 0) {
             //$sortObjTmp = sortData($UnSortedDataObject, $sortBy, $parameterizeData);
-            echo "::Data Read";
+            //echo "::Data Read";
             //var_dump($sortObjTmp);
             /* echo"sdt1=".$sortObjTmp->deviceDatetime[0]."<br>";
               echo "sdt2=".$sortObjTmp->deviceDatetime[1]."<br>";
@@ -183,7 +178,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
               echo "ss2=".$sortObjTmp->speedData[1]."<br>";
               echo "<br><br>"; */
             $sortedSize = sizeof($SortedDataObject->deviceDatetime);
-            echo "\nSortedSize=".$sortedSize;
+            //echo "\nSortedSize=".$sortedSize;
             for ($obi = 0; $obi < $sortedSize; $obi++) {
                 /* $finalDateTimeArr[$IMEI[$i]][]=$SortedDataObject->deviceDatetime[$obi];
                   $finalLatitudeArr[$IMEI[$i]][]=$SortedDataObject->latitudeData[$obi];
@@ -214,12 +209,13 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
 	if (sizeof($xml_date_sel) > 0) {
             for ($y = 0; $y < sizeof($xml_date_sel); $y++) {
             {           
-                echo "\nFile Exist";
+                //echo "\nData Exist";
                 $DataValid = 0;
                 $halt_once = false;
                 $xml_date = $xml_date_sel[$y];
+		$datetime = $xml_date;
 
-                while(!feof($xml))          // WHILE LINE != NULL
+                //while(!feof($xml))          // WHILE LINE != NULL
                 {
                         //echo "\nIN WHILE";                     				        
                         if( (strlen($lat_sel[$y])>5) && ($lat_sel[$y]!="-") && (strlen($lng_sel[$y])>5) && ($lng_sel[$y]!="-") )
@@ -235,7 +231,8 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
                             {
                                 if($firstdata_flag==0)
                                 {							
-                                    $halt_flag = 0;
+                                    //echo "\nInFirst";
+				    $halt_flag = 0;
                                     $firstdata_flag = 1;
 
                                     /*$vehicleserial_tmp1 = explode("=",$vehicleserial_tmp[0]);
@@ -258,18 +255,19 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
                                 }                 	
                                 else
                                 {   //  GET NEXT RECO
+					//echo "\nNext";
                                     $lat_cr = $lat_sel[$y];
                                     $lng_cr = $lng_sel[$y];							
                                     $datetime_cr = $datetime;																		
                                     $date_secs2 = strtotime($datetime_cr);	
-                                    calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, &$distance);
+                                    calculate_distance($lat_ref, $lat_cr, $lng_ref, $lng_cr, $distance);
                                     //if(($distance > 0.0100) || ($f== $total_lines-2) )
                                     //echo "\nF=".$f." ,total_lines=".$total_lines;										
 																	
                                     //###### FOR IRREGULAR DATA FILTER CODE
                                     $tmp_time_diff1 = (double)(strtotime($datetime) - strtotime($last_time1)) / 3600;
 
-                                    calculate_distance($latlast, $lat_cr, $lnglast, $lng_cr, &$distance1);
+                                    calculate_distance($latlast, $lat_cr, $lnglast, $lng_cr, $distance1);
                                     if($tmp_time_diff1>0)
                                     {
                                         $tmp_speed = ((double) ($distance1)) / $tmp_time_diff1;
@@ -287,7 +285,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
                                             //echo "\nLatRef_Prev=".$lat_cr." ,distance=".$distance." ,HaltFlag=".$halt_flag;										
                                             //echo " ,DateTimeCr=".$datetime_cr." ,DateTimeRef=".$datetime_ref." ,difference=".$difference." , interval=".$interval." \n";
                                     //}									
-                                    //echo "\nInCondition ,halt_flag=".$halt_flag." ,distance=".$distance;									
+                                    //echo "\nInCondition ,halt_flag=".$halt_flag." ,distance=".$distance." ,datetime_cr=".$datetime_cr." ,datetime_ref=".$datetime_ref." ,interval=".$interval;									
                                     if (($halt_flag == 1) && ($distance > 0.100))
                                     {								
                                         //echo "\n\nIF HALT, datetime=".$datetime;
@@ -302,16 +300,13 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
 
                                         $AddEntryinrReport=true;
                                     }
-                                    else if(($halt_flag == 1) && ($f == ($total_lines-10)))
+                                    /*else if(($halt_flag == 1) && ($f == ($total_lines-10)))
                                     {										
-                                        //echo "\nELSEIF HALT, datetime=".$datetime;
+                                        echo "\nELSEIF HALT, datetime=".$datetime;
                                         $arrivale_time = $datetime_ref;
                                         $starttime = strtotime($datetime_ref);										  
-                                        /*$depature_time="-";
-                                        $halt_dur = "-";
-                                        $hrs_min = "-";*/
                                         $AddEntryinrReport=true;
-                                    }
+                                    }*/
                                     else if(($distance <= 0.100) && ($halt_flag == 0) && ( (strtotime($datetime_cr)-strtotime($datetime_ref))>$interval) )    // IF VEHICLE STOPS FOR 2 MINS 
                                     {            													
                                         $halt_once =1;
@@ -368,8 +363,8 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
                                 if( ($lat_g!="") && ($lng_g!="") && ($customer_no[$k]!="") )
                                 {
                                     //echo "\nDIST::datetime=".$datetime." ,op_date1=".$op_date1." ,op_date2=".$op_date2." \ndistance=".$distance;
-                                    calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, &$distance_station1);
-                                    calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, &$distance_station2);
+                                    calculate_distance($lat_ref1, $lat_g, $lng_ref1, $lng_g, $distance_station1);
+                                    calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, $distance_station2);
 
                                     /*if($customer_no[$k]=="1105")
                                     {
@@ -407,6 +402,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
                                 //##########################################                        
                                 if($entered_station)
                                 {
+					//echo "\nEnterd";
                                     $pos_c = strpos($station_no, "@");
                                     if($pos_c !== false)
                                     {
@@ -489,6 +485,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
                                     //######### CUSTOMER SCHEDULE
                                     if($type_str=="Customer")
                                     {
+					//echo "\nIn Customer";
                                         for($m=0;$m<sizeof($shift);$m++)
                                         {
                                             $schedule_shift_tmp = $shift[$m];
@@ -501,7 +498,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
 
                                             if( ($schedule_shift_tmp == $report_shift) && ($schedule_point_tmp == $station_no) )
                                             {                              
-                                                //echo "\nSchedule Matched";												  
+                                                //echo "\nCSchedule Matched";												  
                                                 $start_date_tmp = explode(" ",$startdate);
                                                 $end_date_tmp = explode(" ",$enddate);
 
@@ -562,6 +559,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
                                     //####### PLANT SCHEDULE
                                     else if($type_str=="Plant")
                                     {
+					//echo "\nIn Plant";
                                         for($m=0;$m<sizeof($ScheduleInTime2);$m++)
                                         {																			
                                             $schedule_point_tmp2 = $Plant2[$m];
@@ -579,7 +577,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
 
                                             if( ($schedule_point_tmp2 == $station_no) && ($route_from_vehicle == $route_master) )
                                             {                              
-                                                //echo "\nSchedule Matched";												  
+                                                //echo "\nPSchedule Matched";												  
                                                 $start_date_tmp = explode(" ",$startdate);
                                                 $end_date_tmp = explode(" ",$enddate);
 
@@ -758,7 +756,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
                         }   //IF ADD ENTRYINRrEPORT
                         $f++;
                 }   // while closed			
-                            //echo "\nvehicle_name=".$vname."csv_string_halt==".$csv_string_halt."<br>";            
+                   //echo "\nvehicle_name=".$vname."csv_string_halt==".$csv_string_halt."<br>";            
             }  // for closed
         }
     }    

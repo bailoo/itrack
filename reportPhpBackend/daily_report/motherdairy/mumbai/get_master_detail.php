@@ -40,6 +40,8 @@ function get_master_detail($account_id, $shift_time)
 	//$dir = "c:\\gps_report/231/master";
 	//$dir = "c:\\halt2/test_master";
 	$dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";
+	echo "\nDir=".$dir;
+	
 	$dh = opendir($dir);
 	while (($file = readdir($dh)) !== false) {
 		//echo "<A HREF=\"$file\">$file</A><BR>\n";
