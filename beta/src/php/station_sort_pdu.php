@@ -19,9 +19,11 @@ function get_master_detail($account_id, $shift_time)
 	//$tpt_path_ev = $abspath."/".$account_id."/master/tpt_ev#1#20.csv";	
 	//$tpt_path_mor = $abspath."/".$account_id."/master/tpt_mor#1#30.csv";
 
-	$abspath ="/var/www/html/vts/beta/src/php";	
-	$dir = $abspath."/gps_report/".$account_id."/master";
-	//echo "<br>dir=".$dir;
+        $abspath = "/var/www/html/vts/test/src/php/gps_report";
+        //$abspath = $pathToRoot."/s3/itrack/gps_report/";
+        //$abspath = "C:\\xampp/htdocs/itrackDevelop/beta/src/php/gps_report";	
+        $dir = $abspath."/".$account_id."/master";
+        
 	$dh = opendir($dir);
 	while (($file = readdir($dh)) !== false) {
 		//echo "<A HREF=\"$file\">$file</A><BR>\n";
@@ -69,7 +71,7 @@ function get_master_detail($account_id, $shift_time)
 	closedir($dh);
 	
 	//######## MAKE VEHICLE ROUTE MASTER
-	$vehicle_customer_write_path = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master/vehicle_customer#1#7.csv";
+	$vehicle_customer_write_path = $abspath."/".$account_id."/master/vehicle_customer#1#7.csv";
 	//echo "<br>VehicleCustomerWritePath=".$vehicle_customer_write_path;
 	//unlink($vehicle_customer_write_path_ev);
 	//$plant_customer_write_path_ev = "C:\\xampp/htdocs/sorting_motherdairy/evening_plant_customer#1#7.csv";
@@ -82,6 +84,7 @@ function get_master_detail($account_id, $shift_time)
 
 function sort_station($vehicle_input, $customer_input,$transporter_input, $vehicle_customer_write_path)	//SORT BY VEHICLE
 {
+    global $account_id;
 	//echo "\nSORT STATION=".$plant_customer_write_path." ,size=".sizeof($customer_input)."\n";
 	for($x = 1; $x < sizeof($customer_input); $x++) 
 	{
@@ -183,7 +186,11 @@ function sort_station($vehicle_input, $customer_input,$transporter_input, $vehic
 	//FINAL FILE WRITE
 	$file = fopen($vehicle_customer_write_path,"w");
 	fwrite($file,$linetowrite);
-	fclose($file);         
+	fclose($file);
+        $filePathTempArr=explode("/",$vehicle_customer_write_path);        
+        $s3FilePath="gps_report/".$account_id."/master/".$filePathTempArr[sizeof($filePathTempArr)-1];
+        //echo "s3FilePath=".$s3FilePath." plant_customer_write_path=".$plant_customer_write_path."<br>";
+        uploadFile($s3FilePath,$vehicle_customer_write_path,true);  
    
 } // FUNCTION CLOSED
  
