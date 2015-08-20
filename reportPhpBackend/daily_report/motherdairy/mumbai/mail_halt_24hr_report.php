@@ -1,5 +1,9 @@
 <?php
 
+/*error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);*/
+
 echo "Evening file";
 set_time_limit(18000);
 //include_once('util_session_variable.php');
@@ -15,9 +19,9 @@ $MAIN_DEBUG = false;
 $LOG = false;
 //#################
 
-$isReport = true;
+$isReport2 = true;
 //$HOST = "111.118.181.156";
-include_once("../../db_connection.php");
+include_once("../../../db_connection.php");
 /*$DBASE = "iespl_vts_beta";
 $USER = "root";
 $PASSWD = "mysql";*/
@@ -68,7 +72,7 @@ include_once($abspath."/area_violation/pointLocation.php");
 require_once $abspath."/excel_lib/class.writeexcel_workbook.inc.php";
 require_once $abspath."/excel_lib/class.writeexcel_worksheet.inc.php";
 include_once($abspath."/util.hr_min_sec.php");
-include_once($abspath."/daily_report/motherdairy/mumbai/get_master_detail.php");
+include_once("get_master_detail.php");
 
 echo "\nD7";
 include_once($abspath . "/util.hr_min_sec.php");
@@ -78,11 +82,7 @@ include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
 
 echo "\nD8";
 
-$cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
-$cacheSettings = array('memoryCacheSize' => '1028MB');
-PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
-
-//echo "\nAfter Include";
+echo "\nAfter Include";
 //include_once($abspath."/get_location_lp_track_report.php");
 
 //include_once($abspath."/mail_action_report_distance_1.php");
@@ -102,7 +102,7 @@ function tempnam_sfx($path, $suffix)
 	return $file;
 }
 
-//echo "report4\n";
+echo "report4\n";
 $csv_string_dist = "";                //INITIALISE  DISTANCE VARIABLES
 $csv_string_dist_arr = array();
 $sno_dist = 0;
@@ -135,7 +135,7 @@ $query_assignment = "SELECT DISTINCT vehicle.vehicle_id,vehicle.vehicle_name FRO
                     "vehicle_grouping.account_id='$account_id' AND vehicle.status=1 AND vehicle_assignment.status=1 AND vehicle_grouping.status=1 limit 10";					
 */
 				
-//echo "\nquery=".$query_assignment."\n";
+echo "\nquery=".$query_assignment."\n";
 $result_assignment = mysql_query($query_assignment,$DbConnection);
 
 while($row_assignment = mysql_fetch_object($result_assignment))
@@ -1473,5 +1473,4 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3, $array4) 
 	unlink($file_path); 
 }
  
-clearstatcache();
 ?>

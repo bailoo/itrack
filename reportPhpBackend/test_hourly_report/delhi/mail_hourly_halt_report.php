@@ -10,7 +10,7 @@ date_default_timezone_set("Asia/Kolkata");
 global $DEBUG_OFFLINE;
 $DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = true;
-$CREATE_MASTER = true;
+$CREATE_MASTER = false;
 $MAIN_DEBUG = true;
 $LOG = false;
 //#################
@@ -148,8 +148,8 @@ include_once("get_route_db_detail.php");
 //$pdate = date('Y-m-d', strtotime($date .' -1 day'));
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-08-11');
-    $date = date('2015-08-12');
+    $pdate = date('2015-08-19');
+    $date = date('2015-08-20');
 } else {
     $date = date('Y-m-d');
 }
@@ -188,8 +188,8 @@ $mor_run_start_time = $date . " 10:00:00";
 //$mor_run_start_time = $date." 06:00:00";
 
 if ($MAIN_DEBUG) {
-    $shift_ev1 = true;
-    $shift_ev2 = false;
+    $shift_ev1 = false;
+    $shift_ev2 = true;
     $shift_mor = false;
 } else {
     $shift_ev1 = false;
@@ -988,8 +988,8 @@ if ($shift_ev2) {
         //echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL ##############
-        //$to = 'rizwan@iembsys.com';		
-        $to = 'gpsreporthourly@gmail.com';
+        $to = 'rizwan@iembsys.com';		
+    //    $to = 'gpsreporthourly@gmail.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -1002,8 +1002,8 @@ if ($shift_ev2) {
         $message = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_EVENING(MOTHER_DELHI)_FOCAL_ROUTE_" . $msg . "_" . $time_1 . "_" . $time_2 . "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
         $random_hash = md5(date('r', time()));
         $headers = "From: support@iembsys.co.in\r\n";
-        $headers .= "Cc: hourlyreport4@gmail.com";
-        //$headers .= "Cc: rizwan@iembsys.com";	
+        //$headers .= "Cc: hourlyreport4@gmail.com";
+        $headers .= "Cc: rizwan@iembsys.com";	
         //pass:8090025844
         //$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com";
         $headers .= "\r\nContent-Type: multipart/mixed; boundary=\"PHP-mixed-" . $random_hash . "\"";
@@ -1015,8 +1015,8 @@ if ($shift_ev2) {
         $result = $mgClient->sendMessage($domain, array(
             'from' => 'Itrack <support@iembsys.co.in>',
             'to' => $to,
-            //'cc'      => 'taseen@iembsys.com',
-            'cc' => 'hourlyreport4@gmail.com',
+            'cc'      => 'rizwan@iembsys.com',
+            //'cc' => 'hourlyreport4@gmail.com',
             //'cc'      => 'hourlyreport4@gmail.com',
             // 'bcc'     => 'astaseen83@gmail.com',
             'subject' => $subject,
