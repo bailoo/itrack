@@ -6442,10 +6442,11 @@ function manage_io_validation()
 	{
 		if(vehicle_id_obj.checked)
 		{
-			var id_string='io_type'+vehicle_id_obj.value+'[]';		
-			var io_type_obj=document.manage.elements[id_string];			
-			var num2=0;	
-			
+                    var id_string='io_type'+vehicle_id_obj.value+'[]';		
+                    var io_type_obj=document.manage.elements[id_string];			
+                    var num2=0;	
+                    if(vehicle_id_obj.length!=undefined)
+                    {
 			for(j=0;j<io_type_obj.length;j++)
 			{
 				engine_type_value=0;	
@@ -6457,91 +6458,152 @@ function manage_io_validation()
 				
 				if(io_name=="engine")
 				{
-					var engineType='engineType'+vehicle_id_ob.value;
-					//alert("engineType="+engineType);
-					if(document.getElementById(engineType).checked==true)
-					{
-						engine_type_value=0;
-					}
-					var typeName='engine_type';
-					var typeValue=engine_type_value;
+                                    var engineType='engineType'+vehicle_id_ob.value;
+                                    //alert("engineType="+engineType);
+                                    if(document.getElementById(engineType).checked==true)
+                                    {
+                                        engine_type_value=1;
+                                    }
+                                    var typeName='engine_type';
+                                    var typeValue=engine_type_value;
 				}
 				if(io_name=="ac")
 				{
-					var acType='acType'+vehicle_id_ob.value;
-					if(document.getElementById(acType).checked==true)
-					{
-						ac_type_value=0;
-					}
-					var typeName='ac_type';
-					var typeValue=ac_type_value;					
+                                    var acType='acType'+vehicle_id_ob.value;
+                                    if(document.getElementById(acType).checked==true)
+                                    {
+                                        ac_type_value=1;
+                                    }
+                                    var typeName='ac_type';
+                                    var typeValue=ac_type_value;					
 				}
 				if(io_name=="sos")
 				{	
-					var sosType='sosType'+vehicle_id_ob.value;
-					if(document.getElementById(sosType).checked==true)
-					{
-						sos_type_value=0;
-					}
-					var typeName='sos_type';
-					var typeValue=sos_type_value;
+                                    var sosType='sosType'+vehicle_id_ob.value;
+                                    if(document.getElementById(sosType).checked==true)
+                                    {
+                                        sos_type_value=1;
+                                    }
+                                    var typeName='sos_type';
+                                    var typeValue=sos_type_value;
 				}
 					//alert("io_name_value="+io_name_value);				
 				if(io_name_value!="select")
 				{
-					io_type[type_count]=io_name;
-					io_type_value[type_count]=io_name_value;
-					if(io_name=="engine" || io_name=="sos" || io_name=="ac")
-					{
-						final_type_and_value=final_type_and_value+io_type[type_count]+","+io_type_value[type_count]+":"+typeName+","+typeValue+":";
-					}
-					else
-					{
-						final_type_and_value=final_type_and_value+io_type[type_count]+","+io_type_value[type_count]+":";
-					}
-				
-					io_type_value1[type_count]=vehicle_id_obj.value+","+io_name_value; // io for validateion			
-					num2 = 2;
-					type_count++;
+                                    io_type[type_count]=io_name;
+                                    io_type_value[type_count]=io_name_value;
+                                    if(io_name=="engine" || io_name=="sos" || io_name=="ac")
+                                    {
+                                        final_type_and_value=final_type_and_value+io_type[type_count]+","+io_type_value[type_count]+":"+typeName+","+typeValue+":";
+                                    }
+                                    else
+                                    {
+                                        final_type_and_value=final_type_and_value+io_type[type_count]+","+io_type_value[type_count]+":";
+                                    }				
+                                    io_type_value1[type_count]=vehicle_id_obj.value+","+io_name_value; // io for validateion			
+                                    num2 = 2;
+                                    type_count++;
 				}				
 			}
-			vehicle_id[veh_count] =  vehicle_id_obj.value;				
-			final_type_and_value=final_type_and_value+"#";	
-			final_vehicle_id=final_vehicle_id+vehicle_id[veh_count]+",";	
-			veh_count++;				
-			num1 = 1;
+                    }
+                    else
+                    {
+                        engine_type_value=0;	
+                        ac_type_value=0;
+                        sos_type_value=0;
+                        var io_name=io_type_obj.value;							
+                        var id_string_1=vehicle_id_obj.value+io_name;										
+                        var io_name_value=document.getElementById(id_string_1).value;
+                        if(io_name=="engine")
+                        {
+                            var engineType='engineType'+vehicle_id_obj.value;
+                            //alert("engineType="+engineType);
+                            if(document.getElementById(engineType).checked==true)
+                            {
+                                engine_type_value=1;
+                            }
+                            var typeName='engine_type';
+                            var typeValue=engine_type_value;
+                        }
+                        if(io_name=="ac")
+                        {
+                            var acType='acType'+vehicle_id_ob.value;
+                            if(document.getElementById(acType).checked==true)
+                            {
+                                ac_type_value=0;
+                            }
+                            var typeName='ac_type';
+                            var typeValue=ac_type_value;					
+                        }
+                        if(io_name=="sos")
+                        {	
+                            var sosType='sosType'+vehicle_id_ob.value;
+                            if(document.getElementById(sosType).checked==true)
+                            {
+                                sos_type_value=0;
+                            }
+                            var typeName='sos_type';
+                            var typeValue=sos_type_value;
+                        }
+                                //alert("io_name_value="+io_name_value);				
+                        if(io_name_value!="select")
+                        {
+                            io_type[type_count]=io_name;
+                            io_type_value[type_count]=io_name_value;
+                            if(io_name=="engine" || io_name=="sos" || io_name=="ac")
+                            {
+                                final_type_and_value=final_type_and_value+io_type[type_count]+","+io_type_value[type_count]+":"+typeName+","+typeValue+":";
+                                //alert("finalTypeAndValue1="+final_type_and_value);
+                            }
+                            else
+                            {
+                                final_type_and_value=final_type_and_value+io_type[type_count]+","+io_type_value[type_count]+":";
+                            }
+
+                            io_type_value1[type_count]=vehicle_id_obj.value+","+io_name_value; // io for validateion			
+                            num2 = 2;
+                            type_count++;
+                        }
+                    }
+                   
+                    vehicle_id[veh_count] =  vehicle_id_obj.value;				
+                    final_type_and_value=final_type_and_value+"#";	
+                    final_vehicle_id=final_vehicle_id+vehicle_id[veh_count]+",";	
+                    veh_count++;				
+                    num1 = 1;
+                        
 		}
 	}
-	//alert("final_num2="+num2);
+        //alert("final_num2="+num2);
 	if(num1==0)
 	{
 		alert("Please Select At Least One Vehicle");							
-			return false;  			
+                return false;  			
 	}
 	else if(num2==0)
 	{
 		alert("Please Select At Least One IO Type");							
-			return false;  			
+                return false;  			
 	}
 	else
 	{
-		for(var m=0;m<type_count;m++)
-		{
-			for(n=0;n<m;n++)
-			{
-				 //alert(io_type_value[n]+","+io_type_value[m]);
-				if(io_type_value1[n]==io_type_value1[m])
-				{
-					alert("IO Should Not Be Same");
-					return false;
-				}
-			}
-		}					
-		showManageLoadingMessage();
-		var poststr = "vehicle_ids=" +final_vehicle_id+
-		"&types=" +final_type_and_value;
-		//alert("poststr="+poststr);
-		makePOSTRequest('src/php/action_final_io_assignment.htm', poststr);
+            for(var m=0;m<type_count;m++)
+            {
+                for(n=0;n<m;n++)
+                {
+                    //alert(io_type_value[n]+","+io_type_value[m]);
+                    if(io_type_value1[n]==io_type_value1[m])
+                    {
+                        alert("IO Should Not Be Same");
+                        return false;
+                    }
+                }
+            }					
+            showManageLoadingMessage();
+            var poststr = "vehicle_ids=" +final_vehicle_id+
+            "&types=" +final_type_and_value;
+            //alert("poststr="+poststr);
+            makePOSTRequest('src/php/action_final_io_assignment.htm', poststr);
 	}			
 }
 

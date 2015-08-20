@@ -1,7 +1,7 @@
 <?php	
 	for($i=0;$i<$NoofIO;$i++)
 	{
-		$io_name[$i]=getFeatureNameFeatureGrouping($io_id1[$i],$DbConnection);	
+            $io_name[$i]=getFeatureNameFeatureGrouping($io_id1[$i],$DbConnection);	
 	}
 	
 	if($num_rows1>0)
@@ -10,18 +10,22 @@
 		//echo "featurcnt=".$feature_count."<br>";
 		for($fi=1;$fi<=$feature_count;$fi++) 
 		{
-			//echo "featureName=".$fname[$fi]."<br>";
+                    //echo "featureName=".$fname[$fi]."<br>";
+                    $IOPresent = false;
+                    for($i=0;$i<$NoofIO;$i++)
+                    {
+                        //echo "allIoName=".$fname[$fi]." deviceAssignIoName=".$io_name[$i]."<br>";
+                        //echo "ioName=".$fname[$fi]."<br>";
+                        if($fname[$fi]==$io_name[$i])
+                        {
+                            //echo "in io present<br>";
+                            $IOPresent = true;
+                            break;
+                        }
+                    }
 			if($fname[$fi]!="engine_type" && $fname[$fi]!="ac_type" && $fname[$fi]!="sos_type" && $fname[$fi]!="")
 			{
-				$IOPresent = false;
-				for($i=0;$i<$NoofIO;$i++)
-				{
-					if($fname[$fi]==$io_name[$i])
-					{
-						$IOPresent = true;
-						break;
-					}
-				}
+				
 				if($IOPresent==true)
 				{							
 					$perm_features[$fi]=$row->$fname[$fi];
