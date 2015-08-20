@@ -12,7 +12,7 @@ function get_master_detail($account_id, $shift_time)
 	//$dir = "c:\\gps_report/231/master";
 	//$dir = "c:\\halt2/test_master";
 	//$dir = "C:\\xampp/htdocs/sorting_motherdairy";	
-	$abspath = "/var/www/html/vts/test/src/php/gps_report";
+	$abspath = "/var/www/html/vts/beta/src/php/gps_report";
         //$abspath = $pathToRoot."/s3/itrack/gps_report/";
         //$abspath = "C:\\xampp/htdocs/itrackDevelop/beta/src/php/gps_report";	
         $dir = $abspath."/".$account_id."/master";

@@ -9,7 +9,7 @@ function get_master_detail($account_id, $shift_time)
     global $route_input_mor;
     global $customer_input;
 
-    $abspath = "/var/www/html/vts/test/src/php/gps_report";
+    $abspath = "/var/www/html/vts/beta/src/php/gps_report";
     //$abspath = $pathToRoot."/s3/itrack/gps_report/";
     //$abspath = "C:\\xampp/htdocs/itrackDevelop/beta/src/php/gps_report";	
     $dir = $abspath."/".$account_id."/master";

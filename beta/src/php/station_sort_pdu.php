@@ -19,7 +19,7 @@ function get_master_detail($account_id, $shift_time)
 	//$tpt_path_ev = $abspath."/".$account_id."/master/tpt_ev#1#20.csv";	
 	//$tpt_path_mor = $abspath."/".$account_id."/master/tpt_mor#1#30.csv";
 
-        $abspath = "/var/www/html/vts/test/src/php/gps_report";
+        $abspath = "/var/www/html/vts/beta/src/php/gps_report";
         //$abspath = $pathToRoot."/s3/itrack/gps_report/";
         //$abspath = "C:\\xampp/htdocs/itrackDevelop/beta/src/php/gps_report";	
         $dir = $abspath."/".$account_id."/master";
