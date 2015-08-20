@@ -1,5 +1,4 @@
 <?php
-
 echo '
 <html>
 <head>
