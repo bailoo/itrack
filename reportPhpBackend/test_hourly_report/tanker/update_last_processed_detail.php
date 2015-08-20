@@ -11,6 +11,9 @@ function update_last_processed_detail($last_processed_path, $current_time)
 	$objPHPExcel_1 = null;
 	//$objPHPExcel_1 = PHPExcel_IOFactory::load($last_file_path);
 	$objPHPExcel_1 = new PHPExcel();  //write new file
+	
+	$objPHPExcel_1->createSheet();
+	$objPHPExcel_1->setActiveSheetIndex(1)->setTitle('Customer_Color');
 
 	//$highestColumm = $objPHPExcel_1->setActiveSheetIndex(0)->getHighestColumn();
 	//$highestRow = $objPHPExcel_1->setActiveSheetIndex(0)->getHighestRow();
@@ -63,7 +66,20 @@ function update_last_processed_detail($last_processed_path, $current_time)
 		{
 			break;
 		}
-	}	
+	}
+
+	/*//######## UPDATE SHEET 2
+	$row=1;
+	$col_tmp = 'A'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Vehicle");
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+	$col_tmp = 'A'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Vehicle");
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);
+	$col_tmp = 'A'.$row;
+	$objPHPExcel_1->setActiveSheetIndex(2)->setCellValue($col_tmp , "Vehicle");
+	$objPHPExcel_1->getActiveSheet(2)->getStyle($col_tmp)->applyFromArray($header_font);*/
+	
 	
 	//echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel_1, 'Excel2007');

@@ -4,7 +4,7 @@ function read_secondary_vehicles($read_excel_path)
 {
 	global $objPHPExcel_1;
 	global $SecondaryVehicle;			//SENT FILE	
-	echo "\nSECONDARY_VEHICLES";
+	echo "\nSECONDARY_VEHICLES:".$read_excel_path;
 	//echo "\nPath=".$path;
 	//######### SENT FILE NAME CLOSED 			
 	$objPHPExcel_1 = null;

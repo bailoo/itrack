@@ -702,7 +702,7 @@ if ($shift_ev1) {
 //if($shift_ev1)
 //{
     //echo "\nEV1-CASH ROUTE";
-    $route_type = "CASH";
+    $route_type = "ALL";
     //######## READ EVENING SENT FILE #############		
     //echo "\nLastProcessedFile=".$evening_last_processed_time_path1;
     if (file_exists($evening_last_processed_time_path1)) {
@@ -728,7 +728,7 @@ if ($shift_ev1) {
         get_customer_db_detail($account_id, "ZBVE", $route_type);
         //echo "\nSizeAllRoutes=".sizeof($all_routes);
         $objPHPExcel_1 = null;
-        create_hrly_excel($evening_sent_file_path1, "ZBVE", $route_type, $shift_ev_date1, "cash");
+        create_hrly_excel($evening_sent_file_path1, "ZBVE", $route_type, $shift_ev_date1, "all");
         //echo "\nAfter Createhrly";
         create_last_halt_time($evening_last_halt_time_path1, $route_type);
         //echo "\nAfter LastHaltTime";
