@@ -708,7 +708,8 @@ echo'<table border="0" align="center">
 				}
 				$cnt++;											
 			}
-		}	
+		}
+                unlink($tmp_upload_file);
 	}
 							
 ?>
