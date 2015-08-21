@@ -212,8 +212,8 @@ function listFile($S3Path)
             }
             else 
             {
-                //echo " keyArr=".$keyArr[sizeof($keyArr)-1]."\n";
-                $filelist[] = $keyArr[sizeof($keyArr)-1];
+                $FileDate = date("Y-m-d H:i:s",$values['time']);
+                $filelist[] = array('name'=>$keyArr[sizeof($keyArr)-1],'dateTime'=>$FileDate);
             }
         }
     }
