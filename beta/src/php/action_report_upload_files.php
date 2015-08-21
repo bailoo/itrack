@@ -275,10 +275,10 @@ echo'<table border="0" align="center">
 
 	if($flag==0)
 	{
-		/*for($i=0;$i<sizeof($delete_post_formatid_arr);$i++)
+		for($i=0;$i<sizeof($delete_post_formatid_arr);$i++)
 		{		
 			delete_files($delete_post_formatid_arr[$i],$delete_post_filename_arr[$i],$delete_format_ids_1[$i]);	
-		}*/
+		}
 	echo'<table border="0" align="center">
 			<tr>
 				<td>
@@ -368,7 +368,8 @@ echo'<table border="0" align="center">
 			{
 				//echo " format_id_prev=".$post_formatid_arr[$fd]." coming_format_id=".$format_ids_cnd." filename=".$post_filename_arr[$fd]."<br>";
 				if($format_ids_cnd==$post_formatid_arr[$fd])
-				{		
+				{
+                                    delFile("gps_report/".$account_id."/master/".$post_filename_arr[$fd]);
                                     unlink("gps_report/".$account_id."/master/".$post_filename_arr[$fd]);
 				}
 			}
