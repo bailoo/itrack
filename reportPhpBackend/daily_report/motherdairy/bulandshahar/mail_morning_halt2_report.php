@@ -1,37 +1,88 @@
 <?php
 
+/*error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);*/
+
 echo "Evening file";
 set_time_limit(18000);
 //include_once('util_session_variable.php');
 //include_once('util_php_mysql_connectivity.php');
 
+date_default_timezone_set("Asia/Kolkata");
+//### DEBUG BOOLEAN
+global $DEBUG_OFFLINE;
+$DEBUG_OFFLINE = false;
+$DEBUG_ONLINE = false;
+$CREATE_MASTER = false;
+$MAIN_DEBUG = false;
+$LOG = false;
+//#################
+
+$isReport2 = true;
 //$HOST = "111.118.181.156";
-include_once("../../database_ip.php");
-$DBASE = "iespl_vts_beta";
+include_once("../../../db_connection.php");
+/*$DBASE = "iespl_vts_beta";
 $USER = "root";
-$PASSWD = "mysql";
+$PASSWD = "mysql";*/
 $account_id = "1668";
 //echo "\nDBASE=".$DBASE." ,User=".$USER." ,PASS=".$PASSWD;
 $DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server is down. Please try after few minutes.");
 mysql_select_db ($DBASE, $DbConnection) or die("could not find DB");
 
-$abspath = "/var/www/html/vts/beta/src/php";
-include_once($abspath."/common_xml_element.php");
-include_once($abspath."/get_all_dates_between.php");
-include_once($abspath."/sort_xml.php");
+date_default_timezone_set("Asia/Kolkata");
+if ($DEBUG_OFFLINE) {    
+    $abspath = "C:\\xampp/htdocs/itrack/beta/src/php";
+    $report_path = "C:\\xampp/htdocs/itrack/reportPhpBackend";
+} else if ($DEBUG_ONLINE) {
+    $abspath = "/var/www/html/vts/beta/src/php";
+    $report_path = "/mnt/itrack/reportPhpBackend";
+} else {
+    $abspath = "/var/www/html/vts/beta/src/php";
+    $report_path = "/mnt/itrack/reportPhpBackend";
+}
+echo "<br>AbsPath=" . $abspath;
+include_once($abspath . "/common_xml_element.php");
+echo "\nD1";
+include_once($abspath . '/ioParameters.php');
+echo "\nD2";
+include_once($abspath . '/dataParameters.php');
+echo "\nD3";
+include_once($abspath . '/dataArrays.php');
+if (file_exists($tmp)) {
+    echo "File Exists1";
+} else {
+    "Does not exist";
+}
+echo "\nD4";
+include_once($abspath . '/sortXmlData.php');
+echo "\nD5:" . $abspath;
+//$tmp = $abspath.'/getXmlData.php';
+//if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
+include_once($abspath . '/getDeviceData.php');
+echo "\nD6";
+
+//$abspath = "/var/www/html/vts/beta/src/php";
 include_once($abspath."/calculate_distance.php");
 include_once($abspath."/report_title.php");
-include_once($abspath."/read_filtered_xml.php");
 //include_once($abspath."/get_location.php");
 include_once($abspath."/user_type_setting.php");
 include_once($abspath."/select_landmark_report.php");
-include_once($abspath."/area_violation/check_with_range.php");
 include_once($abspath."/area_violation/pointLocation.php");
 require_once $abspath."/excel_lib/class.writeexcel_workbook.inc.php";
 require_once $abspath."/excel_lib/class.writeexcel_worksheet.inc.php";
 include_once($abspath."/util.hr_min_sec.php");
-include_once($abspath."/daily_report/motherdairy/bulandshahar/get_master_detail.php");
-//echo "\nAfter Include";
+include_once("get_master_detail.php");
+
+echo "\nD7";
+include_once($abspath . "/util.hr_min_sec.php");
+if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun.php"))
+    ;
+include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
+
+echo "\nD8";
+
+echo "\nAfter Include";
 //include_once($abspath."/get_location_lp_track_report.php");
 
 //include_once($abspath."/mail_action_report_distance_1.php");
@@ -40,15 +91,15 @@ include_once($abspath."/daily_report/motherdairy/bulandshahar/get_master_detail.
 
 function tempnam_sfx($path, $suffix)
 {
-	$file = $path.$suffix;
-	/*do
-	{
-		$file = $path.$suffix;
-		$fp = @fopen($file, 'x');
-	}
-	while(!$fp);
-	fclose($fp);*/
-	return $file;
+    $file = $path.$suffix;
+    /*do
+    {
+            $file = $path.$suffix;
+            $fp = @fopen($file, 'x');
+    }
+    while(!$fp);
+    fclose($fp);*/
+    return $file;
 }
 
 //echo "report4\n";
