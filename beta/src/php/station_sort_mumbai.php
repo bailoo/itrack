@@ -91,6 +91,11 @@ function get_master_detail($account_id, $shift_time)
     {		
         $plant_customer_write_path_ev = $abspath."/".$account_id."/master/evening_plant_customer#1#7.csv";	
         unlink($plant_customer_write_path_ev);
+        
+        $plantEvFileArr=explode("/",$plant_customer_write_path_ev);
+        $delPlantEvFile="gps_report/".$account_id."/master/".$plantEvFileArr[sizeof($plantEvFileArr)-1];
+        delFile($delPlantEvFile);
+        
         //$plant_customer_write_path_ev = "C:\\xampp/htdocs/sorting_motherdairy/evening_plant_customer#1#7.csv";
         sort_station($plant_input_ev, $customer_input_ev, $customer_name_input_ev, $transporter_input_ev, $route_input_ev, $plant_customer_write_path_ev);
     }
@@ -99,6 +104,11 @@ function get_master_detail($account_id, $shift_time)
     {
         $plant_customer_write_path_mor = $abspath."/".$account_id."/master/morning_plant_customer#1#8.csv";
         unlink($plant_customer_write_path_mor);
+        
+        $plantMorFileArr=explode("/",$plant_customer_write_path_mor);
+        $delPlantMorFile="gps_report/".$account_id."/master/".$plantMorFileArr[sizeof($plantMorFileArr)-1];
+        delFile($delPlantMorFile);
+        
         //$plant_customer_write_path_mor = "C:\\xampp/htdocs/sorting_motherdairy/morning_plant_customer#1#8.csv";	
         sort_station($plant_input_mor, $customer_input_mor,  $customer_name_input_mor, $transporter_input_mor, $route_input_mor, $plant_customer_write_path_mor); 
     }
