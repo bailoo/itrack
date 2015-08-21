@@ -25,12 +25,12 @@ include_once($pathToRoot.'/beta/src/php/data.php');
 include_once($pathToRoot.'/beta/src/php/getDeviceDataTest.php');
     
     
-/*$vehicleserialWithIo="865733024480519::#2^engine,,";
+$vehicleserialWithIo="865733024480519::#2^engine,,";
 $startDate="2015/08/21 00:00:00";
 $endDate="2015/08/21 12:11:17";
 
 $result=getEngineRunHour($vehicleserialWithIo,$startDate,$endDate);
-print_r($result);*/
+print_r($result);
 
 function getEngineRunHour($vehicleserialWithIo,$startDate,$endDate)
 {
