@@ -19,7 +19,6 @@
     </head>
 <body>
 <?php
-
 //error_reporting(-1);
 //ini_set('display_errors', 'On');
 ini_set('auto_detect_line_endings',TRUE);
@@ -287,7 +286,7 @@ echo'<table border="0" align="center">
 						<legend>File Upload Message</legend>';
 						for($i=0;$i<sizeof($upload_final_dest_file);$i++)
 						{
-							upload_files($upload_final_dest_file[$i],$upload_format_ids_1[$i],$upload_upload_type[$i],$upload_file_ids_arr[$i]);
+                                                    upload_files($upload_final_dest_file[$i],$upload_format_ids_1[$i],$upload_upload_type[$i],$upload_file_ids_arr[$i]);
 						}
 				echo'</fieldset>
 				</td>
@@ -709,7 +708,8 @@ echo'<table border="0" align="center">
 				}
 				$cnt++;											
 			}
-		}	
+		}
+                unlink($tmp_upload_file);
 	}
 							
 ?>
