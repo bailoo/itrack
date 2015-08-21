@@ -108,7 +108,7 @@ function getEngineRunHourData($vehicle_serial, $iotype_element_1 , $vname_local,
 
     get_All_Dates($dateRangeStart, $dateRangeEnd, $userdates);    
     $date_size = sizeof($userdates);
-    print_r($userdates);
+    //print_r($userdates);
     
 	
     $parameterizeData=new parameterizeData();
