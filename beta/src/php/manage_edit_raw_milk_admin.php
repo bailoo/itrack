@@ -462,7 +462,7 @@ border: none;
                                     //echo $user_Tid;
                                     if( ($user_type!="raw_milk") && ($user_type!="plant_raw_milk" ))
                                     {
-                                            $status = "<a href='src/php/manage_invoice_milk_add_upload.php?pending=1&tid_p=".$row_select['transporter_account_id']."&sno_p=".$row_select['sno']." ;' class='hs2' target='_blank'><font color=red>Pending to<br> $user_Tid </font></a><br>CR:".$row_select['create_date']."<br>LastEdited:".$row_select['edit_date']." ";
+                                            $status = "<a href='src/php/manage_invoice_milk_add_upload.php?pending=1&tid_p=".$row_select['transporter_account_id']."&sno_p=".$row_select['sno']." ;' class='hs2' target='_blank'><font color=red>Pending to<br> $user_Tid </font></a><br>CR:".$row_select['create_date']." ";
                                     }
                                     else
                                     {
@@ -610,7 +610,7 @@ border: none;
 				//--------end milk age calculation-------------//
 				
 				echo "<td>".$sno_local."</td>
-				<td>".$row_select['create_date']."</td>
+				<td>".$row_select['create_date']."<br>LastEdited:".$row_select['edit_date']."</td>
 				<td>".$row_select['lorry_no']."</td>
 				";
 				

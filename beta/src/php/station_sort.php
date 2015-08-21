@@ -12,7 +12,10 @@ function get_master_detail($account_id, $shift_time)
 	//$dir = "c:\\gps_report/231/master";
 	//$dir = "c:\\halt2/test_master";
 	//$dir = "C:\\xampp/htdocs/sorting_motherdairy";	
-	$dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";
+	$abspath = "/var/www/html/vts/beta/src/php/gps_report";
+        //$abspath = $pathToRoot."/s3/itrack/gps_report/";
+        //$abspath = "C:\\xampp/htdocs/itrackDevelop/beta/src/php/gps_report";	
+        $dir = $abspath."/".$account_id."/master";
 	$dh = opendir($dir);
 	while (($file = readdir($dh)) !== false) {
 		//echo "<A HREF=\"$file\">$file</A><BR>\n";
@@ -90,7 +93,7 @@ function get_master_detail($account_id, $shift_time)
 
 	if($shift_time == "ZPME")
 	{		
-		$plant_customer_write_path_ev = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";	
+		$plant_customer_write_path_ev = $pathToRoot."/s3/itrack/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";	
 		unlink($plant_customer_write_path_ev);
 		//$plant_customer_write_path_ev = "C:\\xampp/htdocs/sorting_motherdairy/evening_plant_customer#1#7.csv";
 		sort_station($plant_input_ev, $customer_input_ev, $transporter_input_ev, $route_input_ev, $plant_customer_write_path_ev);
@@ -98,7 +101,7 @@ function get_master_detail($account_id, $shift_time)
 	
 	if($shift_time == "ZPMM")
 	{
-		$plant_customer_write_path_mor = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
+		$plant_customer_write_path_mor = $pathToRoot."/s3/itrack/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
 		unlink($plant_customer_write_path_mor);
 		//$plant_customer_write_path_mor = "C:\\xampp/htdocs/sorting_motherdairy/morning_plant_customer#1#8.csv";	
 		sort_station($plant_input_mor, $customer_input_mor, $transporter_input_mor, $route_input_mor, $plant_customer_write_path_mor); 
@@ -110,6 +113,7 @@ function get_master_detail($account_id, $shift_time)
 
 function sort_station($plant_input, $customer_input, $transporter_input, $route_input, $plant_customer_write_path)
 {
+    global $account_id;
 	//echo "\nSORT STATION=".$plant_customer_write_path." ,size=".sizeof($customer_input)."\n";
 	for($x = 1; $x < sizeof($customer_input); $x++) 
 	{
@@ -238,7 +242,11 @@ function sort_station($plant_input, $customer_input, $transporter_input, $route_
 	//FINAL FILE WRITE
 	$file = fopen($plant_customer_write_path,"w");
 	fwrite($file,$linetowrite);
-	fclose($file);         
+	fclose($file);
+        $filePathTempArr=explode("/",$plant_customer_write_path);        
+        $s3FilePath="gps_report/".$account_id."/master/".$filePathTempArr[sizeof($filePathTempArr)-1];
+        //echo "s3FilePath=".$s3FilePath." plant_customer_write_path=".$plant_customer_write_path."<br>";
+        uploadFile($s3FilePath,$plant_customer_write_path,true); 
    
 } // FUNCTION CLOSED
  
