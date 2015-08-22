@@ -300,9 +300,9 @@ echo'<table border="0" align="center">
 		if(isset($final_dest_file))
 		{
                     $overwrite=true;
-                    //echo "uploadPath=".$final_dest_file." tmpPath=".$_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name']."<br>";
+                    echo "uploadPath=".$final_dest_file." tmpPath=".$_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name']."<br>";
                     $fileUploadStatus=uploadFile($final_dest_file, $_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name'], $overwrite);
-		    //echo "fileUploadStatus=".$fileUploadStatus."<br>";
+		    echo "fileUploadStatus=".$fileUploadStatus."<br>";
                     //echo 'File1='.'file_'.$format_ids_cnd."_".$sub_files_ids.' ,File2='.$_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name']." ,final_dest=".$final_dest_file."<br>";	
 		    copy($_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name'],$final_dest_file);
                     //if(copy($_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name'],$final_dest_file))

@@ -141,19 +141,29 @@ function get_master_detail($account_id, $shift_time)
         
         $file = fopen($ev_file_orig,"w");
         fwrite($file,$content_ev);
-        fclose($file);            
+        fclose($file); 
+        $evFileOrigArr=explode("/",$ev_file_orig);        
+        $s3FilePath="gps_report/".$account_id."/master/".$evFileOrigArr[sizeof($evFileOrigArr)-1];
+        //echo "s3FilePath=".$s3FilePath." plant_customer_write_path=".$plant_customer_write_path."<br>";
+        $uploadResult=uploadFile($s3FilePath,$ev_file_orig,true); 
     }
     else if($shift_time=="ZPMM")
     {
         unlink($mor_file_orig);
-        
+        //echo "mor_file_orig=".$mor_file_orig."<br>";
         $mrFileArr=explode("/",$mor_file_orig);
         $delMrFile="gps_report/".$account_id."/master/".$mrFileArr[sizeof($mrFileArr)-1];
-        delFile($delMrFile);
+        $delFileM=delFile($delMrFile);
+        //echo "delFileM".$delFileM."<br>";
        
         $file = fopen($mor_file_orig,"w");
         fwrite($file,$content_mor);
-        fclose($file);            
+        fclose($file);
+        
+        $morFileOrigArr=explode("/",$mor_file_orig);        
+        $s3FilePath="gps_report/".$account_id."/master/".$morFileOrigArr[sizeof($morFileOrigArr)-1];
+        //echo "s3FilePath=".$s3FilePath." plant_customer_write_path=".$plant_customer_write_path."<br>";
+        $uploadResult=uploadFile($s3FilePath,$mor_file_orig,true);  
     }
     //### UPDATE MORNING ORIGINAL
 
@@ -182,7 +192,8 @@ function get_master_detail($account_id, $shift_time)
         
         $plantMorFileArr=explode("/",$plant_customer_write_path_mor);
         $delPlantMorFile="gps_report/".$account_id."/master/".$plantMorFileArr[sizeof($plantMorFileArr)-1];
-        delFile($delPlantMorFile);
+        $delStatus=delFile($delPlantMorFile);
+        //echo "delStatus=".$delStatus."<br>";
         
         //$plant_customer_write_path_mor = "C:\\xampp/htdocs/sorting_motherdairy/morning_plant_customer#1#8.csv";	
         sort_station($plant_input_mor, $customer_input_mor, $transporter_input_mor, $route_input_mor, $route_input_type_mor, $plant_customer_write_path_mor); 
@@ -191,6 +202,7 @@ function get_master_detail($account_id, $shift_time)
 } //function closed
 function sort_station($plant_input, $customer_input, $transporter_input, $route_input, $route_input_type, $plant_customer_write_path)
 {
+    //echo "in sort";
     global $account_id;
     //echo "\nSORT STATION=".$plant_customer_write_path." ,size=".sizeof($customer_input)."\n";
     for($x = 1; $x < sizeof($customer_input); $x++)
@@ -313,10 +325,11 @@ function sort_station($plant_input, $customer_input, $transporter_input, $route_
     $file = fopen($plant_customer_write_path,"w");
     fwrite($file,$linetowrite);
     fclose($file);  
-    $filePathTempArr=explode("/",$plant_customer_write_path);        
-    $s3FilePath="gps_report/".$account_id."/master/".$filePathTempArr[sizeof($filePathTempArr)-1];
+    $plantCustomerWritePathArr=explode("/",$plant_customer_write_path);        
+    $s3FilePath="gps_report/".$account_id."/master/".$plantCustomerWritePathArr[sizeof($plantCustomerWritePathArr)-1];
     //echo "s3FilePath=".$s3FilePath." plant_customer_write_path=".$plant_customer_write_path."<br>";
-    uploadFile($s3FilePath,$plant_customer_write_path,true);   
+    $uploadResult=uploadFile($s3FilePath,$plant_customer_write_path,true);  
+    //echo "uploadResult=".$uploadResult."<br>";
 } // FUNCTION CLOSED
  
 function check_valid_record($route_tmp, $vehicle_tmp)
