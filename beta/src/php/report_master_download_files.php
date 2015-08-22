@@ -1,6 +1,6 @@
 <?php
 //error_reporting(-1);
-ini_set('display_errors', 'On');
+//ini_set('display_errors', 'On');
 include_once('util_session_variable.php');
 $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 //$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]; // local path
