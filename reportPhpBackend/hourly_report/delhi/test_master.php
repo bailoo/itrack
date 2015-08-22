@@ -10,7 +10,7 @@ $filePathToS3Wrapper=$pathToRoot."/s3/S3Wrapper.php";
 echo "\nfilePathToS3Wrapper=".file_exists($filePathToS3Wrapper);
 //$filePathToS3Wrapper="/mnt/itrack/s3/S3Wrapper.php";
 
-//include_once("../../../s3/S3Wrapper.php");
+include_once($pathToRoot."/s3/S3Wrapper.php");
 echo "\npathToRoot=".$pathToRoot;
 
 $S3DirPath='gps_report/'.$account_id."/master";
