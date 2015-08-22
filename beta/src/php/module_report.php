@@ -1,7 +1,30 @@
 <?php
-	include_once('util_session_variable.php');
-	include_once('util_php_mysql_connectivity.php');
-	include("user_type_setting.php");
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
+include_once('util_session_variable.php');
+include_once('util_php_mysql_connectivity.php');
+include("user_type_setting.php");
+        
+$pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+//print_r($pathInPieces);
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+$filePathToS3Wrapper=$pathToRoot."/beta/s3/S3Wrapper.php";
+include_once($filePathToS3Wrapper);
+
+$S3Path="gps_report/".$account_id."/upload";
+$contents=listDir($S3Path);
+/*$download_path="src/php/gps_report/".$account_id."/download";
+$master_download_path="src/php/gps_report/".$account_id."/master";
+$S3Path="gps_report/".$account_id."/upload";
+$contents=listDir($S3Path);
+ if(count($contents)>0)
+{
+   for($i=0;$i<sizeof($contents);$i++) 
+   {
+      echo "fileName=".$contents[$i]."<br>";
+   }
+}*/
+
 
 	$flag_sector = 0;
 	for($k=0;$k<$size_feature_session;$k++)
@@ -103,7 +126,8 @@
 	//$exp_download_path="src/php/gps_report/".$account_id;
 	$download_path="src/php/gps_report/".$account_id."/download";
 	$master_download_path="src/php/gps_report/".$account_id."/master";
-	
+        
+       	
 	//if ($flag_station) echo "Upload Path=".$upload_download_path;
 	
 	echo'<tr>
@@ -1522,7 +1546,7 @@
 									"</table>",editable:false, children:
 									[';
 										
-										if($handle = opendir($download_path)) 
+										/*if($handle = opendir($download_path)) 
 										{
 											$download_file_arr=array();
 											while($file = readdir($handle)) 
@@ -1556,7 +1580,28 @@
 												[]},';	
 												}
 											}
-										}
+										}*/
+                                                                                if(count($contents)>0)
+                                                                                for($i=0;$i<sizeof($contents);$i++) 
+                                                                                {
+                                                                                  echo'{type:"Text",
+												label:"<table border=0 class=\'mystyle\'>"+
+															"<tr>"+ 																				
+																"<td valign=\'top\'>"+
+																	"<table border=0 class=\'mystyle\'>"+																					
+																		"<tr>"+
+																			"<td>"+ 
+																				"<a href=javascript:report_show_download_file(\'src/php/report_download_files.htm\',\''.$contents[$i].'\'); class=\'menuitem\'>&nbsp;"+
+																					"'.$contents[$i].'"+
+																				"</a>"+
+																			"</td>"+
+																		"</tr>"+
+																	"</table>"+
+																"</td>"+
+															"</tr>"+
+														"</table>",editable:false, children:																	
+												[]},';
+                                                                                }
 									echo '{type:"Text",
 									label:"<table border=0 class=mystyle>"+
 										"<tr>"+ 																	
@@ -1864,7 +1909,7 @@
 						"</table>",';                    
                   }                                                     
 									
-								  if($account_id==1)
+								  //if($account_id==1)
 								  {
 									echo'"<table border=0 class=\'mystyle\'>"+
 											"<tr>"+ 
@@ -2259,6 +2304,38 @@
 														"<td>"+ 	
 															"<a href=javascript:'.$js_function_name.'(\'src/php/alert_area_violation.htm\',\'Geofence%20Violation%20Report\'); class=\'menuitem\'>"+
 																"'.$nbsp.'Geofence violation"+
+															"</a>"+
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+										"</tr>"+
+									"</table>",';
+                                                                echo'"<table border=0 class=\'mystyle\'>"+
+										"<tr>"+ 
+											"<td valign=\'top\'>"+
+												"<table border=0 class=\'mystyle\'>"+
+													"<tr>"+
+														"<td height=\'1px\'></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td>'.$nbsp.'"+
+															"<a href=javascript:'.$js_function_name.'(\'src/php/alert_monthly_distance_geofence.htm\',\'Monthly%20Geofence%20Report\'); class=\'menuitem\'>"+
+																"'.$nbsp.'<img src=\'images/report_icons/area_violation.jpeg\' style=\'border:none;width:20px;height:20px;\' class=\'help_img_css\'>"+
+															"</a>"+
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td valign=\'top\'>"+
+												"<table border=0 class=\'mystyle\'>"+
+													"<tr>"+
+														"<td height=\'1px\'></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td>"+ 	
+															"<a href=javascript:'.$js_function_name.'(\'src/php/alert_monthly_distance_geofence.htm\',\'Monthly%20Geofence%20Report\'); class=\'menuitem\'>"+
+																"'.$nbsp.'Monthly Geofence Report"+
 															"</a>"+
 														"</td>"+
 													"</tr>"+

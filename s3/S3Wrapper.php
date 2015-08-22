@@ -49,7 +49,7 @@ function fileExistsS3($FileName)
     
     if(!$s3->getBucketLocation($bucketName))
     {
-        echo "file exist false 1\n";
+        //echo "file exist false 1\n";
         return false;
     }
     
@@ -78,12 +78,12 @@ function uploadFile($S3FileName, $LocalFilePath, $overwrite)
     
     if(!$s3->getBucketLocation($bucketName))
     {
-        echo "Upload false 1 \n";
+        //echo "Upload false 1 \n";
         return false;
     }
     if (!file_exists($upldFile) || !is_file($upldFile))
     {
-        echo "Upload false 2 \n";
+       // echo "Upload false 2 \n";
         return false;
     }
     
@@ -91,7 +91,7 @@ function uploadFile($S3FileName, $LocalFilePath, $overwrite)
     {
         if(!($s3->putObjectFile($upldFile, $bucketName, $S3FileName, S3::ACL_PUBLIC_READ)))
         {
-            echo "Upload false 3 \n";
+            //echo "Upload false 3 \n";
             return false;
         }
     }
@@ -196,7 +196,7 @@ function listFile($S3Path)
     
     foreach ($BucketList as $key => $values)
     {
-        //echo "key=".$key." value=".$values."<br>";
+        //echo "key=".$key." value=".$values['time']."<br>";
         if(strlen($key)<strlen($S3Path))
         {
             continue;
@@ -212,6 +212,8 @@ function listFile($S3Path)
             }
             else 
             {
+                //echo " keyArr=".$keyArr[sizeof($keyArr)-1]."\n";
+                //$filelist[] = $keyArr[sizeof($keyArr)-1];
                 $FileDate = date("Y-m-d H:i:s",$values['time']);
                 $filelist[] = array('name'=>$keyArr[sizeof($keyArr)-1],'dateTime'=>$FileDate);
             }
@@ -287,13 +289,16 @@ function delDir($S3Dirname)
     
     foreach ($BucketList as $key => $values)
     {
+        //echo "key=".$key."S3Dirname".$S3Dirname."len-S3Dirname=".strlen($S3Dirname)."<br>";
         if(strlen($key)<strlen($S3Dirname))
         {
             continue;
         }
-        else if((strcmp($S3Dirname,$BucketList[$i])==0)||
-                (strcmp(($S3Path.'/'),substr($key,0,strlen($S3Path)+1))==0))
+        else if((strcmp($S3Dirname,$key)==0)||
+                (strcmp(($S3Dirname),substr($key,0,strlen($S3Dirname)))==0))
         {
+            $S3Filename=$key;
+            //echo "key2=".$key."S3Dirname".$S3Dirname."<br>";
             if(!($s3->deleteObject($bucketName, $S3Filename)))
             {
                 return false;
@@ -346,10 +351,19 @@ else if($account_id=="718")
 {
     include_once("station_sort_pdu.php");
 }
+//$S3Dirname="gps_report/568/master";
+//$delStatus=delDir($S3Filename);
+//echo "delStatus=".$delStatus."<br>";
 
-/*$S3Path="gps_report/1115/master";
-$contents=listFile($S3Path);
-print_r($contents);*/
+/*$S3Path="gps_report/231/master";
+$overwrite=true;
+$localPath="test";
+//copyDir($S3Path,)
+unlink($localPath);
+
+
+$contents=copyDir($S3Path,$localPath,$overwrite);*/
+//echo "contents=".$contents."<br>";
 //echo "List Bucket1:\n";
 //listBucket();
 /*$FileName = 'C:\Users\Shams\Desktop'.'/HR38L2027.xlsx';
@@ -398,10 +412,10 @@ else
 {
     echo "S3::Dir not copied():".'0068/mother_delhi'."\n";
 }
-
-echo "List File in Directory:\n";
-$filelist = listFile('0068/mother_delhi');
-print_r($filelist);*/
+*/
+//echo "List File in Directory:\n";
+//$filelist = listFile('gps_report/568/master');
+//print_r($filelist);
 
 /*if(copyFile($targetFile,$LocalFileName,true))
 {

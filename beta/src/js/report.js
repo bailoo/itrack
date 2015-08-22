@@ -2667,7 +2667,64 @@ function display1()
 } 
   
   
-    //1.AREA VIOLATION ALERT REPORT  
+    //1.AREA VIOLATION ALERT REPORT 
+    
+     function action_alert_monthly_distance_geofence(obj)
+  { 
+		var option_choices=0;
+		var numtype = 0;
+		var i = 0;
+		
+		numtype=0;
+    if(obj.day_opt.value == "2")
+		{
+      //alert("2");
+      var s = obj.elements['days[]'];
+  		for(i=0;i<s.length;i++)
+  		{
+  			if(s[i].checked)
+  				numtype = 1;
+  		}
+  		if(numtype==0)
+  		{
+  			alert("Please Select At Least One Day");
+  			return false;
+  		}	
+  	}      
+    
+    var rec = obj.vehicleserial;
+    var device_str = radio_selection(rec); 	 
+    //var device_str = get_selected_vehicle(obj); 
+   
+    if(device_str!=false)
+    {
+    	var day_opt1=document.getElementById("day_opt").value;		
+    	if(day_opt1=="1")
+    	{
+    		document.getElementById("loading_msg").style.display = '';  
+    		var poststr = "vehicleserial=" + encodeURI( device_str ) +					
+    					  "&month=" + encodeURI( document.getElementById("month").value )+
+    					  "&year=" + encodeURI( document.getElementById("year").value )+
+    					  "&days=" + encodeURI( day_str )+
+    					  "&day_opt=" + encodeURI( document.getElementById("day_opt").value ); 			
+    	}
+    	else
+    	{
+    		var day_str = get_selected_day(obj);
+    		if(day_str!=false)
+    		{
+    			document.getElementById("loading_msg").style.display = '';  
+    			var poststr = "vehicleserial=" + encodeURI( device_str ) +							
+    						  "&month=" + encodeURI( document.getElementById("month").value )+
+    						  "&year=" + encodeURI( document.getElementById("year").value )+
+    						  "&days=" + encodeURI( day_str )+
+    						  "&day_opt=" + encodeURI( document.getElementById("day_opt").value );  
+    		}
+    	}
+    }     					
+    //alert("riz:"+poststr);                
+    makePOSTRequest('src/php/action_alert_monthly_distance_geofence.htm', poststr);
+  } 
   
   function action_alert_area_violation(obj)
   {
