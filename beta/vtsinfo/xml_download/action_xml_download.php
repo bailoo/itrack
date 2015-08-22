@@ -4,7 +4,7 @@
 set_time_limit(300);	
 date_default_timezone_set("Asia/Kolkata");
 $vserial = $_POST['filename'];
-echo "vserial".$vserial."<br>";
+//echo "vserial".$vserial."<br>";
 
 
 
@@ -41,6 +41,15 @@ $parameterizeData->io7='o';
 $parameterizeData->io8='p';
 $parameterizeData->latitude='d';
 $parameterizeData->longitude='e';
+$parameterizeData->axParam = 'ax';
+$parameterizeData->ayParam = 'ay';
+$parameterizeData->azParam = 'az';
+$parameterizeData->mxParam = 'mx';
+$parameterizeData->myParam = 'my';
+$parameterizeData->mzParam = 'mz';
+$parameterizeData->bxParam = 'bx';
+$parameterizeData->byParam = 'by';
+$parameterizeData->byParam = 'bz';
 
     
 $SortedDataObject=new data(); 	
@@ -53,7 +62,7 @@ $SortedDataObject=new data();
 readFileXmlNew($vserial,$xmldate1,$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
 //var_dump($SortedDataObject);
   $csv_string = "";
-  $csv_string = $csv_string."SNo,STS,DateTime,MsgTp,Version,Fix,Latitude,Longitude,Speed,SupplyV,SgnlSt,io1,io2,o3,io4,io5,io6,io7,io8\n";
+  $csv_string = $csv_string."SNo,STS,DateTime,MsgTp,Version,Fix,Latitude,Longitude,Speed,SupplyV,SgnlSt,io1,io2,o3,io4,io5,io6,io7,io8,ax,ay,az,mx,my,mz,bx,by,bz\n";
         if(count($SortedDataObject->deviceDatetime)>0)
         {
                 //echo "in sorted=".$SortedDataObject->deviceDatetime."<br><br><br><br><br><br>";
@@ -85,8 +94,18 @@ readFileXmlNew($vserial,$xmldate1,$requiredData,$sortBy,$parameterizeData,$Sorte
                     $io7=$SortedDataObject->io7Data[$obi];
                     $io8=$SortedDataObject->io8Data[$obi];
                     $sup_v=$SortedDataObject->supVoltageData[$obi];
-                    $sig_str=$SortedDataObject->sigStrData[$obi];                 
-                    $csv_string = $csv_string.$sno.','.$sts.','.$datetime.','.$msgtype.','.$ver.','.$fix.','.$lat.','.$lng.','.$speed.','.$sup_v.','.$sig_str.','.$io1.','.$io2.','.$io3.','.$io4.','.$io5.','.$io6.','.$io7.','.$io8."\n";
+                    $sig_str=$SortedDataObject->sigStrData[$obi]; 
+                   
+                    $ax = ($SortedDataObject->axParamData[$obi]!='')? $SortedDataObject->axParamData[$obi] : '-';
+                    $ay = ($SortedDataObject->axParamData[$obi]!='')? $SortedDataObject->ayParamData[$obi] : '-';
+                    $az = ($SortedDataObject->axParamData[$obi]!='')? $SortedDataObject->azParamData[$obi] : '-';
+                    $mx = ($SortedDataObject->axParamData[$obi]!='')? $SortedDataObject->mxParamData[$obi] : '-';
+                    $my = ($SortedDataObject->axParamData[$obi]!='')? $SortedDataObject->myParamData[$obi] : '-';
+                    $mz = ($SortedDataObject->axParamData[$obi]!='')? $SortedDataObject->mzParamData[$obi] : '-';
+                    $bx = ($SortedDataObject->axParamData[$obi]!='')? $SortedDataObject->bxParamData[$obi] : '-';
+                    $by = ($SortedDataObject->axParamData[$obi]!='')? $SortedDataObject->byParamData[$obi] : '-';
+                    $bz = ($SortedDataObject->axParamData[$obi]!='')? $SortedDataObject->bzParamData[$obi] : '-';
+                    $csv_string = $csv_string.$sno.','.$sts.','.$datetime.','.$msgtype.','.$ver.','.$fix.','.$lat.','.$lng.','.$speed.','.$sup_v.','.$sig_str.','.$io1.','.$io2.','.$io3.','.$io4.','.$io5.','.$io6.','.$io7.','.$io8.','.$ax.','.$ay.','.$az.','.$mx.','.$my.','.$mz.','.$bx.','.$by.','.$bz."\n";
             }
         }
         //echo $csv_string;
@@ -133,18 +152,7 @@ if(file_exists(trim($path)))
       }
   }
   fclose ($fd);
-  //exit;
-    
-  /*echo "<br><br><font color=green>Downloding file...</font>";
-  if($buffer)
-    echo "<br><br><br><font color=green><strong>file Download Successful...</strong></font>"; */
-    
-  //UNLINK FILE AFTER DOWNLOAD
-  
-  //$del_path = "csv_reports/".$filename;
-  //echo "<br>path2=".$path;
   unlink($path); 
-  
   exit;   
 }
 /// SCRIPT CLOSED

@@ -11,10 +11,10 @@ $transporter_input_ev = array();
 
 function get_master_detail($account_id, $shift_time)
 {
-	echo "<br>ShiftTime=".$shift_time;
-	//$abspath = "/var/www/html/vts/test/src/php/gps_report";
+	//echo "<br>ShiftTime=".$shift_time;
 	$abspath = "/var/www/html/vts/beta/src/php/gps_report";
-	//$abspath = "D:\\test_app/gps_report";
+	//$abspath = $pathToRoot."/s3/itrack/gps_report/";
+	//$abspath = "C:\\xampp/htdocs/itrackDevelop/beta/src/php/gps_report";
 	
 	$tpt_path_ev = $abspath."/".$account_id."/master/tpt_ev#1#20.csv";	
 	$tpt_path_mor = $abspath."/".$account_id."/master/tpt_mor#1#30.csv";	
@@ -309,10 +309,20 @@ function get_master_detail($account_id, $shift_time)
 		//echo "\nAS2:SizeCustomerInputEv=".sizeof($customer_input_ev);
 		
 		$master_db_path = $abspath."/".$account_id."/master/vehicle_route_db_ev#1#40.csv";	
-		if(file_exists($master_db_path)) unlink($master_db_path);
+		if(file_exists($master_db_path)) 
+                {
+                    unlink($master_db_path);
+                }
+                
+                $masterDbArr=explode("/",$master_db_path);
+                $masterDbFile="gps_report/".$account_id."/master/".$masterDbArr[sizeof($masterDbArr)-1];
+                delFile($masterDbFile);
+        
 		$file = fopen($master_db_path,"w");
 		fwrite($file,$linetowrite);
 		fclose($file);
+                $s3FilePath="gps_report/".$account_id."/master/vehicle_route_db_ev#1#40.csv";
+                uploadFile($s3FilePath,$master_db_path,true);
 
                 //$lines = file($master_db_path);
                 //$lines = array_unique($lines);
@@ -347,15 +357,33 @@ function get_master_detail($account_id, $shift_time)
 			}
 		}
 		//$master_transporter_path = $abspath."/".$account_id."/master/vehicle_transporter#1#6.csv";	
-		if(file_exists($tpt_path_ev)) unlink($tpt_path_ev);
+		if(file_exists($tpt_path_ev)) 
+                {
+                    unlink($tpt_path_ev);
+                }
+                
+                $tptEvArr=explode("/",$tpt_path_ev);
+                $tptEvFile="gps_report/".$account_id."/master/".$tptEvArr[sizeof($tptEvArr)-1];
+                delFile($tptEvFile);
+                
 		$file = fopen($tpt_path_ev,"w");
 		fwrite($file,$linetowrite);
 		fclose($file);
+                $s3FilePath="gps_report/".$account_id."/master/tpt_ev#1#20.csv";
+                uploadFile($s3FilePath,$tpt_path_ev,true);
 		//######### TRANSPORTER FILE CLOSED
 		
 		//################### EVENING FINAL MASTER		
 		$plant_customer_write_path_ev = $abspath."/".$account_id."/master/evening_plant_customer#1#11.csv";	
-		if(file_exists($plant_customer_write_path_ev)) unlink($plant_customer_write_path_ev);
+		if(file_exists($plant_customer_write_path_ev))
+                {
+                    unlink($plant_customer_write_path_ev);
+                }
+                
+                $plantCustomerEvArr=explode("/",$plant_customer_write_path_ev);
+                $plantCustomerEvFile="gps_report/".$account_id."/master/".$plantCustomerEvArr[sizeof($plantCustomerEvArr)-1];
+                delFile($plantCustomerEvFile);                
+                
 		//$plant_customer_write_path_ev = "C:\\xampp/htdocs/sorting_motherdairy/evening_plant_customer#1#7.csv";
 		sort_station($plant_input_ev, $customer_input_ev, $transporter_input_ev, $route_input_ev, $route_input_type_ev, $plant_customer_write_path_ev);		
 	}
@@ -425,10 +453,20 @@ function get_master_detail($account_id, $shift_time)
 			}			
 		}
 		$master_db_path = $abspath."/".$account_id."/master/vehicle_route_db_mor#1#50.csv";	
-		if(file_exists($master_db_path)) unlink($master_db_path);
+		if(file_exists($master_db_path))
+                {
+                    unlink($master_db_path);
+                }
+                
+                $masterDb1Arr=explode("/",$master_db_path);
+                $masterDb1File="gps_report/".$account_id."/master/".$masterDb1Arr[sizeof($masterDb1Arr)-1];
+                delFile($masterDb1File);                
+                
 		$file = fopen($master_db_path,"w");
 		fwrite($file,$linetowrite);
-		fclose($file);		
+		fclose($file);	
+                $s3FilePath="gps_report/".$account_id."/master/vehicle_route_db_mor#1#50.csv";
+                uploadFile($s3FilePath,$master_db_path,true);
 
                 //$lines = file($master_db_path);
                 //$lines = array_unique($lines);
@@ -463,14 +501,33 @@ function get_master_detail($account_id, $shift_time)
 			}			
 		}
 		//$master_transporter_path_mor = $abspath."/".$account_id."/master/vehicle_transporter_ev.csv";	
-		if(file_exists($tpt_path_mor)) unlink($tpt_path_mor);
+		if(file_exists($tpt_path_mor)) 
+                {
+                    unlink($tpt_path_mor);
+                }
+                
+                $tptMor1Arr=explode("/",$tpt_path_mor);
+                $tptMor1File="gps_report/".$account_id."/master/".$tptMor1Arr[sizeof($tptMor1Arr)-1];
+                delFile($tptMor1File);
+                
+                
 		$file = fopen($tpt_path_mor,"w");
 		fwrite($file,$linetowrite);
 		fclose($file);
+                $s3FilePath="gps_report/".$account_id."/master/tpt_mor#1#30.csv";
+                uploadFile($s3FilePath,$tpt_path_mor,true);
 		//######### TRANSPORTER FILE CLOSED
 		//################### MORNING FINAL MASTER
 		$plant_customer_write_path_mor = $abspath."/".$account_id."/master/morning_plant_customer#1#12.csv";
-		if(file_exists($plant_customer_write_path_mor)) unlink($plant_customer_write_path_mor);
+		if(file_exists($plant_customer_write_path_mor)) 
+                {
+                    unlink($plant_customer_write_path_mor);
+                }
+                
+                $plantMorFileArr=explode("/",$plant_customer_write_path_mor);
+                $delPlantMorFile="gps_report/".$account_id."/master/".$plantMorFileArr[sizeof($plantMorFileArr)-1];
+                delFile($delPlantMorFile);
+                
 		//$plant_customer_write_path_mor = "C:\\xampp/htdocs/sorting_motherdairy/morning_plant_customer#1#8.csv";	
 		sort_station($plant_input_mor, $customer_input_mor, $transporter_input_mor, $route_input_mor, $route_input_type_mor, $plant_customer_write_path_mor); 	
 	}
@@ -482,21 +539,22 @@ function get_master_detail($account_id, $shift_time)
 
 function sort_station($plant_input, $customer_input, $transporter_input, $route_input, $route_input_type, $plant_customer_write_path)
 {
+    global $account_id;
 	//echo "\nSORT STATION=".$plant_customer_write_path." ,size=".sizeof($customer_input)."\n";
 	for($x = 1; $x < sizeof($customer_input); $x++) 
 	{
-		$tmp_customer_input = $customer_input[$x];
-		$tmp_plant_input = $plant_input[$x];   				     				
-		$tmp_transporter_input = $transporter_input[$x];
-		$tmp_route_input = $route_input[$x];
-		$tmp_route_input = $route_input[$x];
-		$tmp_route_input_type = $route_input_type[$x];						
+            $tmp_customer_input = $customer_input[$x];
+            $tmp_plant_input = $plant_input[$x];   				     				
+            $tmp_transporter_input = $transporter_input[$x];
+            $tmp_route_input = $route_input[$x];
+            $tmp_route_input = $route_input[$x];
+            $tmp_route_input_type = $route_input_type[$x];						
 		///////////      				
 
-		$z = $x - 1;
-		$done = false;
-		while($done == false)
-		{
+            $z = $x - 1;
+            $done = false;
+            while($done == false)
+            {
 			$customer_tmp1 = $customer_input[$z];
 
 			if ($customer_tmp1 >$tmp_customer_input)
@@ -622,7 +680,12 @@ function sort_station($plant_input, $customer_input, $transporter_input, $route_
 	//FINAL FILE WRITE
 	$file = fopen($plant_customer_write_path,"w");
 	fwrite($file,$linetowrite);
-	fclose($file);         
+	fclose($file); 
+        $filePathTempArr=explode("/",$plant_customer_write_path);
+        
+        $s3FilePath="gps_report/".$account_id."/master/".$filePathTempArr[sizeof($filePathTempArr)-1];
+        //echo "s3FilePath=".$s3FilePath." plant_customer_write_path=".$plant_customer_write_path."<br>";
+        uploadFile($s3FilePath,$plant_customer_write_path,true);
    
 } // FUNCTION CLOSED
 
@@ -836,10 +899,21 @@ function create_transporter($abspath, $account_id, $tpt_path_ev, $tpt_path_mor)
 	}
 	
 	$master_transporter_path_mor = $abspath."/".$account_id."/master/vehicle_transporter#1#6.csv";		
-	if(file_exists($master_transporter_path_mor)) unlink($master_transporter_path_mor);
+	if(file_exists($master_transporter_path_mor))
+        {
+            unlink($master_transporter_path_mor);
+        }
+        
+        $masterTransporterMorArr=explode("/",$master_transporter_path_mor);
+        $masterTransporterMorFile="gps_report/".$account_id."/master/".$masterTransporterMorArr[sizeof($masterTransporterMorArr)-1];
+        delFile($masterTransporterMorFile);
+        
+        
 	$file = fopen($master_transporter_path_mor,"w");
 	fwrite($file,$linetowrite);
 	fclose($file);
+        $s3FilePath="gps_report/".$account_id."/master/vehicle_transporter#1#6.csv";
+        uploadFile($s3FilePath,$master_transporter_path_mor,true);
 }
 
 function sort_all_transporter()

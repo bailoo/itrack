@@ -104,6 +104,7 @@
 	
         for($di=0;$di<=($date_size-1);$di++)
         {
+            
             //echo "userdate=".$userdates[$di]."<br>";
             $SortedDataObject=new data();
             readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
@@ -119,12 +120,12 @@
                     $xml_date=$SortedDataObject->deviceDatetime[$obi];
                     if($xml_date>$date1 && $xml_date<$date2)
                     { 
-                        $finalDateTimeArr[$i][$dataCnt]=$SortedDataObject->deviceDatetime[$obi];
-                        $finalLatitudeArr[$i][$dataCnt]=$SortedDataObject->latitudeData[$obi];
-                        $finalLongitudeArr[$i][$dataCnt]=$SortedDataObject->longitudeData[$obi];
+                      
+                        $lat=$SortedDataObject->latitudeData[$obi];
+                        $lng=$SortedDataObject->longitudeData[$obi];
+                        //echo "lat=".$lat." lng=".$lng." dooropen=".$parameterizeData->doorOpen1."<br>";
                         if($parameterizeData->doorOpen1!=null)
-                        {
-                          
+                        {                          
                             $datetime = $xml_date;  
                             $door_count = $SortedDataObject->doorOpen1Data[$obi]; 
                             if($door_count>=250)
@@ -147,10 +148,12 @@
                             if($StartFlag == 2)
                             {
                                 $StartFlag=0;
+                                $continuous_running_flag = 0;
                                 $runtime = strtotime($time2) - strtotime($time1);
                                 if($runtime > 60)
                                 {
                                     //echo "in door open";
+                                    //echo "dateTime=".$time1."<br>";
                                     $lat_tmp1 = explode("=",$lat_tmp[0]);  
                                     $lat = preg_replace('/"/', '', $lat_tmp1[1]);
 
@@ -158,7 +161,7 @@
                                     $lng = preg_replace('/"/', '', $lng_tmp1[1]);
                                     $closeDataFlag=0;
                                     $doorOpenArrB1['imei'.$B1] =$vserial[$i];
-                                    $doorOpenArrB1['vname'.$B1] =$vname;
+                                    $doorOpenArrB1['vname'.$B1] =$vehicle_detail_local[0];
                                     $doorOpenArrB1['lat'.$B1] =$lat;
                                     $doorOpenArrB1['lng'.$B1] =$lng;
                                     $doorOpenArrB1['datefrom'.$B1] =$time1;
@@ -194,6 +197,7 @@
                             if($StartFlagB2 == 2)
                             {									
                                 $StartFlagB2=0;
+                                $continuous_running_flag2 = 0;
                                 $runtimeB = strtotime($timeB2) - strtotime($timeB1);
                                 if($runtimeB > 60)
                                 { 
@@ -206,7 +210,7 @@
                                     $lng = preg_replace('/"/', '', $lng_tmp1[1]);
 
                                     $doorOpenArrB2['imeib'.$B2] =$vserial[$i];
-                                    $doorOpenArrB2['vnameb'.$B2] =$vname;
+                                    $doorOpenArrB2['vnameb'.$B2] =$vehicle_detail_local[0];
                                     $doorOpenArrB2['latb'.$B2] =$lat;
                                     $doorOpenArrB2['lngb'.$B2] =$lng;
                                     $doorOpenArrB2['datefromb'.$B2] =$timeB1;
@@ -259,7 +263,7 @@
                                     $lng = preg_replace('/"/', '', $lng_tmp1[1]);
 
                                     $doorOpenArrB3['imeib'.$B3] =$vserial[$i];
-                                    $doorOpenArrB3['vnameb'.$B3] =$vname;
+                                    $doorOpenArrB3['vnameb'.$B3] =$vehicle_detail_local[0];
                                     $doorOpenArrB3['latb'.$B3] =$lat;
                                     $doorOpenArrB3['lngb'.$B3] =$lng;
                                     $doorOpenArrB3['datefromb'.$B3] =$timeB3;
@@ -277,6 +281,7 @@
                 {
                     //echo "in StartFlag<br>";
                     $StartFlag=0;
+                    $continuous_running_flag3 = 0;
                     $runtime = strtotime($time2) - strtotime($time1);
                     //echo "<br>runtime=".$runtime;
                     //$runhr_duration = strtotime($runtime);
@@ -289,7 +294,7 @@
                         $lng = preg_replace('/"/', '', $lng_tmp1[1]);
                         $closeDataFlag=0;
                         $doorOpenArrB1['imei'.$B1] =$vserial[$i];
-                        $doorOpenArrB1['vname'.$B1] =$vname;
+                        $doorOpenArrB1['vname'.$B1] =$vehicle_detail_local[0];
                         $doorOpenArrB1['lat'.$B1] =$lat;
                         $doorOpenArrB1['lng'.$B1] =$lng;
                         $doorOpenArrB1['datefrom'.$B1] =$time1;
@@ -318,7 +323,7 @@
                             $lng = preg_replace('/"/', '', $lng_tmp1[1]);
 
                             $doorOpenArrB2['imeib'.$B2] =$vserial[$i];
-                            $doorOpenArrB2['vnameb'.$B2] =$vname;
+                            $doorOpenArrB2['vnameb'.$B2] =$vehicle_detail_local[0];
                             $doorOpenArrB2['latb'.$B2] =$lat;
                             $doorOpenArrB2['lngb'.$B2] =$lng;						
                             $doorOpenArrB2['datefromb'.$B2] =$timeB1;
@@ -350,7 +355,7 @@
                             $lng = preg_replace('/"/', '', $lng_tmp1[1]);
 
                             $doorOpenArrB3['imeib'.$B3] =$vserial[$i];
-                            $doorOpenArrB3['vnameb'.$B3] =$vname;
+                            $doorOpenArrB3['vnameb'.$B3] =$vehicle_detail_local[0];
                             $doorOpenArrB3['latb'.$B3] =$lat;
                             $doorOpenArrB3['lngb'.$B3] =$lng;						
                             $doorOpenArrB3['datefromb'.$B3] =$timeB3;

@@ -471,10 +471,10 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
    {
         $deviceTime=FALSE;
    }
-    //echo "deviceTime=".$deviceTime."<br>";
-    //echo "dateToData=".$dateToData."<br>";
-    //echo "requiredData=".$requiredData."<br>";
-    //echo "imei=".$imei."<br>"; 
+    /*echo "deviceTime=".$deviceTime."<br>";
+    echo "dateToData=".$dateToData."<br>";
+    echo "requiredData=".$requiredData."<br>";
+    echo "imei=".$imei."<br>"; */
 	
     $orderAsc = TRUE;
     $st_results = getLogByDate($o_cassandra, $imei, $dateToData, $deviceTime, $orderAsc);
@@ -482,7 +482,8 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
     //var_dump($st_results);
     foreach($st_results as $item) {
         $msg_type = $item->a;                 
-        $ver = $item->b;              
+        $ver = $item->b;
+        //echo "ver=".$ver."<br>";
         $fix = $item->c;
         $lat = $item->d;
         $lng = $item->e;
@@ -501,6 +502,17 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
         $io8 = $item->p;
         $sig_str = $item->q;
         $sup_v = $item->r;
+        
+        $ax = $item->ax;
+        $ay = $item->ay;
+        $az = $item->az;
+        $mx = $item->mx;
+        $my = $item->my;
+        $mz = $item->mz;
+        $bx = $item->bx;
+        $by = $item->by;
+        $bz = $item->bz;
+        
           
         if ($requiredData == "All") 
         {            
@@ -577,6 +589,7 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
         if ($parameterizeData->axParam != null) 
         {
             $dataObject->axParamData[] = $ax;
+            //echo "ax=".$ax."<br>";
         }
         if ($parameterizeData->ayParam != null) 
         {
