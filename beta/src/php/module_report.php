@@ -7,8 +7,9 @@ include("user_type_setting.php");
         
 $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 //print_r($pathInPieces);
-$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
-$filePathToS3Wrapper=$pathToRoot."/beta/s3/S3Wrapper.php";
+//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
+$filePathToS3Wrapper=$pathToRoot."/s3/S3Wrapper.php";
 include_once($filePathToS3Wrapper);
 
 $S3Path="gps_report/".$account_id."/upload";
