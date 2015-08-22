@@ -320,9 +320,9 @@ include_once($path_mapwindow);
 													<b>Speed</b>
 												</th>';
 											}    
-											echo'<th class="text" align="left" width="3%">
+											/*echo'<th class="text" align="left" width="3%">
 													<b>Dist.(Km)</b>
-												</th>';
+												</th>';*/
 											if($lat_lng_permission)
 											{
 											echo'<th class="text" align="left" width="4%">
@@ -429,12 +429,14 @@ include_once($path_mapwindow);
 												if($data_with_location=="1")
 												{
 													//$csv_string = $csv_string."SNo,Date,Time,Location,Speed,Dist(km),Latitude,Longitude,Altitude";
-													$csv_string = $csv_string."SNo,Date,Time,Location,Speed,Dist(km)";
+													//$csv_string = $csv_string."SNo,Date,Time,Location,Speed,Dist(km)";
+                                                                                                    $csv_string = $csv_string."SNo,Date,Time,Location,Speed";
 												}
 												else
 												{
 													//$csv_string = $csv_string."SNo,Date,Time,Speed,Dist(km),Latitude,Longitude,Altitude";
-													$csv_string = $csv_string."SNo,Date,Time,Speed,Dist(km)";
+													//$csv_string = $csv_string."SNo,Date,Time,Speed,Dist(km)";
+                                                                                                        $csv_string = $csv_string."SNo,Date,Time,Speed";
 												}
 												for($k=0;$k<sizeof($text_report_io_element);$k++)
 												{												
@@ -600,7 +602,7 @@ include_once($path_mapwindow);
 											$csv_string = $csv_string.','.$speed[$i];
 										}
 									}			
-									if($cumdist[$i]=="")
+									/*if($cumdist[$i]=="")
 									{
 										echo'<td class="text" align="center">
 												<font color="red">-</font>
@@ -615,7 +617,7 @@ include_once($path_mapwindow);
 											</td>';
 										echo"<input TYPE=\"hidden\" VALUE=\"$cumdist[$i]\" NAME=\"temp[$i][Distance Covered(Km)]\">";
 										$csv_string = $csv_string.','.$cumdist[$i];
-									}
+									}*/
 									if($lat_lng_permission=="1")
 									{ 
 										if($lt1=="")
