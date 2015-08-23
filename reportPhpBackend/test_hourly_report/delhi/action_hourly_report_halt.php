@@ -289,11 +289,11 @@ $devicedate = $SortedDataObject->deviceDatetime[$obi];
                 $speed_sel[] = $SortedDataObject->speedData[$obi];
             }
 	}
-        else
+        /*else
         {
 	    echo "\nContinue";
             continue;
-        }
+        }*/
         
         $SortedDataObject = null;
         $sortObjTmp = null;
@@ -743,7 +743,7 @@ $devicedate = $SortedDataObject->deviceDatetime[$obi];
         $last_vehicle_name[] = $Vehicle[$i];
         $last_halt_time_new[] = $current_halt_time;
         //echo "<br>CurrentHaltTime:".$Vehicle[$i]." :".$current_halt_time;
-        //echo "\nNoData=".$nodata." ,Vehicle=".$Vehicle[$i];
+        echo "\nNoData=".$nodata." ,Vehicle=".$Vehicle[$i];
 
         $msg = "";
         if ($nodata) {

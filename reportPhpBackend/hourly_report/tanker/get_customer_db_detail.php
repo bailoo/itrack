@@ -46,23 +46,23 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param) {
     read_transporter($account_id, $shift_time);
     //echo "\nSizeExpectedCustomer=".sizeof($expected_customer_csv)." ,SizeExpectedTime=".sizeof($expected_time_csv);
     //##### READ MAIN MASTER FILE
-    if ($shift_time == "ZPMM") {
+    if ($shift_time == "ZBVM") {
         echo "\nMor:Master";
         if ($DEBUG_OFFLINE) {
-            $path = "C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master/morning_plant_customer#1#8.csv";
+            $path = "C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master/morning_plant_customer#1#12.csv";
         } else if($DEBUG_ONLINE) {
-            $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/morning_plant_customer#1#8.csv";
+            $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/morning_plant_customer#1#12.csv";
         } else {
-            $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/morning_plant_customer#1#8.csv";
+            $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/morning_plant_customer#1#12.csv";
         }
-    } else if ($shift_time == "ZPME") {
+    } else if ($shift_time == "ZBVE") {
         echo "\nEv:Master";
         if ($DEBUG_OFFLINE) {
-            $path = "C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master/evening_plant_customer#1#7.csv";
+            $path = "C:\\xampp/htdocs/itrack/beta/src/php/gps_report/".$account_id."/master/evening_plant_customer#1#11.csv";
         }else if($DEBUG_ONLINE) {
-            $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/evening_plant_customer#1#7.csv";
+            $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/evening_plant_customer#1#11.csv";
         } else {
-            $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/evening_plant_customer#1#7.csv";
+            $path = "/var/www/html/vts/beta/src/php/gps_report/" . $account_id . "/master/evening_plant_customer#1#11.csv";
         }
     }
 
@@ -74,11 +74,12 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param) {
 
         $query1 = "SELECT DISTINCT station_id,type,customer_no,station_coord,distance_variable FROM station WHERE " .
                 "user_account_id='$account_id' AND type='1' AND status=1";
-        //echo "\nQuery=".$query2;
+        echo "\nQuery=".$query1;
         $result1 = mysql_query($query1, $DbConnection);
         while ($row1 = mysql_fetch_object($result1)) {
             $plant_station_coord[$row1->customer_no] = $row1->station_coord;
             $plant_distance_variable[$row1->customer_no] = $row1->distance_variable;
+	    echo "\nCustomer=".$row1->customer_no.",Coord=".$row1->station_coord.",Distvar=".$row1->distance_variable;
         }
 
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -230,6 +231,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param) {
                         //$route_sel = $vehicle_imei_rdb[$i];
                         $transporter_wrt_route = $transporter_str[$j];
                         $plant_wrt_route = $plant_str[$j];
+			//echo "\nPlantWrtRoute=".$plant_wrt_route;
 
                         //echo "\nData Write";
                         //### GET EXPECTED TIME OF THIS ROW	

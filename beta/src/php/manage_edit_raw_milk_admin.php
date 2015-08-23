@@ -610,7 +610,7 @@ border: none;
 				//--------end milk age calculation-------------//
 				
 				echo "<td>".$sno_local."</td>
-				<td>".$row_select['create_date']."</td>
+				<td>".$row_select['create_date']."<br>LastEdited:".$row_select['edit_date']."</td>
 				<td>".$row_select['lorry_no']."</td>
 				";
 				

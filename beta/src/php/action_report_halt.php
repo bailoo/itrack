@@ -406,13 +406,14 @@ for($i=0;$i<$vsize;$i++)
             $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
             for($obi=0;$obi<$prevSortedSize;$obi++)
             {
+                $DataValid = 0;
                 $latCheck=$SortedDataObject->latitudeData[$obi];
                 $lngCheck=$SortedDataObject->longitudeData[$obi];               
                 if((strlen($latCheck)>5) && ($latCheck!="-") && (strlen($lngCheck)>5) && ($lngCheck!="-"))
                 {
                     $DataValid = 1;
                 }
-                if(($DataValid==1) && ($SortedDataObject->deviceDatetime[$obi]>$date1 && $SortedDataObject->deviceDatetime[$obi]<$date2))
+                if(($DataValid==1)  && ($SortedDataObject->deviceDatetime[$obi]>$date1 && $SortedDataObject->deviceDatetime[$obi]<$date2))
                 {
                    
                     $speed = $SortedDataObject->speedData[$obi];

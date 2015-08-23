@@ -1429,14 +1429,14 @@ function getIoAssignmentNumRow($list_fname,$vehicle_ids_1,$DbConnection)
 function insertIoAssignmentStr($io_field_name,$io_field_value,$vehicle_ids_1,$status1,$DbConnection)
 {
 	$query="insert into io_assignment(".$io_field_name.",vehicle_id,status) values(".$io_field_value.",'$vehicle_ids_1','$status1')";
-		echo "query2=".$query."<br>";
+        //echo "query2=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);
 	return $result;
 }
 function updateIoAssignmentStr($query_string,$vehicle_ids_1,$DbConnection)
 {
 	$query="UPDATE io_assignment SET ".$query_string."vehicle_id=$vehicle_ids_1 WHERE vehicle_id='$vehicle_ids_1'";
-	echo "query2=".$query."<br>";
+	//echo "query2=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);
         Return $result;	
 }
@@ -4743,7 +4743,7 @@ function getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$order,$use
         $data_invoice=array();
 	while($row_select = mysql_fetch_object($result))
 	{
-		$data_invoice[]=array('uid'=>$row_select->uid,'nme'=>$row_select->nme,'sno'=>$row_select->sno,'invoice_status'=>$row_select->invoice_status,'unload_accept_time'=>$row_select->unload_accept_time,'create_date'=>$row_select->create_date,'transporter_account_id'=>$row_select->transporter_account_id,'create_id'=>$row_select->create_id,'qty_kg'=>$row_select->qty_kg,'plant_acceptance_time'=>$row_select->plant_acceptance_time,'system_time'=>$row_select->system_time,'close_type'=>$row_select->close_type,'milk_age'=>$row_select->milk_age,'dispatch_time'=>$row_select->dispatch_time,'unload_estimated_time'=>$row_select->unload_estimated_time,'lorry_no'=>$row_select->lorry_no,'target_time'=>$row_select->target_time,'vehicle_no'=>$row_select->vehicle_no,'plant'=>$row_select->plant,'tanker_type'=>$row_select->tanker_type,'docket_no'=>$row_select->docket_no,'email'=>$row_select->email,'mobile'=>$row_select->mobile,'fat_percentage'=>$row_select->fat_percentage,'snf_percentage'=>$row_select->snf_percentage,'fat_kg'=>$row_select->fat_kg,'snf_kg'=>$row_select->snf_kg,'driver_name'=>$row_select->driver_name,'driver_mobile'=>$row_select->driver_mobile,'validity_time'=>$row_select->validity_time,'chilling_plant'=>$row_select->chilling_plant,'unload_estimated_datetime'=>$row_select->unload_estimated_datetime,'fat_per_ft'=>$row_select->fat_per_ft,'snf_per_ft'=>$row_select->snf_per_ft,'qty_ct'=>$row_select->qty_ct,'temp_ct'=>$row_select->temp_ct,'acidity_ct'=>$row_select->acidity_ct,'mbrt_min_ct'=>$row_select->mbrt_min_ct,'mbrt_rm_ct'=>$row_select->mbrt_rm_ct,'mbrt_br_ct'=>$row_select->mbrt_br_ct,'protien_per_ct'=>$row_select->protien_per_ct,'sodium_ct'=>$row_select->sodium_ct,'testing_status'=>$row_select->testing_status,'fat_per_rt'=>$row_select->fat_per_rt,'snf_per_rt'=>$row_select->snf_per_rt,'adultration_ct'=>$row_select->adultration_ct,'otheradultration_ct'=>$row_select->otheradultration_ct);
+		$data_invoice[]=array('uid'=>$row_select->uid,'nme'=>$row_select->nme,'sno'=>$row_select->sno,'invoice_status'=>$row_select->invoice_status,'unload_accept_time'=>$row_select->unload_accept_time,'create_date'=>$row_select->create_date,'transporter_account_id'=>$row_select->transporter_account_id,'create_id'=>$row_select->create_id,'qty_kg'=>$row_select->qty_kg,'plant_acceptance_time'=>$row_select->plant_acceptance_time,'system_time'=>$row_select->system_time,'close_type'=>$row_select->close_type,'milk_age'=>$row_select->milk_age,'dispatch_time'=>$row_select->dispatch_time,'unload_estimated_time'=>$row_select->unload_estimated_time,'lorry_no'=>$row_select->lorry_no,'target_time'=>$row_select->target_time,'vehicle_no'=>$row_select->vehicle_no,'plant'=>$row_select->plant,'tanker_type'=>$row_select->tanker_type,'docket_no'=>$row_select->docket_no,'email'=>$row_select->email,'mobile'=>$row_select->mobile,'fat_percentage'=>$row_select->fat_percentage,'snf_percentage'=>$row_select->snf_percentage,'fat_kg'=>$row_select->fat_kg,'snf_kg'=>$row_select->snf_kg,'driver_name'=>$row_select->driver_name,'driver_mobile'=>$row_select->driver_mobile,'validity_time'=>$row_select->validity_time,'chilling_plant'=>$row_select->chilling_plant,'unload_estimated_datetime'=>$row_select->unload_estimated_datetime,'fat_per_ft'=>$row_select->fat_per_ft,'snf_per_ft'=>$row_select->snf_per_ft,'qty_ct'=>$row_select->qty_ct,'temp_ct'=>$row_select->temp_ct,'acidity_ct'=>$row_select->acidity_ct,'mbrt_min_ct'=>$row_select->mbrt_min_ct,'mbrt_rm_ct'=>$row_select->mbrt_rm_ct,'mbrt_br_ct'=>$row_select->mbrt_br_ct,'protien_per_ct'=>$row_select->protien_per_ct,'sodium_ct'=>$row_select->sodium_ct,'testing_status'=>$row_select->testing_status,'fat_per_rt'=>$row_select->fat_per_rt,'snf_per_rt'=>$row_select->snf_per_rt,'adultration_ct'=>$row_select->adultration_ct,'otheradultration_ct'=>$row_select->otheradultration_ct,'edit_date'=>$row_select->edit_date);
 
 	}
         return $data_invoice;
@@ -4756,15 +4756,17 @@ function getInvoiceMDRMTargetDate($condition,$startdate,$enddate,$conditionStr,$
 		$plant_in=$conditionStr;
 		if($condition=='datebetweenonly_alldata') //$condition="datebetweenonly_alldata";$orderA="";$user_type="plant_raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type);
 		{
+                        //AND invoice_mdrm.invoice_status IN('1','5')
 			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
 							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-							AND invoice_mdrm.invoice_status IN('1','5') AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
+							 AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
                         }
 		else if($condition=='invoicestatus_plant_targetdate')  //$condition="invoicestatus_alldataNoDate";$orderA="1";$user_type="plant_raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type);
 		{
+                        //AND invoice_mdrm.invoice_status IN('1','5')
 			 $query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
 							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-							AND invoice_mdrm.invoice_status IN('1','5') AND invoice_mdrm.plant='$targetplant' AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
+							 AND invoice_mdrm.plant='$targetplant' AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
 		}
 		
 	}
@@ -4773,16 +4775,18 @@ function getInvoiceMDRMTargetDate($condition,$startdate,$enddate,$conditionStr,$
 	{
 		if($condition=='invoicestatus_allplant_targetdate') //$condition="datebetweenonly_alldata";$orderA="";$user_type="admin";$conditionStr=""; getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type);
 		{
+                        //AND invoice_mdrm.invoice_status IN('1','5')
 			 $query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
                                                     account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-                                                    AND invoice_mdrm.invoice_status IN('1','5') AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
+                                                     AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
                                                    // echo$query;		
 		}
 		else if($condition=='invoicestatus_plant_targetdate') //$condition="invoicestatus_alldataNoDate";$orderA="1";$user_type="admin";$conditionStr=""; getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type);
 		{
-			  $query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+                   // AND invoice_mdrm.invoice_status IN('1','5')
+                    $query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
                                                     account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-                                                    AND invoice_mdrm.invoice_status IN('1','5') AND invoice_mdrm.plant='$targetplant' AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
+                                                     AND invoice_mdrm.plant='$targetplant' AND invoice_mdrm.target_time BETWEEN '$startdate' AND '$enddate'";
                                                    // echo$query;
 		}
 		
@@ -4792,7 +4796,7 @@ function getInvoiceMDRMTargetDate($condition,$startdate,$enddate,$conditionStr,$
         $data_invoice=array();
 	while($row_select = mysql_fetch_object($result))
 	{
-		$data_invoice[]=array('uid'=>$row_select->uid,'nme'=>$row_select->nme,'sno'=>$row_select->sno,'invoice_status'=>$row_select->invoice_status,'unload_accept_time'=>$row_select->unload_accept_time,'create_date'=>$row_select->create_date,'transporter_account_id'=>$row_select->transporter_account_id,'create_id'=>$row_select->create_id,'qty_kg'=>$row_select->qty_kg,'plant_acceptance_time'=>$row_select->plant_acceptance_time,'system_time'=>$row_select->system_time,'close_type'=>$row_select->close_type,'milk_age'=>$row_select->milk_age,'dispatch_time'=>$row_select->dispatch_time,'unload_estimated_time'=>$row_select->unload_estimated_time,'lorry_no'=>$row_select->lorry_no,'target_time'=>$row_select->target_time,'vehicle_no'=>$row_select->vehicle_no,'plant'=>$row_select->plant,'tanker_type'=>$row_select->tanker_type,'docket_no'=>$row_select->docket_no,'email'=>$row_select->email,'mobile'=>$row_select->mobile,'fat_percentage'=>$row_select->fat_percentage,'snf_percentage'=>$row_select->snf_percentage,'fat_kg'=>$row_select->fat_kg,'snf_kg'=>$row_select->snf_kg,'driver_name'=>$row_select->driver_name,'driver_mobile'=>$row_select->driver_mobile,'validity_time'=>$row_select->validity_time,'chilling_plant'=>$row_select->chilling_plant,'unload_estimated_datetime'=>$row_select->unload_estimated_datetime,'fat_per_ft'=>$row_select->fat_per_ft,'snf_per_ft'=>$row_select->snf_per_ft,'qty_ct'=>$row_select->qty_ct,'temp_ct'=>$row_select->temp_ct,'acidity_ct'=>$row_select->acidity_ct,'mbrt_min_ct'=>$row_select->mbrt_min_ct,'mbrt_rm_ct'=>$row_select->mbrt_rm_ct,'mbrt_br_ct'=>$row_select->mbrt_br_ct,'protien_per_ct'=>$row_select->protien_per_ct,'sodium_ct'=>$row_select->sodium_ct,'testing_status'=>$row_select->testing_status,'fat_per_rt'=>$row_select->fat_per_rt,'snf_per_rt'=>$row_select->snf_per_rt,'adultration_ct'=>$row_select->adultration_ct,'otheradultration_ct'=>$row_select->otheradultration_ct);
+		$data_invoice[]=array('uid'=>$row_select->uid,'nme'=>$row_select->nme,'sno'=>$row_select->sno,'invoice_status'=>$row_select->invoice_status,'unload_accept_time'=>$row_select->unload_accept_time,'create_date'=>$row_select->create_date,'transporter_account_id'=>$row_select->transporter_account_id,'create_id'=>$row_select->create_id,'qty_kg'=>$row_select->qty_kg,'plant_acceptance_time'=>$row_select->plant_acceptance_time,'system_time'=>$row_select->system_time,'close_type'=>$row_select->close_type,'milk_age'=>$row_select->milk_age,'dispatch_time'=>$row_select->dispatch_time,'unload_estimated_time'=>$row_select->unload_estimated_time,'lorry_no'=>$row_select->lorry_no,'target_time'=>$row_select->target_time,'vehicle_no'=>$row_select->vehicle_no,'plant'=>$row_select->plant,'tanker_type'=>$row_select->tanker_type,'docket_no'=>$row_select->docket_no,'email'=>$row_select->email,'mobile'=>$row_select->mobile,'fat_percentage'=>$row_select->fat_percentage,'snf_percentage'=>$row_select->snf_percentage,'fat_kg'=>$row_select->fat_kg,'snf_kg'=>$row_select->snf_kg,'driver_name'=>$row_select->driver_name,'driver_mobile'=>$row_select->driver_mobile,'validity_time'=>$row_select->validity_time,'chilling_plant'=>$row_select->chilling_plant,'unload_estimated_datetime'=>$row_select->unload_estimated_datetime,'fat_per_ft'=>$row_select->fat_per_ft,'snf_per_ft'=>$row_select->snf_per_ft,'qty_ct'=>$row_select->qty_ct,'temp_ct'=>$row_select->temp_ct,'acidity_ct'=>$row_select->acidity_ct,'mbrt_min_ct'=>$row_select->mbrt_min_ct,'mbrt_rm_ct'=>$row_select->mbrt_rm_ct,'mbrt_br_ct'=>$row_select->mbrt_br_ct,'protien_per_ct'=>$row_select->protien_per_ct,'sodium_ct'=>$row_select->sodium_ct,'testing_status'=>$row_select->testing_status,'fat_per_rt'=>$row_select->fat_per_rt,'snf_per_rt'=>$row_select->snf_per_rt,'adultration_ct'=>$row_select->adultration_ct,'otheradultration_ct'=>$row_select->otheradultration_ct,'edit_date'=>$row_select->edit_date);
 
 	}
         return $data_invoice;
