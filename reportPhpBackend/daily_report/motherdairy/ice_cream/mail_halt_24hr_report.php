@@ -1,65 +1,88 @@
 <?php
 
+/*error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);*/
+
 echo "Evening file";
 set_time_limit(18000);
 //include_once('util_session_variable.php');
 //include_once('util_php_mysql_connectivity.php');
 
-//$HOST = "localhost";
-include_once("../../database_ip.php");
-$DBASE = "iespl_vts_beta";
+date_default_timezone_set("Asia/Kolkata");
+//### DEBUG BOOLEAN
+global $DEBUG_OFFLINE;
+$DEBUG_OFFLINE = false;
+$DEBUG_ONLINE = false;
+$CREATE_MASTER = false;
+$MAIN_DEBUG = false;
+$LOG = false;
+//#################
+
+$isReport2 = true;
+//$HOST = "111.118.181.156";
+include_once("../../../db_connection.php");
+/*$DBASE = "iespl_vts_beta";
 $USER = "root";
-//$PASSWD = "neon04$VTS";
-$PASSWD = "mysql";
+$PASSWD = "mysql";*/
 $account_id = "723";
 //echo "\nDBASE=".$DBASE." ,User=".$USER." ,PASS=".$PASSWD;
 $DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server is down. Please try after few minutes.");
 mysql_select_db ($DBASE, $DbConnection) or die("could not find DB");
 
-$abspath = "C:\\xampp/htdocs/itrack/beta/src/php";
-//$abspath = "/var/www/html/vts/beta/src/php";
-//$abspath = "D:\\test_app";
-include_once($abspath."/common_xml_element.php");
-include_once($abspath."/get_all_dates_between.php");
-include_once($abspath."/sort_xml.php");
-include_once($abspath."/calculate_distance.php");
-include_once($abspath."/report_title.php");
-include_once($abspath."/read_filtered_xml.php");
-//include_once($abspath."/get_location.php");
-include_once($abspath."/user_type_setting.php");
-	//include_once($abspath."/select_landmark_report.php");
-//include_once($abspath."/area_violation/check_with_range.php");
-//include_once($abspath."/area_violation/pointLocation.php");
-require_once $abspath."/excel_lib/class.writeexcel_workbook.inc.php";
-require_once $abspath."/excel_lib/class.writeexcel_worksheet.inc.php";
-include_once($abspath."/util.hr_min_sec.php");
-include_once($abspath."/daily_report/motherdairy/ice_cream/get_master_detail.php");
-include_once($abspath."/get_io.php");
-include_once($abspath."/new_xml_string_io.php");
-
-include_once($abspath . '/xmlParameters.php');
-//echo "\nD2";
-include_once($abspath . '/parameterizeData.php');
-//echo "\nD3";
-include_once($abspath . '/data.php');
+date_default_timezone_set("Asia/Kolkata");
+if ($DEBUG_OFFLINE) {    
+    $abspath = "C:\\xampp/htdocs/itrack/beta/src/php";
+    $report_path = "C:\\xampp/htdocs/itrack/reportPhpBackend";
+} else if ($DEBUG_ONLINE) {
+    $abspath = "/var/www/html/vts/beta/src/php";
+    $report_path = "/mnt/itrack/reportPhpBackend";
+} else {
+    $abspath = "/var/www/html/vts/beta/src/php";
+    $report_path = "/mnt/itrack/reportPhpBackend";
+}
+echo "<br>AbsPath=" . $abspath;
+include_once($abspath . "/common_xml_element.php");
+echo "\nD1";
+include_once($abspath . '/ioParameters.php');
+echo "\nD2";
+include_once($abspath . '/dataParameters.php');
+echo "\nD3";
+include_once($abspath . '/dataArrays.php');
 if (file_exists($tmp)) {
     echo "File Exists1";
 } else {
     "Does not exist";
 }
-//echo "\nD4";
+echo "\nD4";
 include_once($abspath . '/sortXmlData.php');
-//echo "\nD5:" . $abspath;
+echo "\nD5:" . $abspath;
 //$tmp = $abspath.'/getXmlData.php';
 //if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
-include_once($abspath . '/getXmlData.php');
+include_once($abspath . '/getDeviceData.php');
+echo "\nD6";
 
+//$abspath = "/var/www/html/vts/beta/src/php";
+include_once($abspath."/calculate_distance.php");
+include_once($abspath."/report_title.php");
+//include_once($abspath."/get_location.php");
+include_once($abspath."/user_type_setting.php");
+include_once($abspath."/select_landmark_report.php");
+include_once($abspath."/area_violation/pointLocation.php");
+require_once $abspath."/excel_lib/class.writeexcel_workbook.inc.php";
+require_once $abspath."/excel_lib/class.writeexcel_worksheet.inc.php";
+include_once($abspath."/util.hr_min_sec.php");
+include_once("get_master_detail.php");
+
+echo "\nD7";
 include_once($abspath . "/util.hr_min_sec.php");
 if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun.php"))
     ;
 include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
 
-//echo "\nAfter Include";
+echo "\nD8";
+
+echo "\nAfter Include";
 //include_once($abspath."/get_location_lp_track_report.php");
 
 //include_once($abspath."/mail_action_report_distance_1.php");
@@ -68,15 +91,15 @@ include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
 
 function tempnam_sfx($path, $suffix)
 {
-    $file = $path.$suffix;
-    /*do
-    {
-            $file = $path.$suffix;
-            $fp = @fopen($file, 'x');
-    }
-    while(!$fp);
-    fclose($fp);*/
-    return $file;
+	$file = $path.$suffix;
+	/*do
+	{
+		$file = $path.$suffix;
+		$fp = @fopen($file, 'x');
+	}
+	while(!$fp);
+	fclose($fp);*/
+	return $file;
 }
 
 //echo "report4\n";
@@ -1648,14 +1671,14 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3) 	//elem =
     //echo "\nWORKBOOK CLOSED"; 
 
     ########### SEND MAIL ##############//
-    //$to = 'rizwan@iembsys.com';
-    $to = 'Vijay.Singh@motherdairy.com,teetu.kumar@motherdairy.com,call1.center@motherdairy.com,Ved.Raturi@motherdairy.com,anil.chugh@motherdairy.com,atul.malhotra@motherdairy.com,ashish@iembsys.co.in';
+    $to = 'rizwan@iembsys.com';
+    //$to = 'Vijay.Singh@motherdairy.com,teetu.kumar@motherdairy.com,call1.center@motherdairy.com,Ved.Raturi@motherdairy.com,anil.chugh@motherdairy.com,atul.malhotra@motherdairy.com,ashish@iembsys.co.in';
     $subject = 'BETA::VTS_HALT_REPORT_(MOTHER_ICECREAM)_'.$previous_date;
     $message = 'BETA::VTS_HALT_REPORT_(MOTHER_ICECREAM)_'.$previous_date."<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply to this email***</font>"; 
-    $random_hash = md5(date('r', time()));  
+    $random_hash = md5(date('r', time()));
     $headers = "From: support@iembsys.co.in\r\n";
-    //$headers .= "Cc: rizwan@iembsys.com";  
-    $headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com,support1@iembsys.com,support2@iembsys.com";
+    $headers .= "Cc: rizwan@iembsys.com";  
+    //$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com,support1@iembsys.com,support2@iembsys.com";
     $headers .= "\r\nContent-Type: multipart/mixed; boundary=\"PHP-mixed-".$random_hash."\""; 
     $filename_title = $filename_title.".xls";
     $file_path = $fullPath.".xls";
@@ -1676,9 +1699,6 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3) 	//elem =
 
     unlink($file_path); 
     */
-    ######## CASSANDRA BLOCK3 CLOSED	
-    $o_cassandra->close();
-    ######## CASSANDRA BLOCK3 CLOSED
 }
  
 ?>
