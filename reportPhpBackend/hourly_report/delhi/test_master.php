@@ -1,5 +1,6 @@
 <?php
 //######### S3 BLOCK OPENS #########
+$account_id = 231;
 $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 //print_r($pathInPieces);
 //$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]; ////// local path
