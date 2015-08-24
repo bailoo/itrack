@@ -609,9 +609,18 @@ border: none;
 				
 				//--------end milk age calculation-------------//
 				
-				echo "<td>".$sno_local."</td>
-				<td>".$row_select['create_date']."<br>LastEdited:".$row_select['edit_date']."</td>
-				<td>".$row_select['lorry_no']."</td>
+				echo "<td>".$sno_local."</td>";
+				//echo"<td>".$row_select['create_date']."<br>LastEdited:".$row_select['edit_date']."</td>";
+				 if($row_select['invoice_status']!= 5)
+                                {
+                                   echo"<td>".$row_select['create_date']."<br>LastEdited:".$row_select['edit_date']."</td>";
+                                }
+                                else
+                                {
+                                    echo"<td>".$row_select['create_date']."</td>";
+                                }
+                                echo
+                                "<td>".$row_select['lorry_no']."</td>
 				";
 				
 					if( $user_type=="plant_raw_milk" && $row_select['invoice_status']==1)
