@@ -505,6 +505,9 @@ if ($shift_mor) {
     }
 
     if (!file_exists($morning_sent_file_path)) {
+        //####### COPY S3 MASTER
+        include_once("S3_master.php");
+        
         //echo "\nCreateFile:Morning";
         $morning_last_processed_time = "";
 
@@ -745,9 +748,12 @@ if ($shift_ev1) {
     }
 
     if (!file_exists($evening_sent_file_path1)) {
+        //####### COPY S3 MASTER
+        include_once("S3_master.php");
+        
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
-
+        
         get_route_db_detail("ZPME",$route_type);
         //echo "\nSizeRoute=".sizeof($route_name_rdb);
         get_customer_db_detail($account_id, "ZPME", $route_type);
@@ -973,6 +979,9 @@ if ($shift_ev2) {
     }
 
     if (!file_exists($evening_sent_file_path2)) {
+        //####### COPY S3 MASTER
+        include_once("S3_master.php");
+        
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
 

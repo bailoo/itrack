@@ -83,6 +83,10 @@ include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
 echo "\nD8";
 
 echo "\nAfter Include";
+
+//####### COPY S3 MASTER
+include_once("S3_master.php");
+
 //include_once($abspath."/get_location_lp_track_report.php");
 
 //include_once($abspath."/mail_action_report_distance_1.php");
