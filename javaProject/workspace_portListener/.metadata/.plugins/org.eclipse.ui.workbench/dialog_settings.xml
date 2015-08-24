@@ -4,11 +4,11 @@
 		<item value="true" key="WizardFileSystemResourceImportPage1.STORE_OVERWRITE_EXISTING_RESOURCES_ID"/>
 		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_CREATE_CONTAINER_STRUCTURE_ID"/>
 		<list key="WizardFileSystemResourceImportPage1.STORE_SOURCE_NAMES_ID">
+			<item value="D:\itrack\javaProject\workspace_portListener\crts_8012_v3"/>
+			<item value="D:\itrack\javaProject\workspace_portListener\crts_8001_v2"/>
 			<item value="D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_8003_v3"/>
 			<item value="D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9001_ok_v3"/>
 			<item value="D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_9001_ok_v2"/>
-			<item value="D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_8001_v2"/>
-			<item value="D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_portListener\crts_8005_v2"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">

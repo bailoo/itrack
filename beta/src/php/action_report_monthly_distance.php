@@ -218,7 +218,7 @@
                             //echo"maxspeed=".$max_speed."speed=".$speed."<br>";
                             if(($max_speed<$speed) && ($speed<200))
                             {
-                                    $max_speed = $speed;
+                                $max_speed = $speed;
                             }
 
                             //echo "tmpSpeed=".round($tmp_speed,2)."tmpSpeed1=".round($tmp_speed1,2)."distanceIncreament=".$distance_incriment."tmpTimeDiff=".$tmp_time_diff." tmpTimeDiff1=".$tmp_time_diff1."<br>";								
