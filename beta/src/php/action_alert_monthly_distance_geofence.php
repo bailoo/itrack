@@ -6,6 +6,10 @@
     include_once("main_vehicle_information_1.php");
     include_once('Hierarchy.php');
     $root=$_SESSION["root"];
+
+    include_once("area_violation/check_with_range.php");
+    include_once("area_violation/pointLocation.php");
+    include_once('util_php_mysql_connectivity.php');
     include_once('util_session_variable.php');
     include_once('xmlParameters.php');
     include_once("report_title.php");
@@ -32,12 +36,10 @@
     $breakflag = 0;
 
     $vehicle_info=get_vehicle_info($root,$vserial);
-    $vehicle_detail_local=explode(",",$vehicle_info);	
-
-
+    $vehicle_detail_local=explode(",",$vehicle_info);
+    
     $sortBy='h';
     $firstDataFlag=0;
-
     $dataCnt=0;	
     $userInterval = "0";
     $requiredData="All";
@@ -50,11 +52,30 @@
     $parameterizeData->speed="f";
     $tdi=0; /// two d increament
     //echo "day opt=".$day_opt1."<br>";
+    
+    $query_geo = "SELECT geo_coord FROM geofence WHERE geo_id IN(SELECT geo_id FROM geo_assignment WHERE status=1 AND ".
+                "vehicle_id IN (SELECT vehicle_id FROM vehicle_assignment WHERE device_imei_no='$vserial' AND status=1)) AND ".
+                "user_account_id='$account_id' AND status=1";                          
+
+    //echo "query=".$query_geo."<br>";
+    $res_geo = mysql_query($query_geo,$DbConnection);
+    if($row_geo = mysql_fetch_object($res_geo))
+    {
+        $geo_coord_tmp = $row_geo->geo_coord;
+        $geo_coord = base64_decode($geo_coord_tmp);
+
+        $geo_coord = str_replace('),(',' ',$geo_coord);
+        $geo_coord = str_replace('(','',$geo_coord);
+        $geo_coord = str_replace(')','',$geo_coord);
+        $geo_coord = str_replace(', ',',',$geo_coord);
+    }
+    $outflag=0;
 
     if($day_opt==2)
     {
         $lastday=$daysize;
     }
+      //echo "geoCoordout=".$geo_coord."<br>";
 
     //$finalVNameArr[$tdi]=$vehicle_detail_local[0];
     //echo "<br>DAYOPT,lastday=".$lastday;
@@ -173,7 +194,7 @@
                             $max_speed	=0.0;								
                         }           	              	
                         else
-                        {           
+                        {
                             $lat_E = $lat;
                             $lng_E = $lng;
                             $datetime_prev = $datetime_E;
@@ -224,48 +245,74 @@
                             //echo "tmpSpeed=".round($tmp_speed,2)."tmpSpeed1=".round($tmp_speed1,2)."distanceIncreament=".$distance_incriment."tmpTimeDiff=".$tmp_time_diff." tmpTimeDiff1=".$tmp_time_diff1."<br>";								
                             if(round($tmp_speed,2)<300.0 && round($tmp_speed1,2)<300.0 && $distance_incriment>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
                             {
-                                    //echo "halt out<br>";
-                                    if($haltFlag==True)
+                               //echo "geoCoordin=".$geo_coord."<br>"; 
+                                if($geo_coord!="")
+                                {                
+                                    check_with_range($lat_E, $lng_E, $geo_coord, $status_geo);                                
+                                    if(($status_geo==false ) || ($status_geo==''))
                                     {
-                                            //echo "halt in<br>";
+                                        if($outflag==0)
+                                        {
+                                           // echo "latOut=".$lat_E."lngOut=".$lng_E."dataTime=".$datetime_prev."<br>";
+                                            $outflag = 1; 
                                             $datetime_travel_start = $datetime_prev;
-                                            //echo "datetime_travel_start=".$datetime_travel_start."<br>";
-                                            $lat_travel_start = $lat_E;
-                                            $lng_travel_start = $lng_E;
-                                            $distance_travel = 0;
-                                            $distance_total = 0;
-                                            $distance_incrimenttotal = 0;
-                                            $haltFlag = False;
+                                           // $time1 = $datetime;   							
+                                           // $starttime = strtotime($time1);
+                                        }										
+                                    } 
+                                    else if(($status_geo==true) && ($outflag==1))
+                                    {
+                                        //echo "latOut=".$lat_E."lngOut=".$lng_E." datetime_S=".$datetime_S."<br>";
+                                        $outflag = 0; 
+                                        $datetime_travel_end = $datetime_S;										
+                                        $daily_travel_time += strtotime($datetime_travel_end) - strtotime($datetime_travel_start);
                                     }
+                                } 
+                                
+                                
+                                //echo "halt out<br>";
+                                if($haltFlag==True)
+                                {
+                                    //echo "halt in<br>";
+                                    $datetime_travel_start = $datetime_prev;
+                                    //echo "datetime_travel_start=".$datetime_travel_start."<br>";
+                                    $lat_travel_start = $lat_E;
+                                    $lng_travel_start = $lng_E;
+                                    $distance_travel = 0;
+                                    $distance_total = 0;
+                                    $distance_incrimenttotal = 0;
+                                    $haltFlag = False;
+                                }
                                     //echo "datetime_E=".$datetime_E." distance_incriment=".$distance_incriment." latS=".$lat_S." latE=".$lat_E." lngs=".$lng_S." lngE=".$lng_E."_Edatetime=".$datetime." speed=".$speed."<br>";
-                                  
+                                if($outflag==1)
+                                {
                                     $distance_total += $distance_incriment;
                                     $distance_travel += $distance_incriment;
                                     $daily_dist += $distance_incriment;
-                                    $lat_S = $lat_E;
-                                    $lng_S = $lng_E;
-                                    $last_time = $datetime_E;
-                                    $datetime_S = $datetime_E;
+                                }
+                                
+                                $lat_S = $lat_E;
+                                $lng_S = $lng_E;
+                                $last_time = $datetime_E;
+                                $datetime_S = $datetime_E;
 
-                                    //echo "dateTime=".$datetime_S."<br>";
-
-                                    $start_point_display =1;
-                                    //$distance_incrimenttotal += $distance_incriment;
-                                    // echo $datetime_E . " -- " . $lat_E .",". $lng_E . "\tDelta Distance = " . $distance_incriment . "\tTotal Distance = " . $distance_total . "\n";
                             }
 
                             $datetime_diff = strtotime($datetime_E) - strtotime($datetime_S);
                             //echo "daily_dist=".$daily_dist."<br><br>";	
                             if(($datetime_diff > $datetime_threshold) && ($haltFlag==False))
                             {
-                                    //echo "datetime_E=".$datetime_E." datetime_S=".$datetime_S."<br>";
-                                    //echo "datetime_travel_start=".$datetime_travel_start." datetime_diff=".$datetime_diff."<br>";
-                                    $datetime_travel_end = $datetime_S;
-                                    //echo "datetime_travel_start=".$datetime_travel_start." datetime_travel_end=".$datetime_travel_end."<br>";
+                                //echo "datetime_E=".$datetime_E." datetime_S=".$datetime_S."<br>";
+                                //echo "datetime_travel_start=".$datetime_travel_start." datetime_diff=".$datetime_diff."<br>";
+                                $datetime_travel_end = $datetime_S;
+                                //echo "datetime_travel_start=".$datetime_travel_start." datetime_travel_end=".$datetime_travel_end."<br>";
+                                if($outflag==1)
+                                {
                                     $daily_travel_time += strtotime($datetime_travel_end) - strtotime($datetime_travel_start);
-                                    //echo "daily_dist=".$daily_dist." daily_travel_time=".$daily_travel_time."<br>";
-                                    $haltFlag = True;
-                                    $j=0;
+                                }
+//echo "daily_dist=".$daily_dist." daily_travel_time=".$daily_travel_time."<br>";
+                                $haltFlag = True;
+                                $j=0;
                             }
                         }
                     }
@@ -319,8 +366,8 @@
                 $max_speed=0;
             }  
         }       
-	//$parameterizeData=null;	
-        report_title("Monthly Distance",$dateStartDisplay,$dateEndDisplay);
+//$parameterizeData=null;	
+report_title("Monthly Geofence Report",$dateStartDisplay,$dateEndDisplay);
     echo'<center>
             <div style="overflow: auto;height: 350px; width: 620px;" align="center">';
             $j=-1;
