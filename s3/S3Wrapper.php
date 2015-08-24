@@ -121,6 +121,7 @@ function copyFile($S3Filename, $LocalPath, $overwrite)
 
 function copyDir($S3DirPath, $LocalPath, $overwrite) 
 {
+    echo "\nInCopyDir";
     $uploadFile = $LocalFilePath; // File to upload, we'll use the S3 class since it exists
     $bucketName = 'itrackreport'; // this is your bucket
     $s3 = new S3(awsAccessKey, awsSecretKey);

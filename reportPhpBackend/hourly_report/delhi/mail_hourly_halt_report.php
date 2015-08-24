@@ -8,7 +8,7 @@ ini_set('display_startup_errors', TRUE);*/
 date_default_timezone_set("Asia/Kolkata");
 //### DEBUG BOOLEAN
 global $DEBUG_OFFLINE;
-$DEBUG_OFFLINE = false;
+$DEBUG_OFFLINE = true;
 $DEBUG_ONLINE = false;
 $CREATE_MASTER = false;
 $MAIN_DEBUG = false;
@@ -31,15 +31,42 @@ if ($DEBUG_OFFLINE) {
 } else {
     $PASSWD = 'neon04$VTS';
 }*/
-include_once("../../db_connection.php");
+//include_once("../../db_connection.php");
+include_once("D:\\itrack/reportPhpBackend/db_connection.php");
 //$HOST = "localhost";
 $account_id = "231";
 if ($account_id == "231")
     $user_name = "delhi";
 //if($account_id == "231") $user_name = "delhi@";
-echo "\nDBASE=".$DBASE." ,USER=".$USER." ,PASS=".$PASSWD;
+//echo "\nDBASE=".$DBASE." ,USER=".$USER." ,PASS=".$PASSWD;
 $DbConnection = mysql_connect($HOST, $USER, $PASSWD) or die("Connection to server is down. Please try after few minutes.");
 mysql_select_db($DBASE, $DbConnection) or die("could not find DB");
+
+//######### S3 BLOCK OPENS #########
+$pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+//print_r($pathInPieces);
+//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]; ////// local path
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]; ////// local path
+//$pathToRoot =  "D:\\MOTHERDELHI_REPORT/";
+//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]; /// server Path
+//$filePathToS3Wrapper=$pathToRoot."/s3/S3Wrapper.php";
+$filePathToS3Wrapper="D:\\itrack/s3/S3Wrapper.php";
+echo "\nfilePathToS3Wrapper=".file_exists($filePathToS3Wrapper);
+//$filePathToS3Wrapper="/mnt/itrack/s3/S3Wrapper.php";
+
+//include_once("../../../s3/S3Wrapper.php");
+echo "\npathToRoot=".$pathToRoot;
+
+$S3DirPath='gps_report/'.$account_id."/master";
+
+$LocalPath = "D:\\MOTHERDELHI_REPORT/gps_report/".$account_id."/master";
+
+echo "\nFileExist=".file_exists($filePathToS3Wrapper);
+$overwrite = true;
+$res = copyDir($S3DirPath, $LocalPath, $overwrite);
+echo "\nRes=".$res;
+//######### S3 BLOCK CLOSED #########
+
 
 date_default_timezone_set("Asia/Kolkata");
 if ($DEBUG_OFFLINE) {    
@@ -52,7 +79,7 @@ if ($DEBUG_OFFLINE) {
     $abspath = "/var/www/html/vts/beta/src/php";
     $report_path = "/mnt/itrack/reportPhpBackend";
 }
-echo "<br>AbsPath=" . $abspath;
+echo "\nAbsPath=" . $abspath;
 include_once($abspath . "/common_xml_element.php");
 echo "\nD1";
 include_once($abspath . '/ioParameters.php');
