@@ -152,7 +152,7 @@ $cdatetime1 = strtotime(date('00:00:00'));
 $cdatetime2 = strtotime(date('H:i:s'));
 $difftime = $cdatetime2 - $cdatetime1;
 //$difftime = 7200;     //EVENING COMMENT IT LATER
-//$difftime = 36000;    //MORNING
+$difftime = 36000;    //MORNING
 //$difftime = 75600 //9 PM
 echo "\nDiff=".$difftime;
 
@@ -480,7 +480,7 @@ if ($shift_mor) {
 
     if (!file_exists($morning_sent_file_path)) {
         //####### COPY S3 MASTER
-        include_once("S3_master.php");
+        include_once("../../S3_master.php");
 
         //echo "\nCreateFile:Morning";
         $morning_last_processed_time = "";
@@ -724,7 +724,7 @@ if ($shift_ev1) {
 
     if (!file_exists($evening_sent_file_path1)) {
         //####### COPY S3 MASTER
-        include_once("S3_master.php");
+        include_once("../../S3_master.php");
 
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
@@ -955,7 +955,7 @@ if ($shift_ev2) {
 
     if (!file_exists($evening_sent_file_path2)) {
         //####### COPY S3 MASTER
-        include_once("S3_master.php");
+        include_once("../../S3_master.php");
 
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
