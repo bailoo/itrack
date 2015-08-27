@@ -2,27 +2,27 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="45" key="DIALOG_Y_ORIGIN"/>
-		<item value="1081" key="DIALOG_X_ORIGIN"/>
+		<item value="154" key="DIALOG_Y_ORIGIN"/>
 		<item value="380" key="DIALOG_HEIGHT"/>
+		<item value="542" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="dispatch" key="selection"/>
+		<item value="write_last_location" key="selection"/>
 		<list key="findhistory">
+			<item value="write_last_location"/>
+			<item value="null"/>
 			<item value="dispatch"/>
-			<item value="tracker"/>
-			<item value="get_vendor_vehicles"/>
-			<item value="dispatch("/>
-			<item value="conn_remote"/>
-			<item value="get_connection"/>
-			<item value="sql_remote"/>
-			<item value="sDF"/>
+			<item value="webServiceClient"/>
+			<item value="processData"/>
+			<item value="Latitude"/>
+			<item value="ServerTS"/>
+			<item value="System"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -2,8 +2,8 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="163" key="DIALOG_Y_ORIGIN"/>
-		<item value="828" key="DIALOG_X_ORIGIN"/>
+		<item value="251" key="DIALOG_Y_ORIGIN"/>
+		<item value="882" key="DIALOG_X_ORIGIN"/>
 		<item value="380" key="DIALOG_HEIGHT"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="ok" key="selection"/>
+		<item value="escalation_read_set_variables" key="selection"/>
 		<list key="findhistory">
-			<item value="ok"/>
-			<item value="accept"/>
-			<item value="dispatch("/>
-			<item value="port_number"/>
-			<item value="System.out"/>
-			<item value="Speed"/>
-			<item value="write_port_log"/>
-			<item value="file"/>
+			<item value="escalation_read_set_variables"/>
+			<item value="get_nearest_landmark"/>
+			<item value="msg"/>
+			<item value="push_email_alert_to_database"/>
+			<item value="push_sms_alert_to_database"/>
+			<item value="temp_alert_nogps"/>
+			<item value="assigned_imei"/>
+			<item value="get_alert_configuration"/>
 		</list>
 		<list key="replacehistory">
 		</list>

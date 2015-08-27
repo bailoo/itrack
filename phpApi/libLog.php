@@ -106,11 +106,12 @@ function getLastSeenDateTimes($o_cassandra, $imei, $datetime1, $datetime2)
 	$interval = new DateInterval('P1D');
 	$start = new DateTime($date2);
 	$end = new DateTime($date1);
-	$start->add($interval);
+	//$start->add($interval); // adds a day
 
 	$st_results = array(); // initialize with empty array
- 
-	for ($date = $start; $date->sub($interval); $date >= $end)
+
+	$date = clone $start;	// copy by value, not by reference 
+	while ($date >= $end)
 	{
 		$strDate = $date->format('Y-m-d');
 		$s_cql = "SELECT * FROM log1 
@@ -127,6 +128,8 @@ function getLastSeenDateTimes($o_cassandra, $imei, $datetime1, $datetime2)
 		$st_results = $o_cassandra->query($s_cql);
 		if (!empty($st_results))
 			break;
+		
+		$date->sub($interval);	/* subtract 1 day */
 	}
 
 	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata

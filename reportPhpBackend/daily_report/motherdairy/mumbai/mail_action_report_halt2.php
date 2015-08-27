@@ -8,10 +8,10 @@ $speed_sel = array();
 echo "MAIL ACTION";
 function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, $user_interval, $report_shift)
 {
-	//echo "\nBefore CAS";
+    //echo "\nBefore CAS";
     //###### OPEN CASSANDRA CONNECTION
     $o_cassandra = openCassandraConnection();
-	//echo "\nAfter CAS";
+    //echo "\nAfter CAS";
 
     global $abspath;
     //echo $vehicle_serial.",". $vid." ,".$vname." ,".$startdate." ,".$enddate." ,".$user_interval." ,".$report_shift;
@@ -281,9 +281,9 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
 
                                     //if($lat_cr == "28.70165N")
                                     //{
-                                            //$difference = strtotime($datetime_cr)-strtotime($datetime_ref);
-                                            //echo "\nLatRef_Prev=".$lat_cr." ,distance=".$distance." ,HaltFlag=".$halt_flag;										
-                                            //echo " ,DateTimeCr=".$datetime_cr." ,DateTimeRef=".$datetime_ref." ,difference=".$difference." , interval=".$interval." \n";
+                                        //$difference = strtotime($datetime_cr)-strtotime($datetime_ref);
+                                        //echo "\nLatRef_Prev=".$lat_cr." ,distance=".$distance." ,HaltFlag=".$halt_flag;										
+                                        //echo " ,DateTimeCr=".$datetime_cr." ,DateTimeRef=".$datetime_ref." ,difference=".$difference." , interval=".$interval." \n";
                                     //}									
                                     //echo "\nInCondition ,halt_flag=".$halt_flag." ,distance=".$distance." ,datetime_cr=".$datetime_cr." ,datetime_ref=".$datetime_ref." ,interval=".$interval;									
                                     if (($halt_flag == 1) && ($distance > 0.100))
@@ -754,7 +754,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
                             $depature_time="";						
 
                         }   //IF ADD ENTRYINRrEPORT
-                        $f++;
+                       // $f++;
                 }   // while closed			
                    //echo "\nvehicle_name=".$vname."csv_string_halt==".$csv_string_halt."<br>";            
             }  // for closed

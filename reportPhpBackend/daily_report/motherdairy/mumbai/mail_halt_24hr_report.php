@@ -25,7 +25,7 @@ include_once("../../../db_connection.php");
 /*$DBASE = "iespl_vts_beta";
 $USER = "root";
 $PASSWD = "mysql";*/
-$account_id = "322";
+$account_id = "1115";
 //echo "\nDBASE=".$DBASE." ,User=".$USER." ,PASS=".$PASSWD;
 $DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server is down. Please try after few minutes.");
 mysql_select_db ($DBASE, $DbConnection) or die("could not find DB");
@@ -83,6 +83,10 @@ include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
 echo "\nD8";
 
 echo "\nAfter Include";
+
+//####### COPY S3 MASTER
+include_once("../../../S3_master.php");
+
 //include_once($abspath."/get_location_lp_track_report.php");
 
 //include_once($abspath."/mail_action_report_distance_1.php");
@@ -1427,7 +1431,7 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3, $array4) 
  
 	########### SEND MAIL ##############//
 	//$to = 'rizwan@iembsys.com';
-	$to = 'Logistics.Vashi@motherdairy.com, Hemanshu.Mundley@motherdairy.com, Anand.Arondekar@motherdairy.com, Vijay.Singh@motherdairy.com, ashish@iembsys.co.in';
+	$to = 'Logistics.Vashi@motherdairy.com, dattatray.jankar@motherdairy.com, Anand.Arondekar@motherdairy.com, Vijay.Singh@motherdairy.com, ashish@iembsys.co.in';
 
 	$subject = 'BETA::VTS_HALT_REPORT_(MOTHER_MUMBAI)_'.$previous_date;
 	$message = 'BETA::VTS_HALT_REPORT_(MOTHER_MUMBAI)_'.$previous_date."<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply to this email***</font>"; 
