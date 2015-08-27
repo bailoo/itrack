@@ -16,16 +16,20 @@ function updateAll_last_processed_time($type, $last_time,$route_type) {
             $query_insert = "INSERT INTO last_processed_time(imei,last_time,account_id,type,routetype) values('$imei','$last_time','$account_id','$type','$route_type')";
             $result_insert = mysql_query($query_insert,$DbConnection); 
             echo "\nQA2=".$query_insert;
-        } else {
+        } /*else {
             $query_update = "UPDATE last_processed_time SET last_time='$last_time' WHERE account_id='$account_id' AND imei='$imei' AND type='$type' AND routetype='$route_type'";
             $result_update = mysql_query($query_update,$DbConnection); 
             echo "\nQA3=".$query_update;
-        }
+        }*/
+        
+        $query_update = "UPDATE last_processed_time SET last_time='$last_time' WHERE account_id='$account_id' AND type='$type' AND routetype='$route_type'";
+        $result_update = mysql_query($query_update,$DbConnection); 
+        echo "\nQA3=".$query_update;       
     }
 }
 
 
-function update_last_processed_time($type, $last_time, $imei,$route_type) {
+function update_last_processed_time($type, $last_time, $imei, $route_type) {
     //echo "\nLAST PROCESSED TIME";
     global $DbConnection;
     global $account_id;
@@ -35,15 +39,17 @@ function update_last_processed_time($type, $last_time, $imei,$route_type) {
         $result = mysql_query($query,$DbConnection);
         $numrows = mysql_num_rows($result);
 
-        if($numrows ==0) {
+        /*if($numrows ==0) {
             $query_insert = "INSERT INTO last_processed_time(imei,last_time,account_id,type,routetype) values('$imei','$last_time','$account_id','$type','$route_type')";
             $result_insert = mysql_query($query_insert,$DbConnection);
             echo "\nQ2=".$query_insert;
-        } else {
+        } else {*/
+        if($numrows ==0) {
             $query_update = "UPDATE last_processed_time SET last_time='$last_time' WHERE account_id='$account_id' AND imei='$imei' AND type='$type' AND routetype='$route_type'";
             $result_update = mysql_query($query_update,$DbConnection);
             echo "\nQ3=".$query_update;
         }
+        //}
 }
 
 
