@@ -35,7 +35,7 @@
     $dateRange1 = $date_1[0];
     $dateRange2 = $date_2[0];
 
-    $userInterval = "0";
+   
     $requiredData="All";
     $sortBy="h";
     $firstDataFlag=0;
@@ -61,7 +61,10 @@
 
         $ioArr=explode(":",$vehicle_detail_local[7]);
         $ioFoundFlag=0;
-        $ioArrSize=sizeof($ioArr);		
+        $ioArrSize=sizeof($ioArr);
+        $parameterizeData->doorOpen1=null;
+        $parameterizeData->doorOpen2=null;
+        $parameterizeData->doorOpen3=null;
         for($z=0;$z<$ioArrSize;$z++)
         {
             $tempIo=explode("^",$ioArr[$z]);
@@ -79,23 +82,23 @@
                     $parameterizeData->doorOpen3=$finalIoArr[$tempIo[0]];
             }
         }
+       /* echo "doorOpen1=".$parameterizeData->doorOpen1."<br>";
+        echo "doorOpen2=".$parameterizeData->doorOpen2."<br>";
+        echo "doorOpen3=".$parameterizeData->doorOpen3."<br>";*/
         
      
 	$B3=0;
 	$B2=0;
 	$B1=0;
-	$CurrentLat = 0.0;
-	$CurrentLong = 0.0;
-	$LastLat = 0.0;
-	$LastLong = 0.0;
+	
 	$firstData = 0;
-	$distance =0.0;
 	$firstdata_flag =0;   
         $runhr_duration =0 ;
 	$flag =0;
 
 	$StartFlag=0;
-	$StartFlag2=0;
+	$StartFlagB2=0;
+        $StartFlagB3=0;
 	$continuous_running_flag =0;
 	$continuous_running_flag2 =0;
 	$continuous_running_flag3=0;
@@ -106,6 +109,7 @@
         {
             
             //echo "userdate=".$userdates[$di]."<br>";
+            $SortedDataObject=null;
             $SortedDataObject=new data();
             readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
             //var_dump($SortedDataObject);
@@ -138,7 +142,8 @@
                                 $StartFlag = 1;
                             } 
                             
-                            else if(($door_count<250 && $StartFlag==1) || ($continuous_running_flag ==1))   //500
+                            //else if(($door_count<250 && $StartFlag==1) || (($obi==($prevSortedSize-1)) && ($continuous_running_flag ==1)))   //500
+                            else if($door_count<250 && $StartFlag==1)   //500
                             {
                                 $StartFlag = 2;
                             }
@@ -187,7 +192,8 @@
                                 $StartFlagB2 = 1;
                             }								
                             //else if( ($door_count<350 && $StartFlag==1) || ( ($c==($total_lines-1)) && ($continuous_running_flag ==1) ) )   //500
-                            else if(($door_count2<250 && $StartFlagB2==1) || ($continuous_running_flag2 ==1))   //500
+                            //else if(($door_count2<250 && $StartFlagB2==1) || ($continuous_running_flag2 ==1))   //500
+                            else if($door_count2<250 && $StartFlagB2==1)   //500
                             {
                                 $StartFlagB2 = 2;
                             }
@@ -237,9 +243,9 @@
                             {                						
                                 $timeB3 = $datetime;
                                 $StartFlagB3 = 1;
-                            }								
-                            
-                            else if(($door_count3<250 && $StartFlagB3==1) || ($continuous_running_flag3 ==1))   //500
+                            }
+                            //else if(($door_count3<250 && $StartFlagB3==1) || ($continuous_running_flag3 ==1))   //500
+                            else if($door_count3<250 && $StartFlagB3==1)   //500
                             {
                                 $StartFlagB3 = 2;
                             }
@@ -249,6 +255,7 @@
                             if($StartFlagB3 == 2)
                             {									
                                 $StartFlagB3=0;
+                                $continuous_running_flag3 = 0;
                                 $runtimeB = strtotime($timeB4) - strtotime($timeB3);
                                 //echo "runtimeB=".$runtimeB."<br>";
                                 if($runtimeB > 60)
@@ -277,11 +284,11 @@
                         }
                     }
                 }
-                if($StartFlag == 1)
+               /* if($StartFlag == 1)
                 {
-                    //echo "in StartFlag<br>";
+                    echo "in StartFlag<br>";
                     $StartFlag=0;
-                    $continuous_running_flag3 = 0;
+                    //$continuous_running_flag3 = 0;
                     $runtime = strtotime($time2) - strtotime($time1);
                     //echo "<br>runtime=".$runtime;
                     //$runhr_duration = strtotime($runtime);
@@ -368,13 +375,9 @@
                             $B3++;
                         } 
                     }				
-                }
+                }*/
             }
-            $SortedDataObject=null;
-        }
-        $parameterizeData->doorOpen1=null;
-        $parameterizeData->doorOpen2=null;
-        $parameterizeData->doorOpen3=null;		
+        }       		
     }
     
     for($k=0;$k<$size_feature_session;$k++)
