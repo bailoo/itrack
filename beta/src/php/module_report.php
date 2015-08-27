@@ -751,7 +751,7 @@ $contents=listDir($S3Path);
                                         }
 					if(!$person_user_type)
 					{
-									echo'"<table border=0 class=\'mystyle\'>"+
+									/*echo'"<table border=0 class=\'mystyle\'>"+
 											"<tr>"+ 
 												"<td valign=\'top\'>"+
 													"<table border=0 class=\'mystyle\'>"+
@@ -782,7 +782,7 @@ $contents=listDir($S3Path);
 													"</table>"+
 												"</td>"+
 											"</tr>"+
-										"</table>",';
+										"</table>",';*/
 				}
 
 										if($account_id==715)

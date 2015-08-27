@@ -149,7 +149,7 @@ if($account_id!="")
                 $final_dest_file="gps_report/".$account_id."/master/".$final_file_name;	
                 if($format_ids_1[0]=="#3")
                 {						
-                    //delete_files($post_formatid_arr,$post_filename_arr,$format_ids_1[0]);
+                    delete_files($post_formatid_arr,$post_filename_arr,$format_ids_1[0]);
                     echo'<table border="0" align="center">
                             <tr>
                                 <td>

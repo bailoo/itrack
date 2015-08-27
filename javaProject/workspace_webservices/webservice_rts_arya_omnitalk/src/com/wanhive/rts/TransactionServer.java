@@ -371,7 +371,7 @@ public class TransactionServer implements Runnable {
 		try 
 		{
 			String response = webServiceClient.get_Information_All("icicimumbai");
-			//System.out.println("WebServiceResponse "+response);						
+			System.out.println("WebServiceResponse "+response);						
 
 			try 
 			{

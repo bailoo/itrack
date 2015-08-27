@@ -151,14 +151,14 @@ $pdate = date('Y-m-d', strtotime($date .' -1 day'));
 $cdatetime1 = strtotime(date('00:00:00'));
 $cdatetime2 = strtotime(date('H:i:s'));
 $difftime = $cdatetime2 - $cdatetime1;
-$difftime = 79200;     //EVENING COMMENT IT LATER
+//$difftime = 7200;     //EVENING COMMENT IT LATER
 //$difftime = 36000;    //MORNING
-//$difftime = 75600 //9 PM
+$difftime = 75600; //9 PM
 echo "\nDiff=".$difftime;
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-08-19');
-    $date = date('2015-08-20');
+    $pdate = date('2015-08-23');
+    $date = date('2015-08-24');
     $shift_ev_date1 = $pdate . " 12:00:00";
     $shift_ev_date2 = $pdate . " 23:59:59";
     $shift_ev1 = true;
@@ -214,7 +214,7 @@ if ($MAIN_DEBUG) {
     }
 
     //######## COMMENT IT
-    //$difftime = 10900;
+    $difftime = 79200;
     //###################
     //######## CHECK EVENING SHIFT1 ###########
     if ((($current_time >= $shift_ev_date1) && ($current_time <= $shift_ev_date2) && ($current_time >= $ev_run_start_time1) ) || (($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4))) {
@@ -479,6 +479,9 @@ if ($shift_mor) {
     }
 
     if (!file_exists($morning_sent_file_path)) {
+        //####### COPY S3 MASTER
+        include_once("S3_master.php");
+
         //echo "\nCreateFile:Morning";
         $morning_last_processed_time = "";
 
@@ -487,7 +490,7 @@ if ($shift_mor) {
         get_customer_db_detail($account_id, "ZBVM", $route_type);
         //echo "\nSizeAllRoutes=".sizeof($all_routes);
         $objPHPExcel_1 = null;
-        create_hrly_excel($morning_sent_file_path, "ZBVM", $route_type, $mor_run_start_time, "all");
+        create_hrly_excel($morning_sent_file_path, "ZBVM", $route_type, $mor_run_start_time);
         //echo "\nAfter CreateHrly";
         create_last_halt_time($morning_last_halt_time_path);
         //echo "\nAfter LastHalt";
@@ -720,6 +723,10 @@ if ($shift_ev1) {
     }
 
     if (!file_exists($evening_sent_file_path1)) {
+        //####### COPY S3 MASTER
+echo "\nEVMASTER=".file_exists("../../S3_master.php");
+        include_once("../../S3_master.php");
+
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
 
@@ -948,6 +955,9 @@ if ($shift_ev2) {
     }
 
     if (!file_exists($evening_sent_file_path2)) {
+        //####### COPY S3 MASTER
+        include_once("S3_master.php");
+
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
 

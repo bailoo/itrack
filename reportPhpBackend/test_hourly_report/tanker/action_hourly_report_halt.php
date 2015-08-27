@@ -252,7 +252,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         $msg = "\nReadSno:" . $i . " ,imei=" . $IMEI[$i] . " ,date1=" . $date1 . " ,date2=" . $date2;
         
         if($LOG) {$debug_msg.=$msg."\n";}
-        echo $msg; 
+        //echo $msg; 
                 
         $dataCnt = 0;
         $LastSortedDate = null;
@@ -266,7 +266,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
 	//exit(0);
      if (count($SortedDataObject->deviceDatetime) > 0) {
             //$sortObjTmp = sortData($UnSortedDataObject, $sortBy, $parameterizeData);
-            echo "::Data Read";
+            //echo "::Data Read";
             //var_dump($sortObjTmp);
             /* echo"sdt1=".$sortObjTmp->deviceDatetime[0]."<br>";
               echo "sdt2=".$sortObjTmp->deviceDatetime[1]."<br>";
@@ -288,11 +288,11 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                 $speed_sel[] = $SortedDataObject->speedData[$obi];
             }
 	}
-        else
+        /*else
         {
 	    echo "\nContinue";
             continue;
-        }
+        }*/
         
         $SortedDataObject = null;
         $sortObjTmp = null;
@@ -301,7 +301,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         //##### DEBUG MSG
         $msg = "\nVehicle=".$Vehicle[$i]." ,SizeXmlDate=".sizeof($xml_date_sel);
         if($LOG) {$debug_msg.=$msg."\n";}
-        echo $msg;
+        //echo $msg;
 
         ######## CASSANDRA BLOCK2 CLOSED
         
@@ -660,7 +660,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                                     $halt_dur = ($deptime - $arrtime);  //THIS IS USED AT RUNTIME, COMMENT HERE LATER
                                     $hms_2 = secondsToTime($halt_dur);
                                     $hrs_min = $hms_2[h] . ":" . $hms_2[m] . ":" . $hms_2[s];
-                                    echo "\nDepartureFound:Time=".$datetime;
+                                    //echo "\nDepartureFound:Time=".$datetime;
 
                                     update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k], $k, $StationNo[$k], $Lat[$k], $Lng[$k], $ScheduleTime[$k], $DistVar[$k], $Remark[$k], $startdate, $enddate, $lat_cr, $lng_cr, $lat_cr, $lng_cr, $arrivale_time, $depature_time, $RouteNo[$k], $hrs_min, $Type[$k], $plant_status_local[$Vehicle[$i]][$RouteNo[$i]], 2, $p_in, $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]], $p_out, $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]]);
                                 }

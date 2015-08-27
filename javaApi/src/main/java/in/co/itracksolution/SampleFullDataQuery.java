@@ -68,9 +68,9 @@ public class SampleFullDataQuery
 			
 		FullDataDao dao = new FullDataDao(st.conn.getSession());
 		
-		String imei = "865733021562939"; //Make sure this imei exists
-		String startDateTime = "2015-07-05 00:00:00";
-		String endDateTime = "2015-07-05 23:59:30";
+		String imei = "7028926386"; //Make sure this imei exists
+		String startDateTime = "2015-08-22 00:00:00";
+		String endDateTime = "2015-08-22 26:59:30";
 		Boolean deviceTime = true;	// true for device time index, otherwise server time
 		Boolean orderAsc = true;	// true for ascending , otherwise descending (default) 
 		ArrayList<FullData> fullDataList = dao.selectByImeiAndDateTimeSlice(imei, startDateTime, endDateTime, deviceTime, orderAsc);

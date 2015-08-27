@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<item value="2" key="TypeHierarchyViewPart.hierarchyview"/>
-	<item value="E:\ESSENTIALS" key="org.eclipse.jdt.ui.lastextjar"/>
+	<item value="480,510" key="UserLibraryLoadSaveDialog.size"/>
+	<item value="D:\Eclipse_ITC_64-BIT\plugins" key="org.eclipse.jdt.ui.lastextjar"/>
 	<item value="500" key="CallHierarchyViewPart.ratio3"/>
 	<item value="500" key="CallHierarchyViewPart.ratio1"/>
 	<item value="false" key="TypeHierarchyViewPart.qualifiednames"/>
@@ -47,6 +48,9 @@
 		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">
 			<item value=".xml"/>
 		</list>
+	</section>
+	<section name="ClasspathContainerSelectionPage">
+		<item value="8" key="index"/>
 	</section>
 	<section name="CallHierarchySearchScope">
 	</section>
