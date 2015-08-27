@@ -8,10 +8,10 @@ ini_set('display_startup_errors', TRUE);*/
 date_default_timezone_set("Asia/Kolkata");
 //### DEBUG BOOLEAN
 global $DEBUG_OFFLINE;
-$DEBUG_OFFLINE = false;
+$DEBUG_OFFLINE = true;
 $DEBUG_ONLINE = false;
-$CREATE_MASTER = false;
-$MAIN_DEBUG = false;
+$CREATE_MASTER = true;
+$MAIN_DEBUG = true;
 $LOG = false;
 //#################
 
@@ -43,8 +43,8 @@ mysql_select_db($DBASE, $DbConnection) or die("could not find DB");
 
 date_default_timezone_set("Asia/Kolkata");
 if ($DEBUG_OFFLINE) {    
-    $abspath = "C:\\xampp/htdocs/itrack/beta/src/php";
-    $report_path = "C:\\xampp/htdocs/itrack/reportPhpBackend";
+    $abspath = "D:\\itrack/beta/src/php";
+    $report_path = "D:\\MOTHERDELHI_REPORT";   
 } else if ($DEBUG_ONLINE) {
     $abspath = "/var/www/html/vts/beta/src/php";
     $report_path = "/mnt/itrack/reportPhpBackend";
@@ -157,8 +157,8 @@ $difftime = $cdatetime2 - $cdatetime1;
 echo "\nDiff=".$difftime;
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-08-02');
-    $date = date('2015-08-03');
+    $pdate = date('2015-08-23');
+    $date = date('2015-08-24');
     $shift_ev_date1 = $date . " 00:00:00";
     $shift_ev_date2 = $pdate . " 23:59:59";
     $shift_ev1 = true;
@@ -480,7 +480,7 @@ if ($shift_mor) {
 
     if (!file_exists($morning_sent_file_path)) {
         //####### COPY S3 MASTER
-        include_once("S3_master.php");
+        include_once("../../S3_master.php");
 
         //echo "\nCreateFile:Morning";
         $morning_last_processed_time = "";
@@ -760,8 +760,8 @@ if ($shift_ev1) {
         //echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL ##############
-        //$to = 'rizwan@iembsys.com';
-        $to = 'hourlyreportbvm@gmail.com';
+        $to = 'rizwan@iembsys.com';
+       // $to = 'hourlyreportbvm@gmail.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -787,8 +787,8 @@ if ($shift_ev1) {
         $result = $mgClient->sendMessage($domain, array(
             'from' => 'Itrack <support@iembsys.co.in>',
             'to' => $to,
-            //'cc'      => 'rizwan@iembsys.com',
-            'cc' => 'hourlyreport4@gmail.com',
+            'cc'      => 'rizwan@iembsys.com',
+            //'cc' => 'hourlyreport4@gmail.com',
             //'cc'      => 'hourlyreport4@gmail.com',
             // 'bcc'     => 'astaseen83@gmail.com',
             'subject' => $subject,

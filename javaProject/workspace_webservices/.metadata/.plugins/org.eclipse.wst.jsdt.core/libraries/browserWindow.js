@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 IBM Corporation and others.
+ * Copyright (c) 2008, 2011 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -297,17 +297,17 @@ Window.prototype.scrollBy=function(arg1,arg2){};
  * @param {Object} arg1
  * @param {Number} arg2
  * @memberOf  Window
- * @returns {Object}
+ * @returns {Number}
  */
-Window.prototype.setInterval=function(arg1, arg2){return new Object();};
+Window.prototype.setInterval=function(arg1, arg2){return 0;};
 /**
  * function setTimeout(arg1, arg2) 
  * @param {Object} arg1
  * @param {Number} arg2
  * @memberOf  Window
- * @returns {Object}
+ * @returns {Number}
  */
-Window.prototype.setTimeout=function(arg1, arg2){return new Object();};
+Window.prototype.setTimeout=function(arg1, arg2){ return 0;};
 /**
  * function atob(arg) 
  * @param {String} arg
