@@ -44,7 +44,7 @@ function update_last_processed_time($type, $last_time, $imei, $route_type) {
             $result_insert = mysql_query($query_insert,$DbConnection);
             echo "\nQ2=".$query_insert;
         } else {*/
-        if($numrows ==0) {
+        if($numrows ==1) {
             $query_update = "UPDATE last_processed_time SET last_time='$last_time' WHERE account_id='$account_id' AND imei='$imei' AND type='$type' AND routetype='$route_type'";
             $result_update = mysql_query($query_update,$DbConnection);
             echo "\nQ3=".$query_update;
