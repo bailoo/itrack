@@ -84,6 +84,14 @@ echo "\nD8";
 
 echo "\nAfter Include";
 
+//######## CLEAR MASTER FILE
+$files = glob('/mnt/itrack/beta/src/php/gps_report/'.$account_id.'/master/*'); // get all file names
+foreach($files as $file){ // iterate files
+  if(is_file($file))
+    unlink($file); // delete file
+}
+//###################################
+
 //####### COPY S3 MASTER
 include_once("../../../S3_master.php");
 
