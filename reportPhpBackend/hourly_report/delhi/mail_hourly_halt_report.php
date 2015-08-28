@@ -42,32 +42,6 @@ echo "\nDBASE=".$DBASE." ,USER=".$USER." ,PASS=".$PASSWD;
 $DbConnection = mysql_connect($HOST, $USER, $PASSWD) or die("Connection to server is down. Please try after few minutes.");
 mysql_select_db($DBASE, $DbConnection) or die("could not find DB");
 
-/*//######### S3 BLOCK OPENS #########
-$pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
-//print_r($pathInPieces);
-//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]; ////// local path
-$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]; ////// local path
-//$pathToRoot =  "D:\\MOTHERDELHI_REPORT/";
-//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]; /// server Path
-//$filePathToS3Wrapper=$pathToRoot."/s3/S3Wrapper.php";
-$filePathToS3Wrapper="D:\\itrack/s3/S3Wrapper.php";
-echo "\nfilePathToS3Wrapper=".file_exists($filePathToS3Wrapper);
-//$filePathToS3Wrapper="/mnt/itrack/s3/S3Wrapper.php";
-
-//include_once("../../../s3/S3Wrapper.php");
-echo "\npathToRoot=".$pathToRoot;
-
-$S3DirPath='gps_report/'.$account_id."/master";
-
-$LocalPath = "D:\\MOTHERDELHI_REPORT/gps_report/".$account_id."/master";
-
-echo "\nFileExist=".file_exists($filePathToS3Wrapper);
-$overwrite = true;
-$res = copyDir($S3DirPath, $LocalPath, $overwrite);
-echo "\nRes=".$res;
-//######### S3 BLOCK CLOSED #########
-*/
-
 date_default_timezone_set("Asia/Kolkata");
 if ($DEBUG_OFFLINE) {    
     $abspath = "C:\\xampp/htdocs/itrack/beta/src/php";
@@ -129,15 +103,10 @@ $objPHPExcel_1 = null;
 echo "TEST1";
 include_once("read_master_file.php");
 include_once("read_sent_file.php");
-echo "\nS1";
 include_once("read_secondary_vehicles.php");
-echo "\nS2";
 //include_once("update_sent_file.php");
 include_once("create_hrly_excel_file.php");
-echo "\nS3";
 include_once("create_secondary_vehicle_excel_file.php");
-echo "\nS4";
-
 include_once("action_hourly_report_halt.php");
 
 include_once("create_last_halt_time.php");
@@ -505,6 +474,15 @@ if ($shift_mor) {
     }
 
     if (!file_exists($morning_sent_file_path)) {
+        
+        //######## CLEAR MASTER FILE
+        $files = glob('/mnt/itrack/beta/src/php/gps_report/'.$account_id.'/master/*'); // get all file names
+        foreach($files as $file){ // iterate files
+          if(is_file($file))
+            unlink($file); // delete file
+        }
+        //###################################
+       
         //####### COPY S3 MASTER
         include_once("../../S3_master.php");
         
@@ -748,6 +726,15 @@ if ($shift_ev1) {
     }
 
     if (!file_exists($evening_sent_file_path1)) {
+        
+        //######## CLEAR MASTER FILE
+        $files = glob('/mnt/itrack/beta/src/php/gps_report/'.$account_id.'/master/*'); // get all file names
+        foreach($files as $file){ // iterate files
+          if(is_file($file))
+            unlink($file); // delete file
+        }
+        //###################################
+
         //####### COPY S3 MASTER
         include_once("../../S3_master.php");
         
@@ -979,6 +966,15 @@ if ($shift_ev2) {
     }
 
     if (!file_exists($evening_sent_file_path2)) {
+        
+        //######## CLEAR MASTER FILE
+        $files = glob('/mnt/itrack/beta/src/php/gps_report/'.$account_id.'/master/*'); // get all file names
+        foreach($files as $file){ // iterate files
+          if(is_file($file))
+            unlink($file); // delete file
+        }
+        //###################################
+        
         //####### COPY S3 MASTER
         include_once("../../S3_master.php");
         
