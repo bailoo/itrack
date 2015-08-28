@@ -1,7 +1,11 @@
 <?php
 //######### S3 BLOCK OPENS #########
 $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
-$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]; /// server Path
+if($DEBUG_OFFLINE) {
+    $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]; /// server Path
+} else {
+    $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]; /// server Path
+}
 //echo "\nONE=".$pathToRoot;
 $filePathToS3Wrapper=$pathToRoot."/s3/S3Wrapper.php";
 //echo "\nTWO=".$filePathToS3Wrapper;
