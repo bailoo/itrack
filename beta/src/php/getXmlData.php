@@ -790,11 +790,11 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
             }
             if ($parameterizeData->io2 != null) 
             {
-                $io2_2 = $io2;
+                $io2_1 = $io2;
             }
             if ($parameterizeData->io3 != null) 
             {
-                    $io3_3 = $io3;
+                    $io3_1 = $io3;
             }
             if ($parameterizeData->io4 != null) 
             {
