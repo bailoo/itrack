@@ -626,7 +626,8 @@ var input = (document.getElementById('pac-input'));
 				{					
 					return function() 
 					{
-						var near_from_customer_or_plant_str='';						
+						var near_from_customer_or_plant_str='';
+                                                var customer_plant_str1='';
 						var feature_id_map = document.getElementById('station_flag_map').value;
                                                 //alert('feature_id_map='+feature_id_map);
 						if(feature_id_map==1)
@@ -847,7 +848,7 @@ var input = (document.getElementById('pac-input'));
 									'</tr>'+
 									'<tr>'+											
 									'<td colspan=3>'+
-									'</tr>'+near_from_customer_or_plant_str+											
+									'</tr>'+near_from_customer_or_plant_str+customer_plant_str1+											
 									'</table>'+
 									'<br><form action=#>';
 									if(feature_id_map==1)

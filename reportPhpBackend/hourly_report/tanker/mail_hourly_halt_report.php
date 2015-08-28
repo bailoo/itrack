@@ -778,8 +778,8 @@ if ($shift_ev1) {
         //echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL ##############
-        $to = 'rizwan@iembsys.com';
-       // $to = 'hourlyreportbvm@gmail.com';
+        //$to = 'rizwan@iembsys.com';
+        $to = 'hourlyreportbvm@gmail.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -805,8 +805,8 @@ if ($shift_ev1) {
         $result = $mgClient->sendMessage($domain, array(
             'from' => 'Itrack <support@iembsys.co.in>',
             'to' => $to,
-            'cc'      => 'rizwan@iembsys.com',
-            //'cc' => 'hourlyreport4@gmail.com',
+            //'cc'      => 'rizwan@iembsys.com',
+            'cc' => 'hourlyreport4@gmail.com',
             //'cc'      => 'hourlyreport4@gmail.com',
             // 'bcc'     => 'astaseen83@gmail.com',
             'subject' => $subject,
