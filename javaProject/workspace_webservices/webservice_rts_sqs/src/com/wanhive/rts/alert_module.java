@@ -163,6 +163,10 @@ public class alert_module {
 					alert_variables.lat.put(imei, Double.parseDouble(lat));
 					alert_variables.lng.put(imei, Double.parseDouble(lng));
 					
+					if(Speed.equals("")){ Speed="0";}
+					if(io_value1.equals("")){ io_value1="0";}
+					if(SupplyVoltage.equals("")){ SupplyVoltage="0";}
+					
 					alert_variables.speed.put(imei, Float.parseFloat(Speed));
 					alert_variables.io1.put(imei, Float.parseFloat(io_value1));					
 					alert_variables.sup_v.put(imei, Float.parseFloat(SupplyVoltage));
