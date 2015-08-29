@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="write_last_location" key="selection"/>
+		<item value="alert_battery_disconnected_process" key="selection"/>
 		<list key="findhistory">
-			<item value="write_last_location"/>
-			<item value="null"/>
+			<item value="alert_battery_disconnected_process"/>
+			<item value="Battery "/>
+			<item value="RD"/>
 			<item value="dispatch"/>
-			<item value="webServiceClient"/>
-			<item value="processData"/>
-			<item value="Latitude"/>
-			<item value="ServerTS"/>
-			<item value="System"/>
+			<item value="battery_"/>
+			<item value="battery_discon"/>
+			<item value="battery_disconnected"/>
+			<item value="Supply"/>
 		</list>
 		<list key="replacehistory">
 		</list>

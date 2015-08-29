@@ -361,7 +361,7 @@ public class alert_module {
 		}catch(Exception e) {System.out.println("Errr:Movement_Alert="+e.getMessage());}
 		
 		
-		try{
+		/*try{
 			if(alert_variables.RD.get(imei).equals("1"))
 			{
 				if(alert_variables.alert_battery_disconnected_flag.get(imei))
@@ -389,6 +389,7 @@ public class alert_module {
 				}				
 			}
 		}catch(Exception e) {System.out.println("Errr:BattrDisConct Alert="+e.getMessage());}
+		*/
 		
 		try{
 			if(alert_variables.NG60.get(imei).equals("1"))
@@ -1193,6 +1194,7 @@ public class alert_module {
 		//String date_range2 = "2014-11-05 16:00:00";
 		String date_range1 = valid_date_tmp[0]+" 04:00:00";
 		String date_range2 = valid_date_tmp[0]+" 12:00:00";
+		//String date_range2 = valid_date_tmp[0]+" 15:00:00";
 		String date_range3 = valid_date_tmp[0]+" 16:00:00";
 		String date_range4 = valid_date_tmp[0]+" 22:00:00";
 		
