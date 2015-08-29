@@ -2261,9 +2261,9 @@ function action_report_nearby_location(obj)
     makePOSTRequest('src/php/action_report_datalog.htm', poststr);
   }  
    
-  function action_report_halt(obj)
+ function action_report_halt(obj)
   {
-	//alert("test");
+    document.getElementById("reportPrevPage").innerHTML='';
     var area_defined = document.getElementById("area_defined").value;
     var geo_id ="";
     
@@ -2322,16 +2322,19 @@ function action_report_nearby_location(obj)
     {    
         if(area_defined == 1)
         {
-			document.thisform.vehicleserial_prev.value=device_str_iotype;
-			document.thisform.geo_id.value=geo_id;	
+            //document.thisform.vehicleserial_prev.value=device_str_iotype;
+            //document.thisform.geo_id.value=geo_id;
+            document.getElementById("vehicleserial_prev").value=device_str_iotype;
+            document.getElementById("geo_id").value=geo_id;
         }
         else
         {
-			document.thisform.vehicleserial_prev.value=device_str_iotype;
+            document.getElementById("vehicleserial_prev").value=device_str_iotype;
+            //document.thisform.vehicleserial_prev.value=device_str_iotype;
         }   
 		document.thisform.submit();
     } 
-  }  
+  } 
 
 //1.DISTANCE REPORT  
   function action_report_track_interval(obj)
@@ -2524,6 +2527,7 @@ function action_report_nearby_location(obj)
    
 function action_report_travel(obj)
 {
+    document.getElementById("reportPrevPage").innerHTML='';
 	//document.getElementById("loading_msg").style.display = '';    
 	var device_str = get_selected_vehicle(obj);
 	//alert("deviceStr="+device_str);
