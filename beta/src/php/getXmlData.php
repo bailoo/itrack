@@ -43,8 +43,8 @@ function read_data_between_datetime($vSerial, $startDate, $endDate, $userInterva
     //echo "imei=".$imei."<br>"; 
 	
     $orderAsc = TRUE;
-    //$st_results = getImeiDateTimes($o_cassandra, $imei, $startDate, $endDate, $deviceTime, $orderAsc);
-    $st_results = getLastSeenDateTimes($o_cassandra, $vSerial, $startDate, $endDate);
+    $st_results = getImeiDateTimes($o_cassandra, $imei, $startDate, $endDate, $deviceTime, $orderAsc);
+
     //var_dump($st_results);
     //$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r');
             // TRUE for ascending, otherwise descending (default) 
@@ -283,8 +283,8 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
     //echo "imei=".$imei."<br>"; 
 	
     $orderAsc = TRUE;
-    //$st_results = getImeiDateTimes($o_cassandra, $imei, $dateRangeStart, $dateRangeEnd, $deviceTime, $orderAsc);
-    $st_results = getLastSeenDateTimes($o_cassandra, $vSerial, $startDate, $endDate);
+    $st_results = getImeiDateTimes($o_cassandra, $imei, $dateRangeStart, $dateRangeEnd, $deviceTime, $orderAsc);
+
     //var_dump($st_results);
     foreach($st_results as $item) {
         $msg_type = $item->a;                 
