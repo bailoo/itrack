@@ -1353,7 +1353,7 @@ unlink($file_path);
 
 //echo "\nBefore mail";
 //############# CREATE FOLDER AND BACKUP FILES ########
-$dirPath = "excel_reports/".$previous_date;
+/*$dirPath = "excel_reports/".$previous_date;
 //echo "\nDirPath=".$dirPath;
 mkdir ($dirPath, false);
 @chmod($dirPath, 0777);
@@ -1364,7 +1364,7 @@ $destpath = $dirPath."/".$filename_title;
 
 @chmod($destpath, 0777);
 //echo "\nSourcePath=".$sourcepath." ,DestPath=".$destpath;
-copy($sourcepath,$destpath);
+copy($sourcepath,$destpath);*/
 //####################################
 //echo "\nAfter mail1";
 

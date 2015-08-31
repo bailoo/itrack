@@ -1,0 +1,839 @@
+package com.wanhive.rts.handler;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
+//import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.Date;
+
+import com.wanhive.rts.FileWriteHandler;
+import com.wanhive.rts.ProtocolHandler;
+import com.wanhive.rts.ServerDataEvent;
+import com.wanhive.rts.TransactionServer;
+//import com.wanhive.rts.handler.db.DataManager;
+import com.wanhive.rts.alert_module;
+
+
+public class RequestHandler {
+	
+	public void handleProtocol(ServerDataEvent dataEvent) {
+		//Clean up the message and set up request Parameters
+		dataEvent.message=dataEvent.message.replaceAll("(\\r|\\n)", "");
+		//dataEvent.requestParams=dataEvent.message.split(":");
+		//String[] commandStr=dataEvent.requestParams;
+		
+		//System.out.println(dataEvent.message);
+		//System.out.println("d");
+		UpdateDatabase(dataEvent.message);
+	}
+	
+	private void UpdateDatabase(String Response)
+	{	
+		GregorianCalendar calendar = new GregorianCalendar();
+		//Statement statement;
+		//ResultSet result;
+		//result=null;
+		//statement=null;
+		//ResultSetMetaData rsmd;
+		StringTokenizer st,st4;
+		SimpleDateFormat formatter;
+		Date date,date1;
+
+		String line="",serverdatetime="",devicedatetime="";
+		int NoofToken,i=0,j=0,k=0;
+		int GPSYear,GPSMonth,GPSDay,GPSHr,GPSMin,GPSSec;
+		double Latitudetmp=0.0,Longitudetmp=0.0;
+		String marker_a1="",marker_a2="";
+		String folderDate="",RFID="";
+//		int SerialNo = 0;
+		String[] data = new String[35];
+		//System.out.println(Response);
+		st = new StringTokenizer(Response,";");		//Parsing Input
+		NoofToken = st.countTokens();
+		//System.out.println("No of Token="+NoofToken);
+
+//		String ServerTS = ""; 
+		String DateTime = "";
+//		String VehicleID = "";
+		String DeviceIMEINo = "";
+		String MsgType = "";
+		String Version = "";
+		String Fix = "";
+//		String SendMode = "";
+		String Latitude = "";
+		String Longitude = "";
+		String Altitude = "";
+		String Speed = "";		
+		String Signal_Strength = "";
+		String No_Of_Satellites = "";
+//		String CBC = "";
+		String CellName = "";
+//		String min_speed = "";
+//		String max_speed = "";
+		String distance = "";
+		String strOrig = "";
+
+		String io_value1 = "";
+		String io_value2 = "";
+		String io_value3 = "";
+		String io_value4 = "";
+		String io_value5 = "";
+		String io_value6 = "";
+		String io_value7 = "";
+		String io_value8 = "";
+		
+		String SupplyVoltage = "";
+		//int SpeedAlert = 0;
+		//int GeofenceInAlert = 0;
+		//int GeofenceOutAlert =0;
+		//int StopAlert =0;
+		//int MoveAlert =0;
+		//int LowVoltageAlert =0;
+		float speed_f = 0.F;
+		float supv_f = 0.F;
+		double ln_io_value1 = 0;
+		double ln_io_value2 = 0;
+		double ln_io_value3 = 0;
+		double ln_io_value4 = 0;
+		double ln_io_value5 = 0;
+		double ln_io_value6 = 0;
+		double ln_io_value7 = 0;
+		double ln_io_value8 = 0;
+		//String ax = "",	ay = "", az = "", mx = "",	my = "", mz = "", bx = "",	by = "", bz = "";
+		
+		String exception_message ="";
+		//String ax = "",	ay = "", az = "", mx = "",	my = "", mz = "", bx = "",	by = "", bz = "";				
+		String LogDataPath = "D:\\data_itrack/xml_data";
+		String RealDataPath = "D:\\data_itrack/last_location";
+		//String LogDataPath = "/mnt/volume1/xml_vts/xml_data";		
+		//String RealDataPath = "/mnt/volume1/xml_vts/last_location";
+//		String LogDataPath = "/home/current_data/xml_data";
+//		String RealDataPath = "/home/current_data/last_location";
+		
+		try
+		{
+			if(NoofToken > 0)
+			{				
+				//System.out.println("NoOfTokens="+NoofToken);
+
+				for(k=0;k<NoofToken ;k++)
+				{
+					//System.out.println("k="+k);
+					line = st.nextToken();
+					//System.out.println(line);
+					//st1 = new StringTokenizer(line,":");		//Parsing Input
+					//NoofField = st1.countTokens();
+					//System.out.println("No of Fields="+NoofField);
+						
+					//if(NoofField > 4)
+					{
+						date = new Date();
+						/*Calendar cal = Calendar.getInstance(); // creates calendar
+						cal.setTime(new Date()); // sets calendar time/date
+						cal.add(Calendar.HOUR_OF_DAY, 1); // adds one hour
+						date=(Date) cal.getTime();*/
+						
+						formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						serverdatetime = formatter.format(date);
+						//System.out.println("STS="+serverdatetime);
+						//System.out.println("line_len="+line.length());
+
+						try{
+							for(i=0;i<line.length();i++)
+							{
+								if(line.charAt(i) == ',')
+								{
+									//System.out.println(data[j]);
+									j++;
+									data[j]="";
+								}
+								else
+								{
+									//System.out.println("Two:else");
+									if(data[j] == null)
+									{
+										data[j] = line.charAt(i)+"";
+									}
+									else
+									{
+										data[j] = data[j]+line.charAt(i);
+									}
+								}								
+							}
+						}catch(Exception e){
+							//System.out.println("exception1:"+e.getMessage());
+							e.printStackTrace();
+							exception_message+="\nOne::"+e.getMessage();
+						}
+						j=0;
+
+						
+						DeviceIMEINo = data[0];
+						devicedatetime = data[1];
+						Latitude=data[2];
+						Longitude = data[3];
+						Speed = data[4];
+						
+						//System.out.println("MsgType="+MsgType+", DeviceIMEINo="+DeviceIMEINo+" ,Version="+Version+" ,Fix="+Fix);
+						////////////////////// FOR DATA[7] (SPEED) //////////////////
+						strOrig = Speed;   
+						char[] stringArray1;
+						   
+						//convert string into array using toCharArray() method of string class    
+						stringArray1 = strOrig.toCharArray();
+							   
+						//display the array    
+						for(int index=0; index < stringArray1.length; index++)   
+						{
+						  if( (stringArray1[index]=='0' || stringArray1[index]=='1'  || stringArray1[index]=='2'  || stringArray1[index]=='3' || stringArray1[index]=='4' || stringArray1[index]=='5' || stringArray1[index]=='6' || stringArray1[index]=='7' || stringArray1[index]=='8' || stringArray1[index]=='9') )
+						  {
+							//System.out.print(stringArray[index]);
+						  }  
+						  else
+						  {
+							stringArray1[index] = '.';
+						  }    
+						  //System.out.print(stringArray[index]);
+						}							
+						try{
+							Speed = new String(stringArray1);
+							speed_f = Float.parseFloat(Speed);
+							speed_f = (float) (Math.round(speed_f*100.0)/100.0);
+						}catch(Exception e) { 
+							exception_message+="\nThree::"+e.getMessage();
+							//System.out.println("Speed error");
+							}	
+						//////////////////////// DATA[7] SPEED CLOSED////////////////			
+						//System.out.println("Test3");			
+						DateTime = devicedatetime;		//data[8] +" "+ data[9]	 //Manipulated above
+
+									
+
+						st4 = new StringTokenizer(serverdatetime," ");
+						folderDate = st4.nextToken();
+						//System.out.println("FolderDate="+folderDate);
+
+						String vserial = DeviceIMEINo;
+						String fuel="-";					
+						String q="\"";							
+							
+						String mydir1 = LogDataPath;
+						boolean success1 = (new File(mydir1 + "/" + folderDate)).mkdir();
+						//System.out.println("Success="+success1);							
+						 
+						 RandomAccessFile raf1 =null;
+						 boolean FilehandlerReceived = false;
+						 FileWriteHandler CurrentFileWriteHandler = null;
+						 //BufferedWriter out_a1 =null;
+						 //BufferedWriter out_a2 =null;
+						 String SFile = LogDataPath+"/"+folderDate+"/"+vserial+".xml";
+						// System.out.println("FilehandlerReceived1:"+FilehandlerReceived+" "+SFile);
+						 try{
+							 synchronized(this.RFileHandler)
+							 {
+								 int ListSize = this.RFileHandler.size();
+								 for(int ListCnt=0;ListCnt<ListSize;ListCnt++)
+								 {
+									 if(this.RFileHandler.get(ListCnt).RFileName.equals(SFile))
+									 {
+										 raf1 =  this.RFileHandler.get(ListCnt).RFile;
+										 CurrentFileWriteHandler = this.RFileHandler.get(ListCnt);
+										 FilehandlerReceived = true;
+										 break;
+									 }
+								 }
+							 
+								 if(FilehandlerReceived==false)
+								 {
+									 //raf1 = new RandomAccessFile("/mnt/volume1/xml_vts/xml_data/"+folderDate+"/"+vserial+".xml", "rw");
+									 raf1 = new RandomAccessFile(SFile, "rwd");
+									 //raf1 = new RandomAccessFile(SFile, "rw");
+									 CurrentFileWriteHandler = new FileWriteHandler(raf1, SFile,System.currentTimeMillis(),System.currentTimeMillis(),new StringBuffer(""));
+									 RFileHandler.add(CurrentFileWriteHandler);
+								 }
+							 
+								 //System.out.println("FilehandlerReceived:"+FilehandlerReceived+" "+CurrentFileWriteHandler.StrBuf.length()+" "+ListSize);
+								 long length1 = raf1.length();
+
+								//System.out.println("File Length1="+length1);
+								
+								if(length1<10)
+								{
+									//out_a1 = new BufferedWriter(new FileWriter("/var/www/html/itrack_vts/xml_vts/xml_data/"+folderDate+"/"+vserial+".xml", true));				
+									//out_a1 = new BufferedWriter(new FileWriter("/mnt/volume1/xml_vts/xml_data/"+folderDate+"/"+vserial+".xml", true));
+									//marker_a1 = "<t1>";
+									raf1.seek(0);
+									//marker_a2 = "<t1>\n<x "+"a="+q+MsgType+q+" b="+q+Version+q+" c="+q+Fix+q+" d="+q+Latitude+q+" e="+q+Longitude+q+" f="+q+speed_f+q+" g="+q+serverdatetime+q+" h="+q+DateTime+q+" i="+q+io_value1+q+" j="+q+io_value2+q+" k="+q+io_value3+q+" l="+q+io_value4+q+" m="+q+io_value5+q+" n="+q+io_value6+q+" o="+q+io_value7+q+" p="+q+io_value8+q+" q="+q+Signal_Strength+q+" r="+q+supv_f+q+" ci="+q+CellName+q+" ax="+q+ax+q+" ay="+q+ay+q+" az="+q+az+q+" mx="+q+mx+q+" my="+q+my+q+" mz="+q+mz+q+" bx="+q+bx+q+" by="+q+by+q+" bz="+q+bz+q+"/>\n</t1>";
+									marker_a2 = "<t1>\n<x "+"a="+q+MsgType+q+" b="+q+Version+q+" c="+q+Fix+q+" d="+q+Latitude+q+" e="+q+Longitude+q+" f="+q+speed_f+q+" g="+q+serverdatetime+q+" h="+q+DateTime+q+" i="+q+io_value1+q+" j="+q+io_value2+q+" k="+q+io_value3+q+" l="+q+io_value4+q+" m="+q+io_value5+q+" n="+q+io_value6+q+" o="+q+io_value7+q+" p="+q+io_value8+q+" q="+q+Signal_Strength+q+" r="+q+supv_f+q+" ci="+q+CellName+q+"/>\n</t1>";
+									//System.out.println("BeforeWrite1");
+									raf1.writeBytes(marker_a2);
+									CurrentFileWriteHandler.UpdateTime = System.currentTimeMillis();
+									CurrentFileWriteHandler.StrBuf.setLength(0);
+									//System.out.println("AfterWrite1:"+marker_a2);
+									//length1 = raf1.length();
+									//raf1.seek(length1);
+									//out_a1.close();
+								}				
+								else
+								{
+									//System.out.println("File Length="+raf1.length());
+									raf1.seek(length1-6);										
+									//marker_a2 = "\n<x "+"a="+q+MsgType+q+" b="+q+Version+q+" c="+q+Fix+q+" d="+q+Latitude+q+" e="+q+Longitude+q+" f="+q+speed_f+q+" g="+q+serverdatetime+q+" h="+q+DateTime+q+" i="+q+io_value1+q+" j="+q+io_value2+q+" k="+q+io_value3+q+" l="+q+io_value4+q+" m="+q+io_value5+q+" n="+q+io_value6+q+" o="+q+io_value7+q+" p="+q+io_value8+q+" q="+q+Signal_Strength+q+" r="+q+supv_f+q+" ci="+q+CellName+q+" ax="+q+ax+q+" ay="+q+ay+q+" az="+q+az+q+" mx="+q+mx+q+" my="+q+my+q+" mz="+q+mz+q+" bx="+q+bx+q+" by="+q+by+q+" bz="+q+bz+q+"/>\n</t1>";
+									marker_a2 = "\n<x "+"a="+q+MsgType+q+" b="+q+Version+q+" c="+q+Fix+q+" d="+q+Latitude+q+" e="+q+Longitude+q+" f="+q+speed_f+q+" g="+q+serverdatetime+q+" h="+q+DateTime+q+" i="+q+io_value1+q+" j="+q+io_value2+q+" k="+q+io_value3+q+" l="+q+io_value4+q+" m="+q+io_value5+q+" n="+q+io_value6+q+" o="+q+io_value7+q+" p="+q+io_value8+q+" q="+q+Signal_Strength+q+" r="+q+supv_f+q+" ci="+q+CellName+q+"/>\n</t1>";
+									//CurrentFileWriteHandler.StrBuf.append(marker_a2);
+									//if(((System.currentTimeMillis()-CurrentFileWriteHandler.UpdateTime)>120000) || (CurrentFileWriteHandler.StrBuf.length()>6000))
+									{
+										//CurrentFileWriteHandler.StrBuf.append("\n</t1>");
+										//raf1.writeBytes(CurrentFileWriteHandler.StrBuf.toString());
+										//System.out.println("BeforeWrite2:"+marker_a2);
+										raf1.writeBytes(marker_a2);
+										CurrentFileWriteHandler.UpdateTime = System.currentTimeMillis();
+										CurrentFileWriteHandler.StrBuf.setLength(0);
+										//System.out.println("AfterWrite2");
+									}
+								}
+							}
+				
+								//raf1.close();
+						}catch(Exception ex){
+							//System.out.println("Exception 700");
+							exception_message+="\nSix::"+ex.getMessage(); 								
+							try{
+							//raf1.close();
+							//out_a1.close();
+							}catch(Exception ex1){
+								exception_message+="\nSeven::"+ex1.getMessage(); 	
+								//System.out.println("Exception 800");
+							}
+
+							ex.printStackTrace();
+						 }
+								
+						try{	
+							//CALL WRITE LAST LOCATION															
+							String filename = RealDataPath+"/"+vserial+".xml";
+							Speed = Float.toString(speed_f);
+							SupplyVoltage = Float.toString(supv_f);
+							//write_last_location(filename,MsgType,vserial,Version,Fix,Latitude,Longitude,Speed,serverdatetime,DateTime,io_value1,io_value2,io_value3,io_value4,io_value5,io_value6,io_value7,io_value8,Signal_Strength,SupplyVoltage,CellName,ax,ay,az,mx,my,mz,bx,by,bz);
+							write_last_location(filename,MsgType,vserial,Version,Fix,Latitude,Longitude,Speed,serverdatetime,DateTime,io_value1,io_value2,io_value3,io_value4,io_value5,io_value6,io_value7,io_value8,Signal_Strength,SupplyVoltage,CellName);
+							
+							//###### CALL SMS ALERT FUNCTION
+							System.out.println("BEFORE FINAL ALERT="+vserial+","+DateTime+","+serverdatetime+","+Latitude+","+Longitude+","+Speed+","+io_value1+","+io_value2+","+io_value3+","+io_value4+","+io_value5+","+io_value6+","+io_value7+","+io_value8+","+SupplyVoltage);
+							alert_module.write_final_alert_data(vserial, DateTime, serverdatetime, Latitude, Longitude, Speed, io_value1, SupplyVoltage);
+							
+							// LAST LOCATION CLOSED									
+						}catch(Exception ex5){
+							exception_message+="\nEight::"+ex5.getMessage();
+							//System.out.println("Exception IN LAST LOCATION WRITE:"+ex5.getMessage()); 
+						}							
+							
+							
+						/////////// CALL -WRITE PORT LOG /////////////////																
+						try{
+							//System.out.println("PV IEMI="+pv.imei);								
+							//String port_logfolder = "/mnt/volume1/xml_vts/imei_port/"+folderDate;
+							//String port_logfolder = "D:\\FILEZILLA_VTS_UPDATE/SMS_ALERTS_JAVA/COMMON_CODE_SMS_ALERT/v1.1_SMS_ALERT_RSPL/xml_vts/imei_port/"+folderDate;
+							//String port_no = "10020";
+							//System.out.println("PORT="+TransactionServer.port_number);
+							String port_logfolder = "/home/VTS/GPRSLoggerLocal/port_log/"+folderDate;
+							String port_flag_path = "/home/VTS/GPRSLoggerLocal/port_flag/"+TransactionServer.port_number;
+
+							//String port_logfolder = "D:\\test_app/port_log/"+folderDate;
+							//String port_flag_path = "D:\\test_app/port_flag/"+port_no;
+							
+							File f = new File(port_flag_path);
+							if(f.exists())
+							{
+								write_port_log(vserial, port_logfolder, serverdatetime, DateTime, TransactionServer.port_number);
+							}
+						}catch(Exception ex6){ 
+							exception_message+="\nNine::"+ex6.getMessage();
+							System.out.println("Exception IN PORT WRITE:"+ex6.getMessage()); }							
+						////////////////////////////////////////////////																			
+					}
+				}
+			}
+		}
+		catch (Exception e)	
+		{
+			exception_message+="\nEleven::"+e.getMessage();
+			//System.out.println("Error1");
+			//System.out.println(e);
+		}
+		
+		//System.out.println("exception_message="+exception_message);
+		//exception_message = "\nTestMessage";
+		
+		if(!exception_message.equalsIgnoreCase(""))
+		{
+			try {
+				TransactionServer.excptionf.writeBytes(exception_message+" "+Response);
+			} catch (IOException e) {			
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}//appends the string to the file
+		}		
+	}
+	
+	//************ METHODS ******************//
+	/************* METHOD BODY -WRITE PORT LOG  **************************/
+	public static void write_port_log(String imei, String folderDate, String serverdatetime, String DateTime, int port_no)	
+	{	
+		BufferedWriter out_a2 =null;
+		Date date_last_loc1=null,date_last_loc2=null,date_servertime3=null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					
+		boolean success1 = (new File(folderDate)).mkdir();		//MAKE FOLDER		
+		
+		String filename = folderDate+"/"+port_no+".txt";
+						
+		//String imei_string = "\n"+imei+" : "+serverdatetime;
+		String imei_string = "\n"+imei;
+		
+		
+		//#### READ EXISTING IMEI ENTRY IN FILE ###############/		
+		boolean imei_exist = false;
+		try{
+			  // Open the file that is the first 
+			  // command line parameter
+			  FileInputStream fstream = new FileInputStream(filename);
+			  // Get the object of DataInputStream
+			  DataInputStream in = new DataInputStream(fstream);
+			  BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			  String strLine;
+			  //Read File Line By Line
+			  while ((strLine = br.readLine()) != null)   {
+			  // Print the content on the console
+				  if(imei.equalsIgnoreCase(strLine.trim()))
+				  {
+					  imei_exist = true;
+					  break;
+					  //System.out.println (strLine);
+				  }
+			  }
+			  //Close the input stream
+			  in.close();
+		    }catch (Exception e){//Catch exception if any
+		  //System.err.println("imei read error: " + e.getMessage());
+		  }		
+		//#####################################################/
+		
+		try{
+			if(!imei_exist)		//IF DOES NOT EXIST
+			{
+				//System.out.println("PORT LOG FILE DOES NOT EXIST");
+				out_a2 = new BufferedWriter(new FileWriter(filename, true));																											
+				out_a2.write(imei_string);
+				out_a2.close();
+			}
+		} catch(Exception e) {System.out.println("EXCEPTION IN WRITING LOG FILE:"+e.getMessage());}																									
+	}	
+	//METHOD FOR GETTING CURRENT DATETIME
+
+	//************* GET XML ATTRIBUTES FROM LINE STRING ************//
+	public static String getXmlAttribute(String line, String param)
+	{
+		//System.out.println("In getXmlAttrib: line="+line+" ,param="+param);
+		String str1 ="";
+		String value ="";
+		String[] str2;
+		
+		try {
+			Pattern p = Pattern.compile(param);
+			Matcher matcher = p.matcher(line);				
+			
+			while(matcher.find()){
+						
+				str1 = matcher.group().toString().replace("\"","");
+				str2 = str1.split("=");
+				//System.out.println(str2[1]);
+				value = str2[1];
+				//System.out.println("val="+value);
+				break;
+			}
+		} catch(Exception e) { System.out.println("Error in function-Xml Attribute"+e.getMessage());}
+		
+		return value;		
+	}
+
+	/************* METHOD BODY -WRITE LAST LOCATION  **************************/
+	
+	//String MsgType, String vserial, String Version, String Fix, String Latitude, String Longitude, String Altitude, String Speed, String serverdatetime, String DateTime, String fuel, String No_Of_Satellites, String CellName, String distance, String io_value1, String io_value2, String io_value3, String io_value4, String io_value5, String io_value6, String io_value7, String io_value8, String Signal_Strength, String SupplyVoltage, String SpeedAlert, String GeofenceInAlert, String GeofenceOutAlert, String StopAlert, String MoveAlert, String LowVoltageAlert, String RFID
+	public void write_last_location(String filename, String MsgType, String vserial, String Version, String Fix, String Latitude, String Longitude, String Speed, String serverdatetime, String DateTime, String io_value1, String io_value2, String io_value3, String io_value4, String io_value5, String io_value6, String io_value7, String io_value8, String Signal_Strength, String SupplyVoltage,String cellname)	
+	{				
+		RandomAccessFile out_a2 =null;
+		//************WRITE LAST LOCATION FILE **********************									
+		//String filename = "/var/www/html/itrack_vts/xml_vts/last_location/"+vserial+".xml";		
+		String marker_a2="", q="\"", xml_date="", xml_last_halt_time="", xml_day_max_speed="", xml_day_max_speed_time="", xml_lat="", xml_lng="";
+		String last_halt_time = "", day_max_speed="", day_max_speed_time="", xml_lat_s = "", xml_lng_s = "", Latitude_s="", Longitude_s="";
+		float tmp_speed = 0.0f;
+		
+		day_max_speed = Speed;
+		day_max_speed_time = DateTime;	//DEFAULT ASSINGMENT
+		
+		Date date_last_loc1=null, date_last_loc2=null, date_servertime2=null;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						
+		String tmpstr2="";
+		//tmpstr2 = "/var/www/html/itrack_vts/xml_vts/last_location/"+vserial+".xml";
+		tmpstr2 = filename;	
+		
+		//ADD ONE HOUR TO SERVERTIME
+		int minutesToAdd = 60;  // 1 hrs
+
+		try{
+		
+		date_last_loc2 = (Date) sdf.parse(DateTime);			//PARSE DATE LAST LOCATION
+			
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(sdf.parse(serverdatetime));
+		cal.add(Calendar.MINUTE, minutesToAdd);
+		//System.out.println(cal.getTime());
+			
+		String TimeStop_Str = sdf.format(cal.getTime());
+		//System.out.println(TimeStop_Str);
+		date_servertime2 = (Date) sdf.parse(TimeStop_Str);		//PARSE SERVER DATETIME
+		} catch(Exception e1){System.out.println("ErrorLastLocation1="+e1.getMessage());}
+		
+		
+		synchronized(this.RFileHandler2)
+		{
+			int ListSize = this.RFileHandler2.size();
+			boolean FilehandlerReceived = false;
+			boolean FileNew = false;
+			FileWriteHandler CurrentFileWriteHandler = null;
+			for(int ListCnt=0;ListCnt<ListSize;ListCnt++)
+			{
+				if(this.RFileHandler2.get(ListCnt).RFileName.equals(filename))
+				{
+					try
+					{
+						 //out_a2 =  new RandomAccessFile(filename, "rw");
+						 CurrentFileWriteHandler = this.RFileHandler2.get(ListCnt);
+						 this.RFileHandler2.get(ListCnt).RFile = out_a2;
+						 FilehandlerReceived = true;
+						 break;
+					 }
+					 catch(Exception e)
+					 {
+						 
+					 }
+				}
+			}
+		 
+			 if(FilehandlerReceived==false)
+			 {
+				 try
+				 {
+					 //out_a2 = new RandomAccessFile(filename, "rw");
+					 CurrentFileWriteHandler = new FileWriteHandler(out_a2, filename,System.currentTimeMillis(),System.currentTimeMillis(),new StringBuffer(""));
+					 RFileHandler2.add(CurrentFileWriteHandler);
+				 }
+				 catch(Exception e)
+				 {
+					 
+				 }
+			 }
+		 
+			 long FileLength=0;
+			 String strLine1="";
+			try
+			{
+				//System.out.println("Time1:"+(System.currentTimeMillis()-CurrentFileWriteHandler.UpdateTime));
+				if ((FilehandlerReceived==false) || ((System.currentTimeMillis()-CurrentFileWriteHandler.UpdateTime)>60000))
+				{
+					out_a2 = new RandomAccessFile(filename, "rwd");
+					//out_a2 = new RandomAccessFile(filename, "rw");
+					FileLength = out_a2.length();
+					out_a2.seek(0);
+					
+					if(out_a2.readLine()==null)
+					{
+						last_halt_time = DateTime;
+						if((date_last_loc2.compareTo(date_servertime2) < 0) && (!Latitude.equals("")) && (!Longitude.equals("")) && (!Latitude.equals("0.0")) && (!Longitude.equals("0.0")) )
+						{
+							//System.out.println("WriteFile:FirstTime");
+			
+							//marker_a2 = "<t1>\n<x "+"a="+q+MsgType+q+" b="+q+Version+q+" c="+q+Fix+q+" d="+q+Latitude+q+" e="+q+Longitude+q+" f="+q+Speed+q+" g="+q+serverdatetime+q+" h="+q+DateTime+q+" i="+q+io_value1+q+" j="+q+io_value2+q+" k="+q+io_value3+q+" l="+q+io_value4+q+" m="+q+io_value5+q+" n="+q+io_value6+q+" o="+q+io_value7+q+" p="+q+io_value8+q+" q="+q+Signal_Strength+q+" r="+q+SupplyVoltage+q+" s="+q+day_max_speed+q+" t="+q+day_max_speed_time+q+" u="+q+last_halt_time+q+" ax="+q+ax+q+" ay="+q+ay+q+" az="+q+az+q+" mx="+q+mx+q+" my="+q+my+q+" mz="+q+mz+q+" bx="+q+bx+q+" by="+q+by+q+" bz="+q+bz+q+" ci="+q+cellname+q+"/>\n</t1>";
+							marker_a2 = "<t1>\n<x "+"a="+q+MsgType+q+" b="+q+Version+q+" c="+q+Fix+q+" d="+q+Latitude+q+" e="+q+Longitude+q+" f="+q+Speed+q+" g="+q+serverdatetime+q+" h="+q+DateTime+q+" i="+q+io_value1+q+" j="+q+io_value2+q+" k="+q+io_value3+q+" l="+q+io_value4+q+" m="+q+io_value5+q+" n="+q+io_value6+q+" o="+q+io_value7+q+" p="+q+io_value8+q+" q="+q+Signal_Strength+q+" r="+q+SupplyVoltage+q+" s="+q+day_max_speed+q+" t="+q+day_max_speed_time+q+" u="+q+last_halt_time+q+" ci="+q+cellname+q+"/>\n</t1>";
+							
+							//marker_a2 = "";
+							out_a2.seek(0);
+							out_a2.writeBytes(marker_a2);
+							CurrentFileWriteHandler.UpdateTime = System.currentTimeMillis();
+							CurrentFileWriteHandler.StrBuf.setLength(0);
+							//System.out.println("T1");
+							//out_a2.close();
+						}
+					}
+					//########## BLANK FILE CLOSED		
+					else
+					{
+						while ((strLine1 = out_a2.readLine()) != null) 
+						{																																						
+							int len = strLine1.length();
+							
+							if(len < 100)
+							{
+								continue;
+							}																										
+							xml_lat = getXmlAttribute(strLine1,"d=\"[^\"]+");
+							xml_lng = getXmlAttribute(strLine1,"e=\"[^\"]+");							
+							xml_date = getXmlAttribute(strLine1,"h=\"[^\"]+");
+							xml_day_max_speed = getXmlAttribute(strLine1,"s=\"[^\"]+");
+							xml_day_max_speed_time = getXmlAttribute(strLine1,"t=\"[^\"]+");
+							xml_last_halt_time = getXmlAttribute(strLine1,"u=\"[^\"]+");														
+																					
+							//####### HANDLE EMPTY VARIABELS
+							if(Latitude.equals(""))
+							{
+								Latitude = "0.0";
+							}
+							if(Longitude.equals(""))
+							{
+								Longitude = "0.0";
+							}
+							if(xml_lat.equals(""))
+							{
+								xml_lat = "0.0";
+							}
+							if(xml_lng.equals(""))
+							{
+								xml_lng = "0.0";
+							}
+							if(xml_day_max_speed.equals(""))
+							{
+								xml_day_max_speed = "0.0";
+							}
+							if(Speed.equals(""))
+							{
+								Speed = "0.0";
+							}
+							if(xml_day_max_speed_time.equals(""))
+							{
+								xml_day_max_speed_time = DateTime;
+							}						
+							//############################
+							
+							//######LAST HALT TIME BLOCK
+							Latitude_s = Latitude.substring(0, Latitude.length() - 1);
+							Longitude_s = Longitude.substring(0, Longitude.length() - 1);
+							
+							xml_lat_s = xml_lat.substring(0, xml_lat.length() - 1);
+							xml_lng_s = xml_lng.substring(0, xml_lng.length() - 1);									
+							//System.out.println("One");													
+							float distance1 = calculateDistance(Float.parseFloat(Latitude_s), Float.parseFloat(xml_lat_s), Float.parseFloat(Longitude_s), Float.parseFloat(xml_lng_s) );								
+							long time_diff = calculateTimeDiff(DateTime, xml_date);  //Seconds
+							time_diff = time_diff / 3600;
+							//System.out.println("Two");	
+							//$tmp_time_diff1 = (strtotime($datetime) - strtotime($last_time1)) / 3600;
+							if(time_diff>0)
+							{
+								tmp_speed = distance1 / (float) time_diff;
+							}
+							
+							//System.out.println("tmp_speed="+tmp_speed+" ,distance="+distance1+" ,time_diff="+time_diff);
+							if(tmp_speed>100.0 && distance1>0.1 && time_diff>0)
+							{
+
+							}
+							else
+							{
+								//##### LAST HALT TIME
+								if(Float.parseFloat(Speed) > 10.0)
+								{
+									last_halt_time = DateTime;
+								}
+								else
+								{
+									if(xml_last_halt_time.equals(""))
+									{
+										last_halt_time = DateTime;
+									}
+									else
+									{
+										last_halt_time = xml_last_halt_time;
+									}
+								}
+								
+								//###### DAY MAX SPEED AND TIME
+								Float f1 = new Float(xml_day_max_speed);
+								double d1 = f1.doubleValue();
+								
+								Float f2 = new Float(Speed);
+								double d2 = f2.doubleValue();								
+								
+								//System.out.println("xml_day_max_speed="+xml_day_max_speed+", Speed="+Speed);
+								//System.out.println("d1="+d1+", d2="+d2);
+								
+								if(d2 > d1)
+								{
+									//System.out.println("condition if");
+									day_max_speed = Speed;
+									day_max_speed_time = DateTime;
+								}
+								else
+								{
+									//System.out.println("condition else");
+									day_max_speed = xml_day_max_speed;
+									day_max_speed_time = xml_day_max_speed_time;
+								}
+								
+								//## RESET SPEED IF DAY CHANGES
+								String[] daytmp1,day1,daytmp2,day2;								 
+								String delimiter1 = " ",delimiter2="-";
+								daytmp1 = xml_date.split(delimiter1);
+								daytmp2 = DateTime.split(delimiter1);
+								
+								day1 = daytmp1[0].split(delimiter2);
+								day2 = daytmp2[0].split(delimiter2);
+								 
+								//System.out.println("day1="+day1[2]+" ,day2="+day2[2]);
+								if(!(day1[2].equals(day2[2])))
+								{
+									//System.out.println("IN day1,day2");
+									day_max_speed = "0.0";
+									day_max_speed_time = DateTime;									
+									//System.out.println("day1="+day1[2]+" ,day2="+day2[2]);
+								}								
+							}
+							try
+							{							
+								date_last_loc1 = (Date) sdf.parse(xml_date);		//XML DATETIME
+									
+							}
+							catch(Exception e) 
+							{
+								System.out.println(e.getMessage());
+							}
+								
+								
+							//if(  (date_last_loc2.compareTo(date_last_loc1) > 0) && (date_last_loc2.compareTo(date_servertime2) < 0) && (date_last_loc2.compareTo(valid_date_min) > 0) && (date_last_loc2.compareTo(valid_date_max) < 0) ) 
+							if(  (date_last_loc2.compareTo(date_last_loc1) > 0) && (date_last_loc2.compareTo(date_servertime2) < 0) && (!Latitude.equals("")) && (!Longitude.equals("")) && (!Latitude.equals("0.0")) && (!Longitude.equals("0.0")) )
+							{																  
+								//System.out.println("WRITE TO LAST LOCATION FILE:"+filename);								
+								//out_a2 = new BufferedWriter(new FileWriter(tmpstr2, false) );
+								out_a2.seek(0);
+								//marker_a2 = "<t1>\n<x "+"a="+q+MsgType+q+" b="+q+Version+q+" c="+q+Fix+q+" d="+q+Latitude+q+" e="+q+Longitude+q+" f="+q+Speed+q+" g="+q+serverdatetime+q+" h="+q+DateTime+q+" i="+q+io_value1+q+" j="+q+io_value2+q+" k="+q+io_value3+q+" l="+q+io_value4+q+" m="+q+io_value5+q+" n="+q+io_value6+q+" o="+q+io_value7+q+" p="+q+io_value8+q+" q="+q+Signal_Strength+q+" r="+q+SupplyVoltage+q+" s="+q+day_max_speed+q+" t="+q+day_max_speed_time+q+" u="+q+last_halt_time+q+" ax="+q+ax+q+" ay="+q+ay+q+" az="+q+az+q+" mx="+q+mx+q+" my="+q+my+q+" mz="+q+mz+q+" bx="+q+bx+q+" by="+q+by+q+" bz="+q+bz+q+" ci="+q+cellname+q+"/>\n</t1>";
+								marker_a2 = "<t1>\n<x "+"a="+q+MsgType+q+" b="+q+Version+q+" c="+q+Fix+q+" d="+q+Latitude+q+" e="+q+Longitude+q+" f="+q+Speed+q+" g="+q+serverdatetime+q+" h="+q+DateTime+q+" i="+q+io_value1+q+" j="+q+io_value2+q+" k="+q+io_value3+q+" l="+q+io_value4+q+" m="+q+io_value5+q+" n="+q+io_value6+q+" o="+q+io_value7+q+" p="+q+io_value8+q+" q="+q+Signal_Strength+q+" r="+q+SupplyVoltage+q+" s="+q+day_max_speed+q+" t="+q+day_max_speed_time+q+" u="+q+last_halt_time+q+" ci="+q+cellname+q+"/>\n</t1>";
+								out_a2.writeBytes(marker_a2);
+								CurrentFileWriteHandler.UpdateTime = System.currentTimeMillis();
+								CurrentFileWriteHandler.StrBuf.setLength(0);
+								//System.out.println("T2");
+								break;
+								//out_a2.close();															
+								//System.out.println(marker_a2);														
+							}
+						}
+					}
+					out_a2.close();
+				}
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+				try
+				{
+					out_a2.close();
+				}
+				catch (Exception e1)
+				{
+					
+				}
+			}
+		} 
+	}
+	
+	//###CHECK VALID IMEI	
+	public static boolean check_valid_imei(String imei)
+	{
+		//System.out.println("IN CHECK VALID IMEI");
+		boolean valid_imei = false;
+		
+		if(imei.length()==15)
+		{
+			try{
+			valid_imei = true;
+			//System.out.println("valid_imei: " + valid_imei);  
+			}catch(Exception e) {System.out.println("ERROR-CORRUPTED IMEI:"+e.getMessage());}
+		}		
+		return valid_imei;		
+	}
+	
+	/************ METHOD- CALCULATE DISTANCE **************/
+	public static float calculateDistance(float lat1, float lat2, float lng1, float lng2) 
+	{	    
+		//System.out.println("In CACL DIST : lat1 : "+lat1+" lng1 : "+lng1+" lat2 : "+lat2 + " lng2 : "+lng2);
+		double earthRadius = 3958.75;
+		double dLat = Math.toRadians(lat2-lat1);
+		double dLng = Math.toRadians(lng2-lng1);
+		double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+		Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+		Math.sin(dLng/2) * Math.sin(dLng/2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		double dist = earthRadius * c;
+		int meterConversion = 1609;
+		return new Float(dist * meterConversion).floatValue();	//KM
+    }
+	
+	/************* METHOD- CALCULATE TIME DIFFERENCE ************/
+	public static long calculateTimeDiff(String time1, String time2)
+	{
+		//System.out.println("Time1="+time1+" ,Time2="+time2);
+		//System.out.println();
+		
+		if(time1.equalsIgnoreCase(""))
+		{
+			return 600;
+		}
+		
+		String[] temp,temp1,temp2;
+		Calendar calendar1 = Calendar.getInstance();
+		Calendar calendar2 = Calendar.getInstance();
+
+		/*temp=split(time1," ");
+		temp1=split(temp[0],"-");
+		temp2=split(temp[1],":");*/
+		
+		temp= time1.split(" ");
+		temp1=temp[0].split("-");
+		temp2=temp[1].split(":");		
+		calendar1.set(Integer.parseInt(temp1[0]), Integer.parseInt(temp1[1]), Integer.parseInt(temp1[2]) , Integer.parseInt(temp2[0]), Integer.parseInt(temp2[1]), Integer.parseInt(temp2[2]) );
+		/*temp=split(time2," ");
+		temp1=split(temp[0],"-");
+		temp2=split(temp[1],":");*/
+		
+		temp=time2.split(" ");
+		temp1=temp[0].split("-");
+		temp2=temp[1].split(":");
+		calendar2.set(Integer.parseInt(temp1[0]), Integer.parseInt(temp1[1]), Integer.parseInt(temp1[2]) , Integer.parseInt(temp2[0]), Integer.parseInt(temp2[1]), Integer.parseInt(temp2[2]) );
+
+		long milliseconds1 = calendar1.getTimeInMillis();
+		long milliseconds2 = calendar2.getTimeInMillis();
+		long diff = milliseconds2 - milliseconds1;
+		long diffMinutes = diff / (60 * 1000);
+
+		//System.out.println("Time in minutes: " + diffMinutes + " minutes.");        		
+		//"yyyy-MM-dd HH:mm:ss"
+		long diffSeconds= diffMinutes * 60;  //IN SECONDS
+		return diffSeconds;
+	}
+	
+	public List<FileWriteHandler> RFileHandler=new ArrayList<FileWriteHandler>();
+	public List<FileWriteHandler> RFileHandler2=new ArrayList<FileWriteHandler>();
+}

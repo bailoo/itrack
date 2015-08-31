@@ -357,12 +357,13 @@ function show_data_on_map(report_format)
 				for(i=0;i<imeino1.length;i++)
 				{
 					if(imeino1[i].checked)
-					{
-						uniqueImeiArr[mlpi]=imeino1[i].value;
-						//alert('value'+j);
-						//alert('value'+uniqueImeiArr[j]);
-						mlpi++;
-						num1++;						
+					{ 
+                                            //alert("imei="+imeino1[i].value);
+                                            uniqueImeiArr[mlpi]=imeino1[i].value;
+                                            //alert('value'+j);
+                                            //alert('value'+uniqueImeiArr[j]);
+                                            mlpi++;
+                                            num1++;						
 					}
 				}
 				imeino1=uniqueImeiArr.filter( onlyUnique );		
@@ -1831,7 +1832,7 @@ function getStation1(select_value)
 		if(client_type_combo=="2")
 		{	
 			//alert("client_type_combo="+client_type_combo);
-			routeLength=RouteNMCustomer.length;
+			routeLength=uniqueRouteMorningParseJson.length;
 			//alert("routeLengthaa="+routeLength+" search_text="+search_text);
 			if(parseInt(routeLength)>0)
 			{
@@ -1840,15 +1841,15 @@ function getStation1(select_value)
 				{
 					search_text = search_text.trim();
 					//alert("route1="+RouteNMCustomer[i]+" route2="+search_text);
-					if(search_text == RouteNMCustomer[i].trim())                                        
+					if(search_text == uniqueRouteMorningParseJson[i]['routeNo'].trim())                                        
 					{
 						routeTmpFlag=true;
-						rFoundRNumber[tmpCnt]=RouteNMCustomer[i]
-						rFoundLat[tmpCnt] = RouteMCustomerLat[i];
-						rFoundLng[tmpCnt] = RouteMCustomerLng[i];
-						rFoundStationName[tmpCnt] = RouteMCustomerStationNo[i];
-						rFoundCustomerNo[tmpCnt] = RouteMCustomerNo[i];
-						rFoundType[tmpCnt] = RouteMCustomerType[i];
+						rFoundRNumber[tmpCnt]=uniqueRouteMorningParseJson[i]['routeNo'];
+						rFoundLat[tmpCnt] = uniqueRouteMorningParseJson[i]['lat'];
+						rFoundLng[tmpCnt] = uniqueRouteMorningParseJson[i]['lng'];
+						rFoundStationName[tmpCnt] = uniqueRouteMorningParseJson[i]['stationName'];
+						rFoundCustomerNo[tmpCnt] = uniqueRouteMorningParseJson[i]['customerNo'];
+						rFoundType[tmpCnt] = uniqueRouteMorningParseJson[i]['type'];
 						tmpCnt++;
 					}    
 				}  
@@ -1875,7 +1876,7 @@ function getStation1(select_value)
 		var routeTmpFlag = false;
 		if(client_type_combo=="3")
 		{				
-			routeLength=RouteNECustomer.length;
+			routeLength=uniqueRouteEveningParseJson.length;
 			//alert("routeLength="+routeLength+" search_text="+search_text);
 			
 			if(routeLength>0)
@@ -1883,17 +1884,17 @@ function getStation1(select_value)
 				for(var i=0;i<routeLength;i++)
 				{
 					search_text = search_text.trim();
-					if(search_text == RouteNECustomer[i].trim())                                        
+					if(search_text == uniqueRouteEveningParseJson[i]['routeNo'].trim())                                        
 					{
-						//alert("routeNo="+RouteNECustomer[i].trim());
-						routeTmpFlag=true;
-						rFoundRNumber[tmpCnt]=RouteNECustomer[i]
-						rFoundLat[tmpCnt] = RouteECustomerLat[i];
-						rFoundLng[tmpCnt] = RouteECustomerLng[i];
-						rFoundStationName[tmpCnt] = RouteECustomerStationNo[i];
-						rFoundCustomerNo[tmpCnt] = RouteECustomerNo[i];
-						rFoundType[tmpCnt] = RouteECustomerType[i];
-						tmpCnt++;
+                                            //alert("routeNo="+RouteNECustomer[i].trim());
+                                            routeTmpFlag=true;
+                                            rFoundRNumber[tmpCnt] = uniqueRouteEveningParseJson[i]['routeNo'];
+                                            rFoundLat[tmpCnt] = uniqueRouteEveningParseJson[i]['lat'];
+                                            rFoundLng[tmpCnt] = uniqueRouteEveningParseJson[i]['lng'];
+                                            rFoundStationName[tmpCnt] = uniqueRouteEveningParseJson[i]['stationName'];
+                                            rFoundCustomerNo[tmpCnt] = uniqueRouteEveningParseJson[i]['customerNo'];
+                                            rFoundType[tmpCnt] = uniqueRouteEveningParseJson[i]['type'];
+                                            tmpCnt++;
 					}    
 				}  
 				if(routeTmpFlag==true)
@@ -3301,8 +3302,8 @@ function Load_Data(vserial,startdate,enddate,pt_for_zoom,zoom_level,status,acces
 		success: function(response){
 		//console.log(response);
 		//alert("response="+response);
-		document.getElementById('dummy_div').style.display='none';
-		//document.getElementById('dummy_div').style.display='';
+		//document.getElementById('dummy_div').style.display='none';
+		document.getElementById('dummy_div').style.display='';
 		//document.getElementById('map_home').innerHTML=response;
 		$("#dummy_div").html(response);
 		

@@ -331,7 +331,7 @@ public class RequestHandler {
 							
 							//###### CALL SMS ALERT FUNCTION
 							//System.out.println("BEFORE FINAL ALERT="+vserial+","+DateTime+","+serverdatetime+","+Latitude+","+Longitude+","+Speed+","+io_value1+","+io_value2+","+io_value3+","+io_value4+","+io_value5+","+io_value6+","+io_value7+","+io_value8+","+SupplyVoltage);
-							alert_module.write_final_alert_data(vserial, DateTime, serverdatetime, Latitude, Longitude, Speed, io_value1, io_value2, io_value3, io_value4, io_value5, io_value6, io_value7, io_value8, SupplyVoltage);
+							alert_module.write_final_alert_data(vserial, DateTime, serverdatetime, Latitude, Longitude, Speed, io_value1, SupplyVoltage);
 							
 							// LAST LOCATION CLOSED									
 						}catch(Exception ex5){

@@ -135,8 +135,8 @@ public class TransactionServer implements Runnable {
 	//#### DATABASE CONNECTION VARIABLES
 	public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	public static final String DB_URL = "jdbc:mysql://localhost/alert_session";
-	public static final String DB_URL_remote = "jdbc:mysql://111.118.181.156/iespl_vts_beta";
-	//public static final String DB_URL_remote = "jdbc:mysql://localhost/iespl_vts_beta";
+//	public static final String DB_URL_remote = "jdbc:mysql://111.118.181.156/iespl_vts_beta";
+	public static final String DB_URL_remote = "jdbc:mysql://localhost/iespl_vts_beta";
 	//public static final String DB_URL_remote = "jdbc:mysql://www.itracksolution.co.in/iespl_vts_beta";
 	//###### SET TRANSACTION IDS
 	public static final int vendor_sno = 2;	
@@ -672,7 +672,7 @@ public class TransactionServer implements Runnable {
         int x=0,y=0;
         boolean create_flag = false;
         //vehicle_imei = "TN45AT5155";
-        //System.out.println("SizevehicleNoArr="+vehicleNoArr.size());
+        System.out.println("SizevehicleNoArr="+vehicleNoArr.size());
 		if (!(vehicleNoArr.isEmpty()))
 		{
 			try{
