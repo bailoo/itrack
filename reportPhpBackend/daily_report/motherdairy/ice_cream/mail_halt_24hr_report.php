@@ -68,7 +68,6 @@ include_once($abspath."/report_title.php");
 //include_once($abspath."/get_location.php");
 include_once($abspath."/user_type_setting.php");
 include_once($abspath."/select_landmark_report.php");
-include_once($abspath."/area_violation/pointLocation.php");
 require_once $abspath."/excel_lib/class.writeexcel_workbook.inc.php";
 require_once $abspath."/excel_lib/class.writeexcel_worksheet.inc.php";
 include_once($abspath."/util.hr_min_sec.php");
@@ -81,6 +80,8 @@ if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun
 include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
 
 echo "\nD8";
+//####### COPY S3 MASTER
+include_once("../../../S3_master.php");
 
 echo "\nAfter Include";
 //include_once($abspath."/get_location_lp_track_report.php");
@@ -1684,8 +1685,23 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3) 	//elem =
     $file_path = $fullPath.".xls";
 
     //echo "\nFILE PATH=".$file_path;  
-    include_once("send_mail_api.php");
+    //include_once("send_mail_api.php");
     //################################//
+    $result = $mgClient->sendMessage($domain, array(
+        'from' => 'Itrack <support@iembsys.co.in>',
+        'to' => $to,
+        //'cc'      => 'rizwan@iembsys.com',
+        'cc' => 'rizwan@iembsys.com,jyoti.jaiswal@iembsys.com,support1@iembsys.com,support2@iembsys.com',
+        //'cc'      => 'hourlyreport4@gmail.com',
+        // 'bcc'     => 'astaseen83@gmail.com',
+        'subject' => $subject,
+        'text' => $message,
+        'html' => '<html></html>'
+            ), array(
+        //'attachment' => array($file_path)
+        'attachment' => array(array('filePath'=>$file_path,'remoteName'=>$filename_title))
+    ));    
+    
 
     //############# CREATE FOLDER AND BACKUP FILES ########
     /*
