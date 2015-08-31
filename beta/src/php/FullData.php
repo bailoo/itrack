@@ -59,10 +59,14 @@
 	}
 	else
 	{
+            $vehicleserial=unserialize($vehicleserial);
 		$lat = unserialize($lat);
 		$lng = unserialize($lng);
-		$datetime = unserialize($datetime);
-		$vehiclename = unserialize($vehiclename);
+               // print_r($lat);
+		$datetime = unserialize(base64_decode($datetimeXml));	
+                $vehiclename = unserialize(base64_decode($vehiclename));
+                //echo "<br>";
+               // print_r($vehiclename);
 		$vehicletype = unserialize($vehicletype);		
 		$cumdist = unserialize($cumdist);
 		//read_track_xml_person($xml_path, &$vehicleserial, &$lat, &$lng, &$datetime, &$vehiclename, &$vehicletype, &$cumdist);
