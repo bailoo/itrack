@@ -7,6 +7,7 @@ function read_sent_file($read_excel_path)
     global $VehicleNo;
     global $ActivityTimeForWeightOut;
     global $ActivityTimeForWeightIn;
+    global $UniqueVehicle;
 
     echo "\nREAD_SENT_FILE";
     echo "\nPath=".$read_excel_path;
@@ -41,6 +42,7 @@ function read_sent_file($read_excel_path)
                     break;
                 }
                 
+                $UniqueVehicle[$vehicle_tmp] = $vehicle_tmp;
                 $VehicleNo[] = $vehicle_tmp;
                                
                 $tmp_val="A".$row;
