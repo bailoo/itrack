@@ -9,6 +9,7 @@ function updateAll_last_processed_time($type, $last_time,$route_type) {
     global $vehicle_imei_rdb;
     global $DEBUG_OFFLINE;
     global $DEBUG_ONLINE;
+    global $difftime;
     $debug_msg = "";
         
     echo "\nSize=".sizeof($vehicle_imei_rdb);
