@@ -2,9 +2,9 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="154" key="DIALOG_Y_ORIGIN"/>
+		<item value="131" key="DIALOG_Y_ORIGIN"/>
 		<item value="380" key="DIALOG_HEIGHT"/>
-		<item value="542" key="DIALOG_X_ORIGIN"/>
+		<item value="935" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="alert_battery_disconnected_process" key="selection"/>
+		<item value="" key="selection"/>
 		<list key="findhistory">
-			<item value="alert_battery_disconnected_process"/>
-			<item value="Battery "/>
-			<item value="RD"/>
-			<item value="dispatch"/>
-			<item value="battery_"/>
-			<item value="battery_discon"/>
-			<item value="battery_disconnected"/>
-			<item value="Supply"/>
+			<item value="156"/>
+			<item value="icici"/>
+			<item value="alert_detail"/>
+			<item value="reset_alert_variables"/>
+			<item value="imei"/>
+			<item value="datetime"/>
+			<item value="write_file_string"/>
+			<item value="push_email_alert_to_database"/>
 		</list>
 		<list key="replacehistory">
 		</list>
