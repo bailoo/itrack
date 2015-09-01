@@ -61,16 +61,17 @@
 				 {
 					alert("xml_latLng="+latLng);
 				 }*/
-				/*var strURL="select_landmark_travel.php?lm_lat="+splitLatLng[0]+"&lm_lng="+splitLatLng[1];
+				var strURL="select_landmark_travel.php?lm_lat="+splitLatLng[0]+"&lm_lng="+splitLatLng[1];
 				//alert("strurl:"+strURL);
 				var req = getXMLHTTP();
 				req.open("GET", strURL, false); //third parameter is set to false here
 				req.send(null);  				
 				address2 = req.responseText+":"; 
 				if(address2==":")
-				{*/
-				/*if(address_flag==0)
 				{
+				if(address_flag==0)
+				{
+                                   // alert("latlng="+latLng);
 					var strURL="get_location_tmp_file.php?point_test="+latLng;
 					//alert("strurl:"+strURL);
 					var req = getXMLHTTP();
@@ -79,33 +80,12 @@
 					place_name_temp_param = req.responseText; 
 					//alert("place_name_temp_param1="+place_name_temp_param);
 					place_name_temp_param =place_name_temp_param.split(":");		
-				}*/
-				MQA.withModule('geocoder', function() 
-				{
-				  MQA.Geocoder.reverse(
-					/*Build an object containing lat/lng to reverse geocode.*/
-					{lat:splitLatLng[0], lng:splitLatLng[1]},
-					null,
-					null,
-					renderReverseGeocodeResults
-				  );
-				  function renderReverseGeocodeResults(response) {
-				var html = '';
-				
-				var location = response.results[0].locations[0];
-				var placeName=location.adminArea5+" ,"+location.adminArea4+" ,"+location.adminArea3+" ,"+location.adminArea1;
-			   var latLngObj=response.results[0].locations[0].displayLatLng;
-
-				//alert('lat='+place_name_temp_param[1]+"lng="+place_name_temp_param[2]);
+				}
 				user_lat = splitLatLng[0];
 				user_lng = splitLatLng[1];
-				/*if(account_id_session=="212")					 {
-					alert("xml_user_lat="+user_lat+"lat="+place_name_temp_param[1]+"user_lng="+user_lng+"log="+place_name_temp_param[2]);
-				 }*/
-				//alert("user_lat="+user_lat+"lat="+place_name_temp_param[1]+"user_lng="+user_lng+"log="+place_name_temp_param[2]);
-				var distance = calculate_distance(user_lat, latLngObj.lat, user_lng, latLngObj.lng);
-				//alert("distance="+distance);
-				address2 = distance+" km from "+placeName+ ":";
+				
+				var distance = calculate_distance(user_lat, place_name_temp_param[1], user_lng, place_name_temp_param[2]);
+				address2 = distance+" km from "+place_name_temp_param[0]+ ":";
 				tmp_distance_diff=distance_tmp-distance;
 				//alert('diff='+Math.abs(tmp_distance_diff));
 				if(Math.abs(tmp_distance_diff)<=2)
@@ -121,7 +101,7 @@
 				//}
 				//alert("ifeslseaddress2="+address2);
 				//alert("address_with_distance_xml="+address2)
-				
+                            }
 				 document.getElementById("geocodedPostcodesStart").value += address2; 
 				  if (i < splitDataStart.length-1) 
 				{	
@@ -134,14 +114,7 @@
 				{
 					GeocodeEnd(document.getElementById("geopointend").value)				
 				}
-		  
-			  }
-				  
-				});
-				
-				
-			
-		}
+    }
     }
 	
 	var splitDataEnd;
@@ -188,15 +161,15 @@
 			separator = ",";
 			var latLng = "("+splitLatLng[0]+","+splitLatLng[1]+")";
 			//alert("in else 1");
-			/*var strURL="select_landmark_travel.php?lm_lat="+splitLatLng[0]+"&lm_lng="+splitLatLng[1];
+			var strURL="select_landmark_travel.php?lm_lat="+splitLatLng[0]+"&lm_lng="+splitLatLng[1];
 			//alert("strurl:"+strURL);
 			var req = getXMLHTTP();
 			req.open("GET", strURL, false); //third parameter is set to false here
 			req.send(null);  				
 			address2 = req.responseText+":";
 			if(address2==":")
-			{*/	
-			/*if(address_flag==0)
+			{	
+			if(address_flag==0)
 			{
 				var strURL="get_location_tmp_file.php?point_test="+latLng;
 				//alert("strurl:"+strURL);
@@ -206,23 +179,7 @@
 				place_name_temp_param = req.responseText; 
 				//alert("place_name_temp_param1="+place_name_temp_param);
 				place_name_temp_param =place_name_temp_param.split(":");
-			}*/
-			MQA.withModule('geocoder', function() 
-				{
-				  MQA.Geocoder.reverse(
-					/*Build an object containing lat/lng to reverse geocode.*/
-					{lat: splitLatLng[0], lng:splitLatLng[1]},
-					null,
-					null,
-					renderReverseGeocodeResults
-				  );
-				  function renderReverseGeocodeResults(response) {
-				  
-				var html = '';
-				
-				var location = response.results[0].locations[0];
-				var placeName=location.adminArea5+" ,"+location.adminArea4+" ,"+location.adminArea3+" ,"+location.adminArea1;
-			   var latLngObj=response.results[0].locations[0].displayLatLng;
+			}
 
 				//alert('lat='+place_name_temp_param[1]+"lng="+place_name_temp_param[2]);
 				user_lat = splitLatLng[0];
@@ -231,9 +188,9 @@
 					alert("xml_user_lat="+user_lat+"lat="+place_name_temp_param[1]+"user_lng="+user_lng+"log="+place_name_temp_param[2]);
 				 }*/
 				//alert("user_lat="+user_lat+"lat="+place_name_temp_param[1]+"user_lng="+user_lng+"log="+place_name_temp_param[2]);
-				var distance = calculate_distance(user_lat, latLngObj.lat, user_lng, latLngObj.lng);
+				var distance = calculate_distance(user_lat, place_name_temp_param[1], user_lng, place_name_temp_param[2]);
 				//alert("distance="+distance);
-				address2 = distance+" km from "+placeName+ ":";
+				address2 = distance+" km from "+place_name_temp_param[0]+ ":";
 				tmp_distance_diff=distance_tmp-distance;
 				//alert('diff='+Math.abs(tmp_distance_diff));
 				if(Math.abs(tmp_distance_diff)<=2)
@@ -262,11 +219,10 @@
 					setTimeout("pageSubmit()", 4000);					
 				}	
 		  
-			  }
-				  
-				});  
+			   
 					
 		}
+    }
     }
 
 		
