@@ -20,8 +20,8 @@ public class push_device_data {
 	CassandraConn conn;
 	
 	public push_device_data(){
-		//String propFileName = "config.properties";
-		String propFileName = "resources/config.properties";
+		String propFileName = "config.properties";
+		//String propFileName = "resources/config.properties";
 		Properties prop = new Properties();
 		
 		try {

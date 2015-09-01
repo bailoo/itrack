@@ -725,7 +725,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
     $deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
     $orderAsc = TRUE;	// TRUE for ascending, otherwise descending (default)   
     $st_results = getImeiDateTimes($o_cassandra, $vSerial, $startDate, $endDate, $deviceTime, $orderAsc);
-    
+    //$st_results = getLastSeenDateTimes($o_cassandra, $vSerial, $startDate, $endDate);
     foreach($st_results as $item) 
     {
         $msg_type = $item->a;                 
@@ -790,11 +790,11 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
             }
             if ($parameterizeData->io2 != null) 
             {
-                $io2_2 = $io2;
+                $io2_1 = $io2;
             }
             if ($parameterizeData->io3 != null) 
             {
-                    $io3_3 = $io3;
+                    $io3_1 = $io3;
             }
             if ($parameterizeData->io4 != null) 
             {

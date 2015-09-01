@@ -108,39 +108,6 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
     $timeto = $date_2[1];
     $cum_dist = 0;
 
-    //###### CASSANDRA BLOCK1 ###########
-    global $o_cassandra;
-    global $sts_date_sel;
-    global $xml_date_sel;
-    global $lat_sel;
-    global $lng_sel;
-    global $speed_sel;
-    global $temperature_arr;
-
-    $date1 = $startdate;
-    $date2 = $enddate;
-    $datefrom = $report_date1;
-    $dateto = $report_date2;
-
-    $userInterval = 0;
-
-    $sortBy = 'g';
-    $firstDataFlag = 0;
-    $endDateTS = strtotime($date2);
-    $dataCnt = 0;
-    //$userInterval = "0";
-    $requiredData = "All";
-
-    $parameterizeData = new parameterizeData();
-    $ioFoundFlag = 0;
-
-    $parameterizeData->latitude = "d";
-    $parameterizeData->longitude = "e";
-    $parameterizeData->speed = "f";
-
-    $finalVNameArr = array();
-    //###### CASSANDRA BLOCK1 CLOSED     
-
     //######### CASSANDRA BLOCK2 OPENS
     $sts_date_sel = array();
     $xml_date_sel = array();
@@ -148,34 +115,57 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
     $lng_sel = array();
     $speed_sel = array();
 
-    //echo "\nReadSno:" . $i . " ,imei2=" . $IMEI[$i] . " ,datefrom=" . $datefrom . " ,dateto=" . $dateto;
+    //##### DEBUG MSG
+    $msg = "\nReadSno:" . $i . " ,imei=" . $vehicle_serial . " ,date1=" . $date1 . " ,date2=" . $date2;
+
+    if($LOG) {$debug_msg.=$msg."\n";}
+    //echo $msg; 
+
     $dataCnt = 0;
-    //$vehicle_info=get_vehicle_info($root,$vserial[$i]);
-    //$vehicle_detail_local=explode(",",$vehicle_info);
-    //$finalVNameArr[$i]=$vehicle_detail_local[0];
-    //echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
-    $LastSortedDate = getLastSortedDate($IMEI[$i], $datefrom, $dateto);
+    $LastSortedDate = null;
     $SortedDataObject = new data();
     $UnSortedDataObject = new data();
 
-    //echo "\nimei3=".$IMEI[$i];
-    if (($LastSortedDate + 24 * 60 * 60) >= $endDateTS) { //All sorted data
-        //echo "\nIF1";
-        $type = "sorted";
-        readFileXml($vehicle_serial, $date1, $date2, $datefrom, $dateto, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $SortedDataObject);
-    } else if ($LastSortedDate == null) { //All Unsorted data
-        //echo "\nIF2";
-        $type = "unSorted";
-        readFileXml($vehicle_serial, $date1, $date2, $datefrom, $dateto, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $UnSortedDataObject);
-    } else { //Partially Sorted data
-        $LastSDate = date("Y-m-d", $LastSortedDate + 24 * 60 * 60);
-        //echo "nELSE";
-        $type = "sorted";
-        readFileXml($vehicle_serial, $date1, $date2, $datefrom, $LastSDate, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $SortedDataObject);
+    readDataBetweenDatetime($vehicle_serial, $date1, $date2, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $o_cassandra, $SortedDataObject);
 
-        $type = "unSorted";
-        readFileXml($vehicle_serial, $date1, $date2, $LastSDate, $dateto, $userInterval, $requiredData, $sortBy, $type, $parameterizeData, $firstDataFlag, $UnSortedDataObject);
-    }
+    //echo "\nCount=".count($SortedDataObject->deviceDatetime);
+   
+    //exit(0);
+    if (count($SortedDataObject->deviceDatetime) > 0) {
+        //$sortObjTmp = sortData($UnSortedDataObject, $sortBy, $parameterizeData);
+        //echo "::Data Read";
+        //var_dump($sortObjTmp);
+        /* echo"sdt1=".$sortObjTmp->deviceDatetime[0]."<br>";
+          echo "sdt2=".$sortObjTmp->deviceDatetime[1]."<br>";
+          echo "ss1=".$sortObjTmp->speedData[0]."<br>";
+          echo "ss2=".$sortObjTmp->speedData[1]."<br>";
+          echo "<br><br>"; */
+        $sortedSize = sizeof($SortedDataObject->deviceDatetime);
+        //echo "\nSortedSize=".$sortedSize;
+        for ($obi = 0; $obi < $sortedSize; $obi++) {
+            /* $finalDateTimeArr[$IMEI[$i]][]=$SortedDataObject->deviceDatetime[$obi];
+              $finalLatitudeArr[$IMEI[$i]][]=$SortedDataObject->latitudeData[$obi];
+              $finalLongitudeArr[$IMEI[$i]][]=$SortedDataObject->longitudeData[$obi];
+              $finalSpeedArr[$IMEI[$i]][]=$SortedDataObject->speedData[$obi]; */
+            //echo "\nSTORED";
+            $sts_date_sel[] = $SortedDataObject->serverDatetime[$obi];
+            $xml_date_sel[] = $SortedDataObject->deviceDatetime[$obi];
+            $lat_sel[] = $SortedDataObject->latitudeData[$obi];
+            $lng_sel[] = $SortedDataObject->longitudeData[$obi];
+            $speed_sel[] = $SortedDataObject->speedData[$obi];
+        }
+    }        
+
+    $SortedDataObject = null;
+    $sortObjTmp = null;
+    $UnsortedDataObject = null;     
+
+    //##### DEBUG MSG
+    $msg = "\nIMEI=".$vehicle_serial." ,SizeXmlDate=".sizeof($xml_date_sel);
+    if($LOG) {$debug_msg.=$msg."\n";}
+    //echo $msg;
+    ######## CASSANDRA BLOCK2 CLOSED
+    
 
     $ioFoundFlag = 0;
     $ioArrSize = sizeof($ioArr);
@@ -310,7 +300,7 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
                  {           
                      /*if($lat_cr == "28.70165N")
                      {
-                             echo "\nLatRef_Found0=".$lat_cr;
+                          echo "\nLatRef_Found0=".$lat_cr;
                      }*/
                      //echo "<br>Next";               
                      $lat_tmp1 = explode("=",$lat_tmp[0]);                           //  GET NEXT RECO
@@ -336,36 +326,36 @@ function get_halt_xml_data($vehicle_serial, $vid, $vname, $startdate, $enddate, 
 
                          if($tmp_time_diff1>0)
                          {
-                                 $tmp_speed = ((double) ($distance1)) / $tmp_time_diff1;
-                                 //if($tmp_speed==0) echo "\nDistance1=".$distance1." ,tmp_time_diff1=".$tmp_time_diff1." ,latlast=".$latlast." ,lnglast=".$lnglast." ,lat_cr=".$lat_cr." ,lng_cr=".$lng_cr;
-                                 $last_time1 = $datetime;
-                                 $latlast = $lat_cr;
-                                 $lnglast =  $lng_cr;
+                            $tmp_speed = ((double) ($distance1)) / $tmp_time_diff1;
+                            //if($tmp_speed==0) echo "\nDistance1=".$distance1." ,tmp_time_diff1=".$tmp_time_diff1." ,latlast=".$latlast." ,lnglast=".$lnglast." ,lat_cr=".$lat_cr." ,lng_cr=".$lng_cr;
+                            $last_time1 = $datetime;
+                            $latlast = $lat_cr;
+                            $lnglast =  $lng_cr;
                          }
                          $tmp_time_diff = ((double)( strtotime($datetime) - strtotime($last_time) )) / 3600;
                          //#######################################
 
                          //if($lat_cr == "28.70165N")
                          //{
-                                 //$difference = strtotime($datetime_cr)-strtotime($datetime_ref);
-                                 //echo "\nLatRef_Prev=".$lat_cr." ,distance=".$distance." ,HaltFlag=".$halt_flag;										
-                                 //echo " ,DateTimeCr=".$datetime_cr." ,DateTimeRef=".$datetime_ref." ,difference=".$difference." , interval=".$interval." \n";
+                            //$difference = strtotime($datetime_cr)-strtotime($datetime_ref);
+                            //echo "\nLatRef_Prev=".$lat_cr." ,distance=".$distance." ,HaltFlag=".$halt_flag;										
+                            //echo " ,DateTimeCr=".$datetime_cr." ,DateTimeRef=".$datetime_ref." ,difference=".$difference." , interval=".$interval." \n";
                          //}									
                          //echo "\nInCondition ,halt_flag=".$halt_flag." ,distance=".$distance;									
 
                          //#### RECORD TEMPERATURE MIN MAX
                          if(($temp_start) && ($temperature>=-10.0 && $temperature<=80))
                          {
-                                 if($temperature < $temp_min)
-                                 {
-                                         $temp_min = $temperature;
-                                         $temp_min_datetime = $datetime;
-                                 }
-                                 if($temperature > $temp_max)
-                                 {
-                                         $temp_max = $temperature;
-                                         $temp_max_datetime = $datetime;
-                                 }																							
+                            if($temperature < $temp_min)
+                            {
+                                $temp_min = $temperature;
+                                $temp_min_datetime = $datetime;
+                            }
+                            if($temperature > $temp_max)
+                            {
+                                $temp_max = $temperature;
+                                $temp_max_datetime = $datetime;
+                            }																							
                          }
                          //###############################																															
 

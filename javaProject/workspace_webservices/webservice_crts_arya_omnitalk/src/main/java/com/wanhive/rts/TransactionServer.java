@@ -26,6 +26,7 @@ import in.co.itracksolution.model.LastData;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.io.StringReader;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -38,11 +39,22 @@ import java.nio.channels.spi.SelectorProvider;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.util.Date;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.tempuri.ServiceSoapProxy;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 
 //import com.wanhive.rts.utils.ASCII;
@@ -63,11 +75,46 @@ public class TransactionServer implements Runnable {
 	public static HashMap<String, String>  last_DayMaxSpd = new HashMap(new Hashtable<String, String>());
 	public static HashMap<String, String>  last_HaltTime = new HashMap(new Hashtable<String, String>());
 	public static push_device_data push_cassandra = null;
-	public static pull_device_last_data pull_cassandra = null;
+	//public static pull_device_last_data pull_cassandra = null;
 	public static LastData data = null;
 	public static LastDataDao dao = null;
 	public static RandomAccessFile excptionf =null;
-	public static int port_number = 0;	
+	public static int port_number = 0;
+	
+	public static String ServerTS = ""; 
+	public static String DateTime = "";
+	public static String ReceiveDateFormat="";
+//	String VehicleID = "";
+	public static String DeviceIMEINo = "";
+	public static String MsgType = "";
+	public static String Version = "";
+	public static String Fix = "1";
+//	String SendMode = "";
+	public static String Latitude = "";
+	public static String Longitude = "";
+	public static String Altitude = "";
+	public static String Speed = "";		
+	public static String Signal_Strength = "";
+	public static String No_Of_Satellites = "";
+	public static String line="",serverdatetime="",devicedatetime="";
+//	String CBC = "";
+	public static String CellName = "";
+//	String min_speed = "";
+//	String max_speed = "";
+	public static String distance = "";
+	public static String strOrig = "";
+
+	public static String io_value1 = "";
+	public static String io_value2 = "";
+	public static String io_value3 = "";
+	public static String io_value4 = "";
+	public static String io_value5 = "";
+	public static String io_value6 = "";
+	public static String io_value7 = "";
+	public static String io_value8 = "";
+	public static String last_date = "";
+	
+	public static String SupplyVoltage = "";	
 	
 	public TransactionServer(Config conf, WorkerClass worker) throws IOException {
 		//RTS Configuration
@@ -157,7 +204,7 @@ public class TransactionServer implements Runnable {
 			{
 				//####### INITITALISE CASSANDRA OBJECT
 				push_cassandra = new push_device_data();
-				pull_cassandra = new pull_device_last_data();
+				//pull_cassandra = new pull_device_last_data();
 				
 				/*//###### LAST DATA DECLARATION
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -291,10 +338,11 @@ public class TransactionServer implements Runnable {
 				if((System.currentTimeMillis()-CleanInitialTime)>60000)
 				{
 					//System.out.println("Clean Connection");
-					removeIdleConnections();
-					//removeIdleFileHandler();
+					removeIdleConnections();					
 					CleanInitialTime = System.currentTimeMillis();
 				}
+				System.out.println("A");
+				Thread.sleep(60000);
 			}
 			catch (Exception e) {
 //				Application.writeLog("TransactionServer[run] Exception: "+e.getMessage(), SystemLogger.SEVERE);
@@ -311,7 +359,7 @@ public class TransactionServer implements Runnable {
 	 */
 	private void dispatch() throws IOException {
 		//Start monitoring the selector for i/o events
-		this.selector.select(selectorTimeout);
+		/*this.selector.select(selectorTimeout);
 
 		//Iterate over the set of keys for which events are available
 		Iterator<SelectionKey> selectedKeys=selector.selectedKeys().iterator();
@@ -332,7 +380,123 @@ public class TransactionServer implements Runnable {
 					//System.out.println("g");
 					this.readMessage(key);
 			}	
+		}*/
+				
+		ServiceSoapProxy webServiceClient = new ServiceSoapProxy();
+		try 
+		{
+			String response = webServiceClient.get_Information_All("icicimumbai");
+			//System.out.println("WebServiceResponse "+response);						
+
+			try 
+			{
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				InputSource is = new InputSource();
+				is.setCharacterStream(new StringReader(response));
+				Document doc = dBuilder.parse(is);
+
+				doc.getDocumentElement().normalize();
+				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+				NodeList nList = doc.getElementsByTagName("VEHICLE");
+				//System.out.println("----------------------------");
+				boolean create_flag = false;
+				
+				for (int temp = 0; temp < nList.getLength(); temp++) 
+				{					
+					Node nNode = nList.item(temp);
+					//System.out.println("\nCurrent Element :" + nNode.getNodeName());
+					if (nNode.getNodeType() == Node.ELEMENT_NODE)
+					{
+						Element eElement = (Element) nNode;
+						DeviceIMEINo=eElement.getElementsByTagName("VEHICLE_ID").item(0).getTextContent();
+						//DeviceIMEINo=eElement.getElementsByTagName("VEHICLE_RTO_NO").item(0).getTextContent();						
+						ReceiveDateFormat = eElement.getElementsByTagName("VEHICLE_GPS_DATETIME").item(0).getTextContent();
+						Date result;
+						result = sDF.parse(ReceiveDateFormat);
+						String DateTimeLast = "";
+						DateTimeLast = dDF.format(result);	
+						//System.out.println("Date="+DateTimeLast);
+						Latitude=eElement.getElementsByTagName("VEHICLE_LAT").item(0).getTextContent();
+						Longitude=eElement.getElementsByTagName("VEHICLE_LONG").item(0).getTextContent();
+						Speed=eElement.getElementsByTagName("VEHICLE_SPEED").item(0).getTextContent();
+						/*DeviceIMEINo=eElement.getElementsByTagName("VEHICLE_ID").item(0).getTextContent());
+						DeviceIMEINo=eElement.getElementsByTagName("VEHICLE_ID").item(0).getTextContent());
+						DeviceIMEINo=eElement.getElementsByTagName("VEHICLE_ID").item(0).getTextContent());
+						DeviceIMEINo=eElement.getElementsByTagName("VEHICLE_ID").item(0).getTextContent());
+						DeviceIMEINo=eElement.getElementsByTagName("VEHICLE_ID").item(0).getTextContent());
+						DeviceIMEINo=eElement.getElementsByTagName("VEHICLE_ID").item(0).getTextContent());*/
+											
+						/*System.out.println("VEHICLE_ALIAS : " + eElement.getElementsByTagName("VEHICLE_ALIAS").item(0).getTextContent());
+						System.out.println("VEHICLE_LOCATION : " + eElement.getElementsByTagName("VEHICLE_LOCATION").item(0).getTextContent());
+						System.out.println("VEHICLE_GPS_DATETIME : " + eElement.getElementsByTagName("VEHICLE_GPS_DATETIME").item(0).getTextContent());
+						System.out.println("VEHICLE_LAT : " + eElement.getElementsByTagName("VEHICLE_LAT").item(0).getTextContent());*/
+//						write_last_location(DeviceIMEINo, DateTime, Latitude, Longitude, Speed);
+//						System.out.println("AfterLastLoc");
+						//CALL ALERT MODULE
+//						alert_module.write_final_alert_data(DeviceIMEINo, DateTimeLast, serverdatetime, Latitude, Longitude, Speed, "0", "0");
+//						System.out.println("AfterAlert :DateTimeLast="+DateTimeLast+" ,last_date="+last_date);
+						
+//						createXmlFile(DeviceIMEINo, DateTime, Latitude, Longitude, Speed);
+//						System.out.println("AfterCreateFile");						
+						//System.out.println("DateTimeLast:"+DateTimeLast);
+						//if(!(DateTimeLast.compareTo(last_date) == 0))
+						
+						line = DeviceIMEINo+","+DateTimeLast+","+Latitude+","+Longitude+","+Speed+";";
+						ByteBuffer buffer=null;
+						byte[] messageBytes=line.getBytes();
+						if(line.length()!=0) {
+								this.worker.processData(messageBytes, line.length());
+						}			
+					}
+				}
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+				//exception_message+="\nONE::"+e.getMessage();
+			}
+
+		} 
+		catch (RemoteException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			//exception_message+="\nTWO::"+e.getMessage();
 		}
+		/*try 
+		{
+			System.out.println("ExceptionLog="+exception_message);
+			if(!exception_message.equalsIgnoreCase(""))
+			{
+				try {
+					RandomAccessFile excptionf =null;
+					//######## LOG DETAIL
+					Date datex = new Date();
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					String exception_date = formatter.format(datex);
+					//String filename= "D:\\EXCEPTION_LOG/9001_"+exception_date+".txt";
+					String filename= "/home/VTS/webservice_exception_log/"+exception_date+".txt";
+					System.out.println("after write="+filename);
+					excptionf = new RandomAccessFile(filename, "rwd");				
+					excptionf.writeBytes(exception_message);
+				} catch (IOException e) {			
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}//appends the string to the file
+			}			
+		} 
+		catch (InterruptedException ie) 
+		{
+			//Handle exception
+			exception_message+="\nTHREE::"+ie.getMessage();
+		}*/		
+	}
+	
+	public static Charset charset = Charset.forName("UTF-8");
+	
+	public static ByteBuffer str_to_bb(String msg){
+	    return ByteBuffer.wrap(msg.getBytes(charset));
 	}
 	//----------------------------------------------------------------------------------
 	/*

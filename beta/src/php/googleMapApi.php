@@ -641,21 +641,24 @@ var input = (document.getElementById('pac-input'));
 									var customer_distance_arr=new Array();
 									var nearestCustArr=new Array();										
 									var inc=0;
-                                                                        for (key in uniqueCustomerParseJson) 
+                                                                        //if(typeof uniqueCustomerParseJson[key] !== 'undefined')
                                                                         {
-                                                                            if (arrayHasOwnIndex(uniqueCustomerParseJson, key)) 
+                                                                            for (key in uniqueCustomerParseJson) 
                                                                             {
-                                                                                var customerArrDetail=uniqueCustomerParseJson[key].split('^');
-                                                                                var customer_distance = calculate_distance(lat, customerArrDetail[0], lng, customerArrDetail[1]);
-                                                                                customer_distance_arr[inc]=customer_distance;
-                                                                                nearestCustArr[customer_distance]=key;                                                                               
-                                                                                //alert('customer_distance='+customer_distance+'key='+key+'dist='+customer_print_str[customer_distance]);                                                                            
-                                                                                inc++;
-                                                                            }
-                                                                        }                                                                      
-                                                                        customer_distance_arr.sort();
-                                                                        customer_min_distance=customer_distance_arr[0];
-                                                                        var customer_print_str1=nearestCustArr[customer_min_distance];
+                                                                                if (arrayHasOwnIndex(uniqueCustomerParseJson, key)) 
+                                                                                {
+                                                                                    var customerArrDetail=uniqueCustomerParseJson[key].split('^');
+                                                                                    var customer_distance = calculate_distance(lat, customerArrDetail[0], lng, customerArrDetail[1]);
+                                                                                    customer_distance_arr[inc]=customer_distance;
+                                                                                    nearestCustArr[customer_distance]=key;                                                                               
+                                                                                    //alert('customer_distance='+customer_distance+'key='+key+'dist='+customer_print_str[customer_distance]);                                                                            
+                                                                                    inc++;
+                                                                                }
+                                                                            }                                                                      
+                                                                            customer_distance_arr.sort();
+                                                                            customer_min_distance=customer_distance_arr[0];
+                                                                            var customer_print_str1=nearestCustArr[customer_min_distance];
+                                                                        }
                                                                         //alert('distance1='+customer_min_distance+'nearestCust='+nearestCustArr[customer_min_distance]);
                                                                        
 													
@@ -668,20 +671,23 @@ var input = (document.getElementById('pac-input'));
                                                                         var plant_distance_arr=new Array();
                                                                         var nearestPlantArr=new Array();
                                                                         var inc=0;
-                                                                        for (key in uniqueCustomerParseJson) 
+                                                                         //if(typeof uniquePlantParseJson[key] !== 'undefined')
                                                                         {
-                                                                            if (arrayHasOwnIndex(uniquePlantParseJson, key)) 
+                                                                            for (key in uniquePlantParseJson) 
                                                                             {
-                                                                                var plantArrDetail=uniquePlantParseJson[key].split('^');
-                                                                                var plant_distance = calculate_distance(lat, plantArrDetail[0], lng, plantArrDetail[1]);
-                                                                                plant_distance_arr[inc]=plant_distance;
-                                                                                nearestPlantArr[plant_distance]=key;
-                                                                                inc++;                                                                            
+                                                                                if (arrayHasOwnIndex(uniquePlantParseJson, key)) 
+                                                                                {
+                                                                                    var plantArrDetail=uniquePlantParseJson[key].split('^');
+                                                                                    var plant_distance = calculate_distance(lat, plantArrDetail[0], lng, plantArrDetail[1]);
+                                                                                    plant_distance_arr[inc]=plant_distance;
+                                                                                    nearestPlantArr[plant_distance]=key;
+                                                                                    inc++;                                                                            
+                                                                                }
                                                                             }
+                                                                            plant_distance_arr.sort();
+                                                                            plant_min_distance=plant_distance_arr[0];
+                                                                            var plant_print_str1=nearestPlantArr[plant_min_distance];
                                                                         }
-                                                                        plant_distance_arr.sort();
-                                                                        plant_min_distance=plant_distance_arr[0];
-                                                                        var plant_print_str1=nearestPlantArr[plant_min_distance];
                                                                         
 
 									//alert('plant_min_distance='+plant_min_distance+'customer_min_distance='+customer_min_distance);

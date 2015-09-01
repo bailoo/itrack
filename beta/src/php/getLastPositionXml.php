@@ -1,5 +1,5 @@
 <?php
-  //error_reporting(-1);
+//error_reporting(-1);
   //ini_set('display_errors', 'On');
 	//set_time_limit(3000);
 	set_time_limit(300);
@@ -70,7 +70,8 @@
                 $vnumber_str = $vnumber_str.$vehicle_detail_local[8].":";
 			
 		$LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
-		$LastDataObject=new lastDataObj();		
+		$LastDataObject =null;
+                $LastDataObject=new lastDataObj();		
 		$type="unSorted";
 		//var_dump($LastDataObject);
 		getLastPositionXMl($vserial[$i],$date1,$date2,$datefrom,$dateto,$sortBy,$type,$parameterizeData,$LastDataObject);
@@ -78,9 +79,9 @@
 		if ($LastDataObject->messageTypeLD[0]!="" && $LastDataObject->deviceDatetimeLD[0]!="")
 		{
                     //var_dump($LastRecordObject);
-                    $linetmp=$linetmp.'<x a="'.$LastDataObject->messageTypeLD[0].'" b="'.$LastDataObject->versionLD[0].'" c="'.$LastDataObject->fixLD[0].'" d="'.$LastDataObject->latitudeLD[0].'" e="'.$LastDataObject->longitudeLD[0].'" f="'.$LastDataObject->speedLD[0].'" g="'.$LastDataObject->serverDatetimeLD[0].'" h="'.$LastDataObject->deviceDatetimeLD[0].'" i="'.$LastDataObject->io1LD[0].'" j="'.$LastDataObject->io2LD[0].'" k="'.$LastDataObject->io3LD[0].'" l="'.$LastDataObject->io4LD[0].'" m="'.$LastDataObject->io5LD[0].'" n="'.$LastDataObject->io6LD[0].'" o="'.$LastDataObject->io7LD[0].'" p="'.$LastDataObject->io8LD[0].'" q="'.$LastDataObject->sigStrLD[0].'" r="'.$LastDataObject->suplyVoltageLD[0].'" s="'.$LastDataObject->dayMaxSpeedLD[0].'" t="'.$LastDataObject->dayMaxSpeedTimeLD[0].'" u="'.$LastDataObject->lastHaltTimeLD[0].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'"/>,';
+                    $linetmp=$linetmp.'<x a="'.$LastDataObject->messageTypeLD[0].'" b="'.$LastDataObject->versionLD[0].'" c="'.$LastDataObject->fixLD[0].'" d="'.$LastDataObject->latitudeLD[0].'" e="'.$LastDataObject->longitudeLD[0].'" f="'.$LastDataObject->speedLD[0].'" g="'.$LastDataObject->serverDatetimeLD[0].'" h="'.$LastDataObject->deviceDatetimeLD[0].'" i="'.$LastDataObject->io1LD[0].'" j="'.$LastDataObject->io2LD[0].'" k="'.$LastDataObject->io3LD[0].'" l="'.$LastDataObject->io4LD[0].'" m="'.$LastDataObject->io5LD[0].'" n="'.$LastDataObject->io6LD[0].'" o="'.$LastDataObject->io7LD[0].'" p="'.$LastDataObject->io8LD[0].'" q="'.$LastDataObject->sigStrLD[0].'" r="'.$LastDataObject->suplyVoltageLD[0].'" s="'.$LastDataObject->dayMaxSpeedLD[0].'" t="'.$LastDataObject->dayMaxSpeedTimeLD[0].'" u="'.$LastDataObject->lastHaltTimeLD[0].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'"/>#';
 		}
-		$LastDataObject =null;
+		
 	}
         $vname1=substr($vname_str,0,-1); /////////for last position text report
         $vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
@@ -93,7 +94,7 @@
 		if($report_type=="Vehicle")
 		{
 			//echo "<textarea>".$linetmp."</textarea>";
-				$lineF=explode(",",substr($linetmp,0,-1));					
+				$lineF=explode("#",substr($linetmp,0,-1));					
 				for($n=0;$n<sizeof($lineF);$n++)
 				{
 					preg_match('/d="[^" ]+/', $lineF[$n], $lat_tmp);
@@ -364,7 +365,7 @@
 		else
 		{
 			//echo "<textarea>".$linetmp."</textarea>";
-			$lineF=explode(",",substr($linetmp,0,-1));
+			$lineF=explode("#",substr($linetmp,0,-1));
 			//echo "size=".sizeof($lineF)."<br>";
 			
 				for($n=0;$n<sizeof($lineF);$n++)
@@ -415,7 +416,7 @@
 	{		
 		if($report_type=="Vehicle")
 		{
-			$lineF=explode(",",substr($linetmp,0,-1));					
+			$lineF=explode("#",substr($linetmp,0,-1));					
 			for($n=0;$n<sizeof($lineF);$n++)
 			{
 				preg_match('/d="[^" ]+/', $lineF[$n], $lat_tmp);
@@ -500,7 +501,7 @@
 		}
 		else
 		{
-			$lineF=explode(",",substr($linetmp,0,-1));					
+			$lineF=explode("#",substr($linetmp,0,-1));					
 			for($n=0;$n<sizeof($lineF);$n++)
 			{
 				preg_match('/d="[^" ]+/', $lineF[$n], $lat_tmp);

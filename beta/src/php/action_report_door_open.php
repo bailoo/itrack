@@ -156,14 +156,7 @@
                                 $continuous_running_flag = 0;
                                 $runtime = strtotime($time2) - strtotime($time1);
                                 if($runtime > 60)
-                                {
-                                    //echo "in door open";
-                                    //echo "dateTime=".$time1."<br>";
-                                    $lat_tmp1 = explode("=",$lat_tmp[0]);  
-                                    $lat = preg_replace('/"/', '', $lat_tmp1[1]);
-
-                                    $lng_tmp1 = explode("=",$lng_tmp[0]);  
-                                    $lng = preg_replace('/"/', '', $lng_tmp1[1]);
+                                {                                   
                                     $closeDataFlag=0;
                                     $doorOpenArrB1['imei'.$B1] =$vserial[$i];
                                     $doorOpenArrB1['vname'.$B1] =$vehicle_detail_local[0];
@@ -209,12 +202,6 @@
                                 { 
                                     $closeDataFlag2=0;
                                     $doorOpen2Flag=1;
-                                    $lat_tmp1 = explode("=",$lat_tmp[0]);  
-                                    $lat = preg_replace('/"/', '', $lat_tmp1[1]);
-
-                                    $lng_tmp1 = explode("=",$lng_tmp[0]);  
-                                    $lng = preg_replace('/"/', '', $lng_tmp1[1]);
-
                                     $doorOpenArrB2['imeib'.$B2] =$vserial[$i];
                                     $doorOpenArrB2['vnameb'.$B2] =$vehicle_detail_local[0];
                                     $doorOpenArrB2['latb'.$B2] =$lat;
@@ -263,12 +250,7 @@
                                     //echo "in door open7";
                                     $closeDataFlag3=0;
                                     $doorOpen3Flag=1;
-                                    $lat_tmp1 = explode("=",$lat_tmp[0]);  
-                                    $lat = preg_replace('/"/', '', $lat_tmp1[1]);
-
-                                    $lng_tmp1 = explode("=",$lng_tmp[0]);  
-                                    $lng = preg_replace('/"/', '', $lng_tmp1[1]);
-
+                                    
                                     $doorOpenArrB3['imeib'.$B3] =$vserial[$i];
                                     $doorOpenArrB3['vnameb'.$B3] =$vehicle_detail_local[0];
                                     $doorOpenArrB3['latb'.$B3] =$lat;
