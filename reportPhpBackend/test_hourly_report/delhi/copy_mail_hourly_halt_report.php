@@ -9,9 +9,9 @@ date_default_timezone_set("Asia/Kolkata");
 //### DEBUG BOOLEAN
 global $DEBUG_OFFLINE;
 $DEBUG_OFFLINE = false;
-$DEBUG_ONLINE = true;
+$DEBUG_ONLINE = false;
 $CREATE_MASTER = false;
-$MAIN_DEBUG = true;
+$MAIN_DEBUG = false;
 $LOG = false;
 //#################
 
@@ -32,7 +32,6 @@ if ($DEBUG_OFFLINE) {
     $PASSWD = 'neon04$VTS';
 }*/
 include_once("../../db_connection.php");
-//include_once("D:\\itrack/reportPhpBackend/db_connection.php");
 //$HOST = "localhost";
 $account_id = "231";
 if ($account_id == "231")
@@ -53,7 +52,7 @@ if ($DEBUG_OFFLINE) {
     $abspath = "/var/www/html/vts/beta/src/php";
     $report_path = "/mnt/itrack/reportPhpBackend";
 }
-echo "\nAbsPath=" . $abspath;
+echo "<br>AbsPath=" . $abspath;
 include_once($abspath . "/common_xml_element.php");
 echo "\nD1";
 include_once($abspath . '/ioParameters.php');
@@ -103,10 +102,15 @@ $objPHPExcel_1 = null;
 echo "TEST1";
 include_once("read_master_file.php");
 include_once("read_sent_file.php");
+echo "\nS1";
 include_once("read_secondary_vehicles.php");
+echo "\nS2";
 //include_once("update_sent_file.php");
 include_once("create_hrly_excel_file.php");
+echo "\nS3";
 include_once("create_secondary_vehicle_excel_file.php");
+echo "\nS4";
+
 include_once("action_hourly_report_halt.php");
 
 include_once("create_last_halt_time.php");
@@ -117,7 +121,7 @@ include_once("update_last_halt_time.php");
 include_once("update_last_processed_time.php");
 include_once("delete_file.php");
 
-$sent_root_path = $report_path . "/test_hourly_report/" . $user_name . "/sent_file";
+$sent_root_path = $report_path . "/hourly_report/" . $user_name . "/sent_file";
 echo "\nSent_RootPath=" . $sent_root_path;
 
 $evening_sent_file_path1 = $sent_root_path . "/V6_HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_DELHI_CASH_ROUTE.xlsx";
@@ -149,16 +153,16 @@ $cdatetime2 = strtotime(date('H:i:s'));
 $difftime = $cdatetime2 - $cdatetime1;
 //$difftime = 7200;     //EVENING COMMENT IT LATER
 //$difftime = 36000;    //MORNING
-$difftime = 75600; 	//9 PM
+//$difftime = 75600 //9 PM
 echo "\nDiff=".$difftime;
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-08-27');
-    $date = date('2015-08-28');
-    $shift_ev_date1 = $pdate . " 12:00:00";
+    $pdate = date('2015-08-02');
+    $date = date('2015-08-03');
+    $shift_ev_date1 = $date . " 00:00:00";
     $shift_ev_date2 = $pdate . " 23:59:59";
-    //$shift_ev1 = true;
-    $shift_ev2 = true;
+    $shift_ev1 = true;
+    $shift_ev2 = false;
     $shift_mor = false;
     $current_time = $date . " 12:00:00";
     $shift_ev_date1_focal = $pdate . " 12:00:00";
@@ -182,7 +186,7 @@ $unchanged = true;
 //######## MAKE TWO SHIFTS
 
 $shift_ev_date3 = $date . " 00:00:00";
-$shift_ev_date4 = $date . " 12:00:00"; //change it to 12:00:00
+$shift_ev_date4 = $date . " 13:50:00"; //change it to 12:00:00
 //$shift_ev_date4 = $date." 06:40:00";
 
 $shift_mor_date1 = $date . " 03:00:00";
@@ -474,18 +478,6 @@ if ($shift_mor) {
     }
 
     if (!file_exists($morning_sent_file_path)) {
-        
-        //######## CLEAR MASTER FILE
-        $files = glob('/mnt/itrack/beta/src/php/gps_report/'.$account_id.'/master/*'); // get all file names
-        foreach($files as $file){ // iterate files
-          if(is_file($file))
-            unlink($file); // delete file
-        }
-        //###################################
-       
-        //####### COPY S3 MASTER
-        include_once("../../S3_master.php");
-        
         //echo "\nCreateFile:Morning";
         $morning_last_processed_time = "";
 
@@ -557,7 +549,7 @@ if ($shift_mor) {
             'text' => $message,
             'html' => '<html></html>'
                 ), array(
-            'attachment' => array(array('filePath'=>$file_path,'remoteName'=>$filename_title))
+            'attachment' => array($file_path)
         ));        
         ////include("send_mail_api.php");
         //######################################	
@@ -726,21 +718,9 @@ if ($shift_ev1) {
     }
 
     if (!file_exists($evening_sent_file_path1)) {
-        
-        //######## CLEAR MASTER FILE
-        $files = glob('/mnt/itrack/beta/src/php/gps_report/'.$account_id.'/master/*'); // get all file names
-        foreach($files as $file){ // iterate files
-          if(is_file($file))
-            unlink($file); // delete file
-        }
-        //###################################
-
-        //####### COPY S3 MASTER
-        include_once("../../S3_master.php");
-        
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
-        
+
         get_route_db_detail("ZPME",$route_type);
         //echo "\nSizeRoute=".sizeof($route_name_rdb);
         get_customer_db_detail($account_id, "ZPME", $route_type);
@@ -772,8 +752,8 @@ if ($shift_ev1) {
         //echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL ##############
-        $to = 'rizwan@iembsys.com';
-        //$to = 'gpsreporthourly@gmail.com';
+        //$to = 'rizwan@iembsys.com';
+        $to = 'gpsreporthourly@gmail.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -799,16 +779,15 @@ if ($shift_ev1) {
         $result = $mgClient->sendMessage($domain, array(
             'from' => 'Itrack <support@iembsys.co.in>',
             'to' => $to,
-            'cc'      => 'rizwan@iembsys.com',
-            //'cc' => 'hourlyreport4@gmail.com',
+            //'cc'      => 'rizwan@iembsys.com',
+            'cc' => 'hourlyreport4@gmail.com',
             //'cc'      => 'hourlyreport4@gmail.com',
             // 'bcc'     => 'astaseen83@gmail.com',
             'subject' => $subject,
             'text' => $message,
             'html' => '<html></html>'
                 ), array(
-            //'attachment' => array($file_path)
-            'attachment' => array(array('filePath'=>$file_path,'remoteName'=>$filename_title))
+            'attachment' => array($file_path)
         ));
         ////include("send_mail_api.php");
         //######################################
@@ -966,18 +945,6 @@ if ($shift_ev2) {
     }
 
     if (!file_exists($evening_sent_file_path2)) {
-        
-        //######## CLEAR MASTER FILE
-        $files = glob('/mnt/itrack/beta/src/php/gps_report/'.$account_id.'/master/*'); // get all file names
-        foreach($files as $file){ // iterate files
-          if(is_file($file))
-            unlink($file); // delete file
-        }
-        //###################################
-        
-        //####### COPY S3 MASTER
-        include_once("../../S3_master.php");
-        
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
 
@@ -1050,8 +1017,7 @@ if ($shift_ev2) {
             'text' => $message,
             'html' => '<html></html>'
                 ), array(
-            //'attachment' => array($file_path)
-            'attachment' => array(array('filePath'=>$file_path,'remoteName'=>$filename_title))
+            'attachment' => array($file_path)
         ));        
         
         //include("send_mail_api.php");

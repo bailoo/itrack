@@ -12,7 +12,7 @@ echo "\nRouteTypeDB=".$route_type;
 	if($shift == "ZPME")
 	{
 		//echo "EV:".$query;		  
-		$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_ev FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_ev='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND route_assignment2.status=1 AND route_assignment2.vehicle_name IN('DL1GC2916') Order By route_assignment2.route_name_ev DESC";
+		$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_ev FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_ev='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND route_assignment2.status=1 Order By route_assignment2.route_name_ev DESC";
 		//$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_ev FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_ev='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND route_assignment2.status=1 AND route_assignment2.vehicle_name IN('UP14ET1519','UP16CT3727','DL1LM6380','DL1M6530','HR45A6102','HR55U6870') Order By route_assignment2.route_name_ev DESC";		
                 /*$query = "SELECT DISTINCT route_assignment2.vehicle_name,route_assignment2.route_name_ev FROM route_assignment2,vehicle WHERE route_assignment2.user_account_id='$account_id' AND NOT(route_assignment2.route_name_ev='') AND route_assignment2.vehicle_name=vehicle.vehicle_name AND vehicle.vehicle_name='UP13D2186' AND route_assignment2.status=1 Order By route_assignment2.route_name_ev DESC";*/
 
