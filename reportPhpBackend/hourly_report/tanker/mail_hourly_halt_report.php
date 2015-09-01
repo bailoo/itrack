@@ -8,10 +8,10 @@ ini_set('display_startup_errors', TRUE);*/
 date_default_timezone_set("Asia/Kolkata");
 //### DEBUG BOOLEAN
 global $DEBUG_OFFLINE;
-$DEBUG_OFFLINE = true;
+$DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
-$CREATE_MASTER = true;
-$MAIN_DEBUG = true;
+$CREATE_MASTER = false;
+$MAIN_DEBUG = false;
 $LOG = false;
 //#################
 
