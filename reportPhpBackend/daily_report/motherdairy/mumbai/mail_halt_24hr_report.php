@@ -64,23 +64,27 @@ echo "\nD6";
 
 //$abspath = "/var/www/html/vts/beta/src/php";
 include_once($abspath."/calculate_distance.php");
+echo "\nD7";
 include_once($abspath."/report_title.php");
 //include_once($abspath."/get_location.php");
 include_once($abspath."/user_type_setting.php");
+echo "\nD8";
 include_once($abspath."/select_landmark_report.php");
-include_once($abspath."/area_violation/pointLocation.php");
+echo "\nD9";
+//include_once($abspath."/area_violation/pointLocation.php");
 require_once $abspath."/excel_lib/class.writeexcel_workbook.inc.php";
 require_once $abspath."/excel_lib/class.writeexcel_worksheet.inc.php";
+echo "\nD10";
 include_once($abspath."/util.hr_min_sec.php");
 include_once("get_master_detail.php");
 
-echo "\nD7";
+echo "\nD11";
 include_once($abspath . "/util.hr_min_sec.php");
 if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun.php"))
     ;
 include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
 
-echo "\nD8";
+echo "\nD12";
 
 echo "\nAfter Include";
 
@@ -717,6 +721,8 @@ function binary_plant_search($elem, $array, $array1, $array2, $array3, $array4) 
 	$sno_tmp = 1;
 	
 	echo "VVSIZE=".sizeof($vname);
+
+
 	for($i=0;$i<sizeof($vname);$i++)
 	{						
 		//echo "\nT_INPUT3=".$transporter_name_input[$i];
