@@ -79,7 +79,7 @@ class manage_route_vehicle_substation_inherit{
 		if($type=="MorningShift"){
 		
 			$dataMR = getDetailAllRouteAssignment2InheritMR($parent_admin_id,$DbConnection);			
-			foreach($dataEV as $dt)
+			foreach($dataMR as $dt)
 			{
 				$vehicle_name=$dt['vehicle_name'];
 				$morning_update_time=$dt['morning_update_time'];
@@ -88,7 +88,7 @@ class manage_route_vehicle_substation_inherit{
 				foreach($vehicle_list1 as $vlist){
                                         
 					if(trim($vlist)==trim($vehicle_name)){
-                                                echo"VN=".$vehicle_name." RN=".$route_name_mor." UM=".$updt_mor."<br>";
+                                                //echo"VN=".$vehicle_name." RN=".$route_name_mor." UM=".$updt_mor."<br>";
 						$updt_mor=str_replace(':','#',$morning_update_time);						
 						$morning_data_first[] = array("LINEDATA"=>$vehicle_name.":".$route_name_mor.":".$updt_mor);
 					}
