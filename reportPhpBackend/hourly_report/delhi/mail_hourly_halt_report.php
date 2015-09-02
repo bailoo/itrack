@@ -12,7 +12,7 @@ $DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
 $CREATE_MASTER = false;
 $MAIN_DEBUG = false;
-$LOG = false;
+$LOG = true;
 //#################
 
 $isReport = true;

@@ -266,7 +266,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
 	//exit(0);
      if (count($SortedDataObject->deviceDatetime) > 0) {
             //$sortObjTmp = sortData($UnSortedDataObject, $sortBy, $parameterizeData);
-            //echo "::Data Read";
+            echo "::Data Read";
             //var_dump($sortObjTmp);
             /* echo"sdt1=".$sortObjTmp->deviceDatetime[0]."<br>";
               echo "sdt2=".$sortObjTmp->deviceDatetime[1]."<br>";
@@ -501,7 +501,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                                     //if( ($shift_1=="ZPMM") || (($shift_1=="ZPME") && ($plant_time_ev=="currentday")) || (($shift_1=="ZPME") && ($plant_time_ev=="nextday") && (strtotime($datetime) < strtotime($date_curr_tmp))))
                                     if ((($shift_1 == "ZBVM") && ($difftime > 10800 && $difftime < 43200)) || ( ($shift_1 == "ZBVE") && ($difftime > 43200 || $difftime < 10800) )) {
                                     //if( (($shift_1=="ZPMM") && ($difftime>10800 && $difftime<43200)) || ($shift_1=="ZPME"))           
-					//echo "\nPlantIN3";
+					echo "\nPlantIN3";
                                         $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]] = $datetime;
                                         $plant_status_local[$Vehicle[$i]][$RouteNo[$i]] = 1;
                                         $p_in = true;
@@ -1145,19 +1145,12 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
         calculate_distance($lat_cr, $lat_g, $lng_cr, $lng_g, $distance_station2);
         //}
 
-	if(($Vehicle=='DL1LK9909') && ($StationNo=='17013')) {
-		echo "\nLatRef1=".$lat_ref1." ,LatG=".$lat_g." ,LngRef1=".$lng_ref1." ,LngG=".$lng_g;
-		echo "\n:LatCr=".$lat_cr." ,LngCr=".$lng_cr;
-		echo "\nDist1=".$distance_station1." ,Dist2=".$distance_station2;
-	}
 
         if ($distance_station1 < $distance_station2) {
             $distance_station = $distance_station1;
         } else {
             $distance_station = $distance_station2;
         }
-
-	
         //echo "\nVehicle entered in station=CustomerNo=".$StationNo." ,arrivale_time=".$arrivale_time." ,lat_ref1=".$lat_ref1." ,lng_ref1=".$lng_ref1." ,lat_cr=".$lat_cr." ,lng_cr=".$lng_cr."dist=".$distance_station.", distvar=".$DistVar;  
         //echo "\n1=CustomerNo=".$StationNo." ,arrivale_time=".$arrivale_time." ,lat_ref1=".$lat_ref1." ,lng_ref1=".$lng_ref1." ,lat_cr=".$lat_cr." ,lng_cr=".$lng_cr."dist=".$distance_station.", distvar=".$DistVar;  
         /* if($status_entered==2)
@@ -1172,9 +1165,7 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 
         if ($distance_station < $DistVar) {
             $station_no = $StationNo;
-		if(($Vehicle=='DL1LK9909') && ($StationNo=='17013')) {
-	            echo "\nAtStation:".$station_no." ,distance_station=".$distance_station;
-		}
+            //echo "\nAtStation:".$station_no." ,distance_station=".$distance_station;
             //$customer_visited[] = $station_no;
             //$customer_type[] = $Type[$i];
             $entered_station = 1;
@@ -1295,7 +1286,7 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
     //######## FINAL UPDATION																						
     $arrival_time1 = explode(' ', $arrivale_time);
     $depature_time1 = explode(' ', $depature_time);
-    //echo "\nArrivalTime[$i]=".$ArrivalTime[$i]." ,status_entered=".$status_entered." ,entered_station=".$entered_station;
+    //echo "\nArrivalTime[$i]=".$ArrivalTime[$i];
 
     if (($status_entered == 1) && ($entered_station == 1)) {//###### CHECK FOR ALL (ARRIVAL AND DEPARTURE)
         //echo "\nEnteredStation";

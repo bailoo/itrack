@@ -229,7 +229,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     $parameterizeData->speed = "f";
 
     $finalVNameArr = array();
-    echo "\nSIZEVehicle=" . sizeof($Vehicle);
+    echo "\nSIZEV=" . sizeof($Vehicle);
     //###### CASSANDRA BLOCK1 CLOSED
     
     for ($i = 0; $i < sizeof($Vehicle); $i++) {
@@ -282,7 +282,6 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                   $finalSpeedArr[$IMEI[$i]][]=$SortedDataObject->speedData[$obi]; */
                 //echo "\nSTORED";
                 $sts_date_sel[] = $SortedDataObject->serverDatetime[$obi];
-$devicedate = $SortedDataObject->deviceDatetime[$obi];
                 $xml_date_sel[] = $SortedDataObject->deviceDatetime[$obi];
                 $lat_sel[] = $SortedDataObject->latitudeData[$obi];
                 $lng_sel[] = $SortedDataObject->longitudeData[$obi];
@@ -300,9 +299,9 @@ $devicedate = $SortedDataObject->deviceDatetime[$obi];
         $UnsortedDataObject = null;     
         
         //##### DEBUG MSG
-        $msg = "\nVehicle=".$Vehicle[$i]." ,SizeXmlDate=".sizeof($xml_date_sel)." ,DeviceDate=".$devicedate;
+        $msg = "\nVehicle=".$Vehicle[$i]." ,SizeXmlDate=".sizeof($xml_date_sel);
         if($LOG) {$debug_msg.=$msg."\n";}
-        echo $msg;
+        //echo $msg;
 
         ######## CASSANDRA BLOCK2 CLOSED
         
@@ -743,7 +742,7 @@ $devicedate = $SortedDataObject->deviceDatetime[$obi];
         $last_vehicle_name[] = $Vehicle[$i];
         $last_halt_time_new[] = $current_halt_time;
         //echo "<br>CurrentHaltTime:".$Vehicle[$i]." :".$current_halt_time;
-        echo "\nNoData=".$nodata." ,Vehicle=".$Vehicle[$i];
+        //echo "\nNoData=".$nodata." ,Vehicle=".$Vehicle[$i];
 
         $msg = "";
         if ($nodata) {

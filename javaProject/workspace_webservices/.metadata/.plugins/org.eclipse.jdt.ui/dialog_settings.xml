@@ -33,17 +33,17 @@
 		<item value="2" key="pageIndex"/>
 	</section>
 	<section name="FatJarPackageWizard">
-		<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_arya_omnitalk.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
-		<item value="webservice_rts_arya_omnitalk - webservice_rts_arya_omnitalk" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
+		<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_arya_omnitalk_test.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
+		<item value="webservice_crts_arya_omnitalk_test - webservice_crts_arya_omnitalk_test" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
 		<item value="" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
 		<item value="1" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
 		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
-			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_arya_omnitalk.jar"/>
+			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_arya_omnitalk_test.jar"/>
 			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_newwaves.jar"/>
+			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_arya_omnitalk.jar"/>
 			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_sqs.jar"/>
 			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_riddhi.jar"/>
-			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_noviretech.jar"/>
 		</list>
 		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">
 			<item value=".xml"/>

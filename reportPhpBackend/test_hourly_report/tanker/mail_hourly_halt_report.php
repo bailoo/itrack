@@ -43,8 +43,8 @@ mysql_select_db($DBASE, $DbConnection) or die("could not find DB");
 
 date_default_timezone_set("Asia/Kolkata");
 if ($DEBUG_OFFLINE) {    
-    $abspath = "C:\\xampp/htdocs/itrack/beta/src/php";
-    $report_path = "C:\\xampp/htdocs/itrack/reportPhpBackend";
+    $abspath = "D:\\itrack/beta/src/php";
+    $report_path = "D:\\MOTHERDELHI_REPORT";   
 } else if ($DEBUG_ONLINE) {
     $abspath = "/var/www/html/vts/beta/src/php";
     $report_path = "/mnt/itrack/reportPhpBackend";
@@ -52,26 +52,26 @@ if ($DEBUG_OFFLINE) {
     $abspath = "/var/www/html/vts/beta/src/php";
     $report_path = "/mnt/itrack/reportPhpBackend";
 }
-echo "<br>AbsPath=" . $abspath;
+//echo "<br>AbsPath=" . $abspath;
 include_once($abspath . "/common_xml_element.php");
-echo "\nD1";
+//echo "\nD1";
 include_once($abspath . '/ioParameters.php');
-echo "\nD2";
+//echo "\nD2";
 include_once($abspath . '/dataParameters.php');
-echo "\nD3";
+//echo "\nD3";
 include_once($abspath . '/dataArrays.php');
 if (file_exists($tmp)) {
     echo "File Exists1";
 } else {
     "Does not exist";
 }
-echo "\nD4";
+//echo "\nD4";
 include_once($abspath . '/sortXmlData.php');
-echo "\nD5:" . $abspath;
+//echo "\nD5:" . $abspath;
 //$tmp = $abspath.'/getXmlData.php';
 //if(file_exists($tmp)){echo "File Exists2";} else {"Does not exist";}
 include_once($abspath . '/getDeviceData.php');
-echo "\nD6";
+//echo "\nD6";
 
 include_once($abspath . "/calculate_distance.php");
 include_once($abspath . "/report_title.php");
@@ -83,7 +83,7 @@ if ("Exists=" . file_exists($abspath . "/mail_api/mailgun-php/attachment_mailgun
     ;
 include_once($abspath . "/mail_api/mailgun-php/attachment_mailgun.php");
 
-echo "\nD8";
+//echo "\nD8";
 //include_once($abspath."/hourly_report/".$user_name."/get_master_detail.php");
 //### IMPORT XLSX LIBRARY
 //error_reporting(E_ALL);
@@ -99,17 +99,17 @@ PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
 
 $objPHPExcel_1 = null;
 
-echo "TEST1";
+//echo "TEST1";
 include_once("read_master_file.php");
 include_once("read_sent_file.php");
-echo "\nS1";
+//echo "\nS1";
 include_once("read_secondary_vehicles.php");
-echo "\nS2";
+//echo "\nS2";
 //include_once("update_sent_file.php");
 include_once("create_hrly_excel_file.php");
-echo "\nS3";
+//echo "\nS3";
 include_once("create_secondary_vehicle_excel_file.php");
-echo "\nS4";
+//echo "\nS4";
 
 include_once("action_hourly_report_halt.php");
 
@@ -121,7 +121,7 @@ include_once("update_last_halt_time.php");
 include_once("update_last_processed_time.php");
 include_once("delete_file.php");
 
-$sent_root_path = $report_path . "/test_hourly_report/" . $user_name . "/sent_file";
+$sent_root_path = $report_path . "/hourly_report/" . $user_name . "/sent_file";
 echo "\nSent_RootPath=" . $sent_root_path;
 
 $evening_sent_file_path1 = $sent_root_path . "/V6_HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_TANKER_ROUTE.xlsx";
@@ -153,12 +153,12 @@ $cdatetime2 = strtotime(date('H:i:s'));
 $difftime = $cdatetime2 - $cdatetime1;
 //$difftime = 7200;     //EVENING COMMENT IT LATER
 //$difftime = 36000;    //MORNING
-$difftime = 75600; //9 PM
+$difftime = 75600;	 //9 PM
 echo "\nDiff=".$difftime;
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-08-23');
-    $date = date('2015-08-24');
+    $pdate = date('2015-08-27');
+    $date = date('2015-08-28');
     $shift_ev_date1 = $pdate . " 12:00:00";
     $shift_ev_date2 = $pdate . " 23:59:59";
     $shift_ev1 = true;
@@ -186,7 +186,7 @@ $unchanged = true;
 //######## MAKE TWO SHIFTS
 
 $shift_ev_date3 = $date . " 00:00:00";
-$shift_ev_date4 = $date . " 13:50:00"; //change it to 12:00:00
+$shift_ev_date4 = $date . " 12:00:00"; //change it to 12:00:00
 //$shift_ev_date4 = $date." 06:40:00";
 
 $shift_mor_date1 = $date . " 03:00:00";
@@ -214,7 +214,7 @@ if ($MAIN_DEBUG) {
     }
 
     //######## COMMENT IT
-    $difftime = 79200;
+    //$difftime = 10900;
     //###################
     //######## CHECK EVENING SHIFT1 ###########
     if ((($current_time >= $shift_ev_date1) && ($current_time <= $shift_ev_date2) && ($current_time >= $ev_run_start_time1) ) || (($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4))) {
@@ -479,8 +479,17 @@ if ($shift_mor) {
     }
 
     if (!file_exists($morning_sent_file_path)) {
+        
+        //######## CLEAR MASTER FILE
+        $files = glob('/mnt/itrack/beta/src/php/gps_report/'.$account_id.'/master/*'); // get all file names
+        foreach($files as $file){ // iterate files
+          if(is_file($file))
+            unlink($file); // delete file
+        }
+        //###################################
+        
         //####### COPY S3 MASTER
-        include_once("S3_master.php");
+        include_once("../../S3_master.php");
 
         //echo "\nCreateFile:Morning";
         $morning_last_processed_time = "";
@@ -723,8 +732,16 @@ if ($shift_ev1) {
     }
 
     if (!file_exists($evening_sent_file_path1)) {
+        
+        //######## CLEAR MASTER FILE
+        $files = glob('/mnt/itrack/beta/src/php/gps_report/'.$account_id.'/master/*'); // get all file names
+        foreach($files as $file){ // iterate files
+          if(is_file($file))
+            unlink($file); // delete file
+        }
+        //###################################
+        
         //####### COPY S3 MASTER
-echo "\nEVMASTER=".file_exists("../../S3_master.php");
         include_once("../../S3_master.php");
 
         //echo "\nCreateFile:Evening";
@@ -761,8 +778,8 @@ echo "\nEVMASTER=".file_exists("../../S3_master.php");
         //echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL ##############
-        $to = 'rizwan@iembsys.com';
-        //$to = 'hourlyreportbvm@gmail.com';
+        //$to = 'rizwan@iembsys.com';
+        $to = 'hourlyreportbvm@gmail.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -788,8 +805,8 @@ echo "\nEVMASTER=".file_exists("../../S3_master.php");
         $result = $mgClient->sendMessage($domain, array(
             'from' => 'Itrack <support@iembsys.co.in>',
             'to' => $to,
-            'cc'      => 'rizwan@iembsys.com',
-            //'cc' => 'hourlyreport4@gmail.com',
+            //'cc'      => 'rizwan@iembsys.com',
+            'cc' => 'hourlyreport4@gmail.com',
             //'cc'      => 'hourlyreport4@gmail.com',
             // 'bcc'     => 'astaseen83@gmail.com',
             'subject' => $subject,
@@ -955,8 +972,17 @@ if ($shift_ev2) {
     }
 
     if (!file_exists($evening_sent_file_path2)) {
+        
+        //######## CLEAR MASTER FILE
+        $files = glob('/mnt/itrack/beta/src/php/gps_report/'.$account_id.'/master/*'); // get all file names
+        foreach($files as $file){ // iterate files
+          if(is_file($file))
+            unlink($file); // delete file
+        }
+        //###################################
+        
         //####### COPY S3 MASTER
-        include_once("S3_master.php");
+        include_once("../../S3_master.php");
 
         //echo "\nCreateFile:Evening";
         $evening_last_processed_time = "";
