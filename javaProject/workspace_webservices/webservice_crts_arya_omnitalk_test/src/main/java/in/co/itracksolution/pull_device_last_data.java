@@ -19,8 +19,8 @@ public class pull_device_last_data {
 	public CassandraConn conn;
 	
 	public pull_device_last_data(){
-		String propFileName = "config.properties";
-		//String propFileName = "resources/config.properties";
+		//String propFileName = "config.properties";
+		String propFileName = "resources/config.properties";
 		
 		Properties prop = new Properties();
 		

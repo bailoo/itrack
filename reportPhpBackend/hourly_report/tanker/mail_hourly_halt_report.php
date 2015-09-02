@@ -8,11 +8,11 @@ ini_set('display_startup_errors', TRUE);*/
 date_default_timezone_set("Asia/Kolkata");
 //### DEBUG BOOLEAN
 global $DEBUG_OFFLINE;
-$DEBUG_OFFLINE = true;
+$DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
-$CREATE_MASTER = true;
-$MAIN_DEBUG = true;
-$LOG = false;
+$CREATE_MASTER = false;
+$MAIN_DEBUG = false;
+$LOG = true;
 //#################
 
 $isReport = true;
@@ -153,12 +153,12 @@ $cdatetime2 = strtotime(date('H:i:s'));
 $difftime = $cdatetime2 - $cdatetime1;
 //$difftime = 7200;     //EVENING COMMENT IT LATER
 //$difftime = 36000;    //MORNING
-//$difftime = 75600 //9 PM
+//$difftime = 75600; //9 PM
 echo "\nDiff=".$difftime;
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-08-23');
-    $date = date('2015-08-24');
+    $pdate = date('2015-09-01');
+    $date = date('2015-09-02');
     $shift_ev_date1 = $date . " 00:00:00";
     $shift_ev_date2 = $pdate . " 23:59:59";
     $shift_ev1 = true;
@@ -792,8 +792,8 @@ if ($shift_ev1) {
         $message = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_EVENING(MOTHER_TANKER_" . $msg . "_" . $time_1 . "_" . $time_2 . "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
         $random_hash = md5(date('r', time()));
         $headers = "From: support@iembsys.co.in\r\n";
-        //$headers .= "Cc: hourlyreport4@gmail.com";
-        $headers .= "Cc: rizwan@iembsys.com";	
+        $headers .= "Cc: hourlyreport4@gmail.com";
+        //$headers .= "Cc: rizwan@iembsys.com";	
         //pass:8090025844
         //$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com";
         $headers .= "\r\nContent-Type: multipart/mixed; boundary=\"PHP-mixed-" . $random_hash . "\"";

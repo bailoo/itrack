@@ -125,7 +125,7 @@ public class TransactionServer implements Runnable {
 	public static HashMap<String, String>  last_DayMaxSpd = new HashMap(new Hashtable<String, String>());
 	public static HashMap<String, String>  last_HaltTime = new HashMap(new Hashtable<String, String>());
 	public static push_device_data push_cassandra = null;
-	public static pull_device_last_data pull_cassandra = null;
+	//public static pull_device_last_data pull_cassandra = null;
 	public static LastData data = null;
 	public static LastDataDao dao = null;
 	
@@ -218,7 +218,7 @@ public class TransactionServer implements Runnable {
 			{
 				//####### INITITALISE CASSANDRA OBJECT
 				push_cassandra = new push_device_data();
-				pull_cassandra = new pull_device_last_data();
+				//pull_cassandra = new pull_device_last_data();
 				
 				/*//###### LAST DATA DECLARATION
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

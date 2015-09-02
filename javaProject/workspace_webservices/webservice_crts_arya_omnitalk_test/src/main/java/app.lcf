@@ -13,6 +13,6 @@ DBFILENAME=rtsdb.properties
 DBPOOL=rts
 
 #Application Configuration
-CONFIGFILENAME=rtsconfig_8001.properties
-LOGFILENAME=rtsLog_8001
+CONFIGFILENAME=rtsconfig_80001.properties
+LOGFILENAME=rtsLog_80001
 HANDLERNAME=com.wanhive.rts.handler.RequestHandler

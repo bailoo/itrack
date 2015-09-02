@@ -60,7 +60,7 @@ function get_route_db_detail($shift,$route_type)
                 //$remark_rdb[] = $row->remark_ev;
                 $query2 = "SELECT DISTINCT vehicle_assignment.device_imei_no FROM vehicle_assignment,vehicle,vehicle_grouping WHERE vehicle_assignment.vehicle_id = vehicle.vehicle_id AND ".
                 " vehicle.vehicle_name = '$vehicle_tmp[$i]' AND vehicle_assignment.status=1 AND vehicle_grouping.vehicle_id=vehicle_assignment.vehicle_id AND vehicle_grouping.status=1 AND vehicle_grouping.account_id='$account_id'";				
-                echo "\n".$query2;
+                //echo "\n".$query2;
                 $result2 = mysql_query($query2,$DbConnection); 			
                 $numrows = mysql_num_rows($result2);
                 //echo "\nNUM=".$numrows;

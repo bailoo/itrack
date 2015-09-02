@@ -16,7 +16,7 @@ include_once('../../src/php/parameterizeData.php');
 include_once('../../src/php/data.php');
 include_once('../../src/php/getXmlData.php');
 
-$sortBy="h";
+$sortBy="g";
 $requiredData="All";
 
 

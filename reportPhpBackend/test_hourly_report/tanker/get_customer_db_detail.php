@@ -74,12 +74,12 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param) {
 
         $query1 = "SELECT DISTINCT station_id,type,customer_no,station_coord,distance_variable FROM station WHERE " .
                 "user_account_id='$account_id' AND type='1' AND status=1";
-        //echo "\nQuery=".$query1;
+        echo "\nQuery=".$query1;
         $result1 = mysql_query($query1, $DbConnection);
         while ($row1 = mysql_fetch_object($result1)) {
             $plant_station_coord[$row1->customer_no] = $row1->station_coord;
             $plant_distance_variable[$row1->customer_no] = $row1->distance_variable;
-	    //echo "\nCustomer=".$row1->customer_no.",Coord=".$row1->station_coord.",Distvar=".$row1->distance_variable;
+	    echo "\nCustomer=".$row1->customer_no.",Coord=".$row1->station_coord.",Distvar=".$row1->distance_variable;
         }
 
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -145,12 +145,12 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param) {
                     $route_match = false;
                     $size_rdb2 = 0;
                     $size_rdb2 = sizeof($route_name_rdb);
-                    //echo "\nroute_str=".$route_str[$j];
+                    //echo "<br>size_rdb222222222=".$route_str[$j];
                     for ($i = 0; $i < $size_rdb2; $i++) {
                         $route_name_rdb_1 = explode('/', $route_name_rdb[$i]);
                         $size_rdb3 = 0;
                         $size_rdb3 = sizeof($route_name_rdb_1);
-                        //echo "\nsize_rdb3=".$size_rdb3;
+                        //echo "<br>size_rdb3=".$size_rdb3;
                         for ($k = 0; $k < $size_rdb3; $k++) {
                             $route_name_rdb_3 = "";
                             if (strpos($route_name_rdb_1[$k], '@') !== false) {
@@ -170,7 +170,7 @@ function get_customer_db_detail($account_id, $shift_time, $route_type_param) {
                               echo "\nROUTE TYPE MATCHED-2";
                               } */
                             $pre_match = false;
-                            //echo "\nroute_type_param=".$route_type_param." ,route_str=".$route_str[$j];
+                            //echo "\nroute_type_param=".$route_type_param;
                             if ($route_type_param == "CASH") {
                                 if ((trim($route_name_rdb_3) == trim($route_str[$j])) && ((strpos($route_type_str[$j], $route_type_param) !== false))) {
                                     //echo "\nCASH1";
