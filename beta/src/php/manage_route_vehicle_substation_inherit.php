@@ -86,7 +86,9 @@ class manage_route_vehicle_substation_inherit{
 				$route_name_mor=$dt['route_name_mor'];
 				
 				foreach($vehicle_list1 as $vlist){
+                                        
 					if(trim($vlist)==trim($vehicle_name)){
+                                                echo"VN=".$vehicle_name." RN=".$route_name_mor." UM=".$updt_mor."<br>";
 						$updt_mor=str_replace(':','#',$morning_update_time);						
 						$morning_data_first[] = array("LINEDATA"=>$vehicle_name.":".$route_name_mor.":".$updt_mor);
 					}
