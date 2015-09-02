@@ -792,9 +792,9 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
      
 //exit(0);
     //##### DEBUG MSG
-    /*if(!$DEBUG_OFFLINE && !$DEBUG_ONLINE && $LOG) {
+    if(!$DEBUG_OFFLINE && !$DEBUG_ONLINE && $LOG) {
         write_log($title,$difftime);
-    }*/
+    }
  
 
    ######## CASSANDRA BLOCK3 CLOSED	
@@ -1615,11 +1615,11 @@ function cellColor($cells, $color) {
     ));
 }
 
-/*function write_log($title,$difftime) {
+function write_log($title,$difftime) {
     global $debug_msg;
     $log_file = "/mnt/phpReportLog/".$title."_".$difftime.".txt";
     $file = fopen($log_file,"a");
     fwrite($file,$debug_msg);
     fclose($file);
-}*/
+}
 ?>
