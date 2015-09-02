@@ -318,11 +318,21 @@ function PlotMarkerWithAddress(marker,point,vehiclename,date1,date2,type) {
 
 		//alert("Icon="+Icon+" map="+map+" marker="+marker+ " actionmrkr="+action_marker+"  vname="+vehiclename+" spd="+speed+" dt="+datetime+" dist="+dist+" fuelltr="+fuel_litres+" fuel_level="+fuel_level);
 
-		if(type=="halt")
-      var myHtml = '<div id="tab1" class="bubble" align=left><table cellpadding=0 cellspacing=0 class="text" ><tr><td><font size=1 color=#000000>Vehicle</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=1 color=#000000>Arrival DateTime</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+date1+' '+'&nbsp;&nbsp;</font></td></tr><tr><td><font size=1 color=#000000>Departure DateTime</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+date2+' '+'&nbsp;&nbsp;</font></td></tr><tr><td><font size=1 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=red size=1>'+place+'</font></td></tr><tr><td colspan=3><font color=blue size=1>( '+point.lat()+', '+point.lng()+' )</font></td></tr></table></div>';
-    else
-      var myHtml = '<div id="tab1" class="bubble" align=left><table cellpadding=0 cellspacing=0 class="text" ><tr><td><font size=1 color=#000000>Vehicle</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=1 color=#000000>Datetime1</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+date1+' '+'&nbsp;&nbsp;</font></td></tr><tr><td><font size=1 color=#000000>DateTime2</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+date2+' '+'&nbsp;&nbsp;</font></td></tr><tr><td><font size=1 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=red size=1>'+place+'</font></td></tr><tr><td colspan=3><font color=blue size=1>( '+point.lat()+', '+point.lng()+' )</font></td></tr></table></div>';
-		
+		if(date1!='')
+                {
+                    if(type=="halt")
+                    {
+                        var myHtml = '<div id="tab1" class="bubble" align=left><table cellpadding=0 cellspacing=0 class="text" ><tr><td><font size=1 color=#000000>Vehicle</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=1 color=#000000>Arrival DateTime</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+date1+' '+'&nbsp;&nbsp;</font></td></tr><tr><td><font size=1 color=#000000>Departure DateTime</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+date2+' '+'&nbsp;&nbsp;</font></td></tr><tr><td><font size=1 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=red size=1>'+place+'</font></td></tr><tr><td colspan=3><font color=blue size=1>( '+point.lat()+', '+point.lng()+' )</font></td></tr></table></div>';
+                    }
+                    else
+                    {
+                        var myHtml = '<div id="tab1" class="bubble" align=left><table cellpadding=0 cellspacing=0 class="text" ><tr><td><font size=1 color=#000000>Vehicle</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=1 color=#000000>Datetime1</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+date1+' '+'&nbsp;&nbsp;</font></td></tr><tr><td><font size=1 color=#000000>DateTime2</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+date2+' '+'&nbsp;&nbsp;</font></td></tr><tr><td><font size=1 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=red size=1>'+place+'</font></td></tr><tr><td colspan=3><font color=blue size=1>( '+point.lat()+', '+point.lng()+' )</font></td></tr></table></div>';
+                    }
+                }
+                else
+                {
+                    var myHtml = '<div id="tab1" class="bubble" align=left><table cellpadding=0 cellspacing=0 class="text" ><tr><td><font size=1 color=#000000>Vehicle</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=1>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=1 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=red size=1>'+place+'</font></td></tr><tr><td colspan=3><font color=blue size=1>( '+point.lat()+', '+point.lng()+' )</font></td></tr></table></div>';
+                }
 		//var tab1 = new GInfoWindowTab("Info", '<div id="tab1" class="bubble" align=left><table cellpadding=0 cellspacing=0><tr><td><font size=2 color=#000000>Vehicle</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>DateTime</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+datetime+' '+'&nbsp;&nbsp;</font></td></tr> <tr><td><font size=2 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+place+'</font></td></tr><tr><td colspan=3><font color=blue size=2>( '+point.y+', '+point.x+' )</font></td></tr></table></div>');
 
 		//var html = new GInfoWindowTab("Info", '<div id="tab1" class="bubble">Click the "Location" tab to see the minimap</div>');

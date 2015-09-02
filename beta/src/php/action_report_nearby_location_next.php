@@ -15,7 +15,7 @@ $vsize = sizeof($imei);
 //echo "vSize=".$vsize."<br>";
 ?>
 <html>
-	<title> Halt Report </title>
+	<title> Near By Report </title>
 	 <head> 
 		<script type="text/javascript" src="../js/calculate_distance.js"></script>
 		<link rel="stylesheet" type="text/css" href="gm_minimap_in_infowindow_files/mapStyle.css">	
