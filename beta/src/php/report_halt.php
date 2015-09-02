@@ -32,8 +32,8 @@
   	</table>
 
 			<form  method="post" name="thisform" action="src/php/action_report_halt.php" target="_blank">	
-			<input type="hidden" name="vehicleserial_prev">
-			<input type="hidden" name="geo_id">
+			<input type="hidden" name="vehicleserial_prev" id="vehicleserial_prev" >
+			<input type="hidden" name="geo_id" id="geo_id">
 			<br>
 	<fieldset class="report_fieldset">';
 	

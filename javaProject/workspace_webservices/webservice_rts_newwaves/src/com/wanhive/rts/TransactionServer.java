@@ -672,7 +672,7 @@ public class TransactionServer implements Runnable {
         int x=0,y=0;
         boolean create_flag = false;
         //vehicle_imei = "TN45AT5155";
-        //System.out.println("SizevehicleNoArr="+vehicleNoArr.size());
+        System.out.println("SizevehicleNoArr="+vehicleNoArr.size());
 		if (!(vehicleNoArr.isEmpty()))
 		{
 			try{
