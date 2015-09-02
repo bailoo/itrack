@@ -1404,29 +1404,18 @@ function action_report_version(obj)
 }
 
 function action_report_nearby_location(obj)
-  {
-  //alert("in function");
-    // GET SELECTED VEHICLES 
-    //alert("one="+document.getElementById("loading_msg").style.display);
-    document.getElementById("loading_msg").style.display = '';  
+{
+    //alert("obj="+obj);
+    document.getElementById("reportPrevPage").innerHTML='';
     //alert("two="+document.getElementById("loading_msg").style.display);   
-	var rec = obj.vehicleserial;
-    var device_str = radio_selection(rec);    
-    
-  	if(device_str==false)
-  	{
-  		document.getElementById("loading_msg").style.display='none';
-  	}
-	  //alert("device_str="+device_str);
-	
-   if(device_str!=false)
-	{
-    var poststr = "vehicleSerial=" + encodeURI( device_str )+				
-				"&selectedAccountId="+document.getElementById("selected_accountid").value;                
-	  //alert("Rizwan:"+poststr);  
-	}                   
-    makePOSTRequest('src/php/action_report_nearby_location.htm', poststr);
-  }   
+    var rec = obj.vehicleserial;
+    var device_str = radio_selection(rec); 
+    //alert("update");
+    if(device_str!=false)
+    {       
+        document.thisform.submit();
+    }
+}  
   
   function action_report_klp_input(filename,title)
 	{
