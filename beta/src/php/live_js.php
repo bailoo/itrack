@@ -543,7 +543,7 @@ function filter_live_vehicle(obj,jsActionNo)
 		  document.forms[0].autoref_combo.value = 120;
 		} 
 	}      
-	if(s1.length>50)
+	if(s1.length>100)
 	{
 		alert("Please select maximum 50 Vehicles at a time");
 		return false;
