@@ -1,6 +1,11 @@
 <?php
 echo "DB";
-    $DBASE = "iespl_vts_beta";
+	if($DB_test){
+		$DBASE = "itrack_test";
+	}else {
+	    	$DBASE = "iespl_vts_beta";
+	}
+
     if ($DEBUG_OFFLINE) {
         $USER = "root";
         $HOST = "localhost";
