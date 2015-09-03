@@ -236,8 +236,8 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         
         //$device_all_date_time = array();    //ALL DEVICE TIME
         
-        if($last_processed_time[$imei]!="") {
-            $date1 = $last_processed_time[$imei];
+        if($last_processed_time[$IMEI[$i]]!="") {
+            $date1 = $last_processed_time[$IMEI[$i]];
         } 
       
         echo "\nVehicle=" . $i . "::" . $Vehicle[$i];        
