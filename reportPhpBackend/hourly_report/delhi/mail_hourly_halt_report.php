@@ -149,7 +149,7 @@ $cdatetime2 = strtotime(date('H:i:s'));
 $difftime = $cdatetime2 - $cdatetime1;
 //$difftime = 7200;     //EVENING COMMENT IT LATER
 //$difftime = 36000;    //MORNING
-//$difftime = 75600 //9 PM
+//$difftime = 75600; //9 PM
 echo "\nDiff=".$difftime;
 
 if ($MAIN_DEBUG) {

@@ -164,7 +164,7 @@ if ($MAIN_DEBUG) {
     $shift_ev1 = true;
     $shift_ev2 = false;
     $shift_mor = false;
-    $current_time = $date . " 12:00:00";
+    $current_time = $date . " 13:00:00";
     $shift_ev_date1_focal = $pdate . " 12:00:00";
 } else {
 //    $date = date('Y-m-d');

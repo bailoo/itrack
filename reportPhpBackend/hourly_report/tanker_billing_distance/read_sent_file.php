@@ -45,8 +45,13 @@ function read_sent_file($read_excel_path)
                 $UniqueVehicle[$vehicle_tmp] = $vehicle_tmp;
                 $VehicleNo[] = $vehicle_tmp;
                                
+                //$tmp_val="A".$row;
+                //$TripDate[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'YYYY-mm-dd');					
                 $tmp_val="A".$row;
-                $TripDate[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'YYYY-mm-dd');					
+                $TripDateTmp = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
+		$TripDateTmp1 = explode('.',$TripDateTmp);
+		$TripDate[] = $TripDateTmp1[2]."-".$TripDateTmp1[1]."-".$TripDateTmp1[0]; 
+
 
                 $tmp_val="B".$row;
                 $DCSM_NAME[] = $objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getValue();
@@ -58,7 +63,7 @@ function read_sent_file($read_excel_path)
                 $ActivityTimeForWeightOut[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
                 
                 $tmp_val="F".$row;
-                $ActivityTimeForWeightOut[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
+                $ActivityTimeForWeightIn[] = PHPExcel_Style_NumberFormat::toFormattedString($objPHPExcel_1->getActiveSheet(0)->getCell($tmp_val)->getCalculatedValue(), 'hh:mm:ss');					
                 
                 break;
             }						
