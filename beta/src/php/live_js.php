@@ -545,7 +545,7 @@ function filter_live_vehicle(obj,jsActionNo)
 	}      
 	if(s1.length>100)
 	{
-		alert("Please select maximum 50 Vehicles at a time");
+		alert("Please select maximum 100 Vehicles at a time");
 		return false;
 	} 
 
