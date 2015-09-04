@@ -67,7 +67,10 @@ for($i=0;$i<$vsize;$i++)
     $vehicle_info=get_vehicle_info($root,$vserial[$i]);
     $vehicle_detail_local=explode(",",$vehicle_info);
     $io_type_value[]=$vehicle_detail_local[7];    
-
+    
+    $vname_str = $vname_str.$vehicle_detail_local[0].":";
+    $vnumber_str = $vnumber_str.$vehicle_detail_local[8].":";
+   
     $LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
     $LastDataObject =null;
     $LastDataObject=new lastDataObj();		
@@ -82,7 +85,8 @@ for($i=0;$i<$vsize;$i++)
     }	
 }
 		
-	
+$vname1=substr($vname_str,0,-1); /////////for last position text report
+$vnumber1=substr($vnumber_str,0,-1); /////////for last position text report		
 
 	if($home_report_type=="map_report")
 	{
