@@ -63,7 +63,8 @@
     $endDateTS=strtotime($date2);
     $userInterval = "0";
     $requiredData="All";
-
+    
+    $parameterizeData=null;
     $parameterizeData=new parameterizeData();
     $ioFoundFlag=0;
 
@@ -90,6 +91,7 @@
         $distance_incriment =0.0;
         $firstdata_flag =0;
         $start_point_display =0;
+        $max_speed=0;
         $j=0;
         $haltFlag=True;
         $distance_travel=0;
@@ -172,16 +174,18 @@
                             //echo "3 tmp_speed=".$tmp_speed." tmp_speed1=".$tmp_speed1."<br>";       
                             if(( strtotime($datetime) - strtotime($speeed_data_valid_time) )>300) //data high speed for 5 mins
                             {
-                                    $lat_S = $lat_E;
-                                    $lng_S = $lng_E;
-                                    $last_time = $datetime;
+                                $lat_S = $lat_E;
+                                $lng_S = $lng_E;
+                                $last_time = $datetime;
                             }
 
                             $last_time1 = $datetime;
                             $latlast = $lat_E;
                             $lnglast =  $lng_E;
                             //echo"maxspeed=".$max_speed."speed=".$speed."<br>";
-                            if(($max_speed<$speed) && ($speed<200))
+                            //echo "haltFlag=".$haltFlag."<br>";
+                            
+                            if(($max_speed<$speed) && ($speed<200) && ($haltFlag=='' || $haltFlag==false))
                             {
                                 $max_speed = $speed;
                             }
@@ -235,6 +239,7 @@
                         }
                     }
                 }
+                //echo "haltFlag=".$haltFlag."<br>";
                 if($haltFlag==False)
                 {
                     $datetime_travel_end = $datetime_S;
@@ -253,11 +258,12 @@
                 }
                 $daily_dist = round($daily_dist,2);
 
-               // echo "dailyAvgSpeed=".$daily_avg_speed." max_speed=".$max_speed."<br>";
+               //echo "dailyAvgSpeed=".$daily_avg_speed." max_speed=".$max_speed."<br>";
 
                 if($daily_avg_speed>$max_speed)
                 {
                     $daily_max_speed = $daily_avg_speed;
+                    //echo"daily_avg_speed=".$daily_avg_speed."<br>"; 
                 }
                 else
                 {
@@ -269,6 +275,8 @@
                     $daily_max_speed=0;
                     $daily_avg_speed=0;
                 }
+                
+                //echo "daily_avg_speed=".$daily_avg_speed." daily_max_speed=".$daily_max_speed."<br>";
                 $imei[]=$vserial;
                 $vname[]=$vehicle_detail_local[0];
                 $mdate[]=$date;
@@ -286,9 +294,11 @@
         }    	
     }
     $o_cassandra->close();
-    $parameterizeData=null;
+  
     
    $m1=date('M',mktime(0,0,0,$month,1));
+   
+   //print_r($maxSpeedDisplayArr);
 if($breakflag==1)
  echo "<br><center><font color=red>Data too large please select less duration/days/vehicle</font></center><br>";
 
@@ -342,7 +352,7 @@ echo'<center>
 			echo '<td class="text" align="left"><b>'.$maxSpeedDisplayArr[$i].'</b></td> ';
 		}
 		$sno++;      		
-   }  
+        }  
    echo"</div>
   </table>";  
    echo'<br>';   
