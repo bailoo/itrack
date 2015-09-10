@@ -4,11 +4,11 @@
 		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_OVERWRITE_EXISTING_RESOURCES_ID"/>
 		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_CREATE_CONTAINER_STRUCTURE_ID"/>
 		<list key="WizardFileSystemResourceImportPage1.STORE_SOURCE_NAMES_ID">
+			<item value="D:\itrack\javaProject\workspace_webservices\webservice_crts_arya_omnitalk_test"/>
 			<item value="D:\itrack\javaProject\workspace_portListener\crts_8001_v2"/>
 			<item value="D:\itrack\javaProject\workspace_webservices\webservice_rts_arya_omnitalk"/>
 			<item value="D:\itrack\javaProject\workspace_webservices\webservice_rts_sqs"/>
 			<item value="D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_webservices\webservice_rts_newwaves"/>
-			<item value="D:\ECLIPSE_PROJECTS\itrack\javaProject\workspace_webservices\webservice_rts_sqs"/>
 		</list>
 	</section>
 	<section name="WorkbenchPreferenceDialogSettings">
@@ -16,7 +16,7 @@
 		<item value="-12" key="DIALOG_X_ORIGIN"/>
 	</section>
 	<section name="NewWizardAction">
-		<item value="org.eclipse.jst.ws.internal.consumption.ui.wizard.client.clientwizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<item value="org.eclipse.jdt.ui.wizards.JavaProjectWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
 		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
 			<item value="org.eclipse.jdt.ui.java"/>
 			<item value="org.eclipse.wst.web.ui"/>
@@ -27,7 +27,7 @@
 		<item value="false" key="EditorSelectionDialog.STORE_ID_INTERNAL_EXTERNAL"/>
 	</section>
 	<section name="ImportExportAction">
-		<item value="org.eclipse.ui.wizards.import.ExternalProject" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
+		<item value="org.eclipse.ui.wizards.import.FileSystem" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
 		<item value="org.eclipse.jdt.internal.ui.fatjarpackager.JarPackageWizard" key="ImportExportPage.STORE_SELECTED_EXPORT_WIZARD_ID"/>
 		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
 			<item value="org.eclipse.ui.Basic"/>
