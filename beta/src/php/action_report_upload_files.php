@@ -30,7 +30,7 @@ $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]; /// server Path
 $filePathToS3Wrapper=$pathToRoot."/s3/S3Wrapper.php";
 include_once($filePathToS3Wrapper);
-if($account_id=="322" || $account_id=="1100" || $account_id=="1115" || $account_id=="1568")
+if($account_id=="322" || $account_id=="1100" || $account_id=="1115" || $account_id=="1568" || $account_id=="1882")
 {
     //echo "in if";
     include_once('station_sort_mumbai.php');
@@ -318,7 +318,7 @@ echo'<table border="0" align="center">
 					</tr>
 				</table>';
 				chmod($final_dest_file, 0777);
-				if((($upload_type=="master" && $format_ids_cnd=="#4") || ($upload_type=="master" && $format_ids_cnd=="#9")) && ($account_id=='231' || $account_id=='322' || $account_id=='723' || $account_id=='568' || $account_id=='2' || $account_id=='1100'  || $account_id=='1115'  || $account_id=='718' || $account_id=="232") || $account_id=="1568")
+				if((($upload_type=="master" && $format_ids_cnd=="#4") || ($upload_type=="master" && $format_ids_cnd=="#9")) && ($account_id=='231' || $account_id=='322' || $account_id=='723' || $account_id=='568' || $account_id=='2' || $account_id=='1100'  || $account_id=='1115'  || $account_id=='718' || $account_id=="232") || $account_id=="1568" || $account_id=="1882")
 				{
                                     //echo "in if <br>";
 					if($account_id=='568')
@@ -331,7 +331,7 @@ echo'<table border="0" align="center">
 					}
 					get_master_detail($account_id, $shift_time); 
 				}
-				if((($upload_type=="master" && $format_ids_cnd=="#5") || ($upload_type=="master" && $format_ids_cnd=="#10")) && ($account_id=='231' || $account_id=='322' || $account_id=='723' || $account_id=='568' || $account_id=='2' || $account_id=='1100' || $account_id=='1115'  || $account_id=='718' || $account_id=="232" || $account_id=="1568"))
+				if((($upload_type=="master" && $format_ids_cnd=="#5") || ($upload_type=="master" && $format_ids_cnd=="#10")) && ($account_id=='231' || $account_id=='322' || $account_id=='723' || $account_id=='568' || $account_id=='2' || $account_id=='1100' || $account_id=='1115'  || $account_id=='718' || $account_id=="232" || $account_id=="1568" || $account_id=="1882"))
 				{
 					//echo "in if 1 <br>";
                                         if($account_id=='568')

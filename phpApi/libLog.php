@@ -40,6 +40,7 @@ function printHTML($st_results)
 
 /***
 * Returns last seen data before given datetime from full data log
+* 		Checks latitude longitude are not blank 
 * 
 * @param object $o_cassandra	Cassandra object 
 * @param string $imei		IMEI
@@ -76,18 +77,27 @@ function getLastSeenDateTime($o_cassandra,$imei,$datetime)
 			  LIMIT 1
 			  ;";
 		$st_results = $o_cassandra->query($s_cql);
-		if (!empty($st_results))
+		if (hasLatLong($st_results))
 			break;
 	}
 
-	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
-	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
-	$st_obj = logParser($st_results, $dataType, $orderAsc);
+	if (hasLatLong($st_results))
+	{
+		$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
+		$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
+		$st_obj = logParser($st_results, $dataType, $orderAsc);
+	}
+	else
+	{
+		$st_obj = new stdClass();			
+	}
+
 	return $st_obj;
 }
 
 /***
-* Returns last seen data between given date times
+* Returns last seen data between given date times. 
+* 		Checks latitude longitude are not blank 
 * 
 * @param object $o_cassandra	Cassandra object 
 * @param string $imei		IMEI
@@ -126,17 +136,60 @@ function getLastSeenDateTimes($o_cassandra, $imei, $datetime1, $datetime2)
 			  LIMIT 1
 			  ;";
 		$st_results = $o_cassandra->query($s_cql);
-		if (!empty($st_results))
+		if (hasLatLong($st_results))
 			break;
 		
 		$date->sub($interval);	/* subtract 1 day */
 	}
 
-	$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
-	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
-	$st_obj = logParser($st_results, $dataType, $orderAsc);
+	if (hasLatLong($st_results))
+	{
+		$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
+		$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
+		$st_obj = logParser($st_results, $dataType, $orderAsc);
+	}
+	else
+	{
+		$st_obj = new stdClass();			
+	}
+
 	return $st_obj;
 }
+
+/***
+* Returns TRUE if result array has latitude and longitude, FALSE otherwise
+*
+* @param array $st_results 	Result array
+*
+* @return Boolean
+*/
+function hasLatLong($st_results)
+{
+	if (!empty($st_results))
+	{
+		$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
+		$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
+		$st_obj = logParser($st_results, $dataType, $orderAsc);
+	
+		/* check if either lat or long is missing, return empty object */	
+		$num = 0;	// returns just one row
+		$lat = $st_obj->$num->d;
+		$long = $st_obj->$num->e;
+		if ("" == $lat || "" == $long)
+		{
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+	else
+	{
+		return FALSE;	
+	}
+}
+
 
 /***
 * Returns last seen data from last data table lastlog

@@ -1,92 +1,92 @@
 <?php
 //error_reporting(-1);
-  //ini_set('display_errors', 'On');
-	//set_time_limit(3000);
-	set_time_limit(300);
-	date_default_timezone_set("Asia/Kolkata");
-	include_once("main_vehicle_information_1.php");
-	include_once('Hierarchy.php');
-	include_once('util_session_variable.php');
-	include_once('util_php_mysql_connectivity.php');
-	include_once('user_type_setting.php');
-	include_once('xmlParameters.php');
-	include_once('parameterizeData.php');
-	include_once('lastDataObj.php');
-	include_once('lastRecordData.php');
-	include_once("getXmlData.php");	
-	include_once('googleMapApi.php');
+//ini_set('display_errors', 'On');
+//set_time_limit(3000);
+set_time_limit(300);
+date_default_timezone_set("Asia/Kolkata");
+include_once("main_vehicle_information_1.php");
+include_once('Hierarchy.php');
+include_once('util_session_variable.php');
+include_once('util_php_mysql_connectivity.php');
+include_once('user_type_setting.php');
+include_once('xmlParameters.php');
+include_once('parameterizeData.php');
+include_once('lastDataObj.php');
+include_once('lastRecordData.php');
+include_once("getXmlData.php");	
+include_once('googleMapApi.php');
 	
-	$flag_play = $_REQUEST['flag_play'];
-	$play_interval = $_REQUEST['play_interval']; 
-	 
-	$vserial1 = $_REQUEST['vserial'];
-	$vserial = explode(',',$vserial1) ;
-	$vsize=sizeof($vserial);
-	$date1 = $_REQUEST['startdate'];
-	$date2 = $_REQUEST['enddate'];
-	$date1 = str_replace("/","-",$date1);
-	$date2 = str_replace("/","-",$date2);
-	$date_1 = explode(" ",$date1);
-	$date_2 = explode(" ",$date2);
-	$datefrom = $date_1[0];
-	$dateto = $date_2[0];
-	$userInterval = "0";
-	$sortBy="h";
-	$firstDataFlag=0;
-	$requiredData="All";
-	$endDateTS=strtotime($date2);
+$flag_play = $_REQUEST['flag_play'];
+$play_interval = $_REQUEST['play_interval']; 
 
-	$parameterizeData=new parameterizeData();
-	
-	$parameterizeData->messageType='a';
-	$parameterizeData->version='b';
-	$parameterizeData->fix='c';
-	$parameterizeData->latitude='d';
-	$parameterizeData->longitude='e';
-	$parameterizeData->speed='f';	
-	$parameterizeData->io1='i';
-	$parameterizeData->io2='j';
-	$parameterizeData->io3='k';
-	$parameterizeData->io4='l';
-	$parameterizeData->io5='m';
-	$parameterizeData->io6='n';
-	$parameterizeData->io7='o';
-	$parameterizeData->io8='p';	
-	$parameterizeData->sigStr='q';
-	$parameterizeData->supVoltage='r';
-	$parameterizeData->dayMaxSpeed='s';
-	$parameterizeData->dayMaxSpeedTime='t';
-	$parameterizeData->lastHaltTime='u';
-	$parameterizeData->cellName='ab';	
-	$linetmp="";
-        $vname_str ="";
-        $vnumber_str ="";
-	for($i=0;$i<$vsize;$i++)
-	{
-		$vehicle_info=get_vehicle_info($root,$vserial[$i]);
-		$vehicle_detail_local=explode(",",$vehicle_info);
-		$io_type_value[]=$vehicle_detail_local[7];
-                $vname_str = $vname_str.$vehicle_detail_local[0].":";
-                $vnumber_str = $vnumber_str.$vehicle_detail_local[8].":";
-			
-		$LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
-		$LastDataObject =null;
-                $LastDataObject=new lastDataObj();		
-		$type="unSorted";
-		//var_dump($LastDataObject);
-		getLastPositionXMl($vserial[$i],$date1,$date2,$datefrom,$dateto,$sortBy,$type,$parameterizeData,$LastDataObject);
-		//var_dump($LastDataObject);
-		if ($LastDataObject->messageTypeLD[0]!="" && $LastDataObject->deviceDatetimeLD[0]!="")
-		{
-                    //var_dump($LastRecordObject);
-                    $linetmp=$linetmp.'<x a="'.$LastDataObject->messageTypeLD[0].'" b="'.$LastDataObject->versionLD[0].'" c="'.$LastDataObject->fixLD[0].'" d="'.$LastDataObject->latitudeLD[0].'" e="'.$LastDataObject->longitudeLD[0].'" f="'.$LastDataObject->speedLD[0].'" g="'.$LastDataObject->serverDatetimeLD[0].'" h="'.$LastDataObject->deviceDatetimeLD[0].'" i="'.$LastDataObject->io1LD[0].'" j="'.$LastDataObject->io2LD[0].'" k="'.$LastDataObject->io3LD[0].'" l="'.$LastDataObject->io4LD[0].'" m="'.$LastDataObject->io5LD[0].'" n="'.$LastDataObject->io6LD[0].'" o="'.$LastDataObject->io7LD[0].'" p="'.$LastDataObject->io8LD[0].'" q="'.$LastDataObject->sigStrLD[0].'" r="'.$LastDataObject->suplyVoltageLD[0].'" s="'.$LastDataObject->dayMaxSpeedLD[0].'" t="'.$LastDataObject->dayMaxSpeedTimeLD[0].'" u="'.$LastDataObject->lastHaltTimeLD[0].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'"/>#';
-		}
+$vserial1 = $_REQUEST['vserial'];
+$vserial = explode(',',$vserial1) ;
+$vsize=sizeof($vserial);
+$date1 = $_REQUEST['startdate'];
+$date2 = $_REQUEST['enddate'];
+$date1 = str_replace("/","-",$date1);
+$date2 = str_replace("/","-",$date2);
+$date_1 = explode(" ",$date1);
+$date_2 = explode(" ",$date2);
+$datefrom = $date_1[0];
+$dateto = $date_2[0];
+$userInterval = "0";
+$sortBy="h";
+$firstDataFlag=0;
+$requiredData="All";
+$endDateTS=strtotime($date2);
+
+$parameterizeData=null;
+$parameterizeData=new parameterizeData();
+
+$parameterizeData->messageType='a';
+$parameterizeData->version='b';
+$parameterizeData->fix='c';
+$parameterizeData->latitude='d';
+$parameterizeData->longitude='e';
+$parameterizeData->speed='f';	
+$parameterizeData->io1='i';
+$parameterizeData->io2='j';
+$parameterizeData->io3='k';
+$parameterizeData->io4='l';
+$parameterizeData->io5='m';
+$parameterizeData->io6='n';
+$parameterizeData->io7='o';
+$parameterizeData->io8='p';	
+$parameterizeData->sigStr='q';
+$parameterizeData->supVoltage='r';
+$parameterizeData->dayMaxSpeed='s';
+$parameterizeData->dayMaxSpeedTime='t';
+$parameterizeData->lastHaltTime='u';
+$parameterizeData->cellName='ab';	
+$linetmp="";
+$vname_str ="";
+$vnumber_str ="";
+for($i=0;$i<$vsize;$i++)
+{
+    $vehicle_info=get_vehicle_info($root,$vserial[$i]);
+    $vehicle_detail_local=explode(",",$vehicle_info);
+    $io_type_value[]=$vehicle_detail_local[7];    
+    
+    $vname_str = $vname_str.$vehicle_detail_local[0].":";
+    $vnumber_str = $vnumber_str.$vehicle_detail_local[8].":";
+   
+    $LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
+    $LastDataObject =null;
+    $LastDataObject=new lastDataObj();		
+    $type="unSorted";
+    //var_dump($LastDataObject);
+    getLastPositionXMl($vserial[$i],$date1,$date2,$datefrom,$dateto,$sortBy,$type,$parameterizeData,$LastDataObject);
+    //var_dump($LastDataObject);
+    if ($LastDataObject->messageTypeLD[0]!="" && $LastDataObject->deviceDatetimeLD[0]!="")
+    {
+        //var_dump($LastRecordObject);
+        $linetmp=$linetmp.'<x a="'.$LastDataObject->messageTypeLD[0].'" b="'.$LastDataObject->versionLD[0].'" c="'.$LastDataObject->fixLD[0].'" d="'.$LastDataObject->latitudeLD[0].'" e="'.$LastDataObject->longitudeLD[0].'" f="'.$LastDataObject->speedLD[0].'" g="'.$LastDataObject->serverDatetimeLD[0].'" h="'.$LastDataObject->deviceDatetimeLD[0].'" i="'.$LastDataObject->io1LD[0].'" j="'.$LastDataObject->io2LD[0].'" k="'.$LastDataObject->io3LD[0].'" l="'.$LastDataObject->io4LD[0].'" m="'.$LastDataObject->io5LD[0].'" n="'.$LastDataObject->io6LD[0].'" o="'.$LastDataObject->io7LD[0].'" p="'.$LastDataObject->io8LD[0].'" q="'.$LastDataObject->sigStrLD[0].'" r="'.$LastDataObject->suplyVoltageLD[0].'" s="'.$LastDataObject->dayMaxSpeedLD[0].'" t="'.$LastDataObject->dayMaxSpeedTimeLD[0].'" u="'.$LastDataObject->lastHaltTimeLD[0].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" z="'.$vehicle_detail_local[8].'"/>#';
+    }	
+}
 		
-	}
-        $vname1=substr($vname_str,0,-1); /////////for last position text report
-        $vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
-	$parameterizeData=null;	
-	
+$vname1=substr($vname_str,0,-1); /////////for last position text report
+$vnumber1=substr($vnumber_str,0,-1); /////////for last position text report		
 
 	if($home_report_type=="map_report")
 	{
@@ -203,6 +203,11 @@
 					$vehilce_type_tmp1 = explode("=",$vehilce_type_tmp[0]);
 					$vehilce_type= preg_replace('/"/', '', $vehilce_type_tmp1[1]);
 					$vehilce_type_arr[]=$vehilce_type;
+                                        
+                                        preg_match('/z="[^"]+/', $lineF[$n], $dmobno_tmp);
+					$dmobno_tmp1 = explode("=",$dmobno_tmp[0]);
+					$dmobno = preg_replace('/"/', '', $dmobno_tmp1[1]);
+					$dMobileNoArr[]=$dmobno;
 
 					$io_str="";
 					if($io_type_value[$n]!="tmp_str")
@@ -357,9 +362,9 @@
 				}
 				//print_r($lat_arr_last);
 				//print_r($lng_arr_last);
-				//print_r($io_str_last);
+				//print_r($vehilce_type_arr);
 				$googleMapthisapi=new GoogleMapHelper();
-				echo $googleMapthisapi->addMultipleMarkerLast("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$io_str_last,$vehilce_type_arr,$day_max_speed_arr_last,$last_halt_time_arr_last);
+				echo $googleMapthisapi->addMultipleMarkerLast("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$io_str_last,$vehilce_type_arr,$day_max_speed_arr_last,$last_halt_time_arr_last,$dMobileNoArr);
 			
 		}
 		else
@@ -399,17 +404,20 @@
 					$vehicle_name = preg_replace('/"/', '', $vname_tmp1[1]);
 					$vehiclename_arr_last[]=$vehicle_name;
 					
-					preg_match('/x="[^"]+/', $lineF[$n], $vnumber_tmp);
+					/*preg_match('/z="[^"]+/', $lineF[$n], $vnumber_tmp);
 					$vnumber_tmp1 = explode("=",$vnumber_tmp[0]);
 					$vnumber = preg_replace('/"/', '', $vnumber_tmp1[1]);
-					$vnumber_arr_last[]=$vnumber;
-					//echo "vehicle_name=".$vehicle_name."<br>";						
-				}
-				//print_r($lat_arr_last);
-				//print_r($lng_arr_last);
-				//print_r($io_str_last);
+					$vnumber_arr_last[]=$vnumber;*/
+					//echo "vehicle_name=".$vehicle_name."<br>";
+                                        
+                                        preg_match('/z="[^"]+/', $lineF[$n], $dmobno_tmp);
+					$dmobno_tmp1 = explode("=",$dmobno_tmp[0]);
+					$dmobno = preg_replace('/"/', '', $dmobno_tmp1[1]);
+					$dMobileNoArr[]=$dmobno;
+					//echo "vehicle_name=".$vehicle_name."<br>";
+				}				
 				$googleMapthisapi=new GoogleMapHelper();							
-				echo $googleMapthisapi->addPersonMultipleMarkerLast("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$vnumber_arr_last);
+				echo $googleMapthisapi->addPersonMultipleMarkerLast("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$dMobileNoArr);
 		}
 	}
 	else
@@ -444,6 +452,11 @@
 				preg_match('/x="[^"]+/', $lineF[$n], $vnumber_tmp);
 				$vnumber_tmp1 = explode("=",$vnumber_tmp[0]);
 				$vehiclenumber[] = preg_replace('/"/', '', $vnumber_tmp1[1]);
+                                
+                                preg_match('/z="[^"]+/', $lineF[$n], $dmobno_tmp);
+                                $dmobno_tmp1 = explode("=",$dmobno_tmp[0]);
+                                $dmobno = preg_replace('/"/', '', $dmobno_tmp1[1]);
+                                $dMobileNoArr[]=$dmobno;
 		
 
 				preg_match('/f="[^"]+/', $lineF[$n], $speed_tmp);
@@ -526,10 +539,15 @@
 				$vehiclename[] = preg_replace('/"/', '', $vname_tmp1[1]);
 			
 
-				preg_match('/x="[^"]+/', $lineF[$n], $vnumber_tmp);
+				/*preg_match('/x="[^"]+/', $lineF[$n], $vnumber_tmp);
 				$vnumber_tmp1 = explode("=",$vnumber_tmp[0]);
-				$vehiclenumber[] = preg_replace('/"/', '', $vnumber_tmp1[1]);
-		
+				$vehiclenumber[] = preg_replace('/"/', '', $vnumber_tmp1[1]);*/
+                                
+                                preg_match('/z="[^"]+/', $lineF[$n], $dmobno_tmp);
+                                $dmobno_tmp1 = explode("=",$dmobno_tmp[0]);
+                                $dmobno = preg_replace('/"/', '', $dmobno_tmp1[1]);
+                                $vehiclenumber[]=$dmobno;
+                                
 
 				preg_match('/f="[^"]+/', $lineF[$n], $speed_tmp);
 				$speed_tmp1 = explode("=",$speed_tmp[0]);

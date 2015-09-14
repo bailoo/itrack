@@ -121,7 +121,7 @@ function copyFile($S3Filename, $LocalPath, $overwrite)
 
 function copyDir($S3DirPath, $LocalPath, $overwrite) 
 {
-    echo "\nInCopyDir";
+    //echo "\nInCopyDir";
     $uploadFile = $LocalFilePath; // File to upload, we'll use the S3 class since it exists
     $bucketName = 'itrackreport'; // this is your bucket
     $s3 = new S3(awsAccessKey, awsSecretKey);
@@ -333,25 +333,6 @@ function listBucket()
     }*/
 }
 
-if($account_id=="322" || $account_id=="1100" || $account_id=="1115" || $account_id=="1568")
-{
-    include_once('station_sort_mumbai.php');
-}
-else if($account_id=="231" || $account_id=="232")
-{	
-    //include_once('station_sort.php');
-    include_once('station_sort_delhi.php');
-}
-else if($account_id=="568")
-{	
-    //include_once('station_sort.php');
-    //echo "<br>Tanker";
-    include_once('station_sort_tanker.php');
-}
-else if($account_id=="718")
-{
-    include_once("station_sort_pdu.php");
-}
 //$S3Dirname="gps_report/568/master";
 //$delStatus=delDir($S3Filename);
 //echo "delStatus=".$delStatus."<br>";

@@ -2066,7 +2066,7 @@ $contents=listDir($S3Path);
 														"</tr>"+
 														"<tr>"+
 															"<td>'.$nbsp.'"+
-																"<a href=javascript:'.$js_function_name.'(\'src/php/report_nearby.htm\',\'Speed%20Report\'); class=\'menuitem\'>"+
+																"<a href=javascript:'.$js_function_name.'(\'src/php/report_nearby.htm\',\'Near%20By%20Report\'); class=\'menuitem\'>"+
 																	"'.$nbsp.'<img src=\'images/report_icons/speed_detail.jpeg\' style=\'border:none;width:20px;height:20px;\' class=\'help_img_css\'>"+
 																"</a>"+
 															"</td>"+
@@ -2080,7 +2080,7 @@ $contents=listDir($S3Path);
 														"</tr>"+
 														"<tr>"+
 															"<td>"+ 	
-																"<a href=javascript:'.$js_function_name.'(\'src/php/report_nearby.htm\',\'Speed%20Report\'); class=\'menuitem\'>"+
+																"<a href=javascript:'.$js_function_name.'(\'src/php/report_nearby.htm\',\'Near%20By%20Report\'); class=\'menuitem\'>"+
 																	"'.$nbsp.'Near By Report"+
 																"</a>"+
 															"</td>"+
