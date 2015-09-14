@@ -13,6 +13,7 @@ $DEBUG_ONLINE = true;
 $CREATE_MASTER = false;
 $MAIN_DEBUG = true;
 $LOG = false;
+$DB_test = true;
 //#################
 
 $isReport = true;
@@ -147,17 +148,17 @@ $pdate = date('Y-m-d', strtotime($date .' -1 day'));
 $cdatetime1 = strtotime(date('00:00:00'));
 $cdatetime2 = strtotime(date('H:i:s'));
 $difftime = $cdatetime2 - $cdatetime1;
-//$difftime = 7200;     //EVENING COMMENT IT LATER
+$difftime = 74000;     //EVENING COMMENT IT LATER
 //$difftime = 36000;    //MORNING
-$difftime = 75600; 	//9 PM
+//$difftime = 75600; //9 PM
 echo "\nDiff=".$difftime;
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-08-27');
-    $date = date('2015-08-28');
+    $pdate = date('2015-09-08');
+    $date = date('2015-09-09');
     $shift_ev_date1 = $pdate . " 12:00:00";
     $shift_ev_date2 = $pdate . " 23:59:59";
-    //$shift_ev1 = true;
+    $shift_ev1 = false;
     $shift_ev2 = true;
     $shift_mor = false;
     $current_time = $date . " 12:00:00";
@@ -175,6 +176,7 @@ if ($MAIN_DEBUG) {
     $shift_ev2 = false;
     $shift_mor = false;
     $current_time = date('Y-m-d H:i:s');
+    //$current_time = date('Y-m-d')." 20:56:00";
     $cdate = $date;
     $shift_ev_date1_focal = $pdate . " 12:00:00";
 }
@@ -189,11 +191,11 @@ $shift_mor_date1 = $date . " 03:00:00";
 $shift_mor_date2 = $date." 19:00:00";
 //$shift_mor_date2 = $date . " 22:00:00";
 
-$ev_run_start_time1 = $date." 20:30:00";
+$ev_run_start_time1 = $date." 21:05:00";
 //$ev_run_start_time1 = $date . " 21:00:00";
 #$ev_run_start_time2 = $date." 22:00:00";
-$ev_run_start_time2 = $date . " 01:00:00";
-$mor_run_start_time = $date . " 10:00:00";
+$ev_run_start_time2 = $date . " 01:05:00";
+$mor_run_start_time = $date . " 10:05:00";
 //$mor_run_start_time = $date." 06:00:00";
 
 
@@ -460,18 +462,19 @@ if ($shift_mor) {
     echo "\nMOR";
     $route_type = "ALL";
     //######## READ EVENING SENT FILE #############		
-    if (file_exists($morning_last_processed_time_path)) {
+    if (file_exists($morning_last_halt_time_path)) {
         //echo "\nLast Processed";
-        read_last_processed_time("ZPMM",$route_type);
+        //read_last_processed_time("ZPMM",$route_type);
         //echo "\nBefore Read LastHaltTime";
         read_last_halt_time($morning_last_halt_time_path);
         //read_all_routes($account_id,"ZPMM");
-        $Last_Time = $last_time_processed;
-    } else {
+        //$Last_Time = $last_time_processed;
+    } 
+   //else {
         //echo "\nElse:UpdateLastTime";
         $Last_Time = $shift_mor_date1;
         //$Last_Time = "2013-10-07 19:00:00";
-    }
+   // }
 
     if (!file_exists($morning_sent_file_path)) {
         
@@ -505,6 +508,7 @@ if ($shift_mor) {
     //echo "\nAfter ReadSentFile2";
     $objPHPExcel_1 = null;
     read_sent_file($morning_sent_file_path);
+    read_last_processed_time("ZPMM",$route_type);
     //echo "\nAfter ReadSentFile2";
     $objPHPExcel_1 = null;
     read_secondary_vehicles($morning_sv_file_path);
@@ -711,19 +715,20 @@ if ($shift_ev1) {
     $route_type = "CASH";
     //######## READ EVENING SENT FILE #############		
     //echo "\nLastProcessedFile=".$evening_last_processed_time_path1;
-    if (file_exists($evening_last_processed_time_path1)) {
+    if (file_exists($evening_last_halt_time_path1)) {
         //echo "\nFile Exists";
-        read_last_processed_time("ZPME",$route_type);
+        //read_last_processed_time("ZPME",$route_type);
         //echo "\nLast ProcessedTime";
         read_last_halt_time($evening_last_halt_time_path1);
         //read_all_routes($account_id,"ZPME");
         //echo "\nLast HaltTime";
-        $Last_Time = $last_time_processed;
-    } else {
+        //$Last_Time = $last_time_processed;
+    } 
+    //else {
         //echo "\nFile DoesNot Exist";
         $Last_Time = $shift_ev_date1;
         //$Last_Time = "2013-10-07 15:00:00";
-    }
+    //}
 
     if (!file_exists($evening_sent_file_path1)) {
         
@@ -757,6 +762,8 @@ if ($shift_ev1) {
     $objPHPExcel_1 = null;
     //echo "\nEvFile1=".$evening_sent_file_path1;
     read_sent_file($evening_sent_file_path1);
+    read_last_processed_time("ZPME",$route_type);
+
     $objPHPExcel_1 = null;
     read_secondary_vehicles($evening_sv_file_path1);
     //echo "\nAfter ReadSentFile";
@@ -772,8 +779,8 @@ if ($shift_ev1) {
         //echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL ##############
-        $to = 'rizwan@iembsys.com';
-        //$to = 'gpsreporthourly@gmail.com';
+        //$to = 'rizwan@iembsys.com';
+        $to = 'gpsreporthourly@gmail.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -799,8 +806,8 @@ if ($shift_ev1) {
         $result = $mgClient->sendMessage($domain, array(
             'from' => 'Itrack <support@iembsys.co.in>',
             'to' => $to,
-            'cc'      => 'rizwan@iembsys.com',
-            //'cc' => 'hourlyreport4@gmail.com',
+            //'cc'      => 'rizwan@iembsys.com',
+            'cc' => 'hourlyreport4@gmail.com',
             //'cc'      => 'hourlyreport4@gmail.com',
             // 'bcc'     => 'astaseen83@gmail.com',
             'subject' => $subject,
@@ -950,20 +957,21 @@ if ($shift_ev2) {
     echo "\nEV-2 FOCAL ROUTE";
     $route_type = "FOCAL";
     //######## READ EVENING SENT FILE #############		
-    if (file_exists($evening_last_processed_time_path2)) {
-        read_last_processed_time("ZPME",$route_type);
+    if (file_exists($evening_last_halt_time_path2)) {
+        //read_last_processed_time("ZPME",$route_type);
         //echo "\nLast ProcessedTime";
         read_last_halt_time($evening_last_halt_time_path2);
         //read_all_routes($account_id,"ZPME");
         //echo "\nLast HaltTime";
-        $Last_Time = $last_time_processed;
+        //$Last_Time = $last_time_processed;
         //$Last_Time = $shift_ev_date1;		
-    } else {
+    } 
+    //else {
         //echo "\nElse";
         //$Last_Time = $shift_ev_date1;
         $Last_Time = $shift_ev_date1_focal;
         //$Last_Time = "2013-10-07 15:00:00";
-    }
+    //}
 
     if (!file_exists($evening_sent_file_path2)) {
         
@@ -1001,6 +1009,8 @@ if ($shift_ev2) {
 
     $objPHPExcel_1 = null;
     read_sent_file($evening_sent_file_path2);
+    read_last_processed_time("ZPME",$route_type);
+
     $objPHPExcel_1 = null;
     read_secondary_vehicles($evening_sv_file_path2);
     //echo "\nAfter ReadSentFile";
@@ -1015,8 +1025,8 @@ if ($shift_ev2) {
         //echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL ##############
-        //$to = 'rizwan@iembsys.com';		
-        $to = 'gpsreporthourly@gmail.com';
+        $to = 'rizwan@iembsys.com';		
+        //$to = 'gpsreporthourly@gmail.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -1042,8 +1052,8 @@ if ($shift_ev2) {
         $result = $mgClient->sendMessage($domain, array(
             'from' => 'Itrack <support@iembsys.co.in>',
             'to' => $to,
-            //'cc'      => 'taseen@iembsys.com',
-            'cc' => 'hourlyreport4@gmail.com',
+            'cc'      => 'rizwan@iembsys.com',
+            //'cc' => 'hourlyreport4@gmail.com',
             //'cc'      => 'hourlyreport4@gmail.com',
             // 'bcc'     => 'astaseen83@gmail.com',
             'subject' => $subject,

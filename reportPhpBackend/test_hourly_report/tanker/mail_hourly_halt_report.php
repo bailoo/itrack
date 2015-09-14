@@ -9,10 +9,11 @@ date_default_timezone_set("Asia/Kolkata");
 //### DEBUG BOOLEAN
 global $DEBUG_OFFLINE;
 $DEBUG_OFFLINE = false;
-$DEBUG_ONLINE = true;
-$CREATE_MASTER = true;
-$MAIN_DEBUG = true;
-$LOG = false;
+$DEBUG_ONLINE = false;
+$CREATE_MASTER = false;
+$MAIN_DEBUG = false;
+$DB_test = true;
+$LOG = true;
 //#################
 
 $isReport = true;
@@ -121,7 +122,7 @@ include_once("update_last_halt_time.php");
 include_once("update_last_processed_time.php");
 include_once("delete_file.php");
 
-$sent_root_path = $report_path . "/hourly_report/" . $user_name . "/sent_file";
+$sent_root_path = $report_path . "/test_hourly_report/" . $user_name . "/sent_file";
 echo "\nSent_RootPath=" . $sent_root_path;
 
 $evening_sent_file_path1 = $sent_root_path . "/V6_HOURLY_MAIL_VTS_HALT_REPORT_EVENING_MOTHER_TANKER_ROUTE.xlsx";
@@ -153,13 +154,13 @@ $cdatetime2 = strtotime(date('H:i:s'));
 $difftime = $cdatetime2 - $cdatetime1;
 //$difftime = 7200;     //EVENING COMMENT IT LATER
 //$difftime = 36000;    //MORNING
-$difftime = 75600;	 //9 PM
+//$difftime = 75600; //9 PM
 echo "\nDiff=".$difftime;
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-08-27');
-    $date = date('2015-08-28');
-    $shift_ev_date1 = $pdate . " 12:00:00";
+    $pdate = date('2015-09-01');
+    $date = date('2015-09-02');
+    $shift_ev_date1 = $date . " 00:00:00";
     $shift_ev_date2 = $pdate . " 23:59:59";
     $shift_ev1 = true;
     $shift_ev2 = false;
@@ -178,7 +179,8 @@ if ($MAIN_DEBUG) {
     $shift_ev1 = false;
     $shift_ev2 = false;
     $shift_mor = false;
-    $current_time = date('Y-m-d H:i:s');
+    //$current_time = date('Y-m-d H:i:s');
+    $current_time = date('Y-m-d').' 14:00:00';
     $cdate = $date;
     $shift_ev_date1_focal = $pdate . " 12:00:00";
 }
@@ -186,7 +188,7 @@ $unchanged = true;
 //######## MAKE TWO SHIFTS
 
 $shift_ev_date3 = $date . " 00:00:00";
-$shift_ev_date4 = $date . " 12:00:00"; //change it to 12:00:00
+$shift_ev_date4 = $date . " 13:50:00"; //change it to 12:00:00
 //$shift_ev_date4 = $date." 06:40:00";
 
 $shift_mor_date1 = $date . " 03:00:00";
@@ -217,12 +219,14 @@ if ($MAIN_DEBUG) {
     //$difftime = 10900;
     //###################
     //######## CHECK EVENING SHIFT1 ###########
-    if ((($current_time >= $shift_ev_date1) && ($current_time <= $shift_ev_date2) && ($current_time >= $ev_run_start_time1) ) || (($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4))) {
+echo "\nCurrentTime=".$current_time." ,ShiftEvDate1=".$shift_ev_date1." ,ShiftEvDate2=".$shift_ev_date2." ,EvRunStartTime1=".$ev_run_start_time1." ,ShiftEvDate3=".$shift_ev_date3." ,ShiftEveDate4=".$shift_ev_date4;
+    if (((strtotime($current_time) >= strtotime($shift_ev_date1)) && (strtotime($current_time) <= strtotime($shift_ev_date2)) && (strtotime($current_time) >= strtotime($ev_run_start_time1)) ) || ((strtotime($current_time) >= strtotime($shift_ev_date3)) && (strtotime($current_time) <= strtotime($shift_ev_date4)))) {
+
         $shift_ev1 = true;
-        echo "\nEv-Shift";
+        echo "\nEv-Shift\n";
     } else {
         //## DELETE EVENING FILE -IF SHIFT IS OVER
-        echo "\nDEL-EV:SHIFT1 FILES";
+        echo "\nDEL-EV:SHIFT1 FILES\n";
         $shift = "ev";
         if (file_exists($evening_sent_file_path1))
             delete_file($evening_sent_file_path1);
@@ -233,7 +237,7 @@ if ($MAIN_DEBUG) {
         if (file_exists($evening_sv_file_path1))
             delete_file($evening_sv_file_path1);
     }
-
+$shift_ev1 = false;
     //######## CHECK EVENING SHIFT2 ###########
     //if( ($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4) )
     //if( (($current_time >= $shift_ev_date1) && ($current_time <= $shift_ev_date2) && ($current_time >= $ev_run_start_time2) ) || (($current_time >= $shift_ev_date3) && ($current_time <= $shift_ev_date4)) )
@@ -525,8 +529,8 @@ if ($shift_mor) {
         //echo "\nAfter Last ProcessedDetail:Morning";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL :MORNING ##############
-        //$to = 'rizwan@iembsys.com';			
-        $to = 'hourlyreportbvm@gmail.com';
+        $to = 'rizwan@iembsys.com';			
+        //$to = 'hourlyreportbvm@gmail.com';
 
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
@@ -554,8 +558,8 @@ if ($shift_mor) {
         $result = $mgClient->sendMessage($domain, array(
             'from' => 'Itrack <support@iembsys.co.in>',
             'to' => $to,
-            //'cc'      => 'taseen@iembsys.com',
-            'cc' => 'hourlyreport4@gmail.com',
+            'cc'      => 'rizwan@iembsys.com',
+            //'cc' => 'hourlyreport4@gmail.com',
             //'cc'      => 'hourlyreport4@gmail.com',
             // 'bcc'     => 'astaseen83@gmail.com',
             'subject' => $subject,
@@ -778,8 +782,8 @@ if ($shift_ev1) {
         //echo "\nAfter Last ProcessedDetail:Evening";
         //#### LAST TIME PROCESSED CLOSED #############
         //############ SEND EMAIL ##############
-        //$to = 'rizwan@iembsys.com';
-        $to = 'hourlyreportbvm@gmail.com';
+        $to = 'rizwan@iembsys.com';
+        //$to = 'hourlyreportbvm@gmail.com';
         $time_1 = date('Y-m-d H:i:s');
         $time_2 = strtotime($time_1);
         $msg = "";
@@ -792,8 +796,8 @@ if ($shift_ev1) {
         $message = "AWS:V6:HOURLY_MAIL_VTS_HALT_REPORT_EVENING(MOTHER_TANKER_" . $msg . "_" . $time_1 . "_" . $time_2 . "<br><br><font color=red size=1>*** This is an automatically generated email by the system on specified time, please do not reply ***</font>";
         $random_hash = md5(date('r', time()));
         $headers = "From: support@iembsys.co.in\r\n";
-        //$headers .= "Cc: hourlyreport4@gmail.com";
-        $headers .= "Cc: rizwan@iembsys.com";	
+        $headers .= "Cc: hourlyreport4@gmail.com";
+        //$headers .= "Cc: rizwan@iembsys.com";	
         //pass:8090025844
         //$headers .= "Cc: rizwan@iembsys.com,jyoti.jaiswal@iembsys.com";
         $headers .= "\r\nContent-Type: multipart/mixed; boundary=\"PHP-mixed-" . $random_hash . "\"";
@@ -805,8 +809,8 @@ if ($shift_ev1) {
         $result = $mgClient->sendMessage($domain, array(
             'from' => 'Itrack <support@iembsys.co.in>',
             'to' => $to,
-            //'cc'      => 'rizwan@iembsys.com',
-            'cc' => 'hourlyreport4@gmail.com',
+            'cc'      => 'rizwan@iembsys.com',
+            //'cc' => 'hourlyreport4@gmail.com',
             //'cc'      => 'hourlyreport4@gmail.com',
             // 'bcc'     => 'astaseen83@gmail.com',
             'subject' => $subject,

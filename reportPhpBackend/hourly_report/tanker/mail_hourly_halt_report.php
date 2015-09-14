@@ -12,7 +12,8 @@ $DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
 $CREATE_MASTER = false;
 $MAIN_DEBUG = false;
-$LOG = true;
+$LOG = false;
+$DB_test = false;
 //#################
 
 $isReport = true;
@@ -157,9 +158,9 @@ $difftime = $cdatetime2 - $cdatetime1;
 echo "\nDiff=".$difftime;
 
 if ($MAIN_DEBUG) {
-    $pdate = date('2015-09-01');
-    $date = date('2015-09-02');
-    $shift_ev_date1 = $date . " 00:00:00";
+    $pdate = date('2015-09-02');
+    $date = date('2015-09-03');
+    $shift_ev_date1 = $pdate . " 12:00:00";
     $shift_ev_date2 = $pdate . " 23:59:59";
     $shift_ev1 = true;
     $shift_ev2 = false;
@@ -186,18 +187,18 @@ $unchanged = true;
 //######## MAKE TWO SHIFTS
 
 $shift_ev_date3 = $date . " 00:00:00";
-$shift_ev_date4 = $date . " 13:50:00"; //change it to 12:00:00
+$shift_ev_date4 = $date . " 12:00:00"; //change it to 12:00:00
 //$shift_ev_date4 = $date." 06:40:00";
 
 $shift_mor_date1 = $date . " 03:00:00";
 $shift_mor_date2 = $date." 19:00:00";
 //$shift_mor_date2 = $date . " 22:00:00";
 
-$ev_run_start_time1 = $date." 20:30:00";
+$ev_run_start_time1 = $date." 21:05:00";
 //$ev_run_start_time1 = $date . " 21:00:00";
 #$ev_run_start_time2 = $date." 22:00:00";
-$ev_run_start_time2 = $date . " 01:00:00";
-$mor_run_start_time = $date . " 10:00:00";
+$ev_run_start_time2 = $date . " 01:05:00";
+$mor_run_start_time = $date . " 10:05:00";
 //$mor_run_start_time = $date." 06:00:00";
 
 
@@ -465,18 +466,19 @@ if ($shift_mor) {
     echo "\nMOR";
     $route_type = "ALL";
     //######## READ EVENING SENT FILE #############		
-    if (file_exists($morning_last_processed_time_path)) {
+    if (file_exists($morning_last_halt_time_path)) {
         //echo "\nLast Processed";
-        read_last_processed_time("ZBVM",$route_type);
+        //read_last_processed_time("ZBVM",$route_type);
         //echo "\nBefore Read LastHaltTime";
         read_last_halt_time($morning_last_halt_time_path);
         //read_all_routes($account_id,"ZBVM");
-        $Last_Time = $last_time_processed;
-    } else {
+        //$Last_Time = $last_time_processed;
+    } 
+    //else {
         //echo "\nElse:UpdateLastTime";
         $Last_Time = $shift_mor_date1;
         //$Last_Time = "2013-10-07 19:00:00";
-    }
+    //}
 
     if (!file_exists($morning_sent_file_path)) {
         
@@ -510,6 +512,8 @@ if ($shift_mor) {
     //echo "\nAfter ReadSentFile2";
     $objPHPExcel_1 = null;
     read_sent_file($morning_sent_file_path);
+    read_last_processed_time("ZBVM",$route_type);
+
     //echo "\nAfter ReadSentFile2";
     $objPHPExcel_1 = null;
     read_secondary_vehicles($morning_sv_file_path);
@@ -717,19 +721,20 @@ if ($shift_ev1) {
     $route_type = "ALL";
     //######## READ EVENING SENT FILE #############		
     //echo "\nLastProcessedFile=".$evening_last_processed_time_path1;
-    if (file_exists($evening_last_processed_time_path1)) {
+    if (file_exists($evening_last_halt_time_path1)) {
         //echo "\nFile Exists";
-        read_last_processed_time("ZBVE",$route_type);
+        //read_last_processed_time("ZBVE",$route_type);
         //echo "\nLast ProcessedTime";
         read_last_halt_time($evening_last_halt_time_path1);
         //read_all_routes($account_id,"ZBVE");
         //echo "\nLast HaltTime";
-        $Last_Time = $last_time_processed;
-    } else {
+        //$Last_Time = $last_time_processed;
+    } 
+    //else {
         //echo "\nFile DoesNot Exist";
         $Last_Time = $shift_ev_date1;
         //$Last_Time = "2013-10-07 15:00:00";
-    }
+    //}
 
     if (!file_exists($evening_sent_file_path1)) {
         
@@ -763,6 +768,8 @@ if ($shift_ev1) {
     $objPHPExcel_1 = null;
     //echo "\nEvFile1=".$evening_sent_file_path1;
     read_sent_file($evening_sent_file_path1);
+    read_last_processed_time("ZBVE",$route_type);
+
     $objPHPExcel_1 = null;
     read_secondary_vehicles($evening_sv_file_path1);
     //echo "\nAfter ReadSentFile";

@@ -103,7 +103,7 @@ function get_route_db_detail($shift,$route_type)
                         $row++;
                         if($row>2)
                         {
-                            //if($data[0]=="DL1LM1328")
+                            if($data[0]=="DL1M5480")
                             {
                                 for ($c=0; $c < $num; $c++) {
                                     //echo "DataC=".$data[$c] . "<br />\n";

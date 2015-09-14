@@ -9,7 +9,7 @@ $lat_sel = array();
 $lng_sel = array();
 $speed_sel = array();
 
-function get_halt_xml_data($write_file_path) {    
+function get_distance_data($write_file_path) {    
     //###### OPEN CASSANDRA CONNECTION    
     $o_cassandra = openCassandraConnection();
     //##### DEBUG MSG
@@ -24,7 +24,7 @@ function get_halt_xml_data($write_file_path) {
     global $DEBUG_ONLINE;
     global $LOG;
     global $abspath;
-    echo "\nSD=" . $startdate . " ,ED=" . $enddate . " ,Time1=" . $time1_ev;
+    //echo "\nSD=" . $startdate . " ,ED=" . $enddate . " ,Time1=" . $time1_ev;
     global $VehicleIMEI;
     
     global $TripDate;
@@ -57,7 +57,7 @@ function get_halt_xml_data($write_file_path) {
 
     $row = 1;
     //###### HEADER
-    $col_tmp = 'A' . $row;
+    /*$col_tmp = 'A' . $row;
     $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, "Trip Date");
     $objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
     $col_tmp = 'B' . $row;
@@ -74,7 +74,7 @@ function get_halt_xml_data($write_file_path) {
     $objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
     $col_tmp = 'F' . $row;
     $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, "Activity Time For  Weight In");
-    $objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
+    $objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);*/
     $col_tmp = 'G' . $row;
     $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, "Distance");
     $objPHPExcel_1->getActiveSheet(0)->getStyle($col_tmp)->applyFromArray($header_font);
@@ -106,10 +106,17 @@ function get_halt_xml_data($write_file_path) {
     
     for ($i = 0; $i < sizeof($VehicleNo); $i++) {
         
-        echo "\nVehicle=" . $i . "::" . $Vehicle[$i];
-    
+        echo "\nVehicle=" . $i . "::" . $VehicleNo[$i];
+   
+ 
         $date1 = $TripDate[$i]." ".$ActivityTimeForWeightOut[$i];
         $date2 = $TripDate[$i]." ".$ActivityTimeForWeightIn[$i];
+
+
+	if(strtotime($date1) > strtotime($date2)) {
+		$nextdate = date('Y-m-d', strtotime($date1 .' +1 day'));
+		$date2 = $nextdate." ".$ActivityTimeForWeightIn[$i];
+	}
 
         $userInterval = 0;
         $sortBy = 'h';
@@ -127,7 +134,7 @@ function get_halt_xml_data($write_file_path) {
         $msg = "\nReadSno:" . $i . " ,imei=" . $VehicleIMEI[$VehicleNo[$i]] . " ,date1=" . $date1 . " ,date2=" . $date2;
         
         if($LOG) {$debug_msg.=$msg."\n";}
-        //echo $msg; 
+        echo $msg; 
                 
         $dataCnt = 0;
         $LastSortedDate = null;
@@ -321,7 +328,8 @@ function get_halt_xml_data($write_file_path) {
         }
         
         $total_dist = round($total_dist,2);
-        update_distance_status($objPHPExcel_1, $write_file_path, $TripDate[$i],$DCSM_NAME[$i],$Route[$i],$VehicleNo[$i],$ActivityTimeForWeightOut[$i],$ActivityTimeForWeightIn[$i], $total_dist, $k);
+	echo "\nTotalDistance=".$total_dist."\n";
+        update_distance_status($objPHPExcel_1, $write_file_path, $TripDate[$i],$DCSM_NAME[$i],$Route[$i],$VehicleNo[$i],$ActivityTimeForWeightOut[$i],$ActivityTimeForWeightIn[$i], $total_dist, $i);
     } //##### EXCEL VEHICLE LOOP CLOSED
     
     ######## CLOSE CASSANDRA CONNECTION	
@@ -340,7 +348,7 @@ function update_distance_status($objPHPExcel_1, $write_file_path, $TripDate,$DCS
 
     $row = $k + 2;
  
-    $col_tmp = 'A' . $row;
+    /*$col_tmp = 'A' . $row;
     $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $TripDate);
     
     $col_tmp = 'A' . $row;
@@ -356,9 +364,9 @@ function update_distance_status($objPHPExcel_1, $write_file_path, $TripDate,$DCS
     $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $ActivityTimeForWeightOut);
 
     $col_tmp = 'A' . $row;
-    $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $ActivityTimeForWeightIn);
+    $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $ActivityTimeForWeightIn);*/
 
-    $col_tmp = 'A' . $row;
+    $col_tmp = 'G' . $row;
     $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $Distance);
 }
 

@@ -236,8 +236,8 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         
         //$device_all_date_time = array();    //ALL DEVICE TIME
         
-        if($last_processed_time[$imei]!="") {
-            $date1 = $last_processed_time[$imei];
+        if($last_processed_time[$IMEI[$i]]!="") {
+            $date1 = $last_processed_time[$IMEI[$i]];
         } 
       
         echo "\nVehicle=" . $i . "::" . $Vehicle[$i];        
@@ -274,7 +274,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
               echo "ss2=".$sortObjTmp->speedData[1]."<br>";
               echo "<br><br>"; */
             $sortedSize = sizeof($SortedDataObject->deviceDatetime);
-            echo "\nSortedSize=".$sortedSize;
+            //echo "\nSortedSize=".$sortedSize;
             for ($obi = 0; $obi < $sortedSize; $obi++) {
                 /* $finalDateTimeArr[$IMEI[$i]][]=$SortedDataObject->deviceDatetime[$obi];
                   $finalLatitudeArr[$IMEI[$i]][]=$SortedDataObject->latitudeData[$obi];
@@ -448,7 +448,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         //exit(0);
         
         if (sizeof($xml_date_sel) > 0) {
-            echo "\nFile ExistFinal";
+            //echo "\nFile ExistFinal";
             $halt_once = false;
 
             $p_in = false;
@@ -1090,7 +1090,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     $objWriter->save($read_excel_path);
     echo date('H:i:s'), " File written to ", $read_excel_path, EOL;
 
-    echo "\nHALT CLCLOSED";
+    echo "\n!! Process-Completed !!";
 }
 
 //######## UPDATE VEHICLE
@@ -1257,6 +1257,7 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
           $time_delay = "-".$time1/60;
           } */
         $time_delay = $time1 / 60;
+	$time_delay = floor($time_delay);
     }
 
     /* if($schedule_in_time=="")
