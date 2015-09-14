@@ -238,12 +238,12 @@
                             $latlast = $lat_E;
                             $lnglast =  $lng_E;
                             //echo"maxspeed=".$max_speed."speed=".$speed."<br>";
-                            if(($max_speed<$speed) && ($speed<200) && (haltFlag==false) && ($outflag==1))
+                            if(($max_speed<$speed) && ($speed<200) && ($haltFlag==false) && ($outflag==1))
                             {
                                 $max_speed = $speed;
                             }
 							
-                            if(($max_speed<$speed) && ($speed<200) && (haltFlag==false) && ($outflag==0))
+                            if(($max_speed<$speed) && ($speed<200) && ($haltFlag==false) && ($outflag==0))
                             {
                                 $max_speed_in = $speed;
                             }
