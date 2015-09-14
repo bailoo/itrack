@@ -33,7 +33,7 @@
 					$distance_variable=$dt['distance_variable'];
 					$type=$dt['type'];				
 					
-					echo '<option value='.$station_id.'>'.$station_name.'</option>';
+					echo '<option value='.$station_id.'>'.$customer_no.'</option>';
 				}
 				?>
 				</select>
