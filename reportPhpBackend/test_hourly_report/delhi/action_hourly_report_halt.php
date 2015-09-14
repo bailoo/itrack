@@ -236,8 +236,8 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         
         //$device_all_date_time = array();    //ALL DEVICE TIME
         
-        if($last_processed_time[$imei]!="") {
-            $date1 = $last_processed_time[$imei];
+        if($last_processed_time[$IMEI[$i]]!="") {
+            $date1 = $last_processed_time[$IMEI[$i]];
         } 
       
         echo "\nVehicle=" . $i . "::" . $Vehicle[$i];        
@@ -252,7 +252,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         $msg = "\nReadSno:" . $i . " ,imei=" . $IMEI[$i] . " ,date1=" . $date1 . " ,date2=" . $date2;
         
         if($LOG) {$debug_msg.=$msg."\n";}
-        echo $msg; 
+        //echo $msg; 
                 
         $dataCnt = 0;
         $LastSortedDate = null;
@@ -274,7 +274,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
               echo "ss2=".$sortObjTmp->speedData[1]."<br>";
               echo "<br><br>"; */
             $sortedSize = sizeof($SortedDataObject->deviceDatetime);
-            echo "\nSortedSize=".$sortedSize;
+            //echo "\nSortedSize=".$sortedSize;
             for ($obi = 0; $obi < $sortedSize; $obi++) {
                 /* $finalDateTimeArr[$IMEI[$i]][]=$SortedDataObject->deviceDatetime[$obi];
                   $finalLatitudeArr[$IMEI[$i]][]=$SortedDataObject->latitudeData[$obi];
@@ -448,7 +448,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         //exit(0);
         
         if (sizeof($xml_date_sel) > 0) {
-            echo "\nFile ExistFinal";
+            //echo "\nFile ExistFinal";
             $halt_once = false;
 
             $p_in = false;
@@ -1090,7 +1090,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
     $objWriter->save($read_excel_path);
     echo date('H:i:s'), " File written to ", $read_excel_path, EOL;
 
-    echo "\nHALT CLCLOSED";
+    echo "\n!! Process-Completed !!";
 }
 
 //######## UPDATE VEHICLE
@@ -1237,9 +1237,11 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
     $in_time_str_excel = $ScheduleDate[$k] . " " . $ScheduleTime;
     $in_time_str = $arrivale_time;
 
-    //echo "<br>ArrivalTime=".$arrivale_time." ,ScheduleTime=".$in_time_str_excel;	
+    //echo "\nArrivalTime=".$arrivale_time." ,ScheduleDateTime=".$in_time_str_excel." ,ScheduleTime=".$ScheduleTime;
+	
     if ($ScheduleTime != "") {
         $time1 = strtotime($in_time_str) - strtotime($in_time_str_excel);
+	
         //echo "\nin_time_str=".$in_time_str." ,in_time_str_excel=".$in_time_str_excel." ,DiffTime=".$time1;
 
         /* if($time1>0)
@@ -1256,7 +1258,9 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
           //$time_delay = "-".$time_delay;
           $time_delay = "-".$time1/60;
           } */
+	//echo "\nTime1A=".$time1;
         $time_delay = $time1 / 60;
+	//echo "\nTime1B=".$time_delay;
     }
 
     /* if($schedule_in_time=="")

@@ -252,7 +252,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
         $msg = "\nReadSno:" . $i . " ,imei=" . $IMEI[$i] . " ,date1=" . $date1 . " ,date2=" . $date2;
         
         if($LOG) {$debug_msg.=$msg."\n";}
-        //echo $msg; 
+        echo $msg; 
                 
         $dataCnt = 0;
         $LastSortedDate = null;
@@ -662,7 +662,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                                     $hrs_min = $hms_2[h] . ":" . $hms_2[m] . ":" . $hms_2[s];
                                     //echo "\nDepartureFound:Time=".$datetime;
 
-                                    update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k], $k, $StationNo[$k], $Lat[$k], $Lng[$k], $ScheduleTime[$k], $DistVar[$k], $Remark[$k], $startdate, $enddate, $lat_cr, $lng_cr, $lat_cr, $lng_cr, $arrivale_time, $depature_time, $RouteNo[$k], $hrs_min, $Type[$k], $plant_status_local[$Vehicle[$i]][$RouteNo[$i]], 2, $p_in, $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]], $p_out, $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]]);
+                                    update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k], $k, $StationNo[$k], $Lat[$k], $Lng[$k], $ScheduleTime[$k], $DistVar[$k], $Remark[$k], $startdate, $enddate, $lat_cr, $lng_cr, $lat_cr, $lng_cr, $arrivale_time, $depature_time, $RouteNo[$k], $hrs_min, $Type[$k], $plant_status_local[$Vehicle[$i]][$RouteNo[$i]], 2, $p_in, $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]], $p_out, $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]], $datetime);
                                 }
                             }
 
@@ -678,7 +678,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                             for ($k = $i; $k < $j; $k++) {
                                 if ($ArrivalTime[$k] == "") {
                                     //echo "\nArrivalFound:".$Vehicle[$k]." ,Station=".$StationNo[$k];
-                                    update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k], $k, $StationNo[$k], $Lat[$k], $Lng[$k], $ScheduleTime[$k], $DistVar[$k], $Remark[$k], $startdate, $enddate, $lat_ref1, $lng_ref1, $lat_cr, $lng_cr, $datetime_ref, $depature_time, $RouteNo[$k], $hrs_min, $Type[$k], $plant_status_local[$Vehicle[$i]][$RouteNo[$i]], 1, $p_in, $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]], $p_out, $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]]);
+                                    update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle[$k], $k, $StationNo[$k], $Lat[$k], $Lng[$k], $ScheduleTime[$k], $DistVar[$k], $Remark[$k], $startdate, $enddate, $lat_ref1, $lng_ref1, $lat_cr, $lng_cr, $datetime_ref, $depature_time, $RouteNo[$k], $hrs_min, $Type[$k], $plant_status_local[$Vehicle[$i]][$RouteNo[$i]], 1, $p_in, $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]], $p_out, $plant_outtime_local[$Vehicle[$i]][$RouteNo[$i]],$datetime);
                                 }
                             }
                             $current_halt_time = 0;
@@ -1096,7 +1096,7 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
 }
 
 //######## UPDATE VEHICLE
-function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $StationNo, $Lat, $Lng, $ScheduleTime, $DistVar, $Remark, $startdate, $enddate, $lat_ref1, $lng_ref1, $lat_cr, $lng_cr, $arrivale_time, $depature_time, $RouteNo, $hrs_min, $Type, $plant_status, $status_entered, $p_in, $plant_indatetime, $p_out, $plant_outdatetime) {
+function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $StationNo, $Lat, $Lng, $ScheduleTime, $DistVar, $Remark, $startdate, $enddate, $lat_ref1, $lng_ref1, $lat_cr, $lng_cr, $arrivale_time, $depature_time, $RouteNo, $hrs_min, $Type, $plant_status, $status_entered, $p_in, $plant_indatetime, $p_out, $plant_outdatetime, $datetime) {
     //echo "\nPlantStatus=".$plant_status;
     //echo "\nUPDATE VEHICLE::".$read_excel_path.", ".$Vehicle.", ".$k.", ".$StationNo.", ".$Lat.", ".$Lng.", ".$ScheduleTime.", ".$DistVar.", ".$Remark.", ".$startdate.", ".$enddate.", ".$status_entered;	
     global $ScheduleDate;
@@ -1165,7 +1165,7 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
 
         if ($distance_station < $DistVar) {
             $station_no = $StationNo;
-            //echo "\nAtStation:".$station_no." ,distance_station=".$distance_station;
+            echo "\nAtStation:".$station_no." ,distance_station=".$distance_stationi." ,DateTime=".$datetime;
             //$customer_visited[] = $station_no;
             //$customer_type[] = $Type[$i];
             $entered_station = 1;
@@ -1289,7 +1289,7 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
     //echo "\nArrivalTime[$i]=".$ArrivalTime[$i];
 
     if (($status_entered == 1) && ($entered_station == 1)) {//###### CHECK FOR ALL (ARRIVAL AND DEPARTURE)
-        //echo "\nEnteredStation";
+        echo "\nEnteredStation::".$datetime." ,ArrivalTime=".$arrival_time1;
         //##UPDATE ARRIVAL																																			
         $hour_band = explode(':', $arrival_time1[1]);
         $col_tmp = 'H' . $row;
@@ -1338,7 +1338,7 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
         //###############																						
     }
     if (($status_entered == 2) && ($entered_station == 0)) {//####### CHECK FOR DEPARTURE
-        //echo "\nDepartureWrite";
+        echo "\nDepartureWrite::".$datetime." ,DepartureTime=".$depature_time1;
         //##UPDATE DEPARTURE
         $col_tmp = 'K' . $row;
         $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $depature_time1[0]);
