@@ -47,13 +47,20 @@ function read_expected_time($account_id, $shift) {
                             } else if ($c == 1) {
                                 $point_csv = $data[$c];
                             } else if ($c == 2) {
-                                $timing_csv = $data[$c];
+
+$datec = new DateTime( $data[$c] );
+//echo $date->format( 'H:i' );
+                                $timing_csv =$datec->format('H:i');
                             }
                         }
                         //echo "\nShift_csv=".$shift_csv.", shift=".$shift;
                         if (trim($shift_csv) == trim($shift)) {
                             $expected_customer_csv[] = $point_csv;
-                            $expected_time_csv[] = $timing_csv;
+
+$datec = new DateTime( $timing_csv );
+//echo $date->format( 'H:i:s' );
+
+                            $expected_time_csv[] = $datec->format( 'H:i:s' );
                         }
                     }
                     fclose($handle);

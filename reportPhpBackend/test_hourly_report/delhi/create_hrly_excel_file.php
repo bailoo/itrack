@@ -215,13 +215,14 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 	
 	if($shift=="ZPME")
 	{
-		if($shift_type=="focal")
+		if($shift_type=="focal") 
 		{
-			$date_tmp = explode(' ',$startdate);
-			//$cdate = date($date_tmp[0]);
-			$nextdate = date($date_tmp[0]);
-			//$nextdate = date('Y-m-d', strtotime($cdate .' +1 day'));
-			$cdate = date('Y-m-d', strtotime($nextdate .' -1 day'));
+			$date_tmp = explode(' ',$startdate);		//THIS TIME BOTH ARE SAME
+			$cdate = date($date_tmp[0]);
+			//$nextdate = date($date_tmp[0]);
+			$nextdate = date('Y-m-d', strtotime($cdate .' +1 day'));
+			//$cdate = date('Y-m-d', strtotime($nextdate .' -1 day'));
+			//$cdate = $nextdate;
 		}
 		else
 		{

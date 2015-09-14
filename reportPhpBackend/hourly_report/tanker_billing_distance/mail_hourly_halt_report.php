@@ -8,10 +8,10 @@ ini_set('display_startup_errors', TRUE);*/
 date_default_timezone_set("Asia/Kolkata");
 //### DEBUG BOOLEAN
 global $DEBUG_OFFLINE;
-$DEBUG_OFFLINE = true;
+$DEBUG_OFFLINE = false;
 $DEBUG_ONLINE = false;
-$CREATE_MASTER = true;
-$MAIN_DEBUG = true;
+$CREATE_MASTER = false;
+$MAIN_DEBUG = false;
 $LOG = false;
 //#################
 $isReport = true;
@@ -79,12 +79,16 @@ include_once("create_hrly_excel_file.php");
 
 $date = date('Y-m-d');
 $pdate = date('Y-m-d', strtotime($date .' -1 day'));
-$filename = "";
-$read_file_path = $abspath . "/gps_report/" . $user_name . "/upload/".$date."/".$filename;
-$write_file_path = $abspath . "/gps_report/" . $user_name . "/download/".$date."/".$filename;
+$directory_date = "2015-09-02";
+$filename = "DISTANCE_16_31.xls";
+//$filename = "DISTANCE_test.xls";
+$read_file_path = $abspath . "/gps_report/" . $account_id . "/upload/".$directory_date."/".$filename;
+$write_file_path = $abspath . "/gps_report/" . $account_id . "/download/".$directory_date."/".$filename;
 echo "\nSent_RootPath=" . $write_file_path;
 
 include_once("get_route_db_detail.php");
+include_once("action_distance_report.php");
+echo "\nRouteDataProcessed:".$read_file_path."\n";
 //include_once("process_data.php");
 
 //#### INITIALIZE ARRAYS -EV-SHIFT1
@@ -97,10 +101,14 @@ $ActivityTimeForWeightIn = array();
 $UniqueVehicle = array();
 $VehicleIMEI = array();
 
+echo "\nFileExist=".file_exists($read_file_path);
+
 if (file_exists($read_file_path)) {
     
+    echo "\nFileExistsTrue";
     read_sent_file($read_file_path);
     get_route_db_detail();
+    echo "\nAfterGetRouteDB";
 }
 
 $objPHPExcel_1 = null;
