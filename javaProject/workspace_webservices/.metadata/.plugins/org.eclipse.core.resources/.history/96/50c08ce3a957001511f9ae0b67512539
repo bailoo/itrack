@@ -57,9 +57,7 @@ import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.tempuri.GetVehicleLatestDataResponseGetVehicleLatestDataResult;
 import org.tempuri.ServiceSoapProxy;
-import org.tempuri.TrackSoapProxy;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -68,12 +66,10 @@ import org.xml.sax.InputSource;
 
 
 //import com.wanhive.rts.utils.ASCII;
-import com.wanhive.rts.alert_module;
 import com.wanhive.rts.handler.RequestHandler;
 import com.wanhive.rts.utils.Application;
 import com.wanhive.rts.utils.Config;
 
-import org.apache.axis.message.MessageElement;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -143,12 +139,12 @@ public class TransactionServer implements Runnable {
 	public static final String DB_URL = "jdbc:mysql://localhost/iespl_vts_beta";
 	//public static final String DB_URL_remote = "jdbc:mysql://111.118.181.156/iespl_vts_beta";
 	//public static final String DB_URL_remote = "jdbc:mysql://localhost/iespl_vts_beta";
-	//###### SET SQS IDS
-	public static final int vendor_sno = 4;	
-	public static final int gps_vendor_id = 3;
-	//################
-//	public static final String DB_URL_remote = "jdbc:mysql://localhost/iespl_vts_beta";
 	//public static final String DB_URL_remote = "jdbc:mysql://www.itracksolution.co.in/iespl_vts_beta";
+	//###### SET TRANSACTION IDS
+	public static final int vendor_sno = 6;	
+	public static final int gps_vendor_id = 9;
+	//################
+	
 	public static ArrayList<String> vehicleNoArr = new ArrayList<String>();
 	public static HashMap<String, String>  LastTime = new HashMap(new Hashtable<String, String>());	
 	//HashMap<String, ArrayList<String>> map = new HashMap<String,ArrayList<String>>();	
@@ -204,9 +200,9 @@ public class TransactionServer implements Runnable {
 		//######## GET CONNECTION AND VENDOR DETAIL
 		get_connection();
 
-		/*try{
+		try{
 			get_vendor_vehicles();
-		}catch(Exception gv){System.out.println("Error:156");}	*/
+		}catch(Exception gv){System.out.println("Error:156");}	
 		//##### CONNECTION CLOSED
 	}
 
@@ -390,7 +386,7 @@ public class TransactionServer implements Runnable {
 					CleanInitialTime = System.currentTimeMillis();
 				}
 				System.out.println("C");
-				Thread.sleep(600000);  //6 mins
+				Thread.sleep(60000);
 			}
 			catch (Exception e) {
 //				Application.writeLog("TransactionServer[run] Exception: "+e.getMessage(), SystemLogger.SEVERE);
@@ -442,7 +438,6 @@ public class TransactionServer implements Runnable {
 		
 		try{
 			//System.out.println("In GetVendor vehicles");
-			stmt = null;
 			stmt = conn.createStatement();
 			String sql;
 			/*sql_remote = "select vehicle_gpsvendor_assignment.device_imei_no from vehicle,vehicle_gpsvendor_assignment,gps_vendor,vehicle_assignment where "+
@@ -452,7 +447,7 @@ public class TransactionServer implements Runnable {
 			"AND gps_vendor.gps_vendor_id= vehicle_gpsvendor_assignment.gps_vendor_id AND gps_vendor.status=1";
 			//System.out.println("SQL="+sql_remote);*/
 			
-			sql = "select vehicle.vehicle_name from vehicle,vehicle_gpsvendor_assignment,gps_vendor,vehicle_assignment where "+
+			sql = "select vehicle_assignment.device_imei_no from vehicle,vehicle_gpsvendor_assignment,gps_vendor,vehicle_assignment where "+
 			"vehicle.vehicle_id=vehicle_assignment.vehicle_id AND vehicle.status=1 AND vehicle_assignment.status=1 "+
 			"AND vehicle_assignment.device_imei_no= vehicle_gpsvendor_assignment.device_imei_no AND "+
 			"vehicle_gpsvendor_assignment.gps_vendor_id="+gps_vendor_id+" AND vehicle_gpsvendor_assignment.status=1 "+
@@ -464,14 +459,14 @@ public class TransactionServer implements Runnable {
 		         try{						
 					//System.out.println("IN 156");
 		        	//vehicle_imei = vehicle_imei+""+rs_remote.getString("device_imei_no")+",";
-		        	vehicleNoArr.add(rs.getString("vehicle_name"));
+		        	vehicleNoArr.add(rs.getString("device_imei_no"));
 		         }catch(SQLException sq) {System.out.println("Error in Con:156");}
 		    }
 		    //vehicle_imei = vehicle_imei.substring(0,vehicle_imei.length()-1);	
 			//System.out.println("sql_remote="+sql_remote);			
 			rs.close();
 			stmt.close();
-			//conn.close();
+			//conn_remote.close();
 		}catch(SQLException se2){System.out.println("conn error");}		
 	}
 	
@@ -628,157 +623,136 @@ public class TransactionServer implements Runnable {
 	
 	private void dispatch() throws IOException {
 
-		ResultSet rs = null;
-		stmt = null;
-		String line ="";
-		String vehicleNoString="";
-		vehicleNoArr=new ArrayList<String>();
-		System.out.println("IN PullWebServiceData");
-		/*Connection conn = null;
+		System.out.println("IN DISPATCH");
+		String startdate = "", enddate="", startdate1="", enddate1="";
+		//##### GET PREVIOUS AND CURRENT TIME								
+		//startdate = "2015-01-30%2005:00:00";
+		Date currentDate = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.MINUTE, -10);
+		Date tenMinutesBack = cal.getTime();		   
+		//System.out.println("tenMinutesBack="+tenMinutesBack);
+		//startdate = dDF.format(tenMinutesBack);	//Uncomment if DateTime Taken 10 mins Back
+		startdate = dateOnly.format(tenMinutesBack);		//Get StartTime as 00:00:00 of the date			
+		startdate = startdate + " 00:00:00";
+		//System.out.println("startdate="+startdate);
+	
+        //String enddate = "2015-01-30%2006:10:00";
+		Date date = new Date();
+		enddate = dDF.format(date);
+		
+		//enddate = "2015-02-12 01:55:00";
+		//System.out.println("StartDateFromDB="+startdate);
+
+		Date sd_tmp = null;
 		try {
-			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-		} catch (SQLException e1) {
+			sd_tmp = dDF.parse(startdate);
+		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}*/
-		TrackSoapProxy webServiceClient = new TrackSoapProxy();	
-		try {
-			try {			
-				/*String sql_remote = "select vehicle.vehicle_name from vehicle,vehicle_gpsvendor_assignment,gps_vendor,vehicle_assignment,trip_detail "+
-				"WHERE vehicle.vehicle_id=vehicle_assignment.vehicle_id AND vehicle.status=1 AND vehicle_assignment.status=1 AND "+
-				"vehicle_assignment.device_imei_no = vehicle_gpsvendor_assignment.device_imei_no AND "+
-				"vehicle_gpsvendor_assignment.gps_vendor_id = 3 AND vehicle_gpsvendor_assignment.status=1 AND "+
-				"vehicle.vehicle_name=trip_detail.vehicle_no AND trip_detail.trip_status=1 AND trip_detail.status=1 AND "+
-				"gps_vendor.gps_vendor_id= vehicle_gpsvendor_assignment.gps_vendor_id AND gps_vendor.status=1 AND vehicle.status=1";*/
-				String sql = "select vehicle.vehicle_name from vehicle,trip_detail,vehicle_assignment,vehicle_gpsvendor_assignment WHERE "+
-				"vehicle.status=1 AND trip_detail.trip_status=1 AND trip_detail.status=1 AND trip_detail.vehicle_no=vehicle.vehicle_name AND "+
-				"vehicle.vehicle_id=vehicle_assignment.vehicle_id AND vehicle_assignment.status=1 AND "+
-				"vehicle_gpsvendor_assignment.device_imei_no=vehicle_assignment.device_imei_no AND vehicle_gpsvendor_assignment.status=1 AND "+
-				"vehicle_gpsvendor_assignment.gps_vendor_id = "+gps_vendor_id+"";				
-				
-				//select DISTINCT gps_vendor_name,gps_vendor_id from vehicle_gpsvendor_assignment where status=1;
-				System.out.print("sql: " + sql);
-				stmt = conn.createStatement();
-				rs = stmt.executeQuery(sql);
-				int i=0;
-				if(rs.next())
-				{
-					System.out.println("Vehicle="+rs.getString("vehicle_name"));
-					//vehicleNoArr.add(rs_remote.getString("vehicle_name"));
-					vehicleNoString = vehicleNoString+rs.getString("vehicle_name");
-				}
-				while(rs.next())
-				{
-					System.out.println("Vehicle="+rs.getString("vehicle_name"));
-					//vehicleNoArr.add(rs_remote.getString("vehicle_name"));
-					vehicleNoString = vehicleNoString+","+rs.getString("vehicle_name");
-			    }
-				System.out.println("vehicleNoString1="+vehicleNoString);
-				/*vehcileNoArr.add("MH04GF8892");
-				vehcileNoArr.add("MH12HD4236");
-				vehcileNoArr.add("MH12HD5996");
-				vehcileNoArr.add("MH12KP3561");*/
-				//System.out.print(", vehcileNoArr: " + vehicleNoArr);
-				rs.close();
-			} 
-			catch (SQLException e) 
-			{
-				e.printStackTrace();
-			}
-			
-			//if (!(vehicleNoArr.isEmpty()))
-			System.out.println("vehicleNoString.length()="+vehicleNoString.length());
-			if (vehicleNoString.length()>0)
-			{
-				System.out.println("vehicleNoString2="+vehicleNoString);
-				//for(String vehicleNoString : vehicleNoArr)
-				{
-					GetVehicleLatestDataResponseGetVehicleLatestDataResult  GDVR = webServiceClient.getVehicleLatestData(vehicleNoString,"bnmuerwu90");
-					//System.out.println("GDVR "+GDVR.toString());
-					MessageElement[] massageElement = GDVR.get_any();
-					System.out.println("Element : "+massageElement.toString());
-					String response = "";
-					for(MessageElement me : massageElement)
-					{
-						response=me.toString();
-						System.out.println("Response : "+me.toString());
-					}
-					System.out.println("WebServiceResponse "+response);
-					DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-					DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-					InputSource is = new InputSource();
-					is.setCharacterStream(new StringReader(response));
-					Document doc = dBuilder.parse(is);
-					System.out.println("D1");
-					doc.getDocumentElement().normalize();
-					System.out.println("D2");
-					NodeList checkValue = doc.getElementsByTagName("Table");
-					System.out.println("D3");
-					Node checkNode=checkValue.item(0);
-					Element cElement = (Element) checkNode;
-					System.out.println("D4");
-					String Vehicle=cElement.getElementsByTagName("Vehicle_No").item(0).getTextContent();
-					System.out.println("Vehicle="+Vehicle);
-					
-					if(!Vehicle.equals("NA"))
-					{
-						NodeList nList = doc.getElementsByTagName("Table");
-						System.out.println("Total : " + nList.getLength());					
-						for (int temp = 0; temp < nList.getLength(); temp++) 
-						{
-							Node nNode = nList.item(temp);
-							//System.out.println("\nCurrent Element :" + nNode.getNodeName());
-							if (nNode.getNodeType() == Node.ELEMENT_NODE)
-							{
-								Element eElement = (Element) nNode;
-								//DeviceIMEINo=eElement.getElementsByTagName("IMEINO").item(0).getTextContent();
-								DeviceIMEINo=Vehicle;
-								//DeviceIMEINo=eElement.getElementsByTagName("VEHICLE_RTO_NO").item(0).getTextContent();						
-								ReceiveDateFormat = eElement.getElementsByTagName("Date").item(0).getTextContent();
-								//System.out.println("ReceiveDateFormat: "+ReceiveDateFormat);
-								ReceiveDateFormat = ReceiveDateFormat.replaceAll("T", " ");
-								//System.out.println("ReceiveDateFormat: "+ReceiveDateFormat);
-								String[] dateS = ReceiveDateFormat.split("\\+");
-								ReceiveDateFormat = dateS[0];
-								String DateTimeLast = "";
-								DateTimeLast = ReceiveDateFormat;
-								System.out.println("ReceiveDateFormat: "+dateS[0]);
-								//Date result;
-								//result = sDF.parse(ReceiveDateFormat);
-								
-								//DateTimeLast = dDF.format(result);
-								System.out.println("DateTimeLast: "+DateTimeLast);
-								Latitude=eElement.getElementsByTagName("Latitude").item(0).getTextContent();
-								Longitude=eElement.getElementsByTagName("Longitude").item(0).getTextContent();
-								Speed=eElement.getElementsByTagName("Speed").item(0).getTextContent();
-								Speed="0.0";
-								
-								line = DeviceIMEINo+","+DateTimeLast+","+Latitude+","+Longitude+","+Speed+";";
-								//System.out.println("line="+line);
-								//ByteBuffer buffer=null;
-								//byte[] messageBytes=line.getBytes();
-								if(line.length()!=0) {
-									//this.worker.processData(messageBytes, line.length());
-									handler.UpdateDatabase(line);
-								}			
-								
-							}
-						}
-					}
-				}
-			}
-		} 
-		catch (Exception e) 
-		{
-			e.printStackTrace();
 		}
 		
-		/*try {
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		/*Calendar cal = Calendar.getInstance();
+		cal.setTime(sd_tmp);
+		cal.add(Calendar.MINUTE, 10);
+		enddate = dDF.format(cal.getTime());
+		System.out.println("NewEndTime="+enddate);*/
+		
+		//enddate = startdate+dDF.format(date);				
+		enddate1 = enddate.replace(" ","%20");
+
+//		startdate1 = "2015-02-09%2000:00:00";
+//		enddate1 = "2015-02-09%2000:10:00";
+		
+        String DeviceIMEINo="",VehicleName="",DateTime="",Latitude="",Longitude="",Speed="",tmptime="";
+        //String all_data="";        
+        
+        int x=0,y=0;
+        boolean create_flag = false;
+        //vehicle_imei = "TN45AT5155";
+        //System.out.println("SizevehicleNoArr="+vehicleNoArr.size());
+		if (!(vehicleNoArr.isEmpty()))
+		{
+			try{
+				for(String vehicleNoString : vehicleNoArr) {
+					
+					create_flag = false;
+					//System.out.println("LastTime="+LastTime.get(vehicleNoString));
+					if( (LastTime.get(vehicleNoString)==null) || (LastTime.get(vehicleNoString).equals("")) || (LastTime.get(vehicleNoString).equals("null"))) {
+						
+						startdate1 = startdate.replace(" ","%20");						
+						
+					} else {
+						startdate1 = LastTime.get(vehicleNoString).replace(" ","%20");
+					}					
+					//System.out.println("startdate1="+startdate1);
+							
+					try {
+		        	String Request = "http://tracker24.in/getlastdata.jsp?opr=getalldatabydate&username=sidanth&password=123456&dname="+vehicleNoString+"&date1="+startdate1+"&date2="+enddate1;
+		        	//String Request = "http://tracker24.in/getlastdata.jsp?opr=getalldatabydate&username=sidanth&password=123456&dname=TN45AT5155&date1=2015-07-09%2016:00:00&date2=2015-07-09%2023:10:00";
+		        		
+		        	System.out.println("Request="+Request);
+		            //URL my_url = new URL("http://www.placeofjo.blogspot.com/");
+		            URL my_url = new URL(Request);
+		            BufferedReader br = new BufferedReader(new InputStreamReader(my_url.openStream()));
+		            String strTemp = "", max_device_time_tmp="";
+		            while(null != (strTemp = br.readLine())){
+			        	//System.out.println("Data1:"+strTemp);            	
+			        	try{
+			        		//String reader = "[{\"IMEINo\":\"123\",\"Speed\":30},{\"IMEINo\":\"456\",\"Speed\":40}]";
+			        		JSONArray jArray = new JSONArray(strTemp);
+		
+			        		//System.out.println("jArray.length()="+jArray.length());
+			        		for(int i = 0 ; i <jArray.length();i++){
+			
+			        			try{
+				        			JSONObject jObject = jArray.getJSONObject(i);
+				        			//System.out.println("IMEI="+jObject.getString("IMEINo"));
+				        			//System.out.println("Speed="+jObject.getInt("Speed"));	        			
+				        			//DeviceIMEINo = jObject.getString("IMEINo");
+				        			DeviceIMEINo = jObject.getString("VehicleName");
+				        			//VehicleName = jObject.getString("VehicleName");
+				        			tmptime = jObject.getString("DateTime");
+				        			String[] parts = tmptime.split("\\.");
+				        			DateTime = parts[0];
+				        			//System.out.println("D1="+DateTime);
+				        			Latitude = Double.toString(jObject.getDouble("Latitude"));
+				        			Longitude = Double.toString(jObject.getDouble("Longitude"));
+				        			Speed = Double.toString(jObject.getDouble("Speed"));
+
+				        			//IgnitionStatus = jObject.getString("IgnitionStatus");
+				        			//SupplyVoltage = jObject.getString("VoltageSource");
+				        			//System.out.println("Spd="+jObject.getDouble("CurrentSpeed"));
+				        			//all_data = all_data+""+DeviceIMEINo+"#"+DateTime+"#"+Latitude+"#"+Longitude+"#"+Speed+";";
+				        			
+									line = DeviceIMEINo+","+DateTime+","+Latitude+","+Longitude+","+Speed+";";
+									//System.out.println("line="+line);
+									ByteBuffer buffer=null;
+									byte[] messageBytes=line.getBytes();
+									if(line.length()!=0) {
+										//this.worker.processData(messageBytes, line.length());
+										handler.UpdateDatabase(line);
+									}			
+				        					        			
+				        			LastTime.put(DeviceIMEINo,DateTime);
+				        			//System.out.println("Added:"+DeviceIMEINo+" ,"+DateTime);
+			        			}catch(Exception e0){System.out.println("e0="+e0.getMessage());}
+			        			//System.out.println("DeviceIMEINo="+DeviceIMEINo+" ,DateTime="+DateTime+" ,Latitude="+Latitude+" ,Longitude="+Longitude+", Speed="+Speed);
+			        		}
+			
+	        				}catch (Exception e) {
+		        			//e.printStackTrace();
+		        			//return;
+	        				}
+						}            
+					}catch(Exception e){System.out.println("Msg1="+e.getMessage());}									
+				}
+			}catch(Exception e1){System.out.println("Msg2="+e1.getMessage());}
+        }
+
+		//###### UPDATE LAST DATETIME IN FILE -FOR REQUESTING WEB SERVICE DATA -NEXT TIME
+		update_last_time();	
 	}
 	
 	public static Charset charset = Charset.forName("UTF-8");

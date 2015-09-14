@@ -728,8 +728,8 @@ public class TransactionServer implements Runnable {
 				        			
 									line = DeviceIMEINo+","+DateTime+","+Latitude+","+Longitude+","+Speed+";";
 									//System.out.println("line="+line);
-									ByteBuffer buffer=null;
-									byte[] messageBytes=line.getBytes();
+									//ByteBuffer buffer=null;
+									//byte[] messageBytes=line.getBytes();
 									if(line.length()!=0) {
 										//this.worker.processData(messageBytes, line.length());
 										handler.UpdateDatabase(line);

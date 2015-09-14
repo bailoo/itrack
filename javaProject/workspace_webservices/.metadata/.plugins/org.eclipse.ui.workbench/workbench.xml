@@ -27,7 +27,7 @@
 <coolItem id="org.eclipse.ant.ui.internal.editor.AntEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -36,31 +36,10 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="alert_module.java" partName="alert_module.java" path="D:/itrack/javaProject/workspace_webservices/webservice_rts_noviretech/src/com/wanhive/rts/alert_module.java" title="alert_module.java" tooltip="webservice_rts_noviretech/src/com/wanhive/rts/alert_module.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/webservice_rts_noviretech/src/com/wanhive/rts/alert_module.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="151635" selectionTopPixel="45186"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" partName="TransactionServer.java" path="D:/itrack/javaProject/workspace_webservices/webservice_rts_newwaves/src/com/wanhive/rts/TransactionServer.java" title="TransactionServer.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/TransactionServer.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/webservice_rts_newwaves/src/com/wanhive/rts/TransactionServer.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="30655" selectionTopPixel="11594"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RequestHandler.java" partName="RequestHandler.java" path="D:/itrack/javaProject/workspace_webservices/webservice_rts_newwaves/src/com/wanhive/rts/handler/RequestHandler.java" title="RequestHandler.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/handler/RequestHandler.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/webservice_rts_newwaves/src/com/wanhive/rts/handler/RequestHandler.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="16191" selectionTopPixel="6409"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="WorkerClass.java" partName="WorkerClass.java" path="D:/itrack/javaProject/workspace_webservices/webservice_rts_newwaves/src/com/wanhive/rts/WorkerClass.java" title="WorkerClass.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/WorkerClass.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/webservice_rts_newwaves/src/com/wanhive/rts/WorkerClass.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2414" selectionTopPixel="629"/>
-</editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
@@ -73,7 +52,7 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Warnings (100 of 2464 items)"/>
+<category IMemento.internal.id="Errors"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="0" org.eclipse.ui.ide.markerType="0" org.eclipse.ui.ide.pathField="0" org.eclipse.ui.ide.resourceField="0" org.eclipse.ui.ide.severityAndDescriptionField="0"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -310,7 +289,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@6d6a3759" ratio="0.7258065" ratioLeft="450" ratioRight="170" relationship="4" relative="left">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@6d6a3759" ratio="0.5225806" ratioLeft="324" ratioRight="296" relationship="4" relative="left">
 <folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
@@ -362,167 +341,7 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory>
-<editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/webservice_rts_newwaves/src/com/wanhive/rts/TransactionServer.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/webservice_rts_newwaves/src/com/wanhive/rts/WorkerClass.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/webservice_rts_newwaves/src/com/wanhive/rts/handler/RequestHandler.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/webservice_rts_newwaves/src/com/wanhive/rts/ServerDataEvent.java"/>
-<editor factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" org.eclipse.jdt.ui.ClassFileIdentifier="=webservice_rts_newwaves/C:\/Program Files\/Java\/jre7\/lib\/rt.jar&lt;java.util(List.class"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/webservice_rts_newwaves/src/com/wanhive/rts/ProtocolHandler.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/webservice_rts_newwaves/src/com/wanhive/rts/utils/Application.java"/>
-</editors>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="16191" y="26"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="30518" y="11"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="30044" y="0"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="1341" y="14"/>
-</item>
-<item historyLabel="WorkerClass.java" index="1">
-<position info="not_deleted" x="3474" y="15"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="1341" y="14"/>
-</item>
-<item historyLabel="ServerDataEvent.java" index="3">
-<position info="not_deleted" x="1420" y="7"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="1341" y="14"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="30044" y="0"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="1341" y="14"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="30535" y="0"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="1341" y="14"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="30535" y="0"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="14105" y="5"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="23832" y="8"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="14105" y="5"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="926" y="14"/>
-</item>
-<item historyLabel="WorkerClass.java" index="1">
-<position info="not_deleted" x="2500" y="0"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="14378" y="4"/>
-</item>
-<item historyLabel="WorkerClass.java" index="1">
-<position info="not_deleted" x="1480" y="3"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="23939" y="10"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="1403" y="16"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="30518" y="11"/>
-</item>
-<item historyLabel="WorkerClass.java" index="1">
-<position info="not_deleted" x="3541" y="0"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="14015" y="0"/>
-</item>
-<item historyLabel="WorkerClass.java" index="1">
-<position info="not_deleted" x="2831" y="7"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="14015" y="0"/>
-</item>
-<item historyLabel="WorkerClass.java" index="1">
-<position info="not_deleted" x="1530" y="7"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="1403" y="16"/>
-</item>
-<item historyLabel="WorkerClass.java" index="1">
-<position info="not_deleted" x="1917" y="6"/>
-</item>
-<item historyLabel="List.class" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="WorkerClass.java" index="1">
-<position info="not_deleted" x="2474" y="14"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="926" y="14"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="14015" y="0"/>
-</item>
-<item historyLabel="WorkerClass.java" index="1">
-<position info="not_deleted" x="2474" y="14"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="926" y="14"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="1284" y="14"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="1341" y="14"/>
-</item>
-<item historyLabel="ProtocolHandler.java" index="5">
-<position info="not_deleted" x="61" y="0"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="1341" y="14"/>
-</item>
-<item historyLabel="Application.java" index="6">
-<position info="not_deleted" x="990" y="0"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="1341" y="14"/>
-</item>
-<item historyLabel="WorkerClass.java" index="1">
-<position info="not_deleted" x="2920" y="0"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="25844" y="0"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="14085" y="0"/>
-</item>
-<item historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="32778" y="0"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="13008" y="0"/>
-</item>
-<item historyLabel="WorkerClass.java" index="1">
-<position info="not_deleted" x="2414" y="0"/>
-</item>
-<item historyLabel="RequestHandler.java" index="2">
-<position info="not_deleted" x="16191" y="0"/>
-</item>
-<item active="true" historyLabel="TransactionServer.java" index="0">
-<position info="not_deleted" x="32778" y="0"/>
-</item>
-</navigationHistory>
+<navigationHistory/>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
@@ -543,50 +362,50 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_rts_noviretech/src/com/wanhive/rts/TransactionServer.java">
+<persistable path="/webservice_rts_noviretech/src/com/wanhive/rts/TransactionServer.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_rts_sqs/src/com/wanhive/rts/TransactionServer.java">
+<persistable path="/webservice_rts_sqs/src/com/wanhive/rts/TransactionServer.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_rts_riddhi/src/com/wanhive/rts/TransactionServer.java">
+<persistable path="/webservice_rts_riddhi/src/com/wanhive/rts/TransactionServer.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_rts_arya_omnitalk/src/com/wanhive/rts/TransactionServer.java">
+<persistable path="/webservice_rts_arya_omnitalk/src/com/wanhive/rts/TransactionServer.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_rts_aditi/src/com/wanhive/rts/TransactionServer.java">
+<persistable path="/webservice_rts_aditi/src/com/wanhive/rts/TransactionServer.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/TransactionServer.java">
+<persistable path="/webservice_rts_newwaves/src/com/wanhive/rts/TransactionServer.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RequestHandler.java" tooltip="webservice_rts_sqs/src/com/wanhive/rts/handler/RequestHandler.java">
+<persistable path="/webservice_rts_sqs/src/com/wanhive/rts/handler/RequestHandler.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RequestHandler.java" tooltip="webservice_rts_riddhi/src/com/wanhive/rts/handler/RequestHandler.java">
+<persistable path="/webservice_rts_riddhi/src/com/wanhive/rts/handler/RequestHandler.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RequestHandler.java" tooltip="webservice_rts_noviretech/src/com/wanhive/rts/handler/RequestHandler.java">
+<persistable path="/webservice_rts_noviretech/src/com/wanhive/rts/handler/RequestHandler.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RequestHandler.java" tooltip="webservice_rts_arya_omnitalk/src/com/wanhive/rts/handler/RequestHandler.java">
+<persistable path="/webservice_rts_arya_omnitalk/src/com/wanhive/rts/handler/RequestHandler.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RequestHandler.java" tooltip="webservice_rts_aditi/src/com/wanhive/rts/handler/RequestHandler.java">
+<persistable path="/webservice_rts_aditi/src/com/wanhive/rts/handler/RequestHandler.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="WorkerClass.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/WorkerClass.java">
+<persistable path="/webservice_rts_newwaves/src/com/wanhive/rts/WorkerClass.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="WorkerClass.java" tooltip="webservice_crts_newwaves/src/main/java/com/wanhive/rts/WorkerClass.java">
+<persistable path="/webservice_crts_newwaves/src/main/java/com/wanhive/rts/WorkerClass.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Application.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/utils/Application.java">
 <persistable path="/webservice_rts_newwaves/src/com/wanhive/rts/utils/Application.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ProtocolHandler.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/ProtocolHandler.java">
 <persistable path="/webservice_rts_newwaves/src/com/wanhive/rts/ProtocolHandler.java"/>
-</file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="List.class" tooltip="java.util.List">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=webservice_rts_newwaves/C:\/Program Files\/Java\/jre7\/lib\/rt.jar&lt;java.util(List.class"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="WorkerClass.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/WorkerClass.java">
-<persistable path="/webservice_rts_newwaves/src/com/wanhive/rts/WorkerClass.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ServerDataEvent.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/ServerDataEvent.java">
-<persistable path="/webservice_rts_newwaves/src/com/wanhive/rts/ServerDataEvent.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RequestHandler.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/handler/RequestHandler.java">
-<persistable path="/webservice_rts_newwaves/src/com/wanhive/rts/handler/RequestHandler.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_rts_newwaves/src/com/wanhive/rts/TransactionServer.java">
-<persistable path="/webservice_rts_newwaves/src/com/wanhive/rts/TransactionServer.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_crts_newwaves/src/main/java/com/wanhive/rts/TransactionServer.java">
-<persistable path="/webservice_crts_newwaves/src/main/java/com/wanhive/rts/TransactionServer.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="alert_module.java" tooltip="webservice_rts_noviretech/src/com/wanhive/rts/alert_module.java">
-<persistable path="/webservice_rts_noviretech/src/com/wanhive/rts/alert_module.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="alert_module.java" tooltip="webservice_rts_sqs/src/com/wanhive/rts/alert_module.java">
-<persistable path="/webservice_rts_sqs/src/com/wanhive/rts/alert_module.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="alert_module.java" tooltip="webservice_rts_riddhi/src/com/wanhive/rts/alert_module.java">
-<persistable path="/webservice_rts_riddhi/src/com/wanhive/rts/alert_module.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="alert_module.java" tooltip="webservice_rts_aditi/src/com/wanhive/rts/alert_module.java">
-<persistable path="/webservice_rts_aditi/src/com/wanhive/rts/alert_module.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="alert_module.java" tooltip="webservice_rts_arya_omnitalk/src/com/wanhive/rts/alert_module.java">
-<persistable path="/webservice_rts_arya_omnitalk/src/com/wanhive/rts/alert_module.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TransactionServer.java" tooltip="webservice_rts_arya_omnitalk/src/com/wanhive/rts/TransactionServer.java">
-<persistable path="/webservice_rts_arya_omnitalk/src/com/wanhive/rts/TransactionServer.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="RequestHandler.java" tooltip="webservice_crts_arya_omnitalk_test/src/main/java/com/wanhive/rts/handler/RequestHandler.java">
-<persistable path="/webservice_crts_arya_omnitalk_test/src/main/java/com/wanhive/rts/handler/RequestHandler.java"/>
 </file>
 </mruList>
 </workbench>
