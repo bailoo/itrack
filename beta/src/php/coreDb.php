@@ -4173,7 +4173,7 @@ function getGroupGroupIdGroupName($account_id,$DbConnection)
 }
 function getVehicleTableData($vehicle_id,$DbConnection,$j)
 {
-    $query_test1 = "SELECT vehicle.vehicle_id,vehicle.vehicle_name,vehicle.vehicle_type,vehicle.category,vehicle.vehicle_tag,vehicle.vehicle_number,".
+    $query_test1 = "SELECT vehicle.vehicle_id,vehicle.vehicle_name,vehicle.vehicle_type,vehicle.category,vehicle.vehicle_tag,vehicle.vehicle_number,vehicle.mobile_number,".
     "vehicle.max_speed,vehicle.fuel_voltage,vehicle.tank_capacity,vehicle_assignment.device_imei_no FROM vehicle ".
     "USE INDEX (v_vehicleid_status),vehicle_assignment USE INDEX (va_vehicleid_status) WHERE".
     " vehicle.vehicle_id=vehicle_assignment.vehicle_id AND ( ";
@@ -4201,6 +4201,7 @@ function getVehicleTableData($vehicle_id,$DbConnection,$j)
             'category'=>$row_1->category,
             'vehicle_tag'=>$row_1->vehicle_tag,
             'vehicle_number'=>$row_1->vehicle_number,
+            'mobile_number'=>$row_1->mobile_number,
             'device_imei_no'=>$row_1->device_imei_no,
             'max_speed'=>$row_1->max_speed,
             'fuel_voltage'=>$row_1->fuel_voltage,

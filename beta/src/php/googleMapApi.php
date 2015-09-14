@@ -371,7 +371,7 @@ var input = (document.getElementById('pac-input'));
 		        }
 		     }";
 			  $map .= "
-				function infoCallback(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,ioStr,marker,maxSpeed,maxHaltTime) 
+				function infoCallback(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,ioStr,marker,maxSpeed,maxHaltTime,dMobileNoLocal) 
 				{	
 					return function() 
 					{
@@ -439,7 +439,7 @@ var input = (document.getElementById('pac-input'));
 										'<tr>'+
 										'<td class=\"live_td_css1\">Driver Name/Mob </td>'+
 										'<td>:</td>'+
-										'<td class=\"live_td_css2\">'+vNumber+'</td>'+
+										'<td class=\"live_td_css2\">'+dMobileNoLocal+'</td>'+
 									   '</tr>'+
 									   '<tr>'+
 									   '<tr>'+
@@ -486,7 +486,7 @@ var input = (document.getElementById('pac-input'));
 					};
 				}
 				
-				function infoCallbackLive(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,ioStr,marker,maxSpeed,maxHaltTime) 
+				function infoCallbackLive(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,ioStr,marker,maxSpeed,maxHaltTime,dMobileNoLocal) 
 				{	
 					return function() 
 					{
@@ -544,7 +544,7 @@ var input = (document.getElementById('pac-input'));
 											'<tr>'+
 											'<td>Driver Name/Mob </td>'+
 											'<td>:</td>'+
-											'<td>'+vNumber+'</td>'+
+											'<td>'+dMobileNoLocal+'</td>'+
 										   '</tr>'+
 										   '<tr>'+
 										   '<tr>'+
@@ -622,7 +622,7 @@ var input = (document.getElementById('pac-input'));
 					};
 				}
 				
-				function infoCallbackTrack(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,marker,ioStrLocal,dTravel,feature_id_map) 
+				function infoCallbackTrack(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,marker,ioStrLocal,dTravel,feature_id_map,dMobileNoLocal) 
 				{					
 					return function() 
 					{
@@ -826,7 +826,7 @@ var input = (document.getElementById('pac-input'));
 									'<tr>'+
 									'<td class=\"live_td_css1\">Driver Name/Mob </td>'+
 									'<td>:</td>'+
-									'<td class=\"live_td_css2\">'+vNumber+'</td>'+
+									'<td class=\"live_td_css2\">'+dMobileNoLocal+'</td>'+
 								   '</tr>'+
 								   '<tr>'+
 								   '<tr>'+
@@ -1186,7 +1186,7 @@ var input = (document.getElementById('pac-input'));
 						landmark_counter++;    						
 					}
 				} 
-				function setMultipleMarker(map,latarr, lngarr,datetimearr,vSerial,vName,vNumber,speed,ioStr,dTravel)
+				function setMultipleMarker(map,latarr, lngarr,datetimearr,vSerial,vName,vNumber,speed,ioStr,dTravel,dMobileNoArr)
 				{ 
 					deleteOverlays();
 					if((latarr.length ==1) && (!latarr[0]) && (!lngarr[0]))
@@ -1258,6 +1258,7 @@ var input = (document.getElementById('pac-input'));
 						var dateTime=datetimearr[i];
 						var vSerialLocal=vSerial[i];
 						var vNameLocal=vName[i];
+                                                var dMobileNoLocal=dMobileNoArr[i];
 						var vNumberLocal=vNumber[i];
 						var speedLocal=speed[i];
 						var ioStrLocal=ioStr[i];
@@ -1283,7 +1284,7 @@ var input = (document.getElementById('pac-input'));
 										
 						google.maps.event.addListener
 						(
-							marker, mouse_action, infoCallbackTrack(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,marker,ioStrLocal,dTravelLocal,feature_id_map)
+							marker, mouse_action, infoCallbackTrack(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,marker,ioStrLocal,dTravelLocal,feature_id_map,dMobileNoLocal)
 						);						
 						
 						var line = new google.maps.Polyline
@@ -1364,7 +1365,7 @@ var input = (document.getElementById('pac-input'));
 					}
 				}
 				
-				function setMultipleMarker_play(map,latarr, lngarr,datetimearr,vSerial,vName,vNumber,speed,ioStr,dTravel,mSecond)
+				function setMultipleMarker_play(map,latarr, lngarr,datetimearr,vSerial,vName,vNumber,speed,ioStr,dTravel,mSecond,dMobileNoArr)
 				{ 
 					deleteOverlays();
 					if((latarr.length ==1) && (!latarr[0]) && (!lngarr[0]))
@@ -1461,6 +1462,7 @@ var input = (document.getElementById('pac-input'));
 							var vSerialLocal=vSerial[i];
 							var vNameLocal=vName[i];
 							var vNumberLocal=vNumber[i];
+                                                        var dMobileNoLocal=dMobileNoArr[i];
 							var speedLocal=speed[i];
 							var ioStrLocal=ioStr[i];
 							var dTravelLocal=dTravel[i];
@@ -1487,7 +1489,7 @@ var input = (document.getElementById('pac-input'));
 											
 							google.maps.event.addListener
 							(
-								marker, mouse_action, infoCallbackTrack(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,marker,ioStrLocal,dTravelLocal,feature_id_map)
+								marker, mouse_action, infoCallbackTrack(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,marker,ioStrLocal,dTravelLocal,feature_id_map,dMobileNoLocal)
 							);						
 							
 							var line = new google.maps.Polyline
@@ -1791,7 +1793,7 @@ var input = (document.getElementById('pac-input'));
 						}
 					}					
 				}
-				function setMultipleMarkerLast(map,latarr,lngarr,datetimearr,vSerial,vName,vNumber,speed,ioStr,vType,dMaxSpeed,lHaltSpeed)
+				function setMultipleMarkerLast(map,latarr,lngarr,datetimearr,vSerial,vName,vNumber,speed,ioStr,vType,dMaxSpeed,lHaltSpeed,dMobileNoArr)
 				{  
 					//alert('hi1');				
 					 deleteOverlays();
@@ -1829,6 +1831,7 @@ var input = (document.getElementById('pac-input'));
 						var vSerialLocal=vSerial[i];
 						var vNameLocal=vName[i];
 						var vNumberLocal=vNumber[i];
+                                                var dMobNoLocal=dMobileNoArr[i];
 						var speedLocal=speed[i];
 						var ioStrLocal=ioStr[i];
 						var dMaxSpeedLocal=dMaxSpeed[i];
@@ -1840,7 +1843,7 @@ var input = (document.getElementById('pac-input'));
 							markers.push(marker);					
 						google.maps.event.addListener
 						(						
-							marker, mouse_action, infoCallback(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,ioStrLocal,marker,dMaxSpeedLocal,lHaltSpeedLocal)
+							marker, mouse_action, infoCallback(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,ioStrLocal,marker,dMaxSpeedLocal,lHaltSpeedLocal,dMobNoLocal)
 						);					
 					}
 					
@@ -1870,7 +1873,7 @@ var input = (document.getElementById('pac-input'));
 						}
 					}					
 				}
-				function setMultipleMarkerLive(map,latarr,lngarr,datetimearr,vSerial,vName,vNumber,speed,ioStr,vType,dMaxSpeed,lHaltSpeed,vRoute,vStatus)
+				function setMultipleMarkerLive(map,latarr,lngarr,datetimearr,vSerial,vName,vNumber,speed,ioStr,vType,dMaxSpeed,lHaltSpeed,vRoute,vStatus,dMobileNoArr)
 				{  
 					//alert('hi1');				
 					deleteOverlays();									
@@ -1924,6 +1927,7 @@ var input = (document.getElementById('pac-input'));
 						var vSerialLocal=vSerial[i];
 						var vNameLocal=vName[i];
 						var vNumberLocal=vNumber[i];
+                                                var dMobileNoLocal=dMobileNoArr[i];
 						var speedLocal=speed[i];
 						var ioStrLocal=ioStr[i];
 						var dMaxSpeedLocal=dMaxSpeed[i];
@@ -1935,7 +1939,7 @@ var input = (document.getElementById('pac-input'));
 							markers.push(marker);					
 						google.maps.event.addListener
 						(						
-							marker, 'click', infoCallbackLive(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,ioStrLocal,marker,dMaxSpeedLocal,lHaltSpeedLocal)
+							marker, 'click', infoCallbackLive(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,ioStrLocal,marker,dMaxSpeedLocal,lHaltSpeedLocal,dMobileNoLocal)
 						);					
 					}
 					
@@ -2083,7 +2087,7 @@ var input = (document.getElementById('pac-input'));
 	*
 	*/
 	
-	function addMultipleMarker($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$io_str_last,$d_travel_str)
+	function addMultipleMarker($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$io_str_last,$d_travel_str,$dMobileNoArr)
 	{
 		//print_r($latarr);
 		//print_r($lngarr);
@@ -2105,17 +2109,18 @@ var input = (document.getElementById('pac-input'));
 			$vSerialJs=json_encode($vehicle_serial_arr);
 			$vNameJs=json_encode($vehicle_name_arr);
 			$vNumberJs=json_encode($vehicle_number_arr);
+                        $dMobileNoArrJs=json_encode($dMobileNoArr);
 			$speedJs=json_encode($speed_arr);
 			$ioStr=json_encode($io_str_last);			
 			$dTravelJs=json_encode($d_travel_str);                      
 			//echo "in if<br>";
-			$marker .= "setMultipleMarker({$map_id},{$latJs},{$lngJS},{$dateTimeJs},{$vSerialJs},{$vNameJs},{$vNumberJs},{$speedJs},{$ioStr},{$dTravelJs}".")";
+			$marker .= "setMultipleMarker({$map_id},{$latJs},{$lngJS},{$dateTimeJs},{$vSerialJs},{$vNameJs},{$vNumberJs},{$speedJs},{$ioStr},{$dTravelJs},{$dMobileNoArrJs}".")";
 		}		
 		$marker .= "</script>";
 		return $marker;
 	}
 	//Track Play
-	function addMultipleMarker_play($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$io_str_last,$d_travel_str,$play_interval)
+	function addMultipleMarker_play($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$io_str_last,$d_travel_str,$play_interval,$dMobileNoArr)
 	{
 		//print_r($latarr);
 		//print_r($lngarr);
@@ -2137,11 +2142,12 @@ var input = (document.getElementById('pac-input'));
 			$vSerialJs=json_encode($vehicle_serial_arr);
 			$vNameJs=json_encode($vehicle_name_arr);
 			$vNumberJs=json_encode($vehicle_number_arr);
+                        $dMobileNoArrJs=json_encode($dMobileNoArr);
 			$speedJs=json_encode($speed_arr);
 			$ioStr=json_encode($io_str_last);			
 			$dTravelJs=json_encode($d_travel_str);                      
 			//echo "in if<br>";
-			$marker .= "setMultipleMarker_play({$map_id},{$latJs},{$lngJS},{$dateTimeJs},{$vSerialJs},{$vNameJs},{$vNumberJs},{$speedJs},{$ioStr},{$dTravelJs} ,{$play_interval}".")";
+			$marker .= "setMultipleMarker_play({$map_id},{$latJs},{$lngJS},{$dateTimeJs},{$vSerialJs},{$vNameJs},{$vNumberJs},{$speedJs},{$ioStr},{$dTravelJs} ,{$play_interval},{$dMobileNoArrJs}".")";
 		}		
 		$marker .= "</script>";
 		return $marker;
@@ -2177,7 +2183,7 @@ var input = (document.getElementById('pac-input'));
 		$marker .= "</script>";
 		return $marker;
 	}
-	function addMultipleMarkerLast($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$io_str_arr,$vehilce_type_arr,$day_max_speed_arrt,$last_halt_time_arr)
+	function addMultipleMarkerLast($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$io_str_arr,$vehilce_type_arr,$day_max_speed_arrt,$last_halt_time_arr,$dMobileNoArr)
 	{
 		//print_r($latarr);
 		//print_r($lngarr);
@@ -2204,16 +2210,17 @@ var input = (document.getElementById('pac-input'));
 			$vehilceTypeJs=json_encode($vehilce_type_arr);
 			$dayMaxSpeedJs=json_encode($day_max_speed_arrt);
 			$lastHaltTimeJs=json_encode($last_halt_time_arr);
+                        $dMobileNoArrJs=json_encode($dMobileNoArr);
 		
                        
 			//echo "in if<br>";
-			$marker .= "setMultipleMarkerLast({$map_id},{$latJs},{$lngJS},{$dateTimeJs},{$vSerialJs},{$vNameJs},{$vNumberJs},{$speedJs},{$ioStrJs},{$vehilceTypeJs},{$dayMaxSpeedJs},{$lastHaltTimeJs}".")";
+			$marker .= "setMultipleMarkerLast({$map_id},{$latJs},{$lngJS},{$dateTimeJs},{$vSerialJs},{$vNameJs},{$vNumberJs},{$speedJs},{$ioStrJs},{$vehilceTypeJs},{$dayMaxSpeedJs},{$lastHaltTimeJs},{$dMobileNoArrJs}".")";
 		}		
 		$marker .= "</script>";
 		return $marker;
 	}
 	
-	function addMultipleMarkerLive($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$io_str_arr,$vehilce_type_arr,$day_max_speed_arrt,$last_halt_time_arr,$vroute_arr,$vstatus_arr)
+	function addMultipleMarkerLive($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$io_str_arr,$vehilce_type_arr,$day_max_speed_arrt,$last_halt_time_arr,$vroute_arr,$vstatus_arr,$dMobileNoArr)
 	{
 		//print_r($latarr);
 		//print_r($lngarr);
@@ -2241,9 +2248,10 @@ var input = (document.getElementById('pac-input'));
 			$dayMaxSpeedJs=json_encode($day_max_speed_arrt);
 			$lastHaltTimeJs=json_encode($last_halt_time_arr);
 			$vRouteJs=json_encode($vroute_arr); 
-			$vStatusJs=json_encode($vstatus_arr); 		
+			$vStatusJs=json_encode($vstatus_arr);
+                        $dMobileNoArrJs=json_encode($dMobileNoArr);
 			//echo "in if<br>";
-			$marker .= "setMultipleMarkerLive({$map_id},{$latJs},{$lngJS},{$dateTimeJs},{$vSerialJs},{$vNameJs},{$vNumberJs},{$speedJs},{$ioStrJs},{$vehilceTypeJs},{$dayMaxSpeedJs},{$lastHaltTimeJs},{$vRouteJs},{$vStatusJs}".")";
+			$marker .= "setMultipleMarkerLive({$map_id},{$latJs},{$lngJS},{$dateTimeJs},{$vSerialJs},{$vNameJs},{$vNumberJs},{$speedJs},{$ioStrJs},{$vehilceTypeJs},{$dayMaxSpeedJs},{$lastHaltTimeJs},{$vRouteJs},{$vStatusJs},{$dMobileNoArrJs}".")";
 		}		
 		$marker .= "</script>";
 		return $marker;

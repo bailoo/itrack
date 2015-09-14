@@ -1,5 +1,8 @@
 <?php
-
+date_default_timezone_set('Asia/Calcutta');
+		//echo "DATE TEST";
+$start_date=date("Y/m/d 00:00:00");	
+$end_date=date("Y/m/d H:i:s");	
 echo '
 <html>
 <head>
@@ -8,7 +11,7 @@ echo '
 
 <body>
 
-<form action="action_xml_download.php" method="POST">
+<form action="action_xml_download.php" method="POST" target="_blank">
 <div align="right"><a href="../logout.php" style="text-decoration:none;"><font color=green size=3><strong>Logout</strong></font></a></div> 
 <center>
   
@@ -25,9 +28,22 @@ echo '
     <td><font color=red>Select Date :</font></td>
     <td>
     
-    <input type="text" id="date1" name="xmldate" size="10" maxlength="19">
+    <input type="text" id="date1" name="startdate" value="'.$start_date.'" maxlength="19">
 
-		<a href=javascript:NewCal("date1","yyyymmdd",false,24)>
+		<a href=javascript:NewCal("date1","yyyymmdd",true,24)>
+			<img src="../cal.gif" width="16" height="16" border="0" alt="Pick a date">
+		</a>
+    
+    </td>
+    </tr>
+     <tr>
+    <tr><td colspan="2"></td></tr>
+    <td><font color=red>Select Date :</font></td>
+    <td>
+    
+    <input type="text" id="date2" name="enddate" value="'.$end_date.'" maxlength="19">
+
+		<a href=javascript:NewCal("date2","yyyymmdd",true,24)>
 			<img src="../cal.gif" width="16" height="16" border="0" alt="Pick a date">
 		</a>
     
