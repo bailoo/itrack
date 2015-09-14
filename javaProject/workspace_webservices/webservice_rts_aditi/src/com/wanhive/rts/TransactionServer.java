@@ -81,6 +81,8 @@ public class TransactionServer implements Runnable {
 	 * Basic functions, initialisation of basic functionalities and data-structures
 	 */
 	//==================================================================================	
+	public static RequestHandler handler = new RequestHandler();
+	
 	public static RandomAccessFile excptionf =null;
 	public static int port_number = 0;
 
@@ -136,12 +138,12 @@ public class TransactionServer implements Runnable {
 	
 	//#### DATABASE CONNECTION VARIABLES
 	public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	public static final String DB_URL = "jdbc:mysql://localhost/alert_session";
-	public static final String DB_URL_remote = "jdbc:mysql://111.118.181.156/iespl_vts_beta";
-//	public static final String DB_URL_remote = "jdbc:mysql://localhost/iespl_vts_beta";
+	//public static final String DB_URL = "jdbc:mysql://localhost/alert_session";
+	//public static final String DB_URL_remote = "jdbc:mysql://111.118.181.156/iespl_vts_beta";
+	public static final String DB_URL = "jdbc:mysql://localhost/iespl_vts_beta";
 	//###### SET SQS IDS
-	public static final int vendor_sno = 6;	
-	public static final int gps_vendor_id = 9;
+	public static final int vendor_sno = 3;	
+	public static final int gps_vendor_id = 8;
 	//################
 //	public static final String DB_URL_remote = "jdbc:mysql://localhost/iespl_vts_beta";
 	//public static final String DB_URL_remote = "jdbc:mysql://www.itracksolution.co.in/iespl_vts_beta";
@@ -153,10 +155,10 @@ public class TransactionServer implements Runnable {
 	public static Connection conn = null;
 	public static Statement stmt = null;
 	   
-	public static final String USER_remote = "root";
+	/*public static final String USER_remote = "root";
 	public static final String PASS_remote = "mysql";
 	public static Connection conn_remote = null;
-	public static Statement stmt_remote = null;	
+	public static Statement stmt_remote = null;*/	
 	//############################	
 	
 	//##########################
@@ -330,7 +332,7 @@ public class TransactionServer implements Runnable {
 		//Application.writeLog("TransactionServer[cleanUp]: shutdown has been initiated", SystemLogger.WARN);
 		
 		//Stop the worker
-		this.worker.stop();
+		//this.worker.stop();
 		
 		//Cleanly close all active connections, including the listening channel
 		Set<SelectionKey> keys=this.selector.keys();
@@ -434,10 +436,11 @@ public class TransactionServer implements Runnable {
  
 					line = DeviceIMEINo+","+DateTime+","+Latitude+","+Longitude+","+Speed+";";
 					//System.out.println("line="+line);
-					ByteBuffer buffer=null;
-					byte[] messageBytes=line.getBytes();
+					//ByteBuffer buffer=null;
+					//byte[] messageBytes=line.getBytes();
 					if(line.length()!=0) {
-						this.worker.processData(messageBytes, line.length());
+						//this.worker.processData(messageBytes, line.length());
+						handler.UpdateDatabase(line);
 					}			
 
                 }

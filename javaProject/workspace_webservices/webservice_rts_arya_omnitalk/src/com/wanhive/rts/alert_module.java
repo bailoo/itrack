@@ -24,8 +24,9 @@ import java.util.regex.Pattern;
 public class alert_module {
 	
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-   static final String DB_URL = "jdbc:mysql://localhost/alert_session";
-   static final String DB_URL_remote = "jdbc:mysql://111.118.181.156/iespl_vts_beta";
+   static final String DB_URL = "jdbc:mysql://localhost/iespl_vts_beta";
+   //static final String DB_URL_remote = "jdbc:mysql://111.118.181.156/iespl_vts_beta";
+   //static final String DB_URL_remote = "jdbc:mysql://localhost/iespl_vts_beta";
 
    //  Database credentials
    static final String USER = "root";
@@ -33,14 +34,14 @@ public class alert_module {
    public static Connection conn = null;
    public static Statement stmt = null;
    
-   static final String USER_remote = "root";
+   /*static final String USER_remote = "root";
    static final String PASS_remote = "mysql";
    public static Connection conn_remote = null;
-   public static Statement stmt_remote = null;   
+   public static Statement stmt_remote = null;*/   
 	   
    public static void get_escalation_detail()
    {
-		//System.out.println("GET ESCALATION DETAIL");
+		System.out.println("GET ESCALATION DETAIL");
 		String current_path = "",strLine1="";
 		String imei_db="",imei_local="",imei_db_file="";
 		boolean imei_db_matched = false;
@@ -58,7 +59,7 @@ public class alert_module {
 		  //STEP 3: Open a connection
 		  	  //System.out.println("Connecting to database...");
 		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
-		 }catch(SQLException se){}
+		 }catch(SQLException se){System.out.println("Error:DBfirst");}
 		 //######### DATABASE CONNECTION
 		
 		try{					
@@ -2671,7 +2672,7 @@ public class alert_module {
 		
 		boolean halt_start_flag = false, halt1_start_flag = false, halt2_start_flag = false, movement_flag=false, nogps_flag=false, halt_stop_flag = false, ignition_activated_flag = false, ignition_deactivated_flag = false,sos_flag = false, over_temperature_flag = false, overspeed_flag = false, battery_connected_flag = false, battery_disconnected_flag = false, door1_open_flag = false, door1_close_flag = false, door2_open_flag = false, door2_close_flag = false, ac_on_flag = false,ac_off_flag = false, entered_region_flag = false, exited_region_flag = false;
 		
-		conn_remote = null;		   
+		/*conn = null;		   
 		try{
 		      //STEP 2: Register JDBC driver
 		  try {
@@ -2682,35 +2683,35 @@ public class alert_module {
 		  }
 		  //STEP 3: Open a connection
 		  	  //System.out.println("USER="+USER+" ,PASS="+PASS);
-		      conn_remote = DriverManager.getConnection(DB_URL_remote,USER,PASS);
-		 }catch(SQLException se){System.out.println("ConError:"+se.getMessage());}
+		      conn = DriverManager.getConnection(DB_URL,USER,PASS);
+		 }catch(SQLException se){System.out.println("ConError:"+se.getMessage());}*/
 		 //######### DATABASE CONNECTION
 		
-		stmt_remote = null;
+		stmt = null;
 		   try{
 		      //STEP 2: Register JDBC driver
 
 		      //STEP 4: Execute a query
 			  //System.out.println("Bfore connection :156:Selecting data...");
-		      stmt_remote = conn_remote.createStatement();
-		      String sql_remote;
-		      sql_remote = "SELECT * FROM escalation_detail_icici";
+		      stmt = conn.createStatement();
+		      String sql;
+		      sql = "SELECT * FROM escalation_detail_icici";
 		      //System.out.println("SQL="+sql_remote);
-		      ResultSet rs_remote = stmt_remote.executeQuery(sql_remote);
+		      ResultSet rs = stmt.executeQuery(sql);
 
   	          String tmp_string_halt_start ="", tmp_string_halt1_start ="", tmp_string_halt2_start ="", tmp_string_movement ="", tmp_string_nogps ="",tmp_string_halt_stop ="", tmp_string_ignition_activated ="", tmp_string_ignition_deactivated ="", tmp_string_sos ="", tmp_string_over_temperature ="", tmp_string_overspeed ="", tmp_string_battery_connected ="", tmp_string_battery_disconnected ="", tmp_string_door1_open ="", tmp_string_door1_closed ="", tmp_string_door2_open ="", tmp_string_door2_closed ="", tmp_string_ac_on ="", tmp_string_ac_off ="", tmp_string_exited_region="";		
 
 		      //STEP 5: Extract data from result set
-		      while(rs_remote.next()){
+		      while(rs.next()){
 		         //Retrieve by column name		         	        
 		         //Display values
 		         //System.out.print("Alert_str=" + alert_str);		   	
 																					
 		         try{						
 					//System.out.println(strLine1);
-					alert_name_tmp = rs_remote.getString("alert_type");
-					person_mobile_tmp = rs_remote.getString("mobile");					
-					email_tmp = rs_remote.getString("email");
+					alert_name_tmp = rs.getString("alert_type");
+					person_mobile_tmp = rs.getString("mobile");					
+					email_tmp = rs.getString("email");
 					sms_status = "1";
 					mail_status = "1";
 					//System.out.println("AlertType:156:"+alert_name_tmp+", mobile="+person_mobile_tmp);
@@ -2793,9 +2794,9 @@ public class alert_module {
 			//System.out.println("EXCEPTION-1 IN READ ESCALATION FILE:"+e.getMessage());
 		}*/			
 	  //STEP 6: Clean-up environment
-	  rs_remote.close();
-	  stmt_remote.close();
-	  conn_remote.close();
+	  rs.close();
+	  stmt.close();
+	  //conn.close();
 	  }catch(SQLException se2){}	
 			  
 		//######## VEHICLE GEOFENCE ##########
@@ -3106,7 +3107,7 @@ public class alert_module {
 	public static String get_url_location(double lat, double lng)
 	{
 		try {		
-				String Request = "http://www.itracksolution.co.in/src/php/get_url_location2.php?lat="+lat+"&lng="+lng+"";
+				String Request = "http://www.tracemyvehicle.co.in/src/php/get_url_location2.php?lat="+lat+"&lng="+lng+"";
 				//URL my_url = new URL("http://www.placeofjo.blogspot.com/");
 				URL my_url = new URL(Request);
 				BufferedReader br = new BufferedReader(new InputStreamReader(my_url.openStream()));

@@ -41,7 +41,7 @@ public class RequestHandler {
 		UpdateDatabase(dataEvent.message);
 	}
 	
-	private void UpdateDatabase(String Response)
+	public void UpdateDatabase(String Response)
 	{	
 		GregorianCalendar calendar = new GregorianCalendar();
 		//Statement statement;
