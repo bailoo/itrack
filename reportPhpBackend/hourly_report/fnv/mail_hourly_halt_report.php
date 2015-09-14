@@ -204,8 +204,8 @@ $shift_ev_date4 = $date . " 06:00:00"; //change it to 18:00:00
 $shift_mor_date3 = $date." 00:00:00";
 $shift_mor_date4 = $date." 12:00:00";
 
-$ev_run_start_time1 = $date." 18:00:00";
-$mor_run_start_time = $date . " 00:00:00";
+$ev_run_start_time1 = $date." 22:55:00";
+$mor_run_start_time = $date . " 05:00:00";
 
 
 if ($MAIN_DEBUG) {
