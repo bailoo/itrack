@@ -63,6 +63,8 @@ public class TransactionServer implements Runnable {
 	 * Basic functions, initialisation of basic functionalities and data-structures
 	 */
 	//==================================================================================	
+	public static RequestHandler handler = new RequestHandler();
+	
 	public static RandomAccessFile excptionf =null;
 	public static int port_number = 0;
 
@@ -281,7 +283,7 @@ public class TransactionServer implements Runnable {
 		//Application.writeLog("TransactionServer[cleanUp]: shutdown has been initiated", SystemLogger.WARN);
 		
 		//Stop the worker
-		this.worker.stop();
+		//this.worker.stop();
 		
 		//Cleanly close all active connections, including the listening channel
 		Set<SelectionKey> keys=this.selector.keys();
@@ -428,10 +430,11 @@ public class TransactionServer implements Runnable {
 						//if(!(DateTimeLast.compareTo(last_date) == 0))
 						
 						line = DeviceIMEINo+","+DateTimeLast+","+Latitude+","+Longitude+","+Speed+";";
-						ByteBuffer buffer=null;
-						byte[] messageBytes=line.getBytes();
+						//ByteBuffer buffer=null;
+						//byte[] messageBytes=line.getBytes();
 						if(line.length()!=0) {
-								this.worker.processData(messageBytes, line.length());
+							//this.worker.processData(messageBytes, line.length());
+							handler.UpdateDatabase(line);
 						}			
 					}
 				}

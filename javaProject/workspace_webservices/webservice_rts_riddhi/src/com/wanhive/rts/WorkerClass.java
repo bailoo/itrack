@@ -36,7 +36,10 @@ public class WorkerClass implements Runnable {
 		this.handler=handler;		
 	}
 
-	@Override
+	public void run(){
+		
+	}
+	/*@Override
 	public void run() {
 		ServerDataEvent dataEvent=null;
 		int DataCnt=0;
@@ -79,7 +82,8 @@ public class WorkerClass implements Runnable {
 			}
 			
 			//System.out.println("DataCnt="+DataCnt);
-			if(DataCnt>100)
+			//if(DataCnt>100)
+			if(DataCnt>5)
 			{
 				System.out.println("e");
 				DataCnt=0;
@@ -95,7 +99,7 @@ public class WorkerClass implements Runnable {
 		}
 		queue=null;
 		//Application.writeLog("WorkerClass[run]: thread has been stopped", SystemLogger.WARN);
-	}
+	}*/
 
 	/**
 	 * @param args
@@ -104,7 +108,7 @@ public class WorkerClass implements Runnable {
 		// TODO Auto-generated method stub
 	}
 
-	public void processData(byte[] data, int count) {
+	/*public void processData(byte[] data, int count) {
 		synchronized(this.queue) {
 			queue.add(new ServerDataEvent(data));
 			//Notify that data is available
@@ -117,7 +121,7 @@ public class WorkerClass implements Runnable {
 		synchronized (queue) {
 			this.queue.notify();
 		}
-	}
+	}*/
 	
 	private List<ServerDataEvent> queue=new ArrayList<ServerDataEvent>();
 	public RequestHandler handler;

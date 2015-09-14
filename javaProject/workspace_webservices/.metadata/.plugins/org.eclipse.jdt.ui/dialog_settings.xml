@@ -2,12 +2,12 @@
 <section name="Workbench">
 	<item value="2" key="TypeHierarchyViewPart.hierarchyview"/>
 	<item value="480,510" key="UserLibraryLoadSaveDialog.size"/>
+	<item value="E:\ESSENTIALS" key="org.eclipse.jdt.ui.lastextjar"/>
 	<item value="500" key="CallHierarchyViewPart.ratio3"/>
-	<item value="D:\Eclipse_ITC_64-BIT\plugins" key="org.eclipse.jdt.ui.lastextjar"/>
 	<item value="500" key="CallHierarchyViewPart.ratio1"/>
-	<item value="3" key="CallHierarchyViewPart.orientation"/>
-	<item value="3" key="TypeHierarchyViewPart.orientation"/>
 	<item value="false" key="TypeHierarchyViewPart.qualifiednames"/>
+	<item value="3" key="TypeHierarchyViewPart.orientation"/>
+	<item value="3" key="CallHierarchyViewPart.orientation"/>
 	<item value="1" key="SearchScopeActionGroup.search_scope_type"/>
 	<item value="2" key="CallHierarchyViewPart.field_mode"/>
 	<item value="false" key="TypeHierarchyViewPart.linkeditors"/>
@@ -33,17 +33,17 @@
 		<item value="2" key="pageIndex"/>
 	</section>
 	<section name="FatJarPackageWizard">
-		<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_arya_omnitalk_test.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
-		<item value="webservice_crts_arya_omnitalk_test - webservice_crts_arya_omnitalk_test" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
+		<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_sqs.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
+		<item value="webservice_rts_sqs - webservice_rts_sqs" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
 		<item value="" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
 		<item value="1" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
 		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
-			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_arya_omnitalk_test.jar"/>
-			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_newwaves.jar"/>
-			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_arya_omnitalk.jar"/>
 			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_sqs.jar"/>
 			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_riddhi.jar"/>
+			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_noviretech.jar"/>
+			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_newwaves.jar"/>
+			<item value="D:\ECLIPSE_PROJECTS1\jarRunnableBackend\jarWebservicePull\webservice_rts_arya_omnitalk.jar"/>
 		</list>
 		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">
 			<item value=".xml"/>
