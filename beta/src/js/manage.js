@@ -9342,6 +9342,7 @@ function setapproval(sno){
 
 function setclosetime(sno){
 	
+	
 	document.getElementById('tmp_serial').value = sno;
 	document.getElementById('popup_action').value = "add";
 	if(document.getElementById('close_chk_'+sno).checked==true){
@@ -9427,10 +9428,25 @@ function setclosetime(sno){
 			
 			//var resverseDate=theDate.getFullYear()+ "/" +   theDate.getMonth()+1 + "/" + final_dd + " " + final_hr + ":" + final_mi + ":" + final_ss;
 			var resverseDate=theDate.getFullYear()+ "/" +   cMonth + "/" + final_dd + " " + final_hr + ":" + final_mi + ":" + final_ss;
-			//alert(resverseDate);
+			if(resverseDate=="NaN/NaN/NaN NaN:NaN:NaN")
+			{
+				resverseDate="";
+			}
+                        //alert(resverseDate);
 			document.getElementById('temp_unload_estimate_datetime').value=resverseDate;
-			document.getElementById('temp_unload_accept_time').value=(document.getElementById('temp_unload_accept_time').value).replace(/-/g, "/"); 
+			//document.getElementById('temp_unload_accept_time').value=(document.getElementById('temp_unload_accept_time').value).replace(/-/g, "/"); 
+                        if(document.getElementById('unload_estimated_time_'+sno).value!="NaN")
+			{
+				document.getElementById('temp_unload_estimate_time').value = document.getElementById('unload_estimated_time_'+sno).value;
+			}
+			else
+			{
+				document.getElementById('temp_unload_estimate_time').value = "";
+			}
 		}
+		
+                document.getElementById('temp_unload_accept_time').value=(document.getElementById('unload_accept_time_'+sno).value).replace(/-/g, "/"); 		
+		document.getElementById('temp_unload_estimate_datetime').value=(document.getElementById('temp_unload_estimate_datetime').value).replace(/-/g, "/");
 		
 		var testing_status=document.getElementById('testing_status_'+sno).value;
 		
@@ -9497,7 +9513,6 @@ function setclosetime(sno){
 		document.getElementById(param2).style.display = "none";
 	}
 }
-
 function setclosetimeedit(sno){
 	
 	    document.getElementById('tmp_serial').value = sno;
