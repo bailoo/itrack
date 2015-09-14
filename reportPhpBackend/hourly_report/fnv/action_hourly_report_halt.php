@@ -492,13 +492,13 @@ function get_halt_xml_data($startdate, $enddate, $read_excel_path, $time1_ev, $t
                             //echo "\nPlantLat=".$plant_lat_local[$Vehicle[$i]][$RouteNo[$i]]." ,PlantLng=".$plant_lng_local[$Vehicle[$i]][$RouteNo[$i]]." ,LatSel=".$lat_sel[$y]." ,LngSel=".$lng_sel[$y];
                             //echo "\nDistance1=".$distance_plant." ,tmp_radius[p]=".$tmp_radius[$p];
                             if ($distance_plant < $tmp_radius[$p]) {
-                                //echo "\nIN:PLANT-1:".$datetime;
+                                echo "\nIN:PLANT-1:".$datetime;
                                 //$plant_status_local[$Vehicle[$i]][$RouteNo[$i]] = 1;
-                                //echo "<br>PlantINTimePrev=".$plant_intime_local[$Vehicle[$i]][$RouteNo[$i]];
+                                echo "<br>PlantINTimePrev=".$plant_intime_local[$Vehicle[$i]][$RouteNo[$i]]." ,difftime=".$difftime." ,Shift=".$shift_1;
                                 if ($plant_intime_local[$Vehicle[$i]][$RouteNo[$i]] == "") {
                                     //echo "\nIN:Plant2=".$datetime;
                                     //if( ($shift_1=="ZPMM") || (($shift_1=="ZPME") && ($plant_time_ev=="currentday")) || (($shift_1=="ZPME") && ($plant_time_ev=="nextday") && (strtotime($datetime) < strtotime($date_curr_tmp))))
-                                    if ((($shift_1 == "ZPMM") && ($difftime > 10800 && $difftime < 43200)) || ( ($shift_1 == "ZPME") && ($difftime > 43200 || $difftime < 10800) )) {
+                                    if ((($shift_1 == "ZPMM") && ($difftime > 82800 || $difftime < 21700)) || ( ($shift_1 == "ZPME") && ($difftime > 61200 || $difftime < 11800) )) {
                                     //if( (($shift_1=="ZPMM") && ($difftime>10800 && $difftime<43200)) || ($shift_1=="ZPME"))           //echo "\nPlantIN";
                                         $plant_intime_local[$Vehicle[$i]][$RouteNo[$i]] = $datetime;
                                         $plant_status_local[$Vehicle[$i]][$RouteNo[$i]] = 1;

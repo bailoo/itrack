@@ -237,6 +237,8 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 	}
 	//echo "\nCdate=".$cdate." ,nextdate=".$nextdate;
 
+echo "\nRouteNameRDB=".sizeof($route_name_rdb);
+
 	for($i=0;$i<sizeof($route_name_rdb);$i++)
 	{
 		$sno=1;
@@ -250,6 +252,9 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 		{
 			echo "<br>RouteNameRDBSize2=".sizeof($route_name_rdb_1);
 		}*/		
+
+echo "\nRouteDBB_1=".sizeof($route_name_rdb_1);
+
 		for($k=0;$k<sizeof($route_name_rdb_1);$k++)
 		{
 			$route_name_rdb_3="";
@@ -290,9 +295,11 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 							
 			if($pre_match)
 			{						
-				//echo "<BR>CreateHrly ".$i." ".$vehicle_imei_rdb[$i];
+				echo "<BR>CreateHrly ".$i." ".$vehicle_imei_rdb[$i];
 				for($j=0;$j<sizeof($customer_sel[$route_name_rdb_3]);$j++)
-				{					
+				{
+					echo "\nCustomer=".$customer_sel[$route_name_rdb_3][j];
+										
 					$col_tmp = 'A'.$row;
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $vehicle_name_rdb[$i]);
 					
@@ -317,6 +324,9 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_sel[$route_name_rdb_3][$j]);
 					//$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $plant_sel[$vehicle_imei_rdb[$i]][$j]);
 					
+
+echo "\nDEBUG1";
+
 
 					//echo "\nExpectedTimeSel=".$expected_time_sel[$route_name_rdb_3][$j];
 					$cshift_date = "";
@@ -352,6 +362,8 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 
 					$col_tmp = 'Q'.$row;
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $remark_rdb[$i]);
+
+echo "\nDEBUG2";
 					
 					//####### PLANT SHIFT
 					$cshift_date2 = "";
@@ -384,6 +396,8 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 					
 					$col_tmp = 'W'.$row;
 					$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $expected_time_plant_out_sel[$route_name_rdb_3][$j]);					
+echo "\nDEBUG3";
+
 					//####### PLANT SHIFT ENDS
 					
 					//echo "\nSizeTransporter=".sizeof($transporter_m);
@@ -452,10 +466,13 @@ function create_hrly_excel($read_excel_path, $shift, $route_type_param, $startda
 					
 					$row++;
 					$sno++;					
+echo "\nDEBUG5";
 				}
 			}
 		}
 	}
+
+echo "\nAfterFirstSheet";
 	
 	//if($route_type_param!="ALL")
 	//{

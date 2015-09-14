@@ -24,7 +24,7 @@ function get_distance_data($write_file_path) {
     global $DEBUG_ONLINE;
     global $LOG;
     global $abspath;
-    echo "\nSD=" . $startdate . " ,ED=" . $enddate . " ,Time1=" . $time1_ev;
+    //echo "\nSD=" . $startdate . " ,ED=" . $enddate . " ,Time1=" . $time1_ev;
     global $VehicleIMEI;
     
     global $TripDate;
@@ -328,7 +328,8 @@ function get_distance_data($write_file_path) {
         }
         
         $total_dist = round($total_dist,2);
-        update_distance_status($objPHPExcel_1, $write_file_path, $TripDate[$i],$DCSM_NAME[$i],$Route[$i],$VehicleNo[$i],$ActivityTimeForWeightOut[$i],$ActivityTimeForWeightIn[$i], $total_dist, $k);
+	echo "\nTotalDistance=".$total_dist."\n";
+        update_distance_status($objPHPExcel_1, $write_file_path, $TripDate[$i],$DCSM_NAME[$i],$Route[$i],$VehicleNo[$i],$ActivityTimeForWeightOut[$i],$ActivityTimeForWeightIn[$i], $total_dist, $i);
     } //##### EXCEL VEHICLE LOOP CLOSED
     
     ######## CLOSE CASSANDRA CONNECTION	
@@ -365,7 +366,7 @@ function update_distance_status($objPHPExcel_1, $write_file_path, $TripDate,$DCS
     $col_tmp = 'A' . $row;
     $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $ActivityTimeForWeightIn);*/
 
-    $col_tmp = 'A' . $row;
+    $col_tmp = 'G' . $row;
     $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $Distance);
 }
 

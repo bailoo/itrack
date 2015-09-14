@@ -79,9 +79,11 @@ include_once("create_hrly_excel_file.php");
 
 $date = date('Y-m-d');
 $pdate = date('Y-m-d', strtotime($date .' -1 day'));
+$directory_date = "2015-09-02";
 $filename = "DISTANCE_16_31.xls";
-$read_file_path = $abspath . "/gps_report/" . $account_id . "/upload/".$date."/".$filename;
-$write_file_path = $abspath . "/gps_report/" . $account_id . "/download/".$date."/".$filename;
+//$filename = "DISTANCE_test.xls";
+$read_file_path = $abspath . "/gps_report/" . $account_id . "/upload/".$directory_date."/".$filename;
+$write_file_path = $abspath . "/gps_report/" . $account_id . "/download/".$directory_date."/".$filename;
 echo "\nSent_RootPath=" . $write_file_path;
 
 include_once("get_route_db_detail.php");
