@@ -122,7 +122,7 @@
 				<input type="hidden" name="docketflag" id="docketflag:0" value="1" style="width:70px;"  />	
 		
 				<!--<input type="hidden" style="width:70px;"  id="addfield1" onclick="javascript:addfield();" value="ADD"  />-->
-				<td><input type="button" style="width:70px;"  id="addfield1" onclick="javascript:addfield();" value="ADD"  /></td>
+				<td><input type="button" style="width:70px;"  id="addfield1"  value="---"  /></td>
 				
 			</tr>
 		</table>
