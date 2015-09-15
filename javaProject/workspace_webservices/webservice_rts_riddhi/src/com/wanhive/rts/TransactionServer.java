@@ -83,6 +83,8 @@ public class TransactionServer implements Runnable {
 	 * Basic functions, initialisation of basic functionalities and data-structures
 	 */
 	//==================================================================================	
+	public static RequestHandler handler = new RequestHandler();
+	
 	public static RandomAccessFile excptionf =null;
 	public static int port_number = 0;
 
@@ -138,8 +140,8 @@ public class TransactionServer implements Runnable {
 	
 	//#### DATABASE CONNECTION VARIABLES
 	public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	public static final String DB_URL = "jdbc:mysql://localhost/alert_session";
-	public static final String DB_URL_remote = "jdbc:mysql://111.118.181.156/iespl_vts_beta";
+	public static final String DB_URL = "jdbc:mysql://localhost/iespl_vts_beta";
+	//public static final String DB_URL_remote = "jdbc:mysql://111.118.181.156/iespl_vts_beta";
 	//public static final String DB_URL_remote = "jdbc:mysql://localhost/iespl_vts_beta";
 	//###### SET SQS IDS
 	public static final int vendor_sno = 4;	
@@ -157,10 +159,10 @@ public class TransactionServer implements Runnable {
 	public static Connection conn = null;
 	public static Statement stmt = null;
 	   
-	public static final String USER_remote = "root";
+	/*public static final String USER_remote = "root";
 	public static final String PASS_remote = "mysql";
 	public static Connection conn_remote = null;
-	public static Statement stmt_remote = null;	
+	public static Statement stmt_remote = null;*/	
 	//############################	
 	
 	//##########################
@@ -342,7 +344,7 @@ public class TransactionServer implements Runnable {
 		//Application.writeLog("TransactionServer[cleanUp]: shutdown has been initiated", SystemLogger.WARN);
 		
 		//Stop the worker
-		this.worker.stop();
+		//this.worker.stop();
 		
 		//Cleanly close all active connections, including the listening channel
 		Set<SelectionKey> keys=this.selector.keys();
@@ -425,7 +427,7 @@ public class TransactionServer implements Runnable {
 	
 	public static void get_vendor_vehicles()
 	{		
-		try{
+		/*try{
 		      //STEP 2: Register JDBC driver
 		  try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -434,14 +436,15 @@ public class TransactionServer implements Runnable {
 			e.printStackTrace();
 		  }
 		  //STEP 3: Open a connection	  	  
-		  conn_remote = DriverManager.getConnection(DB_URL_remote,USER,PASS);
+		  conn = DriverManager.getConnection(DB_URL,USER,PASS);
 	  	  //System.out.println("Connection to 156 -Remote database-ok:"+conn_remote+" ,DB_URL_remote="+DB_URL_remote+",USER="+USER+" PASS="+PASS);
-		}catch(SQLException se){}
+		}catch(SQLException se){}*/
 		
 		try{
 			//System.out.println("In GetVendor vehicles");
-			stmt_remote = conn_remote.createStatement();
-			String sql_remote;
+			stmt = null;
+			stmt = conn.createStatement();
+			String sql;
 			/*sql_remote = "select vehicle_gpsvendor_assignment.device_imei_no from vehicle,vehicle_gpsvendor_assignment,gps_vendor,vehicle_assignment where "+
 			"vehicle.vehicle_id=vehicle_assignment.vehicle_id AND vehicle.status=1 AND vehicle_assignment.status=1 "+
 			"AND vehicle_assignment.device_imei_no= vehicle_gpsvendor_assignment.device_imei_no AND "+
@@ -449,27 +452,27 @@ public class TransactionServer implements Runnable {
 			"AND gps_vendor.gps_vendor_id= vehicle_gpsvendor_assignment.gps_vendor_id AND gps_vendor.status=1";
 			//System.out.println("SQL="+sql_remote);*/
 			
-			sql_remote = "select vehicle.vehicle_name from vehicle,vehicle_gpsvendor_assignment,gps_vendor,vehicle_assignment where "+
+			sql = "select vehicle.vehicle_name from vehicle,vehicle_gpsvendor_assignment,gps_vendor,vehicle_assignment where "+
 			"vehicle.vehicle_id=vehicle_assignment.vehicle_id AND vehicle.status=1 AND vehicle_assignment.status=1 "+
 			"AND vehicle_assignment.device_imei_no= vehicle_gpsvendor_assignment.device_imei_no AND "+
 			"vehicle_gpsvendor_assignment.gps_vendor_id="+gps_vendor_id+" AND vehicle_gpsvendor_assignment.status=1 "+
 			"AND gps_vendor.gps_vendor_id= vehicle_gpsvendor_assignment.gps_vendor_id AND gps_vendor.status=1 AND vehicle.status=1";
 			//13=Newwaves select DISTINCT gps_vendor_name,gps_vendor_id from vehicle_gpsvendor_assignment where status=1;
 			//System.out.println("sql_remote="+sql_remote);
-			ResultSet rs_remote = stmt_remote.executeQuery(sql_remote);
-		    while(rs_remote.next()){
+			ResultSet rs = stmt.executeQuery(sql);
+		    while(rs.next()){
 		         try{						
 					//System.out.println("IN 156");
 		        	//vehicle_imei = vehicle_imei+""+rs_remote.getString("device_imei_no")+",";
-		        	vehicleNoArr.add(rs_remote.getString("vehicle_name"));
+		        	vehicleNoArr.add(rs.getString("vehicle_name"));
 		         }catch(SQLException sq) {System.out.println("Error in Con:156");}
 		    }
 		    //vehicle_imei = vehicle_imei.substring(0,vehicle_imei.length()-1);	
 			//System.out.println("sql_remote="+sql_remote);			
-			rs_remote.close();
-			stmt_remote.close();
-			conn_remote.close();
-		}catch(SQLException se2){System.out.println("conn_remote error");}		
+			rs.close();
+			stmt.close();
+			//conn.close();
+		}catch(SQLException se2){System.out.println("conn error");}		
 	}
 	
 	public static void get_last_time()
@@ -625,19 +628,19 @@ public class TransactionServer implements Runnable {
 	
 	private void dispatch() throws IOException {
 
-		ResultSet rs_remote = null;
-		stmt_remote = null;
+		ResultSet rs = null;
+		stmt = null;
 		String line ="";
 		String vehicleNoString="";
 		vehicleNoArr=new ArrayList<String>();
 		System.out.println("IN PullWebServiceData");
-		Connection conn_remote = null;
+		/*Connection conn = null;
 		try {
-			conn_remote = DriverManager.getConnection(DB_URL_remote,USER,PASS);
+			conn = DriverManager.getConnection(DB_URL,USER,PASS);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 		TrackSoapProxy webServiceClient = new TrackSoapProxy();	
 		try {
 			try {			
@@ -647,28 +650,28 @@ public class TransactionServer implements Runnable {
 				"vehicle_gpsvendor_assignment.gps_vendor_id = 3 AND vehicle_gpsvendor_assignment.status=1 AND "+
 				"vehicle.vehicle_name=trip_detail.vehicle_no AND trip_detail.trip_status=1 AND trip_detail.status=1 AND "+
 				"gps_vendor.gps_vendor_id= vehicle_gpsvendor_assignment.gps_vendor_id AND gps_vendor.status=1 AND vehicle.status=1";*/
-				String sql_remote = "select vehicle.vehicle_name from vehicle,trip_detail,vehicle_assignment,vehicle_gpsvendor_assignment WHERE "+
+				String sql = "select vehicle.vehicle_name from vehicle,trip_detail,vehicle_assignment,vehicle_gpsvendor_assignment WHERE "+
 				"vehicle.status=1 AND trip_detail.trip_status=1 AND trip_detail.status=1 AND trip_detail.vehicle_no=vehicle.vehicle_name AND "+
 				"vehicle.vehicle_id=vehicle_assignment.vehicle_id AND vehicle_assignment.status=1 AND "+
 				"vehicle_gpsvendor_assignment.device_imei_no=vehicle_assignment.device_imei_no AND vehicle_gpsvendor_assignment.status=1 AND "+
 				"vehicle_gpsvendor_assignment.gps_vendor_id = "+gps_vendor_id+"";				
 				
 				//select DISTINCT gps_vendor_name,gps_vendor_id from vehicle_gpsvendor_assignment where status=1;
-				System.out.print("sql_remote: " + sql_remote);
-				stmt_remote = conn_remote.createStatement();
-				rs_remote = stmt_remote.executeQuery(sql_remote);
+				System.out.print("sql: " + sql);
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery(sql);
 				int i=0;
-				if(rs_remote.next())
+				if(rs.next())
 				{
-					System.out.println("Vehicle="+rs_remote.getString("vehicle_name"));
+					System.out.println("Vehicle="+rs.getString("vehicle_name"));
 					//vehicleNoArr.add(rs_remote.getString("vehicle_name"));
-					vehicleNoString = vehicleNoString+rs_remote.getString("vehicle_name");
+					vehicleNoString = vehicleNoString+rs.getString("vehicle_name");
 				}
-				while(rs_remote.next())
+				while(rs.next())
 				{
-					System.out.println("Vehicle="+rs_remote.getString("vehicle_name"));
+					System.out.println("Vehicle="+rs.getString("vehicle_name"));
 					//vehicleNoArr.add(rs_remote.getString("vehicle_name"));
-					vehicleNoString = vehicleNoString+","+rs_remote.getString("vehicle_name");
+					vehicleNoString = vehicleNoString+","+rs.getString("vehicle_name");
 			    }
 				System.out.println("vehicleNoString1="+vehicleNoString);
 				/*vehcileNoArr.add("MH04GF8892");
@@ -676,7 +679,7 @@ public class TransactionServer implements Runnable {
 				vehcileNoArr.add("MH12HD5996");
 				vehcileNoArr.add("MH12KP3561");*/
 				//System.out.print(", vehcileNoArr: " + vehicleNoArr);
-				rs_remote.close();
+				rs.close();
 			} 
 			catch (SQLException e) 
 			{
@@ -752,10 +755,11 @@ public class TransactionServer implements Runnable {
 								
 								line = DeviceIMEINo+","+DateTimeLast+","+Latitude+","+Longitude+","+Speed+";";
 								//System.out.println("line="+line);
-								ByteBuffer buffer=null;
-								byte[] messageBytes=line.getBytes();
+								//ByteBuffer buffer=null;
+								//byte[] messageBytes=line.getBytes();
 								if(line.length()!=0) {
-										this.worker.processData(messageBytes, line.length());
+									//this.worker.processData(messageBytes, line.length());
+									handler.UpdateDatabase(line);
 								}			
 								
 							}
@@ -769,12 +773,12 @@ public class TransactionServer implements Runnable {
 			e.printStackTrace();
 		}
 		
-		try {
-			conn_remote.close();
+		/*try {
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public static Charset charset = Charset.forName("UTF-8");

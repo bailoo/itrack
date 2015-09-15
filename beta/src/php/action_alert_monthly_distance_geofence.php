@@ -191,7 +191,8 @@
                             $last_time1 = $datetime;
                             $latlast = $lat;
                             $lnglast =  $lng;  
-                            $max_speed	=0.0;								
+                            $max_speed	=0.0;
+                            $max_speed_in =0.0;
                         }           	              	
                         else
                         {
@@ -237,9 +238,14 @@
                             $latlast = $lat_E;
                             $lnglast =  $lng_E;
                             //echo"maxspeed=".$max_speed."speed=".$speed."<br>";
-                            if(($max_speed<$speed) && ($speed<200))
+                            if(($max_speed<$speed) && ($speed<200) && ($haltFlag==false) && ($outflag==1))
                             {
                                 $max_speed = $speed;
+                            }
+							
+                            if(($max_speed<$speed) && ($speed<200) && ($haltFlag==false) && ($outflag==0))
+                            {
+                                $max_speed_in = $speed;
                             }
 
                             //echo "tmpSpeed=".round($tmp_speed,2)."tmpSpeed1=".round($tmp_speed1,2)."distanceIncreament=".$distance_incriment."tmpTimeDiff=".$tmp_time_diff." tmpTimeDiff1=".$tmp_time_diff1."<br>";								
@@ -357,6 +363,7 @@
                 $dailyDistDisplay[]=$daily_dist;
                 $maxSpeedArr[]=$daily_max_speed;
                 $avgSpeedArr[]=$daily_avg_speed;
+                $maxSpeedArrIn[] = $max_speed_in;
 
                 $daily_dist = 0;
                 $daily_travel_time=0;
@@ -364,6 +371,7 @@
                 $daily_avg_speed=0;
                 $daily_max_speed=0;
                 $max_speed=0;
+                $max_speed_in=0;
             }  
         }       
 //$parameterizeData=null;	
@@ -377,6 +385,7 @@ report_title("Monthly Geofence Report",$dateStartDisplay,$dateEndDisplay);
             $daily_dist1=array();
             $maxSpeedArr1=array();
             $avgSpeedArr1=array();
+            $maxSpeedArrIn1=array();
             for($i=0;$i<sizeof($imei);$i++)
             {								              
                 if(($i==0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )
@@ -404,6 +413,7 @@ report_title("Monthly Geofence Report",$dateStartDisplay,$dateEndDisplay);
                         <td class="text" align="left"><b>Daily Distance (km)</b></td>
                         <td class="text" align="left"><b>Max Speed (km/hr)</b></td>
                         <td class="text" align="left"><b>Avg Speed (km/hr)</b></td>
+                        <td class="text" align="left"><b>Max Speed Inside Geofence (km/hr)</b></td>
                     </tr>';  								
                 }  	
 		$sum_dailydist = $sum_dailydist + $dailyDistDisplay[$i];
@@ -412,7 +422,8 @@ report_title("Monthly Geofence Report",$dateStartDisplay,$dateEndDisplay);
 		echo'<td class="text" align="left">'.$mdate[$i].'</td>';		
 		echo'<td class="text" align="left">'.$dailyDistDisplay[$i].'</td>';
 		echo'<td class="text" align="left">'.$maxSpeedArr[$i].'</td>';
-		echo'<td class="text" align="left">'.$avgSpeedArr[$i].'</td>';		
+		echo'<td class="text" align="left">'.$avgSpeedArr[$i].'</td>';
+                echo'<td class="text" align="left">'.$maxSpeedArrIn[$i].'</td>';
 		echo'</tr>';	          		
                 //echo "<br>arr_time1[$j][$k]main=".$arr_time1[$j][$k];
       
@@ -420,7 +431,7 @@ report_title("Monthly Geofence Report",$dateStartDisplay,$dateEndDisplay);
 		$daily_dist1[$j][$k] = $dailyDistDisplay[$i];
 		$maxSpeedArr1[$j][$k] = $maxSpeedArr[$i];
 		$avgSpeedArr1[$j][$k] = $avgSpeedArr[$i];		
-								
+		$maxSpeedArrIn1[$j][$k] = $maxSpeedArrIn[$i];					
 		if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
 		{
 			$endtable =1;        
@@ -471,7 +482,7 @@ report_title("Monthly Geofence Report",$dateStartDisplay,$dateEndDisplay);
 		{								
 			$title=$vname[$x]." (".$imei[$x]."): Monthly Distance Report(km) Date From ".$date1." To ".$date2;
 			$csv_string = $csv_string.$title."\n";
-			$csv_string = $csv_string."SNo,Date,Daily Distance (km),Max Speed(km/hr),Average Speed(km/hr)\n";
+			$csv_string = $csv_string."SNo,Date,Daily Distance (km),Max Speed(km/hr),Average Speed(km/hr),Max Speed Inside Geofence(km/hr)\n";
       echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title[$x]\">";
 			
 			$sno=0;
@@ -483,7 +494,8 @@ report_title("Monthly Geofence Report",$dateStartDisplay,$dateEndDisplay);
         $datetmp = $date_pdf[$x][$y];	
 				$dailydisttmp = $daily_dist1[$x][$y];
 				$maxSpeedTmp = $maxSpeedArr1[$x][$y];
-				$avgSpeedTmp = $avgSpeedArr1[$x][$y];				
+				$avgSpeedTmp = $avgSpeedArr1[$x][$y];
+                                $maxSpeedInTmp = $maxSpeedArrIn1[$x][$y];
 				//echo "dt=".$datetmp1;
 				
 				echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$x][$y][SNo]\">";
@@ -491,8 +503,9 @@ report_title("Monthly Geofence Report",$dateStartDisplay,$dateEndDisplay);
 				echo"<input TYPE=\"hidden\" VALUE=\"$dailydisttmp\" NAME=\"temp[$x][$y][Daily Distance]\">";
 				echo"<input TYPE=\"hidden\" VALUE=\"$maxSpeedTmp\" NAME=\"temp[$x][$y][Max Speed]\">";
 				echo"<input TYPE=\"hidden\" VALUE=\"$avgSpeedTmp\" NAME=\"temp[$x][$y][Avg Speed]\">";
+                                echo"<input TYPE=\"hidden\" VALUE=\"$maxSpeedInTmp\" NAME=\"temp[$x][$y][Max Speed Inside Geofence]\">";
         
-        $csv_string = $csv_string.$sno.','.$datetmp.','.$dailydisttmp.','.$maxSpeedTmp.','.$avgSpeedTmp."\n"; 							
+                                $csv_string = $csv_string.$sno.','.$datetmp.','.$dailydisttmp.','.$maxSpeedTmp.','.$avgSpeedTmp.','.$maxSpeedInTmp."\n"; 							
 			}		
 
 			echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][SNo]\">";
@@ -500,6 +513,7 @@ report_title("Monthly Geofence Report",$dateStartDisplay,$dateEndDisplay);
 			echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][Daily Distance]\">";
 			echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][Max Speed]\">";
 			echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][Avg Speed]\">";
+                        echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][Max Speed Inside Geofence]\">";
 			
 			$m = $y+1;								
 			

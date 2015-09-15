@@ -9342,6 +9342,7 @@ function setapproval(sno){
 
 function setclosetime(sno){
 	
+	
 	document.getElementById('tmp_serial').value = sno;
 	document.getElementById('popup_action').value = "add";
 	if(document.getElementById('close_chk_'+sno).checked==true){
@@ -9447,6 +9448,9 @@ function setclosetime(sno){
                 document.getElementById('temp_unload_accept_time').value=(document.getElementById('unload_accept_time_'+sno).value).replace(/-/g, "/"); 		
 		document.getElementById('temp_unload_estimate_datetime').value=(document.getElementById('temp_unload_estimate_datetime').value).replace(/-/g, "/");
 		
+                document.getElementById('temp_unload_accept_time').value=(document.getElementById('unload_accept_time_'+sno).value).replace(/-/g, "/"); 		
+		document.getElementById('temp_unload_estimate_datetime').value=(document.getElementById('temp_unload_estimate_datetime').value).replace(/-/g, "/");
+		
 		var testing_status=document.getElementById('testing_status_'+sno).value;
 		
 		var radioObj = document.popupform.temp_accept_reject_sampling;		
@@ -9512,7 +9516,6 @@ function setclosetime(sno){
 		document.getElementById(param2).style.display = "none";
 	}
 }
-
 function setclosetimeedit(sno){
 	
 	    document.getElementById('tmp_serial').value = sno;

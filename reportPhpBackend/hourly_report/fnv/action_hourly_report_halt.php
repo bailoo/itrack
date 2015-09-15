@@ -1290,44 +1290,41 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
     if (($status_entered == 1) && ($entered_station == 1)) {//###### CHECK FOR ALL (ARRIVAL AND DEPARTURE)
         //echo "\nEnteredStation";
         //##UPDATE ARRIVAL																																			
-        $hour_band = explode(':', $arrival_time1[1]);
-        $col_tmp = 'H' . $row;
-        $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $hour_band[0]);
+        //$hour_band = explode(':', $arrival_time1[1]);
+        //$col_tmp = 'H' . $row;
+        //$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $hour_band[0]);
 
-        $col_tmp = 'I' . $row;
+        $col_tmp = 'H' . $row;
         $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $arrival_time1[0]);
 
-        $col_tmp = 'J' . $row;
+        $col_tmp = 'I' . $row;
         $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $arrival_time1[1]);
 
-        $col_tmp = 'O' . $row;
-        $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, round($time_delay, 2));
+        $col_tmp = 'N' . $row;
+        $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, round($time_delay, 2));			
 
-        //$col_tmp = 'M'.$row;
-        //$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp , $hrs_min);			
+        //$col_tmp = 'AJ' . $row;
+        //$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time1[0]);
 
-        $col_tmp = 'AJ' . $row;
-        $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time1[0]);
+        //$col_tmp = 'AK' . $row;
+        //$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time1[1]);
 
-        $col_tmp = 'AK' . $row;
-        $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time1[1]);
+        //$col_tmp = 'AL' . $row;
+        //$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time2[0]);
 
-        $col_tmp = 'AL' . $row;
-        $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time2[0]);
-
-        $col_tmp = 'AM' . $row;
-        $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time2[1]);
+        //$col_tmp = 'AM' . $row;
+        //$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time2[1]);
 
         //####### FILL COLOR IF CUSTOMER REVISITED
         //if($VisitStatus[trim($Vehicle)][trim($customer_at_the_rate1[0])] =="")
         if ($VisitStatus[trim($RouteNo)][trim($customer_at_the_rate1[0])] == "") {
-            $col_tmp = 'AN' . $row;
+            $col_tmp = 'AH' . $row;
             $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, "1");
             $VisitStatus[trim($RouteNo)][trim($customer_at_the_rate1[0])] = "1";
         }
         //else if($VisitStatus[trim($Vehicle)][trim($customer_at_the_rate1[0])]==1)
         else if ($VisitStatus[trim($RouteNo)][trim($customer_at_the_rate1[0])] == 1) {
-            cellColor('A' . $row . ':AN' . $row, 'FFFF99');
+            cellColor('A' . $row . ':AH' . $row, 'FFFF99');
         }
         //########################################
         $ArrivalDate[$k] = $arrival_time1[0];
@@ -1339,26 +1336,26 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
     if (($status_entered == 2) && ($entered_station == 0)) {//####### CHECK FOR DEPARTURE
         //echo "\nDepartureWrite";
         //##UPDATE DEPARTURE
-        $col_tmp = 'K' . $row;
+        $col_tmp = 'J' . $row;
         $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $depature_time1[0]);
 
-        $col_tmp = 'L' . $row;
+        $col_tmp = 'K' . $row;
         $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $depature_time1[1]);
 
-        $col_tmp = 'P' . $row;
+        $col_tmp = 'O' . $row;
         $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $hrs_min);
 
-        $col_tmp = 'AJ' . $row;
-        $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time1[0]);
+        //$col_tmp = 'AJ' . $row;
+        //$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time1[0]);
 
-        $col_tmp = 'AK' . $row;
-        $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time1[1]);
+        //$col_tmp = 'AK' . $row;
+        //$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time1[1]);
 
-        $col_tmp = 'AL' . $row;
-        $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time2[0]);
+        //$col_tmp = 'AL' . $row;
+        //$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time2[0]);
 
-        $col_tmp = 'AM' . $row;
-        $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time2[1]);
+        //$col_tmp = 'AM' . $row;
+        //$objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $report_time2[1]);
 
         $DepartureDate[$k] = $depature_time1[0];
         $DepartureTime[$k] = $depature_time1[1];
@@ -1367,7 +1364,7 @@ function update_vehicle_status($objPHPExcel_1, $read_excel_path, $Vehicle, $k, $
         //echo "\nIF ARRIVAL NOT NULL";												
     }
 
-    $col_tmp = 'AI' . $row;
+    $col_tmp = 'AG' . $row;
     $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $plant_status);
 
     /* //### PLANT IN,OUT TIME	
@@ -1419,20 +1416,20 @@ function update_plant($k, $objPHPExcel_1, $read_excel_path, $p_in, $plant_indate
     if (($p_in) && ($PlantInTime[$k] == "")) {
         //echo "\nPLANT_IN";
         $plant_in_time = explode(' ', $plant_indatetime);
-        $col_tmp = 'R' . $row;
+        $col_tmp = 'P' . $row;
         $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $plant_in_time[0]);
 
-        $col_tmp = 'S' . $row;
+        $col_tmp = 'Q' . $row;
         $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $plant_in_time[1]);
         $PlantInTime[$k] = $plant_in_time[1];
     }
     if (($p_out) && ($PlantOutTime[$k] == "")) {
         //echo "\nPlantOut";
         $plant_out_time = explode(' ', $plant_outdatetime);
-        $col_tmp = 'T' . $row;
+        $col_tmp = 'R' . $row;
         $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $plant_out_time[0]);
 
-        $col_tmp = 'U' . $row;
+        $col_tmp = 'S' . $row;
         $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $plant_out_time[1]);
 
         $PlantOutTime[$k] = $plant_out_time[1];
@@ -1450,7 +1447,7 @@ function update_plant($k, $objPHPExcel_1, $read_excel_path, $p_in, $plant_indate
 
             $time_delay = $time1 / 60;
 
-            $col_tmp = 'X' . $row;
+            $col_tmp = 'V' . $row;
             $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, round($time_delay, 2));
             $PlantOutDelay[$k] = $time_delay;
         }
@@ -1535,7 +1532,7 @@ function update_plant($k, $objPHPExcel_1, $read_excel_path, $p_in, $plant_indate
 function update_nogps($objPHPExcel_1, $msg, $i) {
     //echo "\nInUpdateRemark";
     $row = $i + 2;
-    $col_tmp = 'AB' . $row;
+    $col_tmp = 'Z' . $row;
 
     $objPHPExcel_1->setActiveSheetIndex(0)->setCellValue($col_tmp, $msg);
 }
