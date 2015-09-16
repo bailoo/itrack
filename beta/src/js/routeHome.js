@@ -64,11 +64,13 @@ function switch_vehicle_selection(disp_value)
 	}*/
 function showMERoutes(value)
 {
+    var goefenceFlag=1;
 	if(value=="select")
 	{
 		alert("Please select one route");
 		document.getElementById('morningRoute').style.display='none';
 		document.getElementById('morningEvening').style.display='none';
+                goefenceFlag=0;
 		return false;
 	}
 	else if(value=="2")
@@ -117,6 +119,10 @@ function showMERoutes(value)
 		document.getElementById('morningEvening').style.display='';
 		document.getElementById('morningRoute').style.display='none';
 	}
+        if(document.thisform.geofence_feature.checked==true && goefenceFlag==1)/////// for other users
+        {
+                show_geofence(map);				
+        }
 }
 function initialize() 
 {
