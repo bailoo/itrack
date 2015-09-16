@@ -2218,6 +2218,10 @@ function getStation1(select_value)
 	}
 	function plotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType,rFoundLat,rFoundLng,inci)
 	{ 
+            if(document.thisform.geofence_feature.checked==true)/////// for other users
+            {
+                show_geofence(map_canvas);				
+            }
 		var latlngbounds = new google.maps.LatLngBounds();
 		var icon;
 		
