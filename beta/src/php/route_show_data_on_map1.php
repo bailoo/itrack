@@ -579,7 +579,95 @@ function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
 
-
+function show_geofence(map)
+{
+    //alert("test");
+	var req = getXMLHTTP();
+	req.open("GET", "src/php/getGeofencePoints.php", false); //third parameter is set to false here
+	req.send(null);
+        //alert("response="+responseText);
+	var data = req.responseText;
+	var xml = xmlParse(data);		
+	if(data!="Geofence Not Found")
+	{
+		var geo_point_data = xml.documentElement.getElementsByTagName("marker");
+		var i;	
+		var bounds_global = new google.maps.LatLngBounds();		
+		var point_global;																				
+		for(i=0; i<geo_point_data.length; i++) 
+		{	
+			var polygon = new Array();		
+			var p = 0;	
+			var geo_name = geo_point_data[i].getAttribute("geo_name");
+			var geo_points = geo_point_data[i].getAttribute("points");
+			var geo_points1=geo_points.split(',');	
+			var bounds = new google.maps.LatLngBounds();	
+			var point;			
+			for(var j=0;j<geo_points1.length;j++)
+			{
+				if(j==0)
+				{
+					//alert("in if"+i);
+					var coord_global = geo_points1[j].split(" ");	
+					//alert("coord="+coord);
+					point_global = new google.maps.LatLng(parseFloat(coord_global[0]),parseFloat(coord_global[1]));		//alert("point="+point);
+					bounds_global.extend(point_global);
+				}
+					
+				var coord = geo_points1[j].split(" ");	
+				//alert("coord="+coord);
+				point = new google.maps.LatLng(parseFloat(coord[0]),parseFloat(coord[1]));		//alert("point="+point);
+				bounds.extend(point);	
+			}			
+			var center = bounds.getCenter();	
+			//var zoom = map.getBoundsZoomLevel(bounds)-5;	//map.setCenter(center,zoom);				
+			var temp_center="";		
+			temp_center=temp_center+"0"+center+"0";		
+			var center2 = temp_center.split("(");	
+			var center3 = center2[1].split(")");				
+			var center4 = center3[0].split(",");	
+			//var latlng = new GLatLng(center4[0], center4[1]);	
+			var latlng = new google.maps.LatLng(center4[0], center4[1]);				
+			var marker = new MarkerWithLabel({
+			position: latlng,
+			draggable: true,							
+			map:map,
+			icon: {path: google.maps.SymbolPath.CIRCLE,},
+			labelContent: '<table><tr><td><font color="green" size=2><b>'+geo_name+'</b></font></td></tr></table>',
+			labelAnchor: new google.maps.Point(-2, 12)
+			});
+			markers.push(marker);
+			var point1;
+			var bounds1 = new google.maps.LatLngBounds();				
+			var geo_points2=geo_points.split(',');
+			var lastpt = geo_points2.length-1;
+			var pts = new Array();
+				
+			for(var j=0;j<geo_points2.length;j++)
+			{
+				var points = geo_points2[j].split(" ");				
+				pts[j] = new google.maps.LatLng(parseFloat(points[0]),parseFloat(points[1]));				
+				if(j == lastpt)
+				{
+					j++;
+					points = geo_points2[0].split(" ");											
+					pts[j] = new google.maps.LatLng(parseFloat(points[0]),parseFloat(points[1]));
+					var geofencePolygon = new google.maps.Polygon({
+					paths: pts,
+					strokeColor: '#FF0000',
+					strokeOpacity: 0.8,
+					strokeWeight: 2,
+					fillColor: '#FF0000',
+					fillOpacity: 0.0
+					});
+					markers.push(geofencePolygon);
+					geofencePolygon.setMap(map);					
+					p++;	
+				}	// if closed
+			}
+		}			
+	}
+}
 /*function DateCheck_1(b)
 {
 	var currentTime = new Date();

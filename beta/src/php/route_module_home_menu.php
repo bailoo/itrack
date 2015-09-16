@@ -41,8 +41,7 @@
             include('module_route_select_track.php');
           //include('module_refresh.php');
            // include('module_mouse_action.php');       
-		echo '<input type="hidden" name="location" checked>
-		<input type="hidden" name="geofence_feature"> ';		
+		echo '<input type="hidden" name="location" checked>';		
 		/*echo'<tr>
 				<td>
 					<table border="0" class="module_left_menu">
@@ -61,6 +60,18 @@
 					</table>
 				</td>
 			</tr>';*/
+                        echo'<tr>
+				<td>
+					<table border="0" class="module_left_menu">
+						<tr>
+							<td>
+                                                            Geofence &nbsp;&nbsp;
+                                                            <input type="checkbox" name="geofence_feature">     
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>';
 			echo'<input type="hidden" name="latlng">';
 			echo'<input type="hidden" name="m1" value="1"/>';
 			echo'<input type="hidden" name="m2" value="1"/>';
