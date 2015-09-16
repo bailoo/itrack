@@ -74,25 +74,17 @@ function getLastSeenDateTime($o_cassandra,$imei,$datetime)
 			  date = '$strDate'
 			  AND	
 			  dtime <= '$datetime+$TZ'
-			  LIMIT 1
 			  ;";
 		$st_results = $o_cassandra->query($s_cql);
-		if (hasLatLong($st_results))
-			break;
+		$st_obj = hasLatLong($st_results);
+		if (!empty($st_obj))
+		{
+			return $st_obj;
+		}
+
 	}
 
-	if (hasLatLong($st_results))
-	{
-		$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
-		$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
-		$st_obj = logParser($st_results, $dataType, $orderAsc);
-	}
-	else
-	{
-		$st_obj = new stdClass();			
-	}
-
-	return $st_obj;
+	return new stdClass();	/* empty object */
 }
 
 /***
@@ -133,27 +125,18 @@ function getLastSeenDateTimes($o_cassandra, $imei, $datetime1, $datetime2)
 			  dtime <= '$datetime2+$TZ'
 			  AND	
 			  dtime >= '$datetime1+$TZ'
-			  LIMIT 1
 			  ;";
 		$st_results = $o_cassandra->query($s_cql);
-		if (hasLatLong($st_results))
-			break;
-		
+		$st_obj = hasLatLong($st_results);
+		if (!empty($st_obj))
+		{
+			return $st_obj;
+		}
+
 		$date->sub($interval);	/* subtract 1 day */
 	}
 
-	if (hasLatLong($st_results))
-	{
-		$dataType = TRUE;	// TRUE for fulldata, otherwise lastdata
-		$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
-		$st_obj = logParser($st_results, $dataType, $orderAsc);
-	}
-	else
-	{
-		$st_obj = new stdClass();			
-	}
-
-	return $st_obj;
+	return new stdClass();	/* empty object */
 }
 
 /***
@@ -161,7 +144,7 @@ function getLastSeenDateTimes($o_cassandra, $imei, $datetime1, $datetime2)
 *
 * @param array $st_results 	Result array
 *
-* @return Boolean
+* @return object	parsed result of the query
 */
 function hasLatLong($st_results)
 {
@@ -171,23 +154,22 @@ function hasLatLong($st_results)
 		$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
 		$st_obj = logParser($st_results, $dataType, $orderAsc);
 	
-		/* check if either lat or long is missing, return empty object */	
-		$num = 0;	// returns just one row
-		$lat = $st_obj->$num->d;
-		$long = $st_obj->$num->e;
-		if ("" == $lat || "" == $long)
+		foreach ($st_obj as $row)
 		{
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
+			/* check if either lat or long is missing, return empty object */	
+			$lat = $row->d;
+			$long = $row->e;
+			if ("" == $lat || "" == $long)
+			{
+				continue;	
+			}
+			else
+			{
+				return $row;
+			}
 		}
 	}
-	else
-	{
-		return FALSE;	
-	}
+	return new stdClass();	/* empty object */
 }
 
 
