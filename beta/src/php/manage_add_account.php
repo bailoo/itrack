@@ -147,11 +147,11 @@
 					$show_combo = 1;
 					$flagcombo[]=array("KEY"=>"plant_raw_milk","DISPLAY"=>"Plant Raw Milk");
 				}
-				if($feature_name_session[$k] == "plant_raw_milk")
+				  if($feature_name_session[$k] == "plant_admin")
 				{
 					$flag_plant_raw_milk = 1;
 					$show_combo = 1;
-					$flagcombo[]=array("KEY"=>"plant_raw_milk","DISPLAY"=>"Plant Raw Milk");
+					$flagcombo[]=array("KEY"=>"plant_admin","DISPLAY"=>"Plant Admin");
 				}	
 				if($feature_name_session[$k] == "hindalco_invoice")
 				{
