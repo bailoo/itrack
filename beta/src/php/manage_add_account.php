@@ -134,7 +134,19 @@
 					$flag_raw_milk = 1;
 					$show_combo = 1;
 					$flagcombo[]=array("KEY"=>"raw_milk","DISPLAY"=>"Raw Milk");
-				}	
+				}
+                                if($feature_name_session[$k] == "proc_admin")
+				{
+					$flag_raw_milk = 1;
+					$show_combo = 1;
+					$flagcombo[]=array("KEY"=>"proc_admin","DISPLAY"=>"Proc. Admin");
+				}
+				if($feature_name_session[$k] == "plant_raw_milk")
+				{
+					$flag_plant_raw_milk = 1;
+					$show_combo = 1;
+					$flagcombo[]=array("KEY"=>"plant_raw_milk","DISPLAY"=>"Plant Raw Milk");
+				}
 				if($feature_name_session[$k] == "plant_raw_milk")
 				{
 					$flag_plant_raw_milk = 1;

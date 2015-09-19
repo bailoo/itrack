@@ -7,11 +7,11 @@
 	
 	//===Getting Plant 
 	$final_plant_list_tmp=array();
-    $final_plant_name_list_tmp=array();
+        $final_plant_name_list_tmp=array();
 	$final_plant_list_tmp[0]="";
-    $final_plant_name_list_tmp[0]="";
+        $final_plant_name_list_tmp[0]="";
 	
-	if($user_type=='plant_raw_milk'){
+	if($user_type=='plant_raw_milk' || $user_type=='plant_admin'){
 echo'
 	<center>	
 	<table>

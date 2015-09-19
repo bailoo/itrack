@@ -3,7 +3,8 @@
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');	
 include("user_type_setting.php");
-
+include_once("util_account_detail.php");
+//echo $user_type;
 $flag_sector = 0;
 for($k=0;$k<$size_feature_session;$k++)
 {
@@ -34,7 +35,11 @@ for($k=0;$k<$size_feature_session;$k++)
 	if($feature_name_session[$k] == "raw_milk")
 	{
 		$flag_raw_milk = 1;
-	}	
+	}
+        if($user_type == "proc_admin")
+	{
+		$flag_proc_admin = 1;
+	}
 	if($feature_name_session[$k] == "hindalco_invoice")
 	{
 		$flag_hindalco_invoice = 1;
@@ -99,6 +104,8 @@ $contetnbsp="&nbsp;";
 						tree = new YAHOO.widget.TreeView("treeView",
 						[
 							<?php
+                                                            if($flag_proc_admin!=1)
+                                                            {
 								echo'{type:"Text",
 									label:"<table border=0 class=mystyle>"+
 										"<tr>"+ 																	
@@ -161,7 +168,7 @@ $contetnbsp="&nbsp;";
 										"</tr>"+
 									"</table>",editable:false, children:
 									[]},';
-									
+									}
 									if($account_id=='1')
 									{
 										echo'{type:"Text",
@@ -196,6 +203,8 @@ $contetnbsp="&nbsp;";
 										"</table>",editable:false, children:
 										[]},';
 									}
+                                                                         if($flag_proc_admin!=1)
+                                                                         {
 									echo'{type:"Text",
 										label:"<table border=0 class=mystyle>"+
 											"<tr>"+ 																	
@@ -227,6 +236,7 @@ $contetnbsp="&nbsp;";
 											"</tr>"+
 										"</table>",editable:false, children:
 										[]},';
+                                                                         }
 									if($consignment_info==1)
                                    {
 									echo'{type:"Text",
@@ -261,7 +271,10 @@ $contetnbsp="&nbsp;";
 									"</table>",editable:false, children:
 									[]},';
                                   }
-									echo'{type:"Text",
+									
+                                                                         if($flag_proc_admin!=1)
+                                                                         {
+                                                                        echo'{type:"Text",
 									label:"<table border=0 class=mystyle>"+
 										"<tr>"+ 																	
 											"<td valign=\'top\'>"+
@@ -292,7 +305,7 @@ $contetnbsp="&nbsp;";
 										"</tr>"+
 									"</table>",editable:false, children:
 									[]},';
-								
+                                                                         }
 								if($report_type=="Person")
 								{
 									echo'{type:"Text",
@@ -329,7 +342,9 @@ $contetnbsp="&nbsp;";
 								}
 								else
 								{
-									echo'{type:"Text",
+								 if($flag_proc_admin!=1)
+                                                                 {
+                                                                    echo'{type:"Text",
 									label:"<table border=0 class=mystyle>"+
 										"<tr>"+ 																	
 											"<td valign=\'top\'>"+
@@ -360,9 +375,9 @@ $contetnbsp="&nbsp;";
 										"</tr>"+
 									"</table>",editable:false, children:
 									[]},';
-								               
+                                                                 }           
 								}	            								
-								if($report_type!="Person")
+								if($report_type!="Person" && $flag_proc_admin!=1)
 								{
 									echo'{type:"Text",
 									label:"<table border=0 class=mystyle>"+

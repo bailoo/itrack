@@ -7,8 +7,7 @@
 	<script type="text/javascript" src="../js/menu.js"></script>
 	<script language="javascript" src="../js/calendar_us.js"></script> 
 	<link rel="stylesheet" href="../css/search_style.css?<?php echo time();?>">
-	<script language="javascript" src="../js/datetimepicker.js"></script>
-	<script language="javascript" src="../js/datetimepicker_sd.js"></script>
+	
 	<script type="text/javascript" src="../js/jquery.js"></script> 
 	<script language="javascript" src="../js/ajax.js?<?php echo time();?>"></script>
 	<script type="text/javascript" src="../js/jquery-1.3.2.js"></script> 
@@ -60,6 +59,7 @@
 				include_once('util_php_mysql_connectivity.php');
 				include('manage_route_vehicle_substation_inherit.php');
 				include_once("util_account_detail.php");
+                                
 				//echo "add##"; 
 				$root=$_SESSION['root'];
 				//$common_id1=$_POST['common_id'];
@@ -100,6 +100,7 @@
 				
 				//get_user_vehicle($root,$account_id_admin);
 				//print_r($vehicle_list);*/
+                                //echo $parent_admin_id;
                                 $vehicle_list=getVehicleListVehicleGroupingVehicle($parent_admin_id,$DbConnection);
 				$vehicle_list1 = array_unique($vehicle_list);	
 				$final_vehicle_list=array();
@@ -178,55 +179,50 @@
 				else
 				{
 					//plant
-					//$query_plant = "SELECT customer_no,station_name FROM station WHERE type=1 AND user_account_id='$parent_admin_id' AND  status=1";
-					/*$self_child_plantno="";
-					$query_plant = "SELECT station.customer_no,station.station_name ,plant_user_assignment.plant_customer_no FROM station,plant_user_assignment WHERE station.type=1 AND station.user_account_id='$parent_admin_id' AND  station.status=1 AND plant_user_assignment.plant_customer_no= station.customer_no and plant_user_assignment.account_id='$account_id' AND plant_user_assignment.status=1";
-					//echo $query_plant;
-					$result_query = mysql_query($query_plant,$DbConnection);
-					while($row=mysql_fetch_object($result_query))
-					{
-						//echo $row->customer_no;
-						$final_plant_list[]=$row->customer_no;
-						$final_plant_name_list[]=$row->station_name;
-						$self_child_plantno.="'$row->customer_no'".',';
-					}
-					$self_child_plantno=substr($self_child_plantno,0,-1);
-                                        */
-                                        $DataSelf =getDetailSelfChildCustomerNoStationNameStation($parent_admin_id,$account_id,$DbConnection);
-                                        foreach($DataSelf as $dt)
-					{
-						$final_plant_list[]=$dt['final_plant_list'];
-						$final_plant_name_list[]=$dt['final_plant_name_list'];
-                                                $self_child_plantno.=$dt['final_plant_list'].',';
-						
-					}
-                                        $self_child_plantno=substr($self_child_plantno,0,-1);
-					/*//chilling plant
-					$query_chillplant = "SELECT customer_no,station_name FROM station WHERE type=2 AND user_account_id='$parent_admin_id' AND status=1";
-					$result_chillquery = mysql_query($query_chillplant,$DbConnection);
-					while($rowchill=mysql_fetch_object($result_chillquery))
-					{
-						//echo $row->customer_no;
-						$final_chillplant_list[]=$rowchill->customer_no;
-						$final_chillplant_name_list[]=$rowchill->station_name;
-					}*/
-                                        //chilling plant					
-					$DataChil = getCustomerNoStationNext($parent_admin_id,$DbConnection);
-					foreach($DataChil as $dt)
-					{
-						$final_chillplant_list[]=$dt['final_chillplant_list'];
-						$final_chillplant_name_list[]=$dt['final_chillplant_name_list'];
-					}
-					//getting invoice lorry number of only open for desired transporter
-					/*$query_lorry_open = "SELECT lorry_no FROM invoice_mdrm WHERE invoice_status=1 AND plant IN($self_child_plantno) AND status=1";
-					//echo "QLO=".$query_lorry_open;
-					$result_lorry_open = mysql_query($query_lorry_open,$DbConnection);
-					while($row_lorry_open=mysql_fetch_object($result_lorry_open))
-					{
-						$final_lorry_list[]=$row_lorry_open->lorry_no;					
-					}*/
+					if($user_type=='plant_admin')
+                                        {
+                                           $data_cus_station1=getDetailAllCustomerNoStationNameStation($parent_admin_id,$DbConnection);
+                                           foreach($data_cus_station1 as $row)
+                                            {
+                                                    //echo $row->customer_no;
+                                                    $final_plant_list[]=$row['final_plant_list'];
+                                                    $final_plant_name_list[]=$row['final_plant_name_list'];
+                                                    $self_child_plantno.=$dt['final_plant_list'].',';
+                                            }
+                                            $self_child_plantno=substr($self_child_plantno,0,-1);
+                                            
+                                            $data_cus_station2=getCustomerNoStationNext($parent_admin_id,$DbConnection);
+                                            foreach($data_cus_station2 as $rowchill)
+                                            {
+                                                $final_chillplant_list[]=$rowchill['final_chillplant_list'];
+                                                $final_chillplant_name_list[]=$rowchill['final_chillplant_name_list'];
+                                            }
+                                        }
+                                        else {
+                                            $DataSelf =getDetailSelfChildCustomerNoStationNameStation($parent_admin_id,$account_id,$DbConnection);
+                                            foreach($DataSelf as $dt)
+                                            {
+                                                    $final_plant_list[]=$dt['final_plant_list'];
+                                                    $final_plant_name_list[]=$dt['final_plant_name_list'];
+                                                    $self_child_plantno.=$dt['final_plant_list'].',';
+
+                                            }
+                                            $self_child_plantno=substr($self_child_plantno,0,-1);
+
+                                            //chilling plant					
+                                            $DataChil = getCustomerNoStationNext($parent_admin_id,$DbConnection);
+                                            foreach($DataChil as $dt)
+                                            {
+                                                    $final_chillplant_list[]=$dt['final_chillplant_list'];
+                                                    $final_chillplant_name_list[]=$dt['final_chillplant_name_list'];
+                                            }
+                                           
+                                        }
+                                         //getting invoice lorry number of only open for desired transporter
+
                                         $final_lorry_list=lorrylistPlantAll($self_child_plantno,$DbConnection);
-					//=================================================================
+                                        //=================================================================
+                                        
 				}	
 				//print_r($final_lorry_list);
 				
@@ -413,7 +409,49 @@
 							}
 						}
 					}
-				
+				function read_sent_db_pending($pid)
+                                {
+                                        global $LRNO;  global $Vehicle; global $Transporter; global $mobileno; global $emailid; global $drivername; global $drivermobile; global $qty; global $snf_per; global $snf_kg;
+                                        global $fat_kg; global $fat_per; global $milk_age; global $disp_time; global $target_time; global $plant; global $chillplant; global $tankertype;
+                                        global $sno_id;
+
+                                        //------fetching from database----------//
+                                        global $DbConnection;
+                                        //$queryPending = "SELECT * FROM invoice_mdrm WHERE status=1 AND invoice_status=5 AND (vehicle_no is NULL OR vehicle_no='') AND parent_account_id='$pid' ";
+                                        //$queryPending = "SELECT * FROM invoice_mdrm WHERE status=1 AND invoice_status=5 AND (vehicle_no is NULL OR vehicle_no='') ";
+
+                                        //$queryPending = "SELECT * FROM invoice_mdrm WHERE status=1 AND invoice_status=5";    
+
+                                        //echo $queryPending;
+                                        //$resultPending = mysql_query($queryPending,$DbConnection);
+                                        $rowPending_data=getDetailAllInvoiceMdrmNext($DbConnection);
+                                        //while($rowPending = mysql_fetch_object($resultPending))
+                                        foreach($rowPending_data as $rowPending )
+                                        {
+                                                $LRNO[] = $rowPending['LRNO'];
+                                                $Vehicle[] = $rowPending['Vehicle'];
+                                                $Transporter[] =  $rowPending['Transporter'];
+                                                $emailid[] = $rowPending['emailid'];
+                                                $mobileno[] = $rowPending['mobileno'];
+                                                $drivername[] = $rowPending['drivername'];
+                                                $drivermobile[] = $rowPending['drivermobile'];
+                                                $qty[] = $rowPending['qty'];
+                                                $fat_per[] = $rowPending['fat_per'];
+                                                $snf_per[] = $rowPending['snf_per'];
+                                                $fat_kg[] = $rowPending['fat_kg'];
+                                                $snf_kg[] = $rowPending['snf_kg'];
+                                                $milk_age[] = $rowPending['milk_age'];
+                                                $disp_time[] = $rowPending['disp_time'];
+                                                $target_time[] = $rowPending['target_time'];
+                                                $plant[] = $rowPending['plant'];
+                                                $chillplant[] = $rowPending['chillplant'];
+                                                $tankertype[] =  $rowPending['tankertype'];
+                                                $sno_id[] =$rowPending['sno_id'];
+                                        }
+
+                                        //---------------------------------------//
+
+                                }
 				function read_sent_db($account_id)
 				{
 					//echo"AC=".$account_id;
@@ -565,8 +603,22 @@
 										$LRNO=array();  $Vehicle = array(); $Transporter = array(); $mobileno=array(); $emailid=array(); $drivername=array(); $drivermobile=array(); $qty=array(); $snf_per=array(); $snf_kg=array();
 										$fat_kg=array(); $fat_per=array(); $milk_age=array(); $disp_time=array(); $target_time=array(); $plant=array(); $chillplant=array();$tankertype=array();
 										$sno_id=array();
+										if($user_type=='plant_admin')
+                                                                                {
+                                                                                    //echo $parent_admin_id;
+                                                                                    //read_sent_db($parent_admin_id);
+                                                                                    read_sent_db_pending($parent_admin_id);
+                                                                                    echo'<script>
+                                                                                        var adm_plant="1";
+                                                                                    </script>';
+                                                                                }
+                                                                                else {
+                                                                                   read_sent_db($account_id); 
+                                                                                   echo'<script>
+                                                                                        var adm_plant="0";
+                                                                                    </script>';
+                                                                                }
 										
-										read_sent_db($account_id);
 										//read_sent_db($self_child_transporter_id);
 										
 										$total_lr=sizeof($LRNO);
@@ -734,20 +786,25 @@
 				<input type="hidden" id="tmp_serial"/>
 				<script>
 				//alert(tot_loop);
-				/*if(tot_loop > 0)
-				{
-					
-					document.getElementById("enter_button").disabled=false;
-					
-				}
-				else
-				{
-					//alert("0");
-					document.getElementById("enter_button").disabled=true;
-				} */
+                                if(adm_plant=="0")
+                                {
+                                    if(tot_loop > 0)
+                                    {
+
+                                            document.getElementById("enter_button").disabled=false;
+
+                                    }
+                                    else
+                                    {
+                                            //alert("0");
+                                            document.getElementById("enter_button").disabled=true;
+                                    } 
+                                }
+				
 				</script>
 				</form>';
 				
+                                
 				function get_user_vehicle($AccountNode,$account_id)
 				{
 					//echo "hi".$account_id;

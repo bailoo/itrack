@@ -2872,7 +2872,7 @@ function getFieldStringAccountFeature($edit_account_id,$DbConnection)
     $result = mysql_query($query,$DbConnection);
     $row=mysql_fetch_object($result);
     $field_string="";
-    for($i=1;$i<=44;$i++)   //////for getting the field name having value 1 
+    for($i=1;$i<=46;$i++)   //////for getting the field name having value 1 
     {
         $field="field".$i;
         $field_value=$row->$field;
