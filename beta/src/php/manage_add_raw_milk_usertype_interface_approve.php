@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="src/css/jquery-ui.css">
 <script src="src/js/jquery-1.js"></script>
 <script src="src/js/jquery-ui.js"></script>
+<script language="javascript" src="src/js/datetimepicker_sd.js"></script>
 <script language="javascript" src="../js/datetimepicker_sdtime.js"></script>
 <input type="hidden" name="tnum"  id="tnum" value="0">
 <table  border="1" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse"   width="1390px" >
