@@ -214,11 +214,11 @@ function NewCal_SDTIME(pCtrl,pFormat,pShowTime,pTimeMode,pScroller,pHideSeconds)
 	}
 	selDate=new Date(Cal.Year,Cal.Month,Cal.Date);//version 1.7	
 	winCal=window.open("","DateTimePicker_sd","toolbar=0,status=0,menubar=0,fullscreen=no,width=230,height=245,resizable=0,top="+cnTop+",left="+cnLeft);
-	RenderCal();
+	RenderCalTime();
 	winCal.focus();
 }
 
-function RenderCal()
+function RenderCalTime()
 {
 	var vCalHeader;
 	var vCalData;
@@ -241,7 +241,7 @@ function RenderCal()
 	//******************Month selector in dropdown list************************
 	if (Cal.Scroller=="DROPDOWN")
 	{
-		vCalHeader+="<td align='left'><select name=\"MonthSelector\" onChange=\"javascript:winMain.Cal.SwitchMth(this.selectedIndex);winMain.RenderCal();\">\n";
+		vCalHeader+="<td align='left'><select name=\"MonthSelector\" onChange=\"javascript:winMain.Cal.SwitchMth(this.selectedIndex);winMain.RenderCalTime();\">\n";
 		for (i=0;i<12;i++)
 		{
 			if (i==Cal.Month)
@@ -252,18 +252,18 @@ function RenderCal()
 		}
 		vCalHeader+="</select></td>";
 		//Year selector
-		vCalHeader+="\n<td align='right'><a href=\"javascript:winMain.Cal.DecYear();winMain.RenderCal()\"><b><font color=\""+YrSelColor+"\"><</font></b></a><font face=\"Verdana\" color=\""+YrSelColor+"\" size=2><b> "+Cal.Year+" </b></font><a href=\"javascript:winMain.Cal.IncYear();winMain.RenderCal()\"><b><font color=\""+YrSelColor+"\">></font></b></a></td></tr></table></td>\n";	
+		vCalHeader+="\n<td align='right'><a href=\"javascript:winMain.Cal.DecYear();winMain.RenderCalTime()\"><b><font color=\""+YrSelColor+"\"><</font></b></a><font face=\"Verdana\" color=\""+YrSelColor+"\" size=2><b> "+Cal.Year+" </b></font><a href=\"javascript:winMain.Cal.IncYear();winMain.RenderCal()\"><b><font color=\""+YrSelColor+"\">></font></b></a></td></tr></table></td>\n";	
 		vCalHeader+="</tr>";
 	}
 	//******************End Month selector in dropdown list*********************
 	//******************Month selector in arrow*********************************
 	else if (Cal.Scroller=="ARROW")
 	{
-		vCalHeader+="<td align='center'><a href='javascript:winMain.Cal.DecYear();winMain.RenderCal();'>- </a></td>";//Year scroller (decrease 1 year)
-		vCalHeader+="<td align='center'><a href='javascript:winMain.Cal.DecMonth();winMain.RenderCal();'>&lt;</a></td>";//Month scroller (decrease 1 month)
+		vCalHeader+="<td align='center'><a href='javascript:winMain.Cal.DecYear();winMain.RenderCalTime();'>- </a></td>";//Year scroller (decrease 1 year)
+		vCalHeader+="<td align='center'><a href='javascript:winMain.Cal.DecMonth();winMain.RenderCalTime();'>&lt;</a></td>";//Month scroller (decrease 1 month)
 		vCalHeader+="<td align='center' width='70%'><font face='Verdana' size='2' color='"+YrSelColor+"'><b>"+Cal.GetMonthName(ShowLongMonth)+" "+Cal.Year+"</b></font></td>"//Month and Year
-		vCalHeader+="<td align='center'><a href='javascript:winMain.Cal.IncMonth();winMain.RenderCal();'>&gt;</a></td>";//Month scroller (increase 1 month)
-		vCalHeader+="<td align='center'><a href='javascript:winMain.Cal.IncYear();winMain.RenderCal();'>+</a></td>";//Year scroller (increase 1 year)
+		vCalHeader+="<td align='center'><a href='javascript:winMain.Cal.IncMonth();winMain.RenderCalTime();'>&gt;</a></td>";//Month scroller (increase 1 month)
+		vCalHeader+="<td align='center'><a href='javascript:winMain.Cal.IncYear();winMain.RenderCalTime();'>+</a></td>";//Year scroller (increase 1 year)
 		vCalHeader+="</tr></table></td></tr>"
 	}
     //******************End Month selector in arrow******************************
@@ -299,7 +299,7 @@ function RenderCal()
 	vCalData="<tr>";
 	for (i=0;i<vFirstDay;i++)
 	{
-		vCalData=vCalData+GenCell();
+		vCalData=vCalData+GenCellTime();
 		vDayCount=vDayCount+1;
 	}
 	//Added version 1.7
@@ -308,32 +308,32 @@ function RenderCal()
 		var strCell;
 		vDayCount=vDayCount+1;
 		if ((j==dtToday.getDate())&&(Cal.Month==dtToday.getMonth())&&(Cal.Year==dtToday.getFullYear()))
-			strCell=GenCell(j,true,TodayColor);//Highlight today's date
+			strCell=GenCellTime(j,true,TodayColor);//Highlight today's date
 		else
 		{
 			if ((j==selDate.getDate())&&(Cal.Month==selDate.getMonth())&&(Cal.Year==selDate.getFullYear()))//modified version 1.7
 			{
-				strCell=GenCell(j,true,SelDateColor);
+				strCell=GenCellTime(j,true,SelDateColor);
 			}
 			else
 			{	
 				if (MondayFirstDay==true)
 				{
 					if (vDayCount%7==0)
-						strCell=GenCell(j,false,SundayColor);
+						strCell=GenCellTime(j,false,SundayColor);
 					else if ((vDayCount+1)%7==0)
-						strCell=GenCell(j,false,SaturdayColor);
+						strCell=GenCellTime(j,false,SaturdayColor);
 					else
-						strCell=GenCell(j,null,WeekDayColor);					
+						strCell=GenCellTime(j,null,WeekDayColor);					
 				} 
 				else
 				{
 					if (vDayCount%7==0)
-						strCell=GenCell(j,false,SaturdayColor);
+						strCell=GenCellTime(j,false,SaturdayColor);
 					else if ((vDayCount+6)%7==0)
-						strCell=GenCell(j,false,SundayColor);
+						strCell=GenCellTime(j,false,SundayColor);
 					else
-						strCell=GenCell(j,null,WeekDayColor);
+						strCell=GenCellTime(j,null,WeekDayColor);
 				}
 			}		
 		}						
@@ -378,7 +378,7 @@ function RenderCal()
 	winCal.document.close();
 }
 
-function GenCell(pValue,pHighLight,pColor)//Generate table cell with value
+function GenCellTime(pValue,pHighLight,pColor)//Generate table cell with value
 {
 	var PValue;
 	var PCellStr;

@@ -55,7 +55,7 @@
 				<td><input type="text" name="fat_kg" id="fat_kg:0" value="" style="width:70px;" placeholder="FAT(KG)" readonly /></td>	
 				<td><input type="text" name="snf_kg" id="snf_kg:0" value="" style="width:70px;" placeholder="SNF(KG)" readonly /></td>	
 				<td><input type="text" name="milk_age" id="milk_age:0" value="" style="width:70px;" placeholder="MilkAge(Hr)" /></td>
-				<td><input type="text" name="disp_time" id="disp_time:0" value="" style="width:70px;" placeholder="DISP TIME" onclick="javascript:NewCal_SDTIME(this.id,'yyyymmdd',true,24);"  readonly /></td>	
+				<td><input type="text" name="disp_time" id="disp_time:0" value="" style="width:70px;" placeholder="DISP TIME" onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
 		
 				<td><input type="text" name="target_time" id="target_time:0" value="" style="width:70px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SDTIME(this.id,'yyyymmdd',true,24);"  readonly /></td>	
 		
@@ -158,7 +158,7 @@
 	<input type="text" name="fat_kg" id="fat_kg:" value="" style="width:70px;" placeholder="FAT(KG)"  readonly />	
 	<input type="text" name="snf_kg" id="snf_kg:" value="" style="width:70px;" placeholder="SNF(KG)" readonly />
 	<input type="text" name="milk_age" id="milk_age:" value="" style="width:70px;" placeholder="MilkAge(Hr)" />
-	<input type="text" name="disp_time" id="disp_time:"  value="" style="width:70px;" placeholder="DISP TIME"  onclick="javascript:NewCal_SDTIME(this.id,'yyyymmdd',true,24);"  readonly />	
+	<input type="text" name="disp_time" id="disp_time:"  value="" style="width:70px;" placeholder="DISP TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly />	
 	
 	<input type="text" name="target_time" id="target_time:" value="" style="width:70px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SDTIME(this.id,'yyyymmdd',true,24);"   readonly />	
 	
