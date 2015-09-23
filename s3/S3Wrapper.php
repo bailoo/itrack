@@ -395,9 +395,9 @@ else
     echo "S3::Dir not copied():".'0068/mother_delhi'."\n";
 }
 */
-//echo "List File in Directory:\n";
-//$filelist = listFile('gps_report/568/master');
-//print_r($filelist);
+/*echo "List File in Directory:\n";
+$filelist = listFile('gps_report/568/master');
+print_r($filelist);*/
 
 /*if(copyFile($targetFile,$LocalFileName,true))
 {
