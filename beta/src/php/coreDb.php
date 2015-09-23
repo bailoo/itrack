@@ -1574,7 +1574,16 @@ function getMaxCountInvoiceMdrm($account_id,$DbConnection)
 	$max_no1=$max_no->max_count;
 	return $max_no1;
 }
-
+//==code upd on 22092015
+function updateInvoiceCheckStatus($sno,$DbConnection)
+{
+    $QueryCheckStatus="Select invoice_status from invoice_mdrm where sno='$sno'";
+    //echo $QueryCheckStatus;
+    $ResultCheck=mysql_query($QueryCheckStatus,$DbConnection);
+    $rowstatus=mysql_fetch_row($ResultCheck);                                        
+    $inv_status = $rowstatus[0];
+    return $inv_status;
+}
 function updateInvoiceMdrmTP($lorry_no,$transporter,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$sno_id1,$DbConnection)
 {
         $QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',transporter_account_id='$transporter',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',

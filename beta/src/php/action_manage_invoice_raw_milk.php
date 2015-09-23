@@ -88,11 +88,12 @@
 				{
 					$sno_id1 =$offset_sno_id[$i];
                                         //==precheck if sno is invoice status not 5 
-                                        $QueryCheckStatus="Select invoice_status from invoice_mdrm where sno='$sno_id1'";
+                                        /*$QueryCheckStatus="Select invoice_status from invoice_mdrm where sno='$sno_id1'";
                                         //echo $QueryCheckStatus;
                                         $ResultCheck=mysql_query($QueryCheckStatus,$DbConnection);
                                         $rowstatus=mysql_fetch_row($ResultCheck);                                        
-					$inv_status = $rowstatus[0];
+					$inv_status = $rowstatus[0];*/
+                                        $inv_status=updateInvoiceCheckStatus($sno_id1,$DbConnection);
 					if($inv_status==5)
                                         {
                                             if($transporter==$account_id)
