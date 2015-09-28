@@ -16,7 +16,7 @@
 		//echo $user_type;
      ?>
      <?php
-        if($user_type=='raw_milk' || $user_type=='plant_raw_milk')
+       /* if($user_type=='raw_milk' || $user_type=='plant_raw_milk')
         {
             ?>
                  <script language="javascript" src="src/js/datetimepicker_sd.js"></script>
@@ -29,7 +29,7 @@
             <script language="javascript" src="src/js/datetimepicker.js"></script>
             <script language="javascript" src="src/js/datetimepicker_sd.js"></script>
             <?php
-        }
+        }*/
 ?>
   </head>
   

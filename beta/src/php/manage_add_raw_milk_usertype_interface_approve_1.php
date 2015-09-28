@@ -6,6 +6,7 @@
 <script src="../js/manage.js"></script>
 <script src="../js/ajax.js"></script>
 <?php
+/*
 if($user_type=='plant_admin')
 {
     ?>
@@ -19,9 +20,10 @@ else
     <script language="javascript" src="../js/datetimepicker_sd.js"></script>
     <script language="javascript" src="../js/datetimepicker_sdtime.js"></script>
     <?php
-}
+}*/
 ?>
-
+ <script language="javascript" src="../js/datetimepicker_sd.js"></script>
+    <script language="javascript" src="../js/datetimepicker_sdtime.js"></script>
 <script>
 function getScriptPage_raw_milk_new(val,ids,box){	
 	//var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
