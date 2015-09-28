@@ -102,7 +102,7 @@ echo '<br><center>
         <input TYPE="hidden" VALUE="station_record" NAME="csv_type">
         <input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">';
                          
-        if( ($account_id_local1 == "231") || ($account_id_local1 == "723") || ($account_id_local1 == "1115") || ($account_id_local1 == "568") || ($account_id_local1 == "715") )
+        if( ($account_id_local1 == "231") || ($account_id_local1 == "723") || ($account_id_local1 == "1115") || ($account_id_local1 == "568") || ($account_id_local1 == "715") || ($account_id_local1 == "1882") )
         {
           echo '<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Optimized CSV Report" class="noprint"></center>';
         }
