@@ -345,7 +345,8 @@ function setInvoiceRawMilk($lorry_no,$Vehicle_no,$group_id,$user_id,$trans_mobil
 			$Query="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',vehicle_no='$Vehicle_no',transporter_account_id='$transporter_id',docket_no='$dock_no',email='$trans_email',mobile='$trans_mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',fat_kg = '$fat_kg',snf_kg='$snf_kg',milk_age='$manual_milk_age',dispatch_time='$dispatch_time',target_time='$target_time',validity_time='$validity_time',plant='$plant',chilling_plant='$chilling_plant',tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',parent_account_id='$transporter_id',edit_id='$transporter_id',edit_date='$date',invoice_status=1,status=1 WHERE sno='$db_serial_no' "; 
 		}
 	}
-	else //newly created
+        //till further notice
+	/*else //newly created
 	{
 		
 		if($Vehicle_no=="" || $Vehicle_no==null) //simply add new pending invoice
@@ -362,7 +363,7 @@ function setInvoiceRawMilk($lorry_no,$Vehicle_no,$group_id,$user_id,$trans_mobil
 						
 
 		}
-	}
+	}*/
 	
 	
 	//return $Query."DB=".$db_serial_no;

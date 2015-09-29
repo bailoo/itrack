@@ -226,7 +226,8 @@ class Hierarchy
 			{
 				foreach($vehicleDataArr as $vehicleData)
 				{
-					$device_imei_no_local=$vehicleData['vehicle_id'];
+					//$device_imei_no_local=$vehicleData['vehicle_id'];
+                                        $device_imei_no_local=$vehicleData['device_imei_no'];
 					$vehicle_id_local=$row_1->vehicle_id;
 					$AccountInfo -> VehicleID[$AccountInfo -> VehicleCnt] =$vehicleData['vehicle_id'];
 					$AccountInfo -> VehicleName[$AccountInfo -> VehicleCnt] =$vehicleData['vehicle_name'];
