@@ -25,9 +25,7 @@ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$path
 //$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]; /// server Path
 $filePathToS3Wrapper=$pathToRoot."/s3/S3Wrapper.php";
     
-include_once($filePathToS3Wrapper);*/
-$apkType=$_GET['apkType'];
-    
+include_once($filePathToS3Wrapper);*/    
 
 $statusApk=1;
 $query = "SELECT apk_type,apk_version_name,apk_heading,download_file_name FROM android_apk_upload_format WHERE apk_type=? AND status=? order by apk_version_name";
