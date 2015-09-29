@@ -16,7 +16,7 @@ ini_set('max_execution_time', 300);
 //ini_set('display_errors', 'On');
 include_once("utilSetUnsetSession.php");
 include_once("utilDatabaseConnectivity.php"); 
-
+$apkType=$_GET['apkType'];
 $statusApk=1;
 $query = "SELECT apk_type,apk_version_name,apk_heading,download_file_name FROM android_apk_upload_format WHERE apk_type=? AND status=? order by apk_version_name";
     $statement = $mysqli->prepare($query);
