@@ -35,7 +35,7 @@ if(count($sourcefileNameArr)>0)
         $fsize = filesize($tmpFilePath);
         $path_parts = pathinfo($tmpFilePath);
        
-        $path_parts["basename"]=$destinationFileName.".apk";
+        $path_parts["basename"]=$destinationFileName;
         $ext = strtolower($path_parts["extension"]);
 		
         switch ($ext) 

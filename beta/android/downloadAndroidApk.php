@@ -28,15 +28,12 @@ include_once($filePathToS3Wrapper);
 $S3Filename =$_POST['sourceFilePath'];
 //echo "serverFilePath=".$S3Filename."<br>";
 $sourcefileNameArr=listFile($S3Filename);
-print_r($sourcefileNameArr);
+//print_r($sourcefileNameArr);
 $sourceFilePath=$S3Filename."/".$sourcefileNameArr[0]['name'];
 //echo "sourceFilePath=".$sourceFilePath."<br>";
 
-$copyFileNameArr=explode("/",$S3Filename);
-$copyFileName=$copyFileNameArr[sizeof($copyFileNameArr)-1];
-//echo "fileName=".$fileName."<br>";
-
-$tmpFilePath="tmpFolder/".$copyFileName.".apk";
+$destinationFileName=$sourcefileNameArr[0]['name'];
+$tmpFilePath="tmpFolder/".$destinationFileName;
 //echo "tmpFilePath=".$tmpFilePath."<br>";
 
 $overwrite=true;
@@ -49,7 +46,7 @@ if(count($sourcefileNameArr)>0)
         $fsize = filesize($tmpFilePath);
         $path_parts = pathinfo($tmpFilePath);
        
-        $path_parts["basename"]=$destinationFileName.".apk";
+        $path_parts["basename"]=$destinationFileName;
         $ext = strtolower($path_parts["extension"]);
 		
         switch ($ext) 
