@@ -24,8 +24,8 @@ $sourceFilePath=$S3Filename."/".$sourcefileNameArr[0]['name'];
 $copyFileNameArr=explode("/",$S3Filename);
 $copyFileName=$copyFileNameArr[sizeof($copyFileNameArr)-1];
 //echo "fileName=".$fileName."<br>";
-
-$tmpFilePath="tmpFolder/".$sourcefileNameArr[0]['name'].".apk";
+$destinationFileName=$sourcefileNameArr[0]['name'].".apk";
+$tmpFilePath="tmpFolder/".$destinationFileName;
 //echo "tmpFilePath=".$tmpFilePath."<br>";
 
 $overwrite=true;
