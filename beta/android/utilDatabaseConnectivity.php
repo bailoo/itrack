@@ -1,8 +1,8 @@
 <?php
-$HOST = "localhost";
+$HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
 $DBASE = "iespl_vts_beta";
-$USER = "root";
-$PASSWD = "mysql";
+$USER = "bailoo";
+$PASSWD = 'neon04$VTS';
     //Open a new connection to the MySQL server
 $mysqli = new mysqli($HOST,$USER,$PASSWD,$DBASE);
 
