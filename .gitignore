@@ -99,3 +99,4 @@ hs_err_pid*
 /data
 /beta/src/php/hourly_report/
 /beta/src/php/test_hourly_report/
+/beta/android/tmpFolder/
