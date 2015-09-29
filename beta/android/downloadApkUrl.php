@@ -17,15 +17,12 @@ $S3Filename =$_POST['sourceFilePath'];
 //echo "serverFilePath=".$S3Filename."<br>";
 $S3Filename="android/".$apkType."/".$versionName."/".$apkHeading."/".$downloadFileName;
 $sourcefileNameArr=listFile($S3Filename);
-print_r($sourcefileNameArr);
+//print_r($sourcefileNameArr);
 $sourceFilePath=$S3Filename."/".$sourcefileNameArr[0]['name'];
-//echo "sourceFilePath=".$sourceFilePath."<br>";
 
-$copyFileNameArr=explode("/",$S3Filename);
-$copyFileName=$copyFileNameArr[sizeof($copyFileNameArr)-1];
 //echo "fileName=".$fileName."<br>";
-
-$tmpFilePath="tmpFolder/".$sourcefileNameArr[0]['name'].".apk";
+$destinationFileName=$sourcefileNameArr[0]['name'].".apk";
+$tmpFilePath="tmpFolder/".$destinationFileName;
 //echo "tmpFilePath=".$tmpFilePath."<br>";
 
 $overwrite=true;
