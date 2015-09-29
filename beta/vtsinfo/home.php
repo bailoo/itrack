@@ -91,8 +91,8 @@ echo'
         <!--<td id="cell5" style="cursor:pointer" onmouseover="changeColor(\'F7BE81\', this.id);" onmouseout="changeColor(\'FFFFFF\', this.id);" onclick="javascript:redirect(5);"><strong><font color="#610B0B"><strong>Avg IO&nbsp;</strong></font></td>-->
         <td id="cell6" style="cursor:pointer" onmouseover="changeColor(\'F7BE81\', this.id);" onmouseout="changeColor(\'FFFFFF\', this.id);" onclick="javascript:redirect(6);"><strong><font color="#610B0B"><strong>Data Download&nbsp;</strong></font></td>
         <!--<td id="cell7" style="cursor:pointer" onmouseover="changeColor(\'F7BE81\', this.id);" onmouseout="changeColor(\'FFFFFF\', this.id);" onclick="javascript:redirect(7);"><strong><font color="#610B0B"><strong>Debug account&nbsp;</strong></font></td>-->
-		<td id="cell10" style="cursor:pointer" onmouseover="changeColor(\'F7BE81\', this.id);" onmouseout="changeColor(\'FFFFFF\', this.id);" onclick="javascript:redirect(10);"><strong><font color="#610B0B"><strong>Device History&nbsp;</strong></font></td>
-		<td id="cell11" style="cursor:pointer" onmouseover="changeColor(\'F7BE81\', this.id);" onmouseout="changeColor(\'FFFFFF\', this.id);" onclick="javascript:redirect(11);"><strong><font color="#610B0B"><strong>SMS Detail&nbsp;</strong></font></td>
+		<!--<td id="cell10" style="cursor:pointer" onmouseover="changeColor(\'F7BE81\', this.id);" onmouseout="changeColor(\'FFFFFF\', this.id);" onclick="javascript:redirect(10);"><strong><font color="#610B0B"><strong>Device History&nbsp;</strong></font></td>
+		<td id="cell11" style="cursor:pointer" onmouseover="changeColor(\'F7BE81\', this.id);" onmouseout="changeColor(\'FFFFFF\', this.id);" onclick="javascript:redirect(11);"><strong><font color="#610B0B"><strong>SMS Detail&nbsp;</strong></font></td>-->
       </tr>     
     </table>  
   </body>
