@@ -77,7 +77,7 @@ function getLastSeenDateTime($o_cassandra,$imei,$datetime)
 			  ;";
 		$st_results = $o_cassandra->query($s_cql);
 		$st_obj = hasLatLong($st_results);
-		if (!empty($st_obj))
+		if (!empty($st_ob))
 		{
 			return $st_obj;
 		}
@@ -169,7 +169,8 @@ function hasLatLong($st_results)
 			}
 		}
 	}
-	return new stdClass();	/* empty object */
+	return FALSE;	/* empty object */
+	//return new stdClass();	/* empty object */
 }
 
 
