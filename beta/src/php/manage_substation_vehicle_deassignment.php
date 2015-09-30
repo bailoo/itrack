@@ -6,8 +6,8 @@ include("user_type_setting.php");
 
 $root=$_SESSION['root'];  
 $js_function_name="manage_select_by_entity";	
-echo "deassign_substation_vehicle##"; 
-
+//echo "deassign_substation_vehicle##"; 
+echo "deassign##"; 
 $DEBUG=0;
 //$common_id1 = $account_id;
 	for($k=0;$k<$size_feature_session;$k++)

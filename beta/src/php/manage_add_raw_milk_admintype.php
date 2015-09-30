@@ -25,7 +25,8 @@
 	$aadminId=$row_account_admin_id->admin_id;
         */
         $row_account_admin_id=getAcccountAdminIdAdminId($account_id,$DbConnection);
-	$aadminId=$row_account_admin_id[1];       
+	$aadminId=$row_account_admin_id[1];  
+        //echo "aaid". $aadminId;
         $aaccount_admin_id=$row_account_admin_id[0]; 
 	/*$query_admin_id="SELECT account_id FROM account_detail WHERE admin_id='$row_account_admin_id->account_admin_id'";
 	//echo $query_admin_id;
@@ -83,7 +84,15 @@
 	//plant
 	//$query_plant = "SELECT customer_no,station_name FROM station WHERE type=1 AND user_account_id='$account_id' AND status=1";
 	//$result_query = mysql_query($query_plant,$DbConnection);
-        $data_cus_station1=getDetailAllCustomerNoStationNameStation($account_id,$DbConnection);
+        if($user_type=='proc_admin')
+        {
+           $data_cus_station1=getDetailAllCustomerNoStationNameStation($parent_admin_id,$DbConnection);
+        }
+        else
+        {
+           $data_cus_station1=getDetailAllCustomerNoStationNameStation($account_id,$DbConnection);
+
+        }
 	//while($row=mysql_fetch_object($result_query))
         foreach($data_cus_station1 as $row)
 	{
@@ -92,7 +101,16 @@
 		$final_plant_name_list[]=$row['final_plant_name_list'];
 	}
         
-        $data_cus_station2=getCustomerNoStationNext($account_id,$DbConnection);
+        if($user_type=='proc_admin')
+        {
+           $data_cus_station2=getCustomerNoStationNext($parent_admin_id,$DbConnection);
+        }
+        else
+        {
+          $data_cus_station2=getCustomerNoStationNext($account_id,$DbConnection);
+
+        }
+        
         //chilling plant
 	//$query_chillplant = "SELECT customer_no,station_name FROM station WHERE type=2 AND user_account_id='$account_id' AND status=1";
 	//$result_chillquery = mysql_query($query_chillplant,$DbConnection);
@@ -130,13 +148,35 @@
 	global $tmCnt;
 	$tmCnt=0;
 	//echo "Pending=".$pending;
+        
+        $row_account_admin_id_proc=getAcccountAdminIdAdminId($parent_admin_id,$DbConnection);
+	$aadminId_proc=$row_account_admin_id_proc[1];  
+        //echo "<br>aaid_proc=". $aadminId_proc;
+        
 	if($pending==0)
 	{
-		select_group_account_hierarchy_transporter($root,$aadminId);
+            if($user_type=='proc_admin')
+            {
+               select_group_account_hierarchy_transporter($root,$aadminId_proc);
+            }
+            else
+            {
+               select_group_account_hierarchy_transporter($root,$aadminId); 
+            }
+		
 	}
 	else if( $pending==1 || $pending==2)
 	{
-		select_group_account_hierarchy_transporter_subuser($root,$aadminId);
+		
+            if($user_type=='proc_admin')
+            {
+               select_group_account_hierarchy_transporter_subuser($root,$aadminId_proc);
+            }
+            else
+            {
+                select_group_account_hierarchy_transporter_subuser($root,$aadminId);
+            }
+            
 	}
 	//global $tmCnt;
 	//echo $tmCnt;
@@ -199,7 +239,7 @@
 		global $DbConnection;
 		global $option_transporter;
 		global $uploadTransporter;//bin type
-	    global $tmCnt;
+                global $tmCnt;
 		// $option_transporter="AC";
 		$hierarchy_level=$AccountNode->data->AccountHierarchyLevel;    
 		$account_id_local=$AccountNode->data->AccountID;

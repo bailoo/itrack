@@ -5,6 +5,25 @@
 <script src="../js/jquery-ui.js"></script>
 <script src="../js/manage.js"></script>
 <script src="../js/ajax.js"></script>
+<?php
+/*
+if($user_type=='plant_admin')
+{
+    ?>
+<script language="javascript" src="../js/datetimepicker.js"></script>
+<script language="javascript" src="../js/datetimepicker_sd.js"></script>
+   <?php
+}
+else
+{
+    ?>
+    <script language="javascript" src="../js/datetimepicker_sd.js"></script>
+    <script language="javascript" src="../js/datetimepicker_sdtime.js"></script>
+    <?php
+}*/
+?>
+ <script language="javascript" src="../js/datetimepicker_sd.js"></script>
+    <script language="javascript" src="../js/datetimepicker_sdtime.js"></script>
 <script>
 function getScriptPage_raw_milk_new(val,ids,box){	
 	//var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
@@ -96,10 +115,22 @@ function getScriptPage_raw_milk_new(val,ids,box){
 				<td><input type="text" name="fat_kg" id="fat_kg:0" value="" style="width:70px;" placeholder="FAT(KG)" readonly /></td>	
 				<td><input type="text" name="snf_kg" id="snf_kg:0" value="" style="width:70px;" placeholder="SNF(KG)" readonly /></td>	
 				<td><input type="text" name="milk_age" id="milk_age:0" value="" style="width:70px;" placeholder="MilkAge(Hr)" /></td>
-				<td><input type="text" name="disp_time" id="disp_time:0" value="" style="width:70px;" placeholder="DISP TIME" onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
-		
-				<td><input type="text" name="target_time" id="target_time:0" value="" style="width:70px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
-		
+                                <?php
+                                if($user_type=='plant_admin')
+                                {
+                                    ?>
+                                <td><input type="text" name="disp_time" id="disp_time:0" value="" style="width:70px;" placeholder="DISP TIME" onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>		
+                                    <td><input type="text" name="target_time" id="target_time:0" value="" style="width:70px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
+                                    <?php
+                                }
+                                else {
+                                    ?>
+                                    <td><input type="text" name="disp_time" id="disp_time:0" value="" style="width:70px;" placeholder="DISP TIME" onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>		
+                                    <td><input type="text" name="target_time" id="target_time:0" value="" style="width:70px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
+                                <?php
+                                }
+                                ?>
+				
 				<td>
 					<!--<div style="width: 70px; overflow: hidden;" >-->
 
@@ -163,7 +194,20 @@ function getScriptPage_raw_milk_new(val,ids,box){
 				<input type="hidden" name="docketflag" id="docketflag:0" value="1" style="width:70px;"  />	
 		
 				<!--<input type="hidden" style="width:70px;"  id="addfield1" onclick="javascript:addfield();" value="ADD"  />-->
-				<td><input type="button" style="width:70px;"  id="addfield1" onclick="javascript:addfield();" value="ADD"  /></td>
+                                <?php
+                                    if($user_type=='plant_admin')
+                                    {
+                                        ?>
+                                            <td><input type="button" style="width:70px;"  id="addfield1" onclick="javascript:addfield();" value="ADD"  /></td>
+                                        <?php
+                                    }
+                                    else {
+                                       ?>
+                                            <td><input type="button" style="width:70px;"  id="addfield1"  value="---"  /></td>
+                                        <?php 
+                                    }
+                                ?>
+				
 				
 			</tr>
 		</table>
@@ -199,12 +243,22 @@ function getScriptPage_raw_milk_new(val,ids,box){
 	<input type="text" name="fat_kg" id="fat_kg:" value="" style="width:70px;" placeholder="FAT(KG)"  readonly />	
 	<input type="text" name="snf_kg" id="snf_kg:" value="" style="width:70px;" placeholder="SNF(KG)" readonly />
 	<input type="text" name="milk_age" id="milk_age:" value="" style="width:70px;" placeholder="MilkAge(Hr)" />
-	<input type="text" name="disp_time" id="disp_time:"  value="" style="width:70px;" placeholder="DISP TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly />	
+	 <?php
+                                if($user_type=='plant_admin')
+                                {
+                                    ?>
+        <input type="text" name="disp_time" id="disp_time:"  value="" style="width:70px;" placeholder="DISP TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly />	
 	
 	<input type="text" name="target_time" id="target_time:" value="" style="width:70px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"   readonly />	
 	
+	   <?php
+                                }
+                                else {
+                                    ?>
+        <input type="text" name="disp_time" id="disp_time:"  value="" style="width:70px;" placeholder="DISP TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly />	
 	
-
+	<input type="text" name="target_time" id="target_time:" value="" style="width:70px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"   readonly />	
+                                <?php } ?>
 	<select name="plant" id="plant:" style="width:70px; position:relative; z-index:+1;"
    onactivate="this.style.width='auto';"
    onchange="this.blur();"

@@ -182,9 +182,11 @@ function xmlParse(str)
  
 function show_geofence(map)
 {
+    //alert("test");
 	var req = getXMLHTTP();
 	req.open("GET", "src/php/getGeofencePoints.php", false); //third parameter is set to false here
 	req.send(null);
+        //alert("response="+responseText);
 	var data = req.responseText;
 	var xml = xmlParse(data);		
 	if(data!="Geofence Not Found")
@@ -192,12 +194,16 @@ function show_geofence(map)
 		var geo_point_data = xml.documentElement.getElementsByTagName("marker");
 		var i;	
 		var bounds_global = new google.maps.LatLngBounds();		
-		var point_global;																				
+		var point_global;
+                var infowindow;
 		for(i=0; i<geo_point_data.length; i++) 
-		{	
+		{
+                    if (infowindow) infowindow.close();
+                    infowindow = new google.maps.InfoWindow();
 			var polygon = new Array();		
 			var p = 0;	
 			var geo_name = geo_point_data[i].getAttribute("geo_name");
+                        //alert("geoName1="+geo_name);
 			var geo_points = geo_point_data[i].getAttribute("points");
 			var geo_points1=geo_points.split(',');	
 			var bounds = new google.maps.LatLngBounds();	
@@ -241,6 +247,26 @@ function show_geofence(map)
 			var geo_points2=geo_points.split(',');
 			var lastpt = geo_points2.length-1;
 			var pts = new Array();
+                        var addListenersOnPolygon = function(polygon) {
+  google.maps.event.addListener(polygon,'click', function(event) {
+           // alert("geoName="+geofencePolygon.geoName);
+           
+           contentStr='<table>'+
+						'<tr>'+
+						'<td class=\"live_td_css1\">Geofence Name</td>'+
+						'<td>:</td>'+
+						'<td class=\"live_td_css2\">'+polygon.geoName+'</td>'+
+					   '</tr></table>';
+          infowindow.setContent(contentStr);
+          if (event) {
+             point = event.latLng;
+          }
+          infowindow.setPosition(point);
+          infowindow.open(map);
+          // map.openInfoWindowHtml(point,html); 
+        }); 
+                        }
+                        
 				
 			for(var j=0;j<geo_points2.length;j++)
 			{
@@ -257,10 +283,12 @@ function show_geofence(map)
 					strokeOpacity: 0.8,
 					strokeWeight: 2,
 					fillColor: '#FF0000',
-					fillOpacity: 0.35
+					fillOpacity: 0.0,
+                                        geoName:geo_name
 					});
 					markers.push(geofencePolygon);
-					geofencePolygon.setMap(map);					
+					geofencePolygon.setMap(map);
+                                        addListenersOnPolygon(geofencePolygon);
 					p++;	
 				}	// if closed
 			}

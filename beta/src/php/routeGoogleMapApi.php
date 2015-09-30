@@ -1285,9 +1285,11 @@ var input = (document.getElementById('pac-input'));
 						document.getElementById('vehicle_milstone').value='vehicle_zoom';			
 						show_milestones(map);		
 					}
-					else if((document.thisform.geofence_feature.checked==true) && (document.getElementById('category').value!=5))
+					//else if((document.thisform.geofence_feature.checked==true) && (document.getElementById('category').value!=5))
+                                        else if(document.thisform.geofence_feature.checked==true)
 					{
-						show_geofence(map_canvas);				
+                                            //alert('in geofence');
+                                            show_geofence(map_canvas);				
 					}
 					for(var i=1;i<latarr.length;i++)
 					{

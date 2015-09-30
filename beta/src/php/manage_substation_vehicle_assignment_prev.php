@@ -3,6 +3,7 @@
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');
 	include("user_type_setting.php");
+        include_once("util_account_detail.php");
 	
 	$root=$_SESSION['root'];  
 	$js_function_name="manage_select_by_entity";	
@@ -20,8 +21,20 @@
 
 	include_once('tree_hierarchy_information.php');
 	
-
-	$data=getDetailAllVehicleVG($account_id,$DbConnection);
+        //echo "UT=".$user_type;
+         if($user_type=='proc_admin')
+         {
+            $row_account_admin_id =getAccountAdminId($account_id,$DbConnection);
+            $parent_admin_id=getAccountIdByAdminId($row_account_admin_id,$DbConnection);
+            //echo"parent_admin_id=".$parent_admin_id."<br>";
+            $data=getDetailAllVehicleVG($parent_admin_id,$DbConnection);
+         }
+         else
+         {
+             $data=getDetailAllVehicleVG($account_id,$DbConnection);
+         }
+	
+	
 	$v_s=0;
 	foreach($data as $dt)
 	{   $v_s++;
@@ -62,7 +75,19 @@
 								Select All
 							</font>"."																				</td>																														
 					</tr>";
-					get_user_vehicle($root,$common_id1);
+                                         if($user_type=='proc_admin')
+                                            {
+                                               $row_account_admin_id =getAccountAdminId($account_id,$DbConnection);
+                                               $parent_admin_id=getAccountIdByAdminId($row_account_admin_id,$DbConnection);
+                                               //echo"parent_admin_id=".$parent_admin_id."<br>";
+                                               get_user_vehicle($root,$parent_admin_id);
+                                            }
+                                            else
+                                            {
+                                                get_user_vehicle($root,$common_id1);
+                                            }
+                                           // get_user_vehicle($root,$common_id1);
+					
 				echo '</table>	
 			</fieldset>		
 		    </div>						

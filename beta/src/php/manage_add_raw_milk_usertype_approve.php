@@ -555,7 +555,7 @@
     <input type="hidden" id="tmp_serial"/>
 	<script>
 	//alert(tot_loop);
-	/*if(tot_loop > 0)
+	if(tot_loop > 0)
 	{
 		
 		document.getElementById("enter_button").disabled=false;
@@ -565,7 +565,7 @@
 	{
 		//alert("0");
 		document.getElementById("enter_button").disabled=true;
-	}*/
+	}
 	</script>
 	</form>';
 	

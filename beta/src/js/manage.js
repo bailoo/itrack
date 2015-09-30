@@ -9448,6 +9448,9 @@ function setclosetime(sno){
                 document.getElementById('temp_unload_accept_time').value=(document.getElementById('unload_accept_time_'+sno).value).replace(/-/g, "/"); 		
 		document.getElementById('temp_unload_estimate_datetime').value=(document.getElementById('temp_unload_estimate_datetime').value).replace(/-/g, "/");
 		
+                document.getElementById('temp_unload_accept_time').value=(document.getElementById('unload_accept_time_'+sno).value).replace(/-/g, "/"); 		
+		document.getElementById('temp_unload_estimate_datetime').value=(document.getElementById('temp_unload_estimate_datetime').value).replace(/-/g, "/");
+		
 		var testing_status=document.getElementById('testing_status_'+sno).value;
 		
 		var radioObj = document.popupform.temp_accept_reject_sampling;		
