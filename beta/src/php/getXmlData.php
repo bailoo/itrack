@@ -706,6 +706,7 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
         $io8 = $item->p;
         $sig_str = $item->q;
         $sup_v = $item->r;
+        $ci = $item->i;
         
         $ax = $item->ax;
         $ay = $item->ay;

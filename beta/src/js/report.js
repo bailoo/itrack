@@ -455,6 +455,14 @@ if(document.getElementById('acc').value=='1')
   } 
 
   /////////////////////  REPORT MODULE /////////////////////////////////////////  	  	
+   function report_person_invalid_data(filename,title)            // manage.js
+    {
+        showManageLoadingMessage();
+        var poststr = "title=" + encodeURI(title);	
+        //alert("poststr="+poststr);
+        makePOSTRequest(filename, poststr);
+    }
+  
   function report_common_prev(filename,title)            // manage.js
 	{
 		showManageLoadingMessage();
@@ -636,6 +644,22 @@ if(document.getElementById('acc').value=='1')
 		document.thisform.submit();
 	} 
   }
+  
+  function action_report_invalid_data()
+{
+    if(document.getElementById("duration").value=="select")
+    {
+        alert("Please select duration");
+        return false;
+    }
+    else
+    {
+        document.getElementById("loading_msg").style.display = ''; 
+        var poststr = "timeDuration="+encodeURI( document.getElementById("duration").value);                
+        //  alert("Rizwan:"+poststr);
+        makePOSTRequest('src/php/action_report_invalid_data.htm', poststr); 
+    }
+}
 
 function report_moto_trip_display(file_name,title)
   {
@@ -2132,7 +2156,7 @@ function action_report_nearby_location(obj)
   				var hrto  =  document.getElementById("hrto").value;
   				var mito  =  document.getElementById("mito").value;
   				var ssto	=  document.getElementById("ssto").value;
-  				date1 = date+" "+hrfrom+":"+mifrom+":"+ssfrom;
+  				var date1 = date+" "+hrfrom+":"+mifrom+":"+ssfrom;
   				var date2 = date+" "+hrto+":"+mito+":"+ssto;
   
   				var poststr = "account_id_local="+account_id_local1+

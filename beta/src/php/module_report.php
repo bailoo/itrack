@@ -574,7 +574,39 @@ $contents=listDir($S3Path);
 													"</table>"+
 												"</td>"+
 											"</tr>"+
-										"</table>",';								
+										"</table>",';
+                                                                                echo'"<table border=0 class=\'mystyle\'>"+
+											"<tr>"+ 
+												"<td valign=\'top\'>"+
+													"<table border=0 class=\'mystyle\'>"+
+														"<tr>"+
+															"<td height=\'1px\'></td>"+
+														"</tr>"+
+														"<tr>"+
+															"<td>'.$nbsp.'"+
+																"<a href=javascript:report_person_invalid_data(\'src/php/report_invalid_data.htm\',\'Invalid%20Data%20Report\'); class=\'menuitem\'>"+
+																	"'.$nbsp.'<img src=\'images/report_icons/speed violation.jpeg\' style=\'border:none;width:20px;height:20px;\' class=\'help_img_css\'>"+
+																"</a>"+
+															"</td>"+
+														"</tr>"+
+													"</table>"+
+												"</td>"+
+												"<td valign=\'top\'>"+
+													"<table border=0 class=\'mystyle\'>"+
+														"<tr>"+
+															"<td height=\'1px\'></td>"+
+														"</tr>"+
+														"<tr>"+
+															"<td>"+ 	
+																"<a href=javascript:report_person_invalid_data(\'src/php/report_invalid_data.htm\',\'Invalid%20Data%20Report\'); class=\'menuitem\'>"+
+																	"'.$nbsp.'Invalid Data"+
+																"</a>"+
+															"</td>"+
+														"</tr>"+
+													"</table>"+
+												"</td>"+
+											"</tr>"+
+										"</table>",';
 								}
 								if($person_user_type==1 || $fleet_user_type==1 || $mining_user_type==1 || $courier_user_type==1 || $school_user_type ==1 || $pos_user_type==1) //for all user except person
 								{
