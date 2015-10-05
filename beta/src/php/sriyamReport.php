@@ -33,10 +33,11 @@ $currentDate=date("Y-m-d");
 $previousDate=date('Y-m-d', strtotime($currentDate .' -1 day'));
 // echo "priviousDate=".$previousDate."<br>";
 
-$startdate = "2015-10-02 00:00:00";
-$enddate = "2015-10-02 23:59:59"; 
-/*$startdate = $previousDate." 00:00:00";
-$enddate = $previousDate." 23:59:59";*/ 
+/*$startdate = "2015-10-02 00:00:00";
+$enddate = "2015-10-02 23:59:59";*/
+
+$startdate = $previousDate." 00:00:00";
+$enddate = $previousDate." 23:59:59"; 
 
 $sortBy='h';
 $firstDataFlag=0;
@@ -248,6 +249,9 @@ $sno=1;
         if($i==0) 
         {
             $htmlFormat=$htmlFormat.'<table border=1 rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3 class="menu">
+                                    <tr>
+                                        <td align="center" colspan=6>Report Date : '.$previousDate.'</td>
+                                    </tr>
                                     <tr>
                                         <td>Serial No</td>
                                         <td>Vehicle Name</td>
