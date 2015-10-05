@@ -33,8 +33,10 @@ $currentDate=date("Y-m-d");
 $previousDate=date('Y-m-d', strtotime($currentDate .' -1 day'));
 // echo "priviousDate=".$previousDate."<br>";
 
-$startdate = $previousDate." 00:00:00";
-$enddate = $previousDate." 23:59:59"; 
+$startdate = "2015-10-02 00:00:00";
+$enddate = "2015-10-02 23:59:59"; 
+/*$startdate = $previousDate." 00:00:00";
+$enddate = $previousDate." 23:59:59";*/ 
 
 $sortBy='h';
 $firstDataFlag=0;
@@ -66,14 +68,21 @@ foreach($vehicle_name_db as $key=>$vehicleDetailArr)
     $firstdata_flag =0;  
     $max_speed=0.0;
     $j=0;
-    $haltFlag=False;
+    $halt_flag = 0;
     $distance_travel=0;
     $alertMaxSpeed=False;
     $SortedDataObject=null;
     $SortedDataObject=new data();
+    $twelveHrHaltFlag=0;
+    
     //echo "startDate=".$startdate."endDate=".$enddate."<br>";
-    deviceDataBetweenDates($vehicleDetailArr['imeiNo'],$startdate,$enddate,$sortBy,$parameterizeData,$SortedDataObject);
     //var_dump($SortedDataObject);
+  
+   // if($vehicleDetailArr['vehicleName']=="UP78 CN 1765")
+    {
+          //echo "twelveHrHaltFlag=".$twelveHrHaltFlag."<br>";
+         deviceDataBetweenDates($vehicleDetailArr['imeiNo'],$startdate,$enddate,$sortBy,$parameterizeData,$SortedDataObject);
+        //echo "in if";
     if(count($SortedDataObject->deviceDatetime)>0)
     {               
         $sortedSize=sizeof($SortedDataObject->deviceDatetime);                 
@@ -108,14 +117,12 @@ foreach($vehicle_name_db as $key=>$vehicleDetailArr)
                     $lnglast =  $lng;  
                     $max_speed	=0.0;
                     $speed_prev = 0.0;
+                    $halt_flag = 0;
+                    $datetime_ref = $datetime;
                 }           	              	
                 else
-                {  
-                    if($haltFlag==False)
-                    {
-                        $haltStartDateTime=$datetime;
-                        $haltFlag=True; 
-                    }
+                {
+                    $datetime_cr = $datetime;
                     $lat_E = $lat;
                     $lng_E = $lng;
                     $datetime_prev = $datetime_E;
@@ -162,8 +169,7 @@ foreach($vehicle_name_db as $key=>$vehicleDetailArr)
 
                     if(round($tmp_speed,2)<300.0 && round($tmp_speed1,2)<300.0 && $distance_incriment>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
                     {
-                        $haltFlag=False;
-                        $haltEndDateTime=$datetime;
+                        //echo "haltEndDateTime=".$haltEndDateTime."<br>";
                         $tmp_time_diff_maxspeed = (double)(strtotime($datetime) - strtotime($datetime_prev)) / 3600;
                         if(($max_speed<$speed) && ($speed<200) && ($haltFlag==False) && ((abs($speed_prev-$speed)<50.0) || ($tmp_time_diff_maxspeed>30)))
                         {
@@ -174,24 +180,40 @@ foreach($vehicle_name_db as $key=>$vehicleDetailArr)
                             }
                             //echo "maxpeed=".$max_speed."<br>";
                         }
+                        if ($halt_flag == 1)
+                        {
+                            $starttime = strtotime($datetime_ref);
+                            //$stoptime = strtotime($datetime_cr);  
+                            $stoptime = strtotime($datetime_cr);                        			
+                            $halt_dur =  ($stoptime - $starttime);
+                            //echo "haltDuration=".$halt_dur."stoptime=".$datetime_cr."starttime=".$datetime_ref."<br>";
+                            if($halt_dur>12*60*60)
+                            {
+                                $twelveHrHaltFlag=1;
+                            }
+                        }
                         $daily_dist += $distance_incriment;
                         $lat_S = $lat_E;
                         $lng_S = $lng_E;
                         $last_time = $datetime_E;
                         $datetime_S = $datetime_E;
+                        $datetime_ref= $datetime_cr;
+                        $halt_flag = 0;
                     }
+                    else if(((strtotime($datetime_cr)-strtotime($datetime_ref))>60) && ($halt_flag != 1))
+                    {            			
+                        //echo "<br>normal flag set "." datetime_cr ".$datetime_cr."<br>";
+                        $halt_flag = 1;
+                    }                   
                 }
             }
-        } 
-        //echo "haltEndDate=".$haltEndDateTime."<br>";
-        //echo "haltStartDate=".$haltStartDateTime."<br>";
-        $haltDuration=strtotime($haltEndDateTime)-strtotime($haltStartDateTime);
-        //echo "haltDuration=".$haltDuration."<br>";
-        if($alertMaxSpeed==True || $haltDuration>(12*60*60) || $daily_dist<300)
+        }        
+       
+        if($alertMaxSpeed==True || $twelveHrHaltFlag==1 || $daily_dist<300)
         {           
             $alertSpeedStatus = ($alertMaxSpeed==True ? "yes" : "no"); // returns true
             $dailyDistStatus = ($daily_dist<300 ? "yes" : "no"); // returns true
-            $alertHaltDuration = ($haltDuration>(12*60*60) ? "yes" : "no"); // returns true
+            $alertHaltDuration =($twelveHrHaltFlag==1 ? "yes" : "no"); // returns true
             $vehicleDetailReport[]=array(
                                             "vName"=>$vehicleDetailArr['vehicleName'],
                                             "imeiNo"=>$vehicleDetailArr['imeiNo'],
@@ -204,8 +226,9 @@ foreach($vehicle_name_db as $key=>$vehicleDetailArr)
     /*if($tmpCn==5)
     {
         break;
-    }*/
-    $tmpCn++;
+    }
+    $tmpCn++;*/
+}
 }
     $o_cassandra->close();
     $htmlFormat='';
@@ -251,7 +274,7 @@ $sno=1;
         $sno++;
     }
     $htmlFormat=$htmlFormat.'</table>';
-	 // echo $htmlFormat;
+    //echo $htmlFormat;
       $to="support3@iembsys.com";
 	  
       $result = $mgClient->sendMessage($domain, array(
