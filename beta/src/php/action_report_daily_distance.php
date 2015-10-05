@@ -120,14 +120,14 @@
                             $latlast = $lat;
                             $lnglast =  $lng;  
                             $max_speed	=0.0;
-							$speed_prev = 0.0;
+                            $speed_prev = 0.0;
                         }           	              	
                         else
                         {           
                             $lat_E = $lat;
                             $lng_E = $lng;
                             $datetime_prev = $datetime_E;
-							$speed_prev = $speed;
+                            $speed_prev = $speed;
                             $datetime_E = $datetime; 
 
                             calculate_distance($lat_S, $lat_E, $lng_S, $lng_E, $distance_incriment);								         		

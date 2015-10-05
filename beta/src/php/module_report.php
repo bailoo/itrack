@@ -584,7 +584,7 @@ $contents=listDir($S3Path);
 														"</tr>"+
 														"<tr>"+
 															"<td>'.$nbsp.'"+
-																"<a href=javascript:report_person_invalid_data(\'src/php/report_invalid_data.htm\',\'Invalid%20Data%20Report\'); class=\'menuitem\'>"+
+																"<a href=javascript:report_person_invalid_data(\'src/php/report_invalid_data.htm\',\'Inactive%20Data%20Report\'); class=\'menuitem\'>"+
 																	"'.$nbsp.'<img src=\'images/report_icons/speed violation.jpeg\' style=\'border:none;width:20px;height:20px;\' class=\'help_img_css\'>"+
 																"</a>"+
 															"</td>"+
@@ -598,8 +598,8 @@ $contents=listDir($S3Path);
 														"</tr>"+
 														"<tr>"+
 															"<td>"+ 	
-																"<a href=javascript:report_person_invalid_data(\'src/php/report_invalid_data.htm\',\'Invalid%20Data%20Report\'); class=\'menuitem\'>"+
-																	"'.$nbsp.'Invalid Data"+
+																"<a href=javascript:report_person_invalid_data(\'src/php/report_invalid_data.htm\',\'Inactive%20Data%20Report\'); class=\'menuitem\'>"+
+																	"'.$nbsp.'Inactive Data"+
 																"</a>"+
 															"</td>"+
 														"</tr>"+

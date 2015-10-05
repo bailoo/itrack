@@ -68,7 +68,7 @@ foreach($vehicle_name_db as $key=>$vehicleDetailArr)
     $j=0;
     $haltFlag=False;
     $distance_travel=0;
-
+    $alertMaxSpeed=False;
     $SortedDataObject=null;
     $SortedDataObject=new data();
     //echo "startDate=".$startdate."endDate=".$enddate."<br>";
@@ -168,7 +168,7 @@ foreach($vehicle_name_db as $key=>$vehicleDetailArr)
                         if(($max_speed<$speed) && ($speed<200) && ($haltFlag==False) && ((abs($speed_prev-$speed)<50.0) || ($tmp_time_diff_maxspeed>30)))
                         {
                             $max_speed = $speed;
-                            if($maxSpeed>70)
+                            if($max_speed>70)
                             {
                                $alertMaxSpeed=True;
                             }

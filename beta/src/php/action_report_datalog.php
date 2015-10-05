@@ -53,7 +53,7 @@ $parameterizeData->fix='c';
 $parameterizeData->latitude='d';
 $parameterizeData->longitude='e';
 $parameterizeData->speed='f';
-$parameterizeData->cellName='ab';
+$parameterizeData->cellName='ci';
 $parameterizeData->supVoltage='r';
 $parameterizeData->io8='p';
 $parameterizeData->dataLog='yes';
@@ -81,13 +81,14 @@ for($i=0;$i<$vsize;$i++)
     $finalVNameArr[$i]=$vehicle_detail_local[0];
     $finalVTypeArr[$i]=$vehicle_detail_local[1];
     //echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
-    $SortedDataObject=new data();
+   
     $distance =0.0;	
     $firstdata_flag =0;		
     $flag =0;
     $rec_count =0;
     for($di=0;$di<=($date_size-1);$di++)
     {
+        $SortedDataObject=null;
         $SortedDataObject=new data();
         readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
         if(count($SortedDataObject->deviceDatetime)>0)
@@ -163,9 +164,7 @@ for($i=0;$i<$vsize;$i++)
             }
         }            
     }
-    $SortedDataObject=null;	
 }
-$parameterizeData=null;	
 
 
 	echo '<center>';
@@ -263,7 +262,10 @@ $parameterizeData=null;
               <th class="text"><b><font size="1">Distance</font></b></td>
               ';
         }   
-					
+	if($report_type=='Person')
+        {            
+          echo'<th class="text"><b><font size="1">Boot Status</font></b></td>';
+        }				
         echo'<th class="text"><b><font size="1">Version</font></b></td>';
         if($report_type!="Person")
         {
@@ -331,7 +333,13 @@ $parameterizeData=null;
       echo'<td class="text">'.$speed[$i].'</td>'; 
       echo'<td class="text">'.$distance[$i].'</td>';
     }
-    
+    if($report_type=='Person')
+    { 
+        //echo "cellName=".$cellname[$i]."<br>";
+        $tmpCellNameArr=explode(",",$cellname[$i]);
+        $bootStatus=$tmpCellNameArr[sizeof($tmpCellNameArr)-1];
+      echo'<td class="text">'.$bootStatus.'</td>';
+    }
     echo'<td class="text">'.$ver[$i].'</td>';
     if($report_type!="Person")
     {
@@ -373,10 +381,11 @@ $parameterizeData=null;
 		echo"<input TYPE=\"hidden\" VALUE=\"$fix[$i]\" NAME=\"temp[$i][Fix]\">";
 		echo"<input TYPE=\"hidden\" VALUE=\"$lat[$i]\" NAME=\"temp[$i][Latitude]\">";
 		echo"<input TYPE=\"hidden\" VALUE=\"$lng[$i]\" NAME=\"temp[$i][Longitude]\">";
+                echo"<input TYPE=\"hidden\" VALUE=\"$bootStatus\" NAME=\"temp[$i][Boot Status]\">";
 		echo"<input TYPE=\"hidden\" VALUE=\"$ver[$i]\" NAME=\"temp[$i][Version]\">";
 		
 		////////// For CSV Report
-		$csv_string = $csv_string.$sno.','.$sts[$i].','.$datetime[$i].','.$msgtype[$i].','.$fix[$i].','.$lat[$i].','.$lng[$i].','.$ver[$i]."\n";
+		$csv_string = $csv_string.$sno.','.$sts[$i].','.$datetime[$i].','.$msgtype[$i].','.$fix[$i].','.$lat[$i].','.$lng[$i].','.$bootStatus.','.$ver[$i]."\n";
    }
   if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
   {
@@ -477,10 +486,10 @@ if(sizeof($imei)>0)
 }
 
 echo'<center>		
-		<a href="javascript:showReportPrevPageNew();" class="back_css">
-			&nbsp;<b>Back</b>
-		</a>
-	</center>';	 
+        <a href="javascript:showReportPrevPageNew();" class="back_css">
+            &nbsp;<b>Back</b>
+        </a>
+    </center>';	 
 //echo "test";
 
 ?>
