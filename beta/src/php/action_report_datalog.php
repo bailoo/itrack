@@ -486,10 +486,10 @@ if(sizeof($imei)>0)
 }
 
 echo'<center>		
-		<a href="javascript:showReportPrevPageNew();" class="back_css">
-			&nbsp;<b>Back</b>
-		</a>
-	</center>';	 
+        <a href="javascript:showReportPrevPageNew();" class="back_css">
+            &nbsp;<b>Back</b>
+        </a>
+    </center>';	 
 //echo "test";
 
 ?>
