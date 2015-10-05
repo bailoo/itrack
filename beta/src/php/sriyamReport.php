@@ -250,6 +250,9 @@ $sno=1;
         {
             $htmlFormat=$htmlFormat.'<table border=1 rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3 class="menu">
                                     <tr>
+                                        <td align="center" colspan=6>Report Date : '.$previousDate.'</td>
+                                    </tr>
+                                    <tr>
                                         <td>Serial No</td>
                                         <td>Vehicle Name</td>
                                         <td>Imei No</td>
