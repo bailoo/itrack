@@ -33,10 +33,11 @@ $currentDate=date("Y-m-d");
 $previousDate=date('Y-m-d', strtotime($currentDate .' -1 day'));
 // echo "priviousDate=".$previousDate."<br>";
 
-$startdate = "2015-10-02 00:00:00";
-$enddate = "2015-10-02 23:59:59"; 
-/*$startdate = $previousDate." 00:00:00";
-$enddate = $previousDate." 23:59:59";*/ 
+/*$startdate = "2015-10-02 00:00:00";
+$enddate = "2015-10-02 23:59:59";*/
+
+$startdate = $previousDate." 00:00:00";
+$enddate = $previousDate." 23:59:59"; 
 
 $sortBy='h';
 $firstDataFlag=0;
