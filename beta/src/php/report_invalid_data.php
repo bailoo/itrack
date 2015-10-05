@@ -1,7 +1,7 @@
 <?php
     echo"reportPrevPage##";
     echo'<center><fieldset class="report_fieldset">';
-    echo'<legend>Invalid Data Duration</legend><br>';     
+    echo'<legend>Inactive Data Duration</legend><br>';     
 														
     date_default_timezone_set('Asia/Calcutta');
     if($start_date=="" && $end_date=="")

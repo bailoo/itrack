@@ -136,13 +136,13 @@ function get_visit_xml_data($person_serial, $pname, $startdate, $enddate)
 }
 //print_r($vehicleDetail);
 echo'<form method="post" target="_blank">';
-	 $title='Invalid Data Report';
+	 $title='Inactive Data Report';
 	 echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title\">";
     echo'<br>
             <table border=0 width = 100% cellspacing=2 cellpadding=0>
                 <tr>
                     <td height=10 class="report_heading" align="center">
-                        Invalid Data Report
+                        Inactive Data Report
                     </td>
                 </tr>
             </table>
