@@ -1,43 +1,52 @@
 <?php
-//error_reporting(-1);
-//ini_set('display_errors', 'On');
-//set_time_limit(3000);
 set_time_limit(300);	
 date_default_timezone_set("Asia/Kolkata");
 include_once("main_vehicle_information_1.php");
 include_once('Hierarchy.php');
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
-include_once('user_type_setting.php');	
-include_once('calculate_distance.php');
-include_once('googleMapApi.php');
-//echo "one";
+$root=$_SESSION["root"];
+//include_once("sort_xml_vtslog.php");
+include_once("calculate_distance.php");
+include("user_type_setting.php");
 include_once('xmlParameters.php');
-include_once('parameterizeData.php');	
-include_once('data.php');		
-include_once("getXmlData.php");	
-	
+include_once("report_title.php");
+include_once('parameterizeData.php');
+include_once('data.php');
+include_once("sortXmlData.php");
+include_once("getXmlData.php");
 
-$flag_play = $_REQUEST['flag_play'];
-$play_interval = $_REQUEST['play_interval']; 
+$account_id_local1 = $_POST['account_id_local'];
+$query = "SELECT user_id FROM account WHERE account_id='$account_id_local1'";
+//echo $query."<br>";
+$result = mysql_query($query,$DbConnection);
+$row = mysql_fetch_object($result);
+$user_id = $row->user_id;
 
-$vserial1 = $_REQUEST['vserial'];
-$vserial = explode(',',$vserial1) ;
-$vsize=sizeof($vserial);
-$date1 = $_REQUEST['startdate'];
-$date2 = $_REQUEST['enddate'];
+$DEBUG = 0;
+$device_str = $_POST['vehicleserial'];
+//echo "<br>devicestr=".$device_str;
+$vserial = explode(',',$device_str);
+$vsize=count($vserial);
+$id = $_REQUEST['id'];
+$rec = $_POST['radio_value'];  
+$date1 = $_POST['start_date'];
+$date2 = $_POST['end_date'];
+
 $date1 = str_replace("/","-",$date1);
 $date2 = str_replace("/","-",$date2);
 $date_1 = explode(" ",$date1);
 $date_2 = explode(" ",$date2);
 $datefrom = $date_1[0];
 $dateto = $date_2[0];
+
 $userInterval = "0";
 $sortBy="h";
 $firstDataFlag=0;
 $requiredData="All";
 $endDateTS=strtotime($date2);
-$parameterizeData=null;
+
+
 $parameterizeData=new parameterizeData();
 $parameterizeData->messageType='a';
 $parameterizeData->version='b';
@@ -45,1041 +54,470 @@ $parameterizeData->fix='c';
 $parameterizeData->latitude='d';
 $parameterizeData->longitude='e';
 $parameterizeData->speed='f';
-$parameterizeData->cellName='ab';
+$parameterizeData->cellName='ci';
 $parameterizeData->supVoltage='r';
-$parameterizeData->dayMaxSpeed='s';
-$parameterizeData->lastHaltTime='u';
-$parameterizeData->io1='i';
-$parameterizeData->io2='j';
-$parameterizeData->io3='k';
-$parameterizeData->io4='l';
-$parameterizeData->io5='m';
-$parameterizeData->io6='n';
-$parameterizeData->io7='o';
 $parameterizeData->io8='p';
-
-$time_interval1 = $_REQUEST['time_interval']; 
-$minlat = 180; 
-$maxlat = -180;
-$minlong = 180;
-$maxlong = -180;
-$maxPoints = 1000;
-$file_exist = 0;	
-$tmptimeinterval = strtotime($enddate) - strtotime($startdate);	
-if($time_interval1=="auto")
+$parameterizeData->dataLog='yes';
+if($account_id=="1594")
 {
-        $timeinterval =   ($tmptimeinterval/$maxPoints);
-        $distanceinterval = 0.1; 
+	$parameterizeData->axParam = 'ax';
+	$parameterizeData->ayParam = 'ay';
+	$parameterizeData->azParam = 'az';
+	$parameterizeData->mxParam = 'mx';
+	$parameterizeData->myParam = 'my';
+	$parameterizeData->mzParam = 'mz';
+	$parameterizeData->bxParam = 'bx';
+	$parameterizeData->byParam = 'by';
+	$parameterizeData->byParam = 'bz';
 }
-else
-{
-        if($tmptimeinterval>86400)
-        {
-                $timeinterval =   $time_interval1;		
-                $distanceinterval = 0.3;
-        }
-        else
-        {
-                $timeinterval =   $time_interval1;
-                $distanceinterval = 0.02;
-        }
-}
-//$distanceinterval=0.0;
 
 
 get_All_Dates($datefrom, $dateto, $userdates);    
 $date_size = sizeof($userdates);
-        
+
 for($i=0;$i<$vsize;$i++)
 {
-    $dataCnt=0;
-    //echo "vs=".$vserial[$i]."<br>";
     $vehicle_info=get_vehicle_info($root,$vserial[$i]);
     $vehicle_detail_local=explode(",",$vehicle_info);
-
-    
-		//echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
-    if($home_report_type=="map_report" || $home_report_type=="play_report")   /// map only
-    { 
-        $lineTmpTrack="";
-        if($report_type=="Vehicle")
-        {
-            $CurrentLat = 0.0;
-            $CurrentLong = 0.0;
-            $LastLat = 0.0;
-            $LastLong = 0.0;
-            $LastDTForDiff = "";
-            $firstData = 0;
-            $distance =0.0;
+    $finalVNameArr[$i]=$vehicle_detail_local[0];
+    $finalVTypeArr[$i]=$vehicle_detail_local[1];
+    //echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
    
-            for($di=0;$di<=($date_size-1);$di++)
-            {
-                //echo "userdate=".$userdates[$di]."<br>";
-                $SortedDataObject=null;
-                $SortedDataObject=new data();
-                if($date_size==1)
-                {
-                    $dateRangeStart=$date1;
-                    $dateRangeEnd=$date2;
-                }
-                else if($di==($date_size-1))
-                {
-                    $dateRangeStart=$userdates[$di]." 00:00:00";
-                    $dateRangeEnd=$date2;
-                }
-                else if($di==0)
-                {
-                    $dateRangeStart=$date1;
-                    $dateRangeEnd=$userdates[$di]." 23:59:59";
-                }
-                else
-                {
-                   $dateRangeStart=$userdates[$di]." 00:00:00";
-                    $dateRangeEnd=$userdates[$di]." 23:59:59";
-                }
-                deviceDataBetweenDates($vserial[$i],$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);
-                //var_dump($SortedDataObject);
-                $last_rec=0;
-                if(count($SortedDataObject->deviceDatetime)>0)
-                { 
-                    $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);                   
-                    for($obi=0;$obi<$prevSortedSize;$obi++)
-                    {
-                        $DataValid = 0;
-                        $CurrentLat = $SortedDataObject->latitudeData[$obi];
-                        $CurrentLong = $SortedDataObject->longitudeData[$obi];
-                        $datetime=$SortedDataObject->deviceDatetime[$obi];
-                        if((strlen($CurrentLat)>5) && ($CurrentLat!="-") && (strlen($CurrentLong)>5) && ($CurrentLong!="-"))
-                        {
-                            $DataValid = 1;
-                        }
-                        if(($DataValid==1))
-                        {
-                            $last_rec = $obi;
-                            //echo "lat=".$CurrentLat." lng=".$CurrentLat."<br><br>";
-                            $xml_date_current = $datetime;
-                            //echo "xml_date_current=".$xml_date_current."<br>";
-                            if((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval)
-                            {
-                                $CurrentDTForDiffTmp=strtotime($datetime);
-                                //echo "CurrentDTForDiffTmp=".$CurrentDTForDiffTmp."<br>";
-                                if($firstData==1)
-                                {
-                                    if($minlat>$CurrentLat)
-                                    {
-                                        $minlat = $CurrentLat;
-                                    }
-                                    if($maxlat<$CurrentLat)
-                                    {
-                                        $maxlat = $CurrentLat;
-                                    }					
-                                    if($minlong>$CurrentLong)
-                                    {
-                                        $minlong = $CurrentLong;
-                                    }
-                                    if($maxlong<$CurrentLong)
-                                    {
-                                        $maxlong = $CurrentLong;
-                                    }                
-                                    $tmp1lat = substr($CurrentLat,0,-1);
-                                    $tmp2lat = substr($LastLat,0,-1);
-                                    $tmp1lng = substr($CurrentLong,0,-1);
-                                    $tmp2lng = substr($LastLong,0,-1);  							
-                                   // echo  "Coord: ".$tmp1lat.' '.$tmp2lat.' '.$tmp1lng.' '.$tmp2lng.'<BR>'; 
-                                    //echo "lastDate=".$LastDTForDif."<br>";
-                                    $LastDTForDiffTS=strtotime($LastDTForDif);									
-                                    $dateDifference=($CurrentDTForDiffTmp-$LastDTForDiffTS)/3600;
-                                    $dateDifference_1=round($dateDifference,5);
-                                    //echo" dateDifference=".round($dateDifference,5)."<br>";
-                                    //echo  "dateDifference: ".$dateDifference.'<BR>'; 									
-                                    calculate_distance($tmp1lat,$tmp2lat,$tmp1lng,$tmp2lng,$distance);									
-                                    $overSpeed=$distance/$dateDifference_1;
-                                   
-                                }
-                                if($distance<$distanceinterval)
-                                {                                   
-                                    $LastDTForDif=$xml_date_current;
-                                }
-                                /*if((((((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval) && ($distance>=$distanceinterval)) || ($firstData==0)) && 
-                                (($xml_date_current<=$enddate) && ($xml_date_current>=$startdate))) || ($f==$total_lines-2) )*/
-                                //echo "distance=".$distance." distanceinterval=".$distanceinterval."<br><br>";
-                                if(($distance>=$distanceinterval) || ($firstData==0))
-                                {
-                                    //echo "distance1=".$distance." distanceinterval1=".$distanceinterval."<br><br>";
-                                    if($overSpeed<200)
-                                    {                                       
-                                        $xml_date_last = $xml_date_current;
-                                        $LastLat =$CurrentLat;
-                                        $LastLong =$CurrentLong;									
-                                        //$linetolog = "Data Written\n";
-                                        $LastDTForDif=$xml_date_current;
-                                        
-                                        $finalDistance = $finalDistance + $distance;	
-                                        $linetowrite='<x a="'.$SortedDataObject->messageTypeData[$obi].'" b="'.$SortedDataObject->versionData[$obi].'" c="'.$SortedDataObject->fixData[$obi].'" d="'.$SortedDataObject->latitudeData[$obi].'" e="'.$SortedDataObject->longitudeData[$obi].'" f="'.$SortedDataObject->speedData[$obi].'" g="'.$SortedDataObject->serverDatetime[$obi].'" h="'.$SortedDataObject->deviceDatetime[$obi].'" i="'.$SortedDataObject->io1Data[$obi].'" j="'.$SortedDataObject->io2Data[$obi].'" k="'.$SortedDataObject->io3Data[$obi].'" l="'.$SortedDataObject->io4Data[$obi].'" m="'.$SortedDataObject->io5Data[$obi].'" n="'.$SortedDataObject->io6Data[$obi].'" o="'.$SortedDataObject->io7Data[$obi].'" p="'.$SortedDataObject->io8Data[$obi].'" q="'.$SortedDataObject->sigStrData[$obi].'" r="'.$SortedDataObject->supVoltageData[$obi].'" s="'.$SortedDataObject->dayMaxSpeedData[$obi].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" z="'.round($finalDistance,2).'" za="'.$vehicle_detail_local[8].'"/>';
-                                        $firstData = 1;  
-                                        $lineTmpTrack=$lineTmpTrack.$linetowrite."@";
-                                        $distance=0;
-                                        //$fh = fopen($xmltowrite, 'a') or die("can't open file 4"); //append
-                                        //fwrite($fh, $linetowrite); 
-                                    }                                    
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-           if(($overSpeed<200) && ($last_rec!=0))
-            {
-                $finalDistance = $finalDistance + $distance;	
-                $linetowrite='<x a="'.$SortedDataObject->messageTypeData[$last_rec].'" b="'.$SortedDataObject->versionData[$last_rec].'" c="'.$SortedDataObject->fixData[$last_rec].'" d="'.$SortedDataObject->latitudeData[$last_rec].'" e="'.$SortedDataObject->longitudeData[$last_rec].'" f="'.$SortedDataObject->speedData[$last_rec].'" g="'.$SortedDataObject->serverDatetime[$last_rec].'" h="'.$SortedDataObject->deviceDatetime[$last_rec].'" i="'.$SortedDataObject->io1Data[$last_rec].'" j="'.$SortedDataObject->io2Data[$last_rec].'" k="'.$SortedDataObject->io3Data[$last_rec].'" l="'.$SortedDataObject->io4Data[$last_rec].'" m="'.$SortedDataObject->io5Data[$last_rec].'" n="'.$SortedDataObject->io6Data[$last_rec].'" o="'.$SortedDataObject->io7Data[$last_rec].'" p="'.$SortedDataObject->io8Data[$last_rec].'" q="'.$SortedDataObject->sigStrData[$last_rec].'" r="'.$SortedDataObject->supVoltageData[$last_rec].'" s="'.$SortedDataObject->dayMaxSpeedData[$last_rec].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" z="'.round($finalDistance,2).'" za="'.$vehicle_detail_local[8].'"/>';
-                //echo"<textarea>".$linetowrite."</textarea>"; 
-                $lineTmpTrack=$lineTmpTrack.$linetowrite."@";            
-            }
-            /*$linetowrite='<x a="'.$SortedDataObject->messageTypeData[$obi].'" b="'.$SortedDataObject->versionData[$obi].'" c="'.$SortedDataObject->fixData[$obi].'" d="'.$SortedDataObject->latitudeData[$obi].'" e="'.$SortedDataObject->longitudeData[$obi].'" f="'.$SortedDataObject->speedData[$obi].'" g="'.$SortedDataObject->serverDatetime[$obi].'" h="'.$SortedDataObject->deviceDatetime[$obi].'" i="'.$SortedDataObject->io1Data[$obi].'" j="'.$SortedDataObject->io2Data[$obi].'" k="'.$SortedDataObject->io3Data[$obi].'" l="'.$SortedDataObject->io4Data[$obi].'" m="'.$SortedDataObject->io5Data[$obi].'" n="'.$SortedDataObject->io6Data[$obi].'" o="'.$SortedDataObject->io7Data[$obi].'" p="'.$SortedDataObject->io8Data[$obi].'" q="'.$SortedDataObject->sigStrData[$obi].'" r="'.$SortedDataObject->supVoltageData[$obi].'" s="'.$SortedDataObject->dayMaxSpeedData[$obi].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" z="'.round($finalDistance,2).'"/>';
-            $lineTmpTrack=$lineTmpTrack.$linetowrite."@";
-            $io_type_value=$vehicle_detail_local[7];*/
-            $lineF=explode("@",substr($lineTmpTrack,0,-1));					
-            for($n=0;$n<sizeof($lineF);$n++)
-            {
-                preg_match('/d="[^" ]+/', $lineF[$n], $lat_tmp);
-                $lat_tmp1 = explode("=",$lat_tmp[0]);
-                $lat = substr(preg_replace('/"/', '', $lat_tmp1[1]),0,-1);
-                //echo "lat=".$lat."<br>";
-                $lat_arr_last[]=$lat;					
-
-                preg_match('/e="[^" ]+/', $lineF[$n], $lng_tmp);
-                $lng_tmp1 = explode("=",$lng_tmp[0]);
-                $lng = substr(preg_replace('/"/', '', $lng_tmp1[1]),0,-1);
-                //echo "lng=".$lng."<br>";
-                $lng_arr_last[]=$lng;                    
-
-                preg_match('/h="[^"]+/', $lineF[$n], $datetime_tmp);
-                $datetime_tmp1 = explode("=",$datetime_tmp[0]);
-                $datetime = preg_replace('/"/', '', $datetime_tmp1[1]);
-                $datetime_arr_last[]=$datetime;
-                // echo "datetime=".$datetime."<br>";
-
-                preg_match('/v="[^"]+/', $lineF[$n], $vserial_tmp);
-                $vserial_tmp1 = explode("=",$vserial_tmp[0]);
-                $vehicle_serial = preg_replace('/"/', '', $vserial_tmp1[1]);
-                $vserial_arr_last[]=$vehicle_serial;
-                // echo "vehicle_name1=".$vehicle_serial."<br>";
-
-                preg_match('/w="[^"]+/', $lineF[$n], $vname_tmp);
-                $vname_tmp1 = explode("=",$vname_tmp[0]);
-                $vehicle_name = preg_replace('/"/', '', $vname_tmp1[1]);
-                $vehiclename_arr_last[]=$vehicle_name;
-                // echo "vehicle_name=".$vehicle_name."<br>";
-
-                preg_match('/x="[^"]+/', $lineF[$n], $vnumber_tmp);
-                $vnumber_tmp1 = explode("=",$vnumber_tmp[0]);
-                $vehicle_number = preg_replace('/"/', '', $vnumber_tmp1[1]);
-                $vehiclenumber_arr_last[]=$vehicle_number;
-                //echo "vehicle_number=".$vehicle_number."<br>";
-
-                preg_match('/f="[^"]+/', $lineF[$n], $speed_tmp);
-                $speed_tmp1 = explode("=",$speed_tmp[0]);
-                $speed = preg_replace('/"/', '', $speed_tmp1[1]);                               
-                if( ($speed<=3) || ($speed>200))
-                {
-                        $speed = 0;
-                }
-                $speed_arr_last[]=$speed;
-                //echo "speed=".$speed."<br>";
-                preg_match('/i="[^"]+/', $lineF[$n], $io1_tmp);
-                $io1_tmp1 = explode("=",$io1_tmp[0]);
-                $io1= preg_replace('/"/', '', $io1_tmp1[1]);
-                // echo "io1=".$io1."<br>";
-
-                preg_match('/j="[^"]+/', $lineF[$n], $io2_tmp);
-                $io2_tmp1 = explode("=",$io2_tmp[0]);
-                $io2= preg_replace('/"/', '', $io2_tmp1[1]);
-                // echo "io2=".$io2."<br>";
-
-                preg_match('/k="[^"]+/', $lineF[$n], $io3_tmp);
-                $io3_tmp1 = explode("=",$io3_tmp[0]);
-                $io3= preg_replace('/"/', '', $io3_tmp1[1]);
-                //echo "io3=".$io3."<br>";
-
-                preg_match('/l="[^"]+/', $lineF[$n], $io4_tmp);
-                $io4_tmp1 = explode("=",$io4_tmp[0]);
-                $io4= preg_replace('/"/', '', $io4_tmp1[1]);
-                //echo "io4=".$io4."<br>";
-
-                preg_match('/m="[^"]+/', $lineF[$n], $io5_tmp);
-                $io5_tmp1 = explode("=",$io5_tmp[0]);
-                $io5= preg_replace('/"/', '', $io5_tmp1[1]);
-                //echo "io5=".$io5."<br>";
-
-                preg_match('/n="[^"]+/', $lineF[$n], $io6_tmp);
-                $io6_tmp1 = explode("=",$io6_tmp[0]);
-                $io6= preg_replace('/"/', '', $io6_tmp1[1]);
-                //echo "io6=".$io6."<br>";
-
-                preg_match('/o="[^"]+/', $lineF[$n], $io7_tmp);
-                $io7_tmp1 = explode("=",$io7_tmp[0]);
-                $io7= preg_replace('/"/', '', $io7_tmp1[1]);
-                // echo "io7=".$io7."<br>";
-
-                preg_match('/p="[^"]+/', $lineF[$n], $io8_tmp);
-                $io8_tmp1 = explode("=",$io8_tmp[0]);
-                $io8= preg_replace('/"/', '', $io8_tmp1[1]);
-                // echo "io8=".$io8."<br>";
-
-                preg_match('/s="[^"]+/', $lineF[$n], $day_max_speed_tmp);
-                $day_max_speed_tmp1 = explode("=",$day_max_speed_tmp[0]);
-                $day_max_speed= preg_replace('/"/', '', $day_max_speed_tmp1[1]);
-                $day_max_speed_arr_last[]=$day_max_speed;
-                // echo "day_max_speed=".$day_max_speed."<br>";
-
-                /*preg_match('/t="[^"]+/', $lineF[$n], $day_max_speed_time_tmp);
-                $day_max_speed_time_tmp1 = explode("=",$day_max_speed_time_tmp[0]);
-                $day_max_speed_time= preg_replace('/"/', '', $day_max_speed_time_tmp1[1]);*/
-
-                // echo "day_max_speed_time=".$day_max_speed_time."<br>";
-
-                preg_match('/u="[^"]+/', $lineF[$n], $last_halt_time_tmp);
-                $last_halt_time_tmp1 = explode("=",$last_halt_time_tmp[0]);
-                $last_halt_time= preg_replace('/"/', '', $last_halt_time_tmp1[1]);
-                $last_halt_time_arr_last[]=$last_halt_time;
-
-                preg_match('/ y="[^"]+/', $lineF[$n], $vehilce_type_tmp);
-                $vehilce_type_tmp1 = explode("=",$vehilce_type_tmp[0]);
-                $vehilce_type= preg_replace('/"/', '', $vehilce_type_tmp1[1]);
-                $vehilce_type_arr[]=$vehilce_type;
-
-                preg_match('/z="[^"]+/', $lineF[$n], $distance_travel_tmp);
-                $distance_travel_tmp1 = explode("=",$distance_travel_tmp[0]);
-                $distance_travel= preg_replace('/"/', '', $distance_travel_tmp1[1]);
-                $distance_travel_arr[]=$distance_travel;
-                
-                preg_match('/za="[^"]+/', $lineF[$n], $dmobno_tmp);
-                $dmobno_tmp1 = explode("=",$dmobno_tmp[0]);
-                $dmobno = preg_replace('/"/', '', $dmobno_tmp1[1]);
-                $dMobileNoArr[]=$dmobno;
-
-                $io_str="";
-                if($io_type_value!="tmp_str")
-                {
-                    $iotype_iovalue_str=explode(":",$io_type_value);
-                    for($i=0;$i<sizeof($iotype_iovalue_str);$i++)
-                    {
-                        $iotype_iovalue_str1=explode("^",$iotype_iovalue_str[$i]);							
-                        if($iotype_iovalue_str1[0]=="1")
-                        {
-                            $io_values=$io1;
-                        }
-                        else if($iotype_iovalue_str1[0]=="2")
-                        {
-                            $io_values=$io2;
-                        }
-                        else if($iotype_iovalue_str1[0]=="3")
-                        {
-                            $io_values=$io3;
-                        }
-                        else if($iotype_iovalue_str1[0]=="4")
-                        {
-                            $io_values=$io4;
-                        }
-                        else if($iotype_iovalue_str1[0]=="5")
-                        {
-                            $io_values=$io5;
-                        }
-                        else if($iotype_iovalue_str1[0]=="6")
-                        {
-                            $io_values=$io6;
-                        }
-                        else if($iotype_iovalue_str1[0]=="7")
-                        {
-                            $io_values=$io7;
-                        }
-                        else if($iotype_iovalue_str1[0]=="8")
-                        {
-                            $io_values=$io8;
-                        }
-                        //echo "temperature=".$iotype_iovalue_str1[1]."<br>";
-                        if($iotype_iovalue_str1[1]=="temperature")
-                        {					
-                            if($io_values!="")
-                            {
-                                if($io_values>=-30 && $io_values<=70)
-                                {
-                                    //echo "in if";
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>".$io_values."</td></tr>";
-                                }
-                                else
-                                {
-                                    //echo "in if 1";
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>Temperature</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>-</td></tr>";
-                                }
-                            }
-                            else
-                            {
-                                //echo "in if 2";
-                                $io_str=$io_str."<tr><td class='live_td_css1'>Temperature</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>-</td></tr>";
-                            }
-                        }
-                        else if($iotype_iovalue_str1[1]!="")
-                        {
-                            //echo "engine".$iotype_iovalue_str1[1]."<br>";
-                            if(trim($iotype_iovalue_str1[1])=="engine")
-                            {
-                                $ioStr= get_io($vehicle_serial,'engine,engine_type');
-                                $ioStr=explode("#",$ioStr);
-                                if($ioStr[1]==1)
-                                {
-                                    if($io_values<350)
-                                    {					
-                                        $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>On</td></tr>";
-                                    }
-                                    else
-                                    {
-                                        $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>:</td><td class='live_td_css2'>Off</td></tr>";
-                                    }
-                                }
-                                else
-                                {
-                                    if($io_values<=350)
-                                    {					
-                                        $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>Off</td></tr>";
-                                    }
-                                    else
-                                    {
-                                        $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>:</td><td class='live_td_css2'>ON</td></tr>";
-                                    }
-                                }
-                            }
-                            else if(trim($iotype_iovalue_str1[1])=="ac")
-                            {
-                                if($io_values>500)
-                                {					
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>Off</td></tr>";
-                                }
-                                else
-                                {
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>:</td><td class='live_td_css2'>ON</td></tr>";
-                                }
-                            }
-                            else if($iotype_iovalue_str1[1]=="door_open")
-                            {
-                                //if($io_values<=350)
-                                if($io_values<250)
-                                {					
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>Delivery Door</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>Close</td></tr>";
-                                }
-                                else
-                                {
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>Delivery Door</td><td>:</td><td class='live_td_css2'>Open</td></tr>";
-                                }
-                            }
-                            else if($iotype_iovalue_str1[1]=="door_open2")
-                            {
-                                //if($io_values<=350)
-                                if($io_values<250)
-                                {					
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>Manhole Door</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>Close</td></tr>";
-                                }
-                                else
-                                {
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>Manhole Door</td><td>:</td><td class='live_td_css2'>Open</td></tr>";
-                                }
-                            }
-                            else if($iotype_iovalue_str1[1]=="door_open3")
-                            {
-                                //if($io_values<=350)
-                                if($io_values<250)
-                                {					
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>Manhole Door2</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>Close</td></tr>";
-                                }
-                                else
-                                {
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>Manhole Door2</td><td>:</td><td class='live_td_css2'>Open</td></tr>";
-                                }
-                            }
-                            else if($iotype_iovalue_str1[1]=="fuel_lead")
-                            {
-                                if($io_values<=350)
-                                {					
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>Close</td></tr>";
-                                }
-                                else
-                                {
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>:</td><td class='live_td_css2'>Open</td></tr>";
-                                }
-                            }
-                            else
-                            {
-                                if($io_values!="")
-                                {					
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>".$io_values."</td></tr>";
-                                }
-                                else
-                                {
-                                    $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>-</td></tr>";
-                                }
-                            }
-                        }			
-                    }
-                }
-                $io_str_last[]=$io_str;                                 
-            }
-            //print_r($io_str_last);
-            //print_r($lng_arr_last);
-            //print_r($io_str_last);
-            $googleMapthisapi=new GoogleMapHelper();								
-            //echo $googleMapthisapi->addMultipleMarker("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$io_str_last,$distance_travel_arr);
-            if($flag_play==1)
-            {
-                //playing track					
-                echo $googleMapthisapi->addMultipleMarker_play("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$io_str_last,$distance_travel_arr,$play_interval);
-            }
-            else
-            {	
-                //not playing track
-                echo $googleMapthisapi->addMultipleMarker("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$io_str_last,$distance_travel_arr,$dMobileNoArr);
-            }
-            //echo "<textarea>".$lineTmpTrack."</textarea>";
-        }
-        else 
-        {
-            $CurrentLat = 0.0;
-            $CurrentLong = 0.0;
-            $LastLat = 0.0;
-            $LastLong = 0.0;
-            $firstData = 0;
-            $distance =0.0;
-            $lineTmpTrack="";
-            for($di=0;$di<=($date_size-1);$di++)
-            {
-                //echo "userdate=".$userdates[$di]."<br>";
-                $SortedDataObject=null;
-                $SortedDataObject=new data();
-                if($date_size==1)
-                {
-                    $dateRangeStart=$date1;
-                    $dateRangeEnd=$date2;
-                }
-                else if($di==($date_size-1))
-                {
-                    $dateRangeStart=$userdates[$di]." 00:00:00";
-                    $dateRangeEnd=$date2;
-                }
-                else if($di==0)
-                {
-                    $dateRangeStart=$date1;
-                    $dateRangeEnd=$userdates[$di]." 23:59:59";
-                }
-                else
-                {
-                   $dateRangeStart=$userdates[$di]." 00:00:00";
-                    $dateRangeEnd=$userdates[$di]." 23:59:59";
-                }
-                $last_rec=0;
-                deviceDataBetweenDates($vserial[$i],$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);
-                //var_dump($SortedDataObject);
-                if(count($SortedDataObject->deviceDatetime)>0)
-                {
-                    $logcnt=0;
-                    $DataComplete=false;
-                    $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
-                    $logcnt=0;
-                    $DataComplete=false;
-                    for($obi=0;$obi<$prevSortedSize;$obi++)
-                    {
-                        $DataValid = 0;
-                        $CurrentLat = $SortedDataObject->latitudeData[$obi];
-                        $CurrentLong = $SortedDataObject->longitudeData[$obi];
-                        $datetime=$SortedDataObject->deviceDatetime[$obi];
-                        if((strlen($CurrentLat)>5) && ($CurrentLat!="-") && (strlen($CurrentLong)>5) && ($CurrentLong!="-"))
-                        {
-                            $DataValid = 1;
-                        }
-                        if($DataValid==1)
-                        { 
-                            $last_rec = $obi;
-                            $xml_date_current = $datetime;
-                            if((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval)
-                            {	
-                                //echo "lat=".$CurrentLat." lng=".$CurrentLong."<br>";
-                                $CurrentDTForDiffTmp=strtotime($datetime);
-                                if($firstData==1)
-                                {   
-                                    $tmp1lat = round(substr($CurrentLat,1,(strlen($CurrentLat)-3)),4);
-                                    $tmp2lat = round(substr($LastLat,1,(strlen($LastLat)-3)),4);
-                                    $tmp1lng = round(substr($CurrentLong,1,(strlen($CurrentLong)-3)),4);
-                                    $tmp2lng = round(substr($LastLong,1,(strlen($LastLong)-3)),4); 
-                                    $LastDTForDiffTS=strtotime($LastDTForDif);									
-                                    $dateDifference=($CurrentDTForDiffTmp-$LastDTForDiffTS)/3600;
-                                    $dateDifference_1=round($dateDifference,5);
-                                    //echo  "Coord: ".$tmp1lat.' '.$tmp2lat.' '.$tmp1lng.' '.$tmp2lng.'<BR>';             							
-                                    calculate_distance($tmp1lat,$tmp2lat,$tmp1lng,$tmp2lng,$distance);  
-                                    $overSpeed=$distance/$dateDifference_1;										
-                                    //fwrite($xmllog, $linetolog);
-                                }
-                                if($distance<$distanceinterval)
-                                {
-                                    $LastDTForDif=$xml_date_current;
-                                }
-                                if(($distance>=$distanceinterval) || ($firstData==0))
-                                {
-                                    $xml_date_last = $xml_date_current;									
-                                    if($overSpeed<200)
-                                    {
-                                        $LastLat =$CurrentLat;
-                                        $LastLong =$CurrentLong;
-                                        $LastDTForDif=$xml_date_current;
-                                        $finalDistance = $finalDistance + $distance;                           
-                                        $linetowrite='<x a="'.$SortedDataObject->messageTypeData[$obi].'" b="'.$SortedDataObject->versionData[$obi].'" c="'.$SortedDataObject->fixData[$obi].'" d="'.$SortedDataObject->latitudeData[$obi].'" e="'.$SortedDataObject->longitudeData[$obi].'" f="'.$SortedDataObject->speedData[$obi].'" g="'.$SortedDataObject->serverDatetime[$obi].'" h="'.$SortedDataObject->deviceDatetime[$obi].'" i="'.$SortedDataObject->io1Data[$obi].'" j="'.$SortedDataObject->io2Data[$obi].'" k="'.$SortedDataObject->io3Data[$obi].'" l="'.$SortedDataObject->io4Data[$obi].'" m="'.$SortedDataObject->io5Data[$obi].'" n="'.$SortedDataObject->io6Data[$obi].'" o="'.$SortedDataObject->io7Data[$obi].'" p="'.$SortedDataObject->io8Data[$obi].'" q="'.$SortedDataObject->sigStrData[$obi].'" r="'.$SortedDataObject->supVoltageData[$obi].'" s="'.$SortedDataObject->dayMaxSpeedData[$obi].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[8].'" y="'.$vehicle_detail_local[1].'" z="'.round($finalDistance,2).'"/>';
-					$firstData = 1;  
-                                        $lineTmpTrack=$lineTmpTrack.$linetowrite."@"; 
-                                    }
-                                }
-                            }
-                        }
-                    }                    
-                }
-            }
-            if(($overSpeed<200) && ($last_rec!=0))
-            {
-                $finalDistance = $finalDistance + $distance;	
-                $linetowrite='<x a="'.$SortedDataObject->messageTypeData[$last_rec].'" b="'.$SortedDataObject->versionData[$last_rec].'" c="'.$SortedDataObject->fixData[$last_rec].'" d="'.$SortedDataObject->latitudeData[$last_rec].'" e="'.$SortedDataObject->longitudeData[$last_rec].'" f="'.$SortedDataObject->speedData[$last_rec].'" g="'.$SortedDataObject->serverDatetime[$last_rec].'" h="'.$SortedDataObject->deviceDatetime[$last_rec].'" i="'.$SortedDataObject->io1Data[$last_rec].'" j="'.$SortedDataObject->io2Data[$last_rec].'" k="'.$SortedDataObject->io3Data[$last_rec].'" l="'.$SortedDataObject->io4Data[$last_rec].'" m="'.$SortedDataObject->io5Data[$last_rec].'" n="'.$SortedDataObject->io6Data[$last_rec].'" o="'.$SortedDataObject->io7Data[$last_rec].'" p="'.$SortedDataObject->io8Data[$last_rec].'" q="'.$SortedDataObject->sigStrData[$last_rec].'" r="'.$SortedDataObject->supVoltageData[$last_rec].'" s="'.$SortedDataObject->dayMaxSpeedData[$last_rec].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[8].'" y="'.$vehicle_detail_local[1].'" z="'.round($finalDistance,2).'"/>';
-                //echo"<textarea>".$linetowrite."</textarea>"; 
-                $lineTmpTrack=$lineTmpTrack.$linetowrite."@";            
-            }
-            //echo "<textarea>".$lineTmpTrack."</textarea>";
-            //echo "lineTmpTrack=".$lineTmpTrack."<br>";
-            $lineF=explode("@",substr($lineTmpTrack,0,-1));					
-            for($n=0;$n<sizeof($lineF);$n++)
-            {
-                preg_match('/d="[^" ]+/', $lineF[$n], $lat_tmp);
-                $lat_tmp1 = explode("=",$lat_tmp[0]);
-                $lat = substr(preg_replace('/"/', '', $lat_tmp1[1]),0,-1);
-                //echo "lat=".$lat."<br>";
-                $lat_arr_last[]=$lat;					
-
-                preg_match('/e="[^" ]+/', $lineF[$n], $lng_tmp);
-                $lng_tmp1 = explode("=",$lng_tmp[0]);
-                $lng = substr(preg_replace('/"/', '', $lng_tmp1[1]),0,-1);
-                //echo "lng=".$lng."<br>";
-                $lng_arr_last[]=$lng;                    
-
-                preg_match('/h="[^"]+/', $lineF[$n], $datetime_tmp);
-                $datetime_tmp1 = explode("=",$datetime_tmp[0]);
-                $datetime = preg_replace('/"/', '', $datetime_tmp1[1]);
-                $datetime_arr_last[]=$datetime;
-                // echo "datetime=".$datetime."<br>";
-
-                preg_match('/v="[^"]+/', $lineF[$n], $vserial_tmp);
-                $vserial_tmp1 = explode("=",$vserial_tmp[0]);
-                $vehicle_serial = preg_replace('/"/', '', $vserial_tmp1[1]);
-                $vserial_arr_last[]=$vehicle_serial;
-                // echo "vehicle_name1=".$vehicle_serial."<br>";
-
-                preg_match('/w="[^"]+/', $lineF[$n], $vname_tmp);
-                $vname_tmp1 = explode("=",$vname_tmp[0]);
-                $vehicle_name = preg_replace('/"/', '', $vname_tmp1[1]);
-                $vehiclename_arr_last[]=$vehicle_name;
-                // echo "vehicle_name=".$vehicle_name."<br>";
-
-                preg_match('/x="[^"]+/', $lineF[$n], $vnumber_tmp);
-                $vnumber_tmp1 = explode("=",$vnumber_tmp[0]);
-                $vehicle_number = preg_replace('/"/', '', $vnumber_tmp1[1]);
-                $vehiclenumber_arr_last[]=$vehicle_number;
-                //echo "vehicle_number=".$vehicle_number."<br>";
-
-                preg_match('/f="[^"]+/', $lineF[$n], $speed_tmp);
-                $speed_tmp1 = explode("=",$speed_tmp[0]);
-                $speed = preg_replace('/"/', '', $speed_tmp1[1]);                               
-                if( ($speed<=3) || ($speed>200))
-                {
-                        $speed = 0;
-                }
-                $speed_arr_last[]=$speed;
-                //echo "speed=".$speed."<br>";
-                preg_match('/i="[^"]+/', $lineF[$n], $io1_tmp);
-                $io1_tmp1 = explode("=",$io1_tmp[0]);
-                $io1= preg_replace('/"/', '', $io1_tmp1[1]);
-                // echo "io1=".$io1."<br>";
-
-                preg_match('/j="[^"]+/', $lineF[$n], $io2_tmp);
-                $io2_tmp1 = explode("=",$io2_tmp[0]);
-                $io2= preg_replace('/"/', '', $io2_tmp1[1]);
-                // echo "io2=".$io2."<br>";
-
-                preg_match('/k="[^"]+/', $lineF[$n], $io3_tmp);
-                $io3_tmp1 = explode("=",$io3_tmp[0]);
-                $io3= preg_replace('/"/', '', $io3_tmp1[1]);
-                //echo "io3=".$io3."<br>";
-
-                preg_match('/l="[^"]+/', $lineF[$n], $io4_tmp);
-                $io4_tmp1 = explode("=",$io4_tmp[0]);
-                $io4= preg_replace('/"/', '', $io4_tmp1[1]);
-                //echo "io4=".$io4."<br>";
-
-                preg_match('/m="[^"]+/', $lineF[$n], $io5_tmp);
-                $io5_tmp1 = explode("=",$io5_tmp[0]);
-                $io5= preg_replace('/"/', '', $io5_tmp1[1]);
-                //echo "io5=".$io5."<br>";
-
-                preg_match('/n="[^"]+/', $lineF[$n], $io6_tmp);
-                $io6_tmp1 = explode("=",$io6_tmp[0]);
-                $io6= preg_replace('/"/', '', $io6_tmp1[1]);
-                //echo "io6=".$io6."<br>";
-
-                preg_match('/o="[^"]+/', $lineF[$n], $io7_tmp);
-                $io7_tmp1 = explode("=",$io7_tmp[0]);
-                $io7= preg_replace('/"/', '', $io7_tmp1[1]);
-                // echo "io7=".$io7."<br>";
-
-                preg_match('/p="[^"]+/', $lineF[$n], $io8_tmp);
-                $io8_tmp1 = explode("=",$io8_tmp[0]);
-                $io8= preg_replace('/"/', '', $io8_tmp1[1]);
-                // echo "io8=".$io8."<br>";
-
-                preg_match('/s="[^"]+/', $lineF[$n], $day_max_speed_tmp);
-                $day_max_speed_tmp1 = explode("=",$day_max_speed_tmp[0]);
-                $day_max_speed= preg_replace('/"/', '', $day_max_speed_tmp1[1]);
-                $day_max_speed_arr_last[]=$day_max_speed;
-                // echo "day_max_speed=".$day_max_speed."<br>";
-
-                /*preg_match('/t="[^"]+/', $lineF[$n], $day_max_speed_time_tmp);
-                $day_max_speed_time_tmp1 = explode("=",$day_max_speed_time_tmp[0]);
-                $day_max_speed_time= preg_replace('/"/', '', $day_max_speed_time_tmp1[1]);*/
-
-                // echo "day_max_speed_time=".$day_max_speed_time."<br>";
-
-                preg_match('/u="[^"]+/', $lineF[$n], $last_halt_time_tmp);
-                $last_halt_time_tmp1 = explode("=",$last_halt_time_tmp[0]);
-                $last_halt_time= preg_replace('/"/', '', $last_halt_time_tmp1[1]);
-                $last_halt_time_arr_last[]=$last_halt_time;
-
-                preg_match('/y="[^"]+/', $lineF[$n], $vehilce_type_tmp);
-                $vehilce_type_tmp1 = explode("=",$vehilce_type_tmp[0]);
-                $vehilce_type= preg_replace('/"/', '', $vehilce_type_tmp1[1]);
-                $vehilce_type_arr[]=$vehilce_type;
-
-                preg_match('/z="[^"]+/', $lineF[$n], $distance_travel_tmp);
-                $distance_travel_tmp1 = explode("=",$distance_travel_tmp[0]);
-                $distance_travel= preg_replace('/"/', '', $distance_travel_tmp1[1]);
-                $distance_travel_arr[]=$distance_travel;
-            }
-            //print_r($lat_arr_last);
-            //print_r($lng_arr_last);
-            //print_r($io_str_last);
-            $googleMapthisapi=new GoogleMapHelper();								
-            echo $googleMapthisapi->addMultipleMarkerPerson("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$distance_travel_arr);
-        }
-    }
-    else   // for text track report
+    $distance =0.0;	
+    $firstdata_flag =0;		
+    $flag =0;
+    $rec_count =0;
+    for($di=($date_size-1);$di>=0;$di--)
     {
-        if($report_type=="Vehicle")
+        if(($flag == 1) && ($rec!="all"))
         {
-            $CurrentLat = 0.0;
-            $CurrentLong = 0.0;
-            $LastLat = 0.0;
-            $LastLong = 0.0;
-            $LastDTForDiff = "";
-            $firstData = 0;
-            $distance =0.0;
-            for($di=0;$di<=($date_size-1);$di++)
-            {
-                //echo "userdate=".$userdates[$di]."<br>";
-                //echo "userdate=".$userdates[$di]."<br>";
-                $SortedDataObject=null;
-                $SortedDataObject=new data();
-                if($date_size==1)
-                {
-                    $dateRangeStart=$date1;
-                    $dateRangeEnd=$date2;
-                }
-                else if($di==($date_size-1))
-                {
-                    $dateRangeStart=$userdates[$di]." 00:00:00";
-                    $dateRangeEnd=$date2;
-                }
-                else if($di==0)
-                {
-                    $dateRangeStart=$date1;
-                    $dateRangeEnd=$userdates[$di]." 23:59:59";
-                }
-                else
-                {
-                   $dateRangeStart=$userdates[$di]." 00:00:00";
-                    $dateRangeEnd=$userdates[$di]." 23:59:59";
-                }
-                deviceDataBetweenDates($vserial[$i],$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);
-                //var_dump($SortedDataObject);
-                $last_rec=0;
-                if(count($SortedDataObject->deviceDatetime)>0)
-                {                   
-                    $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);			
-                    for($obi=0;$obi<$prevSortedSize;$obi++)
-                    {
-                        $DataValid = 0;
-                        $CurrentLat = $SortedDataObject->latitudeData[$obi];
-                        $CurrentLong = $SortedDataObject->longitudeData[$obi];
-                        $datetime=$SortedDataObject->deviceDatetime[$obi];
-                        if((strlen($CurrentLat)>5) && ($CurrentLat!="-") && (strlen($CurrentLong)>5) && ($CurrentLong!="-"))
-                        {
-                            $DataValid = 1;
-                        }
-                        if($DataValid==1)
-                        {
-                            $last_rec = $obi;
-                            //echo "lat=".$CurrentLat." lng=".$CurrentLat."<br><br>";
-                            $xml_date_current = $datetime;
-                            //echo "xml_date_current=".$xml_date_current."<br>";
-                           if((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval)
-                           {
-                                if($firstData==1)
-                                {                                                   
-                                    $tmp1lat = round(substr($CurrentLat,1,(strlen($CurrentLat)-3)),4);
-                                    $tmp2lat = round(substr($LastLat,1,(strlen($LastLat)-3)),4);
-                                    $tmp1lng = round(substr($CurrentLong,1,(strlen($CurrentLong)-3)),4);
-                                    $tmp2lng = round(substr($LastLong,1,(strlen($LastLong)-3)),4);
-
-                                    $LastDTForDiffTS=strtotime($LastDTForDif);	
-                                    $tmpdifff=$CurrentDTForDiffTmp-$LastDTForDiffTS;								
-                                    $dateDifference=($CurrentDTForDiffTmp-$LastDTForDiffTS)/3600;
-                                    $dateDifference_1=round($dateDifference,5);
-                                    //echo  "Lat=".$tmp1lat.' Lng='.$tmp1lng.' Lat2='.$tmp2lat.' Lng2='.$tmp2lng.'<BR>';             							
-                                    calculate_distance($tmp1lat,$tmp2lat,$tmp1lng,$tmp2lng,$distance);                
-                                    $linetolog = $CurrentLat.','.$CurrentLong.','.$LastLat.','.$LastLong.','.$distance.','.$xml_date_current.','.$xml_date_last.','.(strtotime($xml_date_current)-strtotime($xml_date_last)).','.$timeinterval.','.$distanceinterval.','.$enddate.','.$startdate."\n";
-                                    $overSpeed=$distance/$dateDifference_1;
-                                }								
-                                if($distance<$distanceinterval)
-                                {
-                                    $LastDTForDif=$xml_date_current;
-                                }
-                                /*if((((((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval) && ($distance>=$distanceinterval)) || ($firstData==0)) && 
-                                (($xml_date_current<=$enddate) && ($xml_date_current>=$startdate))) || ($f==$total_lines-2) )*/
-                                if(($distance>=$distanceinterval) || ($firstData==0))
-                                {								
-                                    if($overSpeed<200)
-                                    {
-                                        $xml_date_last = $xml_date_current;
-                                        $LastLat =$CurrentLat;
-                                        $LastLong =$CurrentLong;
-                                        $LastDTForDif=$xml_date_current;
-                                        $line = substr($line, 0, -3);   // REMOVE LAST TWO /> CHARARCTER
-                                        $finalDistance = $finalDistance + $distance; 
-                                        $vehicleserial[]=$vserial[$i];
-                                        $lat[]=$CurrentLat;
-                                        $lng[]=$CurrentLong; 
-                                        $alt[]="";
-                                        $datetimeXml[]=$SortedDataObject->deviceDatetime[$obi];
-                                        $vehiclename[]=$vehicle_detail_local[0]; 
-                                        $vehicletype[]=$vehicle_detail_local[1];
-                                        $speed[]=$SortedDataObject->speedData[$obi];
-                                        $cumdist[]=round($finalDistance,2);
-                                        $io1[]=$SortedDataObject->io1Data[$obi];
-                                        $io2[]=$SortedDataObject->io2Data[$obi];
-                                        $io3[]=$SortedDataObject->io3Data[$obi];
-                                        $io4[]=$SortedDataObject->io4Data[$obi];
-                                        $io5[]=$SortedDataObject->io5Data[$obi]; 
-                                        $io6[]=$SortedDataObject->io6Data[$obi];
-                                        $io7[]=$SortedDataObject->io7Data[$obi]; 
-                                        $io8[]=$SortedDataObject->io8Data[$obi];
-                                        $firstData = 1; 
-                                    }
-                                }
-                           }
-                        }
-                    }
-                }
-            }
-            if(($overSpeed<200) && ($last_rec!=0))
-            {
-                $xml_date_last = $xml_date_current;
-                $LastLat =$CurrentLat;
-                $LastLong =$CurrentLong;
-                $LastDTForDif=$xml_date_current;
-                $line = substr($line, 0, -3);   // REMOVE LAST TWO /> CHARARCTER
-                $finalDistance = $finalDistance + $distance; 
-                $vehicleserial[]=$vserial[$i];
-                $lat[]=$CurrentLat;
-                $lng[]=$CurrentLong; 
-                $alt[]="";
-                $datetimeXml[]=$SortedDataObject->deviceDatetime[$obi];
-                $vehiclename[]=$vehicle_detail_local[0]; 
-                $vehicletype[]=$vehicle_detail_local[1];
-                $speed[]=$SortedDataObject->speedData[$obi];
-                $cumdist[]=round($finalDistance,2);
-                $io1[]=$SortedDataObject->io1Data[$obi];
-                $io2[]=$SortedDataObject->io2Data[$obi];
-                $io3[]=$SortedDataObject->io3Data[$obi];
-                $io4[]=$SortedDataObject->io4Data[$obi];
-                $io5[]=$SortedDataObject->io5Data[$obi]; 
-                $io6[]=$SortedDataObject->io6Data[$obi];
-                $io7[]=$SortedDataObject->io7Data[$obi]; 
-                $io8[]=$SortedDataObject->io8Data[$obi];           
-            }
+                break;   // BREAK LOOP AFTER TAKING ONE DAY RECORDS- LAST 30/100/ALL
+        }
+        $SortedDataObject=null;
+        $SortedDataObject=new data();
+        if($date_size==1)
+        {
+            $dateRangeStart=$date1;
+            $dateRangeEnd=$date2;
+        }
+        else if($di==($date_size-1))
+        {
+            $dateRangeStart=$userdates[$di]." 00:00:00";
+            $dateRangeEnd=$date2;
+        }
+        else if($di==0)
+        {
+            $dateRangeStart=$date1;
+            $dateRangeEnd=$userdates[$di]." 23:59:59";
         }
         else
         {
-            $CurrentLat = 0.0;
-            $CurrentLong = 0.0;
-            $LastLat = 0.0;
-            $LastLong = 0.0;
-            $firstData = 0;
-            $distance =0.0;
-            
-            for($di=0;$di<=($date_size-1);$di++)
-            {
-                //echo "userdate=".$userdates[$di]."<br>";
-               //echo "userdate=".$userdates[$di]."<br>";
-                $SortedDataObject=null;
-                $SortedDataObject=new data();
-                if($date_size==1)
-                {
-                    $dateRangeStart=$date1;
-                    $dateRangeEnd=$date2;
-                }
-                else if($di==($date_size-1))
-                {
-                    $dateRangeStart=$userdates[$di]." 00:00:00";
-                    $dateRangeEnd=$date2;
-                }
-                else if($di==0)
-                {
-                    $dateRangeStart=$date1;
-                    $dateRangeEnd=$userdates[$di]." 23:59:59";
-                }
-                else
-                {
-                   $dateRangeStart=$userdates[$di]." 00:00:00";
-                    $dateRangeEnd=$userdates[$di]." 23:59:59";
-                }
-                deviceDataBetweenDates($vserial[$i],$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);
-                //var_dump($SortedDataObject);
-                $last_rec=0;
-                if(count($SortedDataObject->deviceDatetime)>0)
-                {
-                    $logcnt=0;                    
-                    $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);			
-                    for($obi=0;$obi<$prevSortedSize;$obi++)
-                    {
-                        $DataValid = 0;
-                        $CurrentLat = $SortedDataObject->latitudeData[$obi];
-                        $CurrentLong = $SortedDataObject->longitudeData[$obi];
-                        $datetime=$SortedDataObject->deviceDatetime[$obi];                        
-                        if((strlen($CurrentLat)>5) && ($CurrentLat!="-") && (strlen($CurrentLong)>5) && ($CurrentLong!="-"))
-                        {
-                            $DataValid = 1;
-                        }
-                        if($DataValid==1)
-                        {
-                            $last_rec = $obi;
-                            //echo "lat=".$CurrentLat." lng=".$CurrentLat."<br><br>";
-                            $xml_date_current = $datetime;
-                            //echo "xml_date_current=".$xml_date_current."<br>";
-                           if((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval)
-                           {
-                                if($firstData==1)
-                                {                                                   
-                                    $tmp1lat = round(substr($CurrentLat,1,(strlen($CurrentLat)-3)),4);
-                                    $tmp2lat = round(substr($LastLat,1,(strlen($LastLat)-3)),4);
-                                    $tmp1lng = round(substr($CurrentLong,1,(strlen($CurrentLong)-3)),4);
-                                    $tmp2lng = round(substr($LastLong,1,(strlen($LastLong)-3)),4);
-
-                                    $LastDTForDiffTS=strtotime($LastDTForDif);	
-                                    $tmpdifff=$CurrentDTForDiffTmp-$LastDTForDiffTS;								
-                                    $dateDifference=($CurrentDTForDiffTmp-$LastDTForDiffTS)/3600;
-                                    $dateDifference_1=round($dateDifference,5);
-                                    //echo  "Lat=".$tmp1lat.' Lng='.$tmp1lng.' Lat2='.$tmp2lat.' Lng2='.$tmp2lng.'<BR>';             							
-                                    calculate_distance($tmp1lat,$tmp2lat,$tmp1lng,$tmp2lng,$distance);                
-                                    $linetolog = $CurrentLat.','.$CurrentLong.','.$LastLat.','.$LastLong.','.$distance.','.$xml_date_current.','.$xml_date_last.','.(strtotime($xml_date_current)-strtotime($xml_date_last)).','.$timeinterval.','.$distanceinterval.','.$enddate.','.$startdate."\n";
-                                    $overSpeed=$distance/$dateDifference_1;
-                                }								
-                                if($distance<$distanceinterval)
-                                {
-                                    $LastDTForDif=$xml_date_current;
-                                }
-                                /*if((((((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval) && ($distance>=$distanceinterval)) || ($firstData==0)) && 
-                                (($xml_date_current<=$enddate) && ($xml_date_current>=$startdate))) || ($f==$total_lines-2) )*/
-                                if(($distance>=$distanceinterval) || ($firstData==0))
-                                {								
-                                    if($overSpeed<200)
-                                    {
-                                        $xml_date_last = $xml_date_current;
-                                        $LastLat =$CurrentLat;
-                                        $LastLong =$CurrentLong;                           
-                                        $finalDistance = $finalDistance + $distance;                               
-                                        $vehicleserial[]=$vserial[$i];
-                                        $lat[]= $CurrentLat;
-                                        $lng[]=$CurrentLong; 
-                                        $alt[]="";
-                                        $datetimeXml[]=$xml_date_current;
-                                        $vehiclename[]=$vehicle_detail_local[0]; 
-                                        $vehicletype[]=$vehicle_detail_local[1];
-                                        $speed[]=$SortedDataObject->speedData[$obi];
-                                        $cumdist[]=round($finalDistance,2);
-                                        $firstData = 1; 
-                                    }
-                                }
-                           }
-                        }
-                        if($DataValid==1)
-                        { 
-                             $last_rec = $obi;
-                            //echo "lat=".$CurrentLat." lng=".$CurrentLat."<br><br>";
-                            $xml_date_current = $datetime;
-                            //echo "xml_date_current=".$xml_date_current."<br>";
-                            
-                            if($firstData==1)
-                            {                                              
-                                $tmp1lat = round(substr($CurrentLat,1,(strlen($CurrentLat)-3)),4);
-                                $tmp2lat = round(substr($LastLat,1,(strlen($LastLat)-3)),4);
-                                $tmp1lng = round(substr($CurrentLong,1,(strlen($CurrentLong)-3)),4);
-                                $tmp2lng = round(substr($LastLong,1,(strlen($LastLong)-3)),4);  							
-                                //echo  "Coord: ".$tmp1lat.' '.$tmp2lat.' '.$tmp1lng.' '.$tmp2lng.'<BR>';             							
-                                calculate_distance($tmp1lat,$tmp2lat,$tmp1lng,$tmp2lng,$distance);                
-                                $linetolog = $CurrentLat.','.$CurrentLong.','.$LastLat.','.$LastLong.','.$distance.','.$xml_date_current.','.$xml_date_last.','.(strtotime($xml_date_current)-strtotime($xml_date_last)).','.$timeinterval.','.$distanceinterval.','.$enddate.','.$startdate."\n";
-                                //fwrite($xmllog, $linetolog);
-                            }
-                            if((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval)
-                            {
-                                $xml_date_last = $xml_date_current;
-                                $LastLat =$CurrentLat;
-                                $LastLong =$CurrentLong;                           
-                                $finalDistance = $finalDistance + $distance;                               
-                                $vehicleserial[]=$vserial[$i];
-                                $lat[]= $CurrentLat;
-                                $lng[]=$CurrentLong; 
-                                $alt[]="";
-                                $datetimeXml[]=$xml_date_current;
-                                $vehiclename[]=$vehicle_detail_local[0]; 
-                                $vehicletype[]=$vehicle_detail_local[1];
-                                $speed[]=$SortedDataObject->speedData[$obi];
-                                $cumdist[]=round($finalDistance,2);
-                                $firstData = 1; 
-                            }
-                        }
-                    }
-                }
-            }
-            if(($overSpeed<200) && ($last_rec!=0))
-            {
-                $xml_date_last = $xml_date_current;
-                $LastLat =$CurrentLat;
-                $LastLong =$CurrentLong;                           
-                $finalDistance = $finalDistance + $distance;                               
-                $vehicleserial[]=$vserial[$i];
-                $lat[]= $CurrentLat;
-                $lng[]=$CurrentLong; 
-                $alt[]="";
-                $datetimeXml[]=$xml_date_current;
-                $vehiclename[]=$vehicle_detail_local[0]; 
-                $vehicletype[]=$vehicle_detail_local[1];
-                $speed[]=$SortedDataObject->speedData[$obi];
-                $cumdist[]=round($finalDistance,2);         
-            }
+            $dateRangeStart=$userdates[$di]." 00:00:00";
+            $dateRangeEnd=$userdates[$di]." 23:59:59";
         }
+        
+       // echo "vSerial=".$vserial[$i]." dateRangeStart=".$dateRangeStart." dateRangeEnd=".$dateRangeEnd."<br>";
+        deviceDataBetweenDates($vserial[$i],$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);
+        
+        //var_dump($SortedDataObject);
+        if(count($SortedDataObject->deviceDatetime)>0)
+        {
+                //echo "in sorted=".$SortedDataObject->deviceDatetime."<br><br><br><br><br><br>";
+            $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
+            //echo "prevSortedSize=".$prevSortedSize."<br>";
+            for($obi=0;$obi<$prevSortedSize;$obi++)
+            {		
+		$limit0 = ($prevSortedSize+1)-10;
+		$limit1 = ($prevSortedSize+1)-30;
+		$limit2 = ($prevSortedSize+1)-100;
+		$rec_count++;
+		//echo "rec_count=".$rec_count." limit1=".$limit1." innerSize=".$prevSortedSize."<br>";		
+		//echo "<br>flag=".$flag." ,rec_count=".$rec_count." ,limit=".$limit1." rec=".$rec." id=".$id." strlen=".strlen($line);
+		if( ( ($rec_count == $limit1) || ($prevSortedSize<30) ) && ($rec=="30") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
+		{                   
+			//echo "<br>in 30 ,rec_count=".$rec_count;
+			$flag =1;
+		}
+		else if( ( ($rec_count == $limit2) || ($prevSortedSize<100) )  && ($rec=="100") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
+		{
+			//echo "<br>in 100";
+			$flag =1;
+		}
+		else if( ( ($rec_count == $limit0) || ($prevSortedSize<10) )  && ($rec=="10") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
+		{
+			//echo "<br>in 10";
+			$flag =1;
+		}
+		else if(($rec=="all") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) )
+		{
+			//echo "<br>in all";
+			$flag =1;
+		}
+		//echo "flag=".$flag."<br>";
+		if($flag == 1)
+		{	
+                    //echo "in flag=".$flag."<br>";
+                    // $linetowrite = "\n< marker sts=\"".$sts."\" msgtype=\"".$msgtype."\" ver=\"".$ver."\" fix=\"".$fix."\" imei=\"".$vehicleserial."\" vname=\"".$vname."\" userid=\"".$user_id."\" datetime=\"".$datetime."\" lat=\"".$lat."\" lng=\"".$lng."\" alt=\"".$alt."\" speed=\"".$speed."\" fuel=\"".$fuel."\" vehicletype=\"".$vehicletype."\" no_of_sat=\"".$no_of_sat."\" cellname=\"".$cellname."\" distance=\"".$distance."\" io8=\"".$io8."\" sig_str=\"".$sig_str."\" sup_v=\"".$sup_v."\" speed_a=\"".$speed_a."\" geo_in_a=\"".$geo_in_a."\" geo_out_a=\"".$geo_out_a."\" stop_a=\"".$stop_a."\" move_a=\"".$move_a."\" lowv_a=\"".$lowv_a."\" />";						          					                    
+                    //echo "wrote<br>";
+                    $sts[]=$SortedDataObject->serverDatetime[$obi];
+                    $msgtype[]=$SortedDataObject->messageTypeData[$obi];
+                    $ver[]=$SortedDataObject->versionData[$obi];
+                    $fix[]=$SortedDataObject->fixData[$obi];
+                    $imei[]=$vserial[$i];
+                    $vname[]=$vehicle_detail_local[0];
+                    $vtype[]=$vehicle_detail_local[1];
+                    $userid[]=$user_id;
+                    $datetime[]=$SortedDataObject->deviceDatetime[$obi];
+                    $lat[]=$SortedDataObject->latitudeData[$obi];
+                    $lng[]=$SortedDataObject->longitudeData[$obi];
+                    $speed[]=$SortedDataObject->speedData[$obi];
+                    $cellname[]=$SortedDataObject->cellNameData[$obi];
+                    $io8[]=$SortedDataObject->io8Data[$obi];
+                    $sig_str[]=$SortedDataObject->sigStrData[$obi];
+                    $sup_v[]=$SortedDataObject->supVoltageData[$obi];                    
+                    if($account_id=='1594')
+                    {                      
+                        $ax[]=$SortedDataObject->axParamData[$obi];
+                        $ay[]=$SortedDataObject->ayParamData[$obi];
+                        $az[]=$SortedDataObject->azParamData[$obi];
+                        $mx[]= $SortedDataObject->mxParamData[$obi];
+                        $my[]=$SortedDataObject->myParamData[$obi];
+                        $mz[]=$SortedDataObject->mzParamData[$obi];
+                        $bx[]= $SortedDataObject->bxParamData[$obi];
+                        $by[]=$SortedDataObject->byParamData[$obi];
+                        $bz[]=$SortedDataObject->bzParamData[$obi];	
+                    }
+		}
+         
+            }
+        }            
     }
 }
 
-$o_cassandra->close();
+
+	echo '<center>';
+	echo '<div style="width:1025px;height:600px;overflow:auto;" align="center">';
+	   
+	if(sizeof($imei)==0)
+	{
+		echo '<br><font color=red><strong>Sorry No record found</strong></font>';
+	}  
+	else
+	{
+	$sts = array_reverse($sts);
+	$msgtype = array_reverse($msgtype);
+	$ver = array_reverse($ver);
+	$fix = array_reverse($fix);
+	$imei = array_reverse($imei);
+	$vname = array_reverse($vname);
+	$userid = array_reverse($userid); 
+	$datetime = array_reverse($datetime);
+	$lat = array_reverse($lat);
+	$lng = array_reverse($lng);
+	//$alt = array_reverse($alt);
+	$speed = array_reverse($speed);
+	//$fuel = array_reverse($fuel);
+	$vtype = array_reverse($vtype);
+	// $no_of_sat = array_reverse($no_of_sat);
+	$cellname = array_reverse($cellname);
+	//$cbc = array_reverse($cbc);
+	//$distance = array_reverse($distance);
+	$io8 = array_reverse($io8);
+	$sig_str = array_reverse($sig_str);
+	$sup_v = array_reverse($sup_v);
+	
+	if($account_id=='1594')
+	{
+		$ax = array_reverse($ax);
+		$ay = array_reverse($ay);
+		$az = array_reverse($az);
+		$mx = array_reverse($mx);
+		$my = array_reverse($my);
+		$mz = array_reverse($mz);
+		$bx = array_reverse($bx);
+		$by = array_reverse($by);
+		$bz = array_reverse($bz);		
+	}
+   /* $speed_a = array_reverse($speed_a);
+    $geo_in_a = array_reverse($geo_in_a);
+    $geo_out_a = array_reverse($geo_out_a);
+    $stop_a = array_reverse($stop_a);
+    $move_a = array_reverse($move_a);
+    $lowv_a = array_reverse($lowv_a);*/
+  }    				  
+   $csv_string = ""; 
+  for($i=0;$i<sizeof($imei);$i++)
+	{								              
+    if(($i===0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )
+    {
+      $sno = 1;
+      $title="VTS DataLog For UserID : ".$userid[$i].", ".$report_type." : ".$vname[$i]." &nbsp;<font color=red>(".$imei[$i].")</font>";
+       echo"<input TYPE=\"hidden\" VALUE=\"$title1\" NAME=\"title\">";
+      echo'<form  name="text_data_report" method="post" target="_blank">
+      <br><table align="center">
+      <tr>
+      	<td class="text" align="center"><b>'.$title.'</b> <div style="height:8px;"></div></td>
+      </tr>
+      </table>                					
+  
+      <table border="1" id="filter_block" width="98%" rules="all" bordercolor="#e5ecf5" align="center" cellspacing="0" cellpadding="1">	
+			 <tr bgcolor="#C9DDFF"> 
+				<th class="text"><b><font size="1">SNo</font></b></td>   
+				<th class="text"><b><font size="1">STS</font></b></td>  
+				<th class="text"><b><font size="1">DateTime</font></b></td>';
+           
+        if($report_type=='Person')
+        {
+          //echo'<th class="text"><b><font size="1">Person Name</font></b></td>'; 
+				}
+				else
+				{
+          echo'<!--<th class="text"><b><font size="1">VehName</font></b></td>-->  
+					<th class="text"><b><font size="1">VehTp</font></b></td>';					
+        }
+           
+				echo'<!--<th class="text"><b><font size="1">UserID</font></b></td>-->
+				<!--<th class="text"><b><font size="1">IMEI</font></b></td>-->	  
+				<th class="text"><b><font size="1">MsgTp</font></b></td>  
+				<th class="text"><b><font size="1">Fix</font></b></td>   
+				<th class="text"><b><font size="1">Latitude</font></b></td>    
+				<th class="text"><b><font size="1">Longitude</font></b></td>';
+        
+        if($report_type!='Person')
+        {            
+          echo'               
+              <th class="text"><b><font size="1">Speed</font></b></td>   
+              <th class="text"><b><font size="1">Distance</font></b></td>
+              ';
+        }   
+	if($report_type=='Person')
+        {            
+          echo'<th class="text"><b><font size="1">Boot Status</font></b></td>';
+        }				
+        echo'<th class="text"><b><font size="1">Version</font></b></td>';
+        if($report_type!="Person")
+        {
+      echo' 
+    				<th class="text"><b><font size="1">SupplyV</font></b></td>  
+    				<th class="text"><b><font size="1">SgnlSt</font></b></td>  
+    			
+          ';
+        }
+       
+		if($account_id=='1594')
+		{
+			echo '<th class="text"><b><font size="1">AX &nbsp;&nbsp;</font></b></td>';
+			echo '<th class="text"><b><font size="1">AY &nbsp;&nbsp;</font></b></td>';
+			echo '<th class="text"><b><font size="1">AZ &nbsp;&nbsp;</font></b></td>';
+			echo '<th class="text"><b><font size="1">MX &nbsp;&nbsp;</font></b></td>';
+			echo '<th class="text"><b><font size="1">MY &nbsp;&nbsp;</font></b></td>';
+			echo '<th class="text"><b><font size="1">MZ &nbsp;&nbsp;</font></b></td>';
+			echo '<th class="text"><b><font size="1">BX &nbsp;&nbsp;</font></b></td>';
+			echo '<th class="text"><b><font size="1">BY &nbsp;&nbsp;</font></b></td>';
+			echo '<th class="text"><b><font size="1">BZ &nbsp;&nbsp;</font></b></td>';
+		}	   
+					
+        if($report_type!='Person')
+        {
+          
+          if($login == "iesplweb")     
+			echo'<th class="text"><b><font size="1">IO8</font></b></td>';
+		}             
+      echo'</tr>';
+      if($report_type=="Person")    //////// For pdf and CSV Report
+      {     
+       echo"<input TYPE=\"hidden\" VALUE=\"$title1\" NAME=\"title\">";
+       $csv_string = $csv_string.$title1."\n";
+       $csv_string = $csv_string."SNo,STS,DateTime,MsgTp,Fix,Latitude,Longitude,Version\n";
+      }	
+    }	
+
+    if ($sno%2==0)
+    {
+      echo '<tr bgcolor="#F7FCFF">';
+    }										
+    else 
+    {
+      echo '<tr bgcolor="#E8F6FF">';	
+    }
+					                                     
+    echo'<td class="text">'.$sno.'</td>';
+    echo'<td class="text">'.$sts[$i].'</td>';
+    echo'<td class="text">'.$datetime[$i].'</td>';      
+    //echo'<td class="text"><font color="green">'.$vname[$i].'</font></td>';     	
+    if($report_type!='Person')
+    {
+      echo'<td class="text">'.$vtype[$i].'</td>';
+    }            			    
+    //echo'<td class="text"><font size="2">'.$userid[$i].'</td>';
+    //echo'<td class="text">'.$imei[$i].'</td>';
+    echo'<td class="text">'.$msgtype[$i].'</td>';
+    echo'<td class="text">'.$fix[$i].'</td>';
+    echo'<td class="text">'.$lat[$i].'</td>';
+    echo'<td class="text">'.$lng[$i].'</td>';
+    
+    if($report_type!='Person')
+    {     
+      echo'<td class="text">'.$speed[$i].'</td>'; 
+      echo'<td class="text">'.$distance[$i].'</td>';
+    }
+    if($report_type=='Person')
+    { 
+        //echo "cellName=".$cellname[$i]."<br>";
+        $tmpCellNameArr=explode(",",$cellname[$i]);
+        $bootStatus=$tmpCellNameArr[sizeof($tmpCellNameArr)-1];
+      echo'<td class="text">'.$bootStatus.'</td>';
+    }
+    echo'<td class="text">'.$ver[$i].'</td>';
+    if($report_type!="Person")
+    {
+      echo'<td class="text">'.$sup_v[$i].'</td>';
+      echo'<td class="text">'.$sig_str[$i].'</td>';
+    
+    }
+
+    if($report_type!='Person')
+    {      
+     
+      
+      if($login == "iesplweb")  
+        echo'<td class="text">'.$io8[$i].'</td>';
+    }
+
+	if($account_id=='1594')
+	{
+		 echo'<td class="text">'.$ax[$i].'</td>';
+		 echo'<td class="text">'.$ay[$i].'</td>';
+		 echo'<td class="text">'.$az[$i].'</td>';
+		 echo'<td class="text">'.$mx[$i].'</td>';
+		 echo'<td class="text">'.$my[$i].'</td>';
+		 echo'<td class="text">'.$mz[$i].'</td>';
+		 echo'<td class="text">'.$bx[$i].'</td>';
+		 echo'<td class="text">'.$by[$i].'</td>';
+		 echo'<td class="text">'.$bz[$i].'</td>';
+	}		
+      
+	  echo'</tr>'; 
+	  
+    ///////////For PDF Report Only For mobile application /////////
+    if($report_type=="Person")
+    {
+    echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$i][SNo]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$sts[$i]\" NAME=\"temp[$i][STS]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$datetime[$i]\" NAME=\"temp[$i][DateTime]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$msgtype[$i]\" NAME=\"temp[$i][MsgTp]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$fix[$i]\" NAME=\"temp[$i][Fix]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$lat[$i]\" NAME=\"temp[$i][Latitude]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$lng[$i]\" NAME=\"temp[$i][Longitude]\">";
+                echo"<input TYPE=\"hidden\" VALUE=\"$bootStatus\" NAME=\"temp[$i][Boot Status]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$ver[$i]\" NAME=\"temp[$i][Version]\">";
+		
+		////////// For CSV Report
+		$csv_string = $csv_string.$sno.','.$sts[$i].','.$datetime[$i].','.$msgtype[$i].','.$fix[$i].','.$lat[$i].','.$lng[$i].','.$bootStatus.','.$ver[$i]."\n";
+   }
+  if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
+  {
+  	echo '</table>';
+	
+  	if($report_type=="Person")
+  	{
+  	 echo'<input TYPE="hidden" VALUE="halt" NAME="csv_type">';
+      echo'<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">';
+    echo'<br>
+  	<input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size=1\');" value="Get PDF" class="noprint">&nbsp;
+      <input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">';
+    }
+	
+  }
+  						  				 
+  $sno++;
+}
+echo '</div></center>';
+// <form  name="text_data_report" method="post" target="_blank">'
+echo'</tbody></table></div></form>';
+/*if($option=="today")
+{
+$displayPageName='datalog_today_records.htm';
+echo'<center>
+		<a href="javascript:showReportPrevPage(\''.$displayPageName.'\',\''.$selected_account_id.'\',\''.$selected_options_value.'\',\''.$s_vehicle_display_option.'\');" class="back_css">
+			&nbsp;<b>Back</b>
+		</a>
+	</center>';
+}
+else if($option=="date")
+{
+$displayPageName='datalog_between_dates.htm';
+echo'<center>
+		<a href="javascript:showReportPrevPage(\''.$displayPageName.'\',\''.$selected_account_id.'\',\''.$selected_options_value.'\',\''.$s_vehicle_display_option.'\');" class="back_css">
+			&nbsp;<b>Back</b>
+		</a>
+	</center>';
+}*/
+
+/*$csv_string = "";
+$cs_pdf_no=1;
+  for($i=0;$i<sizeof($imei);$i++)
+	{							              
+    if(($i===0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )
+    {
+      $title="VTS DataLog For UserID : ".$userid[$i].", ".$report_type." : ".$vname[$i]." &nbsp;<font color=red>(".$imei[$i].")</font>";
+       echo"<input TYPE=\"hidden\" VALUE=\"$title1\" NAME=\"title\">";
+       $csv_string = $csv_string.$title1."\n";
+       $csv_string = $csv_string."SNo,STS,DateTime,MsgTp,Fix,Latitude,Longitude,Version,CellName\n";
+    }
+      ///////////For PDF Report /////////
+    echo"<input TYPE=\"hidden\" VALUE=\"$cs_pdf_no\" NAME=\"temp[$i][SNo]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$sts[$i]\" NAME=\"temp[$i][STS]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$datetime[$i]\" NAME=\"temp[$i][DateTime]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$msgtype[$i]\" NAME=\"temp[$i][MsgTp]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$fix[$i]\" NAME=\"temp[$i][Fix]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$lat[$i]\" NAME=\"temp[$i][Latitude]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$lng[$i]\" NAME=\"temp[$i][Longitude]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$ver[$i]\" NAME=\"temp[$i][Version]\">";
+		echo"<input TYPE=\"hidden\" VALUE=\"$cellname[$i]\" NAME=\"temp[$i][CellName]\">";
+		////////// For CSV Report
+		$csv_string = $csv_string.$cs_pdf_no.','.$sts[$i].','.$datetime[$i].','.$msgtype[$i].','.$fix[$i].','.$lat[$i].','.$lng[$i].','.$ver[$i].','.$cellname[$i]."\n";
+    $cs_pdf_no++;
+  }
+
+  if(sizeof($imei)==0)
+		{						
+			print"<center><FONT color=\"Red\" size=2><strong>No Report Found</strong></font></center>";
+			//echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=HaltReport.php\">";
+			echo'<br><br>';
+		}	
+		else
+		{
+      echo'<input TYPE="hidden" VALUE="halt" NAME="csv_type">';
+      echo'<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">';                 
+      echo'<br><center><input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size=1\');" value="Get PDF" class="noprint">&nbsp;
+      <input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
+      <!--<input type="button" value="Print it" onclick="window.print()" class="noprint">-->&nbsp;';
+    }
+ echo'</form>'; */
+if(sizeof($imei)>0)
+{
+  echo'
+  <script type="text/javascript">
+    //alert("k");
+    var table3Filters = {
+  	paging:true,
+  	sort_select:true,				
+  	col_1:"select",
+  	col_2:"select",
+  	col_3:"none",
+  	col_4:"none"
+  }
+  setFilterGrid("table1",0,table3Filters); 
+  </script>
+  ';
+}
+
+echo'<center>		
+        <a href="javascript:showReportPrevPageNew();" class="back_css">
+            &nbsp;<b>Back</b>
+        </a>
+    </center>';	 
+//echo "test";
 
 ?>
-
-
