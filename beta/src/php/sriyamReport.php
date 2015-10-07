@@ -280,18 +280,19 @@ $sno=1;
     $htmlFormat=$htmlFormat.'</table>';
     //echo $htmlFormat;
       $to="support3@iembsys.com";
-    $subject="Sriyam Alert Report";  
-      $result = $mgClient->sendMessage($domain, array(
-            'from' => 'Itrack <support@iembsys.co.in>',
-            'to' => $to,
-            //'cc'      => 'taseen@iembsys.com',
-            'cc' => 'ashish@iemsbsys.com,kapil.maurya@iembsys.com,support3@iembsys.com,rizwan@iembsys.com,taseen@iembsys.com,shams.parwez@iembsys.com',
-            //'cc'      => 'hourlyreport4@gmail.com',
-            // 'bcc'     => 'astaseen83@gmail.com',
-            'subject' => $subject,
-            'text' => $message,
-            'html' => $htmlFormat
-                )); 
+    $subject="Sriyam Alert Report"; 
+    
+    $result = $mgClient->sendMessage($domain, array(
+      'from' => 'Itrack <support@iembsys.co.in>',
+      'to' => $to,
+      //'cc'      => 'taseen@iembsys.com',
+      'cc' => 'ashish@iemsbsys.com,kapil.maurya@iembsys.com,support3@iembsys.com,sriyam1@hotmail.com,sriyam.khanna@gmail.com,sriyam@outlook.in',
+      //'cc'      => 'hourlyreport4@gmail.com',
+      // 'bcc'     => 'astaseen83@gmail.com',
+      'subject' => $subject,
+      'text' => $message,
+      'html' => $htmlFormat
+          )); 
     print_r($result);
     				
 ?>
