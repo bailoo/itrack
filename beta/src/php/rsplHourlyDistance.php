@@ -1,5 +1,7 @@
 <?php
 //include_once('util_session_variable.php');
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 include_once('util_php_mysql_connectivity.php');
 include_once('common_xml_element.php');
 include_once('get_location_hourly_person.php');
@@ -52,19 +54,15 @@ while($rowVD=mysql_fetch_object($resultVD))
     $LastRecordObject=getLastRecord($rowVD->device_imei_no,$sortBy,$parameterizeData);    		
     
     if(!empty($LastRecordObject))
-    {        
-        if ((preg_match('/'.$vd.'="\d+.\d+[a-zA-Z0-9]\"/', $line, $lat_match)) && (preg_match('/'.$ve.'="\d+.\d+[a-zA-Z0-9]\"/', $line, $lng_match)))
+    {  
+        $dateTime=$LastRecordObject->deviceDatetimeLR[0];
+        if($dateTime>$current_date_this." 00:00:00")
         {
-            $dateTime=$LastRecordObject->deviceDatetimeLR[0];
-            if($dateTime>$current_date_this." 00:00:00")
-            {
-                $lat =  $LastRecordObject->latitudeLR[0];
-                $lng = $LastRecordObject->longitudeLR[0];			
-                $vehicleDetailArr[trim($rowVD->device_imei_no)]=$dateTime."#".$lat."#".$lng."#".$rowVD->vehicle_name;			
-                //echo "vehicleName=".$rowVD->vehicle_name." DeviceSerial=".$rowVD->device_imei_no."<br>";
-            }
-        }
-		
+            $lat =  $LastRecordObject->latitudeLR[0];
+            $lng = $LastRecordObject->longitudeLR[0];			
+            $vehicleDetailArr[trim($rowVD->device_imei_no)]=$dateTime."#".$lat."#".$lng."#".$rowVD->vehicle_name;			
+            //echo "vehicleName=".$rowVD->vehicle_name." DeviceSerial=".$rowVD->device_imei_no."<br>";
+        }	
     }
 	
 }
