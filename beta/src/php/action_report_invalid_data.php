@@ -19,8 +19,8 @@ include_once("util.hr_min_sec.php");
 include_once('xmlParameters.php');
 include_once('parameterizeData.php');
 include_once('data.php');
-include_once("sortXmlData.php");
-include_once("getXmlData.php");
+include_once('sortXmlData.php');
+include_once('getXmlData.php');
 
 $DEBUG = 0;
 
