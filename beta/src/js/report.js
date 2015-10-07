@@ -3,39 +3,39 @@
   {
     alert("hello");
   } */
-	function show_upload_format(param_value)
-	{
-		if(param_value=="upload_format1")
-		{
-			document.getElementById("format_type").value="";
-			document.getElementById("format_type").value="upload_format1";
-			document.getElementById("upload_format2").style.display="none";
-			document.getElementById("upload_format3").style.display="none";
-			document.getElementById("upload_format1").style.display="";			
-		}
-		if(param_value=="upload_format2")
-		{
-			document.getElementById("format_type").value="";
-			document.getElementById("format_type").value="upload_format2";
-			document.getElementById("upload_format1").style.display="none";
-			document.getElementById("upload_format3").style.display="none";	
-			document.getElementById("upload_format2").style.display="";			
-		}
-		if(param_value=="upload_format3")
-		{
-			document.getElementById("format_type").value="";
-			document.getElementById("format_type").value="upload_format3";
-			document.getElementById("upload_format1").style.display="none";
-			document.getElementById("upload_format2").style.display="none";
-			document.getElementById("upload_format3").style.display="";			
-		}
-	}
-  
-	function report_upload_file(filename,title)            // manage.js
-	{
-		var poststr ="";
-		makePOSTRequest(filename, poststr); 
-	}	
+function show_upload_format(param_value)
+{
+        if(param_value=="upload_format1")
+        {
+                document.getElementById("format_type").value="";
+                document.getElementById("format_type").value="upload_format1";
+                document.getElementById("upload_format2").style.display="none";
+                document.getElementById("upload_format3").style.display="none";
+                document.getElementById("upload_format1").style.display="";			
+        }
+        if(param_value=="upload_format2")
+        {
+                document.getElementById("format_type").value="";
+                document.getElementById("format_type").value="upload_format2";
+                document.getElementById("upload_format1").style.display="none";
+                document.getElementById("upload_format3").style.display="none";	
+                document.getElementById("upload_format2").style.display="";			
+        }
+        if(param_value=="upload_format3")
+        {
+                document.getElementById("format_type").value="";
+                document.getElementById("format_type").value="upload_format3";
+                document.getElementById("upload_format1").style.display="none";
+                document.getElementById("upload_format2").style.display="none";
+                document.getElementById("upload_format3").style.display="";			
+        }
+}
+
+function report_upload_file(filename,title)            // manage.js
+{
+        var poststr ="";
+        makePOSTRequest(filename, poststr); 
+}	
   
   function action_report_fuel_halt(obj)
   {
@@ -3948,7 +3948,7 @@ function checkbox_selection_datalog(obj1)
 }
   //1.Visit Detail REPORT  
   
-  function action_report_visitDetail(obj)
+ function action_report_visitDetail(obj)
   {
     // GET SELECTED VEHICLES 
     //alert("one="+document.getElementById("loading_msg").style.display);     
@@ -3959,17 +3959,14 @@ function checkbox_selection_datalog(obj1)
     if(device_str!=false)
     {  
         document.getElementById("loading_msg").style.display = ''; 
-        var poststr = "vehicleserial=" + encodeURI( device_str ) +
-			"&selected_account_id=" + document.getElementById("selected_account_id").value +
-			"&selected_options_value=" + document.getElementById("selected_options_value").value +
-			"&s_vehicle_display_option=" + document.getElementById("s_vehicle_display_option").value +
+        var poststr = "vehicleserial=" + encodeURI( device_str ) +			
 		  "&start_date=" + encodeURI( document.getElementById("date1").value )+
 		  "&end_date=" + encodeURI( document.getElementById("date2").value );                
               //  alert("Rizwan:"+poststr);                                                                                              
                    
         makePOSTRequest('src/php/action_report_visitDetail.htm', poststr);
     }
-  }      
+  }     
   
   	function report_upload_file_1(filename,title,upload_type)
 	{
