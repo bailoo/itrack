@@ -1,21 +1,25 @@
 <?php
+error_reporting(-1);
+ini_set('display_errors', 'On');
 set_time_limit(80000);
+
 include_once('util_php_mysql_connectivity.php');
 include_once('common_xml_element.php');
-include_once("get_all_dates_between.php");
 include_once('get_location_hourly_person.php');
 //echo "New";
+include_once('coreDb.php');
 include_once('xmlParameters.php');
-include_once("report_title.php");
+include_once('report_title.php');
 include_once('parameterizeData.php');
 include_once('data.php');
-include_once("sortXmlData.php");
-include_once("getXmlData.php");
-include_once("calculate_distance.php");
+include_once('sortXmlData.php');
+include_once('getXmlData.php');
+include_once('calculate_distance.php');
 
 
 
 $hDisArr=getHourlyDistance(1613,1,$DbConnection);
+//print_r($hDisArr);
 
 $t=time();
 $date1=$pdate." 00:00:00";
@@ -25,8 +29,8 @@ date_default_timezone_set("Europe/Berlin");
 
 $last_time=null;
 
-$date1 = $_POST['start_date'];
-$date2 = $_POST['end_date'];
+//$date1 = $_POST['start_date'];
+//$date2 = $_POST['end_date'];
 $date1 = str_replace("/","-",$date1);
 $date2 = str_replace("/","-",$date2);
 $date_1 = explode(" ",$date1);
@@ -53,15 +57,17 @@ $date_size = sizeof($userdates);
 $pdate = date('Y-m-d', strtotime($date .' -1 day'));
 //echo "pdate=".$pdate."<br>";
 //$pdate='2015-05-02';
-if(!file_exists("../../../logBetaXml/".$pdate))
+//$fileTmpPath= "C:\\xampp/htdocs/logBetaXml/";
+$fileTmpPath="../../../logBetaXml/";
+if(!file_exists($fileTmpPath.$pdate))
 {
-	mkdir("../../../logBetaXml/".$pdate);
+	mkdir($fileTmpPath.$pdate);
 }
 
-$xmltowrite = "../../../logBetaXml/".$pdate."/distanceFileGet.xml";
+$xmltowrite =$fileTmpPath.$pdate."/distanceFileGet.xml";
 if(file_exists($xmltowrite))
 {
-	unlink($xmltowrite);
+    unlink($xmltowrite);
 }
 //echo "xmltowrite12=".$xmltowrite."<br>";
 // echo "<br>xml1=".$xmltowrite;
@@ -86,7 +92,8 @@ foreach($hDisArr as $hDValue)
     {
         //echo "userdate=".$userdates[$di]."<br>";
         $SortedDataObject=new data();
-        readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+        //echo"imeiNo=".$hDValue['device_imei_no']."vehicleName=".$hDValue['vehicle_name']."<br>";
+        readFileXmlNew($hDValue['device_imei_no'],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
         if(count($SortedDataObject->deviceDatetime)>0)
         {
             $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
@@ -124,8 +131,7 @@ foreach($hDisArr as $hDValue)
                     else
                     {
                         $time2 = $datetimeN;										
-                        $date_secs2 = $time2->format('U');	
-                        $vserial=$vehicle_serial;														                                      													      					
+                        $date_secs2 = $time2->format('U');                       														                                      													      					
                         $lat2 = $lat;      				        					
                         $lng2 = $lng; 
                         calculate_distance($lat1, $lat2, $lng1, $lng2, $distance);
@@ -174,7 +180,7 @@ foreach($hDisArr as $hDValue)
                             $dateThis=explode(" ",$xml_date);
                             $dateThis1=explode(":",$dateThis[1]);
                             $distanceVar="#d".$dateThis1[0];									
-                            $distance_data = "\n<marker imei=\"".trim($vehicle_serial)."\" vn=\"".trim($vname)."\" dis=\"".$total_dist.$distanceVar."\" add=\"".$placename."\" dtm=\"".$xml_date."\"/>";
+                            $distance_data = "\n<marker imei=\"".trim($hDValue['device_imei_no'])."\" vn=\"".trim($hDValue['vehicle_name'])."\" dis=\"".$total_dist.$distanceVar."\" add=\"".$placename."\" dtm=\"".$xml_date."\"/>";
                             $linetowrite = $distance_data; // for distance       // ADD DISTANCE
                             fwrite($fh, $linetowrite); 
                             $time1 = $datetimeN;
