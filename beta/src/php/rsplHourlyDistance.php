@@ -1,7 +1,7 @@
 <?php
-//include_once('util_session_variable.php');
 //error_reporting(-1);
 //ini_set('display_errors', 'On');
+//include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
 include_once('common_xml_element.php');
 include_once('get_location_hourly_person.php');
@@ -10,6 +10,8 @@ include_once('xmlParameters.php');
 include_once('parameterizeData.php');
 include_once('lastRecordData.php');
 include_once("getXmlData.php");	
+
+set_time_limit(3000); 
 
 $parameterizeData=new parameterizeData();
 $parameterizeData->messageType='a';
@@ -33,11 +35,11 @@ $parameterizeData->dayMaxSpeedTime='t';
 $parameterizeData->lastHaltTime='u';
 $parameterizeData->cellName='ab';	
 $sortBy="h";
-
+//$accountId="1613";
 $queryVD = "SELECT DISTINCT vehicle.vehicle_name,vehicle_assignment.device_imei_no FROM vehicle,vehicle_grouping,vehicle_assignment".
 	 " WHERE vehicle.vehicle_id=vehicle_assignment.vehicle_id AND vehicle_grouping.vehicle_id=vehicle.vehicle_id".
 	 " AND vehicle.status=1 AND vehicle_assignment.status=1 AND vehicle_grouping.status=1 AND vehicle_grouping.".
-	 "account_id=1613";
+	 "account_id=767";
 
 //echo "query=".$queryVD."<br>";
 $resultVD=mysql_query($queryVD,$DbConnection);
@@ -51,10 +53,11 @@ while($rowVD=mysql_fetch_object($resultVD))
 {
     $LastRecordObject=new lastRecordData();	
     //echo "imei=".$imei."<br>";
-    $LastRecordObject=getLastRecord($rowVD->device_imei_no,$sortBy,$parameterizeData);    		
+    $LastRecordObject=getLastRecord($rowVD->device_imei_no,$sortBy,$parameterizeData);  
+    //var_dump($LastRecordObject);    
     
     if(!empty($LastRecordObject))
-    {  
+    { 
         $dateTime=$LastRecordObject->deviceDatetimeLR[0];
         if($dateTime>$current_date_this." 00:00:00")
         {
@@ -63,15 +66,11 @@ while($rowVD=mysql_fetch_object($resultVD))
             $vehicleDetailArr[trim($rowVD->device_imei_no)]=$dateTime."#".$lat."#".$lng."#".$rowVD->vehicle_name;			
             //echo "vehicleName=".$rowVD->vehicle_name." DeviceSerial=".$rowVD->device_imei_no."<br>";
         }	
-    }
-	
+    }	
 }
-	//echo "<br><br><br>";
-//print_r($vehicleDetailArr);
-fclose($fp);
-unlink($xml_original_tmp);
 
 $current_date = date('Y-m-d');
+//$destfile = "C:\\xampp/htdocs/logBetaXml";
 $destfile="../../../logBetaXml/".$current_date;
 if(!file_exists($destfile))
 {
