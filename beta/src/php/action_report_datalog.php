@@ -116,7 +116,7 @@ for($i=0;$i<$vsize;$i++)
             $dateRangeEnd=$userdates[$di]." 23:59:59";
         }
         
-       // echo "vSerial=".$vserial[$i]." dateRangeStart=".$dateRangeStart." dateRangeEnd=".$dateRangeEnd."<br>";
+        //echo "vSerial=".$vserial[$i]." dateRangeStart=".$dateRangeStart." dateRangeEnd=".$dateRangeEnd."<br>";
         deviceDataBetweenDates($vserial[$i],$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);
         
         //var_dump($SortedDataObject);
@@ -135,23 +135,23 @@ for($i=0;$i<$vsize;$i++)
 		//echo "<br>flag=".$flag." ,rec_count=".$rec_count." ,limit=".$limit1." rec=".$rec." id=".$id." strlen=".strlen($line);
 		if( ( ($rec_count == $limit1) || ($prevSortedSize<30) ) && ($rec=="30") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
 		{                   
-			//echo "<br>in 30 ,rec_count=".$rec_count;
-			$flag =1;
+                    //echo "<br>in 30 ,rec_count=".$rec_count;
+                    $flag =1;
 		}
 		else if( ( ($rec_count == $limit2) || ($prevSortedSize<100) )  && ($rec=="100") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
 		{
-			//echo "<br>in 100";
-			$flag =1;
+                    //echo "<br>in 100";
+                    $flag =1;
 		}
 		else if( ( ($rec_count == $limit0) || ($prevSortedSize<10) )  && ($rec=="10") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
 		{
-			//echo "<br>in 10";
-			$flag =1;
+                    //echo "<br>in 10";
+                    $flag =1;
 		}
 		else if(($rec=="all") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) )
 		{
-			//echo "<br>in all";
-			$flag =1;
+                    //echo "<br>in all";
+                    $flag =1;
 		}
 		//echo "flag=".$flag."<br>";
 		if($flag == 1)
