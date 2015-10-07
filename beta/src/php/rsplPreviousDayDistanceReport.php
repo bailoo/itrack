@@ -17,8 +17,8 @@ include_once('getXmlData.php');
 include_once('calculate_distance.php');
 
 
-
-$hDisArr=getHourlyDistance(1613,1,$DbConnection);
+//$accountId="1613";
+$hDisArr=getHourlyDistance(767,1,$DbConnection);
 //print_r($hDisArr);
 
 $t=time();
