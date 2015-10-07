@@ -128,7 +128,7 @@ foreach($hDisArr as $hDValue)
                         $vserial=$vehicle_serial;														                                      													      					
                         $lat2 = $lat;      				        					
                         $lng2 = $lng; 
-                        calculate_distance($lat1, $lat2, $lng1, $lng2, &$distance);
+                        calculate_distance($lat1, $lat2, $lng1, $lng2, $distance);
                         if($distance>2000)
                         {
                             $distance=0;

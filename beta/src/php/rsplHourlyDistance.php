@@ -94,7 +94,7 @@ if(!file_exists($pathtowrite))
 		$tmpD=explode("#",$value);
 		//echo "lat=".$tmpD[1]."lng=".$tmpD[2]."<br>";
 		//echo "placename=".$placename."<br>";
-		get_location($tmpD[1],$tmpD[2],&$placename);
+		get_location($tmpD[1],$tmpD[2],$placename);
 		$todayTime=explode(":",date("H:i:s"));
 		if($tmpCnt==0)
 		{
@@ -159,7 +159,7 @@ else
 					$final_cum_dist = preg_replace('/"/', '', $cum_dist1[1]);
 					//echo "final_cum_dist_len=".strlen($final_cum_dist)."<br>";
 					calculate_distance($lat, $dVdetail[1], $lng, $dVdetail[2], $distance);
-					get_location($dVdetail[1],$dVdetail[2],&$placename);
+					get_location($dVdetail[1],$dVdetail[2],$placename);
 					
 					$nline = substr(trim($line),0,-2);
 					//$nline = substr($line, 0, -10);
@@ -211,7 +211,7 @@ else
 		{
 			//calculate_distance($lat, $dVdetail[1], $lng, $dVdetail[2], &$distance);
 			$tmpD=explode("#",$value);
-			get_location($tmpD[1],$tmpD[2],&$placename);
+			get_location($tmpD[1],$tmpD[2],$placename);
 			$addressStr="";
 			$todayTime=explode(":",date("H:i:s"));
 			$timeCnt=(integer)$todayTime[0];
