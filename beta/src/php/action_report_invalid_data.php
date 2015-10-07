@@ -126,7 +126,7 @@ function get_visit_xml_data($person_serial, $pname, $startdate, $enddate)
     } // if (file_exists closed
     else
     {
-        $inactiveDateTime=$datefrom." 00:00:00";
+        $inactiveDateTime=$startdate;
         $vehicleDetail[$pname]=array(
                                 'imeiNo'=>$person_serial,
                                 'noGpsOrInactiveDT'=>$inactiveDateTime,

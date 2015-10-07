@@ -42,6 +42,7 @@ global $lng0;
 global $cellname0;
 $imei0=array();
 $pmobile0=array();
+$pname0=array();
 $visitStartDateTime=array();
 $visitEndDateTime=array();
 $duration0=array();
@@ -66,6 +67,7 @@ function get_visit_xml_data($person_serial, $pname, $pmobile, $startdate, $endda
 {
     global $imei0;
     global $pmobile0;
+    global $pname0;
     global $visitStartDateTime;
     global $visitEndDateTime;
     global $duration0;
@@ -258,6 +260,7 @@ function get_visit_xml_data($person_serial, $pname, $pmobile, $startdate, $endda
 ////////////////////////////// XML CODE ENDS ////////////////////////////////////////////
 global $imei0;
 global $pmobile0;
+global $pname0;
 global $visitStartDateTime;
 global $visitEndDateTime;
 global $duration0;
@@ -283,7 +286,7 @@ $size_pserial = sizeof($pserial);
                 $j++;
         
                 $sno = 1;
-                $title="Visit Report : ".$pname0[$i]."(".$pmobile0[$i].")";
+                $title="Visit Report : ".$pname0[$i]."(".$imei0[$i].")";
                 $pname1[$j][$k] = $pname0[$i];
         
         echo'<br>
