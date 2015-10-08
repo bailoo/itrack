@@ -14,7 +14,7 @@ $startdate = str_replace("/","-",$startdate);
 $enddate = $_POST['enddate'];
 $enddate = str_replace("/","-",$enddate);
 
-if((strtotime($enddate)-strtotime($startdate))>7*24*60*60)
+//if((strtotime($enddate)-strtotime($startdate))>7*24*60*60)
 {
     /*echo "<center>
                 <br><br>
@@ -22,7 +22,7 @@ if((strtotime($enddate)-strtotime($startdate))>7*24*60*60)
                         Maximum 7 days report is allowed
                 </font>
         </center>";*/
-    exit("Maximum 7 days report is allowed");
+    //exit("Maximum 7 days report is allowed");
 }
 
 include_once('../../src/php/xmlParameters.php');
