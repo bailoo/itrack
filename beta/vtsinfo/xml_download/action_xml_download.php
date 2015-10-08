@@ -242,6 +242,7 @@ if(file_exists(trim($path)))
       }
   }
   fclose ($fd);
+  ignore_user_abort(true);
   unlink($path); 
   //exit;   
 }
