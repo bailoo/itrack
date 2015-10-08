@@ -1,6 +1,6 @@
 <?php
-error_reporting(-1);
-ini_set('display_errors', 'On');
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 set_time_limit(80000);
 
 include_once('util_php_mysql_connectivity.php');
