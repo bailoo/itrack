@@ -3,6 +3,7 @@
 	include_once('Hierarchy.php');	
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');
+        include_once('user_type_setting.php');
 	$root = $_SESSION['root'];
 	$DEBUG = 0;	
 	$option_str = $_POST['option']; 
@@ -38,11 +39,11 @@
 	//echo "device_str=".$device_str."<br>";
 	$vsize = sizeof($device);
 	echo'<form method="post" target="_blank">';
-	 $title='Vehicle Details';
+	 $title=$report_type.' Details';
 	 echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title\">";
 				
         $csv_string = "";
-		$csv_string = $csv_string." Vehicle Report\n";
+		$csv_string = $csv_string." ".$report_type." Report\n";
 		$csv_string = $csv_string."SNo,";
 		if($imei) 
 		{
@@ -88,7 +89,7 @@
 		<table border=0 width = 100% cellspacing=2 cellpadding=0>
 			<tr>
 				<td height=10 class="report_heading" align="center">
-					Vehicle Report
+					'.$report_type.' Report
 				</td>
 			</tr>
 		</table>

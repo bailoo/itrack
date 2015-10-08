@@ -208,7 +208,31 @@ foreach($vehicle_name_db as $key=>$vehicleDetailArr)
                     }                   
                 }
             }
-        }        
+        } 
+        if($halt_flag==1 && $twelveHrHaltFlag!=1)
+        {
+           //echo "<br>In Halt1";
+            //echo "<br>datetime_ref=".$datetime_ref;
+            $arrivale_time=$datetime_ref;
+            $tmp_arr=$tmp_ref;
+            $starttime = strtotime($datetime_ref);
+            //$stoptime = strtotime($datetime_cr);  
+            $stoptime = strtotime($datetime_cr);
+            $depature_time=$datetime_cr;
+            $tmp_dep=$tmp_cr;
+            //echo "<br>".$starttime." ,".$stoptime;
+            $halt_dur =  ($stoptime - $starttime); 
+            if($halt_dur>12*60*60)
+            {
+                $twelveHrHaltFlag=1;
+            }
+        } 
+        
+        //echo "haltDuration=".$halt_dur."stoptime=".$datetime_cr."starttime=".$datetime_ref."<br>";
+        if($halt_dur>12*60*60)
+        {
+            $twelveHrHaltFlag=1;
+        }
        
         if($alertMaxSpeed==True || $twelveHrHaltFlag==1 || $daily_dist<300)
         {           

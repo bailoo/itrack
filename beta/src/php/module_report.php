@@ -634,7 +634,7 @@ $contents=listDir($S3Path);
 														"<tr>"+
 															"<td>"+ 	
 																"<a href=javascript:'.$js_function_name.'(\'src/php/report_vehicle.htm\',\'Vehicle%20Report\'); class=\'menuitem\'>"+
-																	"'.$nbsp.'Vehicle Report"+
+																	"'.$nbsp.$report_type.' Report"+
 																"</a>"+
 															"</td>"+
 														"</tr>"+
