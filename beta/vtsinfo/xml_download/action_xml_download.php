@@ -1,4 +1,5 @@
 <?php
+ ignore_user_abort(true);
  //error_reporting(-1);
  //ini_set('display_errors', 'On');
 //ini_set('memory_limit','200M');
@@ -242,8 +243,13 @@ if(file_exists(trim($path)))
       }
   }
   fclose ($fd);
-  ignore_user_abort(true);
+ if(connection_aborted()){
+    unlink($path);  
+ }
+ else
+ {
   unlink($path); 
+ }
   //exit;   
 }
 /// SCRIPT CLOSED
