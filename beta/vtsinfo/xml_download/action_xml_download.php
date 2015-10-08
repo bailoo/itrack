@@ -73,7 +73,7 @@ $rawData[]=array(
                    $vserial
                 );
 $rawData[]=array(
-                            'SNo','STS', 'DateTime','MsgTp','Version','Fix','Latitude','Longitude','Longitude','Speed',
+                            'SNo','STS', 'DateTime','MsgTp','Version','Fix','Latitude','Longitude','Speed',
                     'SupplyV', 'SgnlSt','io1','io2','io3', 'io4','io5','io6','io7','io8','ax','ay','az',
                     'mx','my','mz','bx','by','bz'
                 );
