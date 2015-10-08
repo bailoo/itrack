@@ -243,13 +243,11 @@ if(file_exists(trim($path)))
       }
   }
   fclose ($fd);
+  unlink($path); 
  if(connection_aborted()){
     unlink($path);  
  }
- else
- {
-  unlink($path); 
- }
+  
   //exit;   
 }
 /// SCRIPT CLOSED
