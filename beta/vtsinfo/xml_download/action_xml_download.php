@@ -243,7 +243,7 @@ if(file_exists(trim($path)))
   }
   fclose ($fd);
   unlink($path); 
-  exit;   
+  //exit;   
 }
 /// SCRIPT CLOSED
 ?>
