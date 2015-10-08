@@ -20,7 +20,7 @@ include_once('calculate_distance.php');
 //$accountId="1613";
 $hDisArr=getHourlyDistance(767,1,$DbConnection);
 //print_r($hDisArr);
-
+$pdate = date('Y-m-d', strtotime($date .' -1 day'));
 $t=time();
 $date1=$pdate." 00:00:00";
 $date2=$pdate." 23:59:59";
