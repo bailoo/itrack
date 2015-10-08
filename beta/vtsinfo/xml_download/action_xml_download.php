@@ -214,7 +214,7 @@ foreach ($rawData as $element) {
 //fwrite($fh, $stringData);
 fclose($fh);
 // CREATE FILE CLOSED
-
+@chmod($path, 0777);
 /// DOWNLOAD SCRIPT
 if(file_exists(trim($path)))      
 {	
