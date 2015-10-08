@@ -1,6 +1,7 @@
 <?php
  //error_reporting(-1);
  //ini_set('display_errors', 'On');
+ini_set('memory_limit','200M');
 set_time_limit(10000);	
 date_default_timezone_set("Asia/Kolkata");
 $vserial = $_POST['filename'];
