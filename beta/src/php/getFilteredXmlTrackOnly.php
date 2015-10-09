@@ -962,7 +962,16 @@ for($i=0;$i<$vsize;$i++)
                         $DataValid = 0;
                         $CurrentLat = $SortedDataObject->latitudeData[$obi];
                         $CurrentLong = $SortedDataObject->longitudeData[$obi];
-                        $datetime=$SortedDataObject->deviceDatetime[$obi];                        
+                        $datetime=$SortedDataObject->deviceDatetime[$obi]; 
+                        $vehicleserial[]=$vserial[$i];
+                        $lat[]= $CurrentLat;
+                        $lng[]=$CurrentLong; 
+                        $alt[]="";
+                        $datetimeXml[]=$xml_date_current;
+                        $vehiclename[]=$vehicle_detail_local[0]; 
+                        $vehicletype[]=$vehicle_detail_local[1];
+                        $speed[]=$SortedDataObject->speedData[$obi];
+                        $cumdist[]="-";
                         if((strlen($CurrentLat)>5) && ($CurrentLat!="-") && (strlen($CurrentLong)>5) && ($CurrentLong!="-"))
                         {
                             $DataValid = 1;
