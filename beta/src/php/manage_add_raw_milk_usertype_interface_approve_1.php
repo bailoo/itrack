@@ -23,7 +23,7 @@ else
 }*/
 ?>
  <script language="javascript" src="../js/datetimepicker_sd.js"></script>
-    <script language="javascript" src="../js/datetimepicker_sdtime.js"></script>
+   <!-- <script language="javascript" src="../js/datetimepicker_sdtime.js"></script>-->
 <script>
 function getScriptPage_raw_milk_new(val,ids,box){	
 	//var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
