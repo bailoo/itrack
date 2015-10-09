@@ -1,5 +1,7 @@
 #!/bin/bash
-sudo php /mnt/itrack/beta/src/php/sriyamReport.php
+cd /mnt/itrack/beta/src/php
+sudo php sriyamReport.php
+
 
 
 
