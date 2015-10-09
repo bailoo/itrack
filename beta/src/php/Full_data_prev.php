@@ -339,21 +339,19 @@ echo'
  $point = '"';
   for($i=0;$i<$size;$i++)
 {
-    if((strlen($lat[$i])>5) && ($lat[$i]!="-") && (strlen($lng[$i])>5) && ($lng[$i]!="-"))
-    {
-        $lat[$i] = substr($lat[$i], 0, -1);
-        $lng[$i] = substr($lng[$i], 0, -1);
+    $lat[$i] = substr($lat[$i], 0, -1);
+    $lng[$i] = substr($lng[$i], 0, -1);
 
-        $coord = $lat[$i].",".$lng[$i]; 
-        if($i==0)
-        {
-          $point = $point.$coord;   
-        }
-        else
-        {
-          $point = $point.":".$coord;   
-        }
+    $coord = $lat[$i].",".$lng[$i]; 
+    if($i==0)
+    {
+      $point = $point.$coord;   
     }
+    else
+    {
+      $point = $point.":".$coord;   
+    }
+
 }         
   $point = $point.'"';
   //echo "<br>pt=".$point;  
