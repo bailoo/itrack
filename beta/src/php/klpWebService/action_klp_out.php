@@ -70,7 +70,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                     {
                         continue;
                     }
-                    break;
+                    //break;
                 }
                 
                 if($wSInputDataObj->actualIcdInDatetime=="" && $speed<10)

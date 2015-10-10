@@ -104,7 +104,7 @@ while($row=mysql_fetch_object($result))
         $icdCoord='26.45718N,80.24565E';
         //echo "coord=".$customerCoord."<br>";
         getDataToFillDetail($icdCoord,$customerCoord,$wSInputDataObj, $startdate, $enddate,$DbConnection);
-         break;
+        //break;
     }
    
 } 
