@@ -3,7 +3,7 @@ error_reporting(-1);
 ini_set('display_errors', 'On');
 
 require_once "lib/nusoap.php";
-$client = new nusoap_client("http://echodrivesolution.com/src/php/klpServerWebService.php");
+$client = new nusoap_client("http://ecodrivesolution.com/src/php/klpServerWebService.php");
 $error = $client->getError();
 if ($error) {
     echo "<h2>Constructor error</h2><pre>" . $error . "</pre>";
