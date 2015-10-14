@@ -936,7 +936,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
     if(count($st_results)>0)
     {
         //echo "lat".$st_results->d."<br>";
-        $msg_type = $st_results->a;                 
+        /*$msg_type = $st_results->a;                 
         $ver = $st_results->b;              
         $fix = $st_results->c;
         $lat = $st_results->d;
@@ -1055,8 +1055,8 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
             {
                 $sup_v_1 = $sup_v;
             }
-        }
-        /*foreach($st_results as $item) 
+        }*/
+        foreach($st_results as $item) 
         {          
             $msg_type = $item->a;                 
             $ver = $item->b;              
@@ -1184,7 +1184,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
                     $sup_v_1 = $sup_v;
                 }
             }
-        }*/
+        }
         $dataObject->serverDatetimeLD[] = $datetime_server;
         $dataObject->deviceDatetimeLD[]=$datetime_device1;	 
         $dataObject->messageTypeLD[] = $msg_type_1;
