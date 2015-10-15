@@ -1,7 +1,7 @@
 <?php 
 //set_time_limit(3600);
-//error_reporting(E_ALL);
-//ini_set('display_errors', TRUE);
+error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
 //ini_set('display_startup_errors', TRUE);
 
 $HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
