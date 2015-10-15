@@ -1,6 +1,6 @@
 <?php
-error_reporting(-1);
-ini_set('display_errors', 'On');
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 $HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
 $DBASE = "iespl_vts_beta";
 $USER = "bailoo";
@@ -11,7 +11,7 @@ $DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server 
 mysql_select_db ($DBASE, $DbConnection) or die("could not find DB");
 
 //require_once "lib/nusoap.php";
-$vehicleName="HR55F3847";
+//$vehicleName="HR55F3847";
 
 function getVehicleDbData($vehicleName)
 {
@@ -22,7 +22,7 @@ function getVehicleDbData($vehicleName)
 		  // $dataArray[]=array('query'=>$Query);
    $Result=mysql_query($Query,$DbConnection);
    
-   echo "result=".$Result;
+   //echo "result=".$Result;
    while($Row=mysql_fetch_object($Result))
    {
         $dataArray[]=array(
@@ -36,10 +36,10 @@ function getVehicleDbData($vehicleName)
    return $dataArray;
 }
 
-$dataArr=getVehicleDbData($vehicleName);
-print_r($dataArr);
+/*$dataArr=getVehicleDbData($vehicleName);
+print_r($dataArr);*/
 
-/*$server = new soap_server();
+$server = new soap_server();
 $server->register("getVehicleDbData");
-$server->service($HTTP_RAW_POST_DATA);*/
+$server->service($HTTP_RAW_POST_DATA);
 ?>
