@@ -1,7 +1,7 @@
 <?php 
 //set_time_limit(3600);
-//error_reporting(E_ALL);
-//ini_set('display_errors', TRUE);
+error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
 //ini_set('display_startup_errors', TRUE);
 
 $HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
@@ -88,7 +88,7 @@ while($row=mysql_fetch_object($result))
     $wSInputDataObj->customerInDatetime=$row->factory_in_datetime;
     $wSInputDataObj->customerOutDatetime=$row->factory_out_datetime;
     
-    var_dump($wSInputDataObj);
+    //var_dump($wSInputDataObj);
     
     //echo "<br><br>";
     //var_dump($icdCoordDataObj);
@@ -101,7 +101,7 @@ while($row=mysql_fetch_object($result))
         $icdCoord='26.45718N,80.24565E';
         //echo "coord=".$customerCoord."<br>";
         getDataToFillDetail($icdCoord,$customerCoord,$wSInputDataObj, $startdate, $enddate,$DbConnection);
-        break;
+       // break;
     }
    
 } 

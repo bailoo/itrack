@@ -28,11 +28,11 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
     $outDistanceLimit=2;
     $inDistanceLimit=1;
     
-    echo "vehcileName=".$wSInputDataObj->vehicleName."<br>";
+   // echo "vehcileName=".$wSInputDataObj->vehicleName."<br>";
     
     //echo "imeiNo=".$wSInputDataObj->imeiNo." startDate=".$startdate." endDate=".$enddate."<br>";
     deviceDataBetweenDates($wSInputDataObj->imeiNo,$startdate,$enddate,$sortBy,$parameterizeData,$SortedDataObject);
-    var_dump($SortedDataObject);
+    //var_dump($SortedDataObject);
     $StatusFlag=0;
     if(count($SortedDataObject->deviceDatetime)>0)
     {  
