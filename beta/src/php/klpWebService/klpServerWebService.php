@@ -1,4 +1,6 @@
 <?php
+error_reporting(-1);
+ini_set('display_errors', 'On');
 $HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
 $DBASE = "iespl_vts_beta";
 $USER = "bailoo";
@@ -34,7 +36,8 @@ function getVehicleDbData($vehicleName)
    return $dataArray;
 }
 
-getVehicleDbData($vehicleName);
+$dataArr=getVehicleDbData($vehicleName);
+print_r($dataArr);
 
 /*$server = new soap_server();
 $server->register("getVehicleDbData");
