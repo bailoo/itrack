@@ -91,7 +91,7 @@ while($row=mysql_fetch_object($result))
     $wSInputDataObj->customerInDatetime=$row->factory_in_datetime;
     $wSInputDataObj->customerOutDatetime=$row->factory_out_datetime;
     
-    //var_dump($wSInputDataObj);
+    var_dump($wSInputDataObj);
     
     //echo "<br><br>";
     //var_dump($icdCoordDataObj);
@@ -104,7 +104,7 @@ while($row=mysql_fetch_object($result))
         $icdCoord='26.45718N,80.24565E';
         //echo "coord=".$customerCoord."<br>";
         getDataToFillDetail($icdCoord,$customerCoord,$wSInputDataObj, $startdate, $enddate,$DbConnection);
-        //break;
+        break;
     }
    
 } 
