@@ -11,7 +11,7 @@ $DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server 
 mysql_select_db ($DBASE, $DbConnection) or die("could not find DB");
 
 //require_once "lib/nusoap.php";
-//$vehicleName="HR55F3847";
+$vehicleName="UP78CN7842";
 
 function getVehicleDbData($vehicleName)
 {
@@ -19,6 +19,7 @@ function getVehicleDbData($vehicleName)
 	//$dataArray[]=array('vehicleName'=>vehicleName);
    $Query="SELECT * FROM icd_webservice_data WHERE vehicle_name='$vehicleName' AND ".
            "icd_in_datetime!='0000-00-00 00:00:00'";
+   echo "Query=".$Query."<br>";
 		  // $dataArray[]=array('query'=>$Query);
    $Result=mysql_query($Query,$DbConnection);
    
@@ -36,10 +37,10 @@ function getVehicleDbData($vehicleName)
    return $dataArray;
 }
 
-/*$dataArr=getVehicleDbData($vehicleName);
-print_r($dataArr);*/
+$dataArr=getVehicleDbData($vehicleName);
+print_r($dataArr);
 
-$server = new soap_server();
+/*$server = new soap_server();
 $server->register("getVehicleDbData");
-$server->service($HTTP_RAW_POST_DATA);
+$server->service($HTTP_RAW_POST_DATA);*/
 ?>
