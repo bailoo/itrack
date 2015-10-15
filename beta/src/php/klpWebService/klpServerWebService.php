@@ -17,8 +17,7 @@ function getVehicleDbData($vehicleName)
 {
 	global $DbConnection;
 	//$dataArray[]=array('vehicleName'=>vehicleName);
-   $Query="SELECT * FROM icd_webservice_data WHERE vehicle_name='$vehicleName' AND ".
-           "icd_in_datetime!='0000-00-00 00:00:00'";
+   $Query="SELECT * FROM icd_webservice_data WHERE vehicle_name='$vehicleName' ORDER BY sno DESC LIMIT 1";
    //echo "Query=".$Query."<br>";
 		  // $dataArray[]=array('query'=>$Query);
    $Result=mysql_query($Query,$DbConnection);
