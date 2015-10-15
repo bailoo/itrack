@@ -159,8 +159,7 @@ foreach($wSData as $key => $wSValue)
         $dateObj=new DateTime(str_replace("/","-",$wSData[$key]['customerOutDatetime']));
         $customerOutDatetime=$dateObj->format('Y-m-d H:i:s');
         //echo "vehicleName=".$wSData[$key]['vehicleName']."inDate=".$wSData[$key]['icdInDatetime']."<br>";
-        
-        
+                
         $queryInsert = "INSERT INTO icd_webservice_data("
                 . "vehicle_name,container_no,icd_code,icd_out_datetime,factory_code,factory_ea_datetime,"
                 . "factory_ed_datetime,icd_in_datetime,account_id,create_date,status,remark) "
@@ -170,12 +169,26 @@ foreach($wSData as $key => $wSValue)
         //echo "Query=".$queryInsert."<br><br>";
        $resultInsert = mysql_query($queryInsert, $DbConnection);
        
-       $queryInsert1 = "INSERT INTO vehicle_last_execution_datetime("
+       $selectQuery="SELECT vehicle_name FROM vehicle_last_execution_datetime WHERE ".
+                                "vehicle_name='$vehicleName'";
+       $selectQueryResult=  mysql_query($selectQuery, $DbConnection);
+       
+       if(mysql_num_rows($selectQueryResult)==0)
+       {
+            $queryInsert1 = "INSERT INTO vehicle_last_execution_datetime("
                 . "vehicle_name,last_execution_datetime) "
                 . "VALUES('$vehicleName','$customerOutDatetime')";
-        //echo "Query=".$queryInsert."<br><br>";
-       $resultInsert1 = mysql_query($queryInsert1, $DbConnection);
-       
+            //echo "Query=".$queryInsert."<br><br>";
+            $resultInsert1 = mysql_query($queryInsert1, $DbConnection); 
+       }
+       else 
+       {
+           //echo "in update";
+           $updateQuery = "UPDATE vehicle_last_execution_datetime SET last_execution_datetime='$customerOutDatetime'".
+                           " WHERE vehicle_name='$vehicleName'";
+            //echo "Query=".$queryInsert."<br><br>";
+            $updateQueryResult = mysql_query($updateQuery, $DbConnection); 
+       }
     }
     else 
     {
@@ -190,6 +203,4 @@ foreach($wSData as $key => $wSValue)
         }
     }
 }
-
-
 ?>
