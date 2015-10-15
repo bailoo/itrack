@@ -22,7 +22,7 @@ include_once($abspath.'/calculate_distance.php');
 include_once($abspath.'/xmlParameters.php');
 include_once($abspath.'/parameterizeData.php');
 include_once($abspath.'/data.php');
-include_once($abspath.'/getXmlData.php');
+include_once($abspath.'/getDeviceDataTest.php');
 
 include_once("action_klp_out.php");
 $date = date('Y-m-d');
@@ -40,15 +40,12 @@ while($row1 = mysql_fetch_object($result1))
     $cusotmerCoordDataObj->icdCoord[$row1->customer_no]=$row1->station_coord;
 } 
 
-
 //var_dump($cusotmerCoordDataObj);
-
 //echo "<br><br><br><br>";
 
 $query_assignment = "SELECT DISTINCT vehicle.vehicle_id,vehicle.vehicle_name,vehicle_assignment.device_imei_no FROM vehicle,vehicle_assignment,vehicle_grouping WHERE ".
                     "vehicle.vehicle_id = vehicle_assignment.vehicle_id AND vehicle_assignment.vehicle_id = vehicle_grouping.vehicle_id AND ".
                     "vehicle_grouping.account_id='$account_id' AND vehicle.status=1 AND vehicle_assignment.status=1 AND vehicle_grouping.status=1";					
-				
 $result_assignment = mysql_query($query_assignment,$DbConnection);
 
 while($row_assignment = mysql_fetch_object($result_assignment))
