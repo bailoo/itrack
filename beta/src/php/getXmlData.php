@@ -511,6 +511,7 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
         $io8 = $item->p;
         $sig_str = $item->q;
         $sup_v = $item->r;
+        $ci = $item->i;
           
                   
         $dataObject->serverDatetime[] = $datetime_server;
