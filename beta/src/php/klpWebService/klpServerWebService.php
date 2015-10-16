@@ -15,8 +15,8 @@ require_once "lib/nusoap.php";
 
 function getVehicleDbData($vehicleName)
 {
-	global $DbConnection;
-	//$dataArray[]=array('vehicleName'=>vehicleName);
+    global $DbConnection;
+    //$dataArray[]=array('vehicleName'=>vehicleName);
    $Query="SELECT * FROM icd_webservice_data WHERE vehicle_name='$vehicleName' ORDER BY sno DESC LIMIT 1";
    //echo "Query=".$Query."<br>";
 		  // $dataArray[]=array('query'=>$Query);
