@@ -623,7 +623,8 @@ border: none;
                                 "<td>".$row_select['lorry_no']."</td>
 				";
 				
-					if( $user_type=="plant_raw_milk" && $row_select['invoice_status']==1)
+					//if( $user_type=="plant_raw_milk" && $row_select['invoice_status']==1)
+                                        if( $user_type!="raw_milk" && $row_select['invoice_status']==1)
 					{
 						$dispatch_time_tmp= str_replace(":", "-", $row_select['dispatch_time']);
 						$target_time_tmp= str_replace(":", "-", $row_select['target_time']);
