@@ -1889,7 +1889,9 @@ border: none;
 		<tr>
 			<td colspan="3">
 				<?php		
-					if( $user_type=="plant_raw_milk"){
+					//if( $user_type=="plant_raw_milk")
+                                        if(   $user_type!="raw_milk")
+                                            {
 						echo '
 						<table><tr><td>
 						<input type="button" value="Close\Update" id="enter_button" onclick="javascript:return action_manage_invoice_update(\'edit\')"/></td>';
