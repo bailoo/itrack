@@ -43,7 +43,7 @@ echo'<table border=0 cellspacing=0 cellpadding=3 align="center">
     <table border=0 cellspacing=0 cellpadding=3 align="center">	
         <tr>
             <td align="center" colspan=2>
-                <input type="button" onclick="javascript:action_report_invalid_data(this.form);" value="Enter">
+                <input type="button" onclick="javascript:action_report_inactive_data(this.form);" value="Enter">
                     &nbsp;
                 <input type="reset" value="Clear">
             </td>

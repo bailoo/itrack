@@ -645,7 +645,7 @@ if(document.getElementById('acc').value=='1')
 	} 
   }
   
-  function action_report_invalid_data()
+function action_report_inactive_data()
 {
     if(document.getElementById("duration").value=="select")
     {
@@ -657,7 +657,23 @@ if(document.getElementById('acc').value=='1')
         document.getElementById("loading_msg").style.display = ''; 
         var poststr = "timeDuration="+encodeURI( document.getElementById("duration").value);                
         //  alert("Rizwan:"+poststr);
-        makePOSTRequest('src/php/action_report_invalid_data.htm', poststr); 
+        makePOSTRequest('src/php/action_report_inactive_data.htm', poststr); 
+    }
+}
+
+function action_report_nogps_data()
+{
+    if(document.getElementById("duration").value=="select")
+    {
+        alert("Please select duration");
+        return false;
+    }
+    else
+    {
+        document.getElementById("loading_msg").style.display = ''; 
+        var poststr = "timeDuration="+encodeURI( document.getElementById("duration").value);                
+        //  alert("Rizwan:"+poststr);
+        makePOSTRequest('src/php/action_report_nogps_data.htm', poststr); 
     }
 }
 
