@@ -32,6 +32,7 @@ $id = $_REQUEST['id'];
 $rec = $_POST['radio_value'];  
 $date1 = $_POST['start_date'];
 $date2 = $_POST['end_date'];
+
 $date1 = str_replace("/","-",$date1);
 $date2 = str_replace("/","-",$date2);
 $date_1 = explode(" ",$date1);
@@ -53,7 +54,7 @@ $parameterizeData->fix='c';
 $parameterizeData->latitude='d';
 $parameterizeData->longitude='e';
 $parameterizeData->speed='f';
-$parameterizeData->cellName='ab';
+$parameterizeData->cellName='ci';
 $parameterizeData->supVoltage='r';
 $parameterizeData->io8='p';
 $parameterizeData->dataLog='yes';
@@ -81,23 +82,51 @@ for($i=0;$i<$vsize;$i++)
     $finalVNameArr[$i]=$vehicle_detail_local[0];
     $finalVTypeArr[$i]=$vehicle_detail_local[1];
     //echo "vehcileName=".$finalVNameArr[$i]." vSerial=".$vehicle_detail_local[0]."<br>";
-    $SortedDataObject=new data();
+   
     $distance =0.0;	
     $firstdata_flag =0;		
     $flag =0;
     $rec_count =0;
-    for($di=0;$di<=($date_size-1);$di++)
+    for($di=($date_size-1);$di>=0;$di--)
     {
+        if(($flag == 1) && ($rec!="all"))
+        {
+                break;   // BREAK LOOP AFTER TAKING ONE DAY RECORDS- LAST 30/100/ALL
+        }
+        $SortedDataObject=null;
         $SortedDataObject=new data();
-        readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+        if($date_size==1)
+        {
+            $dateRangeStart=$date1;
+            $dateRangeEnd=$date2;
+        }
+        else if($di==($date_size-1))
+        {
+            $dateRangeStart=$userdates[$di]." 00:00:00";
+            $dateRangeEnd=$date2;
+        }
+        else if($di==0)
+        {
+            $dateRangeStart=$date1;
+            $dateRangeEnd=$userdates[$di]." 23:59:59";
+        }
+        else
+        {
+            $dateRangeStart=$userdates[$di]." 00:00:00";
+            $dateRangeEnd=$userdates[$di]." 23:59:59";
+        }
+        
+        //echo "vSerial=".$vserial[$i]." dateRangeStart=".$dateRangeStart." dateRangeEnd=".$dateRangeEnd."<br>";
+        deviceDataBetweenDates($vserial[$i],$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);
+        
+        //var_dump($SortedDataObject);
         if(count($SortedDataObject->deviceDatetime)>0)
         {
                 //echo "in sorted=".$SortedDataObject->deviceDatetime."<br><br><br><br><br><br>";
             $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
             //echo "prevSortedSize=".$prevSortedSize."<br>";
             for($obi=0;$obi<$prevSortedSize;$obi++)
-            {
-		$format =2;
+            {		
 		$limit0 = ($prevSortedSize+1)-10;
 		$limit1 = ($prevSortedSize+1)-30;
 		$limit2 = ($prevSortedSize+1)-100;
@@ -106,23 +135,23 @@ for($i=0;$i<$vsize;$i++)
 		//echo "<br>flag=".$flag." ,rec_count=".$rec_count." ,limit=".$limit1." rec=".$rec." id=".$id." strlen=".strlen($line);
 		if( ( ($rec_count == $limit1) || ($prevSortedSize<30) ) && ($rec=="30") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
 		{                   
-			//echo "<br>in 30 ,rec_count=".$rec_count;
-			$flag =1;
+                    //echo "<br>in 30 ,rec_count=".$rec_count;
+                    $flag =1;
 		}
 		else if( ( ($rec_count == $limit2) || ($prevSortedSize<100) )  && ($rec=="100") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
 		{
-			//echo "<br>in 100";
-			$flag =1;
+                    //echo "<br>in 100";
+                    $flag =1;
 		}
 		else if( ( ($rec_count == $limit0) || ($prevSortedSize<10) )  && ($rec=="10") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) ) 
 		{
-			//echo "<br>in 10";
-			$flag =1;
+                    //echo "<br>in 10";
+                    $flag =1;
 		}
 		else if(($rec=="all") && (($id == 1)||($id == 2)||($id == 3)||($id == 4)) )
 		{
-			//echo "<br>in all";
-			$flag =1;
+                    //echo "<br>in all";
+                    $flag =1;
 		}
 		//echo "flag=".$flag."<br>";
 		if($flag == 1)
@@ -163,9 +192,7 @@ for($i=0;$i<$vsize;$i++)
             }
         }            
     }
-    $SortedDataObject=null;	
 }
-$parameterizeData=null;	
 
 
 	echo '<center>';
@@ -263,7 +290,10 @@ $parameterizeData=null;
               <th class="text"><b><font size="1">Distance</font></b></td>
               ';
         }   
-					
+	if($report_type=='Person')
+        {            
+          echo'<th class="text"><b><font size="1">Boot Status</font></b></td>';
+        }				
         echo'<th class="text"><b><font size="1">Version</font></b></td>';
         if($report_type!="Person")
         {
@@ -331,7 +361,13 @@ $parameterizeData=null;
       echo'<td class="text">'.$speed[$i].'</td>'; 
       echo'<td class="text">'.$distance[$i].'</td>';
     }
-    
+    if($report_type=='Person')
+    { 
+        //echo "cellName=".$cellname[$i]."<br>";
+        $tmpCellNameArr=explode(",",$cellname[$i]);
+        $bootStatus=$tmpCellNameArr[sizeof($tmpCellNameArr)-1];
+      echo'<td class="text">'.$bootStatus.'</td>';
+    }
     echo'<td class="text">'.$ver[$i].'</td>';
     if($report_type!="Person")
     {
@@ -373,10 +409,11 @@ $parameterizeData=null;
 		echo"<input TYPE=\"hidden\" VALUE=\"$fix[$i]\" NAME=\"temp[$i][Fix]\">";
 		echo"<input TYPE=\"hidden\" VALUE=\"$lat[$i]\" NAME=\"temp[$i][Latitude]\">";
 		echo"<input TYPE=\"hidden\" VALUE=\"$lng[$i]\" NAME=\"temp[$i][Longitude]\">";
+                echo"<input TYPE=\"hidden\" VALUE=\"$bootStatus\" NAME=\"temp[$i][Boot Status]\">";
 		echo"<input TYPE=\"hidden\" VALUE=\"$ver[$i]\" NAME=\"temp[$i][Version]\">";
 		
 		////////// For CSV Report
-		$csv_string = $csv_string.$sno.','.$sts[$i].','.$datetime[$i].','.$msgtype[$i].','.$fix[$i].','.$lat[$i].','.$lng[$i].','.$ver[$i]."\n";
+		$csv_string = $csv_string.$sno.','.$sts[$i].','.$datetime[$i].','.$msgtype[$i].','.$fix[$i].','.$lat[$i].','.$lng[$i].','.$bootStatus.','.$ver[$i]."\n";
    }
   if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
   {
@@ -477,10 +514,10 @@ if(sizeof($imei)>0)
 }
 
 echo'<center>		
-		<a href="javascript:showReportPrevPageNew();" class="back_css">
-			&nbsp;<b>Back</b>
-		</a>
-	</center>';	 
+        <a href="javascript:showReportPrevPageNew();" class="back_css">
+            &nbsp;<b>Back</b>
+        </a>
+    </center>';	 
 //echo "test";
 
 ?>

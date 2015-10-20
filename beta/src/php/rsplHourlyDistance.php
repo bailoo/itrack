@@ -1,13 +1,45 @@
 <?php
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 //include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
 include_once('common_xml_element.php');
 include_once('get_location_hourly_person.php');
 include_once('calculate_distance.php');
+include_once('xmlParameters.php');
+include_once('parameterizeData.php');
+include_once('lastRecordData.php');
+include_once("getXmlData.php");	
+
+set_time_limit(3000); 
+
+$parameterizeData=new parameterizeData();
+$parameterizeData->messageType='a';
+$parameterizeData->version='b';
+$parameterizeData->fix='c';
+$parameterizeData->latitude='d';
+$parameterizeData->longitude='e';
+$parameterizeData->speed='f';	
+$parameterizeData->io1='i';
+$parameterizeData->io2='j';
+$parameterizeData->io3='k';
+$parameterizeData->io4='l';
+$parameterizeData->io5='m';
+$parameterizeData->io6='n';
+$parameterizeData->io7='o';
+$parameterizeData->io8='p';	
+$parameterizeData->sigStr='q';
+$parameterizeData->supVoltage='r';
+$parameterizeData->dayMaxSpeed='s';
+$parameterizeData->dayMaxSpeedTime='t';
+$parameterizeData->lastHaltTime='u';
+$parameterizeData->cellName='ab';	
+$sortBy="h";
+//$accountId="1613";
 $queryVD = "SELECT DISTINCT vehicle.vehicle_name,vehicle_assignment.device_imei_no FROM vehicle,vehicle_grouping,vehicle_assignment".
 	 " WHERE vehicle.vehicle_id=vehicle_assignment.vehicle_id AND vehicle_grouping.vehicle_id=vehicle.vehicle_id".
 	 " AND vehicle.status=1 AND vehicle_assignment.status=1 AND vehicle_grouping.status=1 AND vehicle_grouping.".
-	 "account_id=1613";
+	 "account_id=767";
 
 //echo "query=".$queryVD."<br>";
 $resultVD=mysql_query($queryVD,$DbConnection);
@@ -16,69 +48,29 @@ $frcnt=0;
 //global $old_xml_date;
 global $vd,$ve,$vh;
 $vehicleDetailArr=array();
+$current_date_this = date('Y-m-d');
 while($rowVD=mysql_fetch_object($resultVD))
 {
-	$current_date_this = date('Y-m-d');
-	$xml_file = "../../../xml_vts/xml_last/".$rowVD->device_imei_no.".xml";
-	//echo "xmlFile=".$xml_file."<br><br>";
-	
-	if(file_exists($xml_file))
-	{
-		//echo "true, FileName=".$xml_file."<br><br>";
-	}
-	
-	$file = file_get_contents($xml_file);
-	if(!strpos($file, "</t1>")) 
-	{
-		usleep(1000);
-	}		
-	if(file_exists($xml_file))
-	{
-		$t=time();
-		$rno = rand();			
-		$xml_original_tmp = "../../../xml_tmp/original_xml/tmp_".$rowVD->device_imei_no."_".$t."_".$rno.".xml";		
-		copy($xml_file,$xml_original_tmp); 
-		if(file_exists($xml_original_tmp))
-		{
-			$fp = fopen($xml_original_tmp, "r") or $fexist = 0;   
-			//$total_lines = count(file($xml_original_tmp));
-
-			set_master_variable($current_date_this);
-			while(!feof($fp)) 
-			{
-				$line = fgets($fp);		
-				$c++;
-				if(strlen($line)>15)
-				{
-					if ((preg_match('/'.$vd.'="\d+.\d+[a-zA-Z0-9]\"/', $line, $lat_match)) && (preg_match('/'.$ve.'="\d+.\d+[a-zA-Z0-9]\"/', $line, $lng_match)))
-					{
-						//echo "vh=".$vh."<br>";
-
-						$status = preg_match('/'.$vh.'="[^"]+/', $line, $datetime_tmp);
-						$datetime_tmp1 = explode("=",$datetime_tmp[0]);
-						$dateTime=preg_replace('/"/', '', $datetime_tmp1[1]);
-						if($dateTime>$current_date_this." 00:00:00")
-						{
-							$status = preg_match('/'.$vd.'="[^"]+/', $line, $lat_tmp);
-							$lat_tmp1 = explode("=",$lat_tmp[0]);
-							$status = preg_match('/'.$ve.'="[^"]+/', $line, $lng_tmp);
-							$lng_tmp1 = explode("=",$lng_tmp[0]);			
-							$vehicleDetailArr[trim($rowVD->device_imei_no)]=$dateTime."#".preg_replace('/"/', '', $lat_tmp1[1])."#".preg_replace('/"/', '', $lng_tmp1[1])."#".$rowVD->vehicle_name;			
-							//echo "vehicleName=".$rowVD->vehicle_name." DeviceSerial=".$rowVD->device_imei_no."<br>";
-						}
-					}																			
-				}			
-			}
-		
-		}
-	}
+    $LastRecordObject=new lastRecordData();	
+    //echo "imei=".$imei."<br>";
+    $LastRecordObject=getLastRecord($rowVD->device_imei_no,$sortBy,$parameterizeData);  
+    //var_dump($LastRecordObject);    
+    
+    if(!empty($LastRecordObject))
+    { 
+        $dateTime=$LastRecordObject->deviceDatetimeLR[0];
+        if($dateTime>$current_date_this." 00:00:00")
+        {
+            $lat =  $LastRecordObject->latitudeLR[0];
+            $lng = $LastRecordObject->longitudeLR[0];			
+            $vehicleDetailArr[trim($rowVD->device_imei_no)]=$dateTime."#".$lat."#".$lng."#".$rowVD->vehicle_name;			
+            //echo "vehicleName=".$rowVD->vehicle_name." DeviceSerial=".$rowVD->device_imei_no."<br>";
+        }	
+    }	
 }
-	//echo "<br><br><br>";
-//print_r($vehicleDetailArr);
-fclose($fp);
-unlink($xml_original_tmp);
 
 $current_date = date('Y-m-d');
+//$destfile = "C:\\xampp/htdocs/logBetaXml";
 $destfile="../../../logBetaXml/".$current_date;
 if(!file_exists($destfile))
 {
@@ -99,16 +91,16 @@ if(!file_exists($pathtowrite))
 		$tmpD=explode("#",$value);
 		//echo "lat=".$tmpD[1]."lng=".$tmpD[2]."<br>";
 		//echo "placename=".$placename."<br>";
-		get_location($tmpD[1],$tmpD[2],&$placename);
+		get_location($tmpD[1],$tmpD[2],$placename);
 		$todayTime=explode(":",date("H:i:s"));
 		if($tmpCnt==0)
 		{
-			$tmpCnt=1;
-			$line2 ='<marker d="'.$tmpD[1].'" e="'.$tmpD[2].'" vs="'.$key.'" vn="'.$tmpD[3].'" a'.$todayTime[0].'="'.$placename.'" cdi="0"/>';   
+                    $tmpCnt=1;
+                    $line2 ='<marker d="'.$tmpD[1].'" e="'.$tmpD[2].'" vs="'.$key.'" vn="'.$tmpD[3].'" a'.$todayTime[0].'="'.$placename.'" cdi="0"/>';   
 		}
 		else
 		{
-			$line2 = "\n".'<marker d="'.$tmpD[1].'" e="'.$tmpD[2].'" vs="'.$key.'" vn="'.$tmpD[3].'" a'.$todayTime[0].'="'.$placename.'" cdi="0"/>';   
+                    $line2 = "\n".'<marker d="'.$tmpD[1].'" e="'.$tmpD[2].'" vs="'.$key.'" vn="'.$tmpD[3].'" a'.$todayTime[0].'="'.$placename.'" cdi="0"/>';   
 		}
 		fwrite($fh, $line2); 
 		/*$tmpTest++;
@@ -163,8 +155,8 @@ else
 					$cum_dist1 = explode("=",$cum_dist[0]);
 					$final_cum_dist = preg_replace('/"/', '', $cum_dist1[1]);
 					//echo "final_cum_dist_len=".strlen($final_cum_dist)."<br>";
-					calculate_distance($lat, $dVdetail[1], $lng, $dVdetail[2], &$distance);
-					get_location($dVdetail[1],$dVdetail[2],&$placename);
+					calculate_distance($lat, $dVdetail[1], $lng, $dVdetail[2], $distance);
+					get_location($dVdetail[1],$dVdetail[2],$placename);
 					
 					$nline = substr(trim($line),0,-2);
 					//$nline = substr($line, 0, -10);
@@ -216,7 +208,7 @@ else
 		{
 			//calculate_distance($lat, $dVdetail[1], $lng, $dVdetail[2], &$distance);
 			$tmpD=explode("#",$value);
-			get_location($tmpD[1],$tmpD[2],&$placename);
+			get_location($tmpD[1],$tmpD[2],$placename);
 			$addressStr="";
 			$todayTime=explode(":",date("H:i:s"));
 			$timeCnt=(integer)$todayTime[0];

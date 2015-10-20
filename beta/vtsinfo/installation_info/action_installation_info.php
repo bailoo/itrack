@@ -2,10 +2,10 @@
 set_time_limit(360000);
 //$HOST = "111.118.181.156";
 //include_once("../database_ip.php");
+$HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
 $DBASE = "iespl_vts_beta";
-$HOST = "localhost";
-$USER = "root";
-$PASSWD = "mysql";
+$USER = "bailoo";
+$PASSWD = 'neon04$VTS';
 
 //echo "\nDBASE=".$DBASE." ,USER=".$USER." ,PASS=".$PASSWD;
 $DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server is down. Please try after few minutes.");

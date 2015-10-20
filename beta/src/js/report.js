@@ -3,39 +3,39 @@
   {
     alert("hello");
   } */
-	function show_upload_format(param_value)
-	{
-		if(param_value=="upload_format1")
-		{
-			document.getElementById("format_type").value="";
-			document.getElementById("format_type").value="upload_format1";
-			document.getElementById("upload_format2").style.display="none";
-			document.getElementById("upload_format3").style.display="none";
-			document.getElementById("upload_format1").style.display="";			
-		}
-		if(param_value=="upload_format2")
-		{
-			document.getElementById("format_type").value="";
-			document.getElementById("format_type").value="upload_format2";
-			document.getElementById("upload_format1").style.display="none";
-			document.getElementById("upload_format3").style.display="none";	
-			document.getElementById("upload_format2").style.display="";			
-		}
-		if(param_value=="upload_format3")
-		{
-			document.getElementById("format_type").value="";
-			document.getElementById("format_type").value="upload_format3";
-			document.getElementById("upload_format1").style.display="none";
-			document.getElementById("upload_format2").style.display="none";
-			document.getElementById("upload_format3").style.display="";			
-		}
-	}
-  
-	function report_upload_file(filename,title)            // manage.js
-	{
-		var poststr ="";
-		makePOSTRequest(filename, poststr); 
-	}	
+function show_upload_format(param_value)
+{
+        if(param_value=="upload_format1")
+        {
+                document.getElementById("format_type").value="";
+                document.getElementById("format_type").value="upload_format1";
+                document.getElementById("upload_format2").style.display="none";
+                document.getElementById("upload_format3").style.display="none";
+                document.getElementById("upload_format1").style.display="";			
+        }
+        if(param_value=="upload_format2")
+        {
+                document.getElementById("format_type").value="";
+                document.getElementById("format_type").value="upload_format2";
+                document.getElementById("upload_format1").style.display="none";
+                document.getElementById("upload_format3").style.display="none";	
+                document.getElementById("upload_format2").style.display="";			
+        }
+        if(param_value=="upload_format3")
+        {
+                document.getElementById("format_type").value="";
+                document.getElementById("format_type").value="upload_format3";
+                document.getElementById("upload_format1").style.display="none";
+                document.getElementById("upload_format2").style.display="none";
+                document.getElementById("upload_format3").style.display="";			
+        }
+}
+
+function report_upload_file(filename,title)            // manage.js
+{
+        var poststr ="";
+        makePOSTRequest(filename, poststr); 
+}	
   
   function action_report_fuel_halt(obj)
   {
@@ -455,6 +455,14 @@ if(document.getElementById('acc').value=='1')
   } 
 
   /////////////////////  REPORT MODULE /////////////////////////////////////////  	  	
+   function report_person_invalid_data(filename,title)            // manage.js
+    {
+        showManageLoadingMessage();
+        var poststr = "title=" + encodeURI(title);	
+        //alert("poststr="+poststr);
+        makePOSTRequest(filename, poststr);
+    }
+  
   function report_common_prev(filename,title)            // manage.js
 	{
 		showManageLoadingMessage();
@@ -636,6 +644,38 @@ if(document.getElementById('acc').value=='1')
 		document.thisform.submit();
 	} 
   }
+  
+function action_report_inactive_data()
+{
+    if(document.getElementById("duration").value=="select")
+    {
+        alert("Please select duration");
+        return false;
+    }
+    else
+    {
+        document.getElementById("loading_msg").style.display = ''; 
+        var poststr = "timeDuration="+encodeURI( document.getElementById("duration").value);                
+        //  alert("Rizwan:"+poststr);
+        makePOSTRequest('src/php/action_report_inactive_data.htm', poststr); 
+    }
+}
+
+function action_report_nogps_data()
+{
+    if(document.getElementById("duration").value=="select")
+    {
+        alert("Please select duration");
+        return false;
+    }
+    else
+    {
+        document.getElementById("loading_msg").style.display = ''; 
+        var poststr = "timeDuration="+encodeURI( document.getElementById("duration").value);                
+        //  alert("Rizwan:"+poststr);
+        makePOSTRequest('src/php/action_report_nogps_data.htm', poststr); 
+    }
+}
 
 function report_moto_trip_display(file_name,title)
   {
@@ -2132,7 +2172,7 @@ function action_report_nearby_location(obj)
   				var hrto  =  document.getElementById("hrto").value;
   				var mito  =  document.getElementById("mito").value;
   				var ssto	=  document.getElementById("ssto").value;
-  				date1 = date+" "+hrfrom+":"+mifrom+":"+ssfrom;
+  				var date1 = date+" "+hrfrom+":"+mifrom+":"+ssfrom;
   				var date2 = date+" "+hrto+":"+mito+":"+ssto;
   
   				var poststr = "account_id_local="+account_id_local1+
@@ -3924,7 +3964,7 @@ function checkbox_selection_datalog(obj1)
 }
   //1.Visit Detail REPORT  
   
-  function action_report_visitDetail(obj)
+ function action_report_visitDetail(obj)
   {
     // GET SELECTED VEHICLES 
     //alert("one="+document.getElementById("loading_msg").style.display);     
@@ -3935,17 +3975,14 @@ function checkbox_selection_datalog(obj1)
     if(device_str!=false)
     {  
         document.getElementById("loading_msg").style.display = ''; 
-        var poststr = "vehicleserial=" + encodeURI( device_str ) +
-			"&selected_account_id=" + document.getElementById("selected_account_id").value +
-			"&selected_options_value=" + document.getElementById("selected_options_value").value +
-			"&s_vehicle_display_option=" + document.getElementById("s_vehicle_display_option").value +
+        var poststr = "vehicleserial=" + encodeURI( device_str ) +			
 		  "&start_date=" + encodeURI( document.getElementById("date1").value )+
 		  "&end_date=" + encodeURI( document.getElementById("date2").value );                
               //  alert("Rizwan:"+poststr);                                                                                              
                    
         makePOSTRequest('src/php/action_report_visitDetail.htm', poststr);
     }
-  }      
+  }     
   
   	function report_upload_file_1(filename,title,upload_type)
 	{

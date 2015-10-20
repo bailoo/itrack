@@ -47,7 +47,7 @@ function get_location($lat,$lng,&$placename)
 	if($address!="")
 	{
 		//calculate_distance_local($latitude,$data['lat'],$longitude,$data['lon'],&$distance_1);
-		calculate_report_distance($lat,$data['lat'],$lng,$data['lon'],&$distance_1);
+		calculate_report_distance($lat,$data['lat'],$lng,$data['lon'],$distance_1);
 
 		$distance_1 = round($distance_1,2);
 		if($distance_1 > 50)
@@ -85,7 +85,7 @@ function get_location($lat,$lng,&$placename)
 
 			//echo "lat1=".$lat."lng1=".$lng."lat2=".$lat_local."long2=".$lon_local."<br>";
 			$distance="";
-			calculate_report_distance($lat,$lat_local,$lng,$lon_local,&$distance);
+			calculate_report_distance($lat,$lat_local,$lng,$lon_local,$distance);
 			//$placename=round($distance,2)." km from ".$xml->result;
 			$placename=round($distance,2)." km from ".$fAddress;
 		}

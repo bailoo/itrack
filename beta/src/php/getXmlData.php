@@ -511,6 +511,7 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
         $io8 = $item->p;
         $sig_str = $item->q;
         $sup_v = $item->r;
+        $ci = $item->i;
           
                   
         $dataObject->serverDatetime[] = $datetime_server;
@@ -706,6 +707,7 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
         $io8 = $item->p;
         $sig_str = $item->q;
         $sup_v = $item->r;
+        $ci = $item->i;
         
         $ax = $item->ax;
         $ay = $item->ay;
@@ -934,8 +936,8 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
     //echo "countAr=".count($st_results)."<br>";
     if(count($st_results)>0)
     {
-        /*//echo "lat".$st_results->d."<br>";
-        $msg_type = $st_results->a;                 
+        //echo "lat".$st_results->d."<br>";
+        /*$msg_type = $st_results->a;                 
         $ver = $st_results->b;              
         $fix = $st_results->c;
         $lat = $st_results->d;
@@ -1056,8 +1058,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
             }
         }*/
         foreach($st_results as $item) 
-        {
-          
+        {          
             $msg_type = $item->a;                 
             $ver = $item->b;              
             $fix = $item->c;

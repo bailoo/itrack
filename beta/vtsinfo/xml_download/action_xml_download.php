@@ -1,7 +1,9 @@
 <?php
+ ignore_user_abort(true);
  //error_reporting(-1);
  //ini_set('display_errors', 'On');
-set_time_limit(1000);	
+//ini_set('memory_limit','200M');
+set_time_limit(10000);	
 date_default_timezone_set("Asia/Kolkata");
 $vserial = $_POST['filename'];
 //echo "vserial".$vserial."<br>";
@@ -14,7 +16,7 @@ $startdate = str_replace("/","-",$startdate);
 $enddate = $_POST['enddate'];
 $enddate = str_replace("/","-",$enddate);
 
-if((strtotime($enddate)-strtotime($startdate))>7*24*60*60)
+//if((strtotime($enddate)-strtotime($startdate))>7*24*60*60)
 {
     /*echo "<center>
                 <br><br>
@@ -22,7 +24,7 @@ if((strtotime($enddate)-strtotime($startdate))>7*24*60*60)
                         Maximum 7 days report is allowed
                 </font>
         </center>";*/
-    exit("Maximum 7 days report is allowed");
+    //exit("Maximum 7 days report is allowed");
 }
 
 include_once('../../src/php/xmlParameters.php');
@@ -65,13 +67,16 @@ $parameterizeData->byParam = 'by';
 $parameterizeData->byParam = 'bz';
 
     
-$SortedDataObject=new data(); 	
-$flag =0;
-$rec_count =0;
- $csv_string = "";
- $csv_string = $csv_string."Imei No - ".$vserial."\n";
-  $csv_string = $csv_string."SNo,STS,DateTime,MsgTp,Version,Fix,Latitude,Longitude,Speed,SupplyV,SgnlSt,io1,io2,io3,io4,io5,io6,io7,io8,ax,ay,az,mx,my,mz,bx,by,bz\n";
-
+$SortedDataObject=new data(); 
+$rawData[]=array(
+                'Vehicle Name',
+                   $vserial
+                );
+$rawData[]=array(
+                            'SNo','STS', 'DateTime','MsgTp','Version','Fix','Latitude','Longitude','Speed',
+                    'SupplyV', 'SgnlSt','io1','io2','io3', 'io4','io5','io6','io7','io8','ax','ay','az',
+                    'mx','my','mz','bx','by','bz'
+                );
 $date_1 = explode(" ",$startdate);
 $date_2 = explode(" ",$enddate);
 $datefrom = $date_1[0];
@@ -151,27 +156,66 @@ for($di=0;$di<=($date_size-1);$di++)
             $bx = ($SortedDataObject->bxParamData[$obi]!='')? $SortedDataObject->bxParamData[$obi] : '-';
             $by = ($SortedDataObject->byParamData[$obi]!='')? $SortedDataObject->byParamData[$obi] : '-';
             $bz = ($SortedDataObject->bzParamData[$obi]!='')? $SortedDataObject->bzParamData[$obi] : '-';
-            $csv_string = $csv_string.$sno.','.$sts.','.$datetime.','.$msgtype.','.$ver.','.$fix.','.$lat.','.$lng.','.$speed.','.$sup_v.','.$sig_str.','.$io1.','.$io2.','.$io3.','.$io4.','.$io5.','.$io6.','.$io7.','.$io8.','.$ax.','.$ay.','.$az.','.$mx.','.$my.','.$mz.','.$bx.','.$by.','.$bz."\n";
+            $rawData[]=array(
+                            "sno"=>$sno,
+                 "sts"=>$sts,                
+                "dateTime"=>$datetime,
+                "msgtype"=>$msgtype,
+                "ver"=>$ver,
+                "fix"=>$fix,
+                "lat"=>$lat,
+                "lng"=>$lng,
+                "speed"=>$speed,
+                "sup_v"=>$sup_v,
+                "sig_str"=>$sig_str,
+                "io1"=>$io1,
+                "io2"=>$io2,
+                "io3"=>$io3,
+                "io4"=>$io4,
+                "io5"=>$io5,
+                "io6"=>$io6,
+                "io7"=>$io7,
+                "io8"=>$io8,
+                "ax"=>$ax,
+                "ay"=>$ay,
+                "az"=>$az,
+                "mx"=>$mx,
+                "my"=>$my,
+                "mz"=>$mz,
+                "bx"=>$bx,
+                "by"=>$by,
+                "bz"=>$bz
+                );
+            //$csv_string = $csv_string.$sno.','.$sts.','.$datetime.','.$msgtype.','.$ver.','.$fix.','.$lat.','.$lng.','.$speed.','.$sup_v.','.$sig_str.','.$io1.','.$io2.','.$io3.','.$io4.','.$io5.','.$io6.','.$io7.','.$io8.','.$ax.','.$ay.','.$az.','.$mx.','.$my.','.$mz.','.$bx.','.$by.','.$bz."\n";
         }
     }
 }
+
+//print_r($rawData);
         //echo $csv_string;
-        $stringData = $csv_string;
-$csv_type1 = $_POST['csv_type'];
+        //$stringData = $csv_string;
+//$csv_type1 = $_POST['csv_type'];
 
 //CREATE FILE
 $t=time();
 $filename = "reportDataLog".$t.".csv";
 $root_dir = getcwd();
-$path = "../../src/php/csv_reports/".$filename;
+//$fileTmpPath= "C:\\xampp/htdocs/itrackDevelop/beta/src/php/csv_reports/";
+$fileTmpPath="../../src/php/csv_reports/";
+$path = $fileTmpPath.$filename;
 
 //echo "<br>path1=".$path;
 
 $fh = fopen($path, 'w') or die("can't open file");
-fwrite($fh, $stringData);
+$delimiter = ',';
+//fputcsv($fh, $headerArr[0]->getProperties(), $delimiter);
+foreach ($rawData as $element) {
+    fputcsv($fh, $element);
+}
+//fwrite($fh, $stringData);
 fclose($fh);
 // CREATE FILE CLOSED
-
+@chmod($path, 0777);
 /// DOWNLOAD SCRIPT
 if(file_exists(trim($path)))      
 {	
@@ -200,7 +244,11 @@ if(file_exists(trim($path)))
   }
   fclose ($fd);
   unlink($path); 
-  exit;   
+ if(connection_aborted()){
+    unlink($path);  
+ }
+  
+  //exit;   
 }
 /// SCRIPT CLOSED
 ?>

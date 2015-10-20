@@ -913,4 +913,72 @@
 	   echo'</tr>';
 	}
     } 
+    
+    function getAllVehicleDetailsInArray($local_account_id)
+    {
+       // echo "accountId=".$local_account_id."<br>";
+        //echo "<br>accnode=".$AccountNode." ,div_option_values".$div_option_values;
+        global $root;
+        global $vehicleid;
+	global $vehicle_cnt;  
+	$vehicle_cnt=0;
+       $vehicleDetailArr=PrintAllVehicleInArray($root, $local_account_id);
+       return $vehicleDetailArr;
+    }
+    
+    function PrintAllVehicleInArray($root, $local_account_id)
+    {
+        global $vehicleid;
+        global $vehicle_cnt;
+        global $td_cnt;
+        global $type_tag;
+        global $vcolor1;
+        global $vcolor2;
+        global $vcolor3;
+        global $title;
+        global $o_cassandra;
+        global $logDate;
+
+        $type = 0;
+        global $current_date;
+        $vehicle_name_arr=array();
+        $imei_arr=array();
+        $vehicleid_or_imei_arr=array();
+        $vehicle_color=array(); 
+
+        if($root->data->AccountID==$local_account_id)
+        {
+            $td_cnt =0;
+            for($j=0;$j<$root->data->VehicleCnt;$j++)
+            {			    
+                $vehicle_id = $root->data->VehicleID[$j];
+                $vehicle_name = $root->data->VehicleName[$j];
+                $vehicle_imei = $root->data->DeviceIMEINo[$j];
+
+                if($vehicle_id!=null)
+                {
+                    for($i=0;$i<$vehicle_cnt;$i++)
+                    {
+                        if($vehicleid[$i]==$vehicle_id)
+                        {
+                             break;
+                        }
+                    }			
+                    if($i>=$vehicle_cnt)
+                    {
+                        $vehicleid[$vehicle_cnt]=$vehicle_id;
+                        $vehicle_cnt++;
+                        //echo "imeiNo=".$vehicle_imei."<br>";
+                        $vehicleDetailArr[]=array('imeiNo'=>$vehicle_imei,'vehicleName'=>$vehicle_name);
+                    }
+                }
+            }
+        }      
+        $ChildCount=$root->ChildCnt;
+        for($i=0;$i<$ChildCount;$i++)
+        { 
+            PrintAllVehicleInArray($root->child[$i],$local_account_id);
+        }
+        return $vehicleDetailArr;
+    }
 ?>

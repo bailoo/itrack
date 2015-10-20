@@ -338,7 +338,7 @@ echo'
 	//echo "in if";
  $point = '"';
   for($i=0;$i<$size;$i++)
-	{
+{
     $lat[$i] = substr($lat[$i], 0, -1);
     $lng[$i] = substr($lng[$i], 0, -1);
 
@@ -351,7 +351,8 @@ echo'
     {
       $point = $point.":".$coord;   
     }
-  }         
+
+}         
   $point = $point.'"';
   //echo "<br>pt=".$point;  
   call_geocode($point); 

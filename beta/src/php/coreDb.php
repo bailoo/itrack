@@ -472,7 +472,7 @@ function getHourlyDistance($accId,$status,$DbConnection)
 		" AND vehicle.status=$status AND vehicle_assignment.status=$status AND vehicle_grouping.status=$status AND vehicle_grouping.".
 		"account_id=$accId";
 	$Result=mysql_query($Query,$DbConnection);
-	while($Row=mysql_fetch_object($resultVD))
+	while($Row=mysql_fetch_object($Result))
 	{
 		$data[]=array(
 						'device_imei_no'=>$Row->device_imei_no,

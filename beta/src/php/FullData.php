@@ -483,20 +483,20 @@ include_once($path_mapwindow);
 										$placename[$i] = $place;*/
 										///////////////////
 										if($data_with_location=="1")
-										{
-											$landmark="";
-											get_landmark($lt1,$lng1,$landmark);    // CALL LANDMARK FUNCTION  		
-											$place = $landmark;      
-											if($place=="")
-											{
-												//$place_name_arr[$i]=preg_replace('/???? ???????/', '', $place_name_arr[$i]);																		
-												//get_location($lt1,$lng1,$alt1,&$place,$DbConnection);    // CALL GOOGLE LOCATION FUNCTION
-												$place = preg_replace('/भारत गणराज्य/', '' , $location[$i]);
-												$place = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '' , $location[$i]);
-											}  		
-											//echo "P:".$place;
-											$placename[$i] = $place;
-											$placename[$i] = $placename[$i]."-(".$lt1.",".$lng1.")";
+										{                                                                                    
+                                                                                    $landmark="";
+                                                                                    get_landmark($lt1,$lng1,$landmark);    // CALL LANDMARK FUNCTION  		
+                                                                                    $place = $landmark;      
+                                                                                    if($place=="")
+                                                                                    {
+                                                                                        //$place_name_arr[$i]=preg_replace('/???? ???????/', '', $place_name_arr[$i]);																		
+                                                                                        //get_location($lt1,$lng1,$alt1,&$place,$DbConnection);    // CALL GOOGLE LOCATION FUNCTION
+                                                                                        $place = preg_replace('/भारत गणराज्य/', '' , $location[$i]);
+                                                                                        $place = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '' , $location[$i]);
+                                                                                    }  		
+                                                                                    //echo "P:".$place;
+                                                                                    $placename[$i] = $place;
+                                                                                    $placename[$i] = $placename[$i]."-(".$lt1.",".$lng1.")";                                                                                   
 										}
 										/////////////////////
 										$dt2 = explode(" ",$datetime[$i]);  
@@ -509,10 +509,10 @@ include_once($path_mapwindow);
 									echo'<tr valign="top" bgcolor="#FFFDF9" onMouseOver="this.className=\'highlight2\'" onMouseOut="this.className=\'normal2\'">';
 										} 		
 										echo'<td class="text" align="left"  width="1%">
-												&nbsp;'.$count.'
-											</td>';
-											echo"<input TYPE=\"hidden\" VALUE=\"$count\" NAME=\"temp[$i][SNo]\">";
-											$csv_string = $csv_string.$count;
+                                                                                        &nbsp;'.$count.'
+                                                                                    </td>';
+                                                                                    echo"<input TYPE=\"hidden\" VALUE=\"$count\" NAME=\"temp[$i][SNo]\">";
+                                                                                    $csv_string = $csv_string.$count;
 										/*if($i%2==0)
 										{
 											echo'<td class="text" align="left">

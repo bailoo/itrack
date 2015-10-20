@@ -171,8 +171,7 @@
                         $DataValid = 1;
                     }
                     if(($DataValid==1))
-                    {
-                        $speed = $SortedDataObject->speedData[$obi];
+                    {                        
                         $datetime=$SortedDataObject->deviceDatetime[$obi];
                         if($firstdata_flag==0)
                         {                                
@@ -200,7 +199,7 @@
                             $lng_E = $lng;
                             $datetime_prev = $datetime_E;
                             $datetime_E = $datetime; 
-
+                            $speed_prev = $speed;
                             calculate_distance($lat_S, $lat_E, $lng_S, $lng_E, $distance_incriment);								         		
                             $tmp_time_diff = (double)(strtotime($datetime) - strtotime($last_time)) / 3600;                
                             //echo "1 tmp_time_diff=".$tmp_time_diff." last_time=".$last_time." datetime".$datetime." distance_incriment=".$distance_incriment." lat_S=".$lat_S." lng_S=".$lng_S." lat_E=".$lat_E." lng_E=".$lng_E."<br>";       
@@ -238,19 +237,21 @@
                             $latlast = $lat_E;
                             $lnglast =  $lng_E;
                             //echo"maxspeed=".$max_speed."speed=".$speed."<br>";
-                            if(($max_speed<$speed) && ($speed<200) && ($haltFlag==false) && ($outflag==1))
-                            {
-                                $max_speed = $speed;
-                            }
-							
-                            if(($max_speed<$speed) && ($speed<200) && ($haltFlag==false) && ($outflag==0))
-                            {
-                                $max_speed_in = $speed;
-                            }
-
+                            $speed = $SortedDataObject->speedData[$obi];
                             //echo "tmpSpeed=".round($tmp_speed,2)."tmpSpeed1=".round($tmp_speed1,2)."distanceIncreament=".$distance_incriment."tmpTimeDiff=".$tmp_time_diff." tmpTimeDiff1=".$tmp_time_diff1."<br>";								
                             if(round($tmp_speed,2)<300.0 && round($tmp_speed1,2)<300.0 && $distance_incriment>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
                             {
+                                $tmp_time_diff_maxspeed = (double)(strtotime($datetime) - strtotime($datetime_prev)) / 3600;                              
+                                
+                                if(($max_speed<$speed) && ($speed<200) && ($haltFlag==false) && ($outflag==1) && ((abs($speed_prev-$speed)<50.0) || ($tmp_time_diff_maxspeed>30)))
+                                {
+                                    $max_speed = $speed;
+                                }
+
+                                if(($max_speed<$speed) && ($speed<200) && ($haltFlag==false) && ($outflag==0) && ((abs($speed_prev-$speed)<50.0) || ($tmp_time_diff_maxspeed>30)))
+                                {
+                                    $max_speed_in = $speed;
+                                }
                                //echo "geoCoordin=".$geo_coord."<br>"; 
                                 if($geo_coord!="")
                                 {                

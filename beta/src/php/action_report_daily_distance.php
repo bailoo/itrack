@@ -119,13 +119,15 @@
                             $last_time1 = $datetime;
                             $latlast = $lat;
                             $lnglast =  $lng;  
-                            $max_speed	=0.0;								
+                            $max_speed	=0.0;
+                            $speed_prev = 0.0;
                         }           	              	
                         else
                         {           
                             $lat_E = $lat;
                             $lng_E = $lng;
                             $datetime_prev = $datetime_E;
+                            $speed_prev = $speed;
                             $datetime_E = $datetime; 
 
                             calculate_distance($lat_S, $lat_E, $lng_S, $lng_E, $distance_incriment);								         		
@@ -169,7 +171,8 @@
                            
                             if(round($tmp_speed,2)<300.0 && round($tmp_speed1,2)<300.0 && $distance_incriment>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
                             {
-                                if(($max_speed<$speed) && ($speed<200) && ($haltFlag==False))
+                                $tmp_time_diff_maxspeed = (double)(strtotime($datetime) - strtotime($datetime_prev)) / 3600;
+                                if(($max_speed<$speed) && ($speed<200) && ($haltFlag==False) && ((abs($speed_prev-$speed)<50.0) || ($tmp_time_diff_maxspeed>30)))
                                 {
                                     $max_speed = $speed;
                                     //echo "maxpeed=".$max_speed."<br>";
