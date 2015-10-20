@@ -208,7 +208,7 @@ var input = (document.getElementById('pac-input'));
     }*/
 
     // For each place, get the icon, place name, and location.
-    markers = [];
+ 
     var bounds = new google.maps.LatLngBounds();
     for (var i = 0, place; place = places[i]; i++) {
       var image = {
