@@ -583,6 +583,23 @@
 							
 							echo "C=". $query_update;*/
 							$flag_close=1;
+                                                        if($flag_close==1)
+                                                        {
+                                                                //$query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_id='$account_id',edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
+                                                                //requirement from yp sing not to save userid 
+                                                                /*$query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
+                                                                //echo $query_update;		
+                                                                $result_update = mysql_query($query_update,$DbConnection);
+                                                                */
+                                                                //echo"aaa1".$unload_estimatetime_serials[$cnt_1];
+                                                                //echo"<br>aaa2".$unload_estimatedatetime_serials[$cnt_1];
+                                                                //echo"<br>aaa3".$unload_accepttime_serials[$cnt_1];
+                                                               if($unload_estimatedatetime_serials[$cnt_1]!=null && $unload_estimatetime_serials[$cnt_1]!=null )
+                                                               {
+                                                                    $query_update =updateInvoiceMdrmClose($date,$closetime,$sno,$DbConnection);
+                                                               }
+                                                        }
+                                                        $flag_close=0;
 						}
 					
 					}
@@ -590,17 +607,14 @@
 					
 					
 				}
-				if($flag_close==1)
+				/*if($flag_close==1)
 				{
 					//$query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_id='$account_id',edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
 					//requirement from yp sing not to save userid 
-					/*$query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
-					//echo $query_update;		
-					$result_update = mysql_query($query_update,$DbConnection);
-                                        */
+					
                                         $query_update =updateInvoiceMdrmClose($date,$closetime,$sno,$DbConnection);
 				}
-				$flag_close=0;
+				$flag_close=0;*/
 			}
 			$cnt++;
 		}

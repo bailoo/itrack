@@ -9355,7 +9355,15 @@ function setclosetime(sno){
 		
 		document.getElementById('temp_unload_estimate_datetime').style.display=''; /*tempo not visible */
 		document.getElementById('temp_unload_estimate_datetime').value =''; /*tempo not visible */
-		document.getElementById('temp_unload_estimate_datetime').value =document.getElementById('unload_estimated_datetime_'+sno).value; 
+		 if(document.getElementById('unload_estimated_datetime_'+sno).value=='0000-00-00 00:00:00')
+                {
+                     document.getElementById('temp_unload_estimate_datetime').value ="";
+                }
+                else
+                {
+                    document.getElementById('temp_unload_estimate_datetime').value =document.getElementById('unload_estimated_datetime_'+sno).value; 
+                }
+                //document.getElementById('temp_unload_estimate_datetime').value =document.getElementById('unload_estimated_datetime_'+sno).value; 
 		document.getElementById('temp_unload_estimate_time').value = document.getElementById('unload_estimated_time_'+sno).value;
 		document.getElementById('temp_unload_estimate_datetime_label').style.display='none';
 		document.getElementById('temp_unload_estimate_time').readOnly = true;
