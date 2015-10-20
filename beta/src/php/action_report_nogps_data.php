@@ -5,7 +5,6 @@ include_once("main_vehicle_information_1.php");
 include_once('Hierarchy.php');
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
-
 include_once("report_hierarchy_header.php");
 
 set_time_limit(380);
@@ -19,8 +18,8 @@ include_once("util.hr_min_sec.php");
 include_once('xmlParameters.php');
 include_once('parameterizeData.php');
 include_once('data.php');
-include_once('sortXmlData.php');
-include_once('getXmlData.php');
+include_once('lastRecordData.php');
+include_once("getXmlData.php");	
 
 $DEBUG = 0;
 
@@ -54,109 +53,98 @@ $cellname0=array();
 
 //echo "accountId=".$account_id."<br>";
 $vehicleDetailArr=getAllVehicleDetailsInArray($account_id);
+$finalTimeDuration=$timeDuration*60;
 
-//print_r($vehicleDetailArr);
+
+
 date_default_timezone_set('Asia/Calcutta');
-$enddate=date("Y-m-d H:i:s");
-
-$curentDTseconds=strtotime($enddate);
-
-$previousDateDuration=$curentDTseconds-($timeDuration*60);
-
-
-$startdate=date("Y-m-d H:i:s",$previousDateDuration);
-
-//echo "startDate=".$startdate."endDate=".$enddate."<br>";
+$currentDateTime=date("Y-m-d H:i:s");
 $vehicleDetail=array();
 foreach($vehicleDetailArr as $key=>$vdValue)
 {  
     //echo "imei=".$vdValue['imeiNo']."name=".$vdValue[$key]['vehicleName']."<br>";  
-    get_visit_xml_data($vdValue['imeiNo'], $vdValue['vehicleName'],$startdate, $enddate);
+    get_visit_xml_data($vdValue['imeiNo'], $vdValue['vehicleName'],$finalTimeDuration,$currentDateTime);
     //echo   "t2".' '.$i;
 }
 
-function get_visit_xml_data($person_serial, $pname, $startdate, $enddate)
-{
-    global $vehicleDetail;
-    $date_1 = explode(" ",$startdate);
-    $datefrom = $date_1[0];
-    
-    get_All_Dates($datefrom, $dateto, $userdates);    
-    $date_size = sizeof($userdates);
-    $inactiveVehicleFlag=1;
-    
+function get_visit_xml_data($person_serial, $pname, $finalTimeDuration,$currentDateTime)
+{ 
     $parameterizeData=null;
-    $parameterizeData=new parameterizeData(); 
-    $parameterizeData->latitude="d";
-    $parameterizeData->longitude="e";   
+    $parameterizeData=new parameterizeData();  
     $parameterizeData->orderBy="DESC"; 
-        
     $SortedDataObject=null;
     $SortedDataObject=new data();
+        
+    $dateExplode=explode(" ",$currentDateTime);
+    $startdate=$dateExplode[0]." 00:00:00";
+    $sortBy="h";
+    global $vehicleDetail;
     //echo "startDate=".$startdate." endDate=".$enddate." serial=".$person_serial."<br>";
-    deviceDataBetweenDates($person_serial,$startdate,$enddate,$sortBy,$parameterizeData,$SortedDataObject);
+    deviceDataBetweenDates($person_serial,$startdate,$currentDateTime,$sortBy,$parameterizeData,$SortedDataObject);
     //var_dump($SortedDataObject);
     if(count($SortedDataObject->deviceDatetime)>0)
     {
         $inactiveVehicleFlag=0;
         $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);                   
         for($obi=0;$obi<$prevSortedSize;$obi++)
-        {
+        {              
             $DataValid = 0;
             $lat = $SortedDataObject->latitudeData[$obi];
             $lng = $SortedDataObject->longitudeData[$obi];
             $datetime=$SortedDataObject->deviceDatetime[$obi];
-            if((strlen($lat)>5) && ($lat!="0.0") && (strlen($lng)>5) && ($lng!="0.0"))
+            
+            if(strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi])<$finalTimeDuration)
             {
-                //echo "test";
-                $vehicleDetail[$pname]=array();
-                break;
+                if((strlen($lat)>5) && ($lat!="0.0") && (strlen($lng)>5) && ($lng!="0.0"))
+                {
+                    //echo "test";
+                    $vehicleDetail[$pname]=array();
+                    break;
+                }
             }
-            if(($lat=="0.0" || $lng=="0.0") && ($DataValid!=1))
+            else
             {
-                if($obi==0)
+                if((strlen($lat)>5) && ($lat!="0.0") && (strlen($lng)>5) && ($lng!="0.0"))
                 {
                     $vehicleDetail[$pname]=array(
                                                 'imeiNo'=>$person_serial,
                                                 'noGpsOrInactiveDT'=>$SortedDataObject->deviceDatetime[$obi],
                                                 'remark'=>'GPS Not Found',
                                                 );
-                }                   
-            }                
+                    break;
+                }
+            }         
         }
-    } 
+    }  
 }
-
 if(count($vehicleDetail)==0)
 {
-echo'<center>
-    <br>
+echo'<center><br>		
         <table border=0 width = 100% cellspacing=2 cellpadding=0>
                 <tr>
                     <td height=10 class="report_heading" align="center">
-                        No Gps Not Found For Any Vehicle
+                        Inactive Data Not Found For Any Vehicle
                     </td>
                 </tr>
             </table>
     </center>';
 exit();
 }
-
 //print_r($vehicleDetail);
 echo'<form method="post" target="_blank">';
-	 $title='No Gps Report';
+	 $title='Inactive Data Report';
 	 echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title\">";
     echo'<br>
             <table border=0 width = 100% cellspacing=2 cellpadding=0>
                 <tr>
                     <td height=10 class="report_heading" align="center">
-                        No GPS Report
+                        Inactive Data Report
                     </td>
                 </tr>
             </table>
 		<br>';
     $csv_string = "";
-    $csv_string = $csv_string." No Gps Report\n";
+    $csv_string = $csv_string." Inactive Data Report\n";
     $csv_string = $csv_string."SNo,Person Name,Imei No,From Date,Remark\n";
 echo'<center><div style="overflow: auto;height: 300px; width: 880px;" align="center">
     <table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
@@ -210,5 +198,4 @@ echo'<center>
             &nbsp;<b>Back</b>
         </a>
     </center>';
-
 ?>								
