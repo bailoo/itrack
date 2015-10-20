@@ -594,7 +594,7 @@ for($i=0;$i<$vsize;$i++)
                         {
                             $DataValid = 1;
                         }
-                        if($DataValid==1)
+                        if(($DataValid==1) && !(strtotime($datetime)>(strtotime($SortedDataObject->serverDatetime[$obi])+10*60)))
                         { 
                             $last_rec = $obi;
                             $xml_date_current = $datetime;
@@ -969,7 +969,7 @@ for($i=0;$i<$vsize;$i++)
                         {
                             $DataValid = 1;
                         }
-                        if($DataValid==1)
+                        if(($DataValid==1) && !(strtotime($datetime)>(strtotime($SortedDataObject->serverDatetime[$obi])+10*60)))
                         {
                             $last_rec = $obi;
                             //echo "lat=".$CurrentLat." lng=".$CurrentLat."<br><br>";
