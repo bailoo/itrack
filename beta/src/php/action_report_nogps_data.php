@@ -88,7 +88,8 @@ function get_visit_xml_data($person_serial, $pname, $startdate, $enddate)
     $parameterizeData=null;
     $parameterizeData=new parameterizeData(); 
     $parameterizeData->latitude="d";
-    $parameterizeData->longitude="e";        
+    $parameterizeData->longitude="e";   
+    $parameterizeData->orderBy="DESC"; 
         
     $SortedDataObject=null;
     $SortedDataObject=new data();
@@ -105,7 +106,7 @@ function get_visit_xml_data($person_serial, $pname, $startdate, $enddate)
             $lat = $SortedDataObject->latitudeData[$obi];
             $lng = $SortedDataObject->longitudeData[$obi];
             $datetime=$SortedDataObject->deviceDatetime[$obi];
-            if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))
+            if((strlen($lat)>5) && ($lat!="0.0") && (strlen($lng)>5) && ($lng!="0.0"))
             {
                 //echo "test";
                 $vehicleDetail[$pname]=array();
@@ -123,32 +124,39 @@ function get_visit_xml_data($person_serial, $pname, $startdate, $enddate)
                 }                   
             }                
         }
-    } // if (file_exists closed
-    else
-    {
-        $inactiveDateTime=$startdate;
-        $vehicleDetail[$pname]=array(
-                                'imeiNo'=>$person_serial,
-                                'noGpsOrInactiveDT'=>$inactiveDateTime,
-                                'remark'=>'In Active',
-                                );
-    }
+    } 
 }
+
+if(count($vehicleDetail)==0)
+{
+echo'<center>
+    <br>
+        <table border=0 width = 100% cellspacing=2 cellpadding=0>
+                <tr>
+                    <td height=10 class="report_heading" align="center">
+                        No Gps Not Found For Any Vehicle
+                    </td>
+                </tr>
+            </table>
+    </center>';
+exit();
+}
+
 //print_r($vehicleDetail);
 echo'<form method="post" target="_blank">';
-	 $title='Inactive Data Report';
+	 $title='No Gps Report';
 	 echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title\">";
     echo'<br>
             <table border=0 width = 100% cellspacing=2 cellpadding=0>
                 <tr>
                     <td height=10 class="report_heading" align="center">
-                        Inactive Data Report
+                        No GPS Report
                     </td>
                 </tr>
             </table>
 		<br>';
     $csv_string = "";
-    $csv_string = $csv_string." Vehicle Report\n";
+    $csv_string = $csv_string." No Gps Report\n";
     $csv_string = $csv_string."SNo,Person Name,Imei No,From Date,Remark\n";
 echo'<center><div style="overflow: auto;height: 300px; width: 880px;" align="center">
     <table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
