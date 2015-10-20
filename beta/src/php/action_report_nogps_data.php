@@ -5,7 +5,6 @@ include_once("main_vehicle_information_1.php");
 include_once('Hierarchy.php');
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
-
 include_once("report_hierarchy_header.php");
 
 set_time_limit(380);
