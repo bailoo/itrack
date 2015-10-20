@@ -69,71 +69,82 @@ include_once("getFilteredXmlTrackOnly.php");      // WRITE SORTED XML , FINAL XM
 			geocoder.geocode({'latLng': latLng}, function(results, status) 
 			{
 				var foundAddress = false;
-				if (status == google.maps.GeocoderStatus.OK) 
-				{
-					if (results) 
-					{
-						var user_lat = "";
-						var user_lng = "";
-						var google_lat = "";
-						var google_lng = "";
-						var distance = "";
-						//getAddressComponent(result, "country");
-						for (var j=0; j<results.length; j++) 
-						{            
-							if ((results[j].types[0] == 'street_address') || (results[j].types[0] == 'route')) 
-							{
-								xml_address_flag=0;
-								//alert(results[j].geometry.location.lat());
-								user_lat = latLng.lat();
-								user_lng = latLng.lng();
-								google_lat = results[j].geometry.location.lat();
-								google_lng = results[j].geometry.location.lng();
-								if(account_id_session=="212")
-								{
-									//alert("user_lat="+user_lat+"user_lng="+user_lng+"address="+results[j].formatted_address);
-								}
-								var distance = calculate_distance(user_lat, google_lat, user_lng, google_lng); 
-								addLocation(latLng, results[j], distance,user_lat,user_lng);
-								foundAddress = true;
-								break;
-							}
-						}
-						if (!foundAddress) 
-						{
-							xml_address_flag=1;
-							var user_lat = latLng.lat();
-							var user_lng = latLng.lng();
-							var distance="";
-							var address="";
-							addResult(latLng, address, errorMsg,distance,user_lat,user_lng);
-							//alert("user_lat="+user_lat+"user_lng="+user_lng+"address="+results[j].formatted_address);
-						}
-					}
-				}
-				else 
-				{
-					// addResult(latLng, errorMsg, errorMsg);				
-					var errorMsg = "Unknown error";
-					switch (status) 
-					{
-						case google.maps.GeocoderStatus.ZERO_RESULTS : errorMsg = "No results"; break;
-						case google.maps.GeocoderStatus.OVER_QUERY_LIMIT : errorMsg = "Over query limit"; break;
-						case google.maps.GeocoderStatus.REQUEST_DENIED : errorMsg = "Request denied"; break;
-						case google.maps.GeocoderStatus.INVALID_REQUEST : errorMsg = "Invalid request"; break;
-					}
-					if (status != google.maps.GeocoderStatus.OVER_QUERY_LIMIT) 
-					{
-						// alert("in if");
-						xml_address_flag=1;
-						var user_lat = latLng.lat();
-						var user_lng = latLng.lng();
-						var distance="";
-						var address="";
-						addResult(latLng, address, errorMsg,distance,user_lat,user_lng);
-						//alert("user_lat="+user_lat+"user_lng="+user_lng+"address="+results[j].formatted_address);
-					}
-				}
+                                 user_lat = latLng.lat();
+                                user_lng = latLng.lng();
+                                //alert("userLat="+user_lat+"userLng="+user_lng)
+                                if(user_lat=="0.0" && user_lng=="0.0")
+                                {
+                                    address2 = "0.0,0.0:";
+                                    document.getElementById("geocodedPostcodes").value += address2; 
+                                }
+                                else
+                                {
+                                    if (status == google.maps.GeocoderStatus.OK) 
+                                    {
+                                            if (results) 
+                                            {
+                                                    var user_lat = "";
+                                                    var user_lng = "";
+                                                    var google_lat = "";
+                                                    var google_lng = "";
+                                                    var distance = "";
+                                                    //getAddressComponent(result, "country");
+                                                    for (var j=0; j<results.length; j++) 
+                                                    {            
+                                                            if ((results[j].types[0] == 'street_address') || (results[j].types[0] == 'route')) 
+                                                            {
+                                                                    xml_address_flag=0;
+                                                                    //alert(results[j].geometry.location.lat());
+                                                                    user_lat = latLng.lat();
+                                                                    user_lng = latLng.lng();
+                                                                    google_lat = results[j].geometry.location.lat();
+                                                                    google_lng = results[j].geometry.location.lng();
+                                                                    if(account_id_session=="212")
+                                                                    {
+                                                                            //alert("user_lat="+user_lat+"user_lng="+user_lng+"address="+results[j].formatted_address);
+                                                                    }
+                                                                    var distance = calculate_distance(user_lat, google_lat, user_lng, google_lng); 
+                                                                    addLocation(latLng, results[j], distance,user_lat,user_lng);
+                                                                    foundAddress = true;
+                                                                    break;
+                                                            }
+                                                    }
+                                                    if (!foundAddress) 
+                                                    {
+                                                            xml_address_flag=1;
+                                                            var user_lat = latLng.lat();
+                                                            var user_lng = latLng.lng();
+                                                            var distance="";
+                                                            var address="";
+                                                            addResult(latLng, address, errorMsg,distance,user_lat,user_lng);
+                                                            //alert("user_lat="+user_lat+"user_lng="+user_lng+"address="+results[j].formatted_address);
+                                                    }
+                                            }
+                                    }
+                                    else 
+                                    {
+                                            // addResult(latLng, errorMsg, errorMsg);				
+                                            var errorMsg = "Unknown error";
+                                            switch (status) 
+                                            {
+                                                    case google.maps.GeocoderStatus.ZERO_RESULTS : errorMsg = "No results"; break;
+                                                    case google.maps.GeocoderStatus.OVER_QUERY_LIMIT : errorMsg = "Over query limit"; break;
+                                                    case google.maps.GeocoderStatus.REQUEST_DENIED : errorMsg = "Request denied"; break;
+                                                    case google.maps.GeocoderStatus.INVALID_REQUEST : errorMsg = "Invalid request"; break;
+                                            }
+                                            if (status != google.maps.GeocoderStatus.OVER_QUERY_LIMIT) 
+                                            {
+                                                    // alert("in if");
+                                                    xml_address_flag=1;
+                                                    var user_lat = latLng.lat();
+                                                    var user_lng = latLng.lng();
+                                                    var distance="";
+                                                    var address="";
+                                                    addResult(latLng, address, errorMsg,distance,user_lat,user_lng);
+                                                    //alert("user_lat="+user_lat+"user_lng="+user_lng+"address="+results[j].formatted_address);
+                                            }
+                                    }
+                                }
 				
 				if((i < splitData.length-1) || (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT))
 				{
@@ -314,13 +325,15 @@ echo'
   <form method="post" action="FullData.htm" target="_self">  
   <div id="progress"></div>
   <div id="delay"></div>
-  <textarea id="geocodedPostcodes" name="geocodedPostcodes" cols="40" rows="20" style="visibility:hidden;"></textarea>';
+  <textarea id="geocodedPostcodes" name="geocodedPostcodes" cols="40" style="visibility:hidden;" rows="20"></textarea>';
       
   //read_lp_xml_imei($xmltowrite, &$vehicleserial, &$lat, &$lng); 
 
  // read_xml_imei($xmltowrite, &$vehicleserial, &$lat, &$lng);
 
  $size = sizeof($vehicleserial);
+ //echo "size=".$size."<br>";
+
   /*$place_name_arr=array();
 	for($i=0;$i<$size;$i++)
 	{
@@ -333,31 +346,65 @@ echo'
 	$_SESSION['place_name_arr1'] = $place_name_arr;*/
   //echo "<br>size:".$size;   
 
- if($dwt=="1")
-{	
-	//echo "in if";
- $point = '"';
-  for($i=0;$i<$size;$i++)
+if($report_type=="Vehicle")
 {
-    $lat[$i] = substr($lat[$i], 0, -1);
-    $lng[$i] = substr($lng[$i], 0, -1);
+    if($dwt=="1")
+    {	
+        //echo "in if";
+        $point = '"';
+        for($i=0;$i<$size;$i++)
+        {
+            if((strlen($lat[$i])>5) && ($lat[$i]!="-") && (strlen($lng[$i])>5) && ($lng[$i]!="-"))
+            {
+                $lat[$i] = substr($lat[$i], 0, -1);
+                $lng[$i] = substr($lng[$i], 0, -1);
 
-    $coord = $lat[$i].",".$lng[$i]; 
-    if($i==0)
-    {
-      $point = $point.$coord;   
-    }
-    else
-    {
-      $point = $point.":".$coord;   
-    }
+                $coord = $lat[$i].",".$lng[$i]; 
+                if($i==0)
+                {
+                    $point = $point.$coord;   
+                }
+                else
+                {
+                    $point = $point.":".$coord;   
+                }
+            }
+        }         
+        $point = $point.'"';
+        //echo "<br>pt=".$point;  
+        call_geocode($point); 
+    } 
+}
+else
+{
+    if($dwt=="1")
+    {	
+        //echo "in if";
+        $point = '"';
+         //print_r($lat);
+        for($i=0;$i<$size;$i++)
+        {
+            //if((strlen($lat[$i])>5) && ($lat[$i]!="-") && (strlen($lng[$i])>5) && ($lng[$i]!="-"))
+            {
+               /* $lat[$i] = substr($lat[$i]);
+                $lng[$i] = substr($lng[$i]);*/
 
-}         
-  $point = $point.'"';
-  //echo "<br>pt=".$point;  
-  call_geocode($point); 
-
-}  
+                $coord = $lat[$i].",".$lng[$i]; 
+                if($i==0)
+                {
+                    $point = $point.$coord;   
+                }
+                else
+                {
+                    $point = $point.":".$coord;   
+                }
+            }
+        }         
+        $point = $point.'"';
+        //echo "<br>pt=".$point;  
+        call_geocode($point); 
+    } 
+}
   //serialize($vehicleserial)
   echo'
 	<input type="hidden" name="startdate" value="'.$startdate.'">
