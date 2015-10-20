@@ -104,7 +104,7 @@ for($i=0;$i<sizeof($vserial_arr);$i++)
         if(!empty($LastRecordObject))
 	{
                 //echo "inOBJ";
-		$current_time = date('Y-m-d H:i:s');
+		/*$current_time = date('Y-m-d H:i:s');
 		$last_halt_time_sec = strtotime($LastRecordObject->lastHaltTimeLR[0]);			
 		$current_time_sec = strtotime($current_time);
 		$diff = ($current_time_sec - $last_halt_time_sec); 
@@ -116,7 +116,38 @@ for($i=0;$i<sizeof($vserial_arr);$i++)
 		else
 		{
 			$status = "Stopped";
+		}*/
+            $current_time = date('Y-m-d H:i:s');
+                $current_time_st=strtotime($current_time);
+                
+		$last_halt_time_sec = strtotime($LastRecordObject->lastHaltTimeLR[0]);
+                
+		//$current_time_sec = strtotime($current_time);
+                //$current_time_sec =strtotime($LastRecordObject->serverDatetimeLR[0]);
+                $current_time_sec =strtotime($LastRecordObject->deviceDatetimeLR[0]);
+                
+		$diff = ($current_time_sec - $last_halt_time_sec); 
+                
+                $diff_st = ($current_time_st - $current_time_sec);
+		
+		if($LastRecordObject->speedLR[0]>=5 && $diff <=600)
+		{
+			$status = "Running";
 		}
+		else if( ($LastRecordObject->speedLR[0]<5 && $diff <=600) || (($diff >600) && ($diff <=1800)) )
+		{
+			$status = "Stopped";
+		}
+              
+                /*else if($diff_st >1800)
+                {
+                    //echo $vehicle_detail_local[7]."=".$diff_st."/";
+                        $status = "NOD";
+                }*/
+                else
+                {
+                    $status = "Stopped";
+                }
                 
             $data[]=array(
                             'messageTypeLR'=>$LastRecordObject->messageTypeLR[0],
