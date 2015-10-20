@@ -159,7 +159,7 @@ function hasLatLong($st_results)
 			/* check if either lat or long is missing, return empty object */	
 			$lat = $row->d;
 			$long = $row->e;
-			if ("" == $lat || "" == $long)
+			if ("" == $lat || "" == $long || "0" == $lat || "0" == $long || "0.0" == $lat || "0.0" == $long)
 			{
 				continue;	
 			}
