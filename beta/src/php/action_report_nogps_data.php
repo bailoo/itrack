@@ -70,7 +70,9 @@ foreach($vehicleDetailArr as $key=>$vdValue)
 function get_visit_xml_data($person_serial, $pname, $finalTimeDuration,$currentDateTime)
 { 
     $parameterizeData=null;
-    $parameterizeData=new parameterizeData();  
+    $parameterizeData=new parameterizeData(); 
+    $parameterizeData->latitude="d";
+    $parameterizeData->longitude="e";
     $parameterizeData->orderBy="DESC"; 
     $SortedDataObject=null;
     $SortedDataObject=new data();
@@ -123,7 +125,7 @@ echo'<center><br>
         <table border=0 width = 100% cellspacing=2 cellpadding=0>
                 <tr>
                     <td height=10 class="report_heading" align="center">
-                        Inactive Data Not Found For Any Vehicle
+                        No GPS Not Found For any person
                     </td>
                 </tr>
             </table>
