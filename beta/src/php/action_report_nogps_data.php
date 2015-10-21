@@ -94,13 +94,14 @@ function get_visit_xml_data($person_serial, $pname, $finalTimeDuration,$currentD
             $lat = $SortedDataObject->latitudeData[$obi];
             $lng = $SortedDataObject->longitudeData[$obi];
             $datetime=$SortedDataObject->deviceDatetime[$obi];
-            
+             echo"imei=".$person_serial." currentDateTime".$currentDateTime." deviceDateTime=".$SortedDataObject->deviceDatetime[$obi]."<br>";
+            $timeDifference=strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi]);
+            echo "finalTimeDuration=".$finalTimeDuration."<br>";
+            echo "timeDifference=".$timeDifference."<br>";
             if(strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi])<$finalTimeDuration)
             {
                 if((strlen($lat)>5) && ($lat!="0.0") && (strlen($lng)>5) && ($lng!="0.0"))
-                {
-                    //echo "test";
-                    $vehicleDetail[$pname]=array();
+                {                  
                     break;
                 }
             }
@@ -134,19 +135,19 @@ exit();
 }
 //print_r($vehicleDetail);
 echo'<form method="post" target="_blank">';
-	 $title='Inactive Data Report';
+	 $title='No Gps Data Report';
 	 echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title\">";
     echo'<br>
             <table border=0 width = 100% cellspacing=2 cellpadding=0>
                 <tr>
                     <td height=10 class="report_heading" align="center">
-                        Inactive Data Report
+                        No Gps Data Report
                     </td>
                 </tr>
             </table>
 		<br>';
     $csv_string = "";
-    $csv_string = $csv_string." Inactive Data Report\n";
+    $csv_string = $csv_string." No Gps Report\n";
     $csv_string = $csv_string."SNo,Person Name,Imei No,From Date,Remark\n";
 echo'<center><div style="overflow: auto;height: 300px; width: 880px;" align="center">
     <table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
