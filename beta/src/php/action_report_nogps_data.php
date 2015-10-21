@@ -94,10 +94,10 @@ function get_visit_xml_data($person_serial, $pname, $finalTimeDuration,$currentD
             $lat = $SortedDataObject->latitudeData[$obi];
             $lng = $SortedDataObject->longitudeData[$obi];
             $datetime=$SortedDataObject->deviceDatetime[$obi];
-             echo"imei=".$person_serial." currentDateTime".$currentDateTime." deviceDateTime=".$SortedDataObject->deviceDatetime[$obi]."<br>";
+            /*echo"imei=".$person_serial." currentDateTime".$currentDateTime." deviceDateTime=".$SortedDataObject->deviceDatetime[$obi]."<br>";
             $timeDifference=strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi]);
             echo "finalTimeDuration=".$finalTimeDuration."<br>";
-            echo "timeDifference=".$timeDifference."<br>";
+            echo "timeDifference=".$timeDifference."<br>";*/
             if(strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi])<$finalTimeDuration)
             {
                 if((strlen($lat)>5) && ($lat!="0.0") && (strlen($lng)>5) && ($lng!="0.0"))
