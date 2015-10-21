@@ -1,63 +1,47 @@
 <?php
 $dataCustomerArr=getCustomerPlantChillingRecord($account_id,0,$DbConnection);
-$size=0;
 $customerArr=array();
 foreach($dataCustomerArr as $dCValue)
 {
-    $station[$size]= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dCValue['station_name']);
-    $customer[$size]=$dCValue['customer_no'];
+    $station= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dCValue['station_name']);
+    $customer=$dCValue['customer_no'];
     $coord = $dCValue['station_coord'];
-    $type[$size] = $dCValue['type'];  	
+    $type = $dCValue['type'];  	
     $coord1 = explode(',',$coord);
-    $lat[$size]= substr(trim($coord1[0]),0,-1);
-    $lng[$size]= substr(trim($coord1[1]),0,-1);
-    $customerArrNew[trim($customer[$size])]=trim($lat[$size])."^".trim($lng[$size])."^".$station[$size]."^".$type[$size];
-    $size++;
+    $lat= substr(trim($coord1[0]),0,-1);
+    $lng= substr(trim($coord1[1]),0,-1);
+    $customerArrNew[trim($customer)]=trim($lat)."^".trim($lng)."^".$station."^".$type;
 }
 //print_r($customerArrNew);
 $_SESSION['uniqueCustomerArrNew'] = json_encode($customerArrNew);
-$query = "";
-$result="";
-$row="";
-
 $dataPlantArr=getCustomerPlantChillingRecord($account_id,1,$DbConnection);
-$size=0;
-//$plantArr=array();
 foreach($dataPlantArr as $dPValue)
 {
-    $station[$size]= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dPValue['station_name']);
-    $customer[$size]=$dPValue['customer_no'];
+    $station= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dPValue['station_name']);
+    $customer=$dPValue['customer_no'];
     $coord = $dPValue['station_coord'];
-    $type[$size] = $dPValue['type'];  	
+    $type = $dPValue['type'];  	
     $coord1 = explode(',',$coord);
-    $lat[$size]= substr(trim($coord1[0]),0,-1);
-    $lng[$size]= substr(trim($coord1[1]),0,-1);
-    $plantArrNew[trim($customer[$size])]=trim($lat[$size])."^".trim($lng[$size])."^".$station[$size]."^".$type[$size];
-    $size++;
+    $lat= substr(trim($coord1[0]),0,-1);
+    $lng= substr(trim($coord1[1]),0,-1);
+    $plantArrNew[trim($customer)]=trim($lat)."^".trim($lng)."^".$station."^".$type;
 }
 $_SESSION['uniquePlantArrNew'] = json_encode($plantArrNew);
-$query = "";
-$result="";
-$row="";	
-
-//echo $query."<br>";
 
 $dataChillingPlantArr=getCustomerPlantChillingRecord($account_id,2,$DbConnection);
-$size=0;
-//$plantArr=array();
 foreach($dataChillingPlantArr as $dCPValue)
 {
-    $station[$size]= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dCPValue['station_name']);
-    $customer[$size]=$dCPValue['customer_no'];
+    $station= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dCPValue['station_name']);
+    $customer=$dCPValue['customer_no'];
     $coord = $dCPValue['station_coord'];
-    $type[$size] = $dCPValue['type'];  	
+    $type = $dCPValue['type'];  	
     $coord1 = explode(',',$coord);
-    $lat[$size]= substr(trim($coord1[0]),0,-1);
-    $lng[$size]= substr(trim($coord1[1]),0,-1);  
-    $chillingArrNew[trim($row->customer_no)]=trim($lat[$size])."^".trim($lng[$size])."^".$station[$size]."^".$type[$size];
-    $size++;
+    $lat= substr(trim($coord1[0]),0,-1);
+    $lng= substr(trim($coord1[1]),0,-1);  
+    $chillingArrNew[trim($customer)]=trim($lat)."^".trim($lng)."^".$station."^".$type;
 }
-$_SESSION['uniqueChillingArrNew'] = json_encode($plantArrNew);	
+//print_r($chillingArrNew);
+$_SESSION['uniqueChillingArrNew'] = json_encode($chillingArrNew);	
 for($k=0;$k<@$size_feature;$k++)
 {
     //$feature_id_session[$k];
