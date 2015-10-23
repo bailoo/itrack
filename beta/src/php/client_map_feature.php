@@ -14,6 +14,7 @@ foreach($dataCustomerArr as $dCValue)
     $customerArrNew[trim($customer[$size])]=trim($lat[$size])."^".trim($lng[$size])."^".$station[$size]."^".$type[$size];
     $size++;
 }
+
 //print_r($customerArrNew);
 $_SESSION['uniqueCustomerArrNew'] = json_encode($customerArrNew);
 $query = "";
@@ -127,12 +128,12 @@ if(@$flag_station==1)
                     {
                         $customerDetail=explode("^",$customerArrNew[$trimCustomerNo]);
                         $routeArrEveningNew[]=array(
-                                                        'routeNo'=>$routeArr[$i],
-                                                        'lat'=>$customerDetail[0],
-                                                        'lng'=>$customerDetail[1],
-                                                        'stationName'=>$customerDetail[2],
-                                                        'customerNo'=>$trimCustomerNo,
-                                                        'type'=>'2'
+                                            'routeNo'=>$routeArr[$i],
+                                            'lat'=>$customerDetail[0],
+                                            'lng'=>$customerDetail[1],
+                                            'stationName'=>$customerDetail[2],
+                                            'customerNo'=>$trimCustomerNo,
+                                            'type'=>'2'
                                         );
                     }
                 }

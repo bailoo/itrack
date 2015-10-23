@@ -14,7 +14,7 @@ $option_string="";
  echo'<center>
     <table border=0 width = 100% cellspacing=2 cellpadding=0>
         <tr>
-            <td height=10 class="report_heading" align="center">No Gps Data Report</td>
+            <td height=10 class="report_heading" align="center">Inactive Data Report</td>
         </tr>
     </table>			
 														
