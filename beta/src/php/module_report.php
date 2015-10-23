@@ -584,7 +584,7 @@ $contents=listDir($S3Path);
 														"</tr>"+
 														"<tr>"+
 															"<td>'.$nbsp.'"+
-																"<a href=javascript:report_person_invalid_data(\'src/php/report_inactive_data.htm\',\'Inactive%20Data%20Report\'); class=\'menuitem\'>"+
+																"<a href=javascript:'.$js_function_name.'(\'src/php/report_inactive_data.htm\',\'Inactive%20Data%20Report\'); class=\'menuitem\'>"+
 																	"'.$nbsp.'<img src=\'images/report_icons/speed violation.jpeg\' style=\'border:none;width:20px;height:20px;\' class=\'help_img_css\'>"+
 																"</a>"+
 															"</td>"+
@@ -598,7 +598,7 @@ $contents=listDir($S3Path);
 														"</tr>"+
 														"<tr>"+
 															"<td>"+ 	
-																"<a href=javascript:report_person_invalid_data(\'src/php/report_inactive_data.htm\',\'Inactive%20Data%20Report\'); class=\'menuitem\'>"+
+																"<a href=javascript:'.$js_function_name.'(\'src/php/report_inactive_data.htm\',\'Inactive%20Data%20Report\'); class=\'menuitem\'>"+
 																	"'.$nbsp.'Inactive Data"+
 																"</a>"+
 															"</td>"+
@@ -616,7 +616,7 @@ $contents=listDir($S3Path);
 														"</tr>"+
 														"<tr>"+
 															"<td>'.$nbsp.'"+
-																"<a href=javascript:report_person_invalid_data(\'src/php/report_nogps_data.htm\',\'No%20Gps%20Data%20Report\'); class=\'menuitem\'>"+
+																"<a href=javascript:'.$js_function_name.'(\'src/php/report_nogps_data.htm\',\'No%20Gps%20Data%20Report\'); class=\'menuitem\'>"+
 																	"'.$nbsp.'<img src=\'images/report_icons/speed violation.jpeg\' style=\'border:none;width:20px;height:20px;\' class=\'help_img_css\'>"+
 																"</a>"+
 															"</td>"+
@@ -630,7 +630,7 @@ $contents=listDir($S3Path);
 														"</tr>"+
 														"<tr>"+
 															"<td>"+ 	
-																"<a href=javascript:report_person_invalid_data(\'src/php/report_nogps_data.htm\',\'No%20Gps%%20Data%20Report\'); class=\'menuitem\'>"+
+																"<a href=javascript:'.$js_function_name.'(\'src/php/report_nogps_data.htm\',\'No%20Gps%%20Data%20Report\'); class=\'menuitem\'>"+
 																	"'.$nbsp.'No Gps Data"+
 																"</a>"+
 															"</td>"+

@@ -21,38 +21,14 @@ include_once('data.php');
 include_once('lastRecordData.php');
 include_once("getXmlData.php");	
 
-$DEBUG = 0;
 
 $device_str = $_POST['vehicleserial'];
 //echo "<br>devicestr=".$device_str;
 $pserial = explode(':',$device_str);
 $psize=count($pserial);
 
-$startdate = str_replace("/","-",$_POST['start_date']);
-$enddate = str_replace("/","-",$_POST['end_date']);
-$sortBy='h';
-$userInterval = $_POST['user_interval'];
-
-global $imei0;
-global $pmobile0;
-global $visitStartDateTime;
-global $visitEndDateTime;
-global $duration0;
-global $lat0;
-global $lng0;
-global $cellname0;
-$imei0=array();
-$pmobile0=array();
-$visitStartDateTime=array();
-$visitEndDateTime=array();
-$duration0=array();
-$lat0=array();
-$lng0=array();
-$cellname0=array();
-
-
 //echo "accountId=".$account_id."<br>";
-$vehicleDetailArr=getAllVehicleDetailsInArray($account_id);
+
 $finalTimeDuration=$timeDuration*60;
 
 
@@ -60,11 +36,20 @@ $finalTimeDuration=$timeDuration*60;
 date_default_timezone_set('Asia/Calcutta');
 $currentDateTime=date("Y-m-d H:i:s");
 $vehicleDetail=array();
+
+/*$vehicleDetailArr=getAllVehicleDetailsInArray($account_id);
 foreach($vehicleDetailArr as $key=>$vdValue)
 {  
     //echo "imei=".$vdValue['imeiNo']."name=".$vdValue[$key]['vehicleName']."<br>";  
     get_visit_xml_data($vdValue['imeiNo'], $vdValue['vehicleName'],$finalTimeDuration,$currentDateTime);
     //echo   "t2".' '.$i;
+}*/
+
+for($i=0;$i<$psize;$i++)
+{
+    $person_info=get_vehicle_info($root,$pserial[$i]);
+    $person_detail_local=explode(",",$person_info);
+    get_visit_xml_data($pserial[$i],$person_detail_local[0],$finalTimeDuration,$currentDateTime);
 }
 
 function get_visit_xml_data($person_serial, $pname, $finalTimeDuration,$currentDateTime)
