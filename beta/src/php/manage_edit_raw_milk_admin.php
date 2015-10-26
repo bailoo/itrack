@@ -90,6 +90,10 @@ border: none;
 	{
 		$targetdatewise = 1;
 	}
+        if($order=="8")
+	{
+		$unloadaccepttime = 1;
+	}
 	$targetplant=$_POST['targetplant'];
 	//echo $targetplant;
         //echo $order."<br>";
@@ -311,6 +315,14 @@ border: none;
                                             
                                             }
                                     }
+                               else if($unloadaccepttime)
+                                {
+                                       $condition="unloadaccepttime";
+                                       $orderA="2";
+                                       $user_type="admin";
+                                       $conditionStr="";
+                                       $result=getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type,$DbConnection);
+                                }
                                else
                                {
                                        $condition="datebetween_invoicestatus";
