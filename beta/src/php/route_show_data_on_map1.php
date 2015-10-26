@@ -2065,10 +2065,12 @@ function getStation1(select_value)
 			);
 			
                             customerMarkers.push(marker);
-                            alert("vehicleName="+vehicleName+"cno="+rFoundCustomerNo[i]+"rno="+rFoundRNumber[i]);
+                            //alert("vehicleName="+vehicleName+"cno="+rFoundCustomerNo[i]+"rno="+rFoundRNumber[i]);
 				var routeKey=vehicleName+rFoundCustomerNo[i]+rFoundRNumber[i];	
-				alert("Reoutekey="+routeKey);	
-				//alert("keyValue="+routeKey);				
+				//alert("Reoutekey="+routeKey);	
+				//alert("keyValue="+routeKey);
+                        if(customerFileArr[routeKey]!=undefined)
+                        {
                         var routeDetail=customerFileArr[routeKey].split(",");
                         f_vehicle_name[tmpCnt]=routeDetail[0];
                         f_customer_no[tmpCnt]=routeDetail[1];
@@ -2080,6 +2082,7 @@ function getStation1(select_value)
                         f_found_lat[tmpCnt]=rFoundLat[i];
                         f_found_lng[tmpCnt]=rFoundLng[i];
                         tmpCnt++;
+                        }
 			
 		}
 		
