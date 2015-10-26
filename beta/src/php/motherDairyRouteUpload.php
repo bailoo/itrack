@@ -48,7 +48,7 @@ $objPHPExcel_1 = PHPExcel_IOFactory::load($filePath);
 				if($row >1)
 				{
 					//echo "duration=".$objPHPExcel_1->getActiveSheet()->getCell("P".$row)->getValue()."<br>";
-					if($objPHPExcel_1->getActiveSheet()->getCell("H".$row)->getValue()!="")
+					//if($objPHPExcel_1->getActiveSheet()->getCell("H".$row)->getValue()!="")
 					{
 						$vname[$cnt]=trim($objPHPExcel_1->getActiveSheet()->getCell("A".$row)->getValue());
 						$cno[$cnt]=trim($objPHPExcel_1->getActiveSheet()->getCell("C".$row)->getValue());
