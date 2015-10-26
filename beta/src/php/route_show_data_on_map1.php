@@ -1880,7 +1880,7 @@ function getStation1(select_value)
                 }
             }
 	}
-	function tmp_search_station(value,inci,customerFileArr,vehicleName,fCallFlag) // inc=increatment , i=image
+	function tmp_search_station(value,inci,customerFileArr,vehicleName) // inc=increatment , i=image
 	{  
             //alert("fCallFlag="+fCallFlag);
             var search_text=value;
@@ -1987,7 +1987,7 @@ function getStation1(select_value)
                     }  
                     if(routeTmpFlag==true)
                     {
-                        tmpPlotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType, rFoundLat, rFoundLng,inci,customerFileArr);
+                        tmpPlotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType, rFoundLat, rFoundLng,inci,customerFileArr,vehicleName);
                     }
                 }
                 if(routeTmpFlag==false)
@@ -2064,9 +2064,10 @@ function getStation1(select_value)
                             marker, 'click', infoCallbackRoute(routeNumberTmp,routeStationNoTmp,routeCustomerNoTmp,routeTypeTmp,routeLatTmp,routeLngTmp,marker)
 			);
 			
-                            customerMarkers.push(marker);			
+                            customerMarkers.push(marker);
+                            alert("vehicleName="+vehicleName+"cno="+rFoundCustomerNo[i]+"rno="+rFoundRNumber[i]);
 				var routeKey=vehicleName+rFoundCustomerNo[i]+rFoundRNumber[i];	
-				//alert("Reoutekey="+routeKey);	
+				alert("Reoutekey="+routeKey);	
 				//alert("keyValue="+routeKey);				
                         var routeDetail=customerFileArr[routeKey].split(",");
                         f_vehicle_name[tmpCnt]=routeDetail[0];
