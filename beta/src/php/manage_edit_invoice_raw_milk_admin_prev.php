@@ -48,6 +48,7 @@
 		<option value="0">Cancelled</option>		
 		<option value="5">Pending</option>
 		<option value="7">TargetDate</option>
+                <option value="8">Unload AcceptTime</option>
 	</select></td>
 	
 	<td style=display:none id="target_plant" >Select Plant:
