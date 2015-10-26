@@ -276,14 +276,14 @@ $o_cassandra->close();
                         {							
                             $color= $vcolor2;
                             $vehicle_name_arr[$color][] =$vehicle_name; 
-                            $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                            $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                         }
                         else
                         {
                             //$color="gray";
                             $color= $vcolor3;      					  
                             $vehicle_name_arr[$color][] =$vehicle_name; 
-                            $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                            $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                         }
                     }
                 }
@@ -540,14 +540,14 @@ $o_cassandra->close();
                                 // echo "in if";
                                 $color = $vcolor2;
                                 $vehicle_name_arr[$color][] =$vehicle_name; 
-                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                             }
                             else
                             {
                                 // echo "in else";
                                 $color = $vcolor3;      					  
                                 $vehicle_name_arr[$color][] =$vehicle_name; 
-                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                             }
                             //common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name);					
                         }
@@ -719,13 +719,13 @@ $o_cassandra->close();
                             {
                                 $color=$vcolor2;
                                 $vehicle_name_arr[$color][] =$vehicle_name; 
-                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                             }
                             else
                             {
                                 $color=$vcolor3;      					  
                                 $vehicle_name_arr[$color][] =$vehicle_name; 
-                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                             }
 							//common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name);
                         }
@@ -911,13 +911,13 @@ $o_cassandra->close();
                             {
                                 $color=$vcolor2;
                                 $vehicle_name_arr[$color][] =$vehicle_name; 
-                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                             }
                             else
                             {
                                 $color=$vcolor3;      					  
                                 $vehicle_name_arr[$color][] =$vehicle_name; 
-                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                             }
                             //common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name);
                         }
@@ -1057,13 +1057,13 @@ $o_cassandra->close();
                             {
                                 $color=$vcolor2;
                                 $vehicle_name_arr[$color][] =$vehicle_name; 
-                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                             }
                             else
                             {
                                 $color=$vcolor3;      					  
                                 $vehicle_name_arr[$color][] =$vehicle_name; 
-                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str;
+                                $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                             }
                             //common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name);
                         }
