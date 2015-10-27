@@ -83,10 +83,10 @@ function get_visit_xml_data($person_serial, $pname, $finalTimeDuration,$currentD
             $timeDifference=strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi]);
             echo "finalTimeDuration=".$finalTimeDuration."<br>";
             echo "timeDifference=".$timeDifference."<br>";*/
-            if(strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi])>$finalTimeDuration)
+            /*if(strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi])>$finalTimeDuration)
             {                
                 break;
-            }
+            }*/
             
             if(strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi])<$finalTimeDuration)
             {
