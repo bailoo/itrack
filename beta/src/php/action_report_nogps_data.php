@@ -69,6 +69,7 @@ function get_visit_xml_data($person_serial, $pname, $finalTimeDuration,$currentD
     //echo "startDate=".$startdate." endDate=".$enddate." serial=".$person_serial."<br>";
     deviceDataBetweenDates($person_serial,$startdate,$currentDateTime,$sortBy,$parameterizeData,$SortedDataObject);
     //var_dump($SortedDataObject);
+    $inactiveDataFlag=1;
     if(count($SortedDataObject->deviceDatetime)>0)
     {
         $inactiveVehicleFlag=0;
@@ -83,13 +84,14 @@ function get_visit_xml_data($person_serial, $pname, $finalTimeDuration,$currentD
             $timeDifference=strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi]);
             echo "finalTimeDuration=".$finalTimeDuration."<br>";
             echo "timeDifference=".$timeDifference."<br>";*/
-            /*if(strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi])>$finalTimeDuration)
+            if((strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi])>$finalTimeDuration) && ($inactiveDataFlag==1))
             {                
                 break;
-            }*/
+            }
             
             if(strtotime($currentDateTime)-strtotime($SortedDataObject->deviceDatetime[$obi])<$finalTimeDuration)
             {
+                $inactiveDataFlag=0;
                 if((strlen($lat)>5) && ($lat!="0.0") && (strlen($lng)>5) && ($lng!="0.0"))
                 {                  
                     break;
@@ -97,6 +99,7 @@ function get_visit_xml_data($person_serial, $pname, $finalTimeDuration,$currentD
             }
             else
             {
+                $inactiveDataFlag=0;
                 if((strlen($lat)>5) && ($lat!="0.0") && (strlen($lng)>5) && ($lng!="0.0"))
                 {
                     $vehicleDetail[$pname]=array(
