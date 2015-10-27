@@ -80,7 +80,7 @@ while($row=mysql_fetch_object($result))
     
     $wLlocationIdArr=explode(",",$row->factory_code);
     //echo "factoryCode=".$wLlocationIdArr[1]."<br>";
-    $wSInputDataObj->locationIds=$wLlocationIdArr[1];
+    $wSInputDataObj->locationIds=$wLlocationIdArr[0];
     $wSInputDataObj->containerName=$row->container_no;
     $wSInputDataObj->icdOutDateTime=$row->icd_out_datetime;
     $wSInputDataObj->actualIcdOutDatetime=$row->actual_icd_out_datetime;
@@ -95,7 +95,7 @@ while($row=mysql_fetch_object($result))
     
    // echo "<br><br>";
    // var_dump($cusotmerCoordDataObj);
-    $customerCoord=$cusotmerCoordDataObj->icdCoord[$wLlocationIdArr[1]];
+    $customerCoord=$cusotmerCoordDataObj->icdCoord[$wLlocationIdArr[0]];
     if($customerCoord!="")
     {  
         $icdCoord='26.45718N,80.24565E';

@@ -122,8 +122,7 @@ if(@$flag_station==1)
                 $routeArr=explode("/",$csvEveningArr[3]);
                 $routeArrSize=sizeof($routeArr);
                 for($i=0;$i<$routeArrSize;$i++)
-                {
-                    $routeArrEvening[$routeArr[$i]]=$routeArr[$i];
+                {                    
                     if($customerArrNew[$trimCustomerNo]!="")
                     {
                         $customerDetail=explode("^",$customerArrNew[$trimCustomerNo]);
@@ -139,8 +138,7 @@ if(@$flag_station==1)
                 }
             }		
         }			
-        $_SESSION['uniqueRouteArrEveningNew'] = json_encode($routeArrEveningNew);
-        $_SESSION['uniqueRouteArrEvening'] = $routeArrEvening;
+        $_SESSION['uniqueRouteArrEveningNew'] = json_encode($routeArrEveningNew);      
     }
     if(file_exists($morningFileName))
     {
@@ -173,14 +171,12 @@ if(@$flag_station==1)
                                                 'customerNo'=>$trimCustomerNo,
                                                 'type'=>'2'
                                             );
-                    }
-                    $routeArrMorning[$routeArr[$i]]=$routeArr[$i];
+                    }               
                 }
             }		
         }
         //print_r($routeArrMorningNew);
-        $_SESSION['uniqueRouteArrMorningNew'] = json_encode($routeArrMorningNew);
-        $_SESSION['uniqueRouteArrMorning'] = $routeArrMorning;
+        $_SESSION['uniqueRouteArrMorningNew'] = json_encode($routeArrMorningNew);        
     }
     if(file_exists($transporterName))
     {			
@@ -194,6 +190,72 @@ if(@$flag_station==1)
         //print_r($transporterRouteArr);
         $_SESSION['uniqueRouteTransporters'] = json_encode($transporterRouteArr);
     }
+}
+
+$routeMorningArr=getRouteMorning($account_id,1,$DbConnection);
+//print_r($routeMorningArr);
+if(count($routeMorningArr)>0)
+{
+    
+    foreach($routeMorningArr as $rMorValue)
+    {
+        $explodedMRouteNo=explode("/",$rMorValue['route_name_mor']);  
+        for($i=0;$i<sizeof($explodedMRouteNo);$i++)
+        {            
+            if($explodedMRouteNo[$i]!='')
+            {
+                //echo "routeNo=".$explodeeRouteNo[$i]."<br>"; 
+                if (strpos($explodedMRouteNo[$i],'@') !== false) 
+                {
+                    $routeNo=  substr($explodedMRouteNo[$i], 1);
+                    //echo "RouteNoa=".$routeNo."<br>";
+                }
+                else
+                {
+                    $routeNo=$explodedMRouteNo[$i];
+                     //echo "RouteNob1=".$routeNo."<br>";
+                }
+                
+                $routeArrMorning[$routeNo]=$routeNo; 
+            }
+        }
+    }
+    $_SESSION['uniqueRouteArrMorning'] = $routeArrMorning;
+    //echo "morningRoute<br>";
+    //print_r($routeArrMorning);
+}
+
+
+$routeEveningArr=getRouteEvening($account_id,1,$DbConnection);
+if(count($routeEveningArr)>0)
+{
+    foreach($routeEveningArr as $rEvValue)
+    {
+        $explodedERouteNo=explode("/",$rEvValue['route_name_ev']);  
+        for($i=0;$i<sizeof($explodedERouteNo);$i++)
+        {            
+            if($explodedERouteNo[$i]!='')
+            {
+                //echo "routeNo=".$explodeeRouteNo[$i]."<br>"; 
+                if (strpos($explodedERouteNo[$i],'@') !== false) 
+                {
+                    $routeENo=  substr($explodedERouteNo[$i], 1);
+                    //echo "RouteNoea=".$routeENo."<br>";
+                }
+                else
+                {
+                    $routeENo=$explodedERouteNo[$i];
+                     //echo "RouteNobe1=".$routeENo."<br>";
+                }
+                
+                $routeArrEvening[$routeENo]=$routeENo; 
+            }
+        }
+       
+    }
+    $_SESSION['uniqueRouteArrEvening'] = $routeArrEvening;
+    //echo "morningRoute<br>";
+    //print_r($routeArrEvening);
 }
 
 ?>

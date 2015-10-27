@@ -35,8 +35,11 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
     //var_dump($SortedDataObject);
     $StatusFlag=0;
     if(count($SortedDataObject->deviceDatetime)>0)
-    {  
-        $daily_dist =0;
+    {
+        $firstdata_flag =0;
+        $total_dist = 0.0;
+        $distance =0.0;
+        $userInterval=5;
         $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);                   
         for($obi=0;$obi<$prevSortedSize;$obi++)
         {					
@@ -51,8 +54,104 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                 $DataValid = 1;
             }
             if($DataValid==1)
-            { 
-                if($wSInputDataObj->actualIcdOutDatetime=="")
+            {
+                if($firstdata_flag==0)
+                {					
+                    $firstdata_flag = 1;
+
+                    $lat1 = $lat;
+                    $lng1 = $lng;
+
+                    //echo "<br>DateSec1 before=".$date_secs1." time_int=".$user_interval;
+                    $interval = (double)$userInterval*60;							
+
+                    $time1 = $datetime;					
+                    $date_secs1 = strtotime($time1);					
+                    //echo "<br>DateSec1 before=".$date_secs1." time_int=".$interval;
+                    $date_secs1 = (double)($date_secs1 + $interval); 
+                    $date_secs2 = 0; 
+                    $last_time = $datetime;
+                    $last_time1 = $datetime;
+                    $latlast = $lat;
+                    $lnglast =  $lng;
+                    //echo "<br>FirstData:".$date_secs1." ".$time1;                 	
+                }
+                else
+                {                           					
+                    // echo "<br>Total lines orig=".$total_lines." ,c=".$c;
+                    $time2 = $datetime;											
+                    $date_secs2 = strtotime($time2);	
+
+                    $lat2 = $lat;      				        					
+                    $lng2 = $lng; 
+                    calculate_distance($lat1, $lat2, $lng1, $lng2, $distance);
+                    if($distance>2000)
+                    {
+                        $distance=0;
+                        $lat1 = $lat2;
+                        $lng1 = $lng2;
+                    }
+                    //echo "<br>lat1=".$lat1." ,lat2=".$lat2." ,lng1=".$lng1." ,lng2=".$lng2." ,dist=".$distance." ,datetime=".$datetime;
+                    $tmp_time_diff1 = (double)(strtotime($datetime) - strtotime($last_time1)) / 3600;
+                    calculate_distance($latlast, $lat2, $lnglast, $lng2, $distance1);
+                    //echo "<br>latlast=".$latlast." ,lat2=".$lat2." ,lnglast=".$lnglast." ,lng2=".$lng2." ,distance1=".$distance1." , datetime=".$datetime."<br>";
+
+                    $tmp_time_diff = ((double)( strtotime($datetime) - strtotime($last_time) )) / 3600;
+
+                    if($tmp_time_diff1>0)
+                    {									
+                        $tmp_speed = ((double) ($distance)) / $tmp_time_diff;
+                        $tmp_speed1 = ((double) ($distance1)) / $tmp_time_diff1;
+                    }
+                    else
+                    {
+                        $tmp_speed1 = 1000.0; //very high value
+                    }
+                    if($tmp_speed<300.0)
+                    {
+                        $speeed_data_valid_time = $datetime;
+                    }
+
+                    if(( strtotime($datetime) - strtotime($speeed_data_valid_time) )>300) //data high speed for 5 mins
+                    {
+                        $lat1 = $lat2;
+                        $lng1 = $lng2;
+                        $last_time = $datetime;
+                    }
+                    $last_time1 = $datetime;
+                    $latlast = $lat2;
+                    $lnglast =  $lng2;
+
+                    //echo "lat1=".$lat1."lng1=".$lng1."lat2=".$lat2." lng2=".$lng2."<br>";
+                    //echo "datetime=".$datetime." distance=".$distance." total_dist=".$total_dist." tmpspeed=".$tmp_speed." tmpspeed1=".$tmp_speed1." tmp_time_diff=".$tmp_time_diff." tmp_time_diff1=".$tmp_time_diff1."<br>";
+
+                    if($tmp_speed<300.0 && $tmp_speed1<300.0 && $distance>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
+                    {								
+                        $total_dist = (double)( $total_dist + $distance ); 							                          
+                        $lat1 = $lat2;
+                        $lng1 = $lng2;
+                        $last_time = $datetime;
+                        //////// TMP VARIABLES TO CALCULATE LAST XML RECORD  //////
+                        $vname_tmp  = $vname;
+                        $vserial_tmp = $vserial;
+                        $time1_tmp = $time1;
+                        $time2_tmp = $time2;
+                        $total_dist_tmp = $total_dist;
+                        //echo "<br>distance=".$distance." ,total_dist=".$total_dist;    			
+                        ////// TMP CLOSED	////////////////////////////////////////                  		    						
+                    }      					
+                    //echo "$date_secs2".$date_secs2." $date_secs1".$date_secs1;
+                    /*if( ($date_secs2 >= $date_secs1))// || ($f == $total_lines-5))
+                    {
+                        $time1 = $datetime;
+                        $date_secs1 = strtotime($time1);
+                        $date_secs1 = (double)($date_secs1 + $interval);		    									    						    						
+                        //echo "<br>datesec1=".$datetime;    						                  
+                        $total_dist = 0.0;															
+                    }  //if datesec2 */      					
+//echo "<br>REACHED-3";		                                                                        									                               
+                }   // else closed  
+                if($wSInputDataObj->actualIcdOutDatetime=="0000-00-00 00:00:00")
                 {
                     $coord = explode(',',$icdCoord);
                     $icdLat = trim($coord[0]);
@@ -75,7 +174,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                     //break;
                 }
                 
-                if($wSInputDataObj->actualIcdInDatetime=="" && $speed<10)
+                if($wSInputDataObj->actualIcdInDatetime=="0000-00-00 00:00:00" && $speed<10)
                 {
                     $coord = explode(',',$icdCoord);
                     $icdLat = trim($coord[0]);
@@ -91,7 +190,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                     }
                 }
                 
-                if(($wSInputDataObj->actualIcdInDatetime=="") && ($wSInputDataObj->customerInDatetime=="" && $speed<10))
+                if(($wSInputDataObj->actualIcdInDatetime=="0000-00-00 00:00:00") && ($wSInputDataObj->customerInDatetime=="" && $speed<10))
                 {
                     $coord = explode(',',$cusotmerCoord);
                     $customerLat = trim($coord[0]);
@@ -107,7 +206,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                     }
                 }
                 
-                if(($wSInputDataObj->actualIcdInDatetime=="") && ($wSInputDataObj->customerInDatetime!="") && ($wSInputDataObj->customerOutDatetime==""))
+                if(($wSInputDataObj->actualIcdInDatetime=="0000-00-00 00:00:00") && ($wSInputDataObj->customerInDatetime!="0000-00-00 00:00:00") && ($wSInputDataObj->customerOutDatetime=="0000-00-00 00:00:00"))
                 {
                     $coord = explode(',',$cusotmerCoord);
                     $customerLat = trim($coord[0]);
@@ -129,15 +228,29 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
             $Query="UPDATE vehicle_last_execution_time set last_execution_datetime='$datetime'".
                     " WHERE vehicle_name='$wSInputDataObj->vehicleName'";
             //echo "Query=".$Query."<br>";
-            $Result=mysql_query($Query,$DbConnection);
-            
-            
+            $Result=mysql_query($Query,$DbConnection);          
         }
         if($StatusFlag==1)
         {
+            $total_dist = round($total_dist,2);
+            $queryDistance="SELECT distance_travelled FROM icd_webservice_data WHERE vehicle_name=".
+                            "'$wSInputDataObj->vehicleName' AND icd_in_datetime='0000-00-00 00:00:00'";
+            $resultDistance=mysql_query($queryDistance,$DbConnection);
+            $rowDistance=  mysql_fetch_row($resultDistance);
+            if($rowDistance[0]!="")
+            {
+                $finalTotalDistance=$total_dist+$rowDistance[0];
+            }
+            else
+            {
+                $finalTotalDistance=$total_dist;
+            }
+            
            $QueryWSDb="UPDATE icd_webservice_data set actual_icd_in_datetime='$wSInputDataObj->actualIcdInDatetime',actual_icd_out_datetime=".
                     "'$wSInputDataObj->actualIcdOutDatetime',factory_in_datetime='$wSInputDataObj->customerInDatetime',factory_out_datetime=".
-                    "'$wSInputDataObj->customerOutDatetime' WHERE vehicle_name='$wSInputDataObj->vehicleName'";
+                    "'$wSInputDataObj->customerOutDatetime',distance_travelled='$finalTotalDistance',".
+                    "hourly_distance='$total_dist' WHERE vehicle_name='$wSInputDataObj->vehicleName'".
+                    " AND icd_in_datetime='0000-00-00 00:00:00'";
             
             //echo "Query=".$QueryWSDb."<br>";
             $ResultWS=mysql_query($QueryWSDb,$DbConnection); 

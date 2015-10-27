@@ -134,6 +134,42 @@ function stationRecord($accId,$DbConnection)
     return $dataArr;
 }
 
+function getRouteMorning($accId,$status,$DbConnection)
+{
+    $query = "SELECT route_name_mor FROM route_assignment2 WHERE user_account_id='$accId' AND ".
+            "status=$status AND route_name_mor!=''";
+    //echo "query=".$query."<br>";
+    //$query = "SELECT * FROM station WHERE status=1 limit 100";
+    $result = mysql_query($query,$DbConnection);
+    $numrows = mysql_num_rows($result); 
+    
+    while($row = mysql_fetch_object($result))
+    {
+        $dataArr[]=array(
+                        'route_name_mor'=>$row->route_name_mor
+                    );
+    }
+    return $dataArr;
+}
+
+function getRouteEvening($accId,$status,$DbConnection)
+{
+    $query = "SELECT route_name_ev FROM route_assignment2 WHERE user_account_id='$accId' AND ".
+            "status=$status AND route_name_ev!=''";
+    //$query = "SELECT * FROM station WHERE status=1 limit 100";
+    //echo "query=".$query."<br>";
+    $result = mysql_query($query,$DbConnection);
+    $numrows = mysql_num_rows($result); 
+    
+    while($row = mysql_fetch_object($result))
+    {
+        $dataArr[]=array(
+                        'route_name_ev'=>$row->route_name_ev
+                    );
+    }
+    return $dataArr;
+}
+
 function getMasterFileDetail($accId,$DbConnection)
 {
     $Query="Select * FROM master_file WHERE account_id='$accId' AND status=1";

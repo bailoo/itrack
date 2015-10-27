@@ -30,7 +30,9 @@ function getVehicleDbData($vehicleName)
                             'icdInDatetime'=>$Row->actual_icd_in_datetime,
                             'icdOutDatetime'=>$Row->actual_icd_out_datetime,
                             'customerInDatetime'=>$Row->factory_in_datetime,
-                            'customerOutDatetime'=>$Row->factory_out_datetime
+                            'customerOutDatetime'=>$Row->factory_out_datetime,
+                            'distanceTravel'=>$Row->distance_travelled,
+                            'twoHourlyDistance'=>$Row->hourly_distance
                         );
    }
    return $dataArray;
