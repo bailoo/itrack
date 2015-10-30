@@ -647,33 +647,48 @@ if(document.getElementById('acc').value=='1')
   
 function action_report_inactive_data()
 {
-    if(document.getElementById("duration").value=="select")
+    var obj=document.thisform;
+    var device_str = get_selected_vehicle(obj); 
+    if(device_str!=false)
     {
-        alert("Please select duration");
-        return false;
+        if(document.getElementById("duration").value=="select")
+        {
+            alert("Please select duration");
+            return false;
+        }
+        else
+        {
+
+            document.getElementById("loading_msg").style.display = ''; 
+            var poststr ="vehicleserial="+ encodeURI( device_str )+
+                    "&timeDuration="+encodeURI( document.getElementById("duration").value);                
+            //alert("poststr:"+poststr);
+            makePOSTRequest('src/php/action_report_inactive_data.htm', poststr); 
+        }
     }
-    else
-    {
-        document.getElementById("loading_msg").style.display = ''; 
-        var poststr = "timeDuration="+encodeURI( document.getElementById("duration").value);                
-        //  alert("Rizwan:"+poststr);
-        makePOSTRequest('src/php/action_report_inactive_data.htm', poststr); 
-    }
+    
 }
 
 function action_report_nogps_data()
 {
-    if(document.getElementById("duration").value=="select")
+    var obj=document.thisform;
+    var device_str = get_selected_vehicle(obj); 
+    if(device_str!=false)
     {
-        alert("Please select duration");
-        return false;
-    }
-    else
-    {
-        document.getElementById("loading_msg").style.display = ''; 
-        var poststr = "timeDuration="+encodeURI( document.getElementById("duration").value);                
-        //  alert("Rizwan:"+poststr);
-        makePOSTRequest('src/php/action_report_nogps_data.htm', poststr); 
+        if(document.getElementById("duration").value=="select")
+        {
+            alert("Please select duration");
+            return false;
+        }
+        else
+        {
+
+            document.getElementById("loading_msg").style.display = ''; 
+            var poststr ="vehicleserial="+ encodeURI( device_str )+
+                    "&timeDuration="+encodeURI( document.getElementById("duration").value);                
+           //alert("poststr:"+poststr);
+           makePOSTRequest('src/php/action_report_nogps_data.htm', poststr); 
+        }
     }
 }
 

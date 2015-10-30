@@ -7,6 +7,9 @@
 	
 	//$root = $_SESSION['root'];
         include_once('coreDb.php');
+         function is_valid_email($email) {
+	  return preg_match('#^[a-z0-9.!\#$%&\'*+-/=?^_`{|}~]+@([0-9.]+|([^\s]+\.+[a-z]{2,6}))$#si', $email);
+	}
 	$DEBUG=0; 
 	//$account_id_local=explode(",",$account_id_local);
     //$vehicle_imei_name=explode("@",$vehicle_imei_name);	
@@ -272,6 +275,35 @@
 						
 						$csv_string = $csv_string.$user_id.','.$dock_no.','.$lorry_no.','.$vehicle_no.','.$email.','.$mobile.','.$qty_kg.','.$fat_per.','.$snf_per.','.$fat_kg.','.$snf_kg.','.$milk_age.','.$dispatch_time.','.$target_time.','.$plant.','.$driver_name.','.$driver_mobile.','.$chillplant.','.$tanker_type."\n";										
 						$csv_write_flag=1;
+                                                $message="<table border=1>"
+                                                        . "<tr><td>LorryNo</td><td>$lorry_no</td><tr>"
+                                                        . "<tr><td>DocketNo</td><td>$dock_no</td></tr>"
+                                                        . "<tr><td>VehicleNo</td><td>$vehicle_no</td></tr>"
+                                                        . "<tr><td>Qty(kg)</td><td>$qty_kg</td></tr>"
+                                                        . "<tr><td>Fat(%)</td><td>$fat_per</td></tr>"
+                                                        . "<tr><td>Snf(%)</td><td>$snf_per</td></tr>"
+                                                        . "<tr><td>Fat(kg)</td><td>$fat_kg</td></tr>"
+                                                        . "<tr><td>Snf(kg)</td><td>$snf_kg</td></tr>"
+                                                        . "<tr><td>MilkAge</td><td>$milk_age</td></tr>"
+                                                        . "<tr><td>DispatchTime</td><td>$dispatch_time</td></tr>"
+                                                        . "<tr><td>TargetTime</td><td>$target_time</td></tr>"
+                                                        . "<tr><td>Plant</td><td>$plant</td></tr>"
+                                                        . "<tr><td>DriverName</td><td>$driver_name</td></tr>"
+                                                        . "<tr><td>DriverMobile</td><td>$driver_mobile</td></tr>"
+                                                        . "<tr><td>ChillingPlant</td><td>$chillplant</td></tr>"
+                                                        . "<tr><td>TankerType</td><td>$tanker_type</td></tr></table>";
+                                                $dt=date('Y-m-d H:i:s');
+                                                $to = $email;
+                                                $msg=$message;
+                                                        //echo $msg;
+                                                $subject = "RawMilk Open Invoice for Docket No: ".$dock_no." of Vehicle ".$vehicle_no." and Lorry Number ".$lorry_no;
+                                                if (is_valid_email($email))
+                                                {
+                                                    $query_email_log="INSERT INTO email_log(vehicle_name,message_type,account_id,subject,email,message,status,create_id,create_date) VALUES".
+                                       "('$vehicle_no','RawMilk','$account_id','$subject','$to','$msg','1','$account_id','$dt')";
+                                                    //echo $query_email_log;
+                                                    $result_email_log=mysql_query($query_email_log,$DbConnection);
+                                                }
 						//################################//
 					/*}   
 					else
@@ -331,6 +363,34 @@
 						$user_id =getUserID($account_id,1,$DbConnection);
 						$csv_string = $csv_string.$user_id.','.$dock_no.','.$lorry_no.','.$vehicle_no.','.$email.','.$mobile.','.$qty_kg.','.$fat_per.','.$snf_per.','.$fat_kg.','.$snf_kg.','.$milk_age.','.$dispatch_time.','.$target_time.','.$plant.','.$driver_name.','.$driver_mobile.','.$chillplant.','.$tanker_type."\n";										
 						$csv_write_flag=1;
+                                                $message="<table border=1>"
+                                                        . "<tr><td>LorryNo</td><td>$lorry_no</td><tr>"
+                                                        . "<tr><td>DocketNo</td><td>$dock_no</td></tr>"
+                                                        . "<tr><td>VehicleNo</td><td>$vehicle_no</td></tr>"
+                                                        . "<tr><td>Qty(kg)</td><td>$qty_kg</td></tr>"
+                                                        . "<tr><td>Fat(%)</td><td>$fat_per</td></tr>"
+                                                        . "<tr><td>Snf(%)</td><td>$snf_per</td></tr>"
+                                                        . "<tr><td>Fat(kg)</td><td>$fat_kg</td></tr>"
+                                                        . "<tr><td>Snf(kg)</td><td>$snf_kg</td></tr>"
+                                                        . "<tr><td>MilkAge</td><td>$milk_age</td></tr>"
+                                                        . "<tr><td>DispatchTime</td><td>$dispatch_time</td></tr>"
+                                                        . "<tr><td>TargetTime</td><td>$target_time</td></tr>"
+                                                        . "<tr><td>Plant</td><td>$plant</td></tr>"
+                                                        . "<tr><td>DriverName</td><td>$driver_name</td></tr>"
+                                                        . "<tr><td>DriverMobile</td><td>$driver_mobile</td></tr>"
+                                                        . "<tr><td>ChillingPlant</td><td>$chillplant</td></tr>"
+                                                        . "<tr><td>TankerType</td><td>$tanker_type</td></tr></table>";
+                                                $dt=date('Y-m-d H:i:s');
+                                                $to = $email;
+                                                $msg=$message;
+                                                $subject = "RawMilk Open Invoice for Docket No: ".$dock_no." of Vehicle ".$vehicle_no." and Lorry Number ".$lorry_no;
+                                                if (is_valid_email($email))
+                                                {
+                                                    $query_email_log="INSERT INTO email_log(vehicle_name,message_type,account_id,subject,email,message,status,create_id,create_date) VALUES".
+                                       "('$vehicle_no','RawMilk','$account_id','$subject','$to','$msg','1','$account_id','$dt')";
+                                                    //echo"insert1=". $query_email_log;
+                                                    $result_email_log=mysql_query($query_email_log,$DbConnection);
+                                                }
 						//################################//
 					}   
 					else
@@ -583,6 +643,23 @@
 							
 							echo "C=". $query_update;*/
 							$flag_close=1;
+                                                        if($flag_close==1)
+                                                        {
+                                                                //$query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_id='$account_id',edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
+                                                                //requirement from yp sing not to save userid 
+                                                                /*$query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
+                                                                //echo $query_update;		
+                                                                $result_update = mysql_query($query_update,$DbConnection);
+                                                                */
+                                                                //echo"aaa1".$unload_estimatetime_serials[$cnt_1];
+                                                                //echo"<br>aaa2".$unload_estimatedatetime_serials[$cnt_1];
+                                                                //echo"<br>aaa3".$unload_accepttime_serials[$cnt_1];
+                                                               if($unload_estimatedatetime_serials[$cnt_1]!=null && $unload_estimatetime_serials[$cnt_1]!=null )
+                                                               {
+                                                                    $query_update =updateInvoiceMdrmClose($date,$closetime,$sno,$DbConnection);
+                                                               }
+                                                        }
+                                                        $flag_close=0;
 						}
 					
 					}
@@ -590,17 +667,14 @@
 					
 					
 				}
-				if($flag_close==1)
+				/*if($flag_close==1)
 				{
 					//$query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_id='$account_id',edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
 					//requirement from yp sing not to save userid 
-					/*$query_update = "UPDATE invoice_mdrm SET invoice_status=2,edit_date='$date',system_time='$date',close_time='$closetime',close_type='m'  WHERE sno='$sno'";
-					//echo $query_update;		
-					$result_update = mysql_query($query_update,$DbConnection);
-                                        */
+					
                                         $query_update =updateInvoiceMdrmClose($date,$closetime,$sno,$DbConnection);
 				}
-				$flag_close=0;
+				$flag_close=0;*/
 			}
 			$cnt++;
 		}

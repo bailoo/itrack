@@ -1,19 +1,44 @@
 <?php
-    echo"reportPrevPage##";
-    echo'<center><fieldset class="report_fieldset">';
-    echo'<legend>Inactive Data Duration</legend><br>';     
+echo"reportPrevPage##";
+include_once("report_hierarchy_header.php");
+
+$account_id_local1 = $_POST['account_id_local'];
+$vehicle_display_option1 = $_POST['vehicle_display_option'];
+$options_value1 = $_POST['options_value'];  
+$options_value2=explode(",",$options_value1);			
+$option_size=sizeof($options_value2);
+$option_string="";  
+  
+    $function_string='get_'.$vehicle_display_option1.'_vehicle';   
+  
+ echo'<center>
+    <table border=0 width = 100% cellspacing=2 cellpadding=0>
+        <tr>
+            <td height=10 class="report_heading" align="center">Inactive Data Report</td>
+        </tr>
+    </table>			
 														
-    date_default_timezone_set('Asia/Calcutta');
-    if($start_date=="" && $end_date=="")
-    {
-        $StartDate=date("Y/m/d 00:00:00");	
-        $EndDate=date("Y/m/d H:i:s");
-    }
-    else
-    {
-        $StartDate=$start_date;	
-        $EndDate=$end_date;
-    }	
+<form  method="post" name="thisform">							
+    <br>
+	<fieldset class="report_fieldset">
+		<legend>Select Vehicle</legend>	
+					
+			<table border=0  cellspacing=0 cellpadding=0  width="100%">
+				<tr>
+					<td align="center">							
+						<div style="overflow: auto;height: 150px; width: 650px;" align="center">
+							<table border=0 cellspacing=0 cellpadding=0 align="center" width="100%">';						
+                
+								 echo'<tr><td height="10px" align="center" colspan="6" class=\'text\'>&nbsp;<input type=\'checkbox\' name=\'all\' value=\'1\' onClick=\'javascript:select_all_vehicle(this.form);\'>&nbsp;&nbsp;Select All</td></tr>';                 
+                 $function_string($account_id_local1,$options_value1);               														
+								echo'
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+      </fieldset> <br>
+      </form>';	
 			
 echo'<table border=0 cellspacing=0 cellpadding=3 align="center">	
         <tr>

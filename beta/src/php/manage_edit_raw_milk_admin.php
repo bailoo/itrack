@@ -90,6 +90,10 @@ border: none;
 	{
 		$targetdatewise = 1;
 	}
+        if($order=="8")
+	{
+		$unloadaccepttime = 1;
+	}
 	$targetplant=$_POST['targetplant'];
 	//echo $targetplant;
         //echo $order."<br>";
@@ -311,6 +315,14 @@ border: none;
                                             
                                             }
                                     }
+                               else if($unloadaccepttime)
+                                {
+                                       $condition="unloadaccepttime";
+                                       $orderA="2";
+                                       $user_type="admin";
+                                       $conditionStr="";
+                                       $result=getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type,$DbConnection);
+                                }
                                else
                                {
                                        $condition="datebetween_invoicestatus";
@@ -340,7 +352,7 @@ border: none;
 			</tr>";*/
 			echo "<tr class='header' style='background-color:silver;' rules='all'>
 			<th>SNO<div>SNO</div></th><th>FIRST CREATE DATE<div>FIRST CREATE DATE</div></th><th>LORRY NO<div>LORRY NO</div></th><th>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th>QTY(KG)<div>QTY(KG)</div></th>
-				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>CLOSE<div>CLOSE</div></th><th>PLANT<div>PLANT</div></th><th>CHILLING PLANT<div>CHILLING PLANT</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>UNLOAD ACCEPT TIME<div>UNLOAD ACCEPT TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th>
+				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>CLOSE<div>CLOSE</div></th><th>PLANT<div>PLANT</div></th><th>CHILLING PLANT<div>CHILLING PLANT</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>POSTING DATE/TIME<div>POSTING DATE/TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th>
 			</tr>";
 			}
 			else if($user_type=="raw_milk"){
@@ -351,7 +363,7 @@ border: none;
 			</tr>";*/
 			echo "<tr class='header' style='background-color:silver;' rules='all'>
 			<th>SNO<div>SNO</div></th><th>FIRST CREATE DATE<div>FIRST CREATE DATE</div></th><th>LORRY NO<div>LORRY NO</div></th><th>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th>QTY(KG)<div>QTY(KG)</div></th>
-				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>PLANT<div>PLANT</div></th><th>CHILLING PLANT<div>CHILLING PLANT</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>UNLOAD ACCEPT TIME<div>UNLOAD ACCEPT TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th><th>APPROVED TIME<div>APPROVED TIME</div></th>
+				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>PLANT<div>PLANT</div></th><th>CHILLING PLANT<div>CHILLING PLANT</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>POSTING DATE/TIME<div>POSTING DATE/TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th><th>APPROVED TIME<div>APPROVED TIME</div></th>
 			</tr>";
 			}
 			else{ //admin
@@ -361,7 +373,7 @@ border: none;
 			</tr>";*/
 			echo "<tr class='header' style='background-color:silver;' rules='all'>
 			<th>SNO<div>SNO</div></th><th>FIRST CREATE DATE<div>FIRST CREATE DATE</div></th><th>LORRY NO<div>LORRY NO</div></th><th>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th>QTY(KG)<div>QTY(KG)</div></th>
-				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>CLOSE<div>CLOSE</div></th><th>CANCEL<div>CANCEL</div></th><th>PLANT<div>PLANT</div></th><th>CHILLING PLANT<div>CHILLING PLANT</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>UNLOAD ACCEPT TIME<div>UNLOAD ACCEPT TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th><th>APPROVED<div>APPROVED</div></th><th>APPROVED TIME<div>APPROVED TIME</div></th>
+				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>CLOSE<div>CLOSE</div></th><th>CANCEL<div>CANCEL</div></th><th>PLANT<div>PLANT</div></th><th>CHILLING PLANT<div>CHILLING PLANT</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>POSTING DATE/TIME<div>POSTING DATE/TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th><th>APPROVED<div>APPROVED</div></th><th>APPROVED TIME<div>APPROVED TIME</div></th>
 			</tr>"; 
 			}
 			
@@ -374,13 +386,13 @@ border: none;
 			$title= "RAW MILK INVOICE REPORT";
 			$csv_string = $csv_string.$title."\n";
 			if( $user_type=="plant_raw_milk"){
-				$csv_string = $csv_string."SNO,FIRST CREATE DATE,LORRY NO,VEHICLE NO,TANKER TYPE,DOCKET NO,EMAIL,TRANSPORTER MOBILE,QTY,FAT(%),SNF(%),FAT(KG),SNF(KG),MANUAL MILK AGE(Hrs),DISPATCH TIME,TARGET TIME,DRIVER NAME,DRIVER MOBILE,USERNAME(USERID),STATUS, PLANT,CHILLING PLANT,UNLOAD ESTIMATED TIME,GATE ENTRY,UNLOAD ACCEPT TIME,FAT%(FT),SNF%(FT),Qty(FT),Temp.(FT),Acidity(FT),MBRT-min(FT),RM(FT),BR(FT),Protien%(FT),Sodium(FT),Testing Status,FAT%(RT),SNF%(RT),ADULTRATION,OtherADULTRATION,CLOSE TIME\n";
+				$csv_string = $csv_string."SNO,FIRST CREATE DATE,LORRY NO,VEHICLE NO,TANKER TYPE,DOCKET NO,EMAIL,TRANSPORTER MOBILE,QTY,FAT(%),SNF(%),FAT(KG),SNF(KG),MANUAL MILK AGE(Hrs),DISPATCH TIME,TARGET TIME,DRIVER NAME,DRIVER MOBILE,USERNAME(USERID),STATUS, PLANT,CHILLING PLANT,UNLOAD ESTIMATED TIME,GATE ENTRY,POSTING DATE/TIME,FAT%(FT),SNF%(FT),Qty(FT),Temp.(FT),Acidity(FT),MBRT-min(FT),RM(FT),BR(FT),Protien%(FT),Sodium(FT),Testing Status,FAT%(RT),SNF%(RT),ADULTRATION,OtherADULTRATION,CLOSE TIME\n";
 			}
 			else if( $user_type=="raw_milk"){
-				$csv_string = $csv_string."SNO,FIRST CREATE DATE,LORRY NO,VEHICLE NO,TANKER TYPE,DOCKET NO,EMAIL,TRANSPORTER MOBILE,QTY,FAT(%),SNF(%),FAT(KG),SNF(KG),MANUAL MILK AGE(Hrs),DISPATCH TIME,TARGET TIME,DRIVER NAME,DRIVER MOBILE,USERNAME(USERID),STATUS, PLANT,CHILLING PLANT,APPROVED TIME,UNLOAD ESTIMATED TIME,GATE ENTRY,UNLOAD ACCEPT TIME,FAT%(FT),SNF%(FT),Qty(FT),Temp.(FT),Acidity(FT),MBRT-min(FT),RM(FT),BR(FT),Protien%(FT),Sodium(FT),Testing Status,FAT%(RT),SNF%(RT),ADULTRATION,OtherADULTRATION \n";
+				$csv_string = $csv_string."SNO,FIRST CREATE DATE,LORRY NO,VEHICLE NO,TANKER TYPE,DOCKET NO,EMAIL,TRANSPORTER MOBILE,QTY,FAT(%),SNF(%),FAT(KG),SNF(KG),MANUAL MILK AGE(Hrs),DISPATCH TIME,TARGET TIME,DRIVER NAME,DRIVER MOBILE,USERNAME(USERID),STATUS, PLANT,CHILLING PLANT,APPROVED TIME,UNLOAD ESTIMATED TIME,GATE ENTRY,POSTING DATE/TIME,FAT%(FT),SNF%(FT),Qty(FT),Temp.(FT),Acidity(FT),MBRT-min(FT),RM(FT),BR(FT),Protien%(FT),Sodium(FT),Testing Status,FAT%(RT),SNF%(RT),ADULTRATION,OtherADULTRATION \n";
 			}
 			else{
-				$csv_string = $csv_string."SNO,FIRST CREATE DATE,LORRY NO,VEHICLE NO,TANKER TYPE,DOCKET NO,EMAIL,TRANSPORTER MOBILE,QTY,FAT(%),SNF(%),FAT(KG),SNF(KG),MANUAL MILK AGE(Hrs),DISPATCH TIME,TARGET TIME,DRIVER NAME,DRIVER MOBILE,USERNAME(USERID),STATUS, PLANT,CHILLING PLANT,APPROVED TIME,UNLOAD ESTIMATED TIME,GATE ENTRY,UNLOAD ACCEPT TIME,FAT%(FT),SNF%(FT),Qty(FT),Temp.(FT),Acidity(FT),MBRT-min(FT),RM(FT),BR(FT),Protien%(FT),Sodium(FT),Testing Status,FAT%(RT),SNF%(RT),ADULTRATION,OtherADULTRATION,CLOSE TIME\n";
+				$csv_string = $csv_string."SNO,FIRST CREATE DATE,LORRY NO,VEHICLE NO,TANKER TYPE,DOCKET NO,EMAIL,TRANSPORTER MOBILE,QTY,FAT(%),SNF(%),FAT(KG),SNF(KG),MANUAL MILK AGE(Hrs),DISPATCH TIME,TARGET TIME,DRIVER NAME,DRIVER MOBILE,USERNAME(USERID),STATUS, PLANT,CHILLING PLANT,APPROVED TIME,UNLOAD ESTIMATED TIME,GATE ENTRY,POSTING DATE/TIME,FAT%(FT),SNF%(FT),Qty(FT),Temp.(FT),Acidity(FT),MBRT-min(FT),RM(FT),BR(FT),Protien%(FT),Sodium(FT),Testing Status,FAT%(RT),SNF%(RT),ADULTRATION,OtherADULTRATION,CLOSE TIME\n";
 			
 			}
 			
@@ -1803,7 +1815,7 @@ border: none;
 				{
 					echo"<input TYPE=\"hidden\" VALUE=\"$row_select[unload_estimated_time]\" NAME=\"temp[$i][UPLOAD EST. TIME]\">";					
 					echo"<input TYPE=\"hidden\" VALUE=\"$row_select[unload_estimated_datetime]\" NAME=\"temp[$i][GATE ENTRY]\">";
-					echo"<input TYPE=\"hidden\" VALUE=\"$row_select[unload_accept_time]\" NAME=\"temp[$i][UPLOAD ACCEPT TIME]\">";
+					echo"<input TYPE=\"hidden\" VALUE=\"$row_select[unload_accept_time]\" NAME=\"temp[$i][POSTING DATE/TIME]\">";
 					echo"<input TYPE=\"hidden\" VALUE=\"$row_select[fat_per_ft]\" NAME=\"temp[$i][FAT%(FT)]\">";
 					echo"<input TYPE=\"hidden\" VALUE=\"$row_select[snf_per_ft]\" NAME=\"temp[$i][SNF%(FT]\">";
 					echo"<input TYPE=\"hidden\" VALUE=\"$row_select[qty_ct]\" NAME=\"temp[$i][Qty(FT)]\">";
@@ -2013,7 +2025,7 @@ border: none;
 									<input type="text" id="temp_unload_estimate_time" size='5'  placeholder="In Minutes"  onblur='IsNumericA(this.value,this.id); ' readonly >&nbsp;mins</td>
 								</tr>
 								<tr>
-									<td>Unload Accept Time: </td>
+									<td>Posting Date/Time: </td>
 									<td>
 										<input type="text" id="temp_unload_accept_time"  onclick="javascript:NewCal(this.id,'yyyymmdd',true,24);"  onblur='close_milkage_cal_min();' readonly >
 										<input type="label" id="temp_unload_accept_time_label" style='display:none;' >

@@ -594,7 +594,7 @@ for($i=0;$i<$vsize;$i++)
                         {
                             $DataValid = 1;
                         }
-                        if($DataValid==1)
+                        if(($DataValid==1) && !(strtotime($datetime)>(strtotime($SortedDataObject->serverDatetime[$obi])+10*60)))
                         { 
                             $last_rec = $obi;
                             $xml_date_current = $datetime;
@@ -819,6 +819,8 @@ for($i=0;$i<$vsize;$i++)
                         $CurrentLat = $SortedDataObject->latitudeData[$obi];
                         $CurrentLong = $SortedDataObject->longitudeData[$obi];
                         $datetime=$SortedDataObject->deviceDatetime[$obi];
+                        
+                       
                         if((strlen($CurrentLat)>5) && ($CurrentLat!="-") && (strlen($CurrentLong)>5) && ($CurrentLong!="-"))
                         {
                             $DataValid = 1;
@@ -964,12 +966,24 @@ for($i=0;$i<$vsize;$i++)
                         $CurrentLong = $SortedDataObject->longitudeData[$obi];
                         $datetime=$SortedDataObject->deviceDatetime[$obi]; 
                         
-                       
+                        if($CurrentLat=="0.0" && $CurrentLong=="0.0")
+                        {
+                            //echo "in if";
+                            $vehicleserial[]=$vserial[$i];
+                            $lat[]=$CurrentLat;
+                            $lng[]=$CurrentLong; 
+                            $alt[]="";
+                            $datetimeXml[]=$SortedDataObject->deviceDatetime[$obi];
+                            $vehiclename[]=$vehicle_detail_local[0]; 
+                            $vehicletype[]=$vehicle_detail_local[1];
+                            $speed[]=0.0;
+                            $cumdist[]=0.0;                           
+                        }
                         if((strlen($CurrentLat)>5) && ($CurrentLat!="-") && (strlen($CurrentLong)>5) && ($CurrentLong!="-"))
                         {
                             $DataValid = 1;
                         }
-                        if($DataValid==1)
+                        if(($DataValid==1) && !(strtotime($datetime)>(strtotime($SortedDataObject->serverDatetime[$obi])+10*60)))
                         {
                             $last_rec = $obi;
                             //echo "lat=".$CurrentLat." lng=".$CurrentLat."<br><br>";

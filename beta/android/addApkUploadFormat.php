@@ -239,6 +239,10 @@ echo'<form name="addApkFormat" method="post" action="actionUploadApkFile.php" ta
                             <input type="radio" name="apkType"  value="cce">
                         </td>                       
                         <td>Cce Apk</td>
+                        <td>
+                            <input type="radio" name="apkType"  value="weatherStation">
+                        </td>                       
+                        <td>Weather Station Apk</td>
                     </tr>
                 </table>
             </td>

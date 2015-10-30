@@ -486,7 +486,14 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
     //echo "requiredData=".$requiredData."<br>";
     //echo "imei=".$imei."<br>"; 
 	
-    $orderAsc = TRUE;
+    if($parameterizeData->orderBy=="DESC")
+    {
+      $orderAsc = FALSE;
+    }
+    else
+    {
+        $orderAsc = TRUE;
+    }
     $st_results = getImeiDateTimes($o_cassandra, $imei, $dateRangeStart, $dateRangeEnd, $deviceTime, $orderAsc);
 
     //var_dump($st_results);
@@ -930,14 +937,14 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
     
     $deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
     $orderAsc = TRUE;	// TRUE for ascending, otherwise descending (default)   
-    $st_results = getImeiDateTimes($o_cassandra, $vSerial, $startDate, $endDate, $deviceTime, $orderAsc);
-   //$st_results = getLastSeenDateTimes($o_cassandra, $vSerial, $startDate, $endDate);
+    //$st_results = getImeiDateTimes($o_cassandra, $vSerial, $startDate, $endDate, $deviceTime, $orderAsc);
+    $st_results = getLastSeenDateTimes($o_cassandra, $vSerial, $startDate, $endDate);
     //print_r($st_results);
     //echo "countAr=".count($st_results)."<br>";
     if(count($st_results)>0)
     {
         //echo "lat".$st_results->d."<br>";
-        /*$msg_type = $st_results->a;                 
+        $msg_type = $st_results->a;                 
         $ver = $st_results->b;              
         $fix = $st_results->c;
         $lat = $st_results->d;
@@ -1056,8 +1063,8 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
             {
                 $sup_v_1 = $sup_v;
             }
-        }*/
-        foreach($st_results as $item) 
+        }
+        /*foreach($st_results as $item) 
         {          
             $msg_type = $item->a;                 
             $ver = $item->b;              
@@ -1185,7 +1192,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
                     $sup_v_1 = $sup_v;
                 }
             }
-        }
+        }*/
         $dataObject->serverDatetimeLD[] = $datetime_server;
         $dataObject->deviceDatetimeLD[]=$datetime_device1;	 
         $dataObject->messageTypeLD[] = $msg_type_1;
