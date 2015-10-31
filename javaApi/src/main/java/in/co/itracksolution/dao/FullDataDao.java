@@ -191,6 +191,8 @@ public class FullDataDao {
 			int i = 0;
 			for(String token : tokens)
 			{
+				if (i == fullData.fullParams.length) // full params exceeded
+					break;
 				pMap1.put(fullData.fullParams[i++], token);
 			}
 			fullData.setPMap(pMap1);

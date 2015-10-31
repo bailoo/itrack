@@ -68,7 +68,7 @@ if($account_id=="1594")
 	$parameterizeData->mzParam = 'mz';
 	$parameterizeData->bxParam = 'bx';
 	$parameterizeData->byParam = 'by';
-	$parameterizeData->byParam = 'bz';
+	$parameterizeData->bzParam = 'bz';
 }
 
 

@@ -64,7 +64,7 @@ $parameterizeData->myParam = 'my';
 $parameterizeData->mzParam = 'mz';
 $parameterizeData->bxParam = 'bx';
 $parameterizeData->byParam = 'by';
-$parameterizeData->byParam = 'bz';
+$parameterizeData->bzParam = 'bz';
 
     
 $SortedDataObject=new data(); 
