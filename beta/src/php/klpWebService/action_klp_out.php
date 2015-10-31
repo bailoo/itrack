@@ -242,7 +242,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
         {
             $total_dist = round($total_dist,2);
             $queryDistance="SELECT distance_travelled FROM icd_webservice_data WHERE vehicle_name=".
-                            "'$wSInputDataObj->vehicleName' AND icd_in_datetime='0000-00-00 00:00:00'";
+                            "'$wSInputDataObj->vehicleName' AND icd_in_datetime=''";
             $resultDistance=mysql_query($queryDistance,$DbConnection);
             $rowDistance=  mysql_fetch_row($resultDistance);
             if($rowDistance[0]!="")
