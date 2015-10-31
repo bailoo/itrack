@@ -141,7 +141,7 @@ foreach($wSData as $key => $wSValue)
         //echo "<br$updateVehicleName$query_update;
         $resultUpdate = mysql_query($queryUpdate,$DbConnection);
     }
-    if((count($dBData[$key])==0) || (($dBData[$key]['icdInDatetime']!="0000-00-00 00:00:00") && ($wSIcdInDatetime>$dBData[$key]['icdInDatetime'])))
+    if((count($dBData[$key])==0) || (($dBData[$key]['icdInDatetime']!="") && ($wSIcdInDatetime>$dBData[$key]['icdInDatetime'])))
     {
         //echo "dbCnt=".count($dBData[$key])."<br>";
         //echo "dbdateIn=".$dBData[$key]['icdInDatetime']."<br>";
@@ -192,7 +192,7 @@ foreach($wSData as $key => $wSValue)
     }
     else 
     {
-        if(($dBData[$key]['icdInDatetime']!="0000-00-00 00:00:00") && ($wSData[$key]['icdInDatetime']!=""))
+        if(($dBData[$key]['icdInDatetime']!="") && ($wSData[$key]['icdInDatetime']!=""))
         {
             $updateIcdOutDatetime=$wSValue['icdOutDatetime'];
             $updateVehicleName=$wSValue['vehicleName'];
