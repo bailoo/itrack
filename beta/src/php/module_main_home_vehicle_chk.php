@@ -3,13 +3,14 @@
     include_once('util_session_variable.php');
     include_once('util_php_mysql_connectivity.php');
     include_once('active_vehicle_func.php');
-
+    if($account_id!=2)
+    {
     include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
     include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
     
     $o_cassandra = new Cassandra();	
     $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
-
+    }
    $vehicle_color1=getColorFromAP($account_id,$DbConnection); /// A->Account P->Preference
 
     $vcolor = explode(':',$vehicle_color1); //account_name:active:inactive
