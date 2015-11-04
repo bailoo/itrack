@@ -1,10 +1,10 @@
 <?php 
 include("tree.php");
 include("coreDb.php"); 
-if($account_id==2)
+//if($account_id==2)
 { 
-    error_reporting(-1);
-    ini_set('display_errors', 'On');
+    //error_reporting(-1);
+    //ini_set('display_errors', 'On');
     include_once("/mnt/itrack/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
 include_once("/mnt/itrack/phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/ 
 $o_cassandra = new Cassandra();	
@@ -115,7 +115,7 @@ class Hierarchy
 				
 				}
 			}
-                        if($account_id==2)
+                        //if($account_id==2)
                         {
                             global $o_cassandra;
                         $o_cassandra->close;
@@ -278,10 +278,10 @@ class Hierarchy
 	
 	public function getaccountinfo($account_id,$accountUserType,$DbConnection)
 	{
-            if($account_id==2)
+            //if($account_id==2)
             {
                 global $o_cassandra;
-                $currentFilePath="vehicleStatus";
+                $currentFilePath="/mnt/itrack/beta/src/php/vehicleStatus";
             }
             $AccountInfo = new Info();		
             $AccountInfo -> AccountTypeThirdParty = 0;
@@ -370,7 +370,7 @@ class Hierarchy
 							$AccountInfo -> VehicleTankCapacity[$AccountInfo -> VehicleCnt] = $vehicleData['tank_capacity'];
 							$AccountInfo -> DeviceIMEINo[$AccountInfo -> VehicleCnt] =$device_imei_no_local; 
 							
-                                                        if($account_id==2)
+                                                        //if($account_id==2)
                                         {
                                             $iterator = new FilesystemIterator($currentFilePath);                       
                         //echo "imeiNo11=".count($iterator)."<br>";
