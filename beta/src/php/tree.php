@@ -41,6 +41,7 @@ class Info {
 	Public $VehicleID=array();
 	Public $Vehicle_LDT=array();
 	Public $DeviceIMEINo=array();
+        Public $DeviceRunningStatus=array();
 	Public $DeviceIOTypeValue=array();
 	Public $VehicleName=array();
 	Public $VehicleNumber=array();
