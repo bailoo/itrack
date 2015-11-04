@@ -3,7 +3,7 @@
     include_once('util_session_variable.php');
     include_once('util_php_mysql_connectivity.php');
     include_once('active_vehicle_func.php');
-    if($account_id!=2)
+    //if($account_id!=2)
     {
     include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
     include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
