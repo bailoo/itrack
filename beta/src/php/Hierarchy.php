@@ -1,15 +1,6 @@
 <?php 
 include("tree.php");
-include("coreDb.php"); 
-//if($account_id==2)
-{ 
-    //error_reporting(-1);
-    //ini_set('display_errors', 'On');
-    include_once("/mnt/itrack/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
-include_once("/mnt/itrack/phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/ 
-$o_cassandra = new Cassandra();	
-$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
-}
+include("coreDb.php");  
 class Hierarchy 
 { 
 	public function GetHierarchy($groupid,$account_id,$accountUserType,$admin_id,$user_type,$DbConnection) 
@@ -115,12 +106,6 @@ class Hierarchy
 				
 				}
 			}
-                        //if($account_id==2)
-                        {
-                            global $o_cassandra;
-                        $o_cassandra->close;
-                            
-                        }
 			return $tree_obj;
 		}		
 	}
@@ -255,7 +240,7 @@ class Hierarchy
 					$AccountInfo -> VehicleTankCapacity[$AccountInfo -> VehicleCnt] = $vehicleData['tank_capacity'];
 					$AccountInfo -> DeviceIMEINo[$AccountInfo -> VehicleCnt] =$device_imei_no_local; 
 					
-                                        
+				  
 					$AccountInfo -> VehicleTypeThirdParty[$AccountInfo -> VehicleCnt] = 1;
 					$AccountInfo -> VehicleActiveDate[$AccountInfo -> VehicleCnt] = $vehicle_date_from_third_party[device_imei_no_local];
 				 
@@ -278,11 +263,6 @@ class Hierarchy
 	
 	public function getaccountinfo($account_id,$accountUserType,$DbConnection)
 	{
-            //if($account_id==2)
-            {
-                global $o_cassandra;
-                $currentFilePath="/mnt/itrack/beta/src/php/vehicleStatus";
-            }
             $AccountInfo = new Info();		
             $AccountInfo -> AccountTypeThirdParty = 0;
             //--------------------------------------------//
@@ -370,55 +350,7 @@ class Hierarchy
 							$AccountInfo -> VehicleTankCapacity[$AccountInfo -> VehicleCnt] = $vehicleData['tank_capacity'];
 							$AccountInfo -> DeviceIMEINo[$AccountInfo -> VehicleCnt] =$device_imei_no_local; 
 							
-                                                        //if($account_id==2)
-                                        {
-                                            $iterator = new FilesystemIterator($currentFilePath);                       
-                        //echo "imeiNo11=".count($iterator)."<br>";
-                        $fileFoundFlag=0;
-                        $dateObject=new DateTime();
-                        $todayDateOnly=$dateObject->format('Y-m-d');
-                        //echo"todayDate=".$todayDateOnly."<br>";
-                        $exactFilePath=$currentFilePath."/".$device_imei_no_local.".txt";
-                        //echo "exactFilePath=".$exactFilePath."<br>";
-                        if(file_exists($exactFilePath))
-                        {
-                            $fileFoundFlag=1;
-                            if(date("Y-m-d", filectime($exactFilePath))!=$todayDateOnly)
-                            { 
-                                $todayDataLog=hasImeiLogged($o_cassandra, $device_imei_no_local, $todayDateOnly);
-                                if($todayDataLog!='')
-                                {
-                                    touch($exactFilePath);
-                                    $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1";                                       
-                                }
-                                else
-                                {
-                                   $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="0";  
-                                }
-                            }
-                            else if(date("Y-m-d", filectime($exactFilePath))==$todayDateOnly)
-                            {
-                                //echo "in else 0<br>";
-                               $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1";  
-                            }
-                        }
-                        if($fileFoundFlag==0)
-                        {
-                            $todayDataLog=hasImeiLogged($o_cassandra, $device_imei_no_local, $todayDateOnly);
-                            if($todayDataLog!='')
-                            {
-                                //echo "in if";
-                                touch($currentFilePath."/".$device_imei_no_local.".txt");
-                                $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1"; 
-                            }
-                            else
-                            {
-                                //echo "in else 1<br>";
-                                $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="0"; 
-                            }  
-                        }
-							
-                                        }
+						  
 							$AccountInfo -> VehicleTypeThirdParty[$AccountInfo -> VehicleCnt] = 0;
 							$AccountInfo -> VehicleActiveDate[$AccountInfo -> VehicleCnt] = '';
 						 
