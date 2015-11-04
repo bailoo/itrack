@@ -72,11 +72,6 @@
 		}
 		else
 		{
-                    if($account_id==2)
-                    {
-                        error_reporting(-1);
-                        ini_set('display_errors', 'On');
-                    }
 			
 			$live_default = 0;
 			$msg = "Registered User! Please Wait ...";
