@@ -431,6 +431,10 @@ class Hierarchy
                                                         if(file_exists($exactFilePath))
                                                         {
                                                             $fileFoundFlag=1;
+                                                            if($account_id==2)
+                                                            {
+                                                                 echo "imeiNo=".$device_imei_no_local."date1=".date("Y-m-d H:i:s", filectime($exactFilePath))."date2=".$todayDateOnly."<br>";
+                                                            }
                                                             if(date("Y-m-d", filectime($exactFilePath))!=$todayDateOnly)
                                                             { 
                                                                 $todayDataLog=hasImeiLogged($o_cassandra, $device_imei_no_local, $todayDateOnly);
