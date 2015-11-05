@@ -3,13 +3,14 @@
     include_once('util_session_variable.php');
     include_once('util_php_mysql_connectivity.php');
     include_once('active_vehicle_func.php');
-
-    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    //if($account_id!=2)
+    {
+    /*include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
     include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
     
-    $o_cassandra = new Cassandra();	
-    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
-
+    /*$o_cassandra = new Cassandra();	
+    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);*/
+    }
    $vehicle_color1=getColorFromAP($account_id,$DbConnection); /// A->Account P->Preference
 
     $vcolor = explode(':',$vehicle_color1); //account_name:active:inactive
@@ -92,7 +93,7 @@
         $function_name($root,$div_option_values,$category1);
     }
 echo"</table>";
-$o_cassandra->close();
+//$o_cassandra->close();
     
     function common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name)
     {	
@@ -192,9 +193,9 @@ $o_cassandra->close();
         global $vcolor3;
         global $DbConnection;
         global $account_id;
-        global $o_cassandra;
+        //global $o_cassandra;
         //var_dump($o_cassandra);
-        global $logDate;
+        //global $logDate;
     
         //echo "cat:".$category1;
         //echo $vcolor1.":".$vcolor2.":".$vcolor3;
@@ -238,41 +239,8 @@ $o_cassandra->close();
                     if($i>=@$vehicle_cnt)
                     {
                         $vehicleid[@$vehicle_cnt]=$vehicle_id;
-                        @$vehicle_cnt++; 
-                        //if($account_id==2)
-                        {
-                            //$last_date=get_acitve_vlastdate($vehicle_imei,$DbConnection);
-                            //echo "last_date=".$last_date."today_date2=".$today_date2."<br>";
-                            $vehicle_active_flag=0;
-                            /*if(($last_date!="") && ($last_date==$today_date2))
-                            {
-                                //echo "in if1<br>";
-                                $vehicle_active_flag=1;
-                            }*/
-
-                           $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
-                            //$st_results = getCurrentDateTime($o_cassandra,$vehicle_imei,$sortFetchData);
-                            //var_dump($st_results);
-                            //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-                            if($logResult!='')
-                            {
-                                $vehicle_active_flag=1;
-                                /*$active_vehicle_imei=get_active_imeino($vehicle_imei,$DbConnection);
-                                //echo "active_active_imei=".$active_vehicle_imei."<br>";
-                                if($active_vehicle_imei!="")
-                                {										
-                                    update_active_vehicle($vehicle_imei,$today_date2,$DbConnection);
-                                }
-                                else
-                                {										
-                                    insert_active_vehicle($vehicle_imei,$today_date2,$DbConnection);	
-                                }*/
-                            }						
-                        }
-                        //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-                        //
-                        //if(file_exists($xml_current))
-                        if($vehicle_active_flag==1)
+                        @$vehicle_cnt++;  
+                        if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                         {							
                             $color= $vcolor2;
                             $vehicle_name_arr[$color][] =$vehicle_name; 
@@ -350,9 +318,9 @@ $o_cassandra->close();
         global $vehicleid;
         global $vehicle_cnt;
         global $today_date2;
-        global $o_cassandra;
+       // global $o_cassandra;
         //var_dump($o_cassandra);
-        global $logDate;
+        //global $logDate;
     
     
         if($type=="group")
@@ -386,10 +354,10 @@ $o_cassandra->close();
                         {
                             $vehicleid[$vehicle_cnt]=$vehicle_id;
                             $vehicle_cnt++;
-                            $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                            //$logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
                             //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
                             //if (file_exists($xml_current))
-                            if($logResult!='')
+                            if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                             {
                                 $green_cnt1++; 
                                 //$green_cnt1=$green_cnt;     		
@@ -458,8 +426,8 @@ $o_cassandra->close();
         global $vcolor2;
         global $vcolor3; 
         global $DbConnection;
-        global $o_cassandra;
-        global $logDate;
+        //global $o_cassandra;
+        //global $logDate;
          
         $vehicle_name_arr=array();
         $imei_arr=array();
@@ -501,41 +469,7 @@ $o_cassandra->close();
                             //echo "in if<br>";
                             $vehicleid[$vehicle_cnt]=$vehicle_id;
                             $vehicle_cnt++;
-                            //if($account_id==2)
-                            {
-                                $vehicle_active_flag=0;
-                               /* $last_date=get_acitve_vlastdate($vehicle_imei,$DbConnection);
-                                //echo "last_date=".$last_date."today_date2=".$today_date2."<br>";
-                                
-                                if(($last_date!="") && ($last_date==$today_date2))
-                                {
-                                    //echo "in if1<br>";
-                                    $vehicle_active_flag=1;
-                                }*/
-                                //if($vehicle_active_flag==0)
-                                {
-                                    $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
-                                    //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-                                    if ($logResult!="")
-                                    {
-                                        $vehicle_active_flag=1;
-                                        /*$active_vehicle_imei=get_active_imeino($vehicle_imei,$DbConnection);
-                                        //echo "active_active_imei=".$active_vehicle_imei."<br>";
-                                        if($active_vehicle_imei!="")
-                                        {										
-                                            update_active_vehicle($vehicle_imei,$today_date2,$DbConnection);
-                                        }
-                                        else
-                                        {										
-                                            insert_active_vehicle($vehicle_imei,$today_date2,$DbConnection);	
-                                        }*/
-                                    }
-                                }
-                            }
-                            //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-                            //
-                            //if(file_exists($xml_current))
-                            if($vehicle_active_flag==1)
+                            if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                             {
                                 // echo "in if";
                                 $color = $vcolor2;
@@ -640,8 +574,7 @@ $o_cassandra->close();
         global $vcolor2;
         global $vcolor3;
         global $DbConnection;
-        global $o_cassandra;
-        global $logDate;
+       
 		
         $vehicle_name_arr=array();
         $imei_arr=array();
@@ -680,42 +613,7 @@ $o_cassandra->close();
                         {
                             $vehicleid[$vehicle_cnt]=$vehicle_id;
                             $vehicle_cnt++;
-                            //if($account_id==2)
-                            {
-                               $vehicle_active_flag=0;
-                               /* $last_date=get_acitve_vlastdate($vehicle_imei,$DbConnection);
-                                //echo "last_date=".$last_date."today_date2=".$today_date2."<br>";
-                                $vehicle_active_flag=0;
-                                if(($last_date!="") && ($last_date==$today_date2))
-                                {
-                                    //echo "in if1<br>";
-                                    $vehicle_active_flag=1;
-                                }*/
-                                //if($vehicle_active_flag==0)
-                                {
-                                   $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
-                                    //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-                                   // if (file_exists($xml_current))
-                                   if($logResult!="")
-                                    {
-                                        $vehicle_active_flag=1;
-                                        /*$active_vehicle_imei=get_active_imeino($vehicle_imei,$DbConnection);
-                                        //echo "active_active_imei=".$active_vehicle_imei."<br>";
-                                        if($active_vehicle_imei!="")
-                                        {										
-                                            update_active_vehicle($vehicle_imei,$today_date2,$DbConnection);
-                                        }
-                                        else
-                                        {										
-                                            insert_active_vehicle($vehicle_imei,$today_date2,$DbConnection);	
-                                        }*/
-                                    }
-                                }
-                            }
-                            //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-                            //
-                            //if(file_exists($xml_current))
-                            if($vehicle_active_flag==1)
+                            if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                             {
                                 $color=$vcolor2;
                                 $vehicle_name_arr[$color][] =$vehicle_name; 
@@ -829,8 +727,7 @@ $o_cassandra->close();
         global $vcolor2;
         global $vcolor3;   
         global $DbConnection;
-        global $o_cassandra;
-        global $logDate;
+    
      
         $vehicle_name_arr=array();
         $imei_arr=array();
@@ -872,42 +769,7 @@ $o_cassandra->close();
                         {
                             $vehicleid[$vehicle_cnt]=$vehicle_id;
                             $vehicle_cnt++;
-                            //if($account_id==2)
-                            {
-                                $vehicle_active_flag=0;
-                                /*$last_date=get_acitve_vlastdate($vehicle_imei,$DbConnection);
-                                //echo "last_date=".$last_date."today_date2=".$today_date2."<br>";
-                                $vehicle_active_flag=0;
-                                if(($last_date!="") && ($last_date==$today_date2))
-                                {
-                                    //echo "in if1<br>";
-                                    $vehicle_active_flag=1;
-                                }*/
-                               // if($vehicle_active_flag==0)
-                                {
-                                    $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
-                                   // $xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-                                    //if (file_exists($xml_current))
-                                    if($logResult!="")
-                                    {
-                                        $vehicle_active_flag=1;
-                                        /*$active_vehicle_imei=get_active_imeino($vehicle_imei,$DbConnection);
-                                        //echo "active_active_imei=".$active_vehicle_imei."<br>";
-                                        if($active_vehicle_imei!="")
-                                        {										
-                                            update_active_vehicle($vehicle_imei,$today_date2,$DbConnection);
-                                        }
-                                        else
-                                        {										
-                                            insert_active_vehicle($vehicle_imei,$today_date2,$DbConnection);	
-                                        }*/
-                                    }
-                                }
-                            }
-                            //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-                            //
-                            //if(file_exists($xml_current))
-                            if($vehicle_active_flag==1)
+                            if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                             {
                                 $color=$vcolor2;
                                 $vehicle_name_arr[$color][] =$vehicle_name; 
@@ -976,9 +838,7 @@ $o_cassandra->close();
         global $today_date2;
         global $vcolor2;
         global $vcolor3;
-        global $DbConnection;
-        global $o_cassandra;
-        global $logDate;
+        global $DbConnection;      
 		
         $vehicle_name_arr=array();
         $imei_arr=array();
@@ -1018,42 +878,7 @@ $o_cassandra->close();
                         {
                             $vehicleid[$vehicle_cnt]=$vehicle_id;
                             $vehicle_cnt++;
-                            //if($account_id==2)
-                            {
-                                $vehicle_active_flag=0;
-                                /*$last_date=get_acitve_vlastdate($vehicle_imei,$DbConnection);
-                                //echo "last_date=".$last_date."today_date2=".$today_date2."<br>";
-                                $vehicle_active_flag=0;
-                                if(($last_date!="") && ($last_date==$today_date2))
-                                {
-                                    //echo "in if1<br>";
-                                    $vehicle_active_flag=1;
-                                }*/
-                                //if($vehicle_active_flag==0)
-                                {
-                                    $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
-                                    //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-                                    //if (file_exists($xml_current))
-                                    if($logResult!="")
-                                    {
-                                        $vehicle_active_flag=1;
-                                        /*$active_vehicle_imei=get_active_imeino($vehicle_imei,$DbConnection);
-                                        //echo "active_active_imei=".$active_vehicle_imei."<br>";
-                                        if($active_vehicle_imei!="")
-                                        {										
-                                            update_active_vehicle($vehicle_imei,$today_date2,$DbConnection);
-                                        }
-                                        else
-                                        {										
-                                            insert_active_vehicle($vehicle_imei,$today_date2,$DbConnection);	
-                                        }*/
-                                    }
-                                }
-                            }
-                            //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
-                            //
-                            //if(file_exists($xml_current))
-                            if($vehicle_active_flag==1)
+                           if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                             {
                                 $color=$vcolor2;
                                 $vehicle_name_arr[$color][] =$vehicle_name; 
