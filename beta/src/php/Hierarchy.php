@@ -458,7 +458,7 @@ class Hierarchy
                                                                 }
                                                                 else if(date("Y-m-d", filectime($exactFilePath))==$todayDateOnly)
                                                                 {
-                                                                    echo "in else 0<br>";
+                                                                   //echo "in else 0<br>";
                                                                    $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1";  
                                                                 }
                                                             }
