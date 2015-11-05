@@ -197,7 +197,14 @@
 
 			//echo "size=".sizeof($final_group_array);					
 			//echo "<br>URL=".$re_url;
-			echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=".$re_url."\">";				
+                        if($account_id==2)
+                        {
+			//echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=".$re_url."\">";
+                        }
+                        else
+                        {
+                            echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=".$re_url."\">";
+                        }
 		}
 	}
 ?>
