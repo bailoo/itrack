@@ -476,7 +476,7 @@ class Hierarchy
                                                                 }
                                                                 else
                                                                 {
-                                                                    echo "in else 1<br>";
+                                                                    //echo "in else 1<br>";
                                                                     $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="0"; 
                                                                 }  
                                                             }
