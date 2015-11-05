@@ -261,7 +261,7 @@
                     {
                         $vehicleid[$vehicle_cnt]=$vehicle_id;
                         $vehicle_cnt++;
-                        if($AccountNode->data->DeviceRunningStatus[$j]=="1")
+                        if($root->data->DeviceRunningStatus[$j]=="1")
                         {
                             $color = $vcolor2;
                             $vehicle_name_arr[$color][] =$vehicle_name;
@@ -344,7 +344,7 @@
                     {
                         $vehicleid[$vehicle_cnt]=$vehicle_id;
                         $vehicle_cnt++;
-                        if($AccountNode->data->DeviceRunningStatus[$j]=="1")
+                        if($root->data->DeviceRunningStatus[$j]=="1")
                         {
                             $color = $vcolor2;
                             $vehicle_name_arr[$color][] =$vehicle_name;
@@ -439,7 +439,7 @@
                     {
                         $personid[$person_cnt]=$person_id;
                         $person_cnt++;
-                        if($AccountNode->data->DeviceRunningStatus[$j]=="1")
+                        if($root->data->DeviceRunningStatus[$j]=="1")
                         {
                             $color = $vcolor2;
                             $vehicle_name_arr[$color][] =$vehicle_name; 
