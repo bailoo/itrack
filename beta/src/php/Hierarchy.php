@@ -462,6 +462,14 @@ class Hierarchy
                                                                    $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1";  
                                                                 }
                                                             }
+                                                            else
+                                                            {
+                                                                if(date("Y-m-d", filectime($exactFilePath))==$todayDateOnly)
+                                                                {
+                                                                  // echo "in else 0<br>";
+                                                                   $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1";  
+                                                                }
+                                                            }
                                                         }
                                                         if($fileFoundFlag==0)
                                                         {
