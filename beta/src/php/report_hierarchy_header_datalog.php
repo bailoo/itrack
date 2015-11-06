@@ -2,11 +2,11 @@
 include_once('Hierarchy.php');
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
-include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+/*include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
 include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
     
-$o_cassandra = new Cassandra();	
-$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+/*$o_cassandra = new Cassandra();	
+$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);*/
 
 $vehicle_color1=getColorFromAP($account_id,$DbConnection); /// A->Account P->Preference
 $vcolor = explode(':',$vehicle_color1); //account_name:active:inactive
@@ -141,8 +141,8 @@ function PrintAllVehicle($root, $local_account_id)
     global $vcolor2;
     global $vcolor3;
     global $title;
-    global $o_cassandra;
-    global $logDate;
+    //global $o_cassandra;
+    //global $logDate;
   
 	
 	$type = 0;
@@ -174,10 +174,7 @@ function PrintAllVehicle($root, $local_account_id)
 				{
 					$vehicleid[$vehicle_cnt]=$vehicle_id;
 					$vehicle_cnt++;
-					 $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
-                        //$xml_current = "../../../xml_vts/xml_data/".$current_date."/".$vehicle_imei.".xml";
-                        //if (file_exists($xml_current))
-                        if ($logResult!="")
+					  if($root->data->DeviceRunningStatus[$j]=="1")
                         {
 					 //echo "<br>exists";
            $color = $vcolor2;
@@ -248,8 +245,8 @@ function PrintAllPerson($root, $local_account_id)
   global $vcolor1;
   global $vcolor2;
   global $vcolor3;
-  global $o_cassandra;
-    global $logDate;
+  //global $o_cassandra;
+    //global $logDate;
 	//global $type_tag;
 	//$type_tag = 0;
 	
@@ -277,10 +274,7 @@ function PrintAllPerson($root, $local_account_id)
 					$person_cnt++;
 				  //$td_cnt++;
 					//common_function_for_person($person_imei,$person_id,$person_name,$AccountNode->data->AccountGroupName);
-					 $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
-                        //$xml_current = "../../../xml_vts/xml_data/".$current_date."/".$vehicle_imei.".xml";
-                        //if (file_exists($xml_current))
-                        if ($logResult!="")
+					 if($root->data->DeviceRunningStatus[$j]=="1")
                         {
 					 $color = $vcolor2;
 					 $vehicle_name_arr[$color][] =$vehicle_name; 
@@ -353,8 +347,8 @@ function PrintVehicleTag($AccountNode, $local_account_id,$vehicletag)
   global $vcolor2;
   global $vcolor3;  
   global $current_date;
-   global $o_cassandra;
-    global $logDate;
+   //global $o_cassandra;
+   // global $logDate;
   
   $type = 1;  	
 	$vehicle_name_arr=array();
@@ -388,10 +382,7 @@ function PrintVehicleTag($AccountNode, $local_account_id,$vehicletag)
   					$vehicle_cnt++;
   					//$td_cnt++;
   					//common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name,$vehicle_tag_local);
-  					 $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
-                            //$xml_current = "../../../xml_vts/xml_data/".$current_date."/".$vehicle_imei.".xml";
-                            //if (file_exists($xml_current))
-                            if($logResult!="")
+  					  if($root->data->DeviceRunningStatus[$j]=="1")
                             {
   					 $color = $vcolor2;
   					 $vehicle_name_arr[$color][] =$vehicle_name; 
@@ -449,8 +440,8 @@ function PrintVehicleType($AccountNode, $local_account_id, $vehicletype)
   global $vcolor1;
   global $vcolor2;
   global $vcolor3;
-  global $o_cassandra;
-        global $logDate;
+  //global $o_cassandra;
+       // global $logDate;
     
 	$vehicle_name_arr=array();
 	$imei_arr=array();
@@ -483,10 +474,7 @@ function PrintVehicleType($AccountNode, $local_account_id, $vehicletype)
   					$vehicle_cnt++;
   					$td_cnt++;
   					//common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name,$vehicle_type_local);
-  					$logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
-                            //$xml_current = "../../../xml_vts/xml_data/".$current_date."/".$vehicle_imei.".xml";
-                            //if (file_exists($xml_current))
-                            if($logResult!="")
+  					 if($root->data->DeviceRunningStatus[$j]=="1")
                             {
   					 $color = $vcolor2;
   					 $vehicle_name_arr[$color][] =$vehicle_name; 
