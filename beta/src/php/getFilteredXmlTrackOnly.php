@@ -966,18 +966,22 @@ for($i=0;$i<$vsize;$i++)
                         $CurrentLong = $SortedDataObject->longitudeData[$obi];
                         $datetime=$SortedDataObject->deviceDatetime[$obi]; 
                         
-                        if($CurrentLat=="0.0" && $CurrentLong=="0.0")
+                        if((strtotime($datetime)-strtotime($noGpsDate))>$timeinterval)
                         {
-                            //echo "in if";
-                            $vehicleserial[]=$vserial[$i];
-                            $lat[]=$CurrentLat;
-                            $lng[]=$CurrentLong; 
-                            $alt[]="";
-                            $datetimeXml[]=$SortedDataObject->deviceDatetime[$obi];
-                            $vehiclename[]=$vehicle_detail_local[0]; 
-                            $vehicletype[]=$vehicle_detail_local[1];
-                            $speed[]=0.0;
-                            $cumdist[]=0.0;                           
+                            $noGpsDate=$datetime;
+                            if($CurrentLat=="0.0" && $CurrentLong=="0.0")
+                            {
+                                //echo "in if";
+                                $vehicleserial[]=$vserial[$i];
+                                $lat[]=$CurrentLat;
+                                $lng[]=$CurrentLong; 
+                                $alt[]="";
+                                $datetimeXml[]=$SortedDataObject->deviceDatetime[$obi];
+                                $vehiclename[]=$vehicle_detail_local[0]; 
+                                $vehicletype[]=$vehicle_detail_local[1];
+                                $speed[]=0.0;
+                                $cumdist[]=0.0;                           
+                            }
                         }
                         if((strlen($CurrentLat)>5) && ($CurrentLat!="-") && (strlen($CurrentLong)>5) && ($CurrentLong!="-"))
                         {
