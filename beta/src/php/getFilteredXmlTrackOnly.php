@@ -620,6 +620,18 @@ for($i=0;$i<$vsize;$i++)
                                 {
                                     $LastDTForDif=$xml_date_current;
                                 }
+                                
+                                if($overSpeed<200.0)
+                                {
+                                    $speeed_data_valid_time = $datetime;
+                                }
+                                
+                                if((strtotime($datetime) - strtotime($speeed_data_valid_time) )>300) //data high speed for 5 mins
+                                {
+                                    $LastLat =$CurrentLat;
+                                    $LastLong =$CurrentLong;                                  
+                                }
+                                
                                 if(($distance>=$distanceinterval) || ($firstData==0))
                                 {
                                     $xml_date_last = $xml_date_current;									
@@ -1014,6 +1026,17 @@ for($i=0;$i<$vsize;$i++)
                                 if($distance<$distanceinterval)
                                 {
                                     $LastDTForDif=$xml_date_current;
+                                }
+                                
+                                if($overSpeed<200.0)
+                                {
+                                    $speeed_data_valid_time = $datetime;
+                                }
+                                
+                                if((strtotime($datetime) - strtotime($speeed_data_valid_time) )>300) //data high speed for 5 mins
+                                {
+                                    $LastLat =$CurrentLat;
+                                    $LastLong =$CurrentLong;                                  
                                 }
                                 /*if((((((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval) && ($distance>=$distanceinterval)) || ($firstData==0)) && 
                                 (($xml_date_current<=$enddate) && ($xml_date_current>=$startdate))) || ($f==$total_lines-2) )*/

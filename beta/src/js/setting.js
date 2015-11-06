@@ -82,21 +82,22 @@
   
   function action_setting_password(obj)
   {
-    var old_pass = document.getElementById("old_pass").value;
+    //var old_pass = document.getElementById("old_pass").value;
     var new_pass = document.getElementById("new_pass").value;
     var new_pass1 = document.getElementById("new_pass1").value;
     
-    if(old_pass=="")
+    /*if(old_pass=="")
     {
       alert("Please Enter old Password");
       document.getElementById("old_pass").value ="";
       document.getElementById("new_pass").value ="";
       document.getElementById("new_pass1").value="";      
-    }
-    if( (new_pass == new_pass1) && (old_pass!="") ) 
+    }*/
+    //if( (new_pass == new_pass1) && (old_pass!="") ) 
+    if( (new_pass == new_pass1)) 
     {
       var poststr = "setting_account_id="+document.getElementById("local_account_id").value+
-					"&old_pass=" +document.getElementById("old_pass").value+
+					//"&old_pass=" +document.getElementById("old_pass").value+
                   "&new_pass=" +document.getElementById("new_pass").value;                                 
                  // alert(poststr);                                                                                               
                    
@@ -105,7 +106,7 @@
     else
     {
       alert("New password do not match!");
-      document.getElementById("old_pass").value ="";
+     // document.getElementById("old_pass").value ="";
       document.getElementById("new_pass").value ="";
       document.getElementById("new_pass1").value ="";      
     }

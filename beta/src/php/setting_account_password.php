@@ -18,13 +18,13 @@
          <tr>
           <td colspan="3" align="center"><b>Password</b><div style="height:5px;"></div></td>    
         </tr>              
-			 <tr>
+			 <!--<tr>
 						<td>Old Password</td>
 						<td>&nbsp;:&nbsp;</td>
 						<td>
 							<input type ="password" name="old_pass" id="old_pass">
 						</td>
-				</tr>
+				</tr>-->
 				<tr>
 						<td>New Password</td>
 						<td>&nbsp;:&nbsp;</td>

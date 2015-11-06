@@ -4,7 +4,7 @@
 	$MaxColumnNo;
 	$title1=$_POST['title'];
 	echo "<div class='report_div_height'></div>
-			<center><div class='report_title'><b>".$title1."</b></div></center>	
+			<center><div class='report_title'><b>Change Password</b></div></center>	
 			<div class='report_div_height'></div>
 		<div style='height:450px;overflow:auto'>
 		<table border=1 cellspacing=0 cellpadding=0 class='module_left_menu' align='center' width='70%'>";
