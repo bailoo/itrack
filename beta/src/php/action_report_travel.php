@@ -327,7 +327,21 @@ $parameterizeData->speed="f";
 	
 get_All_Dates($datefrom, $dateto, $userdates);    
 $date_size = sizeof($userdates); 
-
+$CurrentLat = 0.0;
+$CurrentLong = 0.0;
+$LastLat = 0.0;
+$LastLong = 0.0;
+$firstData = 0;
+$start_time_flag = 0;
+$distance_total = 0;
+$distance_threshold = 0.200;
+$distance_error = 0.100;
+$distance_incriment =0.0;
+$firstdata_flag =0;
+$start_point_display =0;
+$j=0;
+$haltFlag==True;
+$distance_travel=0;
 for($i=0;$i<$vsize;$i++)
 {
     //echo"vSerial=".$vserial[$i]."<br>";
@@ -339,22 +353,7 @@ for($i=0;$i<$vsize;$i++)
         readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
         //var_dump($SortedDataObject);
         if(count($SortedDataObject->deviceDatetime)>0)
-	{
-            $CurrentLat = 0.0;
-            $CurrentLong = 0.0;
-            $LastLat = 0.0;
-            $LastLong = 0.0;
-            $firstData = 0;
-            $start_time_flag = 0;
-            $distance_total = 0;
-            $distance_threshold = 0.200;
-            $distance_error = 0.100;
-            $distance_incriment =0.0;
-            $firstdata_flag =0;
-            $start_point_display =0;
-            $j=0;
-            $haltFlag==True;
-            $distance_travel=0;
+	{            
             $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
             if(count($SortedDataObject->deviceDatetime)>0)
             {
