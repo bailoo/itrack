@@ -116,12 +116,12 @@
                             $lat2 = $lat;      				        					
                             $lng2 = $lng; 
                             calculate_distance($lat1, $lat2, $lng1, $lng2, $distance);
-                            if($distance>2000)
+                            /*if($distance>2000)
                             {
                                 $distance=0;
                                 $lat1 = $lat2;
                                 $lng1 = $lng2;
-                            }
+                            }*/
                             //echo "<br>lat1=".$lat1." ,lat2=".$lat2." ,lng1=".$lng1." ,lng2=".$lng2." ,dist=".$distance." ,datetime=".$datetime;
                             $tmp_time_diff1 = (double)(strtotime($datetime) - strtotime($last_time1)) / 3600;
                             calculate_distance($latlast, $lat2, $lnglast, $lng2, $distance1);
