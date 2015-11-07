@@ -486,14 +486,7 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
     //echo "requiredData=".$requiredData."<br>";
     //echo "imei=".$imei."<br>"; 
 	
-    if($parameterizeData->orderBy=="DESC")
-    {
-      $orderAsc = FALSE;
-    }
-    else
-    {
-        $orderAsc = TRUE;
-    }
+    $orderAsc = TRUE;
     $st_results = getImeiDateTimes($o_cassandra, $imei, $dateRangeStart, $dateRangeEnd, $deviceTime, $orderAsc);
 
     //var_dump($st_results);
@@ -916,31 +909,34 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
 function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate,$sortBy,$type,$parameterizeData,&$dataObject)
 {
    global $o_cassandra; 
-    if ($sortBy == "h")
-    {
+   if ($sortBy == "h")
+   {
         $deviceTime=TRUE;
-    }
-    else if($sortBy == "g")
-    {
+   }
+   else if($sortBy == "g")
+   {
         $deviceTime=FALSE;
+   }
+ 
+    $lastRecordArr=$st_results = getLastSeen($o_cassandra,$vSerial);
+    //var_dump($lastRecordArr);
+    foreach($lastRecordArr as $itemLR) 
+    {
+        $last_halt_time = $itemLR->u;
+        $day_max_spd=$itemLR->s;
     }
     
-    $dataFoundFlag=0;
-    $lastDataAmongData=0;
-    if(strtotime(date('Y-m-d H:i:s'))-strtotime($endDate)<1800)
-    {
-        $dataFoundFlag=1;
-        $st_results = getLastSeen($o_cassandra,$vSerial);
-    }
-    else
-    {
-        $dataFoundFlag=1;
-        $lastDataAmongData=1;
-        $st_results = getLastSeenDateTimes($o_cassandra, $vSerial, $startDate, $endDate);
-    }
+    //echo "last_halt_time=".$last_halt_time."day_max_spd=".$day_max_spd."<br>";
     
-    if($dataFoundFlag==1)
+    $deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
+    $orderAsc = TRUE;	// TRUE for ascending, otherwise descending (default)   
+    //$st_results = getImeiDateTimes($o_cassandra, $vSerial, $startDate, $endDate, $deviceTime, $orderAsc);
+    $st_results = getLastSeenDateTimes($o_cassandra, $vSerial, $startDate, $endDate);
+    //print_r($st_results);
+    //echo "countAr=".count($st_results)."<br>";
+    if(count($st_results)>0)
     {
+        //echo "lat".$st_results->d."<br>";
         $msg_type = $st_results->a;                 
         $ver = $st_results->b;              
         $fix = $st_results->c;
@@ -959,17 +955,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
         $io7 = $st_results->o;
         $io8 = $st_results->p;
         $sig_str = $st_results->q;
-        $sup_v = $st_results->r; 
-        if($lastDataAmongData==0)
-        {
-        $last_halt_time = $itemLR->u;
-        $day_max_spd=$itemLR->s;
-        }
-        else
-        {
-            $last_halt_time = '-';
-            $day_max_spd='-'; 
-        }
+        $sup_v = $st_results->r;
         $DataValid = 0;
         if ($parameterizeData->latitude != null && $parameterizeData->longitude != null) 
         {
@@ -1047,7 +1033,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
             }            
             if ($parameterizeData->lastHaltTime != null) 
             {
-                    $last_halt_time_1 = $last_halt_time;
+                $last_halt_time_1 = $last_halt_time;
             }
 
             if ($parameterizeData->latitude != null && $parameterizeData->longitude != null) 
@@ -1064,7 +1050,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
 
             if ($parameterizeData->sigStr != null) 
             {
-                    $sig_str_1 = $sig_str;
+                $sig_str_1 = $sig_str;
             }
             if ($parameterizeData->supVoltage != null) 
             {
@@ -1072,14 +1058,13 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
             }
         }
         /*foreach($st_results as $item) 
-        {
-          
+        {          
             $msg_type = $item->a;                 
             $ver = $item->b;              
             $fix = $item->c;
             $lat = $item->d;
             $lng = $item->e;
-            echo "lat".$lat."<br>";
+            //echo "lat".$lat."<br>";
             $speed = $item->f;
             $datetime_server = str_replace('@',' ',$item->g);
             $datetime_device = str_replace('@',' ',$item->h);              
