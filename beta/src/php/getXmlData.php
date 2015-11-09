@@ -961,7 +961,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
     
     if($liveDataFoundFlag==0)
     {  
-        echo "liveDataFoundFlag=".$liveDataFoundFlag."<br>";
+        //echo "liveDataFoundFlag=".$liveDataFoundFlag."<br>";
         $st_results = getLastSeenDateTimes($o_cassandra, $vSerial, $startDate, $endDate);
         $msg_type = $st_results->a;                 
         $ver = $st_results->b;              
