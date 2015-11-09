@@ -14300,3 +14300,75 @@ function show_targetplantwise(val)
 		document.getElementById('enddateto').style.display='';
 	}
 }
+
+function action_manage_invoiceMaterial(action_type)
+ {  
+    if(action_type=="add")  
+    {
+	 
+		  var material_name=document.getElementById("material_name").value; 
+		  var material_code=document.getElementById("material_code").value;
+		  if(material_name=="") 
+		  {
+			alert("Please Enter Material Name"); 
+			document.getElementById("material_name").focus();
+			return false;
+		  }
+		  else if( material_code=="") 
+		  {
+			alert("Please Enter Material Code");
+			document.getElementById("material_code").focus();
+			return false;
+		  }
+		  var poststr = "action_type="+encodeURI(action_type ) + 						
+						"&material_name="+encodeURI(material_name) +
+						"&material_code="+encodeURI(material_code); 
+		
+    }
+    else if(action_type=="edit")
+    {		var snoid=document.getElementById("snoid").value;
+                if(snoid=="")
+		{
+			alert("Some thing Problem with Database"); 			
+			return false;
+		}
+		var material_name=document.getElementById("material_name").value; 
+		if(material_name=="")
+		{
+			alert("Please Enter Material Name"); 			
+			return false;
+		}       
+		var material_code=document.getElementById("material_code").value; 
+		
+		if(material_code=="") 
+		{
+			alert("Some thing Problem with Database"); 
+			return false;
+		}
+		
+		var poststr ="action_type="+encodeURI(action_type ) + 
+		"&snoid="+encodeURI(snoid) +
+		"&material_name="+encodeURI(material_name) +
+		"&material_code="+encodeURI(document.getElementById("material_code").value ); 
+
+    }
+   
+	//alert("poststr="+poststr);
+	showManageLoadingMessage();
+    makePOSTRequest('src/php/action_manage_invoiceMaterial.htm', poststr);
+ }
+function show_invoiceRawMIlkMaterial()
+ {
+    var material_id=document.getElementById("material_id").value;
+    if(material_id=="select")
+    {
+       
+    }
+    else
+    {
+      var poststr = "material_id=" + encodeURI( document.getElementById("material_id").value) ;
+      //alert(poststr);
+      makePOSTRequest('src/php/manage_ajax_invoiceRawmilkMaterial.htm', poststr);
+      //alert(poststr);
+    }
+ }

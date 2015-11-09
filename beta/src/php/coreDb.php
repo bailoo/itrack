@@ -4899,6 +4899,47 @@ function getVehicleAndTypeFromVserial($vserial,$DbConnection)
     return $data;
 }
 
+function getRawMilkInvoiceMaterial($post_name,$DbConnection)
+{
+	$query = "SELECT name FROM rawmilk_material WHERE name='$post_name' and status=1 ";
+	$result=mysql_query($query,$DbConnection);
+	$count = mysql_num_rows($result);
+	return $count;
+}
+function insertRawMilkInvoiceMaterial($name,$code,$status,$account_id,$account_id,$date,$DbConnection)
+{
+        $query="INSERT INTO rawmilk_material(name,code,status,account_id,create_id,create_date) VALUES('$name','$code','$status','$account_id','$account_id','$date')";       
+        $result=mysql_query($query,$DbConnection); 
+        return $result;
+}
+function getAllRawMilkInvoiceMaterial($account_id,$DbConnection)
+{
+    $data=array();  
+    $query = "SELECT sno,name,code FROM rawmilk_material WHERE account_id='$account_id' and status=1 ";
+    $result=mysql_query($query,$DbConnection);            							
+    while($row=mysql_fetch_object($result))
+    {       		
+        $data[]=array('sno'=>$row->sno,'name'=>$row->name,'code'=>$row->code);	
+    }
+    return $data;
+}
+function getParticularRawMilkInvoiceMaterial($sno,$DbConnection)
+{
+    $data=array();  
+    $query = "SELECT sno,name,code FROM rawmilk_material WHERE sno='$sno' and status=1 ";
+    $result=mysql_query($query,$DbConnection);            							
+    while($row=mysql_fetch_object($result))
+    {       		
+        $data[]=array('sno'=>$row->sno,'name'=>$row->name,'code'=>$row->code);	
+    }
+    return $data;
+}
+function updateRawMilkInvoiceMaterial($material_name1,$material_code1,$account_id,$date,$snoid1,$DbConnection)
+{
+	$query="UPDATE rawmilk_material SET name='$material_name1',code='$material_code1',edit_id='$account_id',edit_date='$date' WHERE sno='$snoid1'";
+	$result=mysql_query($query,$DbConnection); 
+	return $result;
+}
 //========================================================//
 //////////// end of hierarchy class ////////
 ///////////// end of excalation ////////////
