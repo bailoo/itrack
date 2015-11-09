@@ -432,7 +432,7 @@ for($i=0;$i<$vsize;$i++)
                                         $max_speed = $speed;
                                 }
 
-
+                                //echo "halt flag=".$haltFlag."dateime=".$datetime_E . " -- " . $lat_E .",". $lng_E . "\tDelta Distance = " . $distance_incriment . "\tTotal Distance = " . $distance_total . "\tmp_speed Distance = " . $tmp_speed . "\tmp_speed= " . $tmp_speed . "\tmp_speed1= " . $tmp_speed1 . "\tmp_time_diff= " . $tmp_time_diff . "\tmp_time_diff1= " . $tmp_time_diff1 . "\n";               
                                 if($tmp_speed<300.0 && $tmp_speed1<300.0 && $distance_incriment>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
                                 {
                                         if($haltFlag==True)
@@ -455,7 +455,7 @@ for($i=0;$i<$vsize;$i++)
 
                                         $start_point_display =1;
                                         //$distance_incrimenttotal += $distance_incriment;
-                                        // echo $datetime_E . " -- " . $lat_E .",". $lng_E . "\tDelta Distance = " . $distance_incriment . "\tTotal Distance = " . $distance_total . "\n";
+                                        //echo "halt flag=".$haltFlag."dateTime=".$datetime_E . " -- " . $lat_E .",". $lng_E . "\tDelta Distance = " . $distance_incriment . "\tTotal Distance = " . $distance_total . "\n";
                                 }
 
                                 $datetime_diff = strtotime($datetime_E) - strtotime($datetime_S);
