@@ -9352,7 +9352,14 @@ function setclosetime(sno){
 		document.getElementById(param2).style.visibility = "visible";
 		document.getElementById(param1).style.display = "block";
 		document.getElementById(param2).style.display = "block"; 
-		
+		if(document.getElementById('invoice_material_'+sno).value=="")
+                {
+                    document.getElementById('temp_inv_material').value =0;
+                }
+                else
+                {
+                    document.getElementById('temp_inv_material').value =document.getElementById('invoice_material_'+sno).value;
+                }
 		document.getElementById('temp_unload_estimate_datetime').style.display=''; /*tempo not visible */
 		document.getElementById('temp_unload_estimate_datetime').value =''; /*tempo not visible */
 		 if(document.getElementById('unload_estimated_datetime_'+sno).value=='0000-00-00 00:00:00')
@@ -9647,6 +9654,7 @@ function close_milkage()
 		}
 		
 		var serial = document.getElementById('tmp_serial').value;
+                var temp_inv_material = document.getElementById('temp_inv_material').value;
 		var temp_unload_estimate_time = document.getElementById('temp_unload_estimate_time').value;
 		var temp_unload_estimate_datetime = document.getElementById('temp_unload_estimate_datetime').value;
 		var temp_unload_accept_time = document.getElementById('temp_unload_accept_time').value;
@@ -9691,6 +9699,7 @@ function close_milkage()
 		}
 		else*/
 		{
+                        document.getElementById('invoice_material_'+serial).value=temp_inv_material;
 			document.getElementById('unload_estimated_time_'+serial).value=temp_unload_estimate_time;
 			document.getElementById('unload_estimated_datetime_'+serial).value=temp_unload_estimate_datetime;
 			document.getElementById('unload_accept_time_'+serial).value=temp_unload_accept_time;

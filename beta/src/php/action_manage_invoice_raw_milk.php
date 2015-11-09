@@ -447,6 +447,7 @@
 		$approval_serials=explode(',',substr($_POST['approval_serials'],0,-1));//approved
 		$closetime_serials=explode(',',substr($_POST['closetime_serials'],0,-1));//approved
 		
+                $invoice_material_serials=explode(',',substr($_POST['invoice_material_serials'],0,-1));//invoice_material_serials
 		$unload_estimatetime_serials=explode(',',substr($_POST['unload_estimatetime_serials'],0,-1));//upload estimate
 		$unload_estimatedatetime_serials=explode(',',substr($_POST['unload_estimatedatetime_serials'],0,-1));//upload estimate datetime
 		$unload_accepttime_serials=explode(',',substr($_POST['unload_accepttime_serials'],0,-1));//upload accept
@@ -494,14 +495,14 @@
 					{
 									
                                               
-                                               $result_update= updateInvoiceMdrmApproved($plant_serials[$cnt],$date,$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
+                                               $result_update= updateInvoiceMdrmApproved($plant_serials[$cnt],$date,$invoice_material_serials[$cnt],$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
 					}
 					else
 					{
 						if($flag_add==1)
 						{
 							
-                                                        $result_update = updateInvoiceMdrmNoApproved_flag_add($plant_serials[$cnt],$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
+                                                        $result_update = updateInvoiceMdrmNoApproved_flag_add($plant_serials[$cnt],$invoice_material_serials[$cnt],$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
 						}
 						else if($snf_per_rt_serials[$cnt]!="" && $fat_per_rt_serials[$cnt]!="")
 						{
@@ -549,7 +550,7 @@
 						//echo "1b=". $query_update;
 						$result_update = mysql_query($query_update,$DbConnection);
                                                 */
-                                                $result_update =updateInvoiceMdrmApprovedUnload($plant_serials[$cnt],$date,$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials[$cnt],$unload_accepttime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$sno,$DbConnection);
+                                                $result_update =updateInvoiceMdrmApprovedUnload($plant_serials[$cnt],$date,$invoice_material_serials[$cnt],$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials[$cnt],$unload_accepttime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$sno,$DbConnection);
 					}
 					else
 					{
@@ -568,7 +569,7 @@
 						//echo "2b=". $query_update;
 						$result_update = mysql_query($query_update,$DbConnection);
                                                 */
-                                                $result_update =updateInvoiceMdrmNoApprovedUnload_flag_add($plant_serials[$cnt],$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials[$cnt],$unload_accepttime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$sno,$date,$DbConnection);
+                                                $result_update =updateInvoiceMdrmNoApprovedUnload_flag_add($plant_serials[$cnt],$invoice_material_serials[$cnt],$unload_estimatetime_serials[$cnt],$unload_estimatedatetime_serials[$cnt],$unload_accepttime_serials[$cnt],$fat_per_ft_serials[$cnt],$snf_per_ft_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$sno,$date,$DbConnection);
 						}
 						else if($snf_per_rt_serials[$cnt]!="" && $fat_per_rt_serials[$cnt]!="")
 						{
