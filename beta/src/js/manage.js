@@ -10269,6 +10269,9 @@ function action_manage_invoice_update(action_type)
 		var approval="";
 		var closetime="";
 		
+                var invoice_material_arr = document.invoice_form.elements['invoice_material[]'];
+		var invoice_material="";
+                
 		var unload_arr_estimated_time = document.invoice_form.elements['unload_estimated_time[]'];
 		var unload_estimatetime="";
 		
@@ -10388,7 +10391,8 @@ function action_manage_invoice_update(action_type)
 		if(unload_arr_estimated_time.length!=undefined)
 		{
 			for (var i=0;i<unload_arr_estimated_time.length;i++)
-			{				
+			{	
+                                invoice_material = invoice_material + ""+invoice_material_arr[i].value+",";
 				unload_estimatetime = unload_estimatetime + ""+unload_arr_estimated_time[i].value+",";
 				unload_estimatedatetime = unload_estimatedatetime + ""+unload_arr_estimated_datetime[i].value+",";
 				unload_accepttime = unload_accepttime + ""+unload_arr_accept_time[i].value+",";
@@ -10414,6 +10418,7 @@ function action_manage_invoice_update(action_type)
 		}
 		else
 		{
+                        invoice_material = invoice_material + ""+invoice_material_arr.value+",";
 			unload_estimatetime = unload_estimatetime + ""+unload_arr_estimated_time.value+",";
 			unload_estimatedatetime = unload_estimatedatetime + ""+unload_arr_estimated_datetime.value+",";
 			unload_accepttime = unload_accepttime + ""+unload_arr_accept_time.value+",";
@@ -10447,6 +10452,7 @@ function action_manage_invoice_update(action_type)
 					"&close_serials="+close_serials+
 					"&closetime_serials="+ closetime +
 					"&approval_serials="+ approval +
+                                        "&invoice_material_serials="+ invoice_material +
 					"&unload_estimatetime_serials="+ unload_estimatetime +
 					"&unload_estimatedatetime_serials="+ unload_estimatedatetime +
 					"&unload_accepttime_serials="+ unload_accepttime +
