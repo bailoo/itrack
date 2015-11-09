@@ -9352,7 +9352,14 @@ function setclosetime(sno){
 		document.getElementById(param2).style.visibility = "visible";
 		document.getElementById(param1).style.display = "block";
 		document.getElementById(param2).style.display = "block"; 
-		
+		if(document.getElementById('invoice_material_'+sno).value=="")
+                {
+                    document.getElementById('temp_inv_material').value =0;
+                }
+                else
+                {
+                    document.getElementById('temp_inv_material').value =document.getElementById('invoice_material_'+sno).value;
+                }
 		document.getElementById('temp_unload_estimate_datetime').style.display=''; /*tempo not visible */
 		document.getElementById('temp_unload_estimate_datetime').value =''; /*tempo not visible */
 		 if(document.getElementById('unload_estimated_datetime_'+sno).value=='0000-00-00 00:00:00')
@@ -9647,6 +9654,7 @@ function close_milkage()
 		}
 		
 		var serial = document.getElementById('tmp_serial').value;
+                var temp_inv_material = document.getElementById('temp_inv_material').value;
 		var temp_unload_estimate_time = document.getElementById('temp_unload_estimate_time').value;
 		var temp_unload_estimate_datetime = document.getElementById('temp_unload_estimate_datetime').value;
 		var temp_unload_accept_time = document.getElementById('temp_unload_accept_time').value;
@@ -9691,6 +9699,7 @@ function close_milkage()
 		}
 		else*/
 		{
+                        document.getElementById('invoice_material_'+serial).value=temp_inv_material;
 			document.getElementById('unload_estimated_time_'+serial).value=temp_unload_estimate_time;
 			document.getElementById('unload_estimated_datetime_'+serial).value=temp_unload_estimate_datetime;
 			document.getElementById('unload_accept_time_'+serial).value=temp_unload_accept_time;
@@ -10260,6 +10269,9 @@ function action_manage_invoice_update(action_type)
 		var approval="";
 		var closetime="";
 		
+                var invoice_material_arr = document.invoice_form.elements['invoice_material[]'];
+		var invoice_material="";
+                
 		var unload_arr_estimated_time = document.invoice_form.elements['unload_estimated_time[]'];
 		var unload_estimatetime="";
 		
@@ -10379,7 +10391,8 @@ function action_manage_invoice_update(action_type)
 		if(unload_arr_estimated_time.length!=undefined)
 		{
 			for (var i=0;i<unload_arr_estimated_time.length;i++)
-			{				
+			{	
+                                invoice_material = invoice_material + ""+invoice_material_arr[i].value+",";
 				unload_estimatetime = unload_estimatetime + ""+unload_arr_estimated_time[i].value+",";
 				unload_estimatedatetime = unload_estimatedatetime + ""+unload_arr_estimated_datetime[i].value+",";
 				unload_accepttime = unload_accepttime + ""+unload_arr_accept_time[i].value+",";
@@ -10405,6 +10418,7 @@ function action_manage_invoice_update(action_type)
 		}
 		else
 		{
+                        invoice_material = invoice_material + ""+invoice_material_arr.value+",";
 			unload_estimatetime = unload_estimatetime + ""+unload_arr_estimated_time.value+",";
 			unload_estimatedatetime = unload_estimatedatetime + ""+unload_arr_estimated_datetime.value+",";
 			unload_accepttime = unload_accepttime + ""+unload_arr_accept_time.value+",";
@@ -10438,6 +10452,7 @@ function action_manage_invoice_update(action_type)
 					"&close_serials="+close_serials+
 					"&closetime_serials="+ closetime +
 					"&approval_serials="+ approval +
+                                        "&invoice_material_serials="+ invoice_material +
 					"&unload_estimatetime_serials="+ unload_estimatetime +
 					"&unload_estimatedatetime_serials="+ unload_estimatedatetime +
 					"&unload_accepttime_serials="+ unload_accepttime +
