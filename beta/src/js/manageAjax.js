@@ -1266,8 +1266,21 @@ function show_option_with_value(type, option)      // type="manage/report/settin
 				document.getElementById('box3').style.display = 'none';
 			}
     	  }
-		  
-		  
+          
+	  else if(result1[0].trim()=="addMaterial")
+          {            
+            //alert(result1[1]);
+            //document.getElementById("available_message").style.display='';
+            document.getElementById('available_message').innerHTML = result1[1];                                                             
+          }
+          else if(result1[0].trim()=="invoiceMaterialParticular")
+          {            
+            //alert(result1[1]);
+            document.getElementById("mat_area").style.display='';
+            document.getElementById('snoid').value = result1[1];
+            document.getElementById('material_name').value = result1[2];
+            document.getElementById('material_code').value = result1[3];
+          }	  
 		
           /*else if(result1[0]=="route_vehicle")
           {                         

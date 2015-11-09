@@ -241,4 +241,17 @@
 		echo $message;	
 	}
 	/////////stop sales /////////
+         if($file_type=="invoice_rawmilk" )
+	{
+		$rowcnt=getRawMilkInvoiceMaterial($field_value,$DbConnection);
+		//$message=failure_successesor($row_result);
+                if($rowcnt>0)
+                {
+                    echo "addMaterial##<font color=red>Not Available</font>";	
+                }
+                else
+                {
+                    echo "addMaterial##<font color=green>Available</font>"; 
+                }
+	}
 	?>
