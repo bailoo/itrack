@@ -37,7 +37,7 @@
     $userInterval = $_POST['user_interval'];
     //echo "userInterval=".$userInterval."<br>";
     $requiredData="All";
-
+    $parameterizeData=null;
     $parameterizeData=new parameterizeData();
     $ioFoundFlag=0;
 
@@ -69,6 +69,7 @@
         for($di=0;$di<=($date_size-1);$di++)
         {
             //echo "userdate=".$userdates[$di]."<br>";
+            $SortedDataObject=null;
             $SortedDataObject=new data();
             readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
             //var_dump($SortedDataObject);
@@ -76,7 +77,8 @@
             {
                 $prevSortedSize=sizeof($SortedDataObject->deviceDatetime);
                 for($obi=0;$obi<$prevSortedSize;$obi++)
-                {		
+                {
+                    $DataValid = 0;
                     $lat = $SortedDataObject->latitudeData[$obi];
                     $lng = $SortedDataObject->longitudeData[$obi];
                     if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))
@@ -108,7 +110,8 @@
                             //echo "<br>FirstData:".$date_secs1." ".$time1;                 	
                         }
                         else
-                        {                           					
+                        {
+                            $lastDataFlag=1;
                             // echo "<br>Total lines orig=".$total_lines." ,c=".$c;
                             $time2 = $datetime;											
                             $date_secs2 = strtotime($time2);	
@@ -175,7 +178,8 @@
                             }      					
                             //echo "$date_secs2".$date_secs2." $date_secs1".$date_secs1;
                             if( ($date_secs2 >= $date_secs1))// || ($f == $total_lines-5))
-                            {									
+                            {
+                                $lastDataFlag=0;
                                 $imei[]=$vserial[$i];
                                 $vname[]=$vehicle_detail_local[0];
                                 $dateFromDisplay[]=$time1;
@@ -192,25 +196,19 @@
         //echo "<br>REACHED-3";		                                                                        									                               
                         }   // else closed  
                     }
-                }
-                $imei[]=$vserial[$i];
-                $vname[]=$vehicle_detail_local[0];
-                $dateFromDisplay[]=$time1;
-                $dateToDisplay[]=$time2;
-                $distanceDisplay[]=$total_dist;
-                //reassign time1
-                $time1 = $datetime;
-                $date_secs1 = strtotime($time1);
-                $date_secs1 = (double)($date_secs1 + $interval);		    									    						    						
-                //echo "<br>datesec1=".$datetime;    						                  
-                $total_dist = 0.0;	 
-                $lat1 = $lat2;
-                $lng1 = $lng2;
-                $SortedDataObject=null;
+                }               
             }
-        }	
+        }
+        if($lastDataFlag==1)
+        {
+            $imei[]=$vserial[$i];
+            $vname[]=$vehicle_detail_local[0];
+            $dateFromDisplay[]=$time1;
+            $dateToDisplay[]=$time2;
+            $distanceDisplay[]=$total_dist;
+        }
     }
-    $parameterizeData=null;
+    
     $o_cassandra->close();
 	
 echo '<center>';
