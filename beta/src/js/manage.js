@@ -9588,6 +9588,7 @@ function setclosetimeedit(sno){
 			}
 			
 		}
+                document.getElementById('temp_inv_material').value =document.getElementById('invoice_material_'+sno).value;
 		document.getElementById('temp_qty_ct').value = document.getElementById('qty_ct_'+sno).value;
 		document.getElementById('temp_degree_ct').value = document.getElementById('temp_ct_'+sno).value;
 		document.getElementById('temp_acidity_ct').value = document.getElementById('acidity_ct_'+sno).value;
