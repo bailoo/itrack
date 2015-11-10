@@ -344,7 +344,7 @@ for($i=0;$i<$vsize;$i++)
     for($di=0;$di<=($date_size-1);$di++)
     {
         $SortedDataObject=new data();
-        readFileXmlNew('865733021565734',$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+        readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
         //var_dump($SortedDataObject);
         if(count($SortedDataObject->deviceDatetime)>0)
 	{            
@@ -517,6 +517,18 @@ for($i=0;$i<$vsize;$i++)
         $datetime_travel_end = $datetime_E;
         $lat_travel_end = $lat_S;
         $lng_travel_end = $lng_S;
+        $travel_dur =  strtotime($datetime_travel_end) - strtotime($datetime_travel_start);                                                    
+        $hms = secondsToTime($travel_dur);
+        $travel_time_this = $hms[h].":".$hms[m].":".$hms[s];
+        //echo "avg_speed=".$distance_travel."travel_dur=".$travel_dur."<br>";
+        $avg_speed = $distance_travel/($travel_dur/3600);
+        $distance_travel = round($distance_travel,2);
+        $avg_speed = round($avg_speed,2);
+        //echo "avg_speed=".$avg_speed."<br>";
+        if($max_speed<$avg_speed)
+        {
+            $max_speed = $avg_speed;
+        }
 
         $imei[]=$vserial[$i];
         $vname[]=$finalVNameArr[$i];
@@ -529,7 +541,7 @@ for($i=0;$i<$vsize;$i++)
         $distance_travel = round($distance_travel,2);
         $distance_travelled[]=$distance_travel;
         $travel_time[]=$travel_time_this;
-        $maxSpeed[]=$maxSpeed;
+        $maxSpeed[]=$max_speed;
         $avgSpeed[]=$avg_speed;
 
         $datetime_travel_start = $datetime_E;
