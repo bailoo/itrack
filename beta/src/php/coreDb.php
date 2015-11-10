@@ -1760,9 +1760,9 @@ function updateInvoiceMdrmNoApprovedUnload_flag_add($plant_serials,$invoice_mate
 						$result_update = mysql_query($query_update,$DbConnection);
                                              return $result_update;
 } 
-function updateInvoiceMdrmTest($testing_status_serials,$qty_ct_serials,$temp_ct_serials,$acidity_ct_serials,$mbrt_min_ct_serials,$mbrt_br_ct_serials,$mbrt_rm_ct_serials,$protien_per_ct_serials,$sodium_ct_serials,$fat_per_rt_serials,$snf_per_rt_serials,$adultration_ct_serials,$otheradultration_ct_serials,$date,$sno,$DbConnection)
+function updateInvoiceMdrmTest($invoice_material_serials,$testing_status_serials,$qty_ct_serials,$temp_ct_serials,$acidity_ct_serials,$mbrt_min_ct_serials,$mbrt_br_ct_serials,$mbrt_rm_ct_serials,$protien_per_ct_serials,$sodium_ct_serials,$fat_per_rt_serials,$snf_per_rt_serials,$adultration_ct_serials,$otheradultration_ct_serials,$date,$sno,$DbConnection)
 {
-    $query_update = "UPDATE invoice_mdrm SET testing_status='$testing_status_serials',qty_ct='$qty_ct_serials',
+    $query_update = "UPDATE invoice_mdrm SET invoice_material='$invoice_material_serials',testing_status='$testing_status_serials',qty_ct='$qty_ct_serials',
 				temp_ct='$temp_ct_serials',acidity_ct='$acidity_ct_serials',mbrt_min_ct='$mbrt_min_ct_serials',mbrt_br_ct='$mbrt_br_ct_serials',
 				mbrt_rm_ct='$mbrt_rm_ct_serials',protien_per_ct='$protien_per_ct_serials',sodium_ct='$sodium_ct_serials',
 				fat_per_rt='$fat_per_rt_serials',snf_per_rt='$snf_per_rt_serials' ,adultration_ct='$adultration_ct_serials' , otheradultration_ct='$otheradultration_ct_serials' ,edit_date='$date' WHERE sno='$sno'";
