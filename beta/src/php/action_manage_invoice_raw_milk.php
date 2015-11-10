@@ -578,7 +578,7 @@
 							mbrt_rm_ct='$mbrt_rm_ct_serials[$cnt]',protien_per_ct='$protien_per_ct_serials[$cnt]',sodium_ct='$sodium_ct_serials[$cnt]',fat_per_rt='$fat_per_rt_serials[$cnt]',snf_per_rt='$snf_per_rt_serials[$cnt]',adultration_ct='$adultration_ct_serials[$cnt]' , otheradultration_ct='$otheradultration_ct_serials[$cnt]' ,edit_date='$date' WHERE sno='$sno'";
 							//echo "3b=". $query_update;
 							$result_update = mysql_query($query_update,$DbConnection);*/
-                                                         $result_update = updateInvoiceMdrmTest($testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
+                                                         $result_update = updateInvoiceMdrmTest($invoice_material_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
 						}
 						else if($edit_close_chk_serials[$cnt]=="1")
 						{
@@ -588,7 +588,7 @@
 							
 							//echo "3a=". $query_update;
 							$result_update = mysql_query($query_update,$DbConnection);*/
-                                                         $result_update = updateInvoiceMdrmTest($testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
+                                                         $result_update = updateInvoiceMdrmTest($invoice_material_serials[$cnt],$testing_status_serials[$cnt],$qty_ct_serials[$cnt],$temp_ct_serials[$cnt],$acidity_ct_serials[$cnt],$mbrt_min_ct_serials[$cnt],$mbrt_br_ct_serials[$cnt],$mbrt_rm_ct_serials[$cnt],$protien_per_ct_serials[$cnt],$sodium_ct_serials[$cnt],$fat_per_rt_serials[$cnt],$snf_per_rt_serials[$cnt],$adultration_ct_serials[$cnt],$otheradultration_ct_serials[$cnt],$date,$sno,$DbConnection);
 						}
 					}
 				}
