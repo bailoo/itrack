@@ -9588,6 +9588,7 @@ function setclosetimeedit(sno){
 			}
 			
 		}
+                document.getElementById('temp_inv_material').value =document.getElementById('invoice_material_'+sno).value;
 		document.getElementById('temp_qty_ct').value = document.getElementById('qty_ct_'+sno).value;
 		document.getElementById('temp_degree_ct').value = document.getElementById('temp_ct_'+sno).value;
 		document.getElementById('temp_acidity_ct').value = document.getElementById('acidity_ct_'+sno).value;
@@ -11897,8 +11898,8 @@ function action_manage_invoice_raw_milk_from_admin(){
 			var hr_diff_sec=(endHour-startHour)/1000;
 			var hr_diff=parseInt(hr_diff_sec/3600);
 			//alert(hr_diff);
-			if(hr_diff > 120){ //5 day
-				alert("Dispatch Time is not allowed more than 120 Hours (5 day) back from Current Invoice Entry Time ");
+			if(hr_diff > 360){ //15 day
+				alert("Dispatch Time is not allowed more than 360 Hours (15 day) back from Current Invoice Entry Time ");
 				document.getElementById('disp_time:'+j).focus();
 				document.getElementById('disp_time:'+j).value="";
 				return false;
