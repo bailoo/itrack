@@ -635,39 +635,37 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
             $dataObject->longitudeData[] = $lng;
         }
 
-       if ($parameterizeData->speed != null) {
-                  $dataObject->speedData[] = $speed;
-       }
+        if ($parameterizeData->speed != null) 
+        {
+            $dataObject->speedData[] = $speed;
+        }
         if ($parameterizeData->doorOpen1 != null) 
         {
             $doorOpen1 = $parameterizeData->doorOpen1;
             $dataObject->doorOpen1Data[] = $item->$doorOpen1;
         }
-            if ($parameterizeData->doorOpen2 != null) 
-            {
-                $doorOpen2 = $parameterizeData->doorOpen2;
-                $dataObject->doorOpen2Data[] = $item->$doorOpen2;
-            }
-            if ($parameterizeData->doorOpen3 != null) 
-            {
-                $doorOpen3 = $parameterizeData->doorOpen3;
-                $dataObject->doorOpen3Data[] = $item->$doorOpen3;
-            }
+        if ($parameterizeData->doorOpen2 != null) 
+        {
+            $doorOpen2 = $parameterizeData->doorOpen2;
+            $dataObject->doorOpen2Data[] = $item->$doorOpen2;
+        }
+        if ($parameterizeData->doorOpen3 != null) 
+        {
+            $doorOpen3 = $parameterizeData->doorOpen3;
+            $dataObject->doorOpen3Data[] = $item->$doorOpen3;
+        }
 
-            if ($parameterizeData->acRunHr != null) 
-            {
-                $acRunHr = $parameterizeData->acRunHr;
-                $dataObject->acIOData[] = $item->$acRunHr;
-            }
+        if ($parameterizeData->acRunHr != null) 
+        {
+            $acRunHr = $parameterizeData->acRunHr;
+            $dataObject->acIOData[] = $item->$acRunHr;
+        }
 
-            if ($parameterizeData->engineRunHr != null) 
-            {
-                $engineRunHr = $parameterizeData->engineRunHr;
-                $dataObject->engineIOData[] = $item->$engineRunHr;
-            }
-               
-               
-        
+        if ($parameterizeData->engineRunHr != null) 
+        {
+            $engineRunHr = $parameterizeData->engineRunHr;
+            $dataObject->engineIOData[] = $item->$engineRunHr;
+        }
     }
 }
 function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $parameterizeData, &$dataObject) {
