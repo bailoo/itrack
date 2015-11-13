@@ -11898,8 +11898,8 @@ function action_manage_invoice_raw_milk_from_admin(){
 			var hr_diff_sec=(endHour-startHour)/1000;
 			var hr_diff=parseInt(hr_diff_sec/3600);
 			//alert(hr_diff);
-			if(hr_diff > 120){ //5 day
-				alert("Dispatch Time is not allowed more than 120 Hours (5 day) back from Current Invoice Entry Time ");
+			if(hr_diff > 360){ //15 day
+				alert("Dispatch Time is not allowed more than 360 Hours (15 day) back from Current Invoice Entry Time ");
 				document.getElementById('disp_time:'+j).focus();
 				document.getElementById('disp_time:'+j).value="";
 				return false;
