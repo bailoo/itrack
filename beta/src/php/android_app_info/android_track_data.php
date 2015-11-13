@@ -120,16 +120,10 @@
         $LastLong = 0.0;
         $firstData = 0;
         $distance =0.0;
-        $linetowrite="";
+        
         $date_1 = explode(" ",$startdate);
         $date_2 = explode(" ",$enddate);
-
-        $dateRangeStart = $date_1[0];
-        $dateRangeEnd = $date_2[0];
-        $timefrom = $date_1[1];
-        $timeto = $date_2[1];
-
-        get_All_Dates($dateRangeStart, $dateRangeEnd, $userdates);    
+        get_All_Dates($date_1[0], $date_2[0], $userdates);    
         $date_size = sizeof($userdates);
 
         date_default_timezone_set("Asia/Calcutta");
@@ -157,23 +151,23 @@
            
             if($date_size==1)
             {
-                $dateRangeStart=$date1;
-                $dateRangeEnd=$date2;
+                $dateRangeStart=$startdate;
+                $dateRangeEnd=$enddate;
             }
             else if($di==($date_size-1))
             {
                 $dateRangeStart=$userdates[$i]." 00:00:00";
-                $dateRangeEnd=$date2;
+                $dateRangeEnd=$enddate;
             }
             else if($di==0)
             {
-                $dateRangeStart=$date1;
+                $dateRangeStart=$startdate;
                 $dateRangeEnd=$userdates[$i]." 23:59:59";
             }
             else
             {
                $dateRangeStart=$userdates[$i]." 00:00:00";
-                $dateRangeEnd=$userdates[$i]." 23:59:59";
+               $dateRangeEnd=$userdates[$i]." 23:59:59";
             }
             deviceDataBetweenDates($vehicle_serial,$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);            
             $t=time();
