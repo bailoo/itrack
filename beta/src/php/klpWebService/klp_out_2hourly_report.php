@@ -56,7 +56,7 @@ while($row_assignment = mysql_fetch_object($result_assignment))
 
 $query = "SELECT sno,vehicle_name,container_no,icd_out_datetime,icd_code,icd_in_datetime,factory_ea_datetime,".
         "factory_ed_datetime,factory_code,actual_icd_out_datetime,actual_icd_in_datetime,remark FROM icd_webservice_data ".
-        "WHERE icd_in_datetime!='' AND account_id=715";
+        "WHERE icd_in_datetime='0000-00-00 00:00:00' AND account_id=715";
 //echo "Query=".$query."<br>";
 $result = mysql_query($query,$DbConnection);
 $numRows=mysql_num_rows($result);

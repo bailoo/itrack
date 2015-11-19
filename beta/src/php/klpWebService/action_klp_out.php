@@ -151,7 +151,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                     }  //if datesec2 */      					
 //echo "<br>REACHED-3";		                                                                        									                               
                 }   // else closed  
-                if($wSInputDataObj->actualIcdOutDatetime=="")
+                if($wSInputDataObj->actualIcdOutDatetime=="0000-00-00 00:00:00")
                 {
                     $coord = explode(',',$icdCoord);
                     $icdLat = trim($coord[0]);
@@ -174,7 +174,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                     }                   
                 }
                 //echo "actualIcdInDatetime=".$wSInputDataObj->actualIcdInDatetime."<br>";
-                if($wSInputDataObj->actualIcdInDatetime=="" && $speed<10)
+                if($wSInputDataObj->actualIcdInDatetime=="0000-00-00 00:00:00" && $speed<10)
                 {
                     $coord = explode(',',$icdCoord);
                     $icdLat = trim($coord[0]);
@@ -195,7 +195,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                 echo "customerInDatetime=".$wSInputDataObj->customerInDatetime."<br>";
                 echo "speed=".$speed."<br>";*/
                 
-                if(($wSInputDataObj->actualIcdOutDatetime!="") && ($wSInputDataObj->customerInDatetime=="" && $speed<10))
+                if(($wSInputDataObj->actualIcdOutDatetime!="0000-00-00 00:00:00") && ($wSInputDataObj->customerInDatetime=="0000-00-00 00:00:00" && $speed<10))
                 {
                     //echo "in customer";
                     $coord = explode(',',$cusotmerCoord);
@@ -204,7 +204,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                     //echo "lat=".$customerLat."lng=".$customerLng."<br>";
                     $cOStatus=false;
                     $customerInStatus=checkAreaDistance($customerLat,$lat,$customerLng,$lng,$cOStatus,$inDistanceLimit);
-                    $wSInputDataObj->actualIcdInDatetime="";
+                    $wSInputDataObj->actualIcdInDatetime="0000-00-00 00:00:00";
                     //echo "inStatus=".$customerInStatus."<br>";
                     if($customerInStatus==true)
                     {
@@ -214,7 +214,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                     }
                 }
                 //echo "customerOutDatetime=".$wSInputDataObj->customerOutDatetime."<br>";
-                if(($wSInputDataObj->actualIcdOutDatetime!="") && ($wSInputDataObj->customerInDatetime!="") && ($wSInputDataObj->customerOutDatetime==""))
+                if(($wSInputDataObj->actualIcdOutDatetime!="0000-00-00 00:00:00") && ($wSInputDataObj->customerInDatetime!="0000-00-00 00:00:00") && ($wSInputDataObj->customerOutDatetime=="0000-00-00 00:00:00"))
                 {
                     $coord = explode(',',$cusotmerCoord);
                     $customerLat = trim($coord[0]);
@@ -242,7 +242,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
         {
             $total_dist = round($total_dist,2);
             $queryDistance="SELECT distance_travelled FROM icd_webservice_data WHERE vehicle_name=".
-                            "'$wSInputDataObj->vehicleName' AND icd_in_datetime=''";
+                            "'$wSInputDataObj->vehicleName' AND icd_in_datetime='0000-00-00 00:00:00'";
             $resultDistance=mysql_query($queryDistance,$DbConnection);
             $rowDistance=  mysql_fetch_row($resultDistance);
             if($rowDistance[0]!="")
@@ -258,7 +258,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                     "'$wSInputDataObj->actualIcdOutDatetime',factory_in_datetime='$wSInputDataObj->customerInDatetime',factory_out_datetime=".
                     "'$wSInputDataObj->customerOutDatetime',distance_travelled='$finalTotalDistance',".
                     "hourly_distance='$total_dist' WHERE vehicle_name='$wSInputDataObj->vehicleName'".
-                    " AND icd_in_datetime=''";
+                    " AND icd_in_datetime='0000-00-00 00:00:00'";
             
             //echo "Query=".$QueryWSDb."<br>";
             $ResultWS=mysql_query($QueryWSDb,$DbConnection); 
