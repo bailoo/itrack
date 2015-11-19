@@ -939,7 +939,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
                 $lat = $itemLR->d;
                 $lng = $itemLR->e;
                 //echo "lat".$lat."<br>";
-                $speed = $st_results->f;
+                $speed = $itemLR->f;
                 $datetime_server = str_replace('@',' ',$itemLR->g);                         
                 $io1 = $itemLR->i;
                 $io2 = $itemLR->j;
