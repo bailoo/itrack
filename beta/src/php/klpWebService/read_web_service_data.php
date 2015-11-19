@@ -13,7 +13,8 @@ if($account_id == "715")
     $user_name = "klp_out";
 }
 //if($account_id == "231") $user_name = "delhi@";
-echo "\nDBASE=".$DBASE." ,USER=".$USER." ,PASS=".$PASSWD;
+//if($account_id == "231") $user_name = "delhi@";
+//echo "\nDBASE=".$DBASE." ,USER=".$USER." ,PASS=".$PASSWD;
 $DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server is down. Please try after few minutes.");
 mysql_select_db ($DBASE, $DbConnection) or die("could not find DB");
 
@@ -100,63 +101,45 @@ else
     }
 }
 
-
-$query = "SELECT sno,vehicle_name,container_no,icd_out_datetime,icd_code,icd_in_datetime,factory_ea_datetime,".
-        "factory_ed_datetime,factory_code,actual_icd_out_datetime,actual_icd_in_datetime,remark FROM icd_webservice_data ".
-        "WHERE icd_in_datetime!='0000-00-00 00:00:00' AND account_id=715";
-$result = mysql_query($query,$DbConnection);
-while($row=mysql_fetch_object($result))
-{
-    $locationIdDbArr=explode(",",$row->factory_code);                
-    $uniqueDBKey=$locationIdDbArr[1]."#".$row->vehicle_name;
-    //echo "uniqueDbKey=".$uniqueDBKey."<br>";
-    $dBData[$uniqueDBKey] = array(
-                                        "vehicleName"=>$row->vehicle_name,
-                                        "customerNo"=>$row->container_no,
-                                        "locationIds"=>$row->factory_code,
-                                        "customerInDatetime"=>$row->factory_ea_datetime,
-                                        "customerOutDatetime"=>$row->factory_ed_datetime,
-                                        "icdInDatetime"=>$row->icd_in_datetime,
-                                        "icdOutDatetime"=>$row->icd_out_datetime
-                                     );
-}
 $icd_code_global = "KLPL/ICD Panki";
 $current_date = date('Y-m-d H:i:s');
+//echo "cnt=".count($wSData)."<br>";
 foreach($wSData as $key => $wSValue)
 {
-    //echo"vNamew=".$wSData[$key]['vehicleName']."<br>";
-    //print_r($wSValue);
-    //echo "<br><br>";
-    //echo"vNameS=".$dBData[$key]['vehicleName']."<br>";
-    if($wSData[$key]['icdInDatetime']!="")
-    {
-        $dateObj= new DateTime(str_replace("/","-",$wSData[$key]['icdInDatetime']));
-        $wSIcdInDatetime=$dateObj->format('Y-m-d H:i:s'); 
-    }    
+    $vehicleName=$wSValue['vehicleName'];
+    $locationIds=$wSValue['locationIds'];
     
-    //echo "icdWebOutDatetime=".$wSData[$key]['icdOutDatetime']."<br>";
-    $dateObj = new DateTime(str_replace("/","-",$wSData[$key]['icdOutDatetime']));
+       
+    
+    $dateObj = new DateTime(str_replace("/","-",$wSValue['icdOutDatetime']));
     $wbIcdOutDatetime=$dateObj->format('Y-m-d H:i:s');
-    //echo "afcicdWebOutDatetime=".$wbIcdOutDatetime."<br>";
+    //echo "wbIcdOutDatetime=".$wbIcdOutDatetime."<br>";
     
-    if(count($dBData[$key])==0)
+    $query = "SELECT sno,vehicle_name,container_no,icd_out_datetime,icd_code,icd_in_datetime,factory_ea_datetime,".
+        "factory_ed_datetime,factory_code,actual_icd_out_datetime,actual_icd_in_datetime,remark FROM icd_webservice_data ".
+        "WHERE vehicle_name='$vehicleName' and factory_code='$locationIds' AND account_id=715 ORDER BY sno DESC LIMIT 1";
+    
+    //echo "query=".$query."<br>";
+    $result = mysql_query($query,$DbConnection);    
+    $numRows=  mysql_num_rows($result);
+    $wSIcdInDatetime="";
+    if($wSValue['icdInDatetime']!="")
     {
-        //echo "in if <br>";
-        //echo "dbCnt=".count($dBData[$key])."<br>";
-        //echo "dbdateIn=".$dBData[$key]['icdInDatetime']."<br>";
-        //echo "wsIn=".str_replace("/","-",$wSData[$key]['icdInDatetime'])."<br>";
-        $vehicleName=$wSData[$key]['vehicleName'];
-        $customerNo=$wSData[$key]['customerNo'];
+        $dateObj= new DateTime(str_replace("/","-",$wSValue['icdInDatetime']));
+        $wSIcdInDatetime=$dateObj->format('Y-m-d H:i:s'); 
+    }
+    if($numRows==0)
+    {
+        //echo "Vehicle Not found<br>";
+        //echo "vehicleName=".$vehicleName."factoryCode=".$locationIds."wsInTime=".$wSValue['icdInDatetime']."<br>";
         
-        //echo "icdOutDatetime=".$icdOutDatetime."<br>";
-        $locationIds=$wSData[$key]['locationIds'];
-     
-        $dateObj =new DateTime(str_replace("/","-",$wSData[$key]['customerInDatetime']));
+        $customerNo=$wSValue['customerNo'];
+        $dateObj =new DateTime(str_replace("/","-",$wSValue['customerInDatetime']));
         $customerInDatetime=$dateObj->format('Y-m-d H:i:s');
-        $dateObj=new DateTime(str_replace("/","-",$wSData[$key]['customerOutDatetime']));
+        $dateObj=new DateTime(str_replace("/","-",$wSValue['customerOutDatetime']));
         $customerOutDatetime=$dateObj->format('Y-m-d H:i:s');
-        //echo "vehicleName=".$wSData[$key]['vehicleName']."inDate=".$wSData[$key]['icdInDatetime']."<br>";
-                
+        
+
         $queryInsert = "INSERT INTO icd_webservice_data("
                 . "vehicle_name,container_no,icd_code,icd_out_datetime,factory_code,factory_ea_datetime,"
                 . "factory_ed_datetime,icd_in_datetime,account_id,create_date,status,remark) "
@@ -165,11 +148,11 @@ foreach($wSData as $key => $wSValue)
                 . "'$current_date',1,'-')";
         //echo "Query=".$queryInsert."<br><br>";
        $resultInsert = mysql_query($queryInsert, $DbConnection);
-       
+
        $selectQuery="SELECT vehicle_name FROM vehicle_last_execution_datetime WHERE ".
                                 "vehicle_name='$vehicleName'";
        $selectQueryResult=  mysql_query($selectQuery, $DbConnection);
-       
+
        if(mysql_num_rows($selectQueryResult)==0)
        {
             $queryInsert1 = "INSERT INTO vehicle_last_execution_datetime("
@@ -187,122 +170,114 @@ foreach($wSData as $key => $wSValue)
             $updateQueryResult = mysql_query($updateQuery, $DbConnection); 
        }
     }
-    if($dBData[$key]['icdInDatetime']!="0000-00-00 00:00:00")
+    else
     {
-        if($wSIcdInDatetime=="")
-        {
-            //echo "in if 2 <br>";
-            //echo "dbCnt=".count($dBData[$key])."<br>";
-            //echo "dbdateIn=".$dBData[$key]['icdInDatetime']."<br>";
-            //echo "wsIn=".str_replace("/","-",$wSData[$key]['icdInDatetime'])."<br>";
-            $vehicleName=$wSData[$key]['vehicleName'];
-            $customerNo=$wSData[$key]['customerNo'];
-
-            //echo "icdOutDatetime=".$icdOutDatetime."<br>";
-            $locationIds=$wSData[$key]['locationIds'];
-
-            $dateObj =new DateTime(str_replace("/","-",$wSData[$key]['customerInDatetime']));
-            $customerInDatetime=$dateObj->format('Y-m-d H:i:s');
-            $dateObj=new DateTime(str_replace("/","-",$wSData[$key]['customerOutDatetime']));
-            $customerOutDatetime=$dateObj->format('Y-m-d H:i:s');
-            //echo "vehicleName=".$wSData[$key]['vehicleName']."inDate=".$wSData[$key]['icdInDatetime']."<br>";
-
-            $queryInsert = "INSERT INTO icd_webservice_data("
-                    . "vehicle_name,container_no,icd_code,icd_out_datetime,factory_code,factory_ea_datetime,"
-                    . "factory_ed_datetime,icd_in_datetime,account_id,create_date,status,remark) "
-                    . "values('$vehicleName','$customerNo','$icd_code_global','$wbIcdOutDatetime','$locationIds',"
-                    . "'$customerInDatetime','$customerOutDatetime','$wSIcdInDatetime','$account_id',"
-                    . "'$current_date',1,'-')";
-            //echo "Query=".$queryInsert."<br><br>";
-           $resultInsert = mysql_query($queryInsert, $DbConnection);
-
-           $selectQuery="SELECT vehicle_name FROM vehicle_last_execution_datetime WHERE ".
-                                    "vehicle_name='$vehicleName'";
-           $selectQueryResult=  mysql_query($selectQuery, $DbConnection);
-
-            if(mysql_num_rows($selectQueryResult)==0)
+        while($row= mysql_fetch_object($result))
+        {        
+            if($row->icd_in_datetime!="0000-00-00 00:00:00")
             {
-                $queryInsert1 = "INSERT INTO vehicle_last_execution_datetime("
-                    . "vehicle_name,last_execution_datetime) "
-                    . "VALUES('$vehicleName','$customerOutDatetime')";
-                //echo "Query=".$queryInsert."<br><br>";
-                $resultInsert1 = mysql_query($queryInsert1, $DbConnection); 
-            }
-           else 
-           {
-               //echo "in update";
-               $updateQuery = "UPDATE vehicle_last_execution_datetime SET last_execution_datetime='$customerOutDatetime'".
-                               " WHERE vehicle_name='$vehicleName'";
-                //echo "Query=".$queryInsert."<br><br>";
-                $updateQueryResult = mysql_query($updateQuery, $DbConnection); 
-            }
-        }
-    }
-    if(($dBData[$key]['icdInDatetime']=="0000-00-00 00:00:00"))
-    { 
-        if($wbIcdOutDatetime>$dBData[$key]['icdOutDatetime'])
-        {
-            //echo "in if 3 <br>";
-            $updateVehicleName=$wSValue['vehicleName'];
-            $queryUpdate1 = "UPDATE icd_webservice_data SET icd_in_datetime='$wbIcdOutDatetime' WHERE ".
-                        "vehicle_name='$updateVehicleName'";
-                //echo "<br$updateVehicleName$query_update;
-            $resultUpdate1 = mysql_query($queryUpdate1,$DbConnection); 
-            if($resultUpdate1)
-            {
-                //echo "dbCnt=".count($dBData[$key])."<br>";
-                //echo "dbdateIn=".$dBData[$key]['icdInDatetime']."<br>";
-                //echo "wsIn=".str_replace("/","-",$wSData[$key]['icdInDatetime'])."<br>";
-                $vehicleName=$wSData[$key]['vehicleName'];
-                $customerNo=$wSData[$key]['customerNo'];
+                if($wSIcdInDatetime=="")
+                {
+                    //echo "in if 2 <br>";               
+                    $customerNo=$wSValue['customerNo'];
+                    //echo "icdOutDatetime=".$icdOutDatetime."<br>";
 
-                //echo "icdOutDatetime=".$icdOutDatetime."<br>";
-                $locationIds=$wSData[$key]['locationIds'];
+                    $dateObj =new DateTime(str_replace("/","-",$wSValue['customerInDatetime']));
+                    $customerInDatetime=$dateObj->format('Y-m-d H:i:s');
+                    $dateObj=new DateTime(str_replace("/","-",$wSValue['customerOutDatetime']));
+                    $customerOutDatetime=$dateObj->format('Y-m-d H:i:s');
+                    
 
-                $dateObj =new DateTime(str_replace("/","-",$wSData[$key]['customerInDatetime']));
-                $customerInDatetime=$dateObj->format('Y-m-d H:i:s');
-                $dateObj=new DateTime(str_replace("/","-",$wSData[$key]['customerOutDatetime']));
-                $customerOutDatetime=$dateObj->format('Y-m-d H:i:s');
-                //echo "vehicleName=".$wSData[$key]['vehicleName']."inDate=".$wSData[$key]['icdInDatetime']."<br>";
-
-                $queryInsert = "INSERT INTO icd_webservice_data("
-                        . "vehicle_name,container_no,icd_code,icd_out_datetime,factory_code,factory_ea_datetime,"
-                        . "factory_ed_datetime,icd_in_datetime,account_id,create_date,status,remark) "
-                        . "values('$vehicleName','$customerNo','$icd_code_global','$icdOutDatetime','$locationIds',"
-                        . "'$customerInDatetime','$customerOutDatetime','$wSIcdInDatetime','$account_id',"
-                        . "'$current_date',1,'-')";
-                //echo "Query=".$queryInsert."<br><br>";
-               $resultInsert = mysql_query($queryInsert, $DbConnection);
-
-               $selectQuery="SELECT vehicle_name FROM vehicle_last_execution_datetime WHERE ".
-                                        "vehicle_name='$vehicleName'";
-               $selectQueryResult=  mysql_query($selectQuery, $DbConnection);
-
-               if(mysql_num_rows($selectQueryResult)==0)
-               {
-                    $queryInsert1 = "INSERT INTO vehicle_last_execution_datetime("
-                        . "vehicle_name,last_execution_datetime) "
-                        . "VALUES('$vehicleName','$customerOutDatetime')";
+                    $queryInsert = "INSERT INTO icd_webservice_data("
+                            . "vehicle_name,container_no,icd_code,icd_out_datetime,factory_code,factory_ea_datetime,"
+                            . "factory_ed_datetime,icd_in_datetime,account_id,create_date,status,remark) "
+                            . "values('$vehicleName','$customerNo','$icd_code_global','$wbIcdOutDatetime','$locationIds',"
+                            . "'$customerInDatetime','$customerOutDatetime','$wSIcdInDatetime','$account_id',"
+                            . "'$current_date',1,'-')";
                     //echo "Query=".$queryInsert."<br><br>";
-                    $resultInsert1 = mysql_query($queryInsert1, $DbConnection); 
-               }
-               else 
-               {
-                   //echo "in update";
-                   $updateQuery = "UPDATE vehicle_last_execution_datetime SET last_execution_datetime='$customerOutDatetime'".
-                                   " WHERE vehicle_name='$vehicleName'";
-                    //echo "Query=".$queryInsert."<br><br>";
-                    $updateQueryResult = mysql_query($updateQuery, $DbConnection); 
-               }
+                    $resultInsert = mysql_query($queryInsert, $DbConnection);
+
+                    $selectQuery="SELECT vehicle_name FROM vehicle_last_execution_datetime WHERE ".
+                                             "vehicle_name='$vehicleName'";
+                    $selectQueryResult=  mysql_query($selectQuery, $DbConnection);
+
+                     if(mysql_num_rows($selectQueryResult)==0)
+                     {
+                         $queryInsert1 = "INSERT INTO vehicle_last_execution_datetime("
+                             . "vehicle_name,last_execution_datetime) "
+                             . "VALUES('$vehicleName','$customerOutDatetime')";
+                         //echo "Query=".$queryInsert."<br><br>";
+                         $resultInsert1 = mysql_query($queryInsert1, $DbConnection); 
+                     }
+                    else 
+                    {
+                        //echo "in update";
+                        $updateQuery = "UPDATE vehicle_last_execution_datetime SET last_execution_datetime='$customerOutDatetime'".
+                                        " WHERE vehicle_name='$vehicleName'";
+                         //echo "Query=".$queryInsert."<br><br>";
+                         $updateQueryResult = mysql_query($updateQuery, $DbConnection); 
+                    }
+                }
             }
-        }
-        else if($wbIcdInDatetime!="")
-        {
-           // echo "in else if";
-            $queryUpdate1 = "UPDATE icd_webservice_data SET icd_in_datetime='$wbIcdInDatetime' WHERE ".
-                        "vehicle_name='$updateVehicleName'";
-                //echo "<br$updateVehicleName$query_update;
-            $resultUpdate1 = mysql_query($queryUpdate1,$DbConnection); 
+            if(($row->icd_in_datetime=="0000-00-00 00:00:00"))
+            { 
+                if($wbIcdOutDatetime>$row->icd_out_datetime)
+                {
+                    //echo "in if 3 <br>";
+                    $updateVehicleName=$wSValue['vehicleName'];
+                    $queryUpdate1 = "UPDATE icd_webservice_data SET icd_in_datetime='$wbIcdOutDatetime' WHERE ".
+                                "vehicle_name='$updateVehicleName'";
+                        //echo "<br$updateVehicleName$query_update;
+                    $resultUpdate1 = mysql_query($queryUpdate1,$DbConnection); 
+                    if($resultUpdate1)
+                    {                      
+                        $customerNo=$wSValue['customerNo'];
+                        $dateObj =new DateTime(str_replace("/","-",$wSValue['customerInDatetime']));
+                        $customerInDatetime=$dateObj->format('Y-m-d H:i:s');
+                        $dateObj=new DateTime(str_replace("/","-",$wSValue['customerOutDatetime']));
+                        $customerOutDatetime=$dateObj->format('Y-m-d H:i:s');
+                        
+
+                        $queryInsert = "INSERT INTO icd_webservice_data("
+                                . "vehicle_name,container_no,icd_code,icd_out_datetime,factory_code,factory_ea_datetime,"
+                                . "factory_ed_datetime,icd_in_datetime,account_id,create_date,status,remark) "
+                                . "values('$vehicleName','$customerNo','$icd_code_global','$icdOutDatetime','$locationIds',"
+                                . "'$customerInDatetime','$customerOutDatetime','$wSIcdInDatetime','$account_id',"
+                                . "'$current_date',1,'-')";
+                        //echo "Query=".$queryInsert."<br><br>";
+                        $resultInsert = mysql_query($queryInsert, $DbConnection);
+
+                        $selectQuery="SELECT vehicle_name FROM vehicle_last_execution_datetime WHERE ".
+                                                "vehicle_name='$vehicleName'";
+                        $selectQueryResult=  mysql_query($selectQuery, $DbConnection);
+
+                        if(mysql_num_rows($selectQueryResult)==0)
+                        {
+                             $queryInsert1 = "INSERT INTO vehicle_last_execution_datetime("
+                                 . "vehicle_name,last_execution_datetime) "
+                                 . "VALUES('$vehicleName','$customerOutDatetime')";
+                             //echo "Query=".$queryInsert."<br><br>";
+                             $resultInsert1 = mysql_query($queryInsert1, $DbConnection); 
+                        }
+                        else 
+                        {
+                            //echo "in update";
+                            $updateQuery = "UPDATE vehicle_last_execution_datetime SET last_execution_datetime='$customerOutDatetime'".
+                                            " WHERE vehicle_name='$vehicleName'";
+                             //echo "Query=".$queryInsert."<br><br>";
+                             $updateQueryResult = mysql_query($updateQuery, $DbConnection); 
+                        }
+                    }
+                }
+                else if($wbIcdInDatetime!="")
+                {
+                   // echo "in else if";
+                    $queryUpdate1 = "UPDATE icd_webservice_data SET icd_in_datetime='$wbIcdInDatetime' WHERE ".
+                                "vehicle_name='$updateVehicleName'";
+                        //echo "<br$updateVehicleName$query_update;
+                    $resultUpdate1 = mysql_query($queryUpdate1,$DbConnection); 
+                }
+            } 
         }
     }
 }
