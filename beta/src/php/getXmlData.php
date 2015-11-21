@@ -505,6 +505,16 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
         $lng = $item->e;
         $speed = $item->f;
         
+        $ax = $item->ax;
+        $ay = $item->ay;
+        $az = $item->az;
+        $mx = $item->mx;
+        $my = $item->my;
+        $mz = $item->mz;
+        $bx = $item->bx;
+        $by = $item->by;
+        $bz = $item->bz;
+        
         
         $datetime_server = str_replace('@',' ',$item->g);
         $datetime_device = str_replace('@',' ',$item->h);              
