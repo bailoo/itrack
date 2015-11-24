@@ -1,33 +1,33 @@
 <?php 
-	include_once('Hierarchy.php');
-	include_once('util_session_variable.php');
-	include_once('util_php_mysql_connectivity.php');
-	include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
-        include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
-    
-        $o_cassandra = new Cassandra();	
-        $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
+    include_once('Hierarchy.php');
+    include_once('util_session_variable.php');
+    include_once('util_php_mysql_connectivity.php');
+    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
 
-	$query1="SELECT vehicle_color from account_preference WHERE account_id='$account_id'";
-	$result1=mysql_query($query1,$DbConnection);
-	$row1=mysql_fetch_object($result1);
-	$vehicle_color1=$row1->vehicle_color;
+    //$o_cassandra = new Cassandra();	
+    //$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 
-	$vcolor = explode(':',$vehicle_color1); //account_name:active:inactive
-	$vcolor1 = "#".$vcolor[0];
-	$vcolor2 = "#".$vcolor[1];
-	$vcolor3 = "#".$vcolor[2];    
+    $query1="SELECT vehicle_color from account_preference WHERE account_id='$account_id'";
+    $result1=mysql_query($query1,$DbConnection);
+    $row1=mysql_fetch_object($result1);
+    $vehicle_color1=$row1->vehicle_color;
 
-	$root=$_SESSION['root'];
-	$DEBUG = 0;    
-	$display_type = $_POST['display_type1']; 
-	$common_div_option = $_POST['common_div_option1'];
-	$user_type_option = $_POST['user_type_option1'];
+    $vcolor = explode(':',$vehicle_color1); //account_name:active:inactive
+    $vcolor1 = "#".$vcolor[0];
+    $vcolor2 = "#".$vcolor[1];
+    $vcolor3 = "#".$vcolor[2];    
+
+    $root=$_SESSION['root'];
+    $DEBUG = 0;    
+    $display_type = $_POST['display_type1']; 
+    $common_div_option = $_POST['common_div_option1'];
+    $user_type_option = $_POST['user_type_option1'];
 	
 	if($size_utype_session)
 	{	
-		//echo'<br>value='.$user_typeid_array[$i].' name='.$user_type_name_session[$i];
-		$category1 = $user_typeid_array[0];	
+            //echo'<br>value='.$user_typeid_array[$i].' name='.$user_type_name_session[$i];
+            $category1 = $user_typeid_array[0];	
 	}	
 	//$category1 = $_POST['category'];
 	//$category1 = 1;
@@ -184,9 +184,9 @@
             global $vcolor1;
             global $vcolor2;
             global $vcolor3;
-            global $o_cassandra;
+            //global $o_cassandra;
             //var_dump($o_cassandra);
-            global $logDate;
+            //global $logDate;
 
             //echo "cat:".$category1;
             //echo $vcolor1.":".$vcolor2.":".$vcolor3;
@@ -233,12 +233,12 @@
                             }			
                             if($i>=$vehicle_cnt)
                             {
-                                $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                //$logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
                                 $vehicleid[$vehicle_cnt]=$vehicle_id;
                                 $vehicle_cnt++; 					
                                 //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
                                 //if(file_exists($xml_current))
-                                if ($logResult!='')
+                                if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                                 {
                                     //$color="green";
                                     $color= $vcolor2;
@@ -312,9 +312,9 @@
             global $vehicleid;
             global $vehicle_cnt;
             global $today_date2;
-            global $o_cassandra;
+            //global $o_cassandra;
             //var_dump($o_cassandra);
-            global $logDate;
+            //global $logDate;
 
             if($type=="group")
             {
@@ -356,10 +356,10 @@
                             {
                                 $vehicleid[$vehicle_cnt]=$vehicle_id;
                                 $vehicle_cnt++;
-                                $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                //$logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
                                 //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
                                 //if(file_exists($xml_current))
-                                if($logResult!='')
+                                if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                                 {
                                     $green_cnt1++; 
                                     //$green_cnt1=$green_cnt;     		
@@ -429,9 +429,9 @@
             global $vcolor1;
             global $vcolor2;
             global $vcolor3;
-            global $o_cassandra;
+            //global $o_cassandra;
             //var_dump($o_cassandra);
-            global $logDate;
+            //global $logDate;
          
             $vehicle_name_arr=array();
             $imei_arr=array();
@@ -470,14 +470,14 @@
                             }			
                             if($i>=$vehicle_cnt)
                             {
-                                $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                //$logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
                                 // echo "in if<br>";
                                 $vehicleid[$vehicle_cnt]=$vehicle_id;
                                 $vehicle_cnt++;
                                 //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
                                 //echo "xml_current=".$xml_current."<br>";
                                 //if(file_exists($xml_current))                                
-                                if($logResult!='')
+                                if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                                 {
                                     // echo "in if";
                                     $color = $vcolor2;
@@ -574,9 +574,9 @@
             global $vcolor1;
             global $vcolor2;
             global $vcolor3;
-            global $o_cassandra;
+            //global $o_cassandra;
             //var_dump($o_cassandra);
-            global $logDate;
+            //global $logDate;
 		
             $vehicle_name_arr=array();
             $imei_arr=array();
@@ -613,12 +613,12 @@
                             }			
                             if($i>=$vehicle_cnt)
                             {
-                                $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                //$logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
                                 $vehicleid[$vehicle_cnt]=$vehicle_id;
                                 $vehicle_cnt++;
                                 //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
                                 //if(file_exists($xml_current))
-                                if($logResult!='')
+                                if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                                 {
                                     $color=$vcolor2;
                                     $vehicle_name_arr[$color][] =$vehicle_name; 
@@ -735,9 +735,9 @@
             global $vcolor1;
             global $vcolor2;
             global $vcolor3;            
-            global $o_cassandra;
+            //global $o_cassandra;
             //var_dump($o_cassandra);
-            global $logDate;
+            //global $logDate;
      
             $vehicle_name_arr=array();
             $imei_arr=array();
@@ -778,10 +778,10 @@
                             {
                                 $vehicleid[$vehicle_cnt]=$vehicle_id;
                                 $vehicle_cnt++;
-                                $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                //$logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
                                 //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
                                 //if (file_exists($xml_current))
-                                if($logResult!='')
+                                if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                                 {
                                     $color=$vcolor2;
                                     $vehicle_name_arr[$color][] =$vehicle_name; 
@@ -850,9 +850,9 @@
             global $today_date2;
             global $vcolor2;
             global $vcolor3;
-            global $o_cassandra;
+            //global $o_cassandra;
             //var_dump($o_cassandra);
-            global $logDate;
+            //global $logDate;
 		
             $vehicle_name_arr=array();
             $imei_arr=array();
@@ -892,10 +892,10 @@
                             {
                                 $vehicleid[$vehicle_cnt]=$vehicle_id;
                                 $vehicle_cnt++;
-                                $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
+                                //$logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
                                 //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
                                 //if(file_exists($xml_current))
-                                if($logResult!='')
+                                if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                                 {
                                     $color=$vcolor2;
                                     $vehicle_name_arr[$color][] =$vehicle_name; 
