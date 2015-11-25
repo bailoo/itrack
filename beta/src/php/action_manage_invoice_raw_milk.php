@@ -97,7 +97,7 @@
                                         $rowstatus=mysql_fetch_row($ResultCheck);                                        
 					$inv_status = $rowstatus[0];*/
                                         $inv_status=updateInvoiceCheckStatus($sno_id1,$DbConnection);
-					if($inv_status==5)
+					if($inv_status==5 &&  strlen($dispatch_time)==19 &&  strlen($target_time)==19)
                                         {
                                             if($transporter==$account_id)
                                             {
@@ -139,6 +139,8 @@
 					if($DEBUG) print_query($Query);
 					$Result=mysql_query($Query,$DbConnection);
                                         */
+                                    if(strlen($dispatch_time)==19 &&  strlen($target_time)==19)
+                                    {
                                         $Result=insertInvoiceMdrm($lorry_no,$transporter,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$DbConnection);
 				
 					if($Result)
@@ -160,6 +162,7 @@
 									 </center>";
 					   
 					}
+                                    }
 				}
 				
 				//---end of unfinalize---//
@@ -223,7 +226,7 @@
 				}
 				$validity_time = date('Y-m-d H:i:s', strtotime($target_time .' +4 day'));
 				//if(sizeof($offset_sno_id)>0)
-				if($offset_sno_id[$i]!="" && $offset_vehno[$i]!="" )
+				if($offset_sno_id[$i]!="" && $offset_vehno[$i]!="" &&  strlen($dispatch_time)==19 &&  strlen($target_time)==19 )
 				{
 					$sno_id1 =$offset_sno_id[$i];
 					
@@ -324,83 +327,86 @@
 					if($DEBUG) print_query($Query);
 					$Result=mysql_query($Query,$DbConnection);
                                         */
-                                        $Result=insertInvoiceMdrmVehicle($lorry_no,$vehicle_no,$transporter,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dock_no,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$DbConnection);
-					if($Result )
-					{			
-						//Insert Docket number to track
-						if($dock_no!=""){
-							/*$QueryVehicle="SELECT vehicle_id from vehicle where vehicle_name='$vehicle_no' and status=1 ";
-							$result_Vehicle = mysql_query($QueryVehicle,$DbConnection);
-							$row_Vehicle = mysql_fetch_object($result_Vehicle);
-							$vehicle_id = $row_Vehicle->vehicle_id;*/
-                                                        $vehicle_id =getVehicleId($vehicle_no,1,$DbConnection);
-							/*$QueryVehicleIMEI="SELECT device_imei_no from vehicle_assignment where vehicle_id='$vehicle_id' and status=1 ";
-							$result_VehicleIMEI = mysql_query($QueryVehicleIMEI,$DbConnection);
-							$row_VehicleIMEI = mysql_fetch_object($result_VehicleIMEI);
-							$vehicle_IMEI = $row_VehicleIMEI->device_imei_no;*/
-                                                        $vehicle_IMEI =getVADeviceImeiNo($vehicle_id,1,$DbConnection);
-                                                        /*
-							$QueryDocket="INSERT INTO consignment_info (account_id,device_imei_no,vehicle_name,consignee_name,start_date,end_date,docket_no,create_id,create_date,status) VALUES('$account_id','$vehicle_IMEI','$vehicle_no','$customer','$dispatch_time','$validity_time','$dock_no','$account_id','$date',1)";
-							$ResultDOCKET=mysql_query($QueryDocket,$DbConnection);*/
-                                                        $ResultDOCKET=insertConsignmetInfoDoct($account_id,$vehicle_IMEI,$vehicle_no,$customer,$dispatch_time,$validity_time,$dock_no,$account_id,$date,$DbConnection);
-						}
-					
-						$message_web = "<center>
-									<br>
-										<FONT color=\"green\">
-											 <strong>Invoice data created Successfully </strong>
-									   </font>
-									</center>";
-										
-						//SEND EMAIL
-                                                /*
-						$query_userid = "SELECT user_id FROM account WHERE account_id='$account_id' AND status=1";
-						$result_userid = mysql_query($query_userid,$DbConnection);
-						if($row = mysql_fetch_object($result_userid))
-						{
-							$user_id = $row->user_id;
-						}*/
-						$user_id =getUserID($account_id,1,$DbConnection);
-						$csv_string = $csv_string.$user_id.','.$dock_no.','.$lorry_no.','.$vehicle_no.','.$email.','.$mobile.','.$qty_kg.','.$fat_per.','.$snf_per.','.$fat_kg.','.$snf_kg.','.$milk_age.','.$dispatch_time.','.$target_time.','.$plant.','.$driver_name.','.$driver_mobile.','.$chillplant.','.$tanker_type."\n";										
-						$csv_write_flag=1;
-                                                $message="<table border=1>"
-                                                        . "<tr><td>LorryNo</td><td>$lorry_no</td><tr>"
-                                                        . "<tr><td>DocketNo</td><td>$dock_no</td></tr>"
-                                                        . "<tr><td>VehicleNo</td><td>$vehicle_no</td></tr>"
-                                                        . "<tr><td>Qty(kg)</td><td>$qty_kg</td></tr>"
-                                                        . "<tr><td>Fat(%)</td><td>$fat_per</td></tr>"
-                                                        . "<tr><td>Snf(%)</td><td>$snf_per</td></tr>"
-                                                        . "<tr><td>Fat(kg)</td><td>$fat_kg</td></tr>"
-                                                        . "<tr><td>Snf(kg)</td><td>$snf_kg</td></tr>"
-                                                        . "<tr><td>MilkAge</td><td>$milk_age</td></tr>"
-                                                        . "<tr><td>DispatchTime</td><td>$dispatch_time</td></tr>"
-                                                        . "<tr><td>TargetTime</td><td>$target_time</td></tr>"
-                                                        . "<tr><td>Plant</td><td>$plant</td></tr>"
-                                                        . "<tr><td>DriverName</td><td>$driver_name</td></tr>"
-                                                        . "<tr><td>DriverMobile</td><td>$driver_mobile</td></tr>"
-                                                        . "<tr><td>ChillingPlant</td><td>$chillplant</td></tr>"
-                                                        . "<tr><td>TankerType</td><td>$tanker_type</td></tr></table>";
-                                                $dt=date('Y-m-d H:i:s');
-                                                $to = $email;
-                                                $msg=$message;
-                                                $subject = "RawMilk Open Invoice for Docket No: ".$dock_no." of Vehicle ".$vehicle_no." and Lorry Number ".$lorry_no;
-                                                if (is_valid_email($email))
-                                                {
-                                                    $query_email_log="INSERT INTO email_log(vehicle_name,message_type,account_id,subject,email,message,status,create_id,create_date) VALUES".
-                                       "('$vehicle_no','RawMilk','$account_id','$subject','$to','$msg','1','$account_id','$dt')";
-                                                    //echo"insert1=". $query_email_log;
-                                                    $result_email_log=mysql_query($query_email_log,$DbConnection);
-                                                }
-						//################################//
-					}   
-					else
-					{
-						$message_web = "<center><br>
-										<FONT color=\"red\">
-											<strong>Sorry! Unable to process request.</strong></font>
-									 </center>";
-					   
-					}
+                                        if(strlen($dispatch_time)==19 &&  strlen($target_time)==19)
+                                        {
+                                            $Result=insertInvoiceMdrmVehicle($lorry_no,$vehicle_no,$transporter,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dock_no,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$DbConnection);
+                                            if($Result )
+                                            {			
+                                                    //Insert Docket number to track
+                                                    if($dock_no!=""){
+                                                            /*$QueryVehicle="SELECT vehicle_id from vehicle where vehicle_name='$vehicle_no' and status=1 ";
+                                                            $result_Vehicle = mysql_query($QueryVehicle,$DbConnection);
+                                                            $row_Vehicle = mysql_fetch_object($result_Vehicle);
+                                                            $vehicle_id = $row_Vehicle->vehicle_id;*/
+                                                            $vehicle_id =getVehicleId($vehicle_no,1,$DbConnection);
+                                                            /*$QueryVehicleIMEI="SELECT device_imei_no from vehicle_assignment where vehicle_id='$vehicle_id' and status=1 ";
+                                                            $result_VehicleIMEI = mysql_query($QueryVehicleIMEI,$DbConnection);
+                                                            $row_VehicleIMEI = mysql_fetch_object($result_VehicleIMEI);
+                                                            $vehicle_IMEI = $row_VehicleIMEI->device_imei_no;*/
+                                                            $vehicle_IMEI =getVADeviceImeiNo($vehicle_id,1,$DbConnection);
+                                                            /*
+                                                            $QueryDocket="INSERT INTO consignment_info (account_id,device_imei_no,vehicle_name,consignee_name,start_date,end_date,docket_no,create_id,create_date,status) VALUES('$account_id','$vehicle_IMEI','$vehicle_no','$customer','$dispatch_time','$validity_time','$dock_no','$account_id','$date',1)";
+                                                            $ResultDOCKET=mysql_query($QueryDocket,$DbConnection);*/
+                                                            $ResultDOCKET=insertConsignmetInfoDoct($account_id,$vehicle_IMEI,$vehicle_no,$customer,$dispatch_time,$validity_time,$dock_no,$account_id,$date,$DbConnection);
+                                                    }
+
+                                                    $message_web = "<center>
+                                                                            <br>
+                                                                                    <FONT color=\"green\">
+                                                                                             <strong>Invoice data created Successfully </strong>
+                                                                               </font>
+                                                                            </center>";
+
+                                                    //SEND EMAIL
+                                                    /*
+                                                    $query_userid = "SELECT user_id FROM account WHERE account_id='$account_id' AND status=1";
+                                                    $result_userid = mysql_query($query_userid,$DbConnection);
+                                                    if($row = mysql_fetch_object($result_userid))
+                                                    {
+                                                            $user_id = $row->user_id;
+                                                    }*/
+                                                    $user_id =getUserID($account_id,1,$DbConnection);
+                                                    $csv_string = $csv_string.$user_id.','.$dock_no.','.$lorry_no.','.$vehicle_no.','.$email.','.$mobile.','.$qty_kg.','.$fat_per.','.$snf_per.','.$fat_kg.','.$snf_kg.','.$milk_age.','.$dispatch_time.','.$target_time.','.$plant.','.$driver_name.','.$driver_mobile.','.$chillplant.','.$tanker_type."\n";										
+                                                    $csv_write_flag=1;
+                                                    $message="<table border=1>"
+                                                            . "<tr><td>LorryNo</td><td>$lorry_no</td><tr>"
+                                                            . "<tr><td>DocketNo</td><td>$dock_no</td></tr>"
+                                                            . "<tr><td>VehicleNo</td><td>$vehicle_no</td></tr>"
+                                                            . "<tr><td>Qty(kg)</td><td>$qty_kg</td></tr>"
+                                                            . "<tr><td>Fat(%)</td><td>$fat_per</td></tr>"
+                                                            . "<tr><td>Snf(%)</td><td>$snf_per</td></tr>"
+                                                            . "<tr><td>Fat(kg)</td><td>$fat_kg</td></tr>"
+                                                            . "<tr><td>Snf(kg)</td><td>$snf_kg</td></tr>"
+                                                            . "<tr><td>MilkAge</td><td>$milk_age</td></tr>"
+                                                            . "<tr><td>DispatchTime</td><td>$dispatch_time</td></tr>"
+                                                            . "<tr><td>TargetTime</td><td>$target_time</td></tr>"
+                                                            . "<tr><td>Plant</td><td>$plant</td></tr>"
+                                                            . "<tr><td>DriverName</td><td>$driver_name</td></tr>"
+                                                            . "<tr><td>DriverMobile</td><td>$driver_mobile</td></tr>"
+                                                            . "<tr><td>ChillingPlant</td><td>$chillplant</td></tr>"
+                                                            . "<tr><td>TankerType</td><td>$tanker_type</td></tr></table>";
+                                                    $dt=date('Y-m-d H:i:s');
+                                                    $to = $email;
+                                                    $msg=$message;
+                                                    $subject = "RawMilk Open Invoice for Docket No: ".$dock_no." of Vehicle ".$vehicle_no." and Lorry Number ".$lorry_no;
+                                                    if (is_valid_email($email))
+                                                    {
+                                                        $query_email_log="INSERT INTO email_log(vehicle_name,message_type,account_id,subject,email,message,status,create_id,create_date) VALUES".
+                                           "('$vehicle_no','RawMilk','$account_id','$subject','$to','$msg','1','$account_id','$dt')";
+                                                        //echo"insert1=". $query_email_log;
+                                                        $result_email_log=mysql_query($query_email_log,$DbConnection);
+                                                    }
+                                                    //################################//
+                                            }   
+                                            else
+                                            {
+                                                    $message_web = "<center><br>
+                                                                                    <FONT color=\"red\">
+                                                                                            <strong>Sorry! Unable to process request.</strong></font>
+                                                                             </center>";
+
+                                            }
+                                    }
 				}
 				
 			
