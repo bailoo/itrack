@@ -144,7 +144,7 @@
 		{
 			position: fixed;
 			top: 20%;
-			left: 40%;
+			left: 30%;
 			margin-top: -81px; /*half of the height plus a little to the top*/
 			margin-left: -150px; /*half of the width */
 			visibility: hidden;
@@ -155,8 +155,8 @@
 			color: #333;
 			padding: 0;
 			overflow:auto;
-			height: 50%;
-			width: 40%;
+			height: 80%;
+			width: 50%;
 			z-index: 10;
 			font-family: "Trebuchet MS", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
 			font-size: 12px;
