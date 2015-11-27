@@ -139,7 +139,7 @@ echo"<table border=1 cellspacing=0 rules='all' bordercolor='#A3AAFF' cellpadding
   echo'</div>';
   if($display_type!="all")
   {  
-	 echo'<br><center> <input type="button" name="submit" value="Enter" onclick="javascript:display_vehicle_according_divoption(this.form)"></center>';
+	 //echo'<br><center> <input type="button" name="submit" value="Enter" onclick="javascript:display_vehicle_according_divoption(this.form)"></center>';
   }
   
 	function GetGroup($AccountNode,$category1)

@@ -107,7 +107,8 @@
   <tr>
 	<td class="manage_interfarce" align="right" colspan="7"><a href="#" onclick="javascript:close_vehicle_display_option()" class="hs3"><img src="images/close.png" type="image" style="border-style:none;"></a>&nbsp;&nbsp;</td> 													
  </tr>	</table>
-		<div id="selection_information" style="display:none;"></div>
+		<div id="selection_information" style="height:85%;width:100%;overflow:auto;display:none;"></div>
+              <br><center> <input type="button" name="submit" value="Enter" onclick="javascript:display_vehicle_according_divoption(this.form)"></center>
 	</div>';
 echo'<div id="blackout_2"> </div>
     <div id="divpopup_2">
