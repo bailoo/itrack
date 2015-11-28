@@ -78,7 +78,19 @@ $io4_arr = array();
 $io5_arr = array();
 $io6_arr = array();
 $io7_arr = array();
-$io8_arr = array();                  
+$io8_arr = array();  
+if($account_id=="1594")
+{
+  $ax_arr = array();  
+  $ay_arr = array();
+  $az_arr = array();
+  $bx_arr = array();
+  $by_arr = array();
+  $bz_arr = array();
+  $mx_arr = array();
+  $my_arr = array();
+  $mz_arr = array();
+}
 
 
 if($vserial)
@@ -121,7 +133,22 @@ function get_log_xml_data($vserial, $vname, $startdate, $enddate,$parameterizeDa
     global $io5_arr;
     global $io6_arr;
     global $io7_arr;
-    global $io8_arr;  
+    global $io8_arr;
+    global $account_id;
+    if($account_id=="1594")
+    {
+        global $ax_arr;  
+        global $ay_arr;
+        global $az_arr;
+        global $bx_arr;
+        global $by_arr;
+        global $bz_arr;
+        global $mx_arr;
+        global $my_arr;
+        global $mz_arr;
+    }
+    global $lat_arr;
+    global $lng_arr;
 	
     $firstData = 0;	
     $linetowrite="";
@@ -267,8 +294,8 @@ function get_log_xml_data($vserial, $vname, $startdate, $enddate,$parameterizeDa
   //echo "<br>size datalog=".sizeof($vname);         
   if(sizeof($imei_arr)==0)
   {
-    echo '<br><font color=red><strong>Sorry No record found</strong></font>';
-   // echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=home.php\">";
+echo '<br><font color=red><strong>Sorry No record found</strong></font>';
+// echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=home.php\">";
   }  
   else
   {
@@ -321,11 +348,11 @@ function get_log_xml_data($vserial, $vname, $startdate, $enddate,$parameterizeDa
       </table>                					
   
       <table border="1" width="98%" rules="all" bordercolor="#e5ecf5" cellspacing="0" cellpadding="1">	
-			 <tr bgcolor="#C9DDFF"> 
-				<td class="text"><b><font size="1">SNo</font></b></td>   
-				<td class="text"><b><font size="1">STS</font></b></td>  
-				<td class="text"><b><font size="1">DateTime</font></b></td>           				
-				<td class="text"><b><font size="1">MsgTp</font></b></td>
+        <tr bgcolor="#C9DDFF"> 
+       <td class="text"><b><font size="1">SNo</font></b></td>   
+       <td class="text"><b><font size="1">STS</font></b></td>  
+       <td class="text"><b><font size="1">DateTime</font></b></td>           				
+       <td class="text"><b><font size="1">MsgTp</font></b></td>
         <td class="text"><b><font size="1">Ver</font></b></td>  
         <td class="text"><b><font size="1">SupplyV</font></b></td>  
         <td class="text"><b><font size="1">IO1</font></b></td>
@@ -390,9 +417,7 @@ function get_log_xml_data($vserial, $vname, $startdate, $enddate,$parameterizeDa
     }	
     echo'<td class="text"><font size="1">'.$lat_arr[$i].'</font></td>';
     echo'<td class="text"><font size="1">'.$lng_arr[$i].'</font></td>';
-      
-   
-	  echo'</tr>'; 
+echo'</tr>'; 
 	  $sno++; 
   }
   if( (($i>0) && ($imei_arr[$i+1] != $imei_arr[$i])) )
