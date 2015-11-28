@@ -38,6 +38,18 @@ $parameterizeData->io7='o';
 $parameterizeData->io8='p';
 $parameterizeData->latitude='d';
 $parameterizeData->longitude='e';
+if($account_id=="1594")
+{
+    $parameterizeData->axParam = 'ax';
+    $parameterizeData->ayParam = 'ay';
+    $parameterizeData->azParam = 'az';
+    $parameterizeData->mxParam = 'mx';
+    $parameterizeData->myParam = 'my';
+    $parameterizeData->mzParam = 'mz';
+    $parameterizeData->bxParam = 'bx';
+    $parameterizeData->byParam = 'by';
+    $parameterizeData->bzParam = 'bz';
+}
 
 set_time_limit(300);
 date_default_timezone_set('Asia/Calcutta');
@@ -220,7 +232,23 @@ function get_log_xml_data($vserial, $vname, $startdate, $enddate,$parameterizeDa
                 $io5_arr[]=$SortedDataObject->io5Data[$obi];
                 $io6_arr[]=$SortedDataObject->io6Data[$obi];
                 $io7_arr[]=$SortedDataObject->io7Data[$obi];
-                $io8_arr[]=$SortedDataObject->io8Data[$obi];                  
+                $io8_arr[]=$SortedDataObject->io8Data[$obi];
+                
+                if($account_id=='1594')
+                {                      
+                    $ax_arr[]=$SortedDataObject->axParamData[$obi];
+                    $ay_arr[]=$SortedDataObject->ayParamData[$obi];
+                    $az_arr[]=$SortedDataObject->azParamData[$obi];
+                    $mx_arr[]= $SortedDataObject->mxParamData[$obi];
+                    $my_arr[]=$SortedDataObject->myParamData[$obi];
+                    $mz_arr[]=$SortedDataObject->mzParamData[$obi];
+                    $bx_arr[]= $SortedDataObject->bxParamData[$obi];
+                    $by_arr[]=$SortedDataObject->byParamData[$obi];
+                    $bz_arr[]=$SortedDataObject->bzParamData[$obi];	
+                }
+                
+                $lat_arr[]=$SortedDataObject->latitudeData[$obi];
+                $lng_arr[]=$SortedDataObject->longitudeData[$obi];
                 }
             }  // for closed    
         } // if (file_exists closed
@@ -258,7 +286,21 @@ function get_log_xml_data($vserial, $vname, $startdate, $enddate,$parameterizeDa
     $io5_arr = array_reverse($io5_arr);
     $io6_arr = array_reverse($io6_arr);
     $io7_arr = array_reverse($io7_arr);
-    $io8_arr = array_reverse($io8_arr);    
+    $io8_arr = array_reverse($io8_arr);
+    if($account_id=='1594')
+    {
+        $ax_arr = array_reverse($ax_arr);
+        $ay_arr = array_reverse($ay_arr);
+        $az_arr = array_reverse($az_arr);
+        $mx_arr= array_reverse($mx_arr);
+        $my_arr = array_reverse($my_arr);
+        $mz_arr = array_reverse($mz_arr);
+        $bx_arr = array_reverse($bx_arr);
+        $by_arr = array_reverse($by_arr);
+        $bz_arr = array_reverse($bz_arr);		
+    }
+    $lat_arr = array_reverse($lat_arr);
+    $lng_arr = array_reverse($lng_arr);
   }    				  
   
   $csv_string = ""; 
@@ -293,8 +335,22 @@ function get_log_xml_data($vserial, $vname, $startdate, $enddate,$parameterizeDa
         <td class="text"><b><font size="1">IO5</font></b></td>
         <td class="text"><b><font size="1">IO6</font></b></td>
         <td class="text"><b><font size="1">IO7</font></b></td>
-        <td class="text"><b><font size="1">IO8</font></b></td>
-      </tr>';      	
+        <td class="text"><b><font size="1">IO8</font></b></td>';
+        if($account_id=='1594')
+        {
+            echo '<td class="text"><b><font size="1">AX &nbsp;&nbsp;</font></b></td>';
+            echo '<td class="text"><b><font size="1">AY &nbsp;&nbsp;</font></b></td>';
+            echo '<td class="text"><b><font size="1">AZ &nbsp;&nbsp;</font></b></td>';
+            echo '<td class="text"><b><font size="1">MX &nbsp;&nbsp;</font></b></td>';
+            echo '<td class="text"><b><font size="1">MY &nbsp;&nbsp;</font></b></td>';
+            echo '<td class="text"><b><font size="1">MZ &nbsp;&nbsp;</font></b></td>';
+            echo '<td class="text"><b><font size="1">BX &nbsp;&nbsp;</font></b></td>';
+            echo '<td class="text"><b><font size="1">BY &nbsp;&nbsp;</font></b></td>';
+            echo '<td class="text"><b><font size="1">BZ &nbsp;&nbsp;</font></b></td>';
+        }
+    echo'<td class="text"><b><font size="1">Latitude</font></b></td>
+        <td class="text"><b><font size="1">Longitude</font></b></td>';
+      echo'</tr>';      	
     }	
 
     if ($sno%2==0)
@@ -320,6 +376,21 @@ function get_log_xml_data($vserial, $vname, $startdate, $enddate,$parameterizeDa
     echo'<td class="text"><font size="1">'.$io6_arr[$i].'</font></td>';
     echo'<td class="text"><font size="1">'.$io7_arr[$i].'</font></td>';
     echo'<td class="text"><font size="1">'.$io8_arr[$i].'</font></td>';
+    if($account_id=='1594')
+    {
+        echo'<td class="text">'.$ax_arr[$i].'</td>';
+        echo'<td class="text">'.$ay_arr[$i].'</td>';
+        echo'<td class="text">'.$az_arr[$i].'</td>';
+        echo'<td class="text">'.$mx_arr[$i].'</td>';
+        echo'<td class="text">'.$my_arr[$i].'</td>';
+        echo'<td class="text">'.$mz_arr[$i].'</td>';
+        echo'<td class="text">'.$bx_arr[$i].'</td>';
+        echo'<td class="text">'.$by_arr[$i].'</td>';
+        echo'<td class="text">'.$bz_arr[$i].'</td>';
+    }	
+    echo'<td class="text"><font size="1">'.$lat_arr[$i].'</font></td>';
+    echo'<td class="text"><font size="1">'.$lng_arr[$i].'</font></td>';
+      
    
 	  echo'</tr>'; 
 	  $sno++; 
