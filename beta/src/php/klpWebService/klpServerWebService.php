@@ -10,7 +10,6 @@ $PASSWD = 'neon04$VTS';
 $DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server is down. Please try after few minutes.");
 mysql_select_db ($DBASE, $DbConnection) or die("could not find DB");
 
-require_once "lib/nusoap.php";
 //$vehicleName="UP78CN7842";
 
 function getVehicleDbData($vehicleName)
@@ -41,7 +40,39 @@ function getVehicleDbData($vehicleName)
 //$dataArr=getVehicleDbData($vehicleName);
 //print_r($dataArr);
 
+require_once "lib/nusoap.php";
+$namespace = "http://tempuri.org";
+// create a new soap server
 $server = new soap_server();
-$server->register("getVehicleDbData");
-$server->service($HTTP_RAW_POST_DATA);
+// configure our WSDL
+$server->configureWSDL("ELSService");
+// set our namespace
+$server->wsdl->schemaTargetNamespace = $namespace;
+// register our WebMethod
+$server->register(
+                // method name:
+                'getVehicleDbData', 		 
+                // parameter list:
+                array('name'=>'xsd:string'), 
+                // return value(s):
+                array('return'=>'xsd:string'),
+                // namespace:
+                $namespace,
+                // soapaction: (use default)
+                false,
+                // style: rpc or document
+                'rpc',
+                // use: encoded or literal
+                'encoded',
+                // description: documentation for the method
+                'A simple Hello World web method');
+                
+// Get our posted data if the service is being consumed
+// otherwise leave this data blank.                
+$POST_DATA = isset($GLOBALS['HTTP_RAW_POST_DATA']) 
+                ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
+
+// pass our posted data (or nothing) to the soap service                    
+$server->service($POST_DATA);                
+exit();
 ?>
