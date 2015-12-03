@@ -340,7 +340,7 @@ class Hierarchy
             {
                 global $imeiCheckArr;
                 global $o_cassandra;
-                $currentFilePath="/mnt/last_data_status";
+                $currentFilePath="/mnt/itrack/beta/src/php/vehicleStatus";
             }
             $AccountInfo = new Info();		
             $AccountInfo -> AccountTypeThirdParty = 0;
@@ -437,17 +437,60 @@ class Hierarchy
                                                         $todayDateOnly=$dateObject->format('Y-m-d');
                                                         //echo"todayDate=".$todayDateOnly."<br>";
                                                         $exactFilePath=$currentFilePath."/".$device_imei_no_local.".txt";
+                                                        //echo "exactFilePath=".$exactFilePath."<br>";
                                                         if(file_exists($exactFilePath))
-                                                        {
-                                                            if(date("Y-m-d", filectime($exactFilePath))==$todayDateOnly)
-                                                            {
-                                                                $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1";
+                                                        {  
+                                                            $fileFoundFlag=1;
+                                                            if($imeiCheckArr[$device_imei_no_local]=="")
+                                                            { 
+                                                                if(date("Y-m-d", filectime($exactFilePath))!=$todayDateOnly)
+                                                                { 
+                                                                    $todayDataLog=hasImeiLogged($o_cassandra, $device_imei_no_local, $todayDateOnly);
+                                                                    if($todayDataLog!='')
+                                                                    {
+                                                                        touch($exactFilePath);
+                                                                        $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1";                                       
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                       $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="0";  
+                                                                    }
+                                                                }
+                                                                else if(date("Y-m-d", filectime($exactFilePath))==$todayDateOnly)
+                                                                {
+                                                                   //echo "in else 0<br>";
+                                                                   $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1";  
+                                                                }
                                                             }
                                                             else
                                                             {
-                                                                $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="0";
+                                                                if(date("Y-m-d", filectime($exactFilePath))==$todayDateOnly)
+                                                                {
+                                                                  // echo "in else 0<br>";
+                                                                   $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1";  
+                                                                }
                                                             }
                                                         }
+                                                        if($fileFoundFlag==0)
+                                                        {
+                                                            if($imeiCheckArr[$device_imei_no_local]=="")
+                                                            { 
+                                                                $todayDataLog=hasImeiLogged($o_cassandra, $device_imei_no_local, $todayDateOnly);
+                                                                if($todayDataLog!='')
+                                                                {
+                                                                    //echo "in if";
+                                                                    touch($currentFilePath."/".$device_imei_no_local.".txt");
+                                                                    $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1"; 
+                                                                }
+                                                                else
+                                                                {
+                                                                    //echo "in else 1<br>";
+                                                                    $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="0"; 
+                                                                }  
+                                                            }
+                                                        }
+							
+                                                         $imeiCheckArr[$device_imei_no_local]=$device_imei_no_local;
 							$AccountInfo -> VehicleTypeThirdParty[$AccountInfo -> VehicleCnt] = 0;
 							$AccountInfo -> VehicleActiveDate[$AccountInfo -> VehicleCnt] = '';
 						 
