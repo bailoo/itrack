@@ -436,5 +436,21 @@ function hasImeiLoggedToday($o_cassandra, $imei)
 	return $stime;
 
 }
+function getLastSeenDate($DbConnection,$imei) 
+{
+    $Date=null;
+    $query = "select date(DateTime) AS date1 FROM last_data WHERE IMEI='$imei'";
+    $res = mysql_query($query,$DbConnection);
+    $numrows = mysql_num_rows($res);
+    
+    if($numrows>0) 
+    {
+        if($row=mysql_fetch_object($res)) 
+        {
+            $Date = $row->date1;
+        }
+    }	
+    return $Date;
+}
 
 ?>
