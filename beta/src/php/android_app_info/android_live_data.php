@@ -281,6 +281,7 @@ function getLiveDeviceData($vehicleserialWithIo)
         $LastRecordObject=null;
 	$final_str=$final_str.$sub_str."#";        	
     }
+    $o_cassandra->close();
     return $final_str;
 }
 $server = new soap_server();

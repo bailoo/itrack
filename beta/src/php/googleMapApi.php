@@ -138,36 +138,24 @@ class GoogleMapHelper{
    white-space: nowrap;
  }
  </style>";
-		
+		global $account_id;
+                $map="";
 		$map .="<div id='$id' style='width:$width; height:$height; $style'></div>
+                      var account_id_for_debug=".$account_id.";
 		<!--<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false'></script>-->
                <!--<script type='text/javascript' src='http://maps.google.com/maps/api/js?sensor=false'></script> -->    
 			<script>
-			//alert('test');
+                        if(account_id_for_debug==2)
+                        {
+                            //alert('test');
+                        }
+			
 				var markers = new Array();
 				var markersIds = new Array();
 				 var infowindow;
 				var geocoder = new google.maps.Geocoder();
                                 var map;
-				/*function geocodeAddress(address, action, map,markerId, markerTitle, markerIcon, markerShadow, windowText, showInfoWindow) {
-				    geocoder.geocode( { 'address': address}, function(results, status) {
-				      if (status == google.maps.GeocoderStatus.OK) {
-				      	if(action =='setCenter'){
-				      		setCenterMap(results[0].geometry.location);
-				      	}
-				      	if(action =='setMarker'){
-				      		//return results[0].geometry.location;
-				      		setMarker(map,markerId,results[0].geometry.location,markerTitle, markerIcon, markerShadow,windowText, showInfoWindow);
-				      	}
-				      	if(action =='addPolyline'){
-				      		return results[0].geometry.location;
-				      	}
-				      } else {
-				        alert('Geocode was not successful for the following reason: ' + status);
-				        return null;
-				      }
-				    });
-				}*/";
+				";
 
 		$map .= "
 			var initialLocation;
@@ -185,6 +173,10 @@ center: initialLocation,
 		      ".(($custom != "")? ",$custom" : "")."
 
 		    };
+                     if(account_id_for_debug==2)
+                        {
+                            alert('myOptions'+myOptions);
+                        }
 		    {$id} = new google.maps.Map(document.getElementById('$id'), myOptions);	
 			var mining_test=document.getElementById('category').value;
 			//alert('mining_test='+mining_test);
@@ -621,7 +613,8 @@ var input = (document.getElementById('pac-input'));
 						infowindow.open(map_canvas, markerL);					 						
 					};
 				}
-				
+				if(account_id_for_debug==2)
+                                {
 				function infoCallbackTrack(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,marker,ioStrLocal,dTravel,feature_id_map,dMobileNoLocal) 
 				{					
 					return function() 
@@ -908,7 +901,7 @@ var input = (document.getElementById('pac-input'));
 					};
 				}
 				
-				
+				}
 				function infoCallbackPersonTrack(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,marker,dTravel) 
 				{	
 					return function() 
@@ -1793,6 +1786,7 @@ var input = (document.getElementById('pac-input'));
 						}
 					}					
 				}
+                               
 				function setMultipleMarkerLast(map,latarr,lngarr,datetimearr,vSerial,vName,vNumber,speed,ioStr,vType,dMaxSpeed,lHaltSpeed,dMobileNoArr)
 				{  
 					//alert('hi1');				
