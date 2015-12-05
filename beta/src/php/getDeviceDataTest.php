@@ -1021,10 +1021,10 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
 function getLastRecord($vSerial,$sortBy,$parameterizeData)
 {
 	global $o_cassandra;
-        global $DbConnection; 
+        //global $DbConnection; 
 	$imei = $vSerial;
 	
-	$st_results = getLastSeen($DbConnection,$imei);
+	$st_results = getLastSeen($o_cassandra,$imei);
 	//var_dump($st_results);
 	//$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r');
 	//$st_obj = gpsParser($st_results,$params,TRUE);
