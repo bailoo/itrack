@@ -493,7 +493,7 @@ function getLastSeenDate($DbConnection,$imei)
     
     if($numrows>0) {
         if($row=mysql_fetch_object($res)) {
-            $Date = $row->g;
+            $Date = $row->date1;
         }
     }	
     return $Date;
