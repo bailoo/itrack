@@ -182,7 +182,7 @@ function hasLatLong($st_results)
 * 
 * @return array 	Results of the query 
 */
-/*function getLastSeen($o_cassandra,$imei)
+function getLastSeen($o_cassandra,$imei)
 {
 	$s_cql = "SELECT * FROM lastlog 
 		  WHERE 
@@ -194,9 +194,9 @@ function hasLatLong($st_results)
 	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
 	$st_obj = logParser($st_results, $dataType, $orderAsc);
 	return $st_obj;
-}*/
+}
 
-function getLastSeen($DbConnection,$imei)
+/*function getLastSeen($DbConnection,$imei)
 {
     $st_obj = new stdClass();
     $num=0;
@@ -240,7 +240,7 @@ function getLastSeen($DbConnection,$imei)
         }
     }
     return $st_obj;
-}
+}*/
 
 
 
