@@ -878,7 +878,7 @@ var input = (document.getElementById('pac-input'));
 									'<table>'+
 									'<tr>'+
 									'<td class=\"live_td_css1\">LandmarkName&nbsp;:&nbsp;<input type=text name=landmark_name id=landmark_name  size=10><input type=hidden name=landmark_point id=landmark_point value=\''+latlng+'\'></td>'+		 					
-									'<td><input type=button value=SAVE id=save_lnmrk onclick=map_add_landmark(this.form)></td><td><span id=wait_lnmrk style=display:none><img src=images/map_add_landmark_loading.gif align=absmiddle>&nbsp;wait ...</span></td>'+
+									'<td><input type=button value=SAVE id=save_lnmrk onclick=map_add_landmark(this.form)></td><td><span id=wait_lnmrk style=display:none><img src=images/map_add_landmark_loading.gif align=absmiddle>&nbsp;wait ...</span></td>\''+
 									'</tr></table>'+
 									'</span>'+
 									'</td>'+
