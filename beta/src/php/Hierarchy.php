@@ -394,10 +394,10 @@ class Hierarchy
 							 $dateObject=new DateTime();
                                                         $todayDateOnly=$dateObject->format('Y-m-d');                                                       
                                                         $dataLogDate=getLastSeenDate($DbConnection,$device_imei_no_local);
-                                                        if($account_id==2)
+                                                        /*if($account_id==2) // for debug
                                                         {
                                                             echo "serveDate".$dataLogDate."thisScriptTodayDate".$todayDateOnly."<br>";
-                                                        }
+                                                        }*/
                                                         if($dataLogDate==$todayDateOnly)
                                                         {
                                                             $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1";                                       
