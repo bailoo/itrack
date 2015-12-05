@@ -182,7 +182,7 @@ function hasLatLong($st_results)
 * 
 * @return array 	Results of the query 
 */
-function getLastSeen($o_cassandra,$imei)
+/*function getLastSeen($o_cassandra,$imei)
 {
 	$s_cql = "SELECT * FROM lastlog 
 		  WHERE 
@@ -194,7 +194,54 @@ function getLastSeen($o_cassandra,$imei)
 	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
 	$st_obj = logParser($st_results, $dataType, $orderAsc);
 	return $st_obj;
+}*/
+
+function getLastSeen($DbConnection,$imei)
+{
+    $st_obj = new stdClass();
+    $num=0;
+    $query = "SELECT * FROM last_data WHERE IMEI='$imei'";
+    $res = mysql_query($query,$DbConnection);
+    $numrows = mysql_num_rows($res);
+    if($numrows>0)
+    {
+        if($row=mysql_fetch_object($res)) {
+            $st_obj->$num->a = $row->a;
+            $st_obj->$num->b = $row->b;
+            $st_obj->$num->c = $row->c;
+            $st_obj->$num->d = $row->d;
+            $st_obj->$num->e = $row->e;
+            $st_obj->$num->f = $row->f;
+            $st_obj->$num->g = $row->g;
+            $st_obj->$num->h = $row->h;
+            $st_obj->$num->i = $row->i;
+            $st_obj->$num->j = $row->j;
+            $st_obj->$num->k = $row->k;
+            $st_obj->$num->l = $row->l;
+            $st_obj->$num->m = $row->m;
+            $st_obj->$num->n = $row->n;
+            $st_obj->$num->o = $row->o;
+            $st_obj->$num->p = $row->p;
+            $st_obj->$num->q = $row->q;
+            $st_obj->$num->r = $row->r;
+            $st_obj->$num->s = $row->s;
+            $st_obj->$num->t = $row->t;
+            $st_obj->$num->u = $row->u;
+            $st_obj->$num->ci = $row->ci;
+            $st_obj->$num->ax = $row->ax;
+            $st_obj->$num->ay = $row->ay;
+            $st_obj->$num->az = $row->az;
+            $st_obj->$num->mx = $row->mx;
+            $st_obj->$num->my = $row->my;
+            $st_obj->$num->mz = $row->mz;
+            $st_obj->$num->bx = $row->bx;
+            $st_obj->$num->by = $row->by;
+            $st_obj->$num->bz = $row->bz;
+        }
+    }
+    return $st_obj;
 }
+
 
 
 /***
