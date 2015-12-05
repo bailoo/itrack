@@ -690,37 +690,210 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
 
 function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate,$sortBy,$type,$parameterizeData,&$dataObject)
 {
-   global $o_cassandra; 
-   if ($sortBy == "h")
-   {
-        $deviceTime=TRUE;
-   }
-   else if($sortBy == "g")
-   {
-        $deviceTime=FALSE;
-   }
- 
-    $lastRecordArr=$st_results = getLastSeen($o_cassandra,$vSerial);
-    //var_dump($lastRecordArr);
-    foreach($lastRecordArr as $itemLR) 
+   global $o_cassandra;
+   global $DbConnection;
+    if ($sortBy == "h")
     {
-        $last_halt_time = $itemLR->u;
-        $day_max_spd=$itemLR->s;
+        $deviceTime=TRUE;
+    }
+    else if($sortBy == "g")
+    {
+        $deviceTime=FALSE;
     }
     
-    //echo "last_halt_time=".$last_halt_time."day_max_spd=".$day_max_spd."<br>";
+    $liveDataFoundFlag=0;   
+    if(strtotime(date('Y-m-d H:i:s'))-strtotime($endDate)<1800)
+    {        
+        $st_results = getLastSeen($DbConnection,$vSerial);
+        foreach($st_results as $itemLR) 
+        {            
+            $datetime_device = str_replace('@',' ',$itemLR->h);
+            if(strtotime(date('Y-m-d H:i:s'))-strtotime($datetime_device)<1800)
+            {
+                $liveDataFoundFlag=1;
+                $msg_type = $itemLR->a;                 
+                $ver = $itemLR->b;              
+                $fix = $itemLR->c;
+                $lat = $itemLR->d;
+                $lng = $itemLR->e;
+                //echo "lat".$lat."<br>";
+                $speed = $itemLR->f;
+                $datetime_server = str_replace('@',' ',$itemLR->g);                         
+                $io1 = $itemLR->i;
+                $io2 = $itemLR->j;
+                $io3 = $itemLR->k;
+                $io4 = $itemLR->l;
+                $io5 = $itemLR->m;
+                $io6 = $itemLR->n;
+                $io7 = $itemLR->o;
+                $io8 = $itemLR->p;
+                $sig_str = $itemLR->q;
+                $sup_v = $itemLR->r;
+                $last_halt_time = $itemLR->u;
+                $day_max_spd=$itemLR->s;
+            }
+        }
+    }
     
-    $deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
-    $orderAsc = TRUE;	// TRUE for ascending, otherwise descending (default)   
-    $st_results = getImeiDateTimes($o_cassandra, $vSerial, $startDate, $endDate, $deviceTime, $orderAsc);
-    
-    foreach($st_results as $item) 
+    if($liveDataFoundFlag==0)
+    {  
+        //echo "liveDataFoundFlag=".$liveDataFoundFlag."<br>";
+        $st_results = getLastSeenDateTimes($o_cassandra, $vSerial, $startDate, $endDate);
+        $msg_type = $st_results->a;                 
+        $ver = $st_results->b;              
+        $fix = $st_results->c;
+        $lat = $st_results->d;
+        $lng = $st_results->e;
+        //echo "lat".$lat."<br>";
+        $speed = $st_results->f;
+        $datetime_server = str_replace('@',' ',$st_results->g);
+        $datetime_device = str_replace('@',' ',$st_results->h);              
+        $io1 = $st_results->i;
+        $io2 = $st_results->j;
+        $io3 = $st_results->k;
+        $io4 = $st_results->l;
+        $io5 = $st_results->m;
+        $io6 = $st_results->n;
+        $io7 = $st_results->o;
+        $io8 = $st_results->p;
+        $sig_str = $st_results->q;
+        $sup_v = $st_results->r; 
+        $last_halt_time = '-';
+        $day_max_spd='-';
+    }
+    //print_r($st_results);          
+    $DataValid = 0;
+    if ($parameterizeData->latitude != null && $parameterizeData->longitude != null) 
     {
+        if((strlen($lat) > 5) && ($lat != "-") && (strlen($lng) > 5) && ($lng != "-")) 
+        {
+            $DataValid = 1;
+        }               
+    }
+    if($DataValid==1)
+    {
+        $datetime_server1=$datetime_server;
+        $datetime_device1=$datetime_device;
+        //echo "datetime=".$datetime_device1."<br>";
+
+        if ($parameterizeData->messageType != null) 
+        {
+            $msg_type_1 = $msg_type;
+        }
+        if ($parameterizeData->version != null) 
+        {
+            $ver_1 = $ver;
+        }
+        if ($parameterizeData->fix != null) 
+        {
+            $fix_1 = $fix;
+        }
+        if ($parameterizeData->cellName != null) 
+        {
+            $ci1 = isset($ci)?$ci:'-';
+        }
+        if ($parameterizeData->supVoltage != null) 
+        {
+            $sup_v1 = $sup_v;
+        }
+        if ($parameterizeData->io1 != null) 
+        {
+            $io1_1 = $io1;
+        }
+        if ($parameterizeData->io2 != null) 
+        {
+            $io2_1 = $io2;
+        }
+        if ($parameterizeData->io3 != null) 
+        {
+                $io3_1 = $io3;
+        }
+        if ($parameterizeData->io4 != null) 
+        {
+                $io4_1 = $io4;
+        }
+        if ($parameterizeData->io5 != null) 
+        {
+                $io5_1 = $io5;
+        }
+        if ($parameterizeData->io6 != null) 
+        {
+                $io6_1 = $io6;
+        }
+        if ($parameterizeData->io7 != null) 
+        {
+                $io7_1 = $io7;
+        }
+        if ($parameterizeData->io8 != null) 
+        {
+                $io8_1 = $io8;
+        }
+
+        if ($parameterizeData->dayMaxSpeed != null) 
+        {
+                $day_max_spd_1 = $day_max_spd;
+        }
+        if ($parameterizeData->dayMaxSpeedTime != null) 
+        {
+                $day_max_spd_time_1 = isset($day_max_spd_time)?$day_max_spd_time:'-';
+        }            
+        if ($parameterizeData->lastHaltTime != null) 
+        {
+                $last_halt_time_1 = $last_halt_time;
+        }
+
+        if ($parameterizeData->latitude != null && $parameterizeData->longitude != null) 
+        {
+            $lat_1 = $lat;
+            $lng_1 = $lng;
+        }
+
+        if ($parameterizeData->speed != null) 
+        {
+            //echo "<br>In Speed";
+            $speed_1 = $speed;
+        }
+
+        if ($parameterizeData->sigStr != null) 
+        {
+                $sig_str_1 = $sig_str;
+        }
+        if ($parameterizeData->supVoltage != null) 
+        {
+            $sup_v_1 = $sup_v;
+        }
+        $dataObject->serverDatetimeLD[] = $datetime_server;
+        $dataObject->deviceDatetimeLD[]=$datetime_device1;	 
+        $dataObject->messageTypeLD[] = $msg_type_1;
+        $dataObject->versionLD[] = $ver_1; 
+        $dataObject->fixLD[] = $fix_1;	
+        $dataObject->latitudeLD[]=$lat_1;
+        $dataObject->longitudeLD[]=$lng_1;
+        $dataObject->speedLD[] =$speed_1;	 
+        $dataObject->io1LD[] = $io1_1;;  
+        $dataObject->io2LD[] =$io2_1; 
+        $dataObject->io3LD[] = $io3_1; 
+        $dataObject->io4LD[] =$io4_1; 
+        $dataObject->io5LD[]=$io5_1;  
+        $dataObject->io6LD[] = $io6_1;  
+        $dataObject->io7LD[] =$io7_1; 
+        $dataObject->io8LD[] = $io8_1;	
+        $dataObject->sigStrLD[] = $sig_str_1;
+        $dataObject->suplyVoltageLD[] = $sup_v_1;	
+        $dataObject->cellNameLD[] =$ci1;
+        $dataObject->dayMaxSpeedLD[]=$day_max_spd_1;
+        $dataObject->dayMaxSpeedTimeLD[]=$day_max_spd_time_1;
+        $dataObject->lastHaltTimeLD[]=$last_halt_time_1;
+    }
+    /*foreach($st_results as $item) 
+    {
+
         $msg_type = $item->a;                 
         $ver = $item->b;              
         $fix = $item->c;
         $lat = $item->d;
         $lng = $item->e;
+        echo "lat".$lat."<br>";
         $speed = $item->f;
         $datetime_server = str_replace('@',' ',$item->g);
         $datetime_device = str_replace('@',' ',$item->h);              
@@ -735,22 +908,24 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
         $sig_str = $item->q;
         $sup_v = $item->r;
         $DataValid = 0;
+        //echo "msgType=".$datetime_device."<br>";
         if ($parameterizeData->latitude != null && $parameterizeData->longitude != null) 
         {
-            if ((strlen($lat) > 5) && ($lat != "-") && (strlen($lng) > 5) && ($lng != "-")) 
+            if((strlen($lat) > 5) && ($lat != "-") && (strlen($lng) > 5) && ($lng != "-")) 
             {
                 $DataValid = 1;
             }
             //echo "DataValid=".$DataValid."<br>";
-            if ($DataValid == 0) 
+            if($DataValid == 0) 
             {
-                    continue;
+                continue;
             }
         }
         if($DataValid==1)
         {
             $datetime_server1=$datetime_server;
             $datetime_device1=$datetime_device;
+            //echo "datetime=".$datetime_device1."<br>";
 
             if ($parameterizeData->messageType != null) 
             {
@@ -778,11 +953,11 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
             }
             if ($parameterizeData->io2 != null) 
             {
-                $io2_2 = $io2;
+                $io2_1 = $io2;
             }
             if ($parameterizeData->io3 != null) 
             {
-                    $io3_3 = $io3;
+                    $io3_1 = $io3;
             }
             if ($parameterizeData->io4 != null) 
             {
@@ -839,38 +1014,17 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
                 $sup_v_1 = $sup_v;
             }
         }
-    }
-    $dataObject->serverDatetimeLD[] = $datetime_server;
-    $dataObject->deviceDatetimeLD[]=$datetime_device1;	 
-    $dataObject->messageTypeLD[] = $msg_type_1;
-    $dataObject->versionLD[] = $ver_1; 
-    $dataObject->fixLD[] = $fix_1;	
-    $dataObject->latitudeLD[]=$lat_1;
-    $dataObject->longitudeLD[]=$lng_1;
-    $dataObject->speedLD[] =$speed_1;	 
-    $dataObject->io1LD[] = $io1_1;;  
-    $dataObject->io2LD[] =$io2_1; 
-    $dataObject->io3LD[] = $io3_1; 
-    $dataObject->io4LD[] =$io4_1; 
-    $dataObject->io5LD[]=$io5_1;  
-    $dataObject->io6LD[] = $io6_1;  
-    $dataObject->io7LD[] =$io7_1; 
-    $dataObject->io8LD[] = $io8_1;	
-    $dataObject->sigStrLD[] = $sig_str_1;
-    $dataObject->suplyVoltageLD[] = $sup_v_1;	
-    $dataObject->cellNameLD[] ='-';
-    $dataObject->dayMaxSpeedLD[]=$day_max_spd_1;
-    $dataObject->lastHaltTimeLD[]=$last_halt_time_1;
-	
+    }*/
 }
 
 
 function getLastRecord($vSerial,$sortBy,$parameterizeData)
 {
-	global $o_cassandra; 
+	global $o_cassandra;
+        global $DbConnection; 
 	$imei = $vSerial;
 	
-	$st_results = getLastSeen($o_cassandra,$imei);
+	$st_results = getLastSeen($DbConnection,$imei);
 	//var_dump($st_results);
 	//$params = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r');
 	//$st_obj = gpsParser($st_results,$params,TRUE);
