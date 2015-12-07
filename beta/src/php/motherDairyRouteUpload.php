@@ -13,7 +13,7 @@ echo "false";
 $uploadFilePath='C:\\xampp/htdocs/itrackDevelop/beta/src/php/client_map_feature_data/'.$account_id;
 if(!file_exists($uploadFilePath))
 {
-    mkdir($uploadFilePath,0755);
+    mkdir($uploadFilePath,0777);
 }
 $final_dest_file=$uploadFilePath.'/'.$fileName;
 if (move_uploaded_file($_FILES['routeFile']['tmp_name'], $final_dest_file)) 
