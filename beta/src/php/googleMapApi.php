@@ -63,7 +63,7 @@ class GoogleMapHelper{
 		if( !isset($windowText) ) 	$windowText = $this->defaultWindowText;
 		if( !isset($lat) ) 	$latitude = $this->defaultInfoWindow;
 		if( !isset($lng) ) 	$longitude = $this->defaultWindowText;
-		$cPlant=$options['chillingPlant'];
+		$cPlant=isset($options['chillingPlant'])?$options['chillingPlant']:0;
 		echo"	
 		<style>
       html, body, #map-canvas {
