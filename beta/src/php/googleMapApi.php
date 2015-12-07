@@ -865,6 +865,9 @@ var input = (document.getElementById('pac-input'));
                                                                                     var contenttmpstr='<em>Add </em>'+
                                                                                     '<select id=\"landmark_type\" onchange=\"display_landmark_type(this.value);\">'+
                                                                                     '<option value=\"landmark\">Landmark</option>'+
+                                                                                    '<option value=\"0\">Customer</option>'+
+                                                                                    '<option value=\"1\">Plant</option>'+
+                                                                                    '<option value=\"2\">Chilling Plant</option>'+
                                                                                     '</select>';	
 										}
 										else
@@ -872,6 +875,8 @@ var input = (document.getElementById('pac-input'));
                                                                                     var contenttmpstr='<em>Add </em>'+
                                                                                     '<select id=\"landmark_type\" onchange=\"display_landmark_type(this.value);\">'+
                                                                                     '<option value=\"landmark\">Landmark</option>'+
+                                                                                    '<option value=\"0\">Customer</option>'+
+                                                                                    '<option value=\"1\">Plant</option>'+
                                                                                     '</select>';
 										}
 									}
