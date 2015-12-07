@@ -120,7 +120,7 @@ class Hierarchy
                         //if($account_id==2)
                         {
                             global $o_cassandra;
-                        $o_cassandra->close;
+                        $o_cassandra->close();
                             
                         }
 			return $tree_obj;
@@ -270,6 +270,7 @@ class Hierarchy
                                         //echo"todayDate=".$todayDateOnly."<br>";
                                         $exactFilePath=$currentFilePath."/".$device_imei_no_local.".txt";
                                         //echo "exactFilePath=".$exactFilePath."<br>";
+                                        $imeiCheckArr[$device_imei_no_local]=isset($imeiCheckArr[$device_imei_no_local])?$imeiCheckArr[$device_imei_no_local]:"";
                                         if(file_exists($exactFilePath))
                                         {
                                             $fileFoundFlag=1;
@@ -438,6 +439,7 @@ class Hierarchy
                                                         //echo"todayDate=".$todayDateOnly."<br>";
                                                         $exactFilePath=$currentFilePath."/".$device_imei_no_local.".txt";
                                                         //echo "exactFilePath=".$exactFilePath."<br>";
+                                                        $imeiCheckArr[$device_imei_no_local]=isset($imeiCheckArr[$device_imei_no_local])?$imeiCheckArr[$device_imei_no_local]:"";
                                                         if(file_exists($exactFilePath))
                                                         {  
                                                             $fileFoundFlag=1;

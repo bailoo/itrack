@@ -1,4 +1,6 @@
-<?php include_once("user_type_setting.php"); 	
+<?php 
+include_once("util_session_variable.php");
+include_once("user_type_setting.php"); 	
 include_once("markers.php");?>
 <script language="javascript" src="src/js/date_time_validation.js"></script>
 <script type="text/javascript" src="jquery.min.js"></script>
@@ -7,8 +9,10 @@ include_once("markers.php");?>
 var customerFileArr=Object();
 var bname = navigator.appName;	
 var xml_data_this;
-var xmlObjThis = null; 			
-var dest_station_test="src/php/client_map_feature_data/commonXmlFile.xml";
+var xmlObjThis = null; 
+var accountIdSession='<?php echo $account_id; ?>';
+//alert('account_id='+accountIdSession);
+var dest_station_test="src/php/client_map_feature_data/"+accountIdSession+"/"+"commonXmlFile.xml";
  var exists = isFile(dest_station_test);
 //alert("exists="+exists);
 //alert(dest_station_test);

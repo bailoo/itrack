@@ -1,4 +1,10 @@
 <?php
+$fleet_user_type=0;
+$courier_user_type=0;
+$school_user_type=0;
+$pos_user_type=0;
+$mining_user_type=0;
+$person_user_type=0;
 for($i=0;$i<$size_utype_session;$i++)
 {
     //echo"<br>user_type_id1=".$user_type_name_session[$i];

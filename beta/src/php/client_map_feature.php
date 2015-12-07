@@ -1,65 +1,64 @@
 <?php
 $dataCustomerArr=getCustomerPlantChillingRecord($account_id,0,$DbConnection);
-$size=0;
 $customerArr=array();
-foreach($dataCustomerArr as $dCValue)
+$customerArrNew=array();
+if($dataCustomerArr>0)
 {
-    $station[$size]= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dCValue['station_name']);
-    $customer[$size]=$dCValue['customer_no'];
-    $coord = $dCValue['station_coord'];
-    $type[$size] = $dCValue['type'];  	
-    $coord1 = explode(',',$coord);
-    $lat[$size]= substr(trim($coord1[0]),0,-1);
-    $lng[$size]= substr(trim($coord1[1]),0,-1);
-    $customerArrNew[trim($customer[$size])]=trim($lat[$size])."^".trim($lng[$size])."^".$station[$size]."^".$type[$size];
-    $size++;
+    foreach($dataCustomerArr as $dCValue)
+    {
+        $station= isset($dCValue['station_name'])?preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dCValue['station_name']):'';
+        $customer=isset($dCValue['customer_no'])?$dCValue['customer_no']:'';
+        $coord = isset($dCValue['station_coord'])?$dCValue['station_coord']:'';
+        $type = isset($dCValue['type'])?$dCValue['type']:'';  	
+        $coord1 = explode(',',$coord);
+        $lat= isset($coord1[0])?substr(trim($coord1[0]),0,-1):'';
+        $lng= isset($coord1[1])?substr(trim($coord1[1]),0,-1):'';
+        $customerArrNew[trim($customer)]=trim($lat)."^".trim($lng)."^".$station."^".$type;
+    }
+    //print_r($customerArrNew);    
 }
-
-//print_r($customerArrNew);
 $_SESSION['uniqueCustomerArrNew'] = json_encode($customerArrNew);
-$query = "";
-$result="";
-$row="";
 
+$plantArrNew=array();
 $dataPlantArr=getCustomerPlantChillingRecord($account_id,1,$DbConnection);
-$size=0;
-//$plantArr=array();
-foreach($dataPlantArr as $dPValue)
+if(count($dataPlantArr)>0)
 {
-    $station[$size]= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dPValue['station_name']);
-    $customer[$size]=$dPValue['customer_no'];
-    $coord = $dPValue['station_coord'];
-    $type[$size] = $dPValue['type'];  	
-    $coord1 = explode(',',$coord);
-    $lat[$size]= substr(trim($coord1[0]),0,-1);
-    $lng[$size]= substr(trim($coord1[1]),0,-1);
-    $plantArrNew[trim($customer[$size])]=trim($lat[$size])."^".trim($lng[$size])."^".$station[$size]."^".$type[$size];
-    $size++;
+    foreach($dataPlantArr as $dPValue)
+    {
+        $station= isset($dPValue['station_name'])?preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dPValue['station_name']):'';
+        $customer=isset($dPValue['customer_no'])?$dPValue['customer_no']:'';
+        $coord = isset($dPValue['station_coord'])?$dPValue['station_coord']:'';
+        $type = isset($dPValue['type'])?$dPValue['type']:'';  	
+        $coord1 = explode(',',$coord);
+        $lat= isset($coord1[0])?substr(trim($coord1[0]),0,-1):'';
+        $lng= isset($coord1[1])?substr(trim($coord1[1]),0,-1):'';
+        $plantArrNew[trim($customer)]=trim($lat)."^".trim($lng)."^".$station."^".$type;
+    }   
 }
 $_SESSION['uniquePlantArrNew'] = json_encode($plantArrNew);
-$query = "";
-$result="";
-$row="";	
 
-//echo $query."<br>";
-
+$chillingArrNew=array();
 $dataChillingPlantArr=getCustomerPlantChillingRecord($account_id,2,$DbConnection);
-$size=0;
-//$plantArr=array();
-foreach($dataChillingPlantArr as $dCPValue)
-{
-    $station[$size]= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dCPValue['station_name']);
-    $customer[$size]=$dCPValue['customer_no'];
-    $coord = $dCPValue['station_coord'];
-    $type[$size] = $dCPValue['type'];  	
-    $coord1 = explode(',',$coord);
-    $lat[$size]= substr(trim($coord1[0]),0,-1);
-    $lng[$size]= substr(trim($coord1[1]),0,-1);  
-    $chillingArrNew[trim($row->customer_no)]=trim($lat[$size])."^".trim($lng[$size])."^".$station[$size]."^".$type[$size];
-    $size++;
+if(count($dataChillingPlantArr)>0)
+{    
+    foreach($dataChillingPlantArr as $dCPValue)
+    {
+        $station= isset($dCPValue['station_name'])?preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dCPValue['station_name']):'';
+        $customer=isset($dCPValue['customer_no'])?$dCPValue['customer_no']:'';
+        $coord = isset($dCPValue['station_coord'])?$dCPValue['station_coord']:'';
+        $type = isset($dCPValue['type'])?$dCPValue['type']:'';  	
+        $coord1 = explode(',',$coord);
+        $lat= isset($coord1[0])?substr(trim($coord1[0]),0,-1):'';
+        $lng= isset($coord1[1])?substr(trim($coord1[1]),0,-1):'';  
+        //echo "customerNo=".$customer."<br>";
+        $chillingArrNew[trim($customer)]=trim($lat)."^".trim($lng)."^".$station."^".$type;
+    }
 }
-$_SESSION['uniqueChillingArrNew'] = json_encode($plantArrNew);	
-for($k=0;$k<@$size_feature;$k++)
+$_SESSION['uniqueChillingArrNew'] = json_encode($chillingArrNew);
+
+$flag_station=0;
+$size_feature=0;
+for($k=0;$k<$size_feature;$k++)
 {
     //$feature_id_session[$k];
     if($feature_name_session_login[$k] == "station")
@@ -71,12 +70,16 @@ for($k=0;$k<@$size_feature;$k++)
 }	
 //if($account_id==231)
 //echo "flag_station=".$flag_substation."<br>";
-if(@$flag_station==1)
+$routeArrMorningNew=array(array());
+$routeArrEveningNew=array(array());
+$transporterRouteArr=array();
+if($flag_station==1)
 {
     $fileEMPath="src/php/gps_report/".$account_id."/master";
     $filePath="src/php/gps_report/".$account_id."/master";
     foreach(glob($fileEMPath.'/*.*') as $fileEM) 
     {
+        $strPosition="";
         $fileNameEM=explode("/",$fileEM);
         $strPosition = strpos($fileNameEM[5], '#7');
         //echo "efm=".$eveningFileName."<br>";
@@ -97,6 +100,8 @@ if(@$flag_station==1)
             $transporterName=$fileEM;
         }
     }
+    
+ 
     if(file_exists($eveningFileName))
     {		
         $file = fopen($eveningFileName,"r");
@@ -122,29 +127,28 @@ if(@$flag_station==1)
                 $routeArr=explode("/",$csvEveningArr[3]);
                 $routeArrSize=sizeof($routeArr);
                 for($i=0;$i<$routeArrSize;$i++)
-                {                    
+                {
                     if($customerArrNew[$trimCustomerNo]!="")
                     {
                         $customerDetail=explode("^",$customerArrNew[$trimCustomerNo]);
                         $routeArrEveningNew[]=array(
-                                            'routeNo'=>$routeArr[$i],
-                                            'lat'=>$customerDetail[0],
-                                            'lng'=>$customerDetail[1],
-                                            'stationName'=>$customerDetail[2],
-                                            'customerNo'=>$trimCustomerNo,
-                                            'type'=>'2'
+                                                        'routeNo'=>$routeArr[$i],
+                                                        'lat'=>$customerDetail[0],
+                                                        'lng'=>$customerDetail[1],
+                                                        'stationName'=>$customerDetail[2],
+                                                        'customerNo'=>$trimCustomerNo,
+                                                        'type'=>'2'
                                         );
                     }
                 }
             }		
-        }			
-        $_SESSION['uniqueRouteArrEveningNew'] = json_encode($routeArrEveningNew);      
-    }
+        }
+    }   
+
     if(file_exists($morningFileName))
     {
         //echo "in file";		
-        $file = fopen($morningFileName,"r");
-        $routeArrMorning=array();
+        $file = fopen($morningFileName,"r");     
         while(!feof($file))
         {
             $csvMorningArr=fgetcsv($file);                       
@@ -171,13 +175,13 @@ if(@$flag_station==1)
                                                 'customerNo'=>$trimCustomerNo,
                                                 'type'=>'2'
                                             );
-                    }               
+                    }
                 }
             }		
         }
-        //print_r($routeArrMorningNew);
-        $_SESSION['uniqueRouteArrMorningNew'] = json_encode($routeArrMorningNew);        
+        //print_r($routeArrMorningNew);        
     }
+   
     if(file_exists($transporterName))
     {			
         $transporterRouteArr=array();
@@ -187,75 +191,83 @@ if(@$flag_station==1)
             $csvTransporterArr=fgetcsv($file);
             $transporterRouteArr[$csvTransporterArr[0]]=$csvTransporterArr[1];
         }
-        //print_r($transporterRouteArr);
-        $_SESSION['uniqueRouteTransporters'] = json_encode($transporterRouteArr);
+        //print_r($transporterRouteArr);       
     }
 }
-
+$_SESSION['uniqueRouteArrEveningNew'] = json_encode($routeArrEveningNew);
+$_SESSION['uniqueRouteArrMorningNew'] = json_encode($routeArrMorningNew);
+$_SESSION['uniqueRouteTransporters'] = json_encode($transporterRouteArr);
+    
 $routeMorningArr=getRouteMorning($account_id,1,$DbConnection);
 //print_r($routeMorningArr);
+$routeArrMorning=array();
 if(count($routeMorningArr)>0)
 {
-    
+   
     foreach($routeMorningArr as $rMorValue)
     {
-        $explodedMRouteNo=explode("/",$rMorValue['route_name_mor']);  
-        for($i=0;$i<sizeof($explodedMRouteNo);$i++)
-        {            
-            if($explodedMRouteNo[$i]!='')
-            {
-                //echo "routeNo=".$explodeeRouteNo[$i]."<br>"; 
-                if (strpos($explodedMRouteNo[$i],'@') !== false) 
+        $explodedMRouteNo=isset($rMorValue['route_name_mor'])?explode("/",$rMorValue['route_name_mor']):0;  
+        if(count($explodedMRouteNo))
+        {
+            for($i=0;$i<sizeof($explodedMRouteNo);$i++)
+            {            
+                if($explodedMRouteNo[$i]!='')
                 {
-                    $routeNo=  substr($explodedMRouteNo[$i], 1);
-                    //echo "RouteNoa=".$routeNo."<br>";
+                    //echo "routeNo=".$explodeeRouteNo[$i]."<br>"; 
+                    if (strpos($explodedMRouteNo[$i],'@') !== false) 
+                    {
+                        $routeNo=  substr($explodedMRouteNo[$i], 1);
+                        //echo "RouteNoa=".$routeNo."<br>";
+                    }
+                    else
+                    {
+                        $routeNo=$explodedMRouteNo[$i];
+                         //echo "RouteNob1=".$routeNo."<br>";
+                    }
+
+                    $routeArrMorning[$routeNo]=$routeNo; 
                 }
-                else
-                {
-                    $routeNo=$explodedMRouteNo[$i];
-                     //echo "RouteNob1=".$routeNo."<br>";
-                }
-                
-                $routeArrMorning[$routeNo]=$routeNo; 
             }
         }
     }
-    $_SESSION['uniqueRouteArrMorning'] = $routeArrMorning;
-    //echo "morningRoute<br>";
     //print_r($routeArrMorning);
 }
+$_SESSION['uniqueRouteArrMorning'] = $routeArrMorning;
 
 
 $routeEveningArr=getRouteEvening($account_id,1,$DbConnection);
+$routeArrEvening=array();
 if(count($routeEveningArr)>0)
 {
     foreach($routeEveningArr as $rEvValue)
     {
-        $explodedERouteNo=explode("/",$rEvValue['route_name_ev']);  
-        for($i=0;$i<sizeof($explodedERouteNo);$i++)
-        {            
-            if($explodedERouteNo[$i]!='')
-            {
-                //echo "routeNo=".$explodeeRouteNo[$i]."<br>"; 
-                if (strpos($explodedERouteNo[$i],'@') !== false) 
+        $explodedERouteNo=isset($rEvValue['route_name_ev'])?explode("/",$rEvValue['route_name_ev']):0; 
+        if(count($explodedERouteNo))
+        {
+            for($i=0;$i<sizeof($explodedERouteNo);$i++)
+            {            
+                if($explodedERouteNo[$i]!='')
                 {
-                    $routeENo=  substr($explodedERouteNo[$i], 1);
-                    //echo "RouteNoea=".$routeENo."<br>";
+                    //echo "routeNo=".$explodeeRouteNo[$i]."<br>"; 
+                    if (strpos($explodedERouteNo[$i],'@') !== false) 
+                    {
+                        $routeENo=  substr($explodedERouteNo[$i], 1);
+                        //echo "RouteNoea=".$routeENo."<br>";
+                    }
+                    else
+                    {
+                        $routeENo=$explodedERouteNo[$i];
+                         //echo "RouteNobe1=".$routeENo."<br>";
+                    }
+
+                    $routeArrEvening[$routeENo]=$routeENo; 
                 }
-                else
-                {
-                    $routeENo=$explodedERouteNo[$i];
-                     //echo "RouteNobe1=".$routeENo."<br>";
-                }
-                
-                $routeArrEvening[$routeENo]=$routeENo; 
             }
         }
-       
     }
-    $_SESSION['uniqueRouteArrEvening'] = $routeArrEvening;
+    
     //echo "morningRoute<br>";
     //print_r($routeArrEvening);
 }
-
+$_SESSION['uniqueRouteArrEvening'] = $routeArrEvening;
 ?>
