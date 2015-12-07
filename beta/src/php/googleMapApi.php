@@ -860,6 +860,13 @@ var input = (document.getElementById('pac-input'));
                                                                         //alert('jsChillingPlant='+jsChillingPlant);
 									if(feature_id_map==1)
 									{
+										if(jsChillingPlant==1)
+										{
+                                                                                    var contenttmpstr='<em>Add </em>'+
+                                                                                    '<select id=\"landmark_type\" onchange=\"display_landmark_type(this.value);\">'+
+                                                                                    '<option value=\"landmark\">Landmark</option>'+
+                                                                                    '</select>';	
+										}
 										
 									}
 									else
