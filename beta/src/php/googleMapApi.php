@@ -863,7 +863,7 @@ var input = (document.getElementById('pac-input'));
 										if(jsChillingPlant==1)
 										{
                                                                                     var contenttmpstr='<em>Add </em>'+
-                                                                                    '<select id=landmark_type onchange=\"display_landmark_type(this.value);\">'+
+                                                                                    '<select id=\"landmark_type\" onchange=\"display_landmark_type(this.value);\">'+
                                                                                     '<option value=\"landmark\">Landmark</option>'+
                                                                                     '<option value=0>Customer</option>'+
                                                                                     '<option value=1>Plant</option>'+
@@ -873,7 +873,7 @@ var input = (document.getElementById('pac-input'));
 										else
 										{
                                                                                     var contenttmpstr='<em>Add </em>'+
-                                                                                    '<select id=landmark_type onchange=\"display_landmark_type(this.value);\">'+
+                                                                                    '<select id=\"landmark_type\" onchange=\"display_landmark_type(this.value);\">'+
                                                                                     '<option value=\"landmark\">Landmark</option>'+
                                                                                     '<option value=0>Customer</option>'+
                                                                                     '<option value=1>Plant</option>'+
