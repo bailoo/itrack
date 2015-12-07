@@ -857,28 +857,10 @@ var input = (document.getElementById('pac-input'));
 									'</tr>'+near_from_customer_or_plant_str+customer_plant_str1+											
 									'</table>'+
 									'<br><form action=#>';
-                                                                        alert('jsChillingPlant='+jsChillingPlant);
+                                                                        //alert('jsChillingPlant='+jsChillingPlant);
 									if(feature_id_map==1)
 									{
-										if(jsChillingPlant==1)
-										{
-                                                                                    var contenttmpstr='<em>Add </em>'+
-                                                                                    '<select id=\"landmark_type\" onchange=\"display_landmark_type(this.value);\">'+
-                                                                                    '<option value=\"landmark\">Landmark</option>'+
-                                                                                    '<option value=0>Customer</option>'+
-                                                                                    '<option value=1>Plant</option>'+
-                                                                                    '<option value=2>Chilling Plant</option>'+
-                                                                                    '</select>';	
-										}
-										else
-										{
-                                                                                    var contenttmpstr='<em>Add </em>'+
-                                                                                    '<select id=\"landmark_type\" onchange=\"display_landmark_type(this.value);\">'+
-                                                                                    '<option value=\"landmark\">Landmark</option>'+
-                                                                                    '<option value=0>Customer</option>'+
-                                                                                    '<option value=1>Plant</option>'+
-                                                                                    '</select>';
-										}
+										
 									}
 									else
 									{
