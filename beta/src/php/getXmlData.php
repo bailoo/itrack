@@ -1,18 +1,27 @@
 <?php
 //echo "INGET11";
 //include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
-if($isReport) {
+$isReport=isset($isReport)?$isReport:0;
+$isReport2=isset($isReport2)?$isReport2:0;
+
+if($isReport) 
+{
    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
-} else if($isReport2) {
+} 
+else if($isReport2) 
+{
    include_once("../../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
    include_once("../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
-} else {      
+} 
+else 
+{      
    // echo "in else";
     include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
     include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
 }
 //echo "EXISTS=".file_exists("../../../../../phpApi/libLog.php")."<br>";
+
 $o_cassandra = new Cassandra();	
 $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 
@@ -724,15 +733,15 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
         $sup_v = $item->r;
         $ci = $item->i;
         
-        $ax = $item->ax;
-        $ay = $item->ay;
-        $az = $item->az;
-        $mx = $item->mx;
-        $my = $item->my;
-        $mz = $item->mz;
-        $bx = $item->bx;
-        $by = $item->by;
-        $bz = $item->bz;
+        $ax = isset($item->ax)?$item->ax:'-';
+        $ay = isset($item->ay)?$item->ay:'-';;
+        $az = isset($item->az)?$item->az:'-';
+        $mx = isset($item->mx)?$item->mx:'-';
+        $my = isset($item->my)?$item->my:'-';
+        $mz = isset($item->mz)?$item->mz:'-';
+        $bx = isset($item->bx)?$item->bx:'-';;
+        $by = isset($item->by)?$item->by:'-';
+        $bz = isset($item->bz)?$item->bz:'-';
         
           
         if ($requiredData == "All") 
@@ -796,15 +805,15 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
 
         if ($parameterizeData->dayMaxSpeed != null) 
         {
-            $dataObject->dayMaxSpeedData[] = $day_max_spd;
+            $dataObject->dayMaxSpeedData[] = isset($day_max_spd)?$day_max_spd:'-';
         }
         if ($parameterizeData->dayMaxSpeed != null) 
         {
-            $dataObject->dayMaxSpeedTime[] = $day_max_spd_time;
+            $dataObject->dayMaxSpeedTime[] = isset($day_max_spd_time)?$day_max_spd_time:'-';
         }            
         if ($parameterizeData->lastHaltTime != null) 
         {
-            $dataObject->lastHaltTimeData[] = $last_halt_time;
+            $dataObject->lastHaltTimeData[] = isset($last_halt_time)?$last_halt_time:'-';
         }
 
         if ($parameterizeData->axParam != null) 
@@ -923,7 +932,8 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
 
 function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate,$sortBy,$type,$parameterizeData,&$dataObject)
 {
-   global $o_cassandra; 
+   global $o_cassandra;
+   //global $DbConnection;
     if ($sortBy == "h")
     {
         $deviceTime=TRUE;
@@ -1022,7 +1032,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
         }
         if ($parameterizeData->cellName != null) 
         {
-            $ci1 = $ci;
+            $ci1 = isset($ci)?$ci:'-';
         }
         if ($parameterizeData->supVoltage != null) 
         {
@@ -1067,7 +1077,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
         }
         if ($parameterizeData->dayMaxSpeedTime != null) 
         {
-                $day_max_spd_time_1 = $day_max_spd_time;
+                $day_max_spd_time_1 = isset($day_max_spd_time)?$day_max_spd_time:'-';
         }            
         if ($parameterizeData->lastHaltTime != null) 
         {
@@ -1112,8 +1122,9 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
         $dataObject->io8LD[] = $io8_1;	
         $dataObject->sigStrLD[] = $sig_str_1;
         $dataObject->suplyVoltageLD[] = $sup_v_1;	
-        $dataObject->cellNameLD[] ='-';
+        $dataObject->cellNameLD[] =$ci1;
         $dataObject->dayMaxSpeedLD[]=$day_max_spd_1;
+        $dataObject->dayMaxSpeedTimeLD[]=$day_max_spd_time_1;
         $dataObject->lastHaltTimeLD[]=$last_halt_time_1;
     }
     /*foreach($st_results as $item) 
@@ -1252,6 +1263,7 @@ function getLastPositionXMl($vSerial,$startDate,$endDate,$xmlFromDate,$xmlToDate
 function getLastRecord($vSerial,$sortBy,$parameterizeData)
 {
 	global $o_cassandra; 
+        //global $DbConnection;
 	$imei = $vSerial;
 	
 	$st_results = getLastSeen($o_cassandra,$imei);

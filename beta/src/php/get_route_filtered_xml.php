@@ -110,6 +110,8 @@ if($home_report_type=="map_report" || $home_report_type=="play_report")
             $distance =0.0;
             $xml_date_current="";
             $xml_date_last="";
+            $overSpeed=0;
+            $finalDistance=0.0;
             $vehicle_info=get_vehicle_info($root,$vserial[$i]);
             $vehicle_detail_local=explode(",",$vehicle_info);
             $finalVName=$vehicle_detail_local[0];
@@ -147,7 +149,7 @@ if($home_report_type=="map_report" || $home_report_type=="play_report")
                             $finalVer=$SortedDataObject->versionData[$obi];
                             $finalFix=$SortedDataObject->fixData[$obi];
                             $finalCN=$SortedDataObject->cellNameData[$obi];
-                            $finalSS=$SortedDataObject->sigStrData[$obi];
+                            $finalSS=isset($SortedDataObject->sigStrData[$obi])?$SortedDataObject->sigStrData[$obi]:'-';
                             $finalSV=$SortedDataObject->supVoltageData[$obi];
                             $finalDMSV=$SortedDataObject->dayMaxSpeedData[$obi];
                             $finalLHT=$SortedDataObject->lastHaltTimeData[$obi];
@@ -182,6 +184,7 @@ if($home_report_type=="map_report" || $home_report_type=="play_report")
                                 //$linetolog = $CurrentLat.','.$CurrentLong.','.$LastLat.','.$LastLong.','.$distance.','.$xml_date_current.','.$xml_date_last.','.(strtotime($xml_date_current)-strtotime($xml_date_last)).','.$timeinterval.','.$distanceinterval.','.$enddate.','.$startdate."\n";
                                 //echo "distance=".$distance."<br>";									
                                 $overSpeed=$distance/$dateDifference_1;
+                                $overSpeed=isset($overSpeed)?$overSpeed:300;
                             }
                             //echo "distance=".$distance."distanceInterval=".$distanceinterval."<br>";
                             if($distance<$distanceinterval)
@@ -197,7 +200,7 @@ if($home_report_type=="map_report" || $home_report_type=="play_report")
                                     $LastLong =$CurrentLong;									
 
                                     $LastDTForDif=$xml_date_current;
-                                    $line = substr($line, 0, -3);   // REMOVE LAST TWO /> CHARARCTER
+                                    //$line = substr($line, 0, -3);   // REMOVE LAST TWO /> CHARARCTER
                                     $finalDistance = $finalDistance + $distance;									
 
                                     $linetowrite='<x a="'.$finalMT.'" b="'.$finalVer.'" c="'.$finalFix.'" d="'.$finalLatitude.'" e="'.$finalLongitude.'" f="'.$finalSpeed.'" g="'.$finalSDateTime.'" h="'.$datetime.'" i="'.$finalio1.'" j="'.$finalio2.'" k="'.$finalio3.'" l="'.$finalio4.'" m="'.$finalio5.'" n="'.$finalio6.'" o="'.$finalio7.'" p="'.$finalio8.'" q="'.$finalSS.'" r="'.$finalSV.'" s="'.$finalDMSV.'" v="'.$vserial[$i].'" w="'.$finalVName.'" x="'.$finalVNum.'" y="'.$finalVType.'" z="'.round($finalDistance,2).'"/>';
@@ -311,9 +314,17 @@ if($home_report_type=="map_report" || $home_report_type=="play_report")
 
 
                 preg_match('/u="[^"]+/', $lineF[$n], $last_halt_time_tmp);
+                if(count($last_halt_time_tmp)>0)
+                {
                 $last_halt_time_tmp1 = explode("=",$last_halt_time_tmp[0]);
                 $last_halt_time= preg_replace('/"/', '', $last_halt_time_tmp1[1]);
                 $last_halt_time_arr_last[]=$last_halt_time;
+                }
+                else
+                {
+                $last_halt_time_arr_last[]='-';
+                }
+                
 
                 preg_match('/ y="[^"]+/', $lineF[$n], $vehilce_type_tmp);
                 $vehilce_type_tmp1 = explode("=",$vehilce_type_tmp[0]);
@@ -479,7 +490,7 @@ if($home_report_type=="map_report" || $home_report_type=="play_report")
             }
             else
             {
-                echo $googleMapthisapi->addMultipleMarker("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$io_str_last,$distance_travel_arr);
+                echo $googleMapthisapi->addMultipleMarker("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$io_str_last,$distance_travel_arr,'-');// dase is mobile no
             }
 	}
     }
