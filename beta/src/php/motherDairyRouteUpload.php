@@ -10,7 +10,7 @@ else
 {
 echo "false";
 }*/
-$uploadFilePath='C:\\xampp/htdocs/itrackDevelop/beta/src/php/client_map_feature_data/'.$account_id;
+$uploadFilePath='/mnt/itrack/beta/src/php/client_map_feature_data/'.$account_id;
 if(!file_exists($uploadFilePath))
 {
     mkdir($uploadFilePath,0777);
