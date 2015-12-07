@@ -27,7 +27,24 @@ $contents=listDir($S3Path);
 }*/
 
 
-	$flag_sector = 0;
+$flag_sector = 0;
+$flag_distance=0;
+$flag_mdistance = 0;
+$flag_performance=0;
+$flag_summary = 0;
+$flag_travel=0;
+$flag_engine = 0;
+$flag_ac=0;
+$flag_load_cell = 0;
+$flag_station=0;
+$flag_substation = 0;
+$flag_visit=0;
+$flag_fuel = 0;
+$consignment_info=0;
+$door_open_info = 0;
+$fuel_lead_info=0;
+$flag_vehicle_reverse = 0;
+$flag_io_trip=0;
 	for($k=0;$k<$size_feature_session;$k++)
 	{
 		//$feature_id_session[$k];
@@ -128,7 +145,7 @@ $contents=listDir($S3Path);
 	$download_path="src/php/gps_report/".$account_id."/download";
 	$master_download_path="src/php/gps_report/".$account_id."/master";
         
-       	
+       	$nbsp='&nbsp';
 	//if ($flag_station) echo "Upload Path=".$upload_download_path;
 	
 	echo'<tr>
@@ -1525,6 +1542,8 @@ $contents=listDir($S3Path);
 												"</td>"+
 											"</tr>"+
 										"</table>",';*/
+										 if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+                                                                                {
 										if($_SERVER['HTTP_X_FORWARDED_FOR']=="172.26.48.195")
 										{
 										echo'"<table border=0 class=\'mystyle\'>"+
@@ -1560,6 +1579,7 @@ $contents=listDir($S3Path);
 											"</tr>"+
 										"</table>",';
 										}
+                                                                            }
 										echo'"<table border=0 class=\'mystyle\'>"+
 											"<tr>"+ 
 												"<td valign=\'top\'>"+

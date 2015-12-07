@@ -7,12 +7,21 @@
 ?>
 
 <?php
-	$DEBUG = 0;
-	$flag = 0;
-	$result_response=1;
-	$width = @$_POST['width'];
-	$height = @$_POST['height'];
-	$resolution = @$_POST['resolution'];
+    $DEBUG = 0;
+    $flag = 0;
+    $result_response=1;
+    if(isset($_POST['width']))
+    {
+        $width = $_POST['width'];
+    }
+    if(isset($_POST['height']))
+    {
+        $height = $_POST['height'];
+    }
+    if(isset($_POST['resolution']))
+    {
+       $resolution = $_POST['resolution']; 
+    }
 	//$post_superuser = $_POST['superuser'];
 	
 	$post_group_id = $_POST['group_id'];	
@@ -191,9 +200,8 @@
 			if ($DEBUG) print_query($query);
 			$result = mysql_query($query, $DbConnection);
 
-			$row = mysql_fetch_object($result);*/
-			$log_id = $row->log_id;
-			$_SESSION['log_id'] = $log_id; 
+			$row = mysql_fetch_object($result);*/			
+			$_SESSION['log_id'] = isset($row->log_id)?$row->log_id:''; 
 
 			//echo "size=".sizeof($final_group_array);					
 			//echo "<br>URL=".$re_url;

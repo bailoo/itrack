@@ -1,4 +1,5 @@
 <?php
+include('util_session_variable.php');
 $fileName=$_FILES["routeFile"]["name"];
 /*echo "fileName=".$fileName."<br>";
 if(file_exists("/var/www/html/vts/uploadFile"))
@@ -9,7 +10,12 @@ else
 {
 echo "false";
 }*/
-$final_dest_file='/var/www/html/vts/beta/src/php/client_map_feature_data/'.$fileName;
+$uploadFilePath='C:\\xampp/htdocs/itrackDevelop/beta/src/php/client_map_feature_data/'.$account_id;
+if(!file_exists($uploadFilePath))
+{
+    mkdir($uploadFilePath,0755);
+}
+$final_dest_file=$uploadFilePath.'/'.$fileName;
 if (move_uploaded_file($_FILES['routeFile']['tmp_name'], $final_dest_file)) 
 {
     echo "File is valid, and was successfully uploaded.\n";
