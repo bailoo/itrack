@@ -117,7 +117,7 @@ $objPHPExcel_1 = PHPExcel_IOFactory::load($filePath);
 		$hd[$z + 1] = $tmp_hd;
 		$tname[$z + 1] = $tmp_tname;
 	}
-	$pathtowrite="/var/www/html/vts/beta/src/php/client_map_feature_data/commonXmlFile.xml";
+	$pathtowrite="/var/www/html/vts/beta/src/php/client_map_feature_data/".$account_id."/commonXmlFile.xml";
 	$fh = fopen($pathtowrite, 'w') or die("can't open file 1"); // new
 	fwrite($fh, "<t1>"); 
 	//print_r($ad_dt);
