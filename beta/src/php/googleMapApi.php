@@ -867,7 +867,13 @@ var input = (document.getElementById('pac-input'));
                                                                                     '<option value=\"landmark\">Landmark</option>'+
                                                                                     '</select>';	
 										}
-										
+										else
+										{
+                                                                                    var contenttmpstr='<em>Add </em>'+
+                                                                                    '<select id=\"landmark_type\" onchange=\"display_landmark_type(this.value);\">'+
+                                                                                    '<option value=\"landmark\">Landmark</option>'+
+                                                                                    '</select>';
+										}
 									}
 									else
 									{
