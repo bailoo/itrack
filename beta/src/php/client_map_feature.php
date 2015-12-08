@@ -69,8 +69,8 @@ for($k=0;$k<$size_feature;$k++)
 }	
 //if($account_id==231)
 //echo "flag_station=".$flag_substation."<br>";
-$routeArrMorningNew=array(array());
-$routeArrEveningNew=array(array());
+$routeArrMorningNew=array();
+$routeArrEveningNew=array();
 $transporterRouteArr=array();
 if($flag_station==1)
 {
