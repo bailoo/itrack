@@ -57,7 +57,6 @@ if(count($dataChillingPlantArr)>0)
 $_SESSION['uniqueChillingArrNew'] = json_encode($chillingArrNew);
 
 $flag_station=0;
-$size_feature=0;
 for($k=0;$k<$size_feature;$k++)
 {
     //$feature_id_session[$k];
