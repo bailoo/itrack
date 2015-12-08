@@ -138,7 +138,7 @@
   }
   
   $_SESSION['size_utype_session'] = $size_utype_session;     // SINGLE
-  $size_feature = sizeof($feature_id_session);
+  $size_feature = isset($feature_id_session)?sizeof($feature_id_session):0;
   if($DEBUG){echo "<br>size=".$feature_id_session;}
   $_SESSION['size_feature_session'] = $size_feature;    // ARRAY TYPE
   
