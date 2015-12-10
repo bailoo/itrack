@@ -16,7 +16,8 @@ function getVehicleDbData($vehicleName)
 {
     global $DbConnection;
     
-   $Query="SELECT * FROM icd_webservice_data WHERE vehicle_name='$vehicleName' ORDER BY sno DESC LIMIT 1";
+   $Query="SELECT * FROM icd_webservice_data WHERE vehicle_name='$vehicleName' AND icd_in_datetime!='0000-00-00 00:00:00'".
+           " ORDER BY sno DESC LIMIT 1";
    //echo "Query=".$Query."<br>";
 		  // $dataArray[]=array('query'=>$Query);
    $Result=mysql_query($Query,$DbConnection);
@@ -90,6 +91,6 @@ $POST_DATA = isset($GLOBALS['HTTP_RAW_POST_DATA'])
                 ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
 
 // pass our posted data (or nothing) to the soap service                    
-$server->service($POST_DATA); 
+$server->service($POST_DATA);  
 exit();
 ?>
