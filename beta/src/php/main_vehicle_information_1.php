@@ -17,7 +17,7 @@ function get_vehicle_info($AccountNode,$imei)
 		
 		if($vehicle_imei_no==$imei)
 		{
-                    $iovalueandtypelocalarr[$vehicle_imei_no] = isset($AccountNode->data->DeviceIOTypeValue[$j])?$AccountNode->data->DeviceIOTypeValue[$j]:'ionone';			
+                    $iovalueandtypelocalarr = isset($AccountNode->data->DeviceIOTypeValue[$j])?$AccountNode->data->DeviceIOTypeValue[$j]:'ionone';			
 					
 			//print_r($iovalueandtypearr);
 			$tmp_iotype_str="";

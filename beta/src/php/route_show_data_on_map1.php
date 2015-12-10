@@ -1528,7 +1528,7 @@ function getStation1(select_value)
                                     if(obj[i].checked==true)
                                     {											
                                                                                     //alert("VehicleName="+imeiNo[2]);
-                                        tmp_search_station(obj[i].value,imgCnt,customerFileArr,imeiNo[2]);
+                                        searchRouteCustomer(obj[i].value,imgCnt,customerFileArr,imeiNo[2]);
                                         if(imgCnt>4)
                                         {
                                             imgCnt=0;
@@ -1543,7 +1543,7 @@ function getStation1(select_value)
                                 //alert("In else");
                                 if(obj.checked==true)
                                 {
-                                    tmp_search_station(obj.value,i,customerFileArr,imeiNo[2]);
+                                    searchRouteCustomer(obj.value,i,customerFileArr,imeiNo[2]);
                                 }
                             }
                         }
@@ -1586,7 +1586,7 @@ function getStation1(select_value)
                                 {
                                     if(obj[i].checked==true)
                                     {	
-                                        tmp_search_station(obj[i].value,imgCnt,customerFileArr,imeiNo[2]);
+                                        searchRouteCustomer(obj[i].value,imgCnt,customerFileArr,imeiNo[2]);
                                         if(imgCnt>4)
                                         {
                                             imgCnt=0;
@@ -1600,7 +1600,7 @@ function getStation1(select_value)
                             {				//alert("In else");
                                 if(obj.checked==true)
                                 {
-                                    tmp_search_station(obj.value,i,customerFileArr,imeiNo[2]);
+                                    searchRouteCustomer(obj.value,i,customerFileArr,imeiNo[2]);
                                 }
                             }
                         }
@@ -1746,7 +1746,7 @@ function getStation1(select_value)
                 }
             }
 	}
-	function tmp_search_station(value,inci,customerFileArr,vehicleName) // inc=increatment , i=image
+	function searchRouteCustomer(value,inci,customerFileArr,vehicleName) // inc=increatment , i=image
 	{  
             //alert("fCallFlag="+fCallFlag);
             var search_text=value;
