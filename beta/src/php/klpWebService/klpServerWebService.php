@@ -15,7 +15,7 @@ mysql_select_db ($DBASE, $DbConnection) or die("could not find DB");
 function getVehicleDbData($vehicleName)
 {
     global $DbConnection;
-    //$dataArray[]=array('vehicleName'=>vehicleName);
+    
    $Query="SELECT * FROM icd_webservice_data WHERE vehicle_name='$vehicleName' ORDER BY sno DESC LIMIT 1";
    //echo "Query=".$Query."<br>";
 		  // $dataArray[]=array('query'=>$Query);
@@ -24,7 +24,7 @@ function getVehicleDbData($vehicleName)
    //echo "result=".$Result;
    while($Row=mysql_fetch_object($Result))
    {
-        $dataArray[]=array(
+        $dataArray=array(
                             'vehicleName'=>$Row->vehicle_name,
                             'icdInDatetime'=>$Row->actual_icd_in_datetime,
                             'icdOutDatetime'=>$Row->actual_icd_out_datetime,
@@ -49,13 +49,30 @@ $server->configureWSDL("ELSService");
 // set our namespace
 $server->wsdl->schemaTargetNamespace = $namespace;
 // register our WebMethod
+
+$server->wsdl->addComplexType(
+    'vehicleInfo',
+    'complextType',
+    'struct',
+    'sequence',
+    '',
+    array(
+        'vehicleName' => array('name' => 'vehicleName', 'type' => 'xsd:string'),
+        'icdInDatetime' => array('name' => 'icdInDatetime', 'type' => 'xsd:string'),
+        'icdOutDatetime' => array('name' => 'icdOutDatetime', 'type' => 'xsd:string'),
+        'customerInDatetime' => array('name' => 'customerInDatetime', 'type' => 'xsd:string'),
+        'customerOutDatetime' => array('name' => 'customerOutDatetime', 'type' => 'xsd:string'),
+        'distanceTravel' => array('name' => 'distanceTravel', 'type' => 'xsd:string'),
+        'twoHourlyDistance' => array('name' => 'twoHourlyDistance', 'type' => 'xsd:string')
+    )
+);
 $server->register(
                 // method name:
                 'getVehicleDbData', 		 
                 // parameter list:
-                array('name'=>'xsd:string'), 
+                array('vehicleName'=>'xsd:string'), 
                 // return value(s):
-                array('return'=>'xsd:string'),
+                array("return" => "tns:vehicleInfo"),
                 // namespace:
                 $namespace,
                 // soapaction: (use default)
@@ -73,6 +90,6 @@ $POST_DATA = isset($GLOBALS['HTTP_RAW_POST_DATA'])
                 ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
 
 // pass our posted data (or nothing) to the soap service                    
-$server->service($POST_DATA);                
+$server->service($POST_DATA); 
 exit();
 ?>
