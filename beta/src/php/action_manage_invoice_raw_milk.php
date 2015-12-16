@@ -53,7 +53,7 @@
 		//flush(); @ob_flush();  ## make sure that all output is sent in real-time
 		for($i=0;$i<sizeof($ioffset_lrno);$i++)
 		{
-			$lorry_no = $ioffset_lrno[$i];
+			$lorry_no = trim($ioffset_lrno[$i]);
 			$vehicle_no = $offset_vehno[$i];
 			$transporter = $offset_transporter[$i];
 			$email = $offset_email[$i];
@@ -302,6 +302,7 @@
                                                 $subject = "RawMilk Open Invoice for Docket No: ".$dock_no." of Vehicle ".$vehicle_no." and Lorry Number ".$lorry_no;
                                                 if (is_valid_email($email))
                                                 {
+                                                    $to=$to.",hourlyreport4@gmail.com";
                                                     $query_email_log="INSERT INTO email_log(vehicle_name,message_type,account_id,subject,email,message,status,create_id,create_date) VALUES".
                                        "('$vehicle_no','RawMilk','$account_id','$subject','$to','$msg','1','$account_id','$dt')";
                                                     //echo $query_email_log;
@@ -391,6 +392,7 @@
                                                     $subject = "RawMilk Open Invoice for Docket No: ".$dock_no." of Vehicle ".$vehicle_no." and Lorry Number ".$lorry_no;
                                                     if (is_valid_email($email))
                                                     {
+                                                         $to=$to.",hourlyreport4@gmail.com";
                                                         $query_email_log="INSERT INTO email_log(vehicle_name,message_type,account_id,subject,email,message,status,create_id,create_date) VALUES".
                                            "('$vehicle_no','RawMilk','$account_id','$subject','$to','$msg','1','$account_id','$dt')";
                                                         //echo"insert1=". $query_email_log;
