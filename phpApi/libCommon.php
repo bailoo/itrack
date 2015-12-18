@@ -1,7 +1,7 @@
 <?php
 if($account_id==2)
 {
-    //echo "in if";
+    echo "in if";
     $s_server_host     = '52.6.155.96'; // us-east ic1 (EIP)
     #$s_server_host     = '52.74.33.255'; //ap-southeast itrackcass0
     #$s_server_host     = '127.0.0.1';    // Localhost
