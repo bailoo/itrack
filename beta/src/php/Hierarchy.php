@@ -5,7 +5,8 @@ include("coreDb.php");
 { 
     //error_reporting(-1);
     //ini_set('display_errors', 'On');
-    include_once("/mnt/itrack/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+include_once("util_session_variable.php");     //##### INCLUDE CASSANDRA API   
+include_once("/mnt/itrack/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
 include_once("/mnt/itrack/phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/ 
 $o_cassandra = new Cassandra();	
 $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);

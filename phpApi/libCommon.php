@@ -1,8 +1,23 @@
 <?php
+if($account_id==2)
+{
+    //echo "in if";
+    $s_server_host     = '52.6.155.96'; // us-east ic1 (EIP)
+    #$s_server_host     = '52.74.33.255'; //ap-southeast itrackcass0
+    #$s_server_host     = '127.0.0.1';    // Localhost
 
-$s_server_host     = '54.152.30.69'; // us-east ic1 (EIP)
-#$s_server_host     = '52.74.33.255'; //ap-southeast itrackcass0
-#$s_server_host     = '127.0.0.1';    // Localhost
+    $s_server_username = 'iccassandra';  // We don't have username
+    $s_server_password = '3ba952a2afad76cce2111cd0306495e7';  // We don't have password
+}
+else 
+{
+    $s_server_host     = '54.152.30.69'; // us-east ic1 (EIP)
+    #$s_server_host     = '52.74.33.255'; //ap-southeast itrackcass0
+    #$s_server_host     = '127.0.0.1';    // Localhost
+
+    $s_server_username = 'bailoo';  // We don't have username
+    $s_server_password = 'neon04$IC1';  // We don't have password
+}
 $i_server_port     = 9042; 
 $s_server_username = 'bailoo';  // We don't have username
 $s_server_password = 'neon04$IC1';  // We don't have password
