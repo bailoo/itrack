@@ -1,5 +1,4 @@
-<?php 
-	include_once('src/php/Hierarchy.php');
+<?php 	
 	include_once('src/php/util_session_variable.php');
 	include_once("src/php/util_php_mysql_connectivity.php");
 	include_once("src/php/util_computer_info.php");
@@ -90,7 +89,7 @@
 			$row =mysql_fetch_object($result);
 			$account_id=$row->account_id;
 			$userTypeLogin=$row->user_type;
-			
+			include_once('src/php/Hierarchy.php');
 			//if($account_id!="213" AND $account_id!="167" AND $account_id!="176" AND $account_id!="34")
 			if($account_id!="213" AND $account_id!="176" AND $account_id!="34")
 			{

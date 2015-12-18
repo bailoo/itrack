@@ -302,7 +302,7 @@
                                                 $subject = "RawMilk Open Invoice for Docket No: ".$dock_no." of Vehicle ".$vehicle_no." and Lorry Number ".$lorry_no;
                                                 if (is_valid_email($email))
                                                 {
-                                                    $to=$to.",hourlyreport4@gmail.com";
+                                                    //$to=$to.",hourlyreport4@gmail.com";
                                                     $query_email_log="INSERT INTO email_log(vehicle_name,message_type,account_id,subject,email,message,status,create_id,create_date) VALUES".
                                        "('$vehicle_no','RawMilk','$account_id','$subject','$to','$msg','1','$account_id','$dt')";
                                                     //echo $query_email_log;
@@ -392,7 +392,7 @@
                                                     $subject = "RawMilk Open Invoice for Docket No: ".$dock_no." of Vehicle ".$vehicle_no." and Lorry Number ".$lorry_no;
                                                     if (is_valid_email($email))
                                                     {
-                                                         $to=$to.",hourlyreport4@gmail.com";
+                                                         //$to=$to.",hourlyreport4@gmail.com";
                                                         $query_email_log="INSERT INTO email_log(vehicle_name,message_type,account_id,subject,email,message,status,create_id,create_date) VALUES".
                                            "('$vehicle_no','RawMilk','$account_id','$subject','$to','$msg','1','$account_id','$dt')";
                                                         //echo"insert1=". $query_email_log;
