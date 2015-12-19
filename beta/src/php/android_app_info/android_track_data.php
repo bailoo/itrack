@@ -8,7 +8,7 @@
     $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
     //print_r($pathInPieces);
     $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]; /// Main server
-    $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]; // Lccal Server
+    //$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]; // Lccal Server
     //echo "pathToRoot=".$pathToRoot."<br>";
             //====cassamdra //////////////
     include_once($pathToRoot.'/beta/src/php/xmlParameters.php');
