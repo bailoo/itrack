@@ -306,7 +306,7 @@
                                                     $query_email_log="INSERT INTO email_log(vehicle_name,message_type,account_id,subject,email,message,status,create_id,create_date) VALUES".
                                        "('$vehicle_no','RawMilk','$account_id','$subject','$to','$msg','1','$account_id','$dt')";
                                                     //echo $query_email_log;
-                                                    $result_email_log=mysql_query($query_email_log,$DbConnection);
+                                                    //$result_email_log=mysql_query($query_email_log,$DbConnection);
                                                 }
 						//################################//
 					/*}   
@@ -396,7 +396,7 @@
                                                         $query_email_log="INSERT INTO email_log(vehicle_name,message_type,account_id,subject,email,message,status,create_id,create_date) VALUES".
                                            "('$vehicle_no','RawMilk','$account_id','$subject','$to','$msg','1','$account_id','$dt')";
                                                         //echo"insert1=". $query_email_log;
-                                                        $result_email_log=mysql_query($query_email_log,$DbConnection);
+                                                        //$result_email_log=mysql_query($query_email_log,$DbConnection);
                                                     }
                                                     //################################//
                                             }   
