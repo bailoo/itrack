@@ -7,8 +7,8 @@
     require_once "lib/nusoap.php"; 
     $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
     //print_r($pathInPieces);
-    $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
-    //$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
+    $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]; /// Main server
+    $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]; // Lccal Server
     //echo "pathToRoot=".$pathToRoot."<br>";
             //====cassamdra //////////////
     include_once($pathToRoot.'/beta/src/php/xmlParameters.php');
@@ -71,8 +71,9 @@
                 $timeinterval =   $time_interval1;
                 $distanceinterval = 0.02;
             }
-        } 
-
+        }
+        /*echo "time_interval1=".$time_interval1."<br>";
+        echo "distanceInterval=".$distanceinterval."<br>";*/
         global $track_report_data;
         $track_report_data=array();
 			
@@ -114,10 +115,11 @@
         $parameterizeData->io6='n';
         $parameterizeData->io7='o';
         $parameterizeData->io8='p';
-        $CurrentLat = 0.0;
+       
         $CurrentLong = 0.0;
         $LastLat = 0.0;
         $LastLong = 0.0;
+        $LastDTForDiff = "";
         $firstData = 0;
         $distance =0.0;
         
@@ -170,7 +172,6 @@
                $dateRangeEnd=$userdates[$i]." 23:59:59";
             }
             deviceDataBetweenDates($vehicle_serial,$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);            
-            $t=time();
             if(count($SortedDataObject->deviceDatetime)>0)
             {
                 //echo "in file exist 2<br>";
@@ -181,24 +182,23 @@
                 {
                     //echo fgets($file). "<br />";
                     $DataValid = 0;
-                    $lat = $SortedDataObject->latitudeData[$obi];
-                    $lng = $SortedDataObject->longitudeData[$obi];
-                    if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))
+                    $CurrentLat = $SortedDataObject->latitudeData[$obi];
+                    $CurrentLong = $SortedDataObject->longitudeData[$obi];
+                    $datetime=$SortedDataObject->deviceDatetime[$obi];
+                    if((strlen($CurrentLat)>5) && ($CurrentLat!="-") && (strlen($CurrentLong)>5) && ($CurrentLong!="-"))
                     {
                         $DataValid = 1;
-                    }
-                    $datetime=$SortedDataObject->deviceDatetime[$obi];
+                    }                 
                     if ($DataValid==1)
                     {
                         $last_rec = $obi;
                         //echo "lat=".$CurrentLat." lng=".$CurrentLat."<br><br>";
                         $xml_date_current = $datetime;
-                        $CurrentLat = $lat ;
-                        $CurrentLong =$lng;
-
                         if((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval)
                         {
+                            //echo "timeInterval=".$timeinterval."<br>";
                              //echo "Final2";
+                            $CurrentDTForDiffTmp=strtotime($datetime);
                             if($firstData==1)
                             {
                                 if($minlat>$CurrentLat)
@@ -222,7 +222,7 @@
                                 $tmp2lat = substr($LastLat,0,-1);
                                 $tmp1lng = substr($CurrentLong,0,-1);
                                 $tmp2lng = substr($LastLong,0,-1);  							
-                                // echo  "Coord: ".$tmp1lat.' '.$tmp2lat.' '.$tmp1lng.' '.$tmp2lng.'<BR>'; 
+                                //echo  "Coord: ".$tmp1lat.' '.$tmp2lat.' '.$tmp1lng.' '.$tmp2lng.'<BR>'; 
                                 //echo "lastDate=".$LastDTForDif."<br>";
                                 $LastDTForDiffTS=strtotime($LastDTForDif);									
                                 $dateDifference=($CurrentDTForDiffTmp-$LastDTForDiffTS)/3600;
@@ -236,7 +236,7 @@
                             {                                   
                                 $LastDTForDif=$xml_date_current;
                             }
-                                
+                            //echo "datetime=".$datetime."overSpeed=".$overSpeed."distance=".$distance."distanceInterval".$distanceinterval."<br>";  
                             if(($distance>=$distanceinterval) || ($firstData==0))
                             {
                                 if($overSpeed<200)
@@ -259,7 +259,17 @@
                                         $temperature="0.0";
                                     }
 
-                                    $track_report_data[]=array("deviceImeiNo"=>$vehicle_serial,"vehicleName"=>$vname,"vehicleNumber"=>$vehicle_number,"datetime"=>$datetime,"temperature"=>$temperature,"cumdist"=>round($finalDistance,2),"latitude"=>$lat,"longitude"=>$lng,"speed"=>$speed_local);
+                                    $track_report_data[]=array(
+                                                                "deviceImeiNo"=>$vehicle_serial,
+                                                                "vehicleName"=>$vname,
+                                                                "vehicleNumber"=>$vehicle_number,
+                                                                "datetime"=>$datetime,
+                                                                "temperature"=>$temperature,
+                                                                "cumdist"=>round($finalDistance,2),
+                                                                "latitude"=>$SortedDataObject->latitudeData[$obi],
+                                                                "longitude"=>$SortedDataObject->longitudeData[$obi],
+                                                                "speed"=>$speed_local
+                                                            );
                                     $firstData = 1; 
                                     $distance=0;
                                 }
@@ -278,11 +288,27 @@
                         $temperature="0.0";
                     }
                     $finalDistance = $finalDistance + $distance;
-                    $track_report_data[]=array("deviceImeiNo"=>$vehicle_serial,"vehicleName"=>$vname,"vehicleNumber"=>$vehicle_number,"datetime"=>$SortedDataObject->deviceDatetime[$last_rec],"temperature"=>$temperature,"cumdist"=>round($finalDistance,2),"latitude"=>$SortedDataObject->latitudeData[$last_rec],"longitude"=>$SortedDataObject->longitudeData[$last_rec],"speed"=>$SortedDataObject->speedData[$last_rec]);
+                    $track_report_data[]=array(
+                                                    "deviceImeiNo"=>$vehicle_serial,
+                                                    "vehicleName"=>$vname,
+                                                    "vehicleNumber"=>$vehicle_number,
+                                                    "datetime"=>$SortedDataObject->deviceDatetime[$last_rec],
+                                                    "temperature"=>$temperature,"cumdist"=>round($finalDistance,2),
+                                                    "latitude"=>$SortedDataObject->latitudeData[$last_rec],
+                                                    "longitude"=>$SortedDataObject->longitudeData[$last_rec],
+                                                    "speed"=>$SortedDataObject->speedData[$last_rec]);
                 }  
             } // if original_tmp exist closed 
         }
     }
+    
+    /*$vehicleserialWithIo="862170018370153:#,";
+    $startDate="2015/12/18 00:00:00";
+    $endDate="2015/12/18 15:12:28";
+    $reportType="V";
+    $userInterval="30";
+    $result=getTrackDeviceData( $reportType,$vehicleserialWithIo,$startDate,$endDate,$userInterval);
+    echo $result;*/ 
     $server = new soap_server();
     $server->register("getTrackDeviceData");
     $server->service($HTTP_RAW_POST_DATA);
