@@ -200,13 +200,21 @@ for($i=0;$i<$vsize;$i++)
                                 {                                   
                                     $LastDTForDif=$xml_date_current;
                                 }
+                                if($dateDifference_1>2.0)
+                                {
+                                    $cmpOverSpeed=90.0;
+                                }
+                                else
+                                {
+                                    $cmpOverSpeed=200.0;
+                                }
                                 /*if((((((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval) && ($distance>=$distanceinterval)) || ($firstData==0)) && 
                                 (($xml_date_current<=$enddate) && ($xml_date_current>=$startdate))) || ($f==$total_lines-2) )*/
                                 //echo "distance=".$distance." distanceinterval=".$distanceinterval."<br><br>";
                                 if(($distance>=$distanceinterval) || ($firstData==0))
                                 {
                                     //echo "distance1=".$distance." distanceinterval1=".$distanceinterval."<br><br>";
-                                    if($overSpeed<200)
+                                    if($overSpeed<$cmpOverSpeed)
                                     {                                       
                                         $xml_date_last = $xml_date_current;
                                         $LastLat =$CurrentLat;
@@ -228,7 +236,7 @@ for($i=0;$i<$vsize;$i++)
                     }
                 }
             }
-           if(($overSpeed<200) && ($last_rec!=0))
+           if(($overSpeed<$cmpOverSpeed) && ($last_rec!=0))
             {
                 $finalDistance = $finalDistance + $distance;	
                 $linetowrite='<x a="'.$SortedDataObject->messageTypeData[$last_rec].'" b="'.$SortedDataObject->versionData[$last_rec].'" c="'.$SortedDataObject->fixData[$last_rec].'" d="'.$SortedDataObject->latitudeData[$last_rec].'" e="'.$SortedDataObject->longitudeData[$last_rec].'" f="'.$SortedDataObject->speedData[$last_rec].'" g="'.$SortedDataObject->serverDatetime[$last_rec].'" h="'.$SortedDataObject->deviceDatetime[$last_rec].'" i="'.$SortedDataObject->io1Data[$last_rec].'" j="'.$SortedDataObject->io2Data[$last_rec].'" k="'.$SortedDataObject->io3Data[$last_rec].'" l="'.$SortedDataObject->io4Data[$last_rec].'" m="'.$SortedDataObject->io5Data[$last_rec].'" n="'.$SortedDataObject->io6Data[$last_rec].'" o="'.$SortedDataObject->io7Data[$last_rec].'" p="'.$SortedDataObject->io8Data[$last_rec].'" q="'.$SortedDataObject->sigStrData[$last_rec].'" r="'.$SortedDataObject->supVoltageData[$last_rec].'" s="'.$SortedDataObject->dayMaxSpeedData[$last_rec].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" z="'.round($finalDistance,2).'" za="'.$vehicle_detail_local[8].'"/>';
@@ -621,7 +629,16 @@ for($i=0;$i<$vsize;$i++)
                                     $LastDTForDif=$xml_date_current;
                                 }
                                 
-                                if($overSpeed<200.0)
+                                if($dateDifference_1>2.0)
+                                {
+                                    $cmpOverSpeed=90.0;
+                                }
+                                else 
+                                {
+                                    $cmpOverSpeed=200.0;     
+                                }
+                                
+                                if($overSpeed<$cmpOverSpeed)
                                 {
                                     $speeed_data_valid_time = $datetime;
                                 }
@@ -635,7 +652,7 @@ for($i=0;$i<$vsize;$i++)
                                 if(($distance>=$distanceinterval) || ($firstData==0))
                                 {
                                     $xml_date_last = $xml_date_current;									
-                                    if($overSpeed<200)
+                                    if($overSpeed<$cmpOverSpeed)
                                     {
                                         $LastLat =$CurrentLat;
                                         $LastLong =$CurrentLong;
@@ -651,7 +668,7 @@ for($i=0;$i<$vsize;$i++)
                     }                    
                 }
             }
-            if(($overSpeed<200) && ($last_rec!=0))
+            if(($overSpeed<$cmpOverSpeed) && ($last_rec!=0))
             {
                 $finalDistance = $finalDistance + $distance;	
                 $linetowrite='<x a="'.$SortedDataObject->messageTypeData[$last_rec].'" b="'.$SortedDataObject->versionData[$last_rec].'" c="'.$SortedDataObject->fixData[$last_rec].'" d="'.$SortedDataObject->latitudeData[$last_rec].'" e="'.$SortedDataObject->longitudeData[$last_rec].'" f="'.$SortedDataObject->speedData[$last_rec].'" g="'.$SortedDataObject->serverDatetime[$last_rec].'" h="'.$SortedDataObject->deviceDatetime[$last_rec].'" i="'.$SortedDataObject->io1Data[$last_rec].'" j="'.$SortedDataObject->io2Data[$last_rec].'" k="'.$SortedDataObject->io3Data[$last_rec].'" l="'.$SortedDataObject->io4Data[$last_rec].'" m="'.$SortedDataObject->io5Data[$last_rec].'" n="'.$SortedDataObject->io6Data[$last_rec].'" o="'.$SortedDataObject->io7Data[$last_rec].'" p="'.$SortedDataObject->io8Data[$last_rec].'" q="'.$SortedDataObject->sigStrData[$last_rec].'" r="'.$SortedDataObject->supVoltageData[$last_rec].'" s="'.$SortedDataObject->dayMaxSpeedData[$last_rec].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[8].'" y="'.$vehicle_detail_local[1].'" z="'.round($finalDistance,2).'"/>';
@@ -865,11 +882,20 @@ for($i=0;$i<$vsize;$i++)
                                 {
                                     $LastDTForDif=$xml_date_current;
                                 }
+                                if($dateDifference_1>2.0)
+                                {
+                                    $cmpOverSpeed=90.0;
+                                }
+                                else 
+                                {
+                                    $cmpOverSpeed=200.0;
+                                }
+                                
                                 /*if((((((strtotime($xml_date_current)-strtotime($xml_date_last))>$timeinterval) && ($distance>=$distanceinterval)) || ($firstData==0)) && 
                                 (($xml_date_current<=$enddate) && ($xml_date_current>=$startdate))) || ($f==$total_lines-2) )*/
                                 if(($distance>=$distanceinterval) || ($firstData==0))
                                 {								
-                                    if($overSpeed<200)
+                                    if($overSpeed<$cmpOverSpeed)
                                     {
                                         $xml_date_last = $xml_date_current;
                                         $LastLat =$CurrentLat;
@@ -902,7 +928,7 @@ for($i=0;$i<$vsize;$i++)
                     }
                 }
             }
-            if(($overSpeed<200) && ($last_rec!=0))
+            if(($overSpeed<$cmpOverSpeed) && ($last_rec!=0))
             {
                 $xml_date_last = $xml_date_current;
                 $LastLat =$CurrentLat;
@@ -1027,8 +1053,15 @@ for($i=0;$i<$vsize;$i++)
                                 {
                                     $LastDTForDif=$xml_date_current;
                                 }
-                                
-                                if($overSpeed<200.0)
+                                if($dateDifference_1>2.0)
+                                {
+                                    $cmpOverSpeed=90.0;
+                                }
+                                else 
+                                {
+                                    $cmpOverSpeed=200.0;
+                                }
+                                if($overSpeed<$cmpOverSpeed)
                                 {
                                     $speeed_data_valid_time = $datetime;
                                 }
@@ -1042,7 +1075,7 @@ for($i=0;$i<$vsize;$i++)
                                 (($xml_date_current<=$enddate) && ($xml_date_current>=$startdate))) || ($f==$total_lines-2) )*/
                                 if(($distance>=$distanceinterval) || ($firstData==0))
                                 {								
-                                    if($overSpeed<200)
+                                    if($overSpeed<$cmpOverSpeed)
                                     {
                                         $xml_date_last = $xml_date_current;
                                         $LastLat =$CurrentLat;
@@ -1065,7 +1098,7 @@ for($i=0;$i<$vsize;$i++)
                     }
                 }
             }
-            if(($overSpeed<200) && ($last_rec!=0))
+            if(($overSpeed<$cmpOverSpeed) && ($last_rec!=0))
             {
                 $xml_date_last = $xml_date_current;
                 $LastLat =$CurrentLat;
