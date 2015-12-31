@@ -159,7 +159,7 @@
                             //echo "lat1=".$lat1."lng1=".$lng1."lat2=".$lat2." lng2=".$lng2."<br>";
                             //echo "datetime=".$datetime." distance=".$distance." total_dist=".$total_dist." tmpspeed=".$tmp_speed." tmpspeed1=".$tmp_speed1." tmp_time_diff=".$tmp_time_diff." tmp_time_diff1=".$tmp_time_diff1."<br>";
 
-                            if($tmp_speed<250.0 && $tmp_speed1<250.0 && $distance>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
+                            if($tmp_speed<200.0 && $tmp_speed1<200.0 && $distance>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
                             {								
                                 $total_dist = (double)( $total_dist + $distance );                                  
                                 $daily_dist= (double) ($daily_dist + $distance);	
