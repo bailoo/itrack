@@ -26,7 +26,11 @@
     $SortedDataObject=null;
     $SortedDataObject=new data();
     readFileXmlNew($vSerial,$dateTime,$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
-    echo $SortedDataObject;   
+    
+    echo json_encode($SortedDataObject);
+
+
+    //echo $SortedDataObject;   
     
     	 
 ?>
