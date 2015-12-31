@@ -71,7 +71,7 @@
             echo "userdate=".$vserial[$di]."<br>";
             $SortedDataObject=null;
             $SortedDataObject=new data();
-            //readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+            readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
             //var_dump($SortedDataObject);
             if(count($SortedDataObject->deviceDatetime)>0)
             {
