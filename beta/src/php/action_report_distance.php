@@ -156,10 +156,20 @@
                             $latlast = $lat2;
                             $lnglast =  $lng2;
                             
-                            //echo "lat1=".$lat1."lng1=".$lng1."lat2=".$lat2." lng2=".$lng2."<br>";
+                            
+                            if(($tmp_time_diff>2.0) && ($tmp_time_diff1>2.0))
+                            {
+                                $SpeedThsld = 90.0;
+                            }
+                            else
+                            {
+                                $SpeedThsld = 250.0;
+                            }
+                            
+                            //echo  "lat1=".$lat1."lng1=".$lng1."lat2=".$lat2." lng2=".$lng2."<br>";
                             //echo "datetime=".$datetime." distance=".$distance." total_dist=".$total_dist." tmpspeed=".$tmp_speed." tmpspeed1=".$tmp_speed1." tmp_time_diff=".$tmp_time_diff." tmp_time_diff1=".$tmp_time_diff1."<br>";
 
-                            if($tmp_speed<200.0 && $tmp_speed1<200.0 && $distance>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
+                            if($tmp_speed<$SpeedThsld && $tmp_speed1<$SpeedThsld && $distance>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
                             {								
                                 $total_dist = (double)( $total_dist + $distance );                                  
                                 $daily_dist= (double) ($daily_dist + $distance);	
