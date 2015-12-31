@@ -146,7 +146,7 @@
                                 $tmp_speed1 = 1000.0; //very high value
                             }
 
-                            if($tmp_speed<300.0)
+                            if($tmp_speed<250.0)
                             {
                                 $speeed_data_valid_time = $datetime;
                             }
@@ -167,9 +167,18 @@
                             //echo "haltFlag=".$haltFlag."<br>";
                             $speed = $SortedDataObject->speedData[$obi];
                             
+                            if(($tmp_time_diff>2.0) && ($tmp_time_diff1>2.0))
+                            {
+                                $SpeedThsld = 90.0;
+                            }
+                            else
+                            {
+                                $SpeedThsld = 250.0;
+                            }
+                            
                             //echo "datetime=".$datetime." tmpSpeed=".round($tmp_speed,2)." tmpSpeed1=".round($tmp_speed1,2)." distance_incriment=".$distance_incriment." latS=".$lat_S." latE=".$lat_E." lngs=".$lng_S." lngE=".$lng_E." speed=".$speed."<br>";
                            
-                            if(round($tmp_speed,2)<300.0 && round($tmp_speed1,2)<300.0 && $distance_incriment>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
+                            if(round($tmp_speed,2)<$SpeedThsld && round($tmp_speed1,2)<$SpeedThsld && $distance_incriment>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
                             {
                                 $tmp_time_diff_maxspeed = (double)(strtotime($datetime) - strtotime($datetime_prev)) / 3600;
                                 if(($max_speed<$speed) && ($speed<200) && ($haltFlag==False) && ((abs($speed_prev-$speed)<50.0) || ($tmp_time_diff_maxspeed>30)))
