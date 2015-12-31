@@ -71,7 +71,7 @@
             echo "userdate=".$vserial[$di]."<br>";
             $SortedDataObject=null;
             $SortedDataObject=new data();
-            //readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+            readFileXmlNew($vserial[$i],$userdates[$di],$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
             //var_dump($SortedDataObject);
             if(count($SortedDataObject->deviceDatetime)>0)
             {
@@ -125,7 +125,7 @@
                                 $lat1 = $lat2;
                                 $lng1 = $lng2;
                             }*/
-                           // echo "<br>lat1=".$lat1." ,lat2=".$lat2." ,lng1=".$lng1." ,lng2=".$lng2." ,dist=".$distance." ,datetime=".$datetime;
+                           //echo "<br>lat1=".$lat1." ,lat2=".$lat2." ,lng1=".$lng1." ,lng2=".$lng2." ,dist=".$distance." ,datetime=".$datetime;
                             $tmp_time_diff1 = (double)(strtotime($datetime) - strtotime($last_time1)) / 3600;
                             calculate_distance($latlast, $lat2, $lnglast, $lng2, $distance1);
                             //echo "<br>latlast=".$latlast." ,lat2=".$lat2." ,lnglast=".$lnglast." ,lng2=".$lng2." ,distance1=".$distance1." , datetime=".$datetime."<br>";
@@ -141,7 +141,7 @@
                             {
                                 $tmp_speed1 = 1000.0; //very high value
                             }
-                            if($tmp_speed<250.0)
+                            if($tmp_speed<200.0)
                             {
                                 $speeed_data_valid_time = $datetime;
                             }
@@ -156,8 +156,8 @@
                             $latlast = $lat2;
                             $lnglast =  $lng2;
                             
-                            //echo "lat1=".$lat1."lng1=".$lng1."lat2=".$lat2." lng2=".$lng2."<br>";
-                            //echo "datetime=".$datetime." distance=".$distance." total_dist=".$total_dist." tmpspeed=".$tmp_speed." tmpspeed1=".$tmp_speed1." tmp_time_diff=".$tmp_time_diff." tmp_time_diff1=".$tmp_time_diff1."<br>";
+                            echo "lat1=".$lat1."lng1=".$lng1."lat2=".$lat2." lng2=".$lng2."<br>";
+                            echo "datetime=".$datetime." distance=".$distance." total_dist=".$total_dist." tmpspeed=".$tmp_speed." tmpspeed1=".$tmp_speed1." tmp_time_diff=".$tmp_time_diff." tmp_time_diff1=".$tmp_time_diff1."<br>";
 
                             if($tmp_speed<200.0 && $tmp_speed1<200.0 && $distance>0.1 && $tmp_time_diff>0.0 && $tmp_time_diff1>0)
                             {								
