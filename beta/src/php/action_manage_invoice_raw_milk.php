@@ -452,6 +452,13 @@
 		$close_serials = explode(',',substr($_POST['close_serials'],0,-1));
 		$plant_serials = explode(',',substr($_POST['plant_serials'],0,-1));
 		$plant_pre_serials = explode(',',substr($_POST['plant_pre_serials'],0,-1));
+                
+                $lorry_serials = explode(',',substr($_POST['lorry_serials'],0,-1));
+		$lorry_pre_serials = explode(',',substr($_POST['lorry_pre_serials'],0,-1));
+                $vehicle_no_serials = explode(',',substr($_POST['vehicle_no_serials'],0,-1));
+		$vehicle_no_pre_serials = explode(',',substr($_POST['vehicle_no_pre_serials'],0,-1));
+                
+                
 		$approval_serials=explode(',',substr($_POST['approval_serials'],0,-1));//approved
 		$closetime_serials=explode(',',substr($_POST['closetime_serials'],0,-1));//approved
 		
@@ -612,6 +619,24 @@
 					//echo $query_update_plant;
                                         */
                                      $result_update_plant = updateInvoiceMdrmNext($plant_serials[$cnt],$account_id,$date,$sno,$DbConnection);
+				}                                
+                                if($lorry_serials[$cnt]!=$lorry_pre_serials[$cnt])
+				{
+                                    /*
+					$query_update_plant = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
+					$result_update_plant = mysql_query($query_update_plant,$DbConnection);                                      
+					//echo $query_update_plant;
+                                        */
+                                     $result_update_lorry = updateInvoiceMdrmNextLorry($lorry_serials[$cnt],$account_id,$date,$sno,$DbConnection);
+				}
+                                if($vehicle_no_serials[$cnt]!=$vehicle_no_pre_serials[$cnt])
+				{
+                                    /*
+					$query_update_plant = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
+					$result_update_plant = mysql_query($query_update_plant,$DbConnection);                                      
+					//echo $query_update_plant;
+                                        */
+                                     $result_update_vehicle = updateInvoiceMdrmNextVehicle($vehicle_no_serials[$cnt],$account_id,$date,$sno,$DbConnection);
 				}
 			
 			$cnt++;			

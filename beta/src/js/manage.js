@@ -10463,7 +10463,13 @@ function action_manage_invoice_update(action_type)
 		var plant_pre_serials = "";
 		var approval="";
 		var closetime="";
-		
+		//--lorry no---//
+                var lorry_serials = "";
+		var lorry_pre_serials = "";
+                //--vehicle_no==//
+                var vehicle_no_serials = "";
+		var vehicle_no_pre_serials = "";
+                
                 var invoice_material_arr = document.invoice_form.elements['invoice_material[]'];
 		var invoice_material="";
                 
@@ -10533,7 +10539,11 @@ function action_manage_invoice_update(action_type)
 				update_serials = update_serials + ""+invoice_arr_cancel[i].value+",";
 				plant_serials = plant_serials + ""+document.getElementById('plant_'+invoice_arr_cancel[i].value).value+",";
 				plant_pre_serials = plant_pre_serials + ""+document.getElementById('plant_pre_'+invoice_arr_cancel[i].value).value+",";
-				approval=approval + ""+document.getElementById('approval_'+invoice_arr_cancel[i].value).value+",";							
+				approval=approval + ""+document.getElementById('approval_'+invoice_arr_cancel[i].value).value+",";	
+                                lorry_serials = lorry_serials + ""+document.getElementById('lorry_'+invoice_arr_cancel[i].value).value+",";
+				lorry_pre_serials = lorry_pre_serials + ""+document.getElementById('lorry_pre_'+invoice_arr_cancel[i].value).value+",";
+                                vehicle_no_serials = vehicle_no_serials + ""+document.getElementById('vehicle_no_'+invoice_arr_cancel[i].value).value+",";
+				vehicle_no_pre_serials = vehicle_no_pre_serials + ""+document.getElementById('vehicle_no_pre_'+invoice_arr_cancel[i].value).value+",";
 			}
 		}
 		else
@@ -10541,7 +10551,11 @@ function action_manage_invoice_update(action_type)
 			update_serials = update_serials + ""+invoice_arr_cancel.value+",";
 			plant_serials = plant_serials + ""+document.getElementById('plant_'+invoice_arr_cancel.value).value+","	;
 			plant_pre_serials = plant_pre_serials + ""+document.getElementById('plant_pre_'+invoice_arr_cancel.value).value+","	;
-			approval=approval + ""+document.getElementById('approval_'+invoice_arr_cancel.value).value+",";					
+			approval=approval + ""+document.getElementById('approval_'+invoice_arr_cancel.value).value+",";	
+                        lorry_serials = lorry_serials + ""+document.getElementById('lorry_'+invoice_arr_cancel.value).value+","	;
+			lorry_pre_serials = lorry_pre_serials + ""+document.getElementById('lorry_pre_'+invoice_arr_cancel.value).value+",";
+                        vehicle_no_serials = vehicle_no_serials + ""+document.getElementById('vehicle_no_'+invoice_arr_cancel.value).value+","	;
+			vehicle_no_pre_serials = vehicle_no_pre_serials + ""+document.getElementById('vehicle_no_pre_'+invoice_arr_cancel.value).value+",";
 		}
 
 		//######## CANCEL SERIALS
@@ -10644,6 +10658,10 @@ function action_manage_invoice_update(action_type)
 					"&update_serials="+update_serials+
 					"&plant_serials="+plant_serials+
 					"&plant_pre_serials="+plant_pre_serials+
+                                        "&lorry_serials="+lorry_serials+
+					"&lorry_pre_serials="+lorry_pre_serials+
+                                        "&vehicle_no_serials="+vehicle_no_serials+
+					"&vehicle_no_pre_serials="+vehicle_no_pre_serials+
 					"&close_serials="+close_serials+
 					"&closetime_serials="+ closetime +
 					"&approval_serials="+ approval +
