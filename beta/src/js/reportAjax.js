@@ -158,6 +158,41 @@ function show_option_with_value(type, option)      // type="manage/report/settin
                                             document.getElementById('edit_div').style.display =""; 
                                             document.getElementById('edit_div').innerHTML = result1[1]; 
                                         }
+                                         else if(result1[0]=="search_vehicle_raw_milk")
+                                        {
+                                                      //alert("d");
+                                                      //alert( document.getElementById("box"));
+                                                      //document.getElementById("box2").style.display='';
+                                                      //document.getElementById("box2").innerHTML =  result1[2]+result1[3];
+
+                                                      //alert( result1[2]+result1[3]);
+                                                      //alert(result1[0]);
+                                                      content=document.getElementById('vehicle_list').value;
+                                                      //alert("content="+content);
+                                                      //alert("result34="+result1[3]);
+                                                      if(trim(result1[3])=="No Data Found")
+                                                      {
+                                                              //alert("test");
+                                                              document.getElementById("box2").style.display='none';
+                                                              //document.getElementById(result1[1]+"text_content2").value="";
+                                                      }
+                                                      else if(trim(result1[3])=="No Data Found Next")
+                                                      {
+                                                              document.getElementById("box2").style.display='none';
+                                                              document.getElementById("vehicle_list").value=result1[4];
+                                                      }				
+                                                      else
+                                                      {
+                                                              //alert("in else"+result1[1]);
+
+                                                              document.getElementById("box2").style.display='';
+                                                              document.getElementById("box2").innerHTML =  result1[2]+result1[3];
+                                                      }
+                                                      if(content.slice(-1)=="@" || content.slice(-1)=="/")
+                                                      {
+                                                              document.getElementById('box2').style.display = 'none';
+                                                      }
+                                        }
 					else 
 					{
                                             //alert("result="+result);
