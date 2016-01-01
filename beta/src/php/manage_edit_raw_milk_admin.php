@@ -2021,7 +2021,7 @@ border: none;
 	   
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="skyblue">							
 			<tr>
-				<td class="manage_interfarce" align="right"><a href="#" onclick="javascript:return close_lorry_pre()" class="hs3">Close</a></td> 													
+				<td class="manage_interfarce" align="right"><a href="#" onclick="javascript:return close_lorry_pre_cancel()" class="hs3">Close</a></td> 													
 			</tr> 
 			<tr>
 				<td colspan="5" valign="top" align="justify">EDIT LORRY NUMBER</td>
@@ -2073,7 +2073,7 @@ border: none;
 	   
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="skyblue">							
 			<tr>
-				<td class="manage_interfarce" align="right"><a href="#" onclick="javascript:return close_vehicle_no_pre()" class="hs3">Close</a></td> 													
+				<td class="manage_interfarce" align="right"><a href="#" onclick="javascript:return close_vehicle_no_pre_cancel()" class="hs3">Close</a></td> 													
 			</tr> 
 			<tr>
 				<td colspan="5" valign="top" align="justify">EDIT VEHICLE NUMBER</td>

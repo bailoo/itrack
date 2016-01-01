@@ -9260,6 +9260,17 @@ function close_lorry_pre()
     
 }
 
+function close_lorry_pre_cancel()
+{
+    var param1 ="blackout";
+    var param2 ="divpopup_lorry";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none";
+}
+
 function show_vehicle_no_pre(sno)
 {
     //alert(sno);
@@ -9339,6 +9350,17 @@ function close_vehicle_no_pre()
     document.getElementById(param2).style.visibility = "hidden";
     document.getElementById(param1).style.display = "none";
     document.getElementById(param2).style.display = "none";
+}
+
+function close_vehicle_no_pre_cancel()
+{
+    var param1 ="blackout";
+    var param2 ="divpopup_vehicle_no";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none"; 
 }
 
 function getScriptPage_raw_milk_for_edit(val,ids,box){
