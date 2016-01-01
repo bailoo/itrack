@@ -9183,7 +9183,201 @@ function manage_csv_post(target_file)
 	document.invoice_form_csv.submit();
 }
   
-  
+function show_lorry_pre(sno)
+{
+    document.getElementById('tmp_serial').value = sno;
+    document.getElementById("blackout").style.visibility = "visible";
+    document.getElementById("divpopup_lorry").style.visibility = "visible";
+    document.getElementById("blackout").style.display = "block";
+    document.getElementById("divpopup_lorry").style.display = "block"; 
+    var lorryno=document.getElementById('lorry_'+sno).value;
+    document.getElementById('temp_lorryno').value=lorryno;
+    document.getElementById('edit_lorryno').value=lorryno;    
+        
+}
+
+function close_lorry_pre()
+{
+    if(document.getElementById('edit_lorryno').value!="")
+    {
+        var flag_not=0;
+        if(document.getElementById('edit_lorryno').value!=document.getElementById('temp_lorryno').value)
+        {
+            //validating lorry no
+            var lorry_val=document.getElementById('edit_lorryno').value;
+            var final_lrno=document.getElementById('final_lrno').value;                    
+
+            final_lrno=final_lrno.split(',');
+            for (var i = 0; i < final_lrno.length; i++)
+            {
+                    if (final_lrno[i] == lorry_val) 
+                    {
+                            alert('Lorry No '+lorry_val +' already exist in Previous Open! Please Enter other Lorry Number');                       
+                            //return false;
+                            flag_not=1;
+                            break;
+                    }
+            }
+            //checking in self list
+            if(flag_not==0)
+            {
+                var tmp_tot_list=document.getElementById('tmp_tot_list').value;  
+                for (var i = 1; i < tmp_tot_list; i++)
+                {
+                        var self_lorry=document.getElementById('lorry_cnt_'+i).value;
+                        if(self_lorry == lorry_val) 
+                        {
+                                alert('Lorry No '+lorry_val +' already exist in List ! Please Enter other Lorry Number');                       
+                                //return false;
+                                flag_not=1;
+                                break;
+                        }
+                }
+            }
+            /////
+            
+            var serial = document.getElementById('tmp_serial').value;
+            if(flag_not==0)
+            {
+                document.getElementById('lorry_'+serial).value = document.getElementById('edit_lorryno').value;
+                document.getElementById('label_lorry_'+serial).innerHTML = document.getElementById('edit_lorryno').value;	
+            }
+            else
+            {
+                 document.getElementById('lorry_'+serial).value = document.getElementById('temp_lorryno').value;
+                 document.getElementById('label_lorry_'+serial).innerHTML = document.getElementById('temp_lorryno').value;	
+            }
+		
+        }
+    }
+    var param1 ="blackout";
+    var param2 ="divpopup_lorry";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none";
+    
+}
+
+function show_vehicle_no_pre(sno)
+{
+    //alert(sno);
+    document.getElementById('tmp_serial').value = sno;
+    document.getElementById("blackout").style.visibility = "visible";
+    document.getElementById("divpopup_vehicle_no").style.visibility = "visible";
+    document.getElementById("blackout").style.display = "block";
+    document.getElementById("divpopup_vehicle_no").style.display = "block"; 
+    var vehicle_no=document.getElementById('vehicle_no_'+sno).value;
+    document.getElementById('temp_vehicle_no').value=vehicle_no;
+    document.getElementById('vehicle_list').value=vehicle_no;  
+        
+}
+
+function close_vehicle_no_pre()
+{
+    //alert(document.getElementById('vehicle_list').value);
+    if(document.getElementById('vehicle_list').value!="")
+    {
+        var flag_not=0;
+        if(document.getElementById('vehicle_list').value!=document.getElementById('temp_vehicle_no').value)
+        {
+            //validating vehicle no
+            var vehicle_val=document.getElementById('vehicle_list').value;
+            var final_vehicleno=document.getElementById('final_vehicleno').value;                    
+
+            final_vehicleno=final_vehicleno.split(',');
+            for (var i = 0; i < final_vehicleno.length; i++)
+            {
+                    if (final_vehicleno[i] == vehicle_val) 
+                    {
+                            alert('Vehicle No '+vehicle_val +' already exist in Previous Open! Please Enter other Vehicle Number');                       
+                            flag_not=1;
+                            break;
+                    }
+            }
+            /////
+            //checking in self list
+            if(flag_not==0)
+            {
+                var tmp_tot_list=document.getElementById('tmp_tot_list').value; 
+                //alert(tmp_tot_list);
+                for (var i = 1; i < tmp_tot_list; i++)
+                {
+                        var self_vehicle=document.getElementById('vehicle_no_cnt_'+i).value;
+                        //alert(self_vehicle);
+                        if(self_vehicle == vehicle_val) 
+                        {
+                                alert('Vehicle No '+vehicle_val +' already exist in List! Please Enter other Vehicle Number');                       
+                                //return false;
+                                flag_not=1;
+                                break;
+                        }
+                }
+            }
+            /////
+            var serial = document.getElementById('tmp_serial').value;
+            if(flag_not==0)
+            {
+                document.getElementById('vehicle_no_'+serial).value = document.getElementById('vehicle_list').value.toUpperCase();
+                document.getElementById('label_vehicle_no_'+serial).innerHTML = document.getElementById('vehicle_list').value.toUpperCase();	
+		
+            }
+            else
+            {
+                 document.getElementById('vehicle_no_'+serial).value = document.getElementById('temp_vehicle_no').value;
+                 document.getElementById('label_vehicle_no_'+serial).innerHTML = document.getElementById('temp_vehicle_no').value;	
+		
+            }
+            
+        }
+    }
+    var param1 ="blackout";
+    var param2 ="divpopup_vehicle_no";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none";
+}
+
+function getScriptPage_raw_milk_for_edit(val,ids,box){
+        //alert(val);
+        
+	//var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
+	var iChars = "! @#$%^&*()+=-[]\\\';,.{}|/\":<>?";
+	flag=0;
+	for (var k = 0; k < val.length; k++) {
+		if (iChars.indexOf(val.charAt(k)) != -1) {
+			//alert(iChars[iChars.indexOf(val.charAt(k))]);
+			alert ("The box has special characters: "+ iChars[iChars.indexOf(val.charAt(k))] +" \n These are not allowed.\n");
+			document.getElementById('vehicle_list').focus();
+			//return false;
+			
+			//document.getElementById('vehicle_list').value="";replace(/blue/gi, "red");
+			var replace_str=val.replace(iChars[iChars.indexOf(val.charAt(k))], "");
+			document.getElementById('vehicle_list').value=replace_str; 
+			flag=1;
+		
+		} 
+	} 
+    if(flag==0){
+		var vehicle_list_hidden=document.getElementById('vehicle_list_hidden').value;	 
+		var poststr ="action_type=rawmilkvehicle"+
+					 "&all_vehicles="+vehicle_list_hidden+
+					 "&content="+val+
+					 "&box="+box+
+					 "&ids="+ids;
+		//alert("poststr="+poststr);
+		makePOSTRequest('src/php/datalog_script_search_rawmilk.htm', poststr); 
+	}
+	else{
+		return false;
+	}
+	   
+}
+///////////////////////////
+
 function show_plant_list(sno)
 {
 	//alert(sno);
