@@ -1775,6 +1775,20 @@ function updateInvoiceMdrmNext($plant_serials,$account_id,$date,$sno,$DbConnecti
 	 $result_update_plant = mysql_query($query_update_plant,$DbConnection);	
 	 return $result_update_plant;
 }
+function updateInvoiceMdrmNextLorry($lorry_serials,$account_id,$date,$sno,$DbConnection)
+{         
+	 $query_update_lorry = "UPDATE invoice_mdrm SET lorry_no='$lorry_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
+	 //echo $query_update_lorry;
+         $result_update_lorry = mysql_query($query_update_lorry,$DbConnection);	
+	 return $result_update_lorry;
+}
+function updateInvoiceMdrmNextVehicle($vehicle_serials,$account_id,$date,$sno,$DbConnection)
+{         
+	 $query_update_vehicle = "UPDATE invoice_mdrm SET vehicle_no='$vehicle_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
+	 //echo $query_update_vehicle;
+         $result_update_vehicle = mysql_query($query_update_vehicle,$DbConnection);	
+	 return $result_update_vehicle;
+}
 function updateInvoiceMdrmClose($date,$closetime,$sno,$DbConnection)
 {
     
