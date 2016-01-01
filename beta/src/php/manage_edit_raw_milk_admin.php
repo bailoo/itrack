@@ -2109,9 +2109,9 @@ border: none;
                 ?>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" rules="all" style="background-color:ghostwhite;">							
 			<tr>
-				<td>Vehicle No :</td>
+				
                                 <td>
-                                    <input type="text" id="edit_vehicle_no" />
+                                    <input type="hidden" id="edit_vehicle_no" />
                                     <input type="hidden" id="temp_vehicle_no"  />
 				</td>
 			</tr>
