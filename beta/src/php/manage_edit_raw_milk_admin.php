@@ -239,13 +239,15 @@ border: none;
 				$Child_account_arr=explode(",",$Child_account);
 				$chaSize=sizeof($Child_account_arr);
 				$conditionStr="";
+                                $self_child_transporter_id="";
 				for($i=0;$i<$chaSize;$i++)			
 				{
 					$conditionStr=$conditionStr." invoice_mdrm.transporter_account_id='$Child_account_arr[$i]' OR ";
-				}
+                                        $self_child_transporter_id.="'$Child_account_arr[$i]'".',';                                        
+                                }
 				//$conditionStr=$conditionStr." transporter_account_id='$account_id' OR ";
 				$conditionStr = substr($conditionStr,0,-3);
-				
+				$self_child_transporter_id = substr($self_child_transporter_id,0,-1);
                                 if($all_data)
 				{
                                     $condition="datebetweenonly_alldata";
@@ -631,25 +633,49 @@ border: none;
                                 {
                                     echo"<td>".$row_select['create_date']."</td>";
                                 }
-                                echo
-                                "<td>".$row_select['lorry_no']."</td>
-				";
+                                 //for lorry
+                                //echo"<td>".$row_select['lorry_no']."</td>";
+                                echo '<input type="hidden" id="lorry_cnt_'.$sno_local.'" name="lorry_cnt_'.$sno_local.'" value="'.$row_select['lorry_no'].'">';
+                                echo '<input type="hidden" id="lorry_'.$sno.'" name="lorry_'.$sno.'" value="'.$row_select['lorry_no'].'">';
+				echo '<input type="hidden" id="lorry_pre_'.$sno.'" name="lorry_pre_'.$sno.'" value="'.$row_select['lorry_no'].'">'	;				
+					
+                                 if($row_select['invoice_status']== 1 && $user_type!="plant_raw_milk")
+                                 {
+                                     echo '<td><a href="javascript:show_lorry_pre('.$sno.')"><div id="label_lorry_'.$sno.'">'.$row_select['lorry_no'].'</div></a></td>';
+                                 }
+                                 else
+                                 {
+                                     echo"<td>".$row_select['lorry_no']."</td>";
+                                 }
 				
-					//if( $user_type=="plant_raw_milk" && $row_select['invoice_status']==1)
-                                        if( $user_type!="raw_milk" && $row_select['invoice_status']==1)
-					{
-						$dispatch_time_tmp= str_replace(":", "-", $row_select['dispatch_time']);
-						$target_time_tmp= str_replace(":", "-", $row_select['target_time']);
-						$vehicle_live_info_set=$row_select['vehicle_no']."/".$dispatch_time_tmp."/".$target_time_tmp."/".$row_select['plant'];
-						//echo'<td><input type="checkbox" id="vehicle_status_'.$sno.'" name="vehicle_status_serial[]" value='.$row_select->vehicle_no.'>';
-						echo'<td><input type="checkbox" id="vehicle_status_'.$sno.'" name="vehicle_status_serial[]" value="'.$vehicle_live_info_set.'">';
-					}
-					else
-					{
-						echo'<td>';
-					}
-				echo
-				$row_select['vehicle_no']."</td>
+                                echo '<input type="hidden" id="vehicle_no_cnt_'.$sno_local.'" name="vehicle_no_cnt_'.$sno_local.'" value="'.$row_select['vehicle_no'].'">';
+				echo '<input type="hidden" id="vehicle_no_'.$sno.'" name="vehicle_no_'.$sno.'" value="'.$row_select['vehicle_no'].'">';
+				echo '<input type="hidden" id="vehicle_no_pre_'.$sno.'" name="vehicle_no_pre_'.$sno.'" value="'.$row_select['vehicle_no'].'">'	;				
+				
+                                //if( $user_type=="plant_raw_milk" && $row_select['invoice_status']==1)
+                                if( $user_type!="raw_milk" && $row_select['invoice_status']==1)
+                                {
+                                        $dispatch_time_tmp= str_replace(":", "-", $row_select['dispatch_time']);
+                                        $target_time_tmp= str_replace(":", "-", $row_select['target_time']);
+                                        $vehicle_live_info_set=$row_select['vehicle_no']."/".$dispatch_time_tmp."/".$target_time_tmp."/".$row_select['plant'];
+                                        //echo'<td><input type="checkbox" id="vehicle_status_'.$sno.'" name="vehicle_status_serial[]" value='.$row_select->vehicle_no.'>';
+                                        echo'<td><input type="checkbox" id="vehicle_status_'.$sno.'" name="vehicle_status_serial[]" value="'.$vehicle_live_info_set.'">';
+                                }
+                               else
+                                {
+                                        echo'<td><div>';
+                                }
+                                if($row_select['invoice_status']== 1 && $user_type!="plant_raw_milk")
+                                {                                    
+                                    echo '<a href="javascript:show_vehicle_no_pre('.$sno.')"><div id="label_vehicle_no_'.$sno.'">'.$row_select['vehicle_no'].'</div></a></div></td>';
+                                }
+                                else
+                                {
+                                  echo
+                                  $row_select['vehicle_no']."</div></td>";  
+                                }
+				
+                                echo"  
 				<!--<td>".$row_select->vehicle_no."</td>-->
 				<td>".$row_select['tanker_type']."</td>
 				<td><font color=red>".$row_select['docket_no']."</font></td>
@@ -1936,6 +1962,7 @@ border: none;
 			}
 			echo '<input type="hidden" value="'.$sno.'" id="counter"/>';
 			echo '<input type="hidden" id="tmp_serial"/>';
+                        echo '<input type="hidden" id="tmp_tot_list" value="'.$sno_local.'" />';
 			
 	echo '		
 	 </tbody>
@@ -1990,6 +2017,119 @@ border: none;
 	</table>
 		
 	<div id="blackout"> </div>
+        <div id="divpopup_lorry">
+	   
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="skyblue">							
+			<tr>
+				<td class="manage_interfarce" align="right"><a href="#" onclick="javascript:return close_lorry_pre()" class="hs3">Close</a></td> 													
+			</tr> 
+			<tr>
+				<td colspan="5" valign="top" align="justify">EDIT LORRY NUMBER</td>
+			</tr>							
+		</table>
+		<br>
+                <?php
+                    if($user_type=="raw_milk")
+                    {
+                        
+                        $final_lorry_list=lorrylistTransporterAll($self_child_transporter_id,$DbConnection);
+                    }
+                    else
+                    {
+                        $final_lorry_list=lorrylistAll($DbConnection);
+                    }
+                    
+                
+                    
+                    //print_r($final_lorry_list);
+                    $final_lorry="";
+                    if(count($final_lorry_list)>0)
+                    {
+                            foreach($final_lorry_list as $fl)
+                            {
+                                    $final_lorry .=$fl.",";
+                            }
+                            $final_lorry = substr($final_lorry, 0, -1);
+                            $final_lorry=str_replace(' ','%20',$final_lorry);
+                    }
+                    echo"<input type='hidden' name='final_lrno' id='final_lrno' value=$final_lorry  />";                   
+                ?>
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" rules="all" style="background-color:ghostwhite;">							
+			<tr>
+				<td>Lorry No :</td>
+                                <td>
+                                    <input type="text" id="edit_lorryno" />
+                                    <input type="hidden" id="temp_lorryno"  />
+				</td>
+			</tr>
+			<tr><td colspan="2"><br></td></tr>
+		</table>
+		
+		<br><center><input type="button" value="Edit" onclick="javascript:close_lorry_pre();"></center>
+			
+	</div>
+        
+        <div id="divpopup_vehicle_no">
+	   
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="skyblue">							
+			<tr>
+				<td class="manage_interfarce" align="right"><a href="#" onclick="javascript:return close_vehicle_no_pre()" class="hs3">Close</a></td> 													
+			</tr> 
+			<tr>
+				<td colspan="5" valign="top" align="justify">EDIT VEHICLE NUMBER</td>
+			</tr>							
+		</table>
+		<br>
+                <?php
+                    $final_vehicle_list=vehiclelistAll($DbConnection);
+                    //print_r($final_lorry_list);
+                    $final_vehicle="";
+                    if(count($final_vehicle_list)>0)
+                    {
+                            foreach($final_vehicle_list as $fl)
+                            {
+                                    $final_vehicle .=$fl.",";
+                            }
+                            $final_vehicle = substr($final_vehicle, 0, -1);
+                            $final_vehicle=str_replace(' ','%20',$final_vehicle);
+                    }
+                    echo"<input type='hidden' name='final_vehicleno' id='final_vehicleno' value=$final_vehicle  />"; 
+                    $vehicle_list_all=array();
+                    global $vehicle_list_all;
+                    get_user_vehicle($root,$account_id);
+                    //print_r($vehicle_list_all);
+                    $vehicle_list_all1 = array_unique($vehicle_list_all);
+                    $all_vehicles_list = "";                    
+                    foreach($vehicle_list_all1 as $vl){                          
+                            $all_vehicles_list.= trim($vl).",";                           
+                    }                   
+                    $all_vehicles_list = substr($all_vehicles_list, 0, -1);                    
+                    $all_vehicles_list = str_replace(' ','%20',$all_vehicles_list);
+                    echo"<input type='hidden' name='vehicle_list_hidden' id='vehicle_list_hidden' value=$all_vehicles_list  />";  
+                ?>
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" rules="all" style="background-color:ghostwhite;">							
+			<tr>
+				<td>Vehicle No :</td>
+                                <td>
+                                    <input type="text" id="edit_vehicle_no" />
+                                    <input type="hidden" id="temp_vehicle_no"  />
+				</td>
+			</tr>
+                        <tr>
+				<td>Select Vehicle :</td><td>
+				<input type="text" id="vehicle_list" name="vehicle_list"  size="30" onKeyUp="getScriptPage_raw_milk_for_edit(this.value,this.id,'box')">
+				<div id="box2" class="input-div-route" style="display:none"></div>
+				</td>
+				
+			</tr>
+			<tr><td colspan="2"><br></td></tr>
+		</table>
+                
+		
+		<br><center><input type="button" value="Edit" onclick="javascript:close_vehicle_no_pre();"></center>
+			
+	</div>
+        
 	<div id="divpopup_plant">
 	    <?php if($user_type=="raw_milk"){ ?>
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="skyblue">							
@@ -2257,3 +2397,53 @@ border: none;
 		<br>
 	</div>
 	
+<?php
+    function get_user_vehicle($AccountNode,$account_id)
+    {
+            //echo "hi".$account_id;
+            global $vehicleid;
+            global $vehicle_cnt;
+            global $td_cnt;
+            global $DbConnection;
+            global $vehicle_list_all;
+            if($AccountNode->data->AccountID==$account_id)
+            {
+                    $td_cnt =0;
+                    for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
+                    {			    
+                            $vehicle_id = $AccountNode->data->VehicleID[$j];
+                            $vehicle_name = $AccountNode->data->VehicleName[$j];
+                            $vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
+                            if($vehicle_id!=null)
+                            {
+                                    for($i=0;$i<$vehicle_cnt;$i++)
+                                    {
+                                            if($vehicleid[$i]==$vehicle_id)
+                                            {
+                                                    break;
+                                            }
+                                    }			
+                                    if($i>=$vehicle_cnt)
+                                    {
+                                            $vehicleid[$vehicle_cnt]=$vehicle_id;
+                                            $vehicle_cnt++;
+                                            $td_cnt++;
+
+
+                                                    $vehicle_list_all[]=$vehicle_name;
+
+                                            if($td_cnt==3)
+                                            {
+                                                    $td_cnt=0;
+                                            }
+                                    }
+                            }
+                    }
+            }
+            $ChildCount=$AccountNode->ChildCnt;
+            for($i=0;$i<$ChildCount;$i++)
+            { 
+                    get_user_vehicle($AccountNode->child[$i],$account_id);
+            }
+    }
+?>
