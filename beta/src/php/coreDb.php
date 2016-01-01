@@ -4455,7 +4455,26 @@ function lorrylistAll($DbConnection)
         }
    
 }
-
+function vehiclelistAll($DbConnection)
+{
+        $final_vehicle_list=array();
+	$query_vehicle_open = "SELECT vehicle_no FROM invoice_mdrm WHERE invoice_status=1  AND status=1";	
+	$result_vehicle_open = mysql_query($query_vehicle_open,$DbConnection);
+        $num_rows=mysql_num_rows($result_vehicle_open);
+        if($num_rows>0)
+	{
+            while($row_vehicle_open=mysql_fetch_object($result_vehicle_open))
+            {
+                    $final_vehicle_list[]=$row_vehicle_open->vehicle_no;					
+            }
+            return $final_vehicle_list;
+        }
+        else
+        {
+            return $final_vehicle_list; 
+        }
+   
+}
 function lorrylistTransporterAll($self_child_transporter_id,$DbConnection)
 {
         $final_lorry_list=array();
