@@ -458,6 +458,21 @@
                 $vehicle_no_serials = explode(',',substr($_POST['vehicle_no_serials'],0,-1));
 		$vehicle_no_pre_serials = explode(',',substr($_POST['vehicle_no_pre_serials'],0,-1));
                 
+                 $qty_kg_serials = explode(',',substr($_POST['qty_kg_serials'],0,-1));
+		$qty_kg_pre_serials = explode(',',substr($_POST['qty_kg_pre_serials'],0,-1));
+                
+                $fat_per_serials = explode(',',substr($_POST['fat_per_serials'],0,-1));
+		$fat_per_pre_serials = explode(',',substr($_POST['fat_per_pre_serials'],0,-1));
+                
+                $snf_per_serials = explode(',',substr($_POST['snf_per_serials'],0,-1));
+		$snf_per_pre_serials = explode(',',substr($_POST['snf_per_pre_serials'],0,-1));
+                
+                $fat_kg_serials = explode(',',substr($_POST['fat_kg_serials'],0,-1));
+		$fat_kg_pre_serials = explode(',',substr($_POST['fat_kg_pre_serials'],0,-1));
+                
+                $snf_kg_serials = explode(',',substr($_POST['snf_kg_serials'],0,-1));
+		$snf_kg_pre_serials = explode(',',substr($_POST['snf_kg_pre_serials'],0,-1));
+                                        
                 
 		$approval_serials=explode(',',substr($_POST['approval_serials'],0,-1));//approved
 		$closetime_serials=explode(',',substr($_POST['closetime_serials'],0,-1));//approved
@@ -622,22 +637,19 @@
 				}                                
                                 if($lorry_serials[$cnt]!=$lorry_pre_serials[$cnt])
 				{
-                                    /*
-					$query_update_plant = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
-					$result_update_plant = mysql_query($query_update_plant,$DbConnection);                                      
-					//echo $query_update_plant;
-                                        */
+                                   
                                      $result_update_lorry = updateInvoiceMdrmNextLorry($lorry_serials[$cnt],$account_id,$date,$sno,$DbConnection);
 				}
                                 if($vehicle_no_serials[$cnt]!=$vehicle_no_pre_serials[$cnt])
 				{
-                                    /*
-					$query_update_plant = "UPDATE invoice_mdrm SET plant='$plant_serials[$cnt]',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
-					$result_update_plant = mysql_query($query_update_plant,$DbConnection);                                      
-					//echo $query_update_plant;
-                                        */
+                                  
                                      $result_update_vehicle = updateInvoiceMdrmNextVehicle($vehicle_no_serials[$cnt],$account_id,$date,$sno,$DbConnection);
 				}
+                                
+                                if(($qty_kg_serials[$cnt]!=$qty_kg_pre_serials[$cnt]) || ($fat_per_serials[$cnt]!=$fat_per_pre_serials[$cnt]) || ($snf_per_serials[$cnt]!=$snf_per_pre_serials[$cnt])  || ($fat_kg_serials[$cnt]!=$fat_kg_pre_serials[$cnt]) || ($snf_kg_serials[$cnt]!=$snf_kg_pre_serials[$cnt]) )
+                                {
+                                    $result_update_invoice_qty = updateInvoiceMdrmNextInvoiceQty($qty_kg_serials[$cnt],$fat_per_serials[$cnt],$snf_per_serials[$cnt],$fat_kg_serials[$cnt],$snf_kg_serials[$cnt],$account_id,$date,$sno,$DbConnection);
+                                }
 			
 			$cnt++;			
 		}

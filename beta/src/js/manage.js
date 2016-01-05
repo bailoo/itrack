@@ -9260,6 +9260,17 @@ function close_lorry_pre()
     
 }
 
+function close_lorry_pre_cancel()
+{
+    var param1 ="blackout";
+    var param2 ="divpopup_lorry";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none";
+}
+
 function show_vehicle_no_pre(sno)
 {
     //alert(sno);
@@ -9340,6 +9351,136 @@ function close_vehicle_no_pre()
     document.getElementById(param1).style.display = "none";
     document.getElementById(param2).style.display = "none";
 }
+
+function close_vehicle_no_pre_cancel()
+{
+    var param1 ="blackout";
+    var param2 ="divpopup_vehicle_no";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none"; 
+}
+
+function show_qtykg_pre(sno,fat_per,snf_per,fat_kg,snf_kg)
+{
+    document.getElementById('tmp_serial').value = sno;
+    
+    var qty_kg=document.getElementById('qty_kg_'+sno).value;
+    document.getElementById('temp_qty_kg').value=qty_kg;
+    document.getElementById('temp_fat_per').value=fat_per;  
+    document.getElementById('temp_snf_per').value=snf_per;  
+    document.getElementById('temp_fat_kg').value=fat_kg;  
+    document.getElementById('temp_snf_kg').value=snf_kg;  
+    
+    document.getElementById("blackout").style.visibility = "visible";
+    document.getElementById("divpopup_invoice_qty").style.visibility = "visible";
+    document.getElementById("blackout").style.display = "block";
+    document.getElementById("divpopup_invoice_qty").style.display = "block"; 
+    
+    
+}
+
+function close_qtykg_pre()
+{
+    //alert("#"+document.getElementById('temp_qty_kg').value+"#");
+    if(document.getElementById('temp_fat_kg').value!="NaN" || document.getElementById('temp_snf_kg').value!="NaN")
+    {
+        //if((document.getElementById('temp_qty_kg').value!='') || (document.getElementById('temp_qty_kg').value!="0") || (document.getElementById('temp_qty_kg').value!="0.0"))
+        if((document.getElementById('temp_qty_kg').value!='') && (document.getElementById('temp_qty_kg').value!='0.0') && (document.getElementById('temp_qty_kg').value!='0') )
+        {
+            //alert(document.getElementById('temp_qty_kg').value);
+            var serial = document.getElementById('tmp_serial').value;
+            document.getElementById('qty_kg_'+serial).value = document.getElementById('temp_qty_kg').value;
+            document.getElementById('label_qtykg_'+serial).innerHTML = document.getElementById('temp_qty_kg').value;	
+
+            document.getElementById('fat_per_'+serial).value = document.getElementById('temp_fat_per').value;
+            document.getElementById('label_fat_per_'+serial).innerHTML = document.getElementById('temp_fat_per').value;	
+
+            document.getElementById('snf_per_'+serial).value = document.getElementById('temp_snf_per').value;
+            document.getElementById('label_snf_per_'+serial).innerHTML = document.getElementById('temp_snf_per').value;	
+
+            document.getElementById('fat_kg_'+serial).value = document.getElementById('temp_fat_kg').value;
+            document.getElementById('label_fat_kg_'+serial).innerHTML = document.getElementById('temp_fat_kg').value;	
+
+            document.getElementById('snf_kg_'+serial).value = document.getElementById('temp_snf_kg').value;
+            document.getElementById('label_snf_kg_'+serial).innerHTML = document.getElementById('temp_snf_kg').value;
+        }
+        
+        
+    }
+    var param1 ="blackout";
+    var param2 ="divpopup_invoice_qty";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none";
+}
+
+function close_qtykg_pre_cancel()
+{
+    var param1 ="blackout";
+    var param2 ="divpopup_invoice_qty";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none"; 
+}
+
+function put_fat_snf_kg_edit(val){
+	//alert(val);
+	
+	document.getElementById('temp_fat_kg').value="";
+	document.getElementById('temp_snf_kg').value="";
+	var fat_per=document.getElementById('temp_fat_per').value;
+	var snf_per=document.getElementById('temp_snf_per').value;
+
+	var fatkg=(val*fat_per)/100;
+	fatkg=Math.round(fatkg*100)/100; 
+	document.getElementById('temp_fat_kg').value=fatkg;
+
+	var snfkg=(val*snf_per)/100;
+	snfkg=Math.round(snfkg*100)/100; 
+	document.getElementById('temp_snf_kg').value=snfkg;
+}
+
+
+function put_fat_kg_edit(val){
+	//alert(val);
+	
+	document.getElementById('temp_fat_kg').value="";
+	var qty=document.getElementById('temp_qty_kg').value;
+	if(qty==""){
+		alert("Please Enter Qty Value");
+		document.getElementById('temp_fat_per').value="";
+	}
+	else{
+		var fatkg=(qty*val)/100;
+		fatkg=Math.round(fatkg*100)/100; 
+		document.getElementById('temp_fat_kg').value=fatkg;
+	}
+	//alert(ids);
+}
+function put_snf_kg_edit(val){
+	//alert(val);
+	
+	document.getElementById('temp_snf_kg').value="";
+	var qty=document.getElementById('temp_qty_kg').value;
+	if(qty==""){
+		alert("Please Enter Qty(kg) Value");
+		document.getElementById('temp_snf_per').value="";
+	}
+	else{
+		var snfkg=(qty*val)/100;
+		snfkg=Math.round(snfkg*100)/100; 
+		document.getElementById('temp_snf_kg').value=snfkg;
+	}
+	//alert(ids);
+}
+
 
 function getScriptPage_raw_milk_for_edit(val,ids,box){
         //alert(val);
@@ -10469,6 +10610,21 @@ function action_manage_invoice_update(action_type)
                 //--vehicle_no==//
                 var vehicle_no_serials = "";
 		var vehicle_no_pre_serials = "";
+                //--qty==//
+                var qty_kg_serials = "";
+                var qty_kg_pre_serials="";
+                //==fatper==//
+                var fat_per_serials = "";
+                var fat_per_pre_serials = "";
+                //==snfper===//
+                var snf_per_serials="";
+                var snf_per_pre_serials="";
+                //==fat kg==//
+                var fat_kg_serials="";
+                var fat_kg_pre_serials="";
+                //==snf kg==//
+                var snf_kg_serials="";
+                var snf_kg_pre_serials="";
                 
                 var invoice_material_arr = document.invoice_form.elements['invoice_material[]'];
 		var invoice_material="";
@@ -10544,6 +10700,22 @@ function action_manage_invoice_update(action_type)
 				lorry_pre_serials = lorry_pre_serials + ""+document.getElementById('lorry_pre_'+invoice_arr_cancel[i].value).value+",";
                                 vehicle_no_serials = vehicle_no_serials + ""+document.getElementById('vehicle_no_'+invoice_arr_cancel[i].value).value+",";
 				vehicle_no_pre_serials = vehicle_no_pre_serials + ""+document.getElementById('vehicle_no_pre_'+invoice_arr_cancel[i].value).value+",";
+                                
+                                 qty_kg_serials = qty_kg_serials + ""+document.getElementById('qty_kg_'+invoice_arr_cancel[i].value).value+",";
+				qty_kg_pre_serials = qty_kg_pre_serials + ""+document.getElementById('qty_kg_pre_'+invoice_arr_cancel[i].value).value+",";
+                                
+                                fat_per_serials = fat_per_serials + ""+document.getElementById('fat_per_'+invoice_arr_cancel[i].value).value+",";
+				fat_per_pre_serials = fat_per_pre_serials + ""+document.getElementById('fat_per_pre_'+invoice_arr_cancel[i].value).value+",";
+                                
+                                snf_per_serials = snf_per_serials + ""+document.getElementById('snf_per_'+invoice_arr_cancel[i].value).value+",";
+				snf_per_pre_serials = snf_per_pre_serials + ""+document.getElementById('snf_per_pre_'+invoice_arr_cancel[i].value).value+",";
+                               
+                                fat_kg_serials = fat_kg_serials + ""+document.getElementById('fat_kg_'+invoice_arr_cancel[i].value).value+",";
+				fat_kg_pre_serials = fat_kg_pre_serials + ""+document.getElementById('fat_kg_pre_'+invoice_arr_cancel[i].value).value+",";
+                               
+                                snf_kg_serials = snf_kg_serials + ""+document.getElementById('snf_kg_'+invoice_arr_cancel[i].value).value+",";
+				snf_kg_pre_serials = snf_kg_pre_serials + ""+document.getElementById('snf_kg_pre_'+invoice_arr_cancel[i].value).value+",";
+                               
 			}
 		}
 		else
@@ -10556,6 +10728,21 @@ function action_manage_invoice_update(action_type)
 			lorry_pre_serials = lorry_pre_serials + ""+document.getElementById('lorry_pre_'+invoice_arr_cancel.value).value+",";
                         vehicle_no_serials = vehicle_no_serials + ""+document.getElementById('vehicle_no_'+invoice_arr_cancel.value).value+","	;
 			vehicle_no_pre_serials = vehicle_no_pre_serials + ""+document.getElementById('vehicle_no_pre_'+invoice_arr_cancel.value).value+",";
+                        
+                         qty_kg_serials = qty_kg_serials + ""+document.getElementById('qty_kg_'+invoice_arr_cancel.value).value+",";
+                        qty_kg_pre_serials = qty_kg_pre_serials + ""+document.getElementById('qty_kg_pre_'+invoice_arr_cancel.value).value+",";
+
+                        fat_per_serials = fat_per_serials + ""+document.getElementById('fat_per_'+invoice_arr_cancel.value).value+",";
+                        fat_per_pre_serials = fat_per_pre_serials + ""+document.getElementById('fat_per_pre_'+invoice_arr_cancel.value).value+",";
+
+                        snf_per_serials = snf_per_serials + ""+document.getElementById('snf_per_'+invoice_arr_cancel.value).value+",";
+                        snf_per_pre_serials = snf_per_pre_serials + ""+document.getElementById('snf_per_pre_'+invoice_arr_cancel.value).value+",";
+
+                        fat_kg_serials = fat_kg_serials + ""+document.getElementById('fat_kg_'+invoice_arr_cancel.value).value+",";
+                        fat_kg_pre_serials = fat_kg_pre_serials + ""+document.getElementById('fat_kg_pre_'+invoice_arr_cancel.value).value+",";
+
+                        snf_kg_serials = snf_kg_serials + ""+document.getElementById('snf_kg_'+invoice_arr_cancel.value).value+",";
+                        snf_kg_pre_serials = snf_kg_pre_serials + ""+document.getElementById('snf_kg_pre_'+invoice_arr_cancel.value).value+",";
 		}
 
 		//######## CANCEL SERIALS
@@ -10662,6 +10849,22 @@ function action_manage_invoice_update(action_type)
 					"&lorry_pre_serials="+lorry_pre_serials+
                                         "&vehicle_no_serials="+vehicle_no_serials+
 					"&vehicle_no_pre_serials="+vehicle_no_pre_serials+
+                                        
+                                        "&qty_kg_serials="+qty_kg_serials+
+					"&qty_kg_pre_serials="+qty_kg_pre_serials+
+                                        
+                                        "&fat_per_serials="+fat_per_serials+
+					"&fat_per_pre_serials="+fat_per_pre_serials+
+                                        
+                                        "&snf_per_serials="+snf_per_serials+
+					"&snf_per_pre_serials="+snf_per_pre_serials+
+                                        
+                                        "&fat_kg_serials="+fat_kg_serials+
+					"&fat_kg_pre_serials="+fat_kg_pre_serials+
+                                        
+                                        "&snf_kg_serials="+snf_kg_serials+
+					"&snf_kg_pre_serials="+snf_kg_pre_serials+
+                                        
 					"&close_serials="+close_serials+
 					"&closetime_serials="+ closetime +
 					"&approval_serials="+ approval +
