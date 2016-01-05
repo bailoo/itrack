@@ -687,7 +687,7 @@ border: none;
 				echo '<input type="hidden" id="qty_kg_'.$sno.'" name="qty_kg_'.$sno.'" value="'.$row_select['qty_kg'].'">';
 				echo '<input type="hidden" id="qty_kg_pre_'.$sno.'" name="qty_kg_pre_'.$sno.'" value="'.$row_select['qty_kg'].'">'	;				
 				
-                                if($row_select['invoice_status']== 1 && $user_type!="plant_raw_milk")
+                                if($row_select['invoice_status']== 1 && $user_type!="plant_raw_milk" && $row_select['unload_estimated_datetime']=="")
                                  {
                                      echo '<td><a href="javascript:show_qtykg_pre('.$sno.','.$row_select['fat_percentage'].','.$row_select['snf_percentage'].','.$row_select['fat_kg'].','.$row_select['snf_kg'].')"><div id="label_qtykg_'.$sno.'">'.$row_select['qty_kg'].'</div></a></td>';
                                  }
