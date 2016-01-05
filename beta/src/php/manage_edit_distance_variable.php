@@ -27,7 +27,7 @@
 						$k=0;
 						foreach($data as $dt)
 						{
-							$geo_id=$dt['geo_id'];	
+							$geo_id=$dt['station_id'];	
                             $customer_no=$dt['customer_no'];
 							if($k==0)
 							{
