@@ -2244,13 +2244,35 @@ function deleteRouteAssign($vehicle_size,$account_id,$date,$local_vehicle_ids,$D
 	return $result;
  }
  
- function updateStation($geo_name1,$geo_coord1,$customer_no1,$distance_variable1,$account_id,$date,$geo_id1,$DbConnection)
-{
-	$query="UPDATE station SET station_name='$geo_name1',station_coord='$geo_coord1',customer_no='$customer_no1',distance_variable='$distance_variable1',edit_id='$account_id',edit_date='$date' WHERE station_id='$geo_id1'";
-	//echo "query=".$query;
-	$result=mysql_query($query,$DbConnection);
-	return $result;		
-}
+    function updateStation($geo_name1,$geo_coord1,$customer_no1,$distance_variable1,$account_id,$date,$geo_id1,$DbConnection)
+   {
+           $query="UPDATE station SET station_name='$geo_name1',station_coord='$geo_coord1',customer_no='$customer_no1',distance_variable='$distance_variable1',edit_id='$account_id',edit_date='$date' WHERE station_id='$geo_id1'";
+           //echo "query=".$query;
+           $result=mysql_query($query,$DbConnection);
+           return $result;		
+   }
+
+    function updateStation2($station_size,$distance_variable1,$date,$local_station_ids,$DbConnection)
+    {
+    $query_string1="UPDATE station SET distance_variable='$distance_variable1',edit_date='$date' WHERE station_id IN(";
+    $update_str = "";
+    for($i=0;$i<$station_size;$i++)
+    {
+    //echo "local_geofenc_id=".$local_geofenc_id[$i]."<br>";
+    if($i==0)
+    {
+    $update_str= $update_str.$local_station_ids[$i];
+    }
+    else
+    {
+    $update_str= $update_str.",'".$local_station_ids[$i]."'";
+    }
+    }
+    $query=$query_string1.$update_str.")";
+    //echo $query;
+    $result=mysql_query($query,$DbConnection);
+        return $result;
+    }
  function editStation($geo_name1,$geo_coord1,$customer_no1,$distance_variable1,$account_id,$date,$geo_id1,$DbConnection)
  {
 	$query="UPDATE station SET station_name='$geo_name1',station_coord='$geo_coord1',customer_no='$customer_no1',distance_variable='$distance_variable1',edit_id='$account_id',edit_date='$date' WHERE station_id='$geo_id1'";
