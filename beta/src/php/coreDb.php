@@ -1775,6 +1775,27 @@ function updateInvoiceMdrmNext($plant_serials,$account_id,$date,$sno,$DbConnecti
 	 $result_update_plant = mysql_query($query_update_plant,$DbConnection);	
 	 return $result_update_plant;
 }
+function updateInvoiceMdrmNextLorry($lorry_serials,$account_id,$date,$sno,$DbConnection)
+{         
+	 $query_update_lorry = "UPDATE invoice_mdrm SET lorry_no='$lorry_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
+	 //echo $query_update_lorry;
+         $result_update_lorry = mysql_query($query_update_lorry,$DbConnection);	
+	 return $result_update_lorry;
+}
+function updateInvoiceMdrmNextVehicle($vehicle_serials,$account_id,$date,$sno,$DbConnection)
+{         
+	 $query_update_vehicle = "UPDATE invoice_mdrm SET vehicle_no='$vehicle_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
+	 //echo $query_update_vehicle;
+         $result_update_vehicle = mysql_query($query_update_vehicle,$DbConnection);	
+	 return $result_update_vehicle;
+}
+function updateInvoiceMdrmNextInvoiceQty($qty_kg_serials,$fat_per_serials,$snf_per_serials,$fat_kg_serials,$snf_kg_serials,$account_id,$date,$sno,$DbConnection)
+{         
+	 $query_update_invoice_qty = "UPDATE invoice_mdrm SET qty_kg='$qty_kg_serials',fat_percentage='$fat_per_serials',snf_percentage='$snf_per_serials',fat_kg='$fat_kg_serials',snf_kg='$snf_kg_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
+	 //echo $query_update_vehicle;
+         $result_update_invoice_qty = mysql_query($query_update_invoice_qty,$DbConnection);	
+	 return $result_update_invoice_qty;
+}
 function updateInvoiceMdrmClose($date,$closetime,$sno,$DbConnection)
 {
     
@@ -2223,13 +2244,35 @@ function deleteRouteAssign($vehicle_size,$account_id,$date,$local_vehicle_ids,$D
 	return $result;
  }
  
- function updateStation($geo_name1,$geo_coord1,$customer_no1,$distance_variable1,$account_id,$date,$geo_id1,$DbConnection)
-{
-	$query="UPDATE station SET station_name='$geo_name1',station_coord='$geo_coord1',customer_no='$customer_no1',distance_variable='$distance_variable1',edit_id='$account_id',edit_date='$date' WHERE station_id='$geo_id1'";
-	//echo "query=".$query;
-	$result=mysql_query($query,$DbConnection);
-	return $result;		
-}
+    function updateStation($geo_name1,$geo_coord1,$customer_no1,$distance_variable1,$account_id,$date,$geo_id1,$DbConnection)
+   {
+           $query="UPDATE station SET station_name='$geo_name1',station_coord='$geo_coord1',customer_no='$customer_no1',distance_variable='$distance_variable1',edit_id='$account_id',edit_date='$date' WHERE station_id='$geo_id1'";
+           //echo "query=".$query;
+           $result=mysql_query($query,$DbConnection);
+           return $result;		
+   }
+
+    function updateStation2($station_size,$distance_variable1,$date,$local_station_ids,$DbConnection)
+    {
+    $query_string1="UPDATE station SET distance_variable='$distance_variable1',edit_date='$date' WHERE station_id IN(";
+    $update_str = "";
+    for($i=0;$i<$station_size;$i++)
+    {
+    //echo "local_geofenc_id=".$local_geofenc_id[$i]."<br>";
+    if($i==0)
+    {
+    $update_str= $update_str.$local_station_ids[$i];
+    }
+    else
+    {
+    $update_str= $update_str.",'".$local_station_ids[$i]."'";
+    }
+    }
+    $query=$query_string1.$update_str.")";
+    //echo $query;
+    $result=mysql_query($query,$DbConnection);
+        return $result;
+    }
  function editStation($geo_name1,$geo_coord1,$customer_no1,$distance_variable1,$account_id,$date,$geo_id1,$DbConnection)
  {
 	$query="UPDATE station SET station_name='$geo_name1',station_coord='$geo_coord1',customer_no='$customer_no1',distance_variable='$distance_variable1',edit_id='$account_id',edit_date='$date' WHERE station_id='$geo_id1'";
@@ -4441,7 +4484,26 @@ function lorrylistAll($DbConnection)
         }
    
 }
-
+function vehiclelistAll($DbConnection)
+{
+        $final_vehicle_list=array();
+	$query_vehicle_open = "SELECT vehicle_no FROM invoice_mdrm WHERE invoice_status=1  AND status=1";	
+	$result_vehicle_open = mysql_query($query_vehicle_open,$DbConnection);
+        $num_rows=mysql_num_rows($result_vehicle_open);
+        if($num_rows>0)
+	{
+            while($row_vehicle_open=mysql_fetch_object($result_vehicle_open))
+            {
+                    $final_vehicle_list[]=$row_vehicle_open->vehicle_no;					
+            }
+            return $final_vehicle_list;
+        }
+        else
+        {
+            return $final_vehicle_list; 
+        }
+   
+}
 function lorrylistTransporterAll($self_child_transporter_id,$DbConnection)
 {
         $final_lorry_list=array();

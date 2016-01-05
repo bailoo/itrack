@@ -452,6 +452,28 @@
 		$close_serials = explode(',',substr($_POST['close_serials'],0,-1));
 		$plant_serials = explode(',',substr($_POST['plant_serials'],0,-1));
 		$plant_pre_serials = explode(',',substr($_POST['plant_pre_serials'],0,-1));
+                
+                $lorry_serials = explode(',',substr($_POST['lorry_serials'],0,-1));
+		$lorry_pre_serials = explode(',',substr($_POST['lorry_pre_serials'],0,-1));
+                $vehicle_no_serials = explode(',',substr($_POST['vehicle_no_serials'],0,-1));
+		$vehicle_no_pre_serials = explode(',',substr($_POST['vehicle_no_pre_serials'],0,-1));
+                
+                 $qty_kg_serials = explode(',',substr($_POST['qty_kg_serials'],0,-1));
+		$qty_kg_pre_serials = explode(',',substr($_POST['qty_kg_pre_serials'],0,-1));
+                
+                $fat_per_serials = explode(',',substr($_POST['fat_per_serials'],0,-1));
+		$fat_per_pre_serials = explode(',',substr($_POST['fat_per_pre_serials'],0,-1));
+                
+                $snf_per_serials = explode(',',substr($_POST['snf_per_serials'],0,-1));
+		$snf_per_pre_serials = explode(',',substr($_POST['snf_per_pre_serials'],0,-1));
+                
+                $fat_kg_serials = explode(',',substr($_POST['fat_kg_serials'],0,-1));
+		$fat_kg_pre_serials = explode(',',substr($_POST['fat_kg_pre_serials'],0,-1));
+                
+                $snf_kg_serials = explode(',',substr($_POST['snf_kg_serials'],0,-1));
+		$snf_kg_pre_serials = explode(',',substr($_POST['snf_kg_pre_serials'],0,-1));
+                                        
+                
 		$approval_serials=explode(',',substr($_POST['approval_serials'],0,-1));//approved
 		$closetime_serials=explode(',',substr($_POST['closetime_serials'],0,-1));//approved
 		
@@ -612,7 +634,22 @@
 					//echo $query_update_plant;
                                         */
                                      $result_update_plant = updateInvoiceMdrmNext($plant_serials[$cnt],$account_id,$date,$sno,$DbConnection);
+				}                                
+                                if($lorry_serials[$cnt]!=$lorry_pre_serials[$cnt])
+				{
+                                   
+                                     $result_update_lorry = updateInvoiceMdrmNextLorry($lorry_serials[$cnt],$account_id,$date,$sno,$DbConnection);
 				}
+                                if($vehicle_no_serials[$cnt]!=$vehicle_no_pre_serials[$cnt])
+				{
+                                  
+                                     $result_update_vehicle = updateInvoiceMdrmNextVehicle($vehicle_no_serials[$cnt],$account_id,$date,$sno,$DbConnection);
+				}
+                                
+                                if(($qty_kg_serials[$cnt]!=$qty_kg_pre_serials[$cnt]) || ($fat_per_serials[$cnt]!=$fat_per_pre_serials[$cnt]) || ($snf_per_serials[$cnt]!=$snf_per_pre_serials[$cnt])  || ($fat_kg_serials[$cnt]!=$fat_kg_pre_serials[$cnt]) || ($snf_kg_serials[$cnt]!=$snf_kg_pre_serials[$cnt]) )
+                                {
+                                    $result_update_invoice_qty = updateInvoiceMdrmNextInvoiceQty($qty_kg_serials[$cnt],$fat_per_serials[$cnt],$snf_per_serials[$cnt],$fat_kg_serials[$cnt],$snf_kg_serials[$cnt],$account_id,$date,$sno,$DbConnection);
+                                }
 			
 			$cnt++;			
 		}

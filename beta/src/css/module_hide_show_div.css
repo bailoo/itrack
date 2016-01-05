@@ -81,6 +81,66 @@
 			
 			
 		}
+                 #divpopup_lorry
+		{
+			position: fixed;
+			top: 30%;
+			left: 50%;
+			margin-top: -70px; /*half of the height plus a little to the top*/
+			margin-left: -130px; /*half of the width */
+			visibility: hidden;
+			position: absolute;
+			display: none;
+			border: none;
+			background-color: #FFF;
+			color: #333;
+			padding: 0;
+			height: 200px;
+			width: 300px;
+			z-index: 10;
+			font-family: "Trebuchet MS", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+			font-size: 12px;
+		}
+                #divpopup_vehicle_no
+		{
+			position: fixed;
+			top: 30%;
+			left: 50%;
+			margin-top: -70px; /*half of the height plus a little to the top*/
+			margin-left: -130px; /*half of the width */
+			visibility: hidden;
+			position: absolute;
+			display: none;
+			border: none;
+			background-color: #FFF;
+			color: #333;
+			padding: 0;
+			height: 200px;
+			width: 300px;
+			z-index: 10;
+			font-family: "Trebuchet MS", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+			font-size: 12px;
+		}
+                #divpopup_invoice_qty
+		{
+			position: fixed;
+			top: 30%;
+			left: 50%;
+			margin-top: -70px; /*half of the height plus a little to the top*/
+			margin-left: -130px; /*half of the width */
+			visibility: hidden;
+			position: absolute;
+			display: none;
+			border: none;
+			background-color: #FFF;
+			color: #333;
+			padding: 0;
+			height: 250px;
+			width: 300px;
+			z-index: 10;
+			font-family: "Trebuchet MS", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+			font-size: 12px;
+		}
 		#divpopup_plant
 		{
 			position: fixed;

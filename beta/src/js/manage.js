@@ -9183,7 +9183,342 @@ function manage_csv_post(target_file)
 	document.invoice_form_csv.submit();
 }
   
-  
+function show_lorry_pre(sno)
+{
+    document.getElementById('tmp_serial').value = sno;
+    document.getElementById("blackout").style.visibility = "visible";
+    document.getElementById("divpopup_lorry").style.visibility = "visible";
+    document.getElementById("blackout").style.display = "block";
+    document.getElementById("divpopup_lorry").style.display = "block"; 
+    var lorryno=document.getElementById('lorry_'+sno).value;
+    document.getElementById('temp_lorryno').value=lorryno;
+    document.getElementById('edit_lorryno').value=lorryno;    
+        
+}
+
+function close_lorry_pre()
+{
+    if(document.getElementById('edit_lorryno').value!="")
+    {
+        var flag_not=0;
+        if(document.getElementById('edit_lorryno').value!=document.getElementById('temp_lorryno').value)
+        {
+            //validating lorry no
+            var lorry_val=document.getElementById('edit_lorryno').value;
+            var final_lrno=document.getElementById('final_lrno').value;                    
+
+            final_lrno=final_lrno.split(',');
+            for (var i = 0; i < final_lrno.length; i++)
+            {
+                    if (final_lrno[i] == lorry_val) 
+                    {
+                            alert('Lorry No '+lorry_val +' already exist in Previous Open! Please Enter other Lorry Number');                       
+                            //return false;
+                            flag_not=1;
+                            break;
+                    }
+            }
+            //checking in self list
+            if(flag_not==0)
+            {
+                var tmp_tot_list=document.getElementById('tmp_tot_list').value;  
+                for (var i = 1; i < tmp_tot_list; i++)
+                {
+                        var self_lorry=document.getElementById('lorry_cnt_'+i).value;
+                        if(self_lorry == lorry_val) 
+                        {
+                                alert('Lorry No '+lorry_val +' already exist in List ! Please Enter other Lorry Number');                       
+                                //return false;
+                                flag_not=1;
+                                break;
+                        }
+                }
+            }
+            /////
+            
+            var serial = document.getElementById('tmp_serial').value;
+            if(flag_not==0)
+            {
+                document.getElementById('lorry_'+serial).value = document.getElementById('edit_lorryno').value;
+                document.getElementById('label_lorry_'+serial).innerHTML = document.getElementById('edit_lorryno').value;	
+            }
+            else
+            {
+                 document.getElementById('lorry_'+serial).value = document.getElementById('temp_lorryno').value;
+                 document.getElementById('label_lorry_'+serial).innerHTML = document.getElementById('temp_lorryno').value;	
+            }
+		
+        }
+    }
+    var param1 ="blackout";
+    var param2 ="divpopup_lorry";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none";
+    
+}
+
+function close_lorry_pre_cancel()
+{
+    var param1 ="blackout";
+    var param2 ="divpopup_lorry";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none";
+}
+
+function show_vehicle_no_pre(sno)
+{
+    //alert(sno);
+    document.getElementById('tmp_serial').value = sno;
+    document.getElementById("blackout").style.visibility = "visible";
+    document.getElementById("divpopup_vehicle_no").style.visibility = "visible";
+    document.getElementById("blackout").style.display = "block";
+    document.getElementById("divpopup_vehicle_no").style.display = "block"; 
+    var vehicle_no=document.getElementById('vehicle_no_'+sno).value;
+    document.getElementById('temp_vehicle_no').value=vehicle_no;
+    document.getElementById('vehicle_list').value=vehicle_no;  
+        
+}
+
+function close_vehicle_no_pre()
+{
+    //alert(document.getElementById('vehicle_list').value);
+    if(document.getElementById('vehicle_list').value!="")
+    {
+        var flag_not=0;
+        if(document.getElementById('vehicle_list').value!=document.getElementById('temp_vehicle_no').value)
+        {
+            //validating vehicle no
+            var vehicle_val=document.getElementById('vehicle_list').value;
+            var final_vehicleno=document.getElementById('final_vehicleno').value;                    
+
+            final_vehicleno=final_vehicleno.split(',');
+            for (var i = 0; i < final_vehicleno.length; i++)
+            {
+                    if (final_vehicleno[i] == vehicle_val) 
+                    {
+                            alert('Vehicle No '+vehicle_val +' already exist in Previous Open! Please Enter other Vehicle Number');                       
+                            flag_not=1;
+                            break;
+                    }
+            }
+            /////
+            //checking in self list
+            if(flag_not==0)
+            {
+                var tmp_tot_list=document.getElementById('tmp_tot_list').value; 
+                //alert(tmp_tot_list);
+                for (var i = 1; i < tmp_tot_list; i++)
+                {
+                        var self_vehicle=document.getElementById('vehicle_no_cnt_'+i).value;
+                        //alert(self_vehicle);
+                        if(self_vehicle == vehicle_val) 
+                        {
+                                alert('Vehicle No '+vehicle_val +' already exist in List! Please Enter other Vehicle Number');                       
+                                //return false;
+                                flag_not=1;
+                                break;
+                        }
+                }
+            }
+            /////
+            var serial = document.getElementById('tmp_serial').value;
+            if(flag_not==0)
+            {
+                document.getElementById('vehicle_no_'+serial).value = document.getElementById('vehicle_list').value.toUpperCase();
+                document.getElementById('label_vehicle_no_'+serial).innerHTML = document.getElementById('vehicle_list').value.toUpperCase();	
+		
+            }
+            else
+            {
+                 document.getElementById('vehicle_no_'+serial).value = document.getElementById('temp_vehicle_no').value;
+                 document.getElementById('label_vehicle_no_'+serial).innerHTML = document.getElementById('temp_vehicle_no').value;	
+		
+            }
+            
+        }
+    }
+    var param1 ="blackout";
+    var param2 ="divpopup_vehicle_no";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none";
+}
+
+function close_vehicle_no_pre_cancel()
+{
+    var param1 ="blackout";
+    var param2 ="divpopup_vehicle_no";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none"; 
+}
+
+function show_qtykg_pre(sno,fat_per,snf_per,fat_kg,snf_kg)
+{
+    document.getElementById('tmp_serial').value = sno;
+    
+    var qty_kg=document.getElementById('qty_kg_'+sno).value;
+    document.getElementById('temp_qty_kg').value=qty_kg;
+    document.getElementById('temp_fat_per').value=fat_per;  
+    document.getElementById('temp_snf_per').value=snf_per;  
+    document.getElementById('temp_fat_kg').value=fat_kg;  
+    document.getElementById('temp_snf_kg').value=snf_kg;  
+    
+    document.getElementById("blackout").style.visibility = "visible";
+    document.getElementById("divpopup_invoice_qty").style.visibility = "visible";
+    document.getElementById("blackout").style.display = "block";
+    document.getElementById("divpopup_invoice_qty").style.display = "block"; 
+    
+    
+}
+
+function close_qtykg_pre()
+{
+    //alert("#"+document.getElementById('temp_qty_kg').value+"#");
+    if(document.getElementById('temp_fat_kg').value!="NaN" || document.getElementById('temp_snf_kg').value!="NaN")
+    {
+        //if((document.getElementById('temp_qty_kg').value!='') || (document.getElementById('temp_qty_kg').value!="0") || (document.getElementById('temp_qty_kg').value!="0.0"))
+        if((document.getElementById('temp_qty_kg').value!='') && (document.getElementById('temp_qty_kg').value!='0.0') && (document.getElementById('temp_qty_kg').value!='0') )
+        {
+            //alert(document.getElementById('temp_qty_kg').value);
+            var serial = document.getElementById('tmp_serial').value;
+            document.getElementById('qty_kg_'+serial).value = document.getElementById('temp_qty_kg').value;
+            document.getElementById('label_qtykg_'+serial).innerHTML = document.getElementById('temp_qty_kg').value;	
+
+            document.getElementById('fat_per_'+serial).value = document.getElementById('temp_fat_per').value;
+            document.getElementById('label_fat_per_'+serial).innerHTML = document.getElementById('temp_fat_per').value;	
+
+            document.getElementById('snf_per_'+serial).value = document.getElementById('temp_snf_per').value;
+            document.getElementById('label_snf_per_'+serial).innerHTML = document.getElementById('temp_snf_per').value;	
+
+            document.getElementById('fat_kg_'+serial).value = document.getElementById('temp_fat_kg').value;
+            document.getElementById('label_fat_kg_'+serial).innerHTML = document.getElementById('temp_fat_kg').value;	
+
+            document.getElementById('snf_kg_'+serial).value = document.getElementById('temp_snf_kg').value;
+            document.getElementById('label_snf_kg_'+serial).innerHTML = document.getElementById('temp_snf_kg').value;
+        }
+        
+        
+    }
+    var param1 ="blackout";
+    var param2 ="divpopup_invoice_qty";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none";
+}
+
+function close_qtykg_pre_cancel()
+{
+    var param1 ="blackout";
+    var param2 ="divpopup_invoice_qty";
+    //alert("param1="+param1+"param2="+param2);
+    document.getElementById(param1).style.visibility = "hidden";
+    document.getElementById(param2).style.visibility = "hidden";
+    document.getElementById(param1).style.display = "none";
+    document.getElementById(param2).style.display = "none"; 
+}
+
+function put_fat_snf_kg_edit(val){
+	//alert(val);
+	
+	document.getElementById('temp_fat_kg').value="";
+	document.getElementById('temp_snf_kg').value="";
+	var fat_per=document.getElementById('temp_fat_per').value;
+	var snf_per=document.getElementById('temp_snf_per').value;
+
+	var fatkg=(val*fat_per)/100;
+	fatkg=Math.round(fatkg*100)/100; 
+	document.getElementById('temp_fat_kg').value=fatkg;
+
+	var snfkg=(val*snf_per)/100;
+	snfkg=Math.round(snfkg*100)/100; 
+	document.getElementById('temp_snf_kg').value=snfkg;
+}
+
+
+function put_fat_kg_edit(val){
+	//alert(val);
+	
+	document.getElementById('temp_fat_kg').value="";
+	var qty=document.getElementById('temp_qty_kg').value;
+	if(qty==""){
+		alert("Please Enter Qty Value");
+		document.getElementById('temp_fat_per').value="";
+	}
+	else{
+		var fatkg=(qty*val)/100;
+		fatkg=Math.round(fatkg*100)/100; 
+		document.getElementById('temp_fat_kg').value=fatkg;
+	}
+	//alert(ids);
+}
+function put_snf_kg_edit(val){
+	//alert(val);
+	
+	document.getElementById('temp_snf_kg').value="";
+	var qty=document.getElementById('temp_qty_kg').value;
+	if(qty==""){
+		alert("Please Enter Qty(kg) Value");
+		document.getElementById('temp_snf_per').value="";
+	}
+	else{
+		var snfkg=(qty*val)/100;
+		snfkg=Math.round(snfkg*100)/100; 
+		document.getElementById('temp_snf_kg').value=snfkg;
+	}
+	//alert(ids);
+}
+
+
+function getScriptPage_raw_milk_for_edit(val,ids,box){
+        //alert(val);
+        
+	//var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
+	var iChars = "! @#$%^&*()+=-[]\\\';,.{}|/\":<>?";
+	flag=0;
+	for (var k = 0; k < val.length; k++) {
+		if (iChars.indexOf(val.charAt(k)) != -1) {
+			//alert(iChars[iChars.indexOf(val.charAt(k))]);
+			alert ("The box has special characters: "+ iChars[iChars.indexOf(val.charAt(k))] +" \n These are not allowed.\n");
+			document.getElementById('vehicle_list').focus();
+			//return false;
+			
+			//document.getElementById('vehicle_list').value="";replace(/blue/gi, "red");
+			var replace_str=val.replace(iChars[iChars.indexOf(val.charAt(k))], "");
+			document.getElementById('vehicle_list').value=replace_str; 
+			flag=1;
+		
+		} 
+	} 
+    if(flag==0){
+		var vehicle_list_hidden=document.getElementById('vehicle_list_hidden').value;	 
+		var poststr ="action_type=rawmilkvehicle"+
+					 "&all_vehicles="+vehicle_list_hidden+
+					 "&content="+val+
+					 "&box="+box+
+					 "&ids="+ids;
+		//alert("poststr="+poststr);
+		makePOSTRequest('src/php/datalog_script_search_rawmilk.htm', poststr); 
+	}
+	else{
+		return false;
+	}
+	   
+}
+///////////////////////////
+
 function show_plant_list(sno)
 {
 	//alert(sno);
@@ -10269,7 +10604,28 @@ function action_manage_invoice_update(action_type)
 		var plant_pre_serials = "";
 		var approval="";
 		var closetime="";
-		
+		//--lorry no---//
+                var lorry_serials = "";
+		var lorry_pre_serials = "";
+                //--vehicle_no==//
+                var vehicle_no_serials = "";
+		var vehicle_no_pre_serials = "";
+                //--qty==//
+                var qty_kg_serials = "";
+                var qty_kg_pre_serials="";
+                //==fatper==//
+                var fat_per_serials = "";
+                var fat_per_pre_serials = "";
+                //==snfper===//
+                var snf_per_serials="";
+                var snf_per_pre_serials="";
+                //==fat kg==//
+                var fat_kg_serials="";
+                var fat_kg_pre_serials="";
+                //==snf kg==//
+                var snf_kg_serials="";
+                var snf_kg_pre_serials="";
+                
                 var invoice_material_arr = document.invoice_form.elements['invoice_material[]'];
 		var invoice_material="";
                 
@@ -10339,7 +10695,27 @@ function action_manage_invoice_update(action_type)
 				update_serials = update_serials + ""+invoice_arr_cancel[i].value+",";
 				plant_serials = plant_serials + ""+document.getElementById('plant_'+invoice_arr_cancel[i].value).value+",";
 				plant_pre_serials = plant_pre_serials + ""+document.getElementById('plant_pre_'+invoice_arr_cancel[i].value).value+",";
-				approval=approval + ""+document.getElementById('approval_'+invoice_arr_cancel[i].value).value+",";							
+				approval=approval + ""+document.getElementById('approval_'+invoice_arr_cancel[i].value).value+",";	
+                                lorry_serials = lorry_serials + ""+document.getElementById('lorry_'+invoice_arr_cancel[i].value).value+",";
+				lorry_pre_serials = lorry_pre_serials + ""+document.getElementById('lorry_pre_'+invoice_arr_cancel[i].value).value+",";
+                                vehicle_no_serials = vehicle_no_serials + ""+document.getElementById('vehicle_no_'+invoice_arr_cancel[i].value).value+",";
+				vehicle_no_pre_serials = vehicle_no_pre_serials + ""+document.getElementById('vehicle_no_pre_'+invoice_arr_cancel[i].value).value+",";
+                                
+                                 qty_kg_serials = qty_kg_serials + ""+document.getElementById('qty_kg_'+invoice_arr_cancel[i].value).value+",";
+				qty_kg_pre_serials = qty_kg_pre_serials + ""+document.getElementById('qty_kg_pre_'+invoice_arr_cancel[i].value).value+",";
+                                
+                                fat_per_serials = fat_per_serials + ""+document.getElementById('fat_per_'+invoice_arr_cancel[i].value).value+",";
+				fat_per_pre_serials = fat_per_pre_serials + ""+document.getElementById('fat_per_pre_'+invoice_arr_cancel[i].value).value+",";
+                                
+                                snf_per_serials = snf_per_serials + ""+document.getElementById('snf_per_'+invoice_arr_cancel[i].value).value+",";
+				snf_per_pre_serials = snf_per_pre_serials + ""+document.getElementById('snf_per_pre_'+invoice_arr_cancel[i].value).value+",";
+                               
+                                fat_kg_serials = fat_kg_serials + ""+document.getElementById('fat_kg_'+invoice_arr_cancel[i].value).value+",";
+				fat_kg_pre_serials = fat_kg_pre_serials + ""+document.getElementById('fat_kg_pre_'+invoice_arr_cancel[i].value).value+",";
+                               
+                                snf_kg_serials = snf_kg_serials + ""+document.getElementById('snf_kg_'+invoice_arr_cancel[i].value).value+",";
+				snf_kg_pre_serials = snf_kg_pre_serials + ""+document.getElementById('snf_kg_pre_'+invoice_arr_cancel[i].value).value+",";
+                               
 			}
 		}
 		else
@@ -10347,7 +10723,26 @@ function action_manage_invoice_update(action_type)
 			update_serials = update_serials + ""+invoice_arr_cancel.value+",";
 			plant_serials = plant_serials + ""+document.getElementById('plant_'+invoice_arr_cancel.value).value+","	;
 			plant_pre_serials = plant_pre_serials + ""+document.getElementById('plant_pre_'+invoice_arr_cancel.value).value+","	;
-			approval=approval + ""+document.getElementById('approval_'+invoice_arr_cancel.value).value+",";					
+			approval=approval + ""+document.getElementById('approval_'+invoice_arr_cancel.value).value+",";	
+                        lorry_serials = lorry_serials + ""+document.getElementById('lorry_'+invoice_arr_cancel.value).value+","	;
+			lorry_pre_serials = lorry_pre_serials + ""+document.getElementById('lorry_pre_'+invoice_arr_cancel.value).value+",";
+                        vehicle_no_serials = vehicle_no_serials + ""+document.getElementById('vehicle_no_'+invoice_arr_cancel.value).value+","	;
+			vehicle_no_pre_serials = vehicle_no_pre_serials + ""+document.getElementById('vehicle_no_pre_'+invoice_arr_cancel.value).value+",";
+                        
+                         qty_kg_serials = qty_kg_serials + ""+document.getElementById('qty_kg_'+invoice_arr_cancel.value).value+",";
+                        qty_kg_pre_serials = qty_kg_pre_serials + ""+document.getElementById('qty_kg_pre_'+invoice_arr_cancel.value).value+",";
+
+                        fat_per_serials = fat_per_serials + ""+document.getElementById('fat_per_'+invoice_arr_cancel.value).value+",";
+                        fat_per_pre_serials = fat_per_pre_serials + ""+document.getElementById('fat_per_pre_'+invoice_arr_cancel.value).value+",";
+
+                        snf_per_serials = snf_per_serials + ""+document.getElementById('snf_per_'+invoice_arr_cancel.value).value+",";
+                        snf_per_pre_serials = snf_per_pre_serials + ""+document.getElementById('snf_per_pre_'+invoice_arr_cancel.value).value+",";
+
+                        fat_kg_serials = fat_kg_serials + ""+document.getElementById('fat_kg_'+invoice_arr_cancel.value).value+",";
+                        fat_kg_pre_serials = fat_kg_pre_serials + ""+document.getElementById('fat_kg_pre_'+invoice_arr_cancel.value).value+",";
+
+                        snf_kg_serials = snf_kg_serials + ""+document.getElementById('snf_kg_'+invoice_arr_cancel.value).value+",";
+                        snf_kg_pre_serials = snf_kg_pre_serials + ""+document.getElementById('snf_kg_pre_'+invoice_arr_cancel.value).value+",";
 		}
 
 		//######## CANCEL SERIALS
@@ -10450,6 +10845,26 @@ function action_manage_invoice_update(action_type)
 					"&update_serials="+update_serials+
 					"&plant_serials="+plant_serials+
 					"&plant_pre_serials="+plant_pre_serials+
+                                        "&lorry_serials="+lorry_serials+
+					"&lorry_pre_serials="+lorry_pre_serials+
+                                        "&vehicle_no_serials="+vehicle_no_serials+
+					"&vehicle_no_pre_serials="+vehicle_no_pre_serials+
+                                        
+                                        "&qty_kg_serials="+qty_kg_serials+
+					"&qty_kg_pre_serials="+qty_kg_pre_serials+
+                                        
+                                        "&fat_per_serials="+fat_per_serials+
+					"&fat_per_pre_serials="+fat_per_pre_serials+
+                                        
+                                        "&snf_per_serials="+snf_per_serials+
+					"&snf_per_pre_serials="+snf_per_pre_serials+
+                                        
+                                        "&fat_kg_serials="+fat_kg_serials+
+					"&fat_kg_pre_serials="+fat_kg_pre_serials+
+                                        
+                                        "&snf_kg_serials="+snf_kg_serials+
+					"&snf_kg_pre_serials="+snf_kg_pre_serials+
+                                        
 					"&close_serials="+close_serials+
 					"&closetime_serials="+ closetime +
 					"&approval_serials="+ approval +
