@@ -5,11 +5,11 @@
     include_once('active_vehicle_func.php');
     //if($account_id!=2)
     {
-    /*include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
     include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
     
-    /*$o_cassandra = new Cassandra();	
-    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);*/
+    $o_cassandra = new Cassandra();	
+    $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
     }
    $vehicle_color1=getColorFromAP($account_id,$DbConnection); /// A->Account P->Preference
 
@@ -193,7 +193,7 @@ echo"</table>";
         global $vcolor3;
         global $DbConnection;
         global $account_id;
-        //global $o_cassandra;
+        global $o_cassandra;
         //var_dump($o_cassandra);
         //global $logDate;
     
@@ -248,6 +248,29 @@ echo"</table>";
                         }
                         else
                         {
+                            $currentFilePath="/mnt/itrack/beta/src/php/vehicleStatus";
+                            $iterator = new FilesystemIterator($currentFilePath);                       
+                            //echo "imeiNo11=".count($iterator)."<br>";
+                            $fileFoundFlag=0;
+                            $dateObject=new DateTime();
+                            $todayDateOnly=$dateObject->format('Y-m-d');
+                            //echo"todayDate=".$todayDateOnly."<br>";
+                            $exactFilePath=$currentFilePath."/".$vehicle_imei.".txt";
+                            //echo "exactFilePath=".$exactFilePath."<br>";
+                            
+                            $todayDataLog=hasImeiLogged($o_cassandra, $vehicle_imei, $todayDateOnly);
+                            if($todayDataLog!='')
+                            {
+                                //echo "in if";
+                                touch($currentFilePath."/".$vehicle_imei.".txt");
+                                $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="1"; 
+                            }
+                            else
+                            {
+                                //echo "in else 1<br>";
+                                $AccountInfo -> DeviceRunningStatus[$AccountInfo -> VehicleCnt]="0"; 
+                            }  
+                            
                             //$color="gray";
                             $color= $vcolor3;      					  
                             $vehicle_name_arr[$color][] =$vehicle_name; 
