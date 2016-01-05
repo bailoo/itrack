@@ -639,7 +639,7 @@ border: none;
                                 echo '<input type="hidden" id="lorry_'.$sno.'" name="lorry_'.$sno.'" value="'.$row_select['lorry_no'].'">';
 				echo '<input type="hidden" id="lorry_pre_'.$sno.'" name="lorry_pre_'.$sno.'" value="'.$row_select['lorry_no'].'">'	;				
 					
-                                 if($row_select['invoice_status']== 1 && $user_type!="plant_raw_milk")
+                                 if($row_select['invoice_status']== 1 && $user_type!="plant_raw_milk" && $row_select['unload_estimated_datetime']=="")
                                  {
                                      echo '<td><a href="javascript:show_lorry_pre('.$sno.')"><div id="label_lorry_'.$sno.'">'.$row_select['lorry_no'].'</div></a></td>';
                                  }
@@ -665,7 +665,7 @@ border: none;
                                 {
                                         echo'<td><div>';
                                 }
-                                if($row_select['invoice_status']== 1 && $user_type!="plant_raw_milk")
+                                if($row_select['invoice_status']== 1 && $user_type!="plant_raw_milk" && $row_select['unload_estimated_datetime']=="")
                                 {                                    
                                     echo '<a href="javascript:show_vehicle_no_pre('.$sno.')"><div id="label_vehicle_no_'.$sno.'">'.$row_select['vehicle_no'].'</div></a></div></td>';
                                 }
@@ -681,11 +681,39 @@ border: none;
 				<td><font color=red>".$row_select['docket_no']."</font></td>
 				<td>".$row_select['email']."</td>
 				<td>".$row_select['mobile']."</td>
-				<td>".$row_select['qty_kg']."</td>
-				<td>".$row_select['fat_percentage']."</td>
-				<td>".$row_select['snf_percentage']."</td>
-				<td>".$row_select['fat_kg']."</td>
-				<td>".$row_select['snf_kg']."</td>
+                                   ";
+                                
+                               
+				echo '<input type="hidden" id="qty_kg_'.$sno.'" name="qty_kg_'.$sno.'" value="'.$row_select['qty_kg'].'">';
+				echo '<input type="hidden" id="qty_kg_pre_'.$sno.'" name="qty_kg_pre_'.$sno.'" value="'.$row_select['qty_kg'].'">'	;				
+				
+                                if($row_select['invoice_status']== 1 && $user_type!="plant_raw_milk")
+                                 {
+                                     echo '<td><a href="javascript:show_qtykg_pre('.$sno.','.$row_select['fat_percentage'].','.$row_select['snf_percentage'].','.$row_select['fat_kg'].','.$row_select['snf_kg'].')"><div id="label_qtykg_'.$sno.'">'.$row_select['qty_kg'].'</div></a></td>';
+                                 }
+                                 else
+                                 {
+                                     echo"<td>".$row_select['qty_kg']."</td>";
+                                 }
+                                 
+                                echo '<input type="hidden" id="fat_per_'.$sno.'" name="fat_per_'.$sno.'" value="'.$row_select['fat_percentage'].'">';
+				echo '<input type="hidden" id="fat_per_pre_'.$sno.'" name="fat_per_pre_'.$sno.'" value="'.$row_select['fat_percentage'].'">'	;				
+				
+                                echo '<input type="hidden" id="snf_per_'.$sno.'" name="snf_per_'.$sno.'" value="'.$row_select['snf_percentage'].'">';
+				echo '<input type="hidden" id="snf_per_pre_'.$sno.'" name="snf_per_pre_'.$sno.'" value="'.$row_select['snf_percentage'].'">'	;				
+				
+                                echo '<input type="hidden" id="fat_kg_'.$sno.'" name="fat_kg_'.$sno.'" value="'.$row_select['fat_kg'].'">';
+				echo '<input type="hidden" id="fat_kg_pre_'.$sno.'" name="fat_kg_pre_'.$sno.'" value="'.$row_select['fat_kg'].'">'	;				
+				
+                                echo '<input type="hidden" id="snf_kg_'.$sno.'" name="snf_kg_'.$sno.'" value="'.$row_select['snf_kg'].'">';
+				echo '<input type="hidden" id="snf_kg_pre_'.$sno.'" name="snf_kg_pre_'.$sno.'" value="'.$row_select['snf_kg'].'">'	;				
+				
+				//<td>".$row_select['qty_kg']."</td>
+                                 echo"
+				<td><div id=label_fat_per_$sno>".$row_select['fat_percentage']."</div></td>
+				<td><div id=label_snf_per_$sno>".$row_select['snf_percentage']."</div></td>
+				<td><div id=label_fat_kg_$sno>".$row_select['fat_kg']."</div></td>
+				<td><div id=label_snf_kg_$sno>".$row_select['snf_kg']."</div></td>
 				<!--<td>".$milk_hr1."-".$manual_milk_hr."</td>-->
 				<td>".$manual_milk_hr."</td>
 				<!--<td>".$row_select['milk_age']."</td>-->
@@ -2127,6 +2155,62 @@ border: none;
                 
 		
 		<br><center><input type="button" value="Edit" onclick="javascript:close_vehicle_no_pre();"></center>
+			
+	</div>
+        
+        <div id="divpopup_invoice_qty">
+	   
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="skyblue">							
+			<tr>
+				<td class="manage_interfarce" align="right"><a href="#" onclick="javascript:return close_qtykg_pre_cancel()" class="hs3">Close</a></td> 													
+			</tr> 
+			<tr>
+				<td colspan="5" valign="top" align="justify">EDIT QUANTITIES PARAMETERS</td>
+			</tr>							
+		</table>
+		<br>
+              
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" rules="all" style="background-color:ghostwhite;">							
+                    <tr>			
+                       
+                        <td>Qty:</td>
+                        <td>
+                                <input type="text" id="temp_qty_kg" placeholder="Qty" onblur=IsNumericA(this.value,this.id); onkeyup="javascript:put_fat_snf_kg_edit(this.value);">
+                        </td>
+                    </tr>
+                    <tr>			
+                       
+                        <td>Fat %:</td>
+                        <td>
+                                <input type="text" id="temp_fat_per" placeholder="Fat %" onblur=IsNumericA(this.value,this.id); onkeyup="javascript:put_fat_kg_edit(this.value);"  >
+                        </td>
+                    </tr>
+                        <tr>
+                        <td>Snf %:</td>
+                        <td>
+                                <input type="text" id="temp_snf_per" placeholder="Snf %" onblur=IsNumericA(this.value,this.id); onkeyup="javascript:put_snf_kg_edit(this.value);"  >
+                        </td>
+                               
+                    </tr>
+                    <tr>			
+                       
+                        <td>Fat Kg:</td>
+                        <td>
+                                <input type="text" id="temp_fat_kg" readonly >
+                        </td>
+                    </tr>
+                    <tr>			
+                       
+                        <td>Snf Kg:</td>
+                        <td>
+                                <input type="text" id="temp_snf_kg" readonly >
+                        </td>
+                    </tr>
+                    <tr><td colspan="2"><br></td></tr>
+		</table>
+                
+		
+		<br><center><input type="button" value="Edit" onclick="javascript:close_qtykg_pre();"></center>
 			
 	</div>
         
