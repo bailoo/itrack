@@ -263,12 +263,12 @@ echo"</table>";
                             {
                                 //echo "in if";
                                 touch($currentFilePath."/".$vehicle_imei.".txt");
-                                $AccountInfo -> DeviceRunningStatus[$j]="1"; 
+                                $AccountNode -> DeviceRunningStatus[$j]="1"; 
                             }
                             else
                             {
                                 //echo "in else 1<br>";
-                                $AccountInfo -> DeviceRunningStatus[$j]="0"; 
+                                $AccountNode -> DeviceRunningStatus[$j]="0"; 
                             }  
                             
                             //$color="gray";
