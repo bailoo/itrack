@@ -1420,7 +1420,7 @@ function getIoAssignmentFnameListNextNew($feature_count,$DbConnection)
 function getFeatureNameArr($DbConnection)
 {
    $query="SELECT DISTINCT column_name FROM information_schema.columns WHERE table_name='io_assignment' AND".
-	" ordinal_position>'2' AND ordinal_position<'17' AND table_schema='iespl_vts_beta'";
+	" ordinal_position>'2' AND ordinal_position<'25' AND table_schema='iespl_vts_beta'";
 	//echo "Query=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);	
 	$fi=0;
@@ -1435,7 +1435,7 @@ function getFeatureNameArr($DbConnection)
 function getIoAssignmentFnameListNext($DbConnection)
 {
    $query="SELECT DISTINCT column_name FROM information_schema.columns WHERE table_name='io_assignment' AND".
-	" ordinal_position>'2' AND ordinal_position<'17' AND table_schema='iespl_vts_beta'";
+	" ordinal_position>'2' AND ordinal_position<'25' AND table_schema='iespl_vts_beta'";
 	//echo "Query=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);
 	$feature_count=mysql_num_rows($result);
