@@ -2770,7 +2770,7 @@ function getIoAssignmentDetail($list_fname,$vehicle_id,$DbConnection)
 
 function getColumnNameInfoSchema($DbConnection)
 {
-    $query="SELECT DISTINCT column_name FROM information_schema.columns WHERE table_name='io_assignment' AND ordinal_position>'2' AND ordinal_position<'17' and table_schema='iespl_vts_beta'";
+    $query="SELECT DISTINCT column_name FROM information_schema.columns WHERE table_name='io_assignment' AND ordinal_position>'2' AND ordinal_position<'25' and table_schema='iespl_vts_beta'";
 	$result=mysql_query($query,$DbConnection);
 	$feature_count=mysql_num_rows($result);
 	$fi=0;
