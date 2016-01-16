@@ -333,9 +333,9 @@ for ($x = 0; $x <= $j; $x++) {
         $dispensing_tmp1 = ltrim($dispensingA1[$x][$y], '.');
         $dispensing_tmp2 = ltrim($dispensingA2[$x][$y], '.');
         $dispensing_tmp3 = ltrim($dispensingA3[$x][$y], '.');
-        echo "<br>D1=" . $dispensing_tmp1;
-        echo "<br>D1=" . $dispensing_tmp2;
-        echo "<br>D1=" . $dispensing_tmp3;
+        //echo "<br>D1=" . $dispensing_tmp1;
+        //echo "<br>D1=" . $dispensing_tmp2;
+        //echo "<br>D1=" . $dispensing_tmp3;
 
         //echo "dt=".$datetmp1;								
         echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$x][$y][SNo]\">";
