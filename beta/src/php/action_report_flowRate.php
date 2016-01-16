@@ -27,6 +27,7 @@ $date_1 = explode(" ", $date1);
 $date_2 = explode(" ", $date2);
 $datefrom = $date_1[0];
 $dateto = $date_2[0];
+$imei = array();
 
 $userInterval = $_POST['user_interval'];
 if ($getDataBy == 1) {
@@ -101,11 +102,13 @@ for ($i = 0; $i < $vsize; $i++) {
 
                             if (($date_secs2 >= $date_secs1) && $tmpFlag == 1) {
                                 //echo "time1=".$time1." time2=".$time2." tmpDiff=".$tmpDiff." tmpNext=".$tmpNext." tmpPrev=".$tmpPrev." datediff=".($dateTimeNext-$dateTimePrev)."<br>";
-                                if ($flowRate >= -30 && $flowRate <= 70) {
+                                //if ($flowRate >= -30 && $flowRate <= 70) 
+                                {
                                     //echo "temperature1=".$flowRate." doublet=".(double)$flowRate."<br>";
-                                    $flowRate = preg_replace('/[^0-9-]/s', '.', $flowRate);
-                                    $flowRatetmp = substr_count($flowRate, '.');
-                                    if ($flowRatetmp <= 1) {
+                                    //$flowRate = preg_replace('/[^0-9-]/s', '.', $flowRate);
+                                    //$flowRatetmp = substr_count($flowRate, '.');
+                                    //if ($flowRatetmp <= 1) 
+                                    {
                                         $imei[] = $vserial[$i];
                                         $vname[] = $vehicle_detail_local[0];
                                         $dateFromDisplay[] = $time1;
@@ -239,7 +242,8 @@ for ($i = 0; $i < sizeof($imei); $i++) {
     /* $flowRatethis=preg_replace("/&#?[A-Za-z]+;/i",".",$flowRate[$i]);	
       $flowRatethis1=iconv('UTF-8', 'UTF-8//IGNORE', $flowRatethis);
       $ftemperature=substr_replace($flowRatethis1, '.', 2, -1); */
-    echo'<td class="text" align="left">' . ltrim($flowRateDisplay[$i], '.') . '</td>';
+    //echo'<td class="text" align="left">' . ltrim($flowRateDisplay[$i], '.') . '</td>';
+    echo'<td class="text" align="left">' . $flowRateDisplay[$i] . '</td>';
     echo'</tr>';
     //echo "<br>arr_time1[$j][$k]main=".$arr_time1[$j][$k];
 
@@ -292,13 +296,14 @@ for ($x = 0; $x <= $j; $x++) {
 
         $datetmp1 = $datefrom1[$x][$y];
         $datetmp2 = $dateto1[$x][$y];
-        $flowRate_tmp = ltrim($flowRate1[$x][$y], '.');
+        //$flowRate_tmp = ltrim($flowRate1[$x][$y], '.');
+        $flowRate_tmp = $flowRate1[$x][$y];
 
         //echo "dt=".$datetmp1;								
         echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$x][$y][SNo]\">";
         echo"<input TYPE=\"hidden\" VALUE=\"$datetmp1\" NAME=\"temp[$x][$y][DateTime From]\">";
         echo"<input TYPE=\"hidden\" VALUE=\"$datetmp2\" NAME=\"temp[$x][$y][DateTime To]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$flowRate1[$x][$y]\" NAME=\"temp[$x][$y][FlowRate]\">";
+        echo"<input TYPE=\"hidden\" VALUE=\"$flowRate_tmp\" NAME=\"temp[$x][$y][FlowRate]\">";
 
         $csv_string = $csv_string . $sno . ',' . $datetmp1 . ',' . $datetmp2 . ',' . $flowRate_tmp . "\n";
     }
