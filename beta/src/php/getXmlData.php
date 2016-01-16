@@ -235,21 +235,21 @@ function read_data_between_datetime($vSerial, $startDate, $endDate, $userInterva
                     $dataObject->engineIOData[] = $item->$engineRunHr;
                 }               
                 if ($parameterizeData->flowRate != null) {
-                    $engineRunHr = $parameterizeData->flowRate;
-                    $dataObject->flowRateData[] = $item->flowRate;
+                    $flowRate = $parameterizeData->flowRate;
+                    $dataObject->flowRateData[] = $item->$flowRate;
                 }               
                 if ($parameterizeData->dispensing1 != null) {
-                    $engineRunHr = $parameterizeData->dispensing1;
-                    $dataObject->dispensing1Data[] = $item->dispensing1;
+                    $dispensing1 = $parameterizeData->dispensing1;
+                    $dataObject->dispensing1Data[] = $item->$dispensing1;
                 }
                 
                 if ($parameterizeData->dispensing2 != null) {
-                    $engineRunHr = $parameterizeData->dispensing2;
-                    $dataObject->dispensing2Data[] = $item->dispensing2;
+                    $dispensing2 = $parameterizeData->dispensing2;
+                    $dataObject->dispensing2Data[] = $item->$dispensing2;
                 }
                 if ($parameterizeData->dispensing3 != null) {
-                    $engineRunHr = $parameterizeData->dispensing3;
-                    $dataObject->dispensing3Data[] = $item->dispensing3;
+                    $dispensing3 = $parameterizeData->dispensing3;
+                    $dataObject->dispensing3Data[] = $item->$dispensing3;
                 }             
             } 
             else if ($requiredData != "All") {
@@ -277,6 +277,24 @@ function read_data_between_datetime($vSerial, $startDate, $endDate, $userInterva
                             $temp = $parameterizeData->temperature;
                             $dataObject->temperatureIOData[] = $item->$temp;
                         }
+                        
+                        if ($parameterizeData->flowRate != null) {
+                            $flowRate = $parameterizeData->flowRate;
+                            $dataObject->flowRateData[] = $item->$flowRate;
+                        }               
+                        if ($parameterizeData->dispensing1 != null) {
+                            $dispensing1 = $parameterizeData->dispensing1;
+                            $dataObject->dispensing1Data[] = $item->$dispensing1;
+                        }
+
+                        if ($parameterizeData->dispensing2 != null) {
+                            $dispensing2 = $parameterizeData->dispensing2;
+                            $dataObject->dispensing2Data[] = $item->$dispensing2;
+                        }
+                        if ($parameterizeData->dispensing3 != null) {
+                            $dispensing3 = $parameterizeData->dispensing3;
+                            $dataObject->dispensing3Data[] = $item->$dispensing3;
+                        }             
 
                         //$time1 = $switchDatetime;
                         $date_secs1 = strtotime($switchDatetime);
@@ -488,9 +506,24 @@ function deviceDataBetweenDatesLogOnly($vSerial, $dateRangeStart, $dateRangeEnd 
                 $engineRunHr = $parameterizeData->engineRunHr;
                 $dataObject->engineIOData[] = $item->$engineRunHr;
             }
-               
-               
-        
+            
+            if ($parameterizeData->flowRate != null) {
+                $flowRate = $parameterizeData->flowRate;
+                $dataObject->flowRateData[] = $item->$flowRate;
+            }               
+            if ($parameterizeData->dispensing1 != null) {
+                $dispensing1 = $parameterizeData->dispensing1;
+                $dataObject->dispensing1Data[] = $item->$dispensing1;
+            }
+
+            if ($parameterizeData->dispensing2 != null) {
+                $dispensing2 = $parameterizeData->dispensing2;
+                $dataObject->dispensing2Data[] = $item->$dispensing2;
+            }
+            if ($parameterizeData->dispensing3 != null) {
+                $dispensing3 = $parameterizeData->dispensing3;
+                $dataObject->dispensing3Data[] = $item->$dispensing3;
+            }             
     }
 }
 function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sortBy, $parameterizeData, &$dataObject)
@@ -701,6 +734,24 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
             $engineRunHr = $parameterizeData->engineRunHr;
             $dataObject->engineIOData[] = $item->$engineRunHr;
         }
+        
+        if ($parameterizeData->flowRate != null) {
+            $flowRate = $parameterizeData->flowRate;
+            $dataObject->flowRateData[] = $item->$flowRate;
+        }               
+        if ($parameterizeData->dispensing1 != null) {
+            $dispensing1 = $parameterizeData->dispensing1;
+            $dataObject->dispensing1Data[] = $item->$dispensing1;
+        }
+
+        if ($parameterizeData->dispensing2 != null) {
+            $dispensing2 = $parameterizeData->dispensing2;
+            $dataObject->dispensing2Data[] = $item->$dispensing2;
+        }
+        if ($parameterizeData->dispensing3 != null) {
+            $dispensing3 = $parameterizeData->dispensing3;
+            $dataObject->dispensing3Data[] = $item->$dispensing3;
+        }                     
     }
 }
 function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $parameterizeData, &$dataObject) {
@@ -907,6 +958,24 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
                 $engineRunHr = $parameterizeData->engineRunHr;
                 $dataObject->engineIOData[] = $item->$engineRunHr;
             }
+            
+            if ($parameterizeData->flowRate != null) {
+                $flowRate = $parameterizeData->flowRate;
+                $dataObject->flowRateData[] = $item->$flowRate;
+            }               
+            if ($parameterizeData->dispensing1 != null) {
+                $dispensing1 = $parameterizeData->dispensing1;
+                $dataObject->dispensing1Data[] = $item->$dispensing1;
+            }
+
+            if ($parameterizeData->dispensing2 != null) {
+                $dispensing2 = $parameterizeData->dispensing2;
+                $dataObject->dispensing2Data[] = $item->$dispensing2;
+            }
+            if ($parameterizeData->dispensing3 != null) {
+                $dispensing3 = $parameterizeData->dispensing3;
+                $dataObject->dispensing3Data[] = $item->$dispensing3;
+            }                         
         } 
         else if ($requiredData != "All") {
             if ($firstDataFlag == 0) {
@@ -933,6 +1002,24 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
                         $temp = $parameterizeData->temperature;
                         $dataObject->temperatureIOData[] = $item->$temp;
                     }
+                    
+                    if ($parameterizeData->flowRate != null) {
+                        $flowRate = $parameterizeData->flowRate;
+                        $dataObject->flowRateData[] = $item->$flowRate;
+                    }               
+                    if ($parameterizeData->dispensing1 != null) {
+                        $dispensing1 = $parameterizeData->dispensing1;
+                        $dataObject->dispensing1Data[] = $item->$dispensing1;
+                    }
+
+                    if ($parameterizeData->dispensing2 != null) {
+                        $dispensing2 = $parameterizeData->dispensing2;
+                        $dataObject->dispensing2Data[] = $item->$dispensing2;
+                    }
+                    if ($parameterizeData->dispensing3 != null) {
+                        $dispensing3 = $parameterizeData->dispensing3;
+                        $dataObject->dispensing3Data[] = $item->$dispensing3;
+                    }                                 
 
                     //$time1 = $switchDatetime;
                     $date_secs1 = strtotime($switchDatetime);
