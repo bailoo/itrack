@@ -159,9 +159,10 @@ for ($i = 0; $i < $vsize; $i++) {
                                 // if($flowRate>=-30 && $flowRate<=70)
                                 {
                                     //echo "temperature1=".$flowRate." doublet=".(double)$flowRate."<br>";
-                                    $flowRate = preg_replace('/[^0-9-]/s', '.', $flowRate);
-                                    $flowRatetmp = substr_count($flowRate, '.');
-                                    if ($flowRatetmp <= 1) {
+                                    /*$flowRate = preg_replace('/[^0-9-]/s', '.', $flowRate);
+                                    $flowRatetmp = substr_count($flowRate, '.');*/
+                                    //if ($flowRatetmp <= 1) 
+                                    {
                                         $imei[] = $vserial[$i];
                                         $vname[] = $vehicle_detail_local[0];
                                         $dateFromDisplay[] = $time1;
@@ -297,7 +298,7 @@ for ($x = 0; $x <= $j; $x++) {
         echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$x][$y][SNo]\">";
         echo"<input TYPE=\"hidden\" VALUE=\"$datetmp1\" NAME=\"temp[$x][$y][DateTime From]\">";
         echo"<input TYPE=\"hidden\" VALUE=\"$datetmp2\" NAME=\"temp[$x][$y][DateTime To]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$flowRate_tmp\" NAME=\"temp[$x][$y][FlowRate]\">";
+        echo"<input TYPE=\"hidden\" VALUE=\"$flowRate1[$x][$y]\" NAME=\"temp[$x][$y][FlowRate]\">";
 
         $csv_string = $csv_string . $sno . ',' . $datetmp1 . ',' . $datetmp2 . ',' . $flowRate_tmp . "\n";
     }
