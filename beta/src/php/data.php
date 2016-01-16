@@ -29,7 +29,11 @@ class data
 	Public $doorOpen1Data=array();
 	Public $doorOpen2Data=array();
 	Public $doorOpen3Data=array();
-	
+        Public $flowRateData=array();
+        Public $dispensing1Data=array();
+        Public $dispensing2Data=array();
+	Public $dispensing3Data=array();
+        
 	Public $dayMaxSpeedData=array();
 	Public $dayMaxSpeedTimeData=array();
 	Public $lastHaltTimeData=array();	
