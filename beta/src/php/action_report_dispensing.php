@@ -18,6 +18,7 @@ $device_str = $_POST['vehicleserial'];
 //echo "<br>devicestr=".$device_str;
 $vserial = explode(':', $device_str);
 $vsize = count($vserial);
+$imei = arrray();
 
 $date1 = $_POST['start_date'];
 $date2 = $_POST['end_date'];
@@ -119,13 +120,13 @@ for ($i = 0; $i < $vsize; $i++) {
                                     {
                                     //echo "dispensing1=".$dispensing." doublet=".(double)$dispensing."<br>";
                                     $dispensing1 = preg_replace('/[^0-9-]/s', '.', $dispensing1);
-                                    $dispensingtmp1 = substr_count($dispensing1, '.');
+                                    //$dispensingtmp1 = substr_count($dispensing1, '.');
 
                                     $dispensing2 = preg_replace('/[^0-9-]/s', '.', $dispensing2);
-                                    $dispensingtmp2 = substr_count($dispensing2, '.');
+                                    //$dispensingtmp2 = substr_count($dispensing2, '.');
 
                                     $dispensing3 = preg_replace('/[^0-9-]/s', '.', $dispensing3);
-                                    $dispensingtmp3 = substr_count($dispensing3, '.');
+                                    //$dispensingtmp3 = substr_count($dispensing3, '.');
 
                                     //if ($dispensingtmp1 <= 1 || $dispensingtmp2 <= 1 || $dispensingtmp3 <= 1) 
                                     {
@@ -235,9 +236,9 @@ $j = -1;
 $k = 0;
 $datefrom1 = array();
 $dateto1 = array();
-$dispensing1 = array();
-$dispensing2 = array();
-$dispensing3 = array();
+$dispensingA1 = array(array());
+$dispensingA2 = array(array());
+$dispensingA3 = array(array());
 for ($i = 0; $i < sizeof($imei); $i++) {
     if (($i == 0) || (($i > 0) && ($imei[$i - 1] != $imei[$i]))) {
         $k = 0;
@@ -276,9 +277,13 @@ for ($i = 0; $i < sizeof($imei); $i++) {
     /* $dispensingthis=preg_replace("/&#?[A-Za-z]+;/i",".",$dispensing[$i]);	
       $dispensingthis1=iconv('UTF-8', 'UTF-8//IGNORE', $dispensingthis);
       $fdispensing=substr_replace($dispensingthis1, '.', 2, -1); */
-    echo'<td class="text" align="left">' . ltrim($dispensingDisplay1[$i], '.') . '</td>';
+    /*echo'<td class="text" align="left">' . ltrim($dispensingDisplay1[$i], '.') . '</td>';
     echo'<td class="text" align="left">' . ltrim($dispensingDisplay2[$i], '.') . '</td>';
-    echo'<td class="text" align="left">' . ltrim($dispensingDisplay3[$i], '.') . '</td>';
+    echo'<td class="text" align="left">' . ltrim($dispensingDisplay3[$i], '.') . '</td>';*/
+    
+    echo'<td class="text" align="left">' . $dispensingDisplay1[$i] . '</td>';
+    echo'<td class="text" align="left">' . $dispensingDisplay2[$i] . '</td>';
+    echo'<td class="text" align="left">' . $dispensingDisplay3[$i] . '</td>';    
     echo'</tr>';
     //echo "<br>arr_time1[$j][$k]main=".$arr_time1[$j][$k];
 
@@ -336,6 +341,11 @@ for ($x = 0; $x <= $j; $x++) {
         /*$dispensing_tmp1 = ltrim($dispensingA1[$x][$y], '.');
         $dispensing_tmp2 = ltrim($dispensingA2[$x][$y], '.');
         $dispensing_tmp3 = ltrim($dispensingA3[$x][$y], '.');*/
+        
+        $dispensing_tmp1 = $dispensingA1[$x][$y];
+        $dispensing_tmp2 = $dispensingA2[$x][$y];
+        $dispensing_tmp3 = $dispensingA3[$x][$y];
+        
         //echo "<br>D1=" . $dispensing_tmp1;
         //echo "<br>D1=" . $dispensing_tmp2;
         //echo "<br>D1=" . $dispensing_tmp3;
@@ -344,11 +354,11 @@ for ($x = 0; $x <= $j; $x++) {
         echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$x][$y][SNo]\">";
         echo"<input TYPE=\"hidden\" VALUE=\"$datetmp1\" NAME=\"temp[$x][$y][DateTime From]\">";
         echo"<input TYPE=\"hidden\" VALUE=\"$datetmp2\" NAME=\"temp[$x][$y][DateTime To]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$dispensingA1[$x][$y]\" NAME=\"temp[$x][$y][Dispensing1]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$dispensingA2[$x][$y]\" NAME=\"temp[$x][$y][Dispensing2]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$dispensingA3[$x][$y]\" NAME=\"temp[$x][$y][Dispensing3]\">";
+        echo"<input TYPE=\"hidden\" VALUE=\"$dispensing_tmp1\" NAME=\"temp[$x][$y][Dispensing1]\">";
+        echo"<input TYPE=\"hidden\" VALUE=\"$dispensing_tmp2\" NAME=\"temp[$x][$y][Dispensing2]\">";
+        echo"<input TYPE=\"hidden\" VALUE=\"$dispensing_tmp3\" NAME=\"temp[$x][$y][Dispensing3]\">";
 
-        $csv_string = $csv_string . $sno . ',' . $datetmp1 . ',' . $datetmp2 . ',' . $dispensing_tmp . "\n";
+        $csv_string = $csv_string . $sno . ',' . $datetmp1 . ',' . $datetmp2 . ',' . $dispensing_tmp1. ',' . $dispensing_tmp2. ',' . $dispensing_tmp3 . "\n";
     }
 
     /* echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][SNo]\">";
