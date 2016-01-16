@@ -230,11 +230,27 @@ function read_data_between_datetime($vSerial, $startDate, $endDate, $userInterva
                     $acRunHr = $parameterizeData->acRunHr;
                     $dataObject->acIOData[] = $item->$acRunHr;
                 }
-
                 if ($parameterizeData->engineRunHr != null) {
                     $engineRunHr = $parameterizeData->engineRunHr;
                     $dataObject->engineIOData[] = $item->$engineRunHr;
+                }               
+                if ($parameterizeData->flowRate != null) {
+                    $engineRunHr = $parameterizeData->flowRate;
+                    $dataObject->flowRateData[] = $item->flowRate;
+                }               
+                if ($parameterizeData->dispensing1 != null) {
+                    $engineRunHr = $parameterizeData->dispensing1;
+                    $dataObject->dispensing1Data[] = $item->dispensing1;
                 }
+                
+                if ($parameterizeData->dispensing2 != null) {
+                    $engineRunHr = $parameterizeData->dispensing2;
+                    $dataObject->dispensing2Data[] = $item->dispensing2;
+                }
+                if ($parameterizeData->dispensing3 != null) {
+                    $engineRunHr = $parameterizeData->dispensing3;
+                    $dataObject->dispensing3Data[] = $item->dispensing3;
+                }             
             } 
             else if ($requiredData != "All") {
                 if ($firstDataFlag == 0) {
