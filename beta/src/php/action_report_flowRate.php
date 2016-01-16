@@ -51,7 +51,7 @@ for ($i = 0; $i < $vsize; $i++) {
     $ioArrSize = sizeof($ioArr);
     for ($z = 0; $z < $ioArrSize; $z++) {
         $tempIo = explode("^", $ioArr[$z]);
-        echo "io=" . $tempIo[1] . "<br>";
+        //echo "io=" . $tempIo[1] . "<br>";
         if ($tempIo[1] == "flowRate") {
             $ioFoundFlag = 1;
             $parameterizeData->flowRate = $finalIoArr[$tempIo[0]];
