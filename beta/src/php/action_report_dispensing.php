@@ -18,7 +18,7 @@ $device_str = $_POST['vehicleserial'];
 //echo "<br>devicestr=".$device_str;
 $vserial = explode(':', $device_str);
 $vsize = count($vserial);
-$imei = arrray();
+$imei = array();
 
 $date1 = $_POST['start_date'];
 $date2 = $_POST['end_date'];
@@ -120,13 +120,13 @@ for ($i = 0; $i < $vsize; $i++) {
                                     {
                                     //echo "dispensing1=".$dispensing." doublet=".(double)$dispensing."<br>";
                                     $dispensing1 = preg_replace('/[^0-9-]/s', '.', $dispensing1);
-                                    //$dispensingtmp1 = substr_count($dispensing1, '.');
+                                    $dispensingtmp1 = substr_count($dispensing1, '.');
 
                                     $dispensing2 = preg_replace('/[^0-9-]/s', '.', $dispensing2);
-                                    //$dispensingtmp2 = substr_count($dispensing2, '.');
+                                    $dispensingtmp2 = substr_count($dispensing2, '.');
 
                                     $dispensing3 = preg_replace('/[^0-9-]/s', '.', $dispensing3);
-                                    //$dispensingtmp3 = substr_count($dispensing3, '.');
+                                    $dispensingtmp3 = substr_count($dispensing3, '.');
 
                                     //if ($dispensingtmp1 <= 1 || $dispensingtmp2 <= 1 || $dispensingtmp3 <= 1) 
                                     {
