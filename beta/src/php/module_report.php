@@ -5,7 +5,7 @@ include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
 include("user_type_setting.php");
         
-$pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+/*$pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 //print_r($pathInPieces);
 //$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
 $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
@@ -13,7 +13,7 @@ $filePathToS3Wrapper=$pathToRoot."/s3/S3Wrapper.php";
 include_once($filePathToS3Wrapper);
 
 $S3Path="gps_report/".$account_id."/upload";
-$contents=listDir($S3Path);
+$contents=listDir($S3Path);*/
 /*$download_path="src/php/gps_report/".$account_id."/download";
 $master_download_path="src/php/gps_report/".$account_id."/master";
 $S3Path="gps_report/".$account_id."/upload";
@@ -135,6 +135,23 @@ $flag_io_trip=0;
 		if($feature_name_session[$k] == "io_trip")
 		{
 				$flag_io_trip = 1;
+		}
+		
+		if($feature_name_session[$k] == "flowRate")
+		{
+				$flag_flowRate = 1;
+		}
+		if($feature_name_session[$k] == "dispensing1")
+		{
+				$flag_dispensing1 = 1;
+		}
+		if($feature_name_session[$k] == "dispensing2")
+		{
+				$flag_dispensing2 = 1;
+		}
+		if($feature_name_session[$k] == "dispensing3")
+		{
+				$flag_dispensing3 = 1;
 		}
 	}
 	//$person_user_type=1;
@@ -2139,7 +2156,79 @@ $flag_io_trip=0;
 													"</table>"+
 												"</td>"+
 											"</tr>"+
-										"</table>",';              
+										"</table>",';
+
+									if($flag_flowRate == 1) {
+											echo'"<table border=0 class=\'mystyle\'>"+
+											"<tr>"+ 
+												"<td valign=\'top\'>"+
+													"<table border=0 class=\'mystyle\'>"+
+														"<tr>"+
+															"<td height=\'1px\'></td>"+
+														"</tr>"+
+														"<tr>"+
+															"<td>'.$nbsp.'"+
+																"<a href=javascript:'.$js_function_name.'(\'src/php/report_flowRate.htm\',\'FlowRate%20Report\'); class=\'menuitem\'>"+
+																	"'.$nbsp.'<img src=\'images/report_icons/temperature.png\' style=\'border:none;width:20px;height:20px;\' class=\'help_img_css\'>"+
+																"</a>"+
+															"</td>"+
+														"</tr>"+
+													"</table>"+
+												"</td>"+
+												"<td valign=\'top\'>"+
+													"<table border=0 class=\'mystyle\'>"+
+														"<tr>"+
+															"<td height=\'1px\'></td>"+
+														"</tr>"+
+														"<tr>"+
+															"<td>"+ 	
+																"<a href=javascript:'.$js_function_name.'(\'src/php/report_flowRate.htm\',\'FlowRate%20Report\'); class=\'menuitem\'>"+
+																	"'.$nbsp.'FlowRate Report"+
+																"</a>"+
+															"</td>"+
+														"</tr>"+
+													"</table>"+
+												"</td>"+
+											"</tr>"+
+										"</table>",';         
+									}
+									
+									if($flag_dispensing1 == 1 || $flag_dispensing1 == 2 || $flag_dispensing1 == 3 ) {
+											echo'"<table border=0 class=\'mystyle\'>"+
+											"<tr>"+ 
+												"<td valign=\'top\'>"+
+													"<table border=0 class=\'mystyle\'>"+
+														"<tr>"+
+															"<td height=\'1px\'></td>"+
+														"</tr>"+
+														"<tr>"+
+															"<td>'.$nbsp.'"+
+																"<a href=javascript:'.$js_function_name.'(\'src/php/report_dispensing.htm\',\'Dispensing%20Report\'); class=\'menuitem\'>"+
+																	"'.$nbsp.'<img src=\'images/report_icons/temperature.png\' style=\'border:none;width:20px;height:20px;\' class=\'help_img_css\'>"+
+																"</a>"+
+															"</td>"+
+														"</tr>"+
+													"</table>"+
+												"</td>"+
+												"<td valign=\'top\'>"+
+													"<table border=0 class=\'mystyle\'>"+
+														"<tr>"+
+															"<td height=\'1px\'></td>"+
+														"</tr>"+
+														"<tr>"+
+															"<td>"+ 	
+																"<a href=javascript:'.$js_function_name.'(\'src/php/report_dispensing.htm\',\'Dispensing%20Report\'); class=\'menuitem\'>"+
+																	"'.$nbsp.'Dispensing Report"+
+																"</a>"+
+															"</td>"+
+														"</tr>"+
+													"</table>"+
+												"</td>"+
+											"</tr>"+
+										"</table>",';         
+									}									
+
+										
 								  }								  
 									echo'"<table border=0 class=\'mystyle\'>"+
 											"<tr>"+ 
