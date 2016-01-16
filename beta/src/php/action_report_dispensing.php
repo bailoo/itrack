@@ -127,7 +127,8 @@ for ($i = 0; $i < $vsize; $i++) {
                                     $dispensing3 = preg_replace('/[^0-9-]/s', '.', $dispensing3);
                                     $dispensingtmp3 = substr_count($dispensing3, '.');
 
-                                    if ($dispensingtmp1 <= 1 || $dispensingtmp2 <= 1 || $dispensingtmp3 <= 1) {
+                                    //if ($dispensingtmp1 <= 1 || $dispensingtmp2 <= 1 || $dispensingtmp3 <= 1) 
+                                    {
                                         $imei[] = $vserial[$i];
                                         $vname[] = $vehicle_detail_local[0];
                                         $dateFromDisplay[] = $time1;
