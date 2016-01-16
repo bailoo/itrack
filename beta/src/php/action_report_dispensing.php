@@ -51,7 +51,7 @@ for ($i = 0; $i < $vsize; $i++) {
     $ioArrSize = sizeof($ioArr);
     for ($z = 0; $z < $ioArrSize; $z++) {
         $tempIo = explode("^", $ioArr[$z]);
-        echo "io=" . $tempIo[1] . "<br>";
+        //echo "io=" . $tempIo[1] . "<br>";
         if ($tempIo[1] == "dispensing1") {
             $ioFoundFlag = 1;
             $parameterizeData->dispensing1 = $finalIoArr[$tempIo[0]];
@@ -115,7 +115,8 @@ for ($i = 0; $i < $vsize; $i++) {
 
                             if (($date_secs2 >= $date_secs1) && $tmpFlag == 1) {
                                 //echo "time1=".$time1." time2=".$time2." tmpDiff=".$tmpDiff." tmpNext=".$tmpNext." tmpPrev=".$tmpPrev." datediff=".($dateTimeNext-$dateTimePrev)."<br>";
-                                if ($dispensing1 >= -30 && $dispensing1 <= 70) {
+                                //if ($dispensing1 >= -30 && $dispensing1 <= 70) 
+                                    {
                                     //echo "dispensing1=".$dispensing." doublet=".(double)$dispensing."<br>";
                                     $dispensing1 = preg_replace('/[^0-9-]/s', '.', $dispensing1);
                                     $dispensingtmp1 = substr_count($dispensing1, '.');
