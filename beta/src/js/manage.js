@@ -5447,7 +5447,7 @@ function showCoordinateInterface(param_1)
   else if(common_event=="polyline")
     {
        //document.getElementById("close_geo_route_coord").value = document.getElementById("polyline_coord").value; // kept last geo coord details for closing pop up div
-		refreshIntervalId = setInterval(keep_alive,840000);  //My session expires at 15 minutes
+		refreshIntervalId = setInterval(keep_alive,8400000);  //My session expires at 140 minutes
 		manage_draw_polyline_route();
     }
   else///////for geofencing and route both ////////////
