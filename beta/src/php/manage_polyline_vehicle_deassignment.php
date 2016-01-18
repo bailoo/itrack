@@ -1,7 +1,7 @@
 <?php
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');
-
+        include_once('coreDb.php');
 	$DEBUG=0; 
 	$common_id1=$_POST['common_id'];
         
@@ -56,7 +56,7 @@
             {
                 $polyline_id=$row['polyline_id'];
 		$polyline_name=$row['polyline_name'];
-                $num_data1=$getVehicleIdPolylineassignment($polyline_id,$DbConnection);
+                $num_data1=getVehicleIdPolylineassignment($polyline_id,$DbConnection);
                 if(count($num_data1)>0)
                 {
                     foreach($num_data1 as $row_1)
