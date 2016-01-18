@@ -2,7 +2,7 @@
 	include_once('Hierarchy.php');
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');
-        include('coreDb.php');
+        //include('coreDb.php');
 	$root=$_SESSION['root'];
 	$DEBUG=0;
 	$parameter_type="polyline";
