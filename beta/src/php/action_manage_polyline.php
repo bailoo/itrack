@@ -54,7 +54,7 @@
 		$field_name[]="polyline_coord";*/ 
 
 	
-		$result=editPolyline($polyline_name1,$polyline_coord1,$account_id,$date,$polyline_id1); 
+		$result=editPolyline($polyline_name1,$polyline_coord1,$account_id,$date,$polyline_id1,$DbConnection); 
 
 		//$ret_result=track_table($polyline_id1,$table_name,$field_name,$old_value,$new_value,$account_id,$date,$DbConnection);
 		if($result)

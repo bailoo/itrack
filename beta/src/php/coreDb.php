@@ -1899,7 +1899,7 @@ function insertPolyline($account_size,$local_account_ids,$max_no,$polyline_name1
 	$result=mysql_query($query,$DbConnection); 
 	return $result;
 }
-function editPolyline($polyline_name1,$polyline_coord1,$account_id,$date,$polyline_id1)
+function editPolyline($polyline_name1,$polyline_coord1,$account_id,$date,$polyline_id1,$DbConnection)
 {
 	$query="UPDATE polyline SET polyline_name='$polyline_name1',polyline_coord='$polyline_coord1',edit_id='$account_id',edit_date='$date' WHERE polyline_id='$polyline_id1'";
 	//echo "query=".$query;
