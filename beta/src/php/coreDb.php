@@ -1389,7 +1389,7 @@ function getIoAssignmentFnameList($DbConnection)
 function getFeatureCount($DbConnection)
 {
    $query="SELECT DISTINCT column_name FROM information_schema.columns WHERE table_name='io_assignment' AND".
-	" ordinal_position>'2' AND ordinal_position<'17' AND table_schema='iespl_vts_beta'";
+	" ordinal_position>'2' AND ordinal_position<'25' AND table_schema='iespl_vts_beta'";
 	//echo "Query=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);
 	$feature_count=mysql_num_rows($result);
@@ -1399,7 +1399,7 @@ function getFeatureCount($DbConnection)
 function getIoAssignmentFnameListNextNew($feature_count,$DbConnection)
 {
    $query="SELECT DISTINCT column_name FROM information_schema.columns WHERE table_name='io_assignment' AND".
-	" ordinal_position>'2' AND ordinal_position<'17' AND table_schema='iespl_vts_beta'";
+	" ordinal_position>'2' AND ordinal_position<'25' AND table_schema='iespl_vts_beta'";
 	//echo "Query=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);
 	$fi=0;
@@ -1420,7 +1420,7 @@ function getIoAssignmentFnameListNextNew($feature_count,$DbConnection)
 function getFeatureNameArr($DbConnection)
 {
    $query="SELECT DISTINCT column_name FROM information_schema.columns WHERE table_name='io_assignment' AND".
-	" ordinal_position>'2' AND ordinal_position<'17' AND table_schema='iespl_vts_beta'";
+	" ordinal_position>'2' AND ordinal_position<'25' AND table_schema='iespl_vts_beta'";
 	//echo "Query=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);	
 	$fi=0;
@@ -1435,7 +1435,7 @@ function getFeatureNameArr($DbConnection)
 function getIoAssignmentFnameListNext($DbConnection)
 {
    $query="SELECT DISTINCT column_name FROM information_schema.columns WHERE table_name='io_assignment' AND".
-	" ordinal_position>'2' AND ordinal_position<'17' AND table_schema='iespl_vts_beta'";
+	" ordinal_position>'2' AND ordinal_position<'25' AND table_schema='iespl_vts_beta'";
 	//echo "Query=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);
 	$feature_count=mysql_num_rows($result);
@@ -1899,7 +1899,7 @@ function insertPolyline($account_size,$local_account_ids,$max_no,$polyline_name1
 	$result=mysql_query($query,$DbConnection); 
 	return $result;
 }
-function editPolyline($polyline_name1,$polyline_coord1,$account_id,$date,$polyline_id1)
+function editPolyline($polyline_name1,$polyline_coord1,$account_id,$date,$polyline_id1,$DbConnection)
 {
 	$query="UPDATE polyline SET polyline_name='$polyline_name1',polyline_coord='$polyline_coord1',edit_id='$account_id',edit_date='$date' WHERE polyline_id='$polyline_id1'";
 	//echo "query=".$query;
@@ -2770,7 +2770,7 @@ function getIoAssignmentDetail($list_fname,$vehicle_id,$DbConnection)
 
 function getColumnNameInfoSchema($DbConnection)
 {
-    $query="SELECT DISTINCT column_name FROM information_schema.columns WHERE table_name='io_assignment' AND ordinal_position>'2' AND ordinal_position<'17' and table_schema='iespl_vts_beta'";
+    $query="SELECT DISTINCT column_name FROM information_schema.columns WHERE table_name='io_assignment' AND ordinal_position>'2' AND ordinal_position<'25' and table_schema='iespl_vts_beta'";
 	$result=mysql_query($query,$DbConnection);
 	$feature_count=mysql_num_rows($result);
 	$fi=0;
@@ -2960,7 +2960,7 @@ function getFieldStringAccountFeature($edit_account_id,$DbConnection)
     $result = mysql_query($query,$DbConnection);
     $row=mysql_fetch_object($result);
     $field_string="";
-    for($i=1;$i<=46;$i++)   //////for getting the field name having value 1 
+    for($i=1;$i<=50;$i++)   //////for getting the field name having value 1 
     {
         $field="field".$i;
         $field_value=$row->$field;

@@ -9,6 +9,7 @@
   $landmark_id_1=$_POST['landmark_id'];
   $location_id_1=$_POST['location_id'];
   //echo "route_id=". $route_id_1;;
+  $polyline_id_1=$_POST['polyline_id'];
   
   if($station_id_1!="")
   {
@@ -90,6 +91,18 @@
     $location_name=$row->location_name;
     $coord_1=$row->geo_point;   
     echo "manage_location_coord##".$location_name."##".$coord_1;
+  }
+  if($polyline_id_1!="")
+  {
+    $query="SELECT polyline_name,polyline_coord FROM polyline WHERE polyline_id='$polyline_id_1'";
+    //echo $query;
+	$result=mysql_query($query,$DbConnection);
+    $row=mysql_fetch_object($result);
+    $polyline_name1=$row->polyline_name;
+    $coord_1=$row->polyline_coord;
+    $coord_1 = base64_decode($coord_1);
+   
+    echo "manage_polyline_coord##".$polyline_name1."##".$coord_1;
   }
 ?>
 

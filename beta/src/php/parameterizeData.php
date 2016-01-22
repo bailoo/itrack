@@ -24,7 +24,11 @@ class parameterizeData
 	Public $acRunHr;
 	Public $doorOpen1;
 	Public $doorOpen2;
-	Public $doorOpen3;	
+	Public $doorOpen3;
+        Public $flowRate;
+        Public $dispensing1;	
+        Public $dispensing2;
+        Public $dispensing3;
 	
 	Public $sigStr;
 	Public $supVoltage;
@@ -71,6 +75,10 @@ class parameterizeData
 		$this->doorOpen1=null;
 		$this->doorOpen2=null;
 		$this->doorOpen3=null;
+                $this->flowRate=null;
+                $this->dispensing1=null;
+                $this->dispensing2=null;
+                $this->dispensing3=null;
 		
 		$this->sigStr=null;
 		$this->supVoltage=null;		

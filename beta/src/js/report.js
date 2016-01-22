@@ -1678,6 +1678,64 @@ function action_report_nearby_location(obj)
   }  
   
   
+  function action_report_flowRate(obj)
+  {
+	//alert("FlowRate");
+      // GET SELECTED VEHICLES 
+	document.getElementById("loading_msg").style.display = '';  
+	var device_str = get_selected_vehicle(obj); 
+	if(device_str==false)
+	{
+		document.getElementById("loading_msg").style.display='none';
+	}
+	if(document.getElementById("serverTimeCheck").checked==true)
+	{
+		var getDataBy=1;
+	}
+	else
+	{
+		var getDataBy=0;  
+	}
+	if(device_str!=false)
+	{    
+		var poststr = "vehicleserial=" + encodeURI( device_str ) +				
+		"&start_date=" + encodeURI( document.getElementById("date1").value )+
+		"&end_date=" + encodeURI( document.getElementById("date2").value )+ 
+		"&getDataBy=" + getDataBy+
+		"&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
+		//alert("riz:"+poststr);
+		makePOSTRequest('src/php/action_report_flowRate.htm', poststr);
+	} 	
+  } 
+  
+  function action_report_dispensing(obj)
+  {
+      // GET SELECTED VEHICLES 
+      document.getElementById("loading_msg").style.display = '';  
+      var device_str = get_selected_vehicle(obj); 
+    	if(device_str==false)
+    	{
+    		document.getElementById("loading_msg").style.display='none';
+    	}
+  	if(document.getElementById("serverTimeCheck").checked==true)
+	{
+            var getDataBy=1;
+	}
+        else
+        {
+            var getDataBy=0;  
+        }
+      if(device_str!=false)
+  	  {    
+        var poststr = "vehicleserial=" + encodeURI( device_str ) +				
+                    "&start_date=" + encodeURI( document.getElementById("date1").value )+
+                    "&end_date=" + encodeURI( document.getElementById("date2").value )+ 
+                    "&getDataBy=" + getDataBy+
+                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
+                    //alert("riz:"+poststr);
+         makePOSTRequest('src/php/action_report_dispensing.htm', poststr);
+  	 } 	
+  }  
   //1.PERFORMANCE REPORT  
   
   function action_report_performance(obj)
