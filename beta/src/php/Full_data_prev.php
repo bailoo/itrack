@@ -435,8 +435,8 @@ else
         else if($report_type=="Person")
         {
         echo'<input type="hidden" name="cellname" value='.serialize($cellname).'>
-	<input type="hidden" name="serverDatetime" value='.serialize($serverDatetime).'>
-	<input type="hidden" name="ver" value='.serialize($ver).'>';
+	<input type="hidden" name="serverDatetime" value='.base64_encode(serialize($serverDatetime)).'>
+	<input type="hidden" name="ver" value='.base64_encode(serialize($ver)).'>';
         }
 echo'</form>';
   if($dwt=="0")
