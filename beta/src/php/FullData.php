@@ -70,8 +70,8 @@
 		$vehicletype = unserialize($vehicletype);		
 		$cumdist = unserialize($cumdist);
                 $cellname = unserialize($cellname);
-                $serverDatetime = unserialize($serverDatetime);
-                $ver = unserialize($ver);
+                $serverDatetime = unserialize(base64_decode($serverDatetime));
+                $ver =unserialize(base64_decode($ver));
 		//read_track_xml_person($xml_path, &$vehicleserial, &$lat, &$lng, &$datetime, &$vehiclename, &$vehicletype, &$cumdist);
 	}
 	$size = sizeof($vehicleserial);	
