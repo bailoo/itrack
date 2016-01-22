@@ -432,6 +432,12 @@ else
 	<input type="hidden" name="io7" value='.serialize($io7).'>
 	<input type="hidden" name="io8" value='.serialize($io8).'>';
 	}
+        else if($report_type=="Person")
+        {
+        echo'<input type="hidden" name="cellname" value='.serialize($cellname).'>
+	<input type="hidden" name="serverDatetime" value='.serialize($serverDatetime).'>
+	<input type="hidden" name="ver" value='.serialize($ver).'>';
+        }
 echo'</form>';
   if($dwt=="0")
   {

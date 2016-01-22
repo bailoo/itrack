@@ -69,6 +69,9 @@
                // print_r($vehiclename);
 		$vehicletype = unserialize($vehicletype);		
 		$cumdist = unserialize($cumdist);
+                $cellname = unserialize($cellname);
+                $serverDatetime = unserialize($serverDatetime);
+                $ver = unserialize($ver);
 		//read_track_xml_person($xml_path, &$vehicleserial, &$lat, &$lng, &$datetime, &$vehiclename, &$vehicletype, &$cumdist);
 	}
 	$size = sizeof($vehicleserial);	
@@ -323,7 +326,19 @@ include_once($path_mapwindow);
 											echo'<th class="text" align="left" width="3%">
 													<b>Speed</b>
 												</th>';
-											}    
+											} 
+                                                                                        if($report_type=="Person")
+											{
+											echo'<th class="text" align="left" width="3%">
+                                                                                                    <b>Boot Status</b>
+												</th>';
+                                                                                        echo'<th class="text" align="left" width="3%">
+                                                                                                    <b>Server Date Time</b>
+												</th>';
+                                                                                        echo'<th class="text" align="left" width="3%">
+                                                                                                    <b>Version</b>
+                                                                                            </th>';
+											}
 											/*echo'<th class="text" align="left" width="3%">
 													<b>Dist.(Km)</b>
 												</th>';*/
@@ -409,7 +424,7 @@ include_once($path_mapwindow);
 												{
 													if($report_type=="Person")
 													{ 
-														$csv_string = $csv_string."SNo,Date,Time,Location,Dist(km),Latitude,Longitude,Altitude\n"; 
+														$csv_string = $csv_string."SNo,Date,Time,Location,Dist(km),Boot Status,Server Date Time,Version,Latitude,Longitude,Altitude\n"; 
 													}
 													else
 													{
@@ -420,7 +435,7 @@ include_once($path_mapwindow);
 												{
 													if($report_type=="Person")
 													{
-														$csv_string = $csv_string."SNo,Date,Time,Dist(km),Latitude,Longitude,Altitude\n"; 
+														$csv_string = $csv_string."SNo,Date,Time,Dist(km),Boot Status,Server Date Time,Version,Latitude,Longitude,Altitude\n"; 
 													}
 													else
 													{
@@ -613,6 +628,59 @@ include_once($path_mapwindow);
 												$csv_string = $csv_string.','.$pdf_place_ref;
 											}																
 										}
+                                                                        if($report_type=="Person")
+									{
+                                                                            if($cellname[$i]=="")
+                                                                            {
+                                                                            echo'<td class="text" align="center">
+                                                                                    <font color="red">-</font>
+                                                                                </td>';
+                                                                            echo"<input TYPE=\"hidden\" VALUE=\"-\" NAME=\"temp[$i][Boot Status]\">";
+                                                                            $csv_string = $csv_string.',-';
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                $tmpCellNameArr=explode(",",$cellname[$i]);
+                                                                                $bootStatus=$tmpCellNameArr[sizeof($tmpCellNameArr)-1];
+                                                                            echo'<td class="text" align="left" width="4%">
+                                                                                            '.$bootStatus.'
+                                                                                    </td>';
+                                                                                    echo"<input TYPE=\"hidden\" VALUE=\"$bootStatus\" NAME=\"temp[$i][Boot Status]\">";
+                                                                                    $csv_string = $csv_string.','.$bootStatus;
+                                                                            } 
+                                                                            if($serverDatetime[$i]=="")
+                                                                            {
+                                                                            echo'<td class="text" align="center">
+                                                                                    <font color="red">-</font>
+                                                                                </td>';
+                                                                            echo"<input TYPE=\"hidden\" VALUE=\"-\" NAME=\"temp[$i][Server Date Time]\">";
+                                                                            $csv_string = $csv_string.',-';
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                            echo'<td class="text" align="left" width="4%">
+                                                                                            '.$serverDatetime[$i].'
+                                                                                    </td>';
+                                                                                    echo"<input TYPE=\"hidden\" VALUE=\"$serverDatetime[$i]\" NAME=\"temp[$i][Server Date Time]\">";
+                                                                                    $csv_string = $csv_string.','.$serverDatetime[$i];
+                                                                            } 
+                                                                            if($ver[$i]=="")
+                                                                            {
+                                                                            echo'<td class="text" align="center">
+                                                                                    <font color="red">-</font>
+                                                                                </td>';
+                                                                            echo"<input TYPE=\"hidden\" VALUE=\"-\" NAME=\"temp[$i][version]\">";
+                                                                            $csv_string = $csv_string.',-';
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                            echo'<td class="text" align="left" width="4%">
+                                                                                            '.$ver[$i].'
+                                                                                    </td>';
+                                                                                    echo"<input TYPE=\"hidden\" VALUE=\"$ver[$i]\" NAME=\"temp[$i][version]\">";
+                                                                                    $csv_string = $csv_string.','.$ver[$i];
+                                                                            } 
+                                                                        }
 									if($report_type!="Person")
 									{      
 										if($speed[$i]=="")
