@@ -44,7 +44,7 @@ if(count($dataChillingPlantArr)>0)
     foreach($dataChillingPlantArr as $dCPValue)
     {
         $station= isset($dCPValue['station_name'])?preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dCPValue['station_name']):'';
-        $customer=isset($dCPValue['customer_no'])?$dCPValue['customer_no']:'';
+        $customer=isset($dCPValue['customer_no'])?preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s','',$dCPValue['customer_no']):'';
         $coord = isset($dCPValue['station_coord'])?$dCPValue['station_coord']:'';
         $type = isset($dCPValue['type'])?$dCPValue['type']:'';  	
         $coord1 = explode(',',$coord);
