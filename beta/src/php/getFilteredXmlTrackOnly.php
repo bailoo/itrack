@@ -45,7 +45,7 @@ $parameterizeData->fix='c';
 $parameterizeData->latitude='d';
 $parameterizeData->longitude='e';
 $parameterizeData->speed='f';
-$parameterizeData->cellName='ab';
+$parameterizeData->cellName='ci';
 $parameterizeData->supVoltage='r';
 $parameterizeData->dayMaxSpeed='s';
 $parameterizeData->lastHaltTime='u';
@@ -1017,6 +1017,9 @@ for($i=0;$i<$vsize;$i++)
                                 $datetimeXml[]=$SortedDataObject->deviceDatetime[$obi];
                                 $vehiclename[]=$vehicle_detail_local[0]; 
                                 $vehicletype[]=$vehicle_detail_local[1];
+                                $cellname[]=$SortedDataObject->cellNameData[$obi];
+                                $serverDatetime[]=$SortedDataObject->serverDatetime[$obi];
+                                $ver[]=$SortedDataObject->versionData[$obi];
                                 $speed[]=0.0;
                                 $cumdist[]=0.0;                           
                             }
@@ -1089,6 +1092,9 @@ for($i=0;$i<$vsize;$i++)
                                         $vehiclename[]=$vehicle_detail_local[0]; 
                                         $vehicletype[]=$vehicle_detail_local[1];
                                         $speed[]=$SortedDataObject->speedData[$obi];
+                                        $cellname[]=$SortedDataObject->cellNameData[$obi];
+                                        $serverDatetime[]=$SortedDataObject->serverDatetime[$obi];
+                                        $ver[]=$SortedDataObject->versionData[$obi];
                                         $cumdist[]=round($finalDistance,2);
                                         $firstData = 1; 
                                     }
@@ -1112,6 +1118,9 @@ for($i=0;$i<$vsize;$i++)
                 $vehiclename[]=$vehicle_detail_local[0]; 
                 $vehicletype[]=$vehicle_detail_local[1];
                 $speed[]=$SortedDataObject->speedData[$obi];
+                $cellname[]=$SortedDataObject->cellNameData[$obi];
+                $serverDatetime[]=$SortedDataObject->serverDatetime[$obi];
+                $ver[]=$SortedDataObject->versionData[$obi];
                 $cumdist[]=round($finalDistance,2);         
             }
         }
