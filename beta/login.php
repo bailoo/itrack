@@ -116,7 +116,7 @@
 				}
 				else
 				{
-					if($live_default)
+					if($live_default && $account_id!=1)
 					{
 					  $re_url = "live.htm";
 					}
