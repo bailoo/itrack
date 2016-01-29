@@ -499,4 +499,52 @@ function getLastSeenDate($DbConnection,$imei)
     return $Date;
 }
 
+function insert_last_data($o_cassandra, $imei, $data) {
+
+    $STime = date('Y-m-d H:i:s');
+    //$STime_UTC = date("Y-m-d H:i:s", strtotime("-330 minutes", strtotime($STime)));
+    $STime_UTC = new DateTime($STime);
+    $STime_UTC->setTimezone(new DateTimeZone("UTC"));
+    $STime_UTC = $STime_UTC->format("Y-m-d H:i:s"); // 2014-12-12 07:18:00 UTC    
+
+    $s_cql = "INSERT INTO lastlog (imei, stime, data) VALUES ('$imei','$STime_UTC','$data')";
+    //echo "QUERY=" . $s_cql;
+    try {
+        $st_results = $o_cassandra->query($s_cql);
+    } catch (Exception $e) {
+        //echo "Error:" . $e;
+    }
+}
+
+function insert_full_data($o_cassandra, $imei, $DeviceTime, $data) {
+
+    $STime = date('Y-m-d H:i:s');
+    //$STime_UTC = date("Y-m-d H:i:s", strtotime("-330 minutes", strtotime($STime)));
+    $STime_UTC = new DateTime($STime);
+    $STime_UTC->setTimezone(new DateTimeZone("UTC"));
+    $STime_UTC = $STime_UTC->format("Y-m-d H:i:s"); // 2014-12-12 07:18:00 UTC      
+    //$DeviceTime_UTC = date("Y-m-d H:i:s", strtotime("-330 minutes", strtotime($STime)));
+    $DeviceTime_UTC = new DateTime($DeviceTime);
+    $DeviceTime_UTC->setTimezone(new DateTimeZone("UTC"));
+    $DeviceTime_UTC = $DeviceTime_UTC->format("Y-m-d H:i:s"); // 2014-12-12 07:18:00 UTC       
+
+    $Date = explode(' ', $DeviceTime_UTC);
+    //echo "\nD1=" . $Date[0] . " ,D2=" . $Date[1];
+    $s_cql1 = "INSERT INTO log1 (imei, date, dtime, data, stime) VALUES ('$imei','$Date[0]','$DeviceTime_UTC','$data','$STime_UTC')";
+    //echo "QUERY=" . $s_cql1;
+    try {
+        $st_results = $o_cassandra->query($s_cql1);
+    } catch (Exception $e) {
+        echo "Error:" . $e;
+    }
+
+    $s_cql2 = "INSERT INTO log2 (imei, date, dtime, data, stime) VALUES ('$imei','$Date[0]','$DeviceTime_UTC','$data','$STime_UTC')";
+    //echo "QUERY=" . $s_cql2;
+    try {
+        $st_results = $o_cassandra->query($s_cql2);
+    } catch (Exception $e) {
+        //echo "Error:" . $e;
+    }
+}
+
 ?>

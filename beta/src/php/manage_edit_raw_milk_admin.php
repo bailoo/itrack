@@ -665,7 +665,7 @@ border: none;
                                 {
                                         echo'<td><div>';
                                 }
-                                if($row_select['invoice_status']== 1 && $user_type!="plant_raw_milk" && $row_select['unload_estimated_datetime']=="")
+                                if($row_select['invoice_status']== 1 && $user_type!="plant_raw_milk" && $user_type!="raw_milk" && $row_select['unload_estimated_datetime']=="")
                                 {                                    
                                     echo '<a href="javascript:show_vehicle_no_pre('.$sno.')"><div id="label_vehicle_no_'.$sno.'">'.$row_select['vehicle_no'].'</div></a></div></td>';
                                 }
