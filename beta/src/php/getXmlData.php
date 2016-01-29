@@ -526,6 +526,17 @@ function deviceDataBetweenDatesLogOnly($vSerial, $dateRangeStart, $dateRangeEnd 
             }             
     }
 }
+function insertFullData($deviceImei,$DeviceDatetime,$data)
+{
+    global $o_cassandra;    
+    insert_full_data($o_cassandra, $deviceImei, $DeviceDatetime, $data);
+}
+function insertLiveData($deviceImei,$dataLive)
+{
+    global $o_cassandra;    
+    insert_last_data($o_cassandra, $deviceImei, $dataLive);
+}
+
 function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sortBy, $parameterizeData, &$dataObject)
 {
     global $o_cassandra; 
