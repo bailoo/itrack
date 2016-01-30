@@ -8,8 +8,8 @@
 	$o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 	
 	
-	$imei = '862170018383602';
-	$date = '2015-06-14';
+	$imei = 'WB23D2023';
+	$date = '2015-11-17';
 	$deviceTime = TRUE;	// TRUE for query on index dtime, otherwise stime	
 	$orderAsc = FALSE;	// TRUE for ascending, otherwise descending (default) 
 
