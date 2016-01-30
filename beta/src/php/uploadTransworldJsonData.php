@@ -34,7 +34,7 @@ if(!empty($_POST['jsonData']))
 {
 	$jsonData=$_POST['jsonData'];	
 	//echo "jsonDecodedData=".$jsonData."<br>";
-	$response=geJsonSampleData($jsonData);
+	$response=getJsonSampleData($jsonData);
 	if($response=="fail")
 	{
 		deliverResponse(400,'Data Not Inserted',NULL);
@@ -60,7 +60,7 @@ function deliverResponse($status,$statusMessage,$response)
 	echo $jsonResponse;	
 }
 
-function geJsonSampleData($jsonData)
+function getJsonSampleData($jsonData)
 {
 	//echo "in function ";
     //$jsonData='{"VEHICLENO":"MH04DK2999","DATAELEMENTS":[{"DATAELEMENTS":{"LOCATION":"","HEADING":237.2,"SPEED":0,"LONGITUDE":76.6232,"DATETIME":"2015\/10\/08 09:37:41","IGNSTATUS":0,"LATITUDE":28.1179}}]}';
