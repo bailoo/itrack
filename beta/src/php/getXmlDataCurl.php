@@ -33,10 +33,11 @@ if(!empty($_POST['functionName']))
         $dateRangeEnd=$_POST['dateRangeEnd'];
         $sortBy=$_POST['sortBy'];
         $parameterizeData=$_POST['parameterizeData'];
+        echo $vSerial;
         
         if($functionName=="deviceDataBetweenDates")
         {
-           deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sortBy, $parameterizeData);
+           ///deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sortBy, $parameterizeData);
             
         }
 	//echo "jsonDecodedData=".$jsonData."<br>";
