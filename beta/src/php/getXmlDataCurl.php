@@ -36,18 +36,18 @@ if(!empty($_POST['functionName']))
         
         if($functionName=="deviceDataBetweenDates")
         {
-            $response=deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sortBy, $parameterizeData);
+           deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sortBy, $parameterizeData);
             
         }
 	//echo "jsonDecodedData=".$jsonData."<br>";
 	//$response=getJsonSampleData($jsonData);
-	if($response=="fail")
+	/*if($response=="fail")
 	{
 		deliverResponse(400,'Data Not Not Fetched',NULL);
 	}
  else {
      echo $jsonResponse;
- }
+ }*/
 }
 else
 {
@@ -83,14 +83,15 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
     //echo "requiredData=".$requiredData."<br>";
     //echo "imei=".$imei."<br>"; 
 	
-    if($parameterizeData->orderBy=="DESC")
+    /*if($parameterizeData->orderBy=="DESC")
     {
       $orderAsc = FALSE;
     }
     else
     {
         $orderAsc = TRUE;
-    }
+    }*/
+   $orderAsc = TRUE;
     $st_results = getImeiDateTimes($o_cassandra, $imei, $dateRangeStart, $dateRangeEnd, $deviceTime, $orderAsc);
 
     //var_dump($st_results);
@@ -134,166 +135,85 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
         $dataObject->serverDatetime[] = $datetime_server;
         $dataObject->deviceDatetime[] = $datetime_device;
 
-        if ($parameterizeData->messageType != null) 
+        if ($parameterizeData['messageType'] != null) 
         {
             $dataObject->messageTypeData[] = $msg_type;
         }
 
-        if ($parameterizeData->version != null) 
+        if ($parameterizeData['version'] != null) 
         {
             $dataObject->versionData[] = $ver;
         }
 
-        if ($parameterizeData->fix != null) {
+        if ($parameterizeData['fix'] != null) {
             $dataObject->fixData[] = $fix;
         }
-        if ($parameterizeData->cellName != null) 
+        if ($parameterizeData['cellName'] != null) 
         {
             $dataObject->cellNameData[] = $ci;
         }
-        if ($parameterizeData->supVoltage != null) 
+        if ($parameterizeData['supVoltage'] != null) 
         {
             $dataObject->supVoltageData[] = $sup_v;
         }
-        if ($parameterizeData->io1 != null) 
+        if ($parameterizeData['io1'] != null) 
         {
             $dataObject->io1Data[] = $io1;
         }
-        if ($parameterizeData->io2 != null) 
+        if ($parameterizeData['io2'] != null) 
         {
             $dataObject->io2Data[] = $io2;
         }
-        if ($parameterizeData->io3 != null) 
+        if ($parameterizeData['io3'] != null) 
         {
             $dataObject->io3Data[] = $io3;
         }
-        if ($parameterizeData->io4 != null) 
+        if ($parameterizeData['io4'] != null) 
         {
             $dataObject->io4Data[] = $io4;
         }
-        if ($parameterizeData->io5 != null) 
+        if ($parameterizeData['io5'] != null) 
         {
             $dataObject->io5Data[] = $io5;
         }
-        if ($parameterizeData->io6 != null) 
+        if ($parameterizeData['io6'] != null) 
         {
             $dataObject->io6Data[] = $io6;
         }
-        if ($parameterizeData->io7 != null) 
+        if ($parameterizeData['io7'] != null) 
         {
             $dataObject->io7Data[] = $io7;
         }
-        if ($parameterizeData->io8 != null) 
+        if ($parameterizeData['io8'] != null) 
         {
             $dataObject->io8Data[] = $io8;
         }
 
-        if ($parameterizeData->dayMaxSpeed != null) 
+        if ($parameterizeData['dayMaxSpeed'] != null) 
         {
             $dataObject->dayMaxSpeedData[] = $day_max_spd;
         }
-        if ($parameterizeData->dayMaxSpeed != null) 
+        if ($parameterizeData['dayMaxSpeed'] != null) 
         {
             $dataObject->dayMaxSpeedTime[] = $day_max_spd_time;
         }            
-        if ($parameterizeData->lastHaltTime != null) 
+        if ($parameterizeData['lastHaltTime'] != null) 
         {
             $dataObject->lastHaltTimeData[] = $last_halt_time;
         }
 
-        if ($parameterizeData->axParam != null) 
-        {
-            $dataObject->axParamData[] = $ax;
-        }
-        if ($parameterizeData->ayParam != null) 
-        {
-            $dataObject->ayParamData[] = $ay;
-        }
-        if ($parameterizeData->azParam != null) 
-        {
-            $dataObject->azParamData[] = $az;
-        }
-        if ($parameterizeData->mxParam != null) 
-        {
-            $dataObject->mxParamData[] = $mx;
-        }
-        if ($parameterizeData->myParam != null) 
-        {
-            $dataObject->myParamData[] = $my;
-        }
-        if ($parameterizeData->mzParam != null) 
-        {
-            $dataObject->mzParamData[] = $mz;
-        }
-        if ($parameterizeData->bxParam != null) 
-        {
-            $dataObject->bxParamData[] = $bx;
-        }
-        if ($parameterizeData->byParam != null) 
-        {
-            $dataObject->byParamData[] = $by;
-        }
-        if ($parameterizeData->bzParam != null) 
-        {
-            $dataObject->bzParamData[] = $bz;
-        }
-
-        if ($parameterizeData->latitude != null && $parameterizeData->longitude != null) 
+        
+        if ($parameterizeData['latitude'] != null && $parameterizeData['longitude'] != null) 
         {
            //echo "lat=".$lat."lng=".$lng."<br>";
             $dataObject->latitudeData[] = $lat;
             $dataObject->longitudeData[] = $lng;
         }
 
-        if ($parameterizeData->speed != null) 
+        if ($parameterizeData['speed'] != null) 
         {
             $dataObject->speedData[] = $speed;
-        }
-        if ($parameterizeData->doorOpen1 != null) 
-        {
-            $doorOpen1 = $parameterizeData->doorOpen1;
-            $dataObject->doorOpen1Data[] = $item->$doorOpen1;
-        }
-        if ($parameterizeData->doorOpen2 != null) 
-        {
-            $doorOpen2 = $parameterizeData->doorOpen2;
-            $dataObject->doorOpen2Data[] = $item->$doorOpen2;
-        }
-        if ($parameterizeData->doorOpen3 != null) 
-        {
-            $doorOpen3 = $parameterizeData->doorOpen3;
-            $dataObject->doorOpen3Data[] = $item->$doorOpen3;
-        }
-
-        if ($parameterizeData->acRunHr != null) 
-        {
-            $acRunHr = $parameterizeData->acRunHr;
-            $dataObject->acIOData[] = $item->$acRunHr;
-        }
-
-        if ($parameterizeData->engineRunHr != null) 
-        {
-            $engineRunHr = $parameterizeData->engineRunHr;
-            $dataObject->engineIOData[] = $item->$engineRunHr;
-        }
-        
-        if ($parameterizeData->flowRate != null) {
-            $flowRate = $parameterizeData->flowRate;
-            $dataObject->flowRateData[] = $item->$flowRate;
-        }               
-        if ($parameterizeData->dispensing1 != null) {
-            $dispensing1 = $parameterizeData->dispensing1;
-            $dataObject->dispensing1Data[] = $item->$dispensing1;
-        }
-
-        if ($parameterizeData->dispensing2 != null) {
-            $dispensing2 = $parameterizeData->dispensing2;
-            $dataObject->dispensing2Data[] = $item->$dispensing2;
-        }
-        if ($parameterizeData->dispensing3 != null) {
-            $dispensing3 = $parameterizeData->dispensing3;
-            $dataObject->dispensing3Data[] = $item->$dispensing3;
-        }                     
+        }                             
     }
     return $dataObject;
     }
