@@ -109,8 +109,16 @@ function getLiveDeviceData($imeiNo)
             else
             {
                 $status = "Stopped";
-            }                
+            }      
             $liveData[]=array(
+                            
+                            'latitude'=>$LastRecordObject->latitudeLR[0],
+                            'longitude'=>$LastRecordObject->longitudeLR[0],
+                            'speed'=>$LastRecordObject->speedLR[0],                            
+                            'deviceDatetime'=>$LastRecordObject->deviceDatetimeLR[0],                            
+                            'deviceImeiNo'=>$imeiNoArr[$i]
+                        );
+           /* $liveData[]=array(
                             'messageType'=>$LastRecordObject->messageTypeLR[0],
                             'version'=>$LastRecordObject->versionLR[0],
                             'fix'=>$LastRecordObject->fixLR[0],
@@ -134,7 +142,7 @@ function getLiveDeviceData($imeiNo)
                             'lastHaltTime'=>$LastRecordObject->lastHaltTimeLR[0],
                             'deviceImeiNo'=>$imeiNoArr[$i],                               
                             'status'=>$status
-                        );
+                        );*/
 	}                    	
     }
     if(count($liveData)==0)
