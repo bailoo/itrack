@@ -19,11 +19,11 @@ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
     
     
        
-    if(!empty($_POST['userId']))
+    if(!empty($_REQUEST['userId']))
     {
-	$imeiNo=$_POST['imeiNo'];
-        $userId=$_POST['userId'];	
-        $password=md5($_POST['password']);	
+	$imeiNo=$_REQUEST['imeiNo'];
+        $userId=$_REQUEST['userId'];	
+        $password=md5($_REQUEST['password']);	
         $query="SELECT account.account_id FROM account WHERE ".
 			"account.user_id='$userId' AND account.password='$password' AND account.status=1";
 	
