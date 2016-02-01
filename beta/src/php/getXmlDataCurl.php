@@ -36,18 +36,18 @@ if(!empty($_POST['functionName']))
         
         if($functionName=="deviceDataBetweenDates")
         {
-            $response=deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sortBy, $parameterizeData);
+           deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sortBy, $parameterizeData);
             
         }
 	//echo "jsonDecodedData=".$jsonData."<br>";
 	//$response=getJsonSampleData($jsonData);
-	if($response=="fail")
+	/*if($response=="fail")
 	{
 		deliverResponse(400,'Data Not Not Fetched',NULL);
 	}
  else {
      echo $jsonResponse;
- }
+ }*/
 }
 else
 {
