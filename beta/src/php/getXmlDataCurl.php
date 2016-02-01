@@ -83,14 +83,15 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
     //echo "requiredData=".$requiredData."<br>";
     //echo "imei=".$imei."<br>"; 
 	
-    if($parameterizeData->orderBy=="DESC")
+    /*if($parameterizeData->orderBy=="DESC")
     {
       $orderAsc = FALSE;
     }
     else
     {
         $orderAsc = TRUE;
-    }
+    }*/
+   $orderAsc = TRUE;
     $st_results = getImeiDateTimes($o_cassandra, $imei, $dateRangeStart, $dateRangeEnd, $deviceTime, $orderAsc);
 
     //var_dump($st_results);
