@@ -144,6 +144,7 @@ function getLiveDeviceData($imeiNo)
     else
     {
        $jsonResponse=json_encode($liveData); 
+       echo $jsonResponse;
     }
 }
 ?>
