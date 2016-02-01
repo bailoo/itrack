@@ -33,7 +33,8 @@ if(!empty($_POST['functionName']))
         $dateRangeEnd=$_POST['dateRangeEnd'];
         $sortBy=$_POST['sortBy'];
         $parameterizeData=$_POST['parameterizeData'];
-        echo $parameterizeData;
+        //echo $parameterizeData;
+        echo json_encode($parameterizeData);
         
         if($functionName=="deviceDataBetweenDates")
         {
