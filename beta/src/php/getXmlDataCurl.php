@@ -286,6 +286,7 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
             $dataObject->dispensing3Data[] = $item->$dispensing3;
         }                     
     }
+    echo json_encode($dataObject);
 }
 else
 {
