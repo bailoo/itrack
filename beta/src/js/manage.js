@@ -2203,6 +2203,24 @@ function unchecked_substation()
 			document.getElementById("available_message").innerHTML="";
 		}
 	}
+        
+        function manage_availability_exclude(field_value, file_type)
+	{
+            if(field_value!="")
+		{
+                    var polyline_id=document.getElementById("polyline_id").value;
+                    //alert(polyline_id);
+                    var poststr ="field_value=" +encodeURI(field_value)+
+                                  "&actual_id=" +encodeURI(polyline_id)+
+				 "&file_type=" + encodeURI(file_type);
+                        makePOSTRequest('src/php/manage_availability.htm', poststr);
+                }
+                else
+		{
+			document.getElementById("available_message").innerHTML="";
+		}
+            
+        }
 	
 	function show_date_option(date_format_option)
   {
@@ -2781,6 +2799,7 @@ function action_manage_polyline(action_type)
 		
 		if(checkbox_result!=false)
 		{
+                    /*
 			var form_obj1=document.manage1.polyline_id;
 			var radio_result=radio_selection(form_obj1);  //////////validate and get geofence
 			if(radio_result!=false)
@@ -2788,7 +2807,14 @@ function action_manage_polyline(action_type)
 			var poststr="action_type="+encodeURI(action_type ) + 
 					"&vehicle_ids="+checkbox_result + 
                     "&polyline_id=" +radio_result;
-			}					
+			}*/
+                       var  polyline_id = document.getElementById('polyline_id').value;
+                       if(polyline_id!="0")
+                       {
+                           var poststr="action_type="+encodeURI(action_type ) + 
+					"&vehicle_ids="+checkbox_result + 
+                        "&polyline_id=" +polyline_id;
+                       }
 		}			
 	}
 	else if(action_type=="deassign")
@@ -2801,6 +2827,27 @@ function action_manage_polyline(action_type)
 			var poststr="action_type="+encodeURI(action_type ) + 
 					"&vehicle_ids="+checkbox_result;							
 		}			
+	}
+        else if(action_type=="register")
+	{
+            //alert('test');
+            var obj=document.manage1.elements['manage_id'];
+            //alert('test'+obj);
+            var result=radio_selection(obj);
+            //alert("result"+result);
+            
+            if(result!=false)
+            {
+               
+                var  polyline_id = document.getElementById('polyline_id').value;
+                if(polyline_id!="0")
+                {
+                    var poststr="action_type="+encodeURI(action_type ) + 
+                                 "&account_id_to="+encodeURI(result) + 
+                                 "&polyline_id=" +polyline_id;
+                }
+            }
+            			
 	}
 	//alert("poststr="+poststr);
 	showManageLoadingMessage();

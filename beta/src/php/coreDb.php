@@ -2620,6 +2620,14 @@ function getVehicleListVehicleGroupingVehicle($parent_admin_id,$DbConnection)
     $row_result=@mysql_num_rows($result);
     return $row_result;
  }
+ function getNumRowPolylineExclude($field_value,$polyline_id,$DbConnection)
+ {
+    $query = "SELECT polyline_name FROM polyline USE INDEX(polyline_polyname_status) WHERE polyline_name='$field_value' and polyline_id!='$polyline_id' and status='1'";  
+    if($DEBUG==1){print_query($query);}
+    $result = @mysql_query($query, $DbConnection);     	     	                       
+    $row_result=@mysql_num_rows($result);
+    return $row_result;
+ }
  function getNumRowVisitArea($field_value,$DbConnection)
  {
     $query = "SELECT visit_area_name FROM visit_area USE INDEX(visar_visarname_status) WHERE visit_area_name='$field_value' and status='1'";  
@@ -3296,6 +3304,48 @@ function  getScheduleAssignmentData($vidStr,$dateFrom,$dateTo,$status,$DbConnect
         $polyline_name=$row->polyline_name;*/
         $data[]=array('polyline_id'=>$row->polyline_id,'polyline_name'=>$row->polyline_name);
     }
+    return $data;
+ }
+ function getSnoPolyline_register($polyline_id,$account_id,$DbConnection)
+ {
+    $sno="";
+    $query="SELECT sno FROM polyline_register where polyline_id='$polyline_id' AND status='1' AND user_account_id=$account_id";
+    $result=mysql_query($query,$DbConnection);
+    $row=mysql_fetch_object($result);
+    $sno=$row->sno;
+    return $sno;
+ }
+ function getPolylineNameByID($polyline_id,$DbConnection)
+ {
+    $polyline_name="";
+    $query_name="SELECT polyline_name FROM polyline where polyline_id='$polyline_id' AND status='1' ";
+    $result_name=mysql_query($query_name,$DbConnection);
+    $row_name=mysql_fetch_object($result_name);
+    $polyline_name=$row_name->polyline_name;
+    return $polyline_name;
+ }
+ function insertPolylineRegister($account_id_to,$polyline_id,$polyline_name,$account_id,$date,$DbConnection)
+ {
+    $query_insert="INSERT INTO polyline_register(user_account_id,polyline_id,polyline_name,status,create_id,create_date) VALUES('$account_id_to','$polyline_id','$polyline_name','1','$account_id','$date')";
+    //echo $query_insert;
+    $result_insert=mysql_query($query_insert,$DbConnection); 
+    return $result_insert;
+ }
+ function getDetailAllPolylineMerge($common_id1,$DbConnection)
+ {
+    $data=array();    
+    $query="SELECT polyline_register.polyline_id as pid, polyline_register.polyline_name as pname FROM polyline_register WHERE
+            polyline_register.user_account_id='$common_id1' and polyline_register.status=1 
+             UNION
+           SELECT polyline.polyline_id as pid,polyline.polyline_name as pname FROM polyline WHERE polyline.user_account_id='$common_id1' and polyline.status=1";
+    $result=mysql_query($query,$DbConnection);            							
+    while($row=mysql_fetch_object($result))
+    {
+       /*$polyline_id=$row->polyline_id; 
+        $polyline_name=$row->polyline_name;*/
+        $data[]=array('polyline_id'=>$row->pid,'polyline_name'=>$row->pname);
+    }
+  
     return $data;
  }
 /*****************************************************************************************************************************/

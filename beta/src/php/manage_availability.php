@@ -129,6 +129,13 @@
 		$message=failure_successesor($row_result);
 		echo $message;
 	}
+        if($file_type=="polyline_name_edit")
+	{     	
+            	$polyline_id = $_POST['actual_id']; 	                       
+		$row_result=getNumRowPolylineExclude($field_value,$polyline_id,$DbConnection);
+		$message=failure_successesor($row_result);
+		echo $message;
+	}
 	if($file_type=="visit_area")
 	{     	
           	     	                       
