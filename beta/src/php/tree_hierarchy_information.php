@@ -201,7 +201,55 @@
 			$ColumnNo--;
 		}
 	}
-	
+    function radio_account_hierarchy_exclude($AccountNode,$self_accountid)
+	{
+		global $ColumnNo;
+		global $RowNo;
+		global $count;
+		global $MaxColumnNo;
+		if($AccountNode->data->AccountTypeThirdParty!='1')
+		{
+			$hierarchy_level=$AccountNode->data->AccountHierarchyLevel;    
+			$account_id_local=$AccountNode->data->AccountID;
+			$group_id_local=$AccountNode->data->AccountGroupID;
+			//echo "account_id=".$account_id_local."group_id=".$group_id_local."<br>";
+			$account_name=$AccountNode->data->AccountName;
+			$ChildCount=$AccountNode->ChildCnt;		
+	 
+			echo"<tr>";
+			for($k=0;$k<$ColumnNo;$k++)
+			{
+				echo"<td>&nbsp;".''."</td>";
+			}
+                        if($account_id_local==$self_accountid)
+                        {
+                            echo"<td>&nbsp;                
+				<INPUT TYPE='radio' name='manage_id' VALUE='$account_id_local' disabled onclick='javascript:temp()'><!--<a href='tree_account_detail.php?account_id_local=$account_id_local'>-->".$account_name."<!--</a>-->
+			</td>";
+                        }
+                        else
+                        {
+                            echo"<td>&nbsp;                
+				<INPUT TYPE='radio' name='manage_id' VALUE='$account_id_local' onclick='javascript:temp()'><!--<a href='tree_account_detail.php?account_id_local=$account_id_local'>-->".$account_name."<!--</a>-->
+			</td>";
+                        }
+			
+			for($l=($k+1);$l<$MaxColumnNo;$l++)
+			{
+				echo"<td>&nbsp;".''."</td>";
+			}
+			echo"</tr>";
+
+			$ColumnNo++;
+			$RowNo++;
+
+			for($i=0;$i<$ChildCount;$i++)
+			{     
+				radio_account_hierarchy_exclude($AccountNode->child[$i],$self_accountid);
+			}  
+			$ColumnNo--;
+		}
+	}
     function selectbox_account_hierarchy($AccountNode)
 	{
 		global $DbConnection;

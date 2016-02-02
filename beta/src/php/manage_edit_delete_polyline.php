@@ -20,7 +20,8 @@
           <option value="select">Select</option>';
           <?php
 			
-			$data=getDetailAllPolyline($common_id1,$DbConnection);            							
+			$data=getDetailAllPolyline($common_id1,$DbConnection);  
+                        sort_array_of_array($data, 'polyline_name');
 			foreach($data as $dt)
 			{
 				$polyline_id=$dt['polyline_id'];
@@ -39,8 +40,8 @@
                 <td>Polyline/Route Name</td>
                 <td>:</td>
                 <td>
-					<!--<input type="text" name="polyline_name" id="polyline_name" onkeyup="manage_availability(this.value, 'polyline')" onmouseup="manage_availability(this.value, 'polyline')" onchange="manage_availability(this.value, 'polyline')">-->
-					<input type="text" name="polyline_name" id="polyline_name" readonly >
+					<input type="text" name="polyline_name" id="polyline_name" onkeyup="manage_availability_exclude(this.value, 'polyline_name_edit')" onmouseup="manage_availability_exclude(this.value, 'polyline_name_edit')" onchange="manage_availability_exclude(this.value, 'polyline_name_edit')">
+					<!--<input type="text" name="polyline_name" id="polyline_name" readonly >-->
 				</td>                                
              </tr> 
              <tr>                          
@@ -59,5 +60,15 @@
   </table>
   
   <?php 
+    function sort_array_of_array(&$array, $subfield)
+    {
+        $sortarray = array();
+        foreach ($array as $key => $row)
+        {
+            $sortarray[$key] = $row[$subfield];
+        }
+
+        array_multisort($sortarray, SORT_ASC, $array);
+    }
     include_once('availability_message_polyline_div.php');
   ?>

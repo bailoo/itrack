@@ -32,7 +32,43 @@
 		}    
 
 	}
-  
+        else if($action_type1=="register")
+        {
+            //phase 1 check polyline if registered in polyline_register
+            //if yes then skip
+            //else insert
+            $account_id_to=$_POST['account_id_to'];
+            $polyline_id=$_POST['polyline_id'];
+            
+            $sno=getSnoPolyline_register($polyline_id,$account_id_to,$DbConnection);
+            /*
+            $query_if="SELECT sno FROM polyline_register where polyline_id='$polyline_id' AND status='1' AND user_account_id=$account_id_to";
+            $result_if=mysql_query($query_if,$DbConnection);
+            $row_if=mysql_fetch_object($result_if);
+            $sno=$row_if->sno;*/
+            if($sno=="" && $polyline_id!='0')
+            {
+                //get polyline name
+                $polyline_name=getPolylineNameByID($polyline_id,$DbConnection);
+                /*$query_name="SELECT polyline_name FROM polyline where polyline_id='$polyline_id' AND status='1' ";
+                $result_name=mysql_query($query_name,$DbConnection);
+                $row_name=mysql_fetch_object($result_name);
+                $polyline_name=$row_name->polyline_name;*/
+                $result_insert=insertPolylineRegister($account_id_to,$polyline_id,$polyline_name,$account_id,$date,$DbConnection);
+                /*$query_insert="INSERT INTO polyline_register(user_account_id,polyline_id,polyline_name,status,create_id,create_date) VALUES('$account_id_to','$polyline_id','$polyline_name','1','$account_id','$date')";
+                //echo $query_insert;
+                $result_insert=mysql_query($query_insert,$DbConnection); 
+                */
+                $flag=1;
+		$action_perform="Register";
+            }
+            else
+            {
+                $flag=2;
+                $action_perform="Already Register";
+            }
+            
+        }
 	else if($action_type1=="edit")
 	{
 		//$type="edit_delete";
