@@ -432,11 +432,11 @@ for($i=0;$i<$vsize;$i++)
                             //echo "engine".$iotype_iovalue_str1[1]."<br>";
                             if(trim($iotype_iovalue_str1[1])=="engine")
                             {
-                                $ioStr= get_io($vehicle_serial,'engine,engine_type');
+                                /*$ioStr= get_io($vehicle_serial,'engine,engine_type');
                                 $ioStr=explode("#",$ioStr);
                                 if($ioStr[1]==1)
                                 {
-                                    if($io_values<350)
+                                    if($io_values<=350)
                                     {					
                                         $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>On</td></tr>";
                                     }
@@ -446,7 +446,7 @@ for($i=0;$i<$vsize;$i++)
                                     }
                                 }
                                 else
-                                {
+                                {*/
                                     if($io_values<=350)
                                     {					
                                         $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>Off</td></tr>";
@@ -455,7 +455,7 @@ for($i=0;$i<$vsize;$i++)
                                     {
                                         $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>:</td><td class='live_td_css2'>ON</td></tr>";
                                     }
-                                }
+                                //}
                             }
                             else if(trim($iotype_iovalue_str1[1])=="ac")
                             {
