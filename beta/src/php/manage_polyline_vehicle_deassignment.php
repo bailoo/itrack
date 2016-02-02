@@ -1,15 +1,24 @@
 <?php
+        include_once('Hierarchy.php');
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');
         include_once('coreDb.php');
 	$DEBUG=0; 
 	$common_id1=$_POST['common_id'];
+        $root=$_SESSION['root'];
+        //print_r($root);
+        global $vehicleid;
+        $vehicle_cnt=0;
+        global $vehicle_cnt;
+        get_user_vehicle($root,$common_id1); 
         
+        //print_r($vehicleid);
 	/*$query ="SELECT polyline_id,polyline_name from polyline WHERE user_account_id=$common_id1 AND status=1";
 	//echo "query=".$query;
 	$result = mysql_query($query, $DbConnection);
 	$num_rows=mysql_num_rows($result);*/
-        $num_data=getPolylineName($common_id1,$DbConnection);
+        //$num_data=getPolylineName($common_id1,$DbConnection);
+        $num_data=getDetailAllPolylineMerge($common_id1,$DbConnection);
 
 	$vehicle_cnt=0;
 	$polyline_cnt=0;
@@ -60,12 +69,15 @@
                 if(count($num_data1)>0)
                 {
                     foreach($num_data1 as $row_1)
-                    {				
+                    {	
+                        if (in_array($row_1['vehicle_id'], $vehicleid))
+                        {
                             $vehicle_id[$polyline_cnt][$vehicle_cnt]=$row_1['vehicle_id'];
                             $vehicle_name[$polyline_cnt][$vehicle_cnt]=$row_1['vehicle_name'];
                             $polyline_id1[$polyline_cnt]=$polyline_id;
                             $polyline_name1[$polyline_cnt]=$polyline_name;					
                             $vehicle_cnt++;
+                        }
                     }  
                 }
                 else
@@ -143,4 +155,48 @@
 			</center>			
 		</form>";
    
+                            
+    function get_user_vehicle($AccountNode,$account_id)
+    {
+        //echo "dd".$AccountNode->data->AccountID;
+        //print_r($AccountNode);
+            global $vehicleid;
+            global $vehicle_cnt;
+            
+            
+            if($AccountNode->data->AccountID==$account_id)
+            {
+                    //echo"in";
+                    for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
+                    {			    
+                            $vehicle_id = $AccountNode->data->VehicleID[$j];
+                            $vehicle_name = $AccountNode->data->VehicleName[$j];
+                            $vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
+                            if($vehicle_id!=null)
+                            {
+                                //echo $vehicle_id."/";
+                                    for($i=0;$i<$vehicle_cnt;$i++)
+                                    {
+                                            if($vehicleid[$i]==$vehicle_id)
+                                            {
+                                                    break;
+                                            }
+                                    }			
+                                    if($i>=$vehicle_cnt)
+                                    {
+                                            $vehicleid[$vehicle_cnt]=$vehicle_id;
+                                             
+                                            $vehicle_cnt++;
+                                            //echo $vehicle_id."/";
+                                            //common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name,$AccountNode->data->AccountGroupName);
+                                    }
+                            }
+                    }
+            }
+            $ChildCount=$AccountNode->ChildCnt;
+            for($i=0;$i<$ChildCount;$i++)
+            { 
+                    get_user_vehicle($AccountNode->child[$i],$account_id);
+            }
+    }
 ?>  

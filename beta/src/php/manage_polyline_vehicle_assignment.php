@@ -18,17 +18,18 @@
 	echo'<input type="hidden" id="account_id_hidden" value='.$common_id1.'>';
 	echo"<br>			
 			<form name='manage1' method='post'>
-				<center>
-				<table border=0 cellspacing=0 cellpadding=0 class='module_left_menu'>
-					<tr>
-						<td colspan='3'>
-							&nbsp;&nbsp;<INPUT TYPE='checkbox' name='all_vehicle' onclick='javascript:select_all_assigned_vehicle(this.form);'>
-							<font size='2'>Select All</font>"."												
-						</td>																														
-					</tr>";
-					get_user_vehicle($root,$common_id1);
-			echo"</table>
-
+                            <center>
+                              <fieldset>
+                                <legend>Vehicle To Route Assignment</legend>
+                                    <table border=0 cellspacing=0 cellpadding=0 class='module_left_menu'>
+                                    <tr>
+                                            <td colspan='3'>
+                                                    <INPUT TYPE='checkbox' name='all_vehicle' onclick='javascript:select_all_assigned_vehicle(this.form);'>
+                                                    <font size='2'>Select All</font>"."												
+                                            </td>																														
+                                    </tr>";
+                                    get_user_vehicle($root,$common_id1);
+                            echo"</table>
 				<br>
 				<table border=0 cellspacing=0 cellpadding=0 class='module_left_menu' align='center'>
 					";
@@ -55,10 +56,11 @@
 					{
 						echo"<font color='blue' size='2'>NO POLYLINE/ROUTE FOUND IN THIS ACCOUNT</font>";
 					}*/
-                                        $row_data=getDetailAllPolyline($common_id1,$DbConnection);
+                                        $row_data=getDetailAllPolylineMerge($common_id1,$DbConnection);
                                         if(count($row_data)>0)
                                         {
-                                            foreach($row_data as $row)
+                                            sort_array_of_array($row_data, 'polyline_name');
+                                            /*foreach($row_data as $row)
                                             {
                                                 $polyline_id=$row['polyline_id'];
                                                 $polyline_name=$row['polyline_name'];
@@ -68,7 +70,18 @@
                                                                 <font color='blue' size='2'>".$polyline_name."&nbsp;&nbsp;&nbsp;</font>"."												
                                                         </td>																														
                                                 </tr>";
+                                            }*/
+                                            echo "<select name='polyline_id' id='polyline_id'>
+                                            <option value=0>Select</option>";
+                                            foreach($row_data as $row)
+                                            {
+                                                $polyline_id=$row['polyline_id'];
+                                                $polyline_name=$row['polyline_name'];
+                                                echo'<option value='.$polyline_id.'>'.$polyline_name.'</option>';
+                                                 ;
                                             }
+                                            echo "</select>";
+                                             
                                         }
                                         else
                                         {
@@ -80,9 +93,20 @@
 				<br>
 					<input type="button" id="enter_button" name="enter_button" Onclick="javascript:return action_manage_polyline(\'assign\')" value="Assign">&nbsp;<input type="reset" value="Cancel">
 				<br><a href="javascript:show_option(\'manage\',\'polyline\');" class="back_css">&nbsp;<b>Back</b></a>
-				</center>
+                                </fieldset>	
+                            </center>
 			</form>';	
+                        function sort_array_of_array(&$array, $subfield)
+                        {
+                            $sortarray = array();
+                            foreach ($array as $key => $row)
+                            {
+                                $sortarray[$key] = $row[$subfield];
+                            }
 
+                            array_multisort($sortarray, SORT_ASC, $array);
+                        }
+                        
 			function common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name,$option_name)
 			{
                             global $o_cassandra;
@@ -104,23 +128,20 @@
                             //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
                             if($logResult!='')
                             {
-				echo'<td align="left">&nbsp;<INPUT TYPE="checkbox"  name="vehicle_id[]" VALUE="'.$vehicle_id.'"></td>
-					   <td class=\'text\'>&nbsp;
+				echo'<td align="left"><INPUT TYPE="checkbox"  name="vehicle_id[]" VALUE="'.$vehicle_id.'"></td>
+					   <td class=\'text\'>
 					     <font color="darkgreen">'.$vehicle_name.'</font>
-                <!--<A HREF="#" style="text-decoration:none;" onclick="main_vehicle_information('.$vehicle_id.')">
-						        <font color="darkgreen">'.$vehicle_name.'</font>&nbsp;('.$option_name.')
-               </A>-->
+              
 					   </td>';
 				}
 				else
 				{
-					echo'<td align="left">&nbsp;
+					echo'<td align="left">
 							<INPUT TYPE="checkbox"  name="vehicle_id[]" VALUE="'.$vehicle_id.'">
 						</td>
 						<td class=\'text\'>
 						  <font color="grey">'.$vehicle_name.'</font>
-							<!--&nbsp;<A HREF="#" style="text-decoration:none;" onclick="main_vehicle_information('.$vehicle_id.')">
-              '.$vehicle_name.'&nbsp;('.$option_name.')</A>-->
+							
 						</td>';
 				}
 				if($td_cnt==3)
