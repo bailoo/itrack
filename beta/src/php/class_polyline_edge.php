@@ -99,13 +99,13 @@ class class_polyline_edge{
 				if($per_distance*1000 < 1000) //km to m and chk within 100 m
 				{
 					
-					$perpendicular_distance="Vehicle on Edge [ ".round($per_distance*1000,2) ." ] meter from Route:".$route1latlng."->".$route2latlng.":".$c['lat'].",".$c['lon'].":1:".$data_date;
+					$perpendicular_distance="Vehicle [ ".round($per_distance*1000,2) ." ] meter from Route:".$route1latlng."->".$route2latlng.":".$c['lat'].",".$c['lon'].":1:".$data_date;
 					break;
 				}
 				else
 				{
 					
-					$perpendicular_distance="Vehicle Not on Edge [ ".round($min_per_distance,2) ." ] Km from Route:".$route1latlng."->".$route2latlng.":".$c['lat'].",".$c['lon'].":0:".$data_date;
+					$perpendicular_distance="Vehicle Diverted [ ".round($min_per_distance,2) ." ] Km from Route:".$route1latlng."->".$route2latlng.":".$c['lat'].",".$c['lon'].":0:".$data_date;
 				}
 			}
 			$l++;
