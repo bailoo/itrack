@@ -21,7 +21,7 @@ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
        
     if(!empty($_REQUEST['userId']))
     {
-	$imeiNo=$_REQUEST['imeiNo'];
+	$vehicleNo=$_REQUEST['vehicleNo'];
         $userId=$_REQUEST['userId'];	
         $password=md5($_REQUEST['password']);	
         $query="SELECT account.account_id FROM account WHERE ".
@@ -37,6 +37,11 @@ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
         }
         else
         {
+            $QueryImeiNo="SELECT DISTINCT vehicle_assignment.device_imei_no FROM vehicle,vehicle_assignment WHERE ".
+                    " vehicle.vehicle_id=vehicle_assignment.vehicle_id AND vehicle_assignment.status=1 AND vehicle.".
+                    "status=1 AND vehicle.vehicle_name='$vehicleNo'";
+            $ResultImeiNo=mysql_query($QueryImeiNo,$DbConnection);
+            $imeiNo=mysql_fetch_row($QueryImeiNo);
             getLiveDeviceData($imeiNo);     
         }
     }
