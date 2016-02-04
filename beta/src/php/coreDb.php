@@ -103,11 +103,11 @@ function getMaxSpeed($vSerial,$status,$DbConnection)
    $Row=mysql_fetch_row($res_geo);
    return $Row[0];
 }
-function getPolyLineDetail($accId,$status,$DbConnection)
+function getPolyLineDetail($accId,$status,$vserial,$DbConnection)
 {
    $query_polyline = "SELECT polyline_coord,polyline_name FROM polyline WHERE polyline_id IN(SELECT polyline_id FROM polyline_assignment WHERE status=1 AND ".
-    "vehicle_id IN (SELECT vehicle_id FROM vehicle_assignment WHERE device_imei_no='$vserial' AND status=1)) AND ".
-    "user_account_id='$account_id' AND status=1";  
+    "vehicle_id IN (SELECT vehicle_id FROM vehicle_assignment WHERE device_imei_no='$vserial' AND status=$status)) AND ".
+    "user_account_id='$accId' AND status=1";  
     $res_polyline = mysql_query($query_polyline,$DbConnection); 
     $rowArr=mysql_fetch_row($res_polyline);
     return $rowArr;

@@ -116,7 +116,7 @@ for($di=0;$di<=($date_size-1);$di++)
 //print_r($latArr);
 $o_cassandra->close();
 $parameterizeData=null;
-$rowArr=getPolyLineDetail($account_id,1,$DbConnection);
+$rowArr=getPolyLineDetail($account_id,1,$vserial,$DbConnection);
 if(count($rowArr)>0)
 {
     $polyline_coord_tmp = $rowArr[0];
