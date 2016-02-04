@@ -46,7 +46,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
             $DataValid = 0;
             $lat = $SortedDataObject->latitudeData[$obi];
             $lng = $SortedDataObject->longitudeData[$obi];
-            $speed = $SortedDataObject->speed[$obi];
+            $speed = $SortedDataObject->speedData[$obi];
             $datetime=$SortedDataObject->deviceDatetime[$obi];
             $xml_date=$datetime;
             if((strlen($lat)>5) && ($lat!="-") && (strlen($lng)>5) && ($lng!="-"))
@@ -151,7 +151,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                     }  //if datesec2 */      					
 //echo "<br>REACHED-3";		                                                                        									                               
                 }   // else closed  
-                if($wSInputDataObj->actualIcdOutDatetime=="0000-00-00 00:00:00")
+                if($wSInputDataObj->actualIcdOutDatetime=="0000-00-00 00:00:00" || $wSInputDataObj->actualIcdOutDatetime=="")
                 {
                     $coord = explode(',',$icdCoord);
                     $icdLat = trim($coord[0]);
@@ -174,7 +174,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                     }                   
                 }
                 //echo "actualIcdInDatetime=".$wSInputDataObj->actualIcdInDatetime."<br>";
-                if($wSInputDataObj->actualIcdInDatetime=="0000-00-00 00:00:00" && $speed<10)
+                if(($wSInputDataObj->actualIcdInDatetime=="0000-00-00 00:00:00" || $wSInputDataObj->actualIcdInDatetime=="") && ($speed<10))
                 {
                     $coord = explode(',',$icdCoord);
                     $icdLat = trim($coord[0]);
@@ -195,9 +195,9 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                 echo "customerInDatetime=".$wSInputDataObj->customerInDatetime."<br>";
                 echo "speed=".$speed."<br>";*/
                 
-                if(($wSInputDataObj->actualIcdOutDatetime!="0000-00-00 00:00:00") && ($wSInputDataObj->customerInDatetime=="0000-00-00 00:00:00" && $speed<10))
+                if(($wSInputDataObj->actualIcdOutDatetime!="0000-00-00 00:00:00" || $wSInputDataObj->actualIcdOutDatetime!="") && ($wSInputDataObj->customerInDatetime=="0000-00-00 00:00:00" || $wSInputDataObj->customerInDatetime=="") && ($speed<10))
                 {
-                    //echo "in customer";
+                    echo "in customer";
                     $coord = explode(',',$cusotmerCoord);
                     $customerLat = trim($coord[0]);
                     $customerLng = trim($coord[1]);
@@ -214,7 +214,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
                     }
                 }
                 //echo "customerOutDatetime=".$wSInputDataObj->customerOutDatetime."<br>";
-                if(($wSInputDataObj->actualIcdOutDatetime!="0000-00-00 00:00:00") && ($wSInputDataObj->customerInDatetime!="0000-00-00 00:00:00") && ($wSInputDataObj->customerOutDatetime=="0000-00-00 00:00:00"))
+                if(($wSInputDataObj->actualIcdOutDatetime!="0000-00-00 00:00:00" || $wSInputDataObj->actualIcdOutDatetime!="") && ($wSInputDataObj->customerInDatetime!="0000-00-00 00:00:00" || $wSInputDataObj->customerInDatetime!="") && ($wSInputDataObj->customerOutDatetime=="0000-00-00 00:00:00" || $wSInputDataObj->customerOutDatetime==""))
                 {
                     $coord = explode(',',$cusotmerCoord);
                     $customerLat = trim($coord[0]);
