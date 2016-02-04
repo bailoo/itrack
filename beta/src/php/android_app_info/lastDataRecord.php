@@ -40,9 +40,10 @@ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
             $QueryImeiNo="SELECT DISTINCT vehicle_assignment.device_imei_no FROM vehicle,vehicle_assignment WHERE ".
                     " vehicle.vehicle_id=vehicle_assignment.vehicle_id AND vehicle_assignment.status=1 AND vehicle.".
                     "status=1 AND vehicle.vehicle_name='$vehicleNo'";
+            //echo "Query=".$QueryImeiNo."<br>";
             $ResultImeiNo=mysql_query($QueryImeiNo,$DbConnection);
             $imeiNo=mysql_fetch_row($QueryImeiNo);
-            getLiveDeviceData($imeiNo);     
+            getLiveDeviceData($imeiNo[0]);     
         }
     }
     else
