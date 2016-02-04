@@ -27,7 +27,7 @@ function getDataToFillDetail($icdCoord, $cusotmerCoord, $wSInputDataObj, $startd
     
     $outDistanceLimit=2;
     $inDistanceLimit=1;
-    
+    $sortBy="h";
    // echo "vehcileName=".$wSInputDataObj->vehicleName."<br>";
     
     //echo "imeiNo=".$wSInputDataObj->imeiNo." startDate=".$startdate." endDate=".$enddate."<br>";
