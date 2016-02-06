@@ -264,7 +264,7 @@ class class_polyline_edge{
 	
 	function getlocation($lat,$lng)
 	{
-		$endpoint="http://maps.googleapis.com/maps/api/geocode/json?latlng=".trim($lat).",".trim($lng)."&sensor=false";
+		/*$endpoint="http://maps.googleapis.com/maps/api/geocode/json?latlng=".trim($lat).",".trim($lng)."&sensor=false";
  
 		$raw=@file_get_contents($endpoint);
 		$json_data=json_decode($raw);
@@ -279,8 +279,49 @@ class class_polyline_edge{
 		{
 			$fAddress="-";
 		}
-		return $fAddress;
+		return $fAddress;*/
+            header('Access-Control-Allow-Origin: *');
+
+                $latitude=$lat;
+                $longitude=$lng;
+
+
+                $curl_handle=curl_init();
+                curl_setopt($curl_handle, CURLOPT_URL,'http://nominatim.openstreetmap.org/reverse?format=json&lat='.$latitude.'&lon='.$longitude.'&zoom=18&addressdetails=1');
+                curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+                curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Your application name');
+                $json = curl_exec($curl_handle);
+                curl_close($curl_handle);
+                $data = json_decode($json, true);
+                //print_r($data);
+                $address=$data['display_name'];
+                $lat_local=$data['lat'];
+                $lon_local=$data['lon'];
+                $lat_local = round(floatval($lat_local),4);
+                $lon_local = round(floatval($lon_local),4);
+                $distance="";
+                calculate_report_distance($latitude,$lat_local,$longitude,$lon_local,$distance);
+                $placename=round($distance,2)." km from ".$address;
+                return $placename;
+
+
 	}
+        
+         function calculate_report_distance($lat1, $lat2, $lon1, $lon2, &$distance) 
+        {
+                $lat1 = deg2rad($lat1);
+                $lon1 = deg2rad($lon1);
+
+                $lat2 = deg2rad($lat2);
+                $lon2 = deg2rad($lon2);
+
+                $delta_lat = $lat2 - $lat1;
+                $delta_lon = $lon2 - $lon1;
+
+                $temp = pow(sin($delta_lat/2.0),2) + cos($lat1) * cos($lat2) * pow(sin($delta_lon/2.0),2);
+                $distance = 6378.1  * 2 * atan2(sqrt($temp),sqrt(1-$temp));
+        }
 	
 }
 ?>
