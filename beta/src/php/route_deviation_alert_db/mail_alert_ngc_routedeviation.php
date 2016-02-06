@@ -84,7 +84,7 @@ if(sizeof($data_vehicle)>0)
    // $data[]=array('vid'=>$row->vehicle_id,'device'=>$row->device_imei_no,'vname'=>$row->vehicle_name);
     
     $o_cassandra=openCassandraConnection();
-    //print_r($data_vehicle);
+    print_r($data_vehicle);
     foreach($data_vehicle as $row_data)
     {
         $vid=$row_data['vid'];
