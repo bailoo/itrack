@@ -38,7 +38,7 @@ else
     $abspath = "/var/www/html/vts/beta/src/php";
 }
 echo "<br>AbsPath=".$abspath;
-
+$isReport2=1;
 include_once($abspath."/common_xml_element.php");
 include_once($abspath."/calculate_distance.php");
 include_once($abspath."/xmlParameters.php");
