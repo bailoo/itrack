@@ -264,8 +264,8 @@ class class_polyline_edge{
 	
 	function getlocation($lat,$lng)
 	{
-            echo $lat;
-            echo $lng;
+            //echo $lat;
+            //echo $lng;
 		/*$endpoint="http://maps.googleapis.com/maps/api/geocode/json?latlng=".trim($lat).",".trim($lng)."&sensor=false";
  
 		$raw=@file_get_contents($endpoint);
@@ -286,7 +286,8 @@ class class_polyline_edge{
 
                 $latitude=$lat;
                 $longitude=$lng;
-
+                $latitude = round($latitude,5);
+                $longitude = round($longitude,5);
 
                 $curl_handle=curl_init();
                 curl_setopt($curl_handle, CURLOPT_URL,'http://nominatim.openstreetmap.org/reverse?format=json&lat='.$latitude.'&lon='.$longitude.'&zoom=18&addressdetails=1');
