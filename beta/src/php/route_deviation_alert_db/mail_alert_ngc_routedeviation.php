@@ -25,7 +25,7 @@ else
 	include_once("setup/database_conn.php");
 	include_once("setup/class_polyline_edge.php");
 }
-$account_id = "1723";
+$account_id = "1991";
 $user_name = "NGC";
 $group_id = "0068";
 
@@ -84,7 +84,7 @@ if(sizeof($data_vehicle)>0)
    // $data[]=array('vid'=>$row->vehicle_id,'device'=>$row->device_imei_no,'vname'=>$row->vehicle_name);
     
     $o_cassandra=openCassandraConnection();
-    print_r($data_vehicle);
+    //print_r($data_vehicle);
     foreach($data_vehicle as $row_data)
     {
         $vid=$row_data['vid'];
@@ -92,7 +92,7 @@ if(sizeof($data_vehicle)>0)
         $vname=$row_data['vname'];
         //echo $imei;
         $polyline_id=PolylineAssignVehilce($vid,$DbConnection);         
-        echo" Polid=". $polyline_id;
+        //echo" Polid=". $polyline_id;
         $query_polyline = "SELECT polyline_coord,polyline_name FROM polyline WHERE polyline_id ='$polyline_id' AND ".
 		"status=1";  
         $res_polyline = mysql_query($query_polyline,$DbConnection);
