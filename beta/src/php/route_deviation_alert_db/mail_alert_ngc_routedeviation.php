@@ -37,7 +37,7 @@ else
 {
     $abspath = "/var/www/html/vts/beta/src/php";
 }
-echo "<br>AbsPath=".$abspath;
+//echo "<br>AbsPath=".$abspath;
 $isReport2=1;
 include_once($abspath."/common_xml_element.php");
 include_once($abspath."/calculate_distance.php");
@@ -92,7 +92,7 @@ if(sizeof($data_vehicle)>0)
         $vname=$row_data['vname'];
         //echo $imei;
         $polyline_id=PolylineAssignVehilce($vid,$DbConnection);         
-        //echo $polyline_id;
+        echo" Polid=". $polyline_id;
         $query_polyline = "SELECT polyline_coord,polyline_name FROM polyline WHERE polyline_id ='$polyline_id' AND ".
 		"status=1";  
         $res_polyline = mysql_query($query_polyline,$DbConnection);
