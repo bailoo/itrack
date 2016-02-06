@@ -264,6 +264,8 @@ class class_polyline_edge{
 	
 	function getlocation($lat,$lng)
 	{
+            echo $lat;
+            echo $lng;
 		/*$endpoint="http://maps.googleapis.com/maps/api/geocode/json?latlng=".trim($lat).",".trim($lng)."&sensor=false";
  
 		$raw=@file_get_contents($endpoint);
