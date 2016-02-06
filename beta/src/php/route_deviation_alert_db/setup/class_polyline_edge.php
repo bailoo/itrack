@@ -280,7 +280,7 @@ class class_polyline_edge{
 			$fAddress="-";
 		}
 		return $fAddress;*/
-            header('Access-Control-Allow-Origin: *');
+            
 
                 $latitude=$lat;
                 $longitude=$lng;
@@ -301,7 +301,7 @@ class class_polyline_edge{
                 $lat_local = round(floatval($lat_local),4);
                 $lon_local = round(floatval($lon_local),4);
                 $distance="";
-                calculate_report_distance($latitude,$lat_local,$longitude,$lon_local,$distance);
+                class_polyline_edge::calculate_report_distance($latitude,$lat_local,$longitude,$lon_local,$distance);
                 $placename=round($distance,2)." km from ".$address;
                 return $placename;
 
