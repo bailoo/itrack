@@ -178,13 +178,14 @@ if(sizeof($final_result)>0)
 	//save it into database
 	
 	//email
-	$header="<b>Route Deviation Report Greater Than 1 Km From its Route</b><br><table border=1><tr><th>Vehicle</th><th>Message</th><th>Current Location</th><th>DateTime</th></tr>";
+	$header="<b>Route Deviation Report Greater Than 1 Km From its Route<b><br><table border=1><tr><th>Vehicle</th><th>Message</th><th>Location</th><th>FirstVoilationDateTime</th><th>CurrentDateTime</th></tr>";
 	foreach($final_result as $fre)
 	{
 		$header.='<tr>
 		<td>'.$fre['vehicle_no'].'</td>				
 		<td>'.$fre['message'].'</td>
 		<td>'.$fre['current_loc'].'</td>
+                <td>'.$fre['firstlogtime'].'</td>
 		<td>'.$fre['datetime'].'</td></tr>';
 	}
 	$header.="</table>";
