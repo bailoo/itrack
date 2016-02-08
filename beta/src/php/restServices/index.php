@@ -15,7 +15,7 @@ include_once($pathToRoot.'/beta/src/php/getDeviceDataTest.php');
 require 'Slim/Slim.php';
 $app = new Slim();
 
-$app->get('/getLastRecord/:/vehicleNo/:id/:password','lastRecordData');
+$app->get('/getLastRecord/:vehicleNo/:userId/:password','lastRecordData');
 $app->run();
 
 function lastRecordData($vehicleNo,$userId,$password)
