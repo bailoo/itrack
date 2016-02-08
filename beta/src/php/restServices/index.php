@@ -27,7 +27,7 @@ function lastRecordData($vehicleNo,$userId,$password)
     {
         $db = getConnection();
         $stmt = $db->prepare($sql);  
-        $stmt->bindParam("userid", $userId);
+        $stmt->bindParam("userId", $userId);
         $stmt->bindParam("password", $password);
         $stmt->bindParam("status", $status);
         $stmt->execute();		
@@ -39,10 +39,10 @@ function lastRecordData($vehicleNo,$userId,$password)
         else
         {
             $db = getConnection();
-            $stmt = $db->prepare("SELECT DISTINCT vehicle_assignment.device_imei_no FROM vehicle".
-                    " INNER JOIN vehicle_assignment ON vehicle.vehicle_id = vehicle_assignment.vehicle_id ".
+            $stmt = $db->prepare("SELECT DISTINCT device_imei_no FROM vehicle_assignment".
+                    " INNER JOIN vehicle ON vehicle.vehicle_id = vehicle_assignment.vehicle_id ".
                     "WHERE vehicle_assignment.status =:status AND vehicle.status=:status AND ".
-                    "vehicle.vehicle_name=:vNAme");   
+                    "vehicle.vehicle_name=:vName");   
             $stmt->bindParam("vName", $vehicleNo);           
             $stmt->bindParam("status", $status);
             $stmt->execute();
