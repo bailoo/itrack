@@ -78,6 +78,7 @@ $current_date=date("Y-m-d");
 $polyline_id_bin=array();
 $data_vehicle=array();
 $final_result=array();
+$catch_vid=array();
 $data_vehicle=getVIDINVnameAr($account_id,$DbConnection);
 if(sizeof($data_vehicle)>0)
 {
@@ -130,7 +131,19 @@ if(sizeof($data_vehicle)>0)
                 foreach($data_result as $dtres)
                 {
                         $dres=explode(':',$dtres);
-                        $final_result[]=array('vehicle_no'=>$vname,'message'=>$dres[0],'current_loc'=>$dres[6],'datetime'=>$dres[5]);
+                        //checking previous log from polyline_ngc_alters
+                        $FirstLogDateTime=PolylineNGCAlert($vid,$DbConnection);
+                        if($FirstLogDateTime=="")
+                        {
+                            //add info into polyline_ngc_alters
+                            PolylineNGCAlertAdd($vid,$dres[5],$DbConnection);
+                            $FirstLogDateTime=$dres[5];
+                        }
+                        
+                        $catch_vid[]=$vid;
+                        $final_result[]=array('vehicle_no'=>$vname,'message'=>$dres[0],'current_loc'=>$dres[6],'datetime'=>$dres[5],'firstlogtime'=>$FirstLogDateTime);
+                        
+                        //$final_result[]=array('vehicle_no'=>$vname,'message'=>$dres[0],'current_loc'=>$dres[6],'datetime'=>$dres[5]);
                         //print_r($final_result);
                         
                 }
@@ -150,6 +163,18 @@ $header="";
 //print_r($final_result);
 if(sizeof($final_result)>0)
 {
+        //remove database table value except $catch_vid value
+        $vid="";
+        foreach($catch_vid as $cvid)
+        {
+            $vid.=$cvid.",";
+        }
+        //echo "pre=".$vid;
+        if(sizeof($vid)>0)
+        {
+            $vid=substr($vid,0,-1);
+            PolylineNGCAlertDelete($vid,$DbConnection);
+        }
 	//save it into database
 	
 	//email
