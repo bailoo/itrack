@@ -30,6 +30,35 @@ function PolylineAssignVehilce($vehicle_id,$DbConnection)
 	return $polyline_id;
 }
  
+function PolylineNGCAlert($vid,$DbConnection)
+{
+    $firstLogDateTime="";
+    $query="SELECT firstLogDateTime from polyline_ngc_alert where vehicle_id=$vid";
+    $result=mysql_query($query,$DbConnection);
+    $num_rows=mysql_num_rows($result);    
+     if($num_rows>0)
+     {
+         $row=mysql_fetch_object($result);
+         $firstLogDateTime=$row->firstLogDateTime;
+     }
+    return $firstLogDateTime;
+}
+function PolylineNGCAlertAdd($vid,$firstLogDateTime,$DbConnection)
+{
+    date_default_timezone_set('Asia/Calcutta'); // add conversion based on the time zone of user
+    $createdate=date("Y-m-d H:i:s");
+    $query="INSERT INTO polyline_ngc_alert (vehicle_id,firstLogDateTime,datetime)VALUES($vid,'$firstLogDateTime','$createdate')";
+    $result=mysql_query($query,$DbConnection);
+    return $result;
+}
+function PolylineNGCAlertDelete($vid,$DbConnection)
+{
+ 
+    $query="DELETE FROM polyline_ngc_alert where vehicle_id NOT IN($vid)";
+    echo $query;
+    $result=mysql_query($query,$DbConnection);
+    return $result;
+}
 
 
 function get_last_location_xml($imei, &$liveXmlData)
