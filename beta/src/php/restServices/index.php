@@ -22,7 +22,7 @@ function lastRecordData($vehicleNo,$userId,$password)
 {
     $password=md5($password);
     $status=1;
-    $sql = "SELECT account_id FROM account WHERE user_id=:userId AND passord=:password AND status=:status";
+    $sql = "SELECT account_id FROM account WHERE user_id=:userId AND password=:password AND status=:status";
     try 
     {
         $db = getConnection();
