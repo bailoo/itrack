@@ -169,10 +169,10 @@ function getLiveDeviceData($imeiNo)
 
 function getConnection() 
 {
-    $dbhost="itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
-    $dbuser="bailoo";
+    $dbhost='itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com';
+    $dbuser='bailoo';
     $dbpass='neon04$VTS';
-    $dbname="iespl_vts_beta";    
+    $dbname='iespl_vts_beta';    
     $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);	
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $dbh;
