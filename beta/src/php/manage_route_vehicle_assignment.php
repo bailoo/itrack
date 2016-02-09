@@ -30,7 +30,7 @@
 	foreach($data_ev as $dt)
 	{
 		$vNameE=$dt['vname_assigned_ev'];		
-		$user_id_tmp = getUserID($edit_id,1,$DbConnection);
+		$user_id_tmp = getUserID($account_id,1,$DbConnection);
 		$vname_assigned_ev[$vNameE] = $dt['route_assigned_ev']."*".$dt['update_time_ev']."*".$dt['remark_assigned_ev']."*".$dt['edit_id']."*".$user_id_tmp;
 	}	
 
@@ -41,7 +41,7 @@
 	foreach($data_mr as $dt)
 	{		
 		$vNameM = $dt['vname_assigned_mor'];
-		$user_id_tmp = getUserID($edit_id,1,$DbConnection);
+		$user_id_tmp = getUserID($account_id,1,$DbConnection);
 		$vname_assigned_mor[$vNameM] = $dt['route_assigned_mor']."*".$dt['update_time_mor']."*".$dt['remark_assigned_mor']."*".$dt['edit_id']."*".$user_id_tmp;
 	}	
 	
