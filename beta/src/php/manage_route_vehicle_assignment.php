@@ -37,7 +37,8 @@
 
 	$data_mr = getDetailAllRouteAssignment2Next($account_id,$DbConnection);
 	
-	//print_r($data_mr);
+	print_r($data_mr);
+        exit;
 	foreach($data_mr as $dt)
 	{		
 		$vNameM = $dt['vname_assigned_mor'];
