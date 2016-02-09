@@ -29,8 +29,7 @@ include_once("getFilteredXmlTrackOnly.php");      // WRITE SORTED XML , FINAL XM
 
     var splitData;
     var i=0;
-var latPrev;
-var lngPrev;
+
 var setCoordFlag=0;
 var prevLocationArr = [];
 	function Geocode(data)
@@ -76,12 +75,7 @@ var prevLocationArr = [];
             document.getElementById("geocodedPostcodes").value += address2; 
         }
         else
-        {
-           if(setCoordFlag==0)
-            {
-                latPrev=user_lat;
-                lngPrev=user_lng;               
-            }
+        {           
             if(setCoordFlag==1)
             {
                 for(var z=prevLocationArr.length-1;z>0;z--)
