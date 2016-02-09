@@ -29,9 +29,7 @@ include_once("getFilteredXmlTrackOnly.php");      // WRITE SORTED XML , FINAL XM
 
     var splitData;
     var i=0;
-var latPrev;
-var lngPrev;
-var setCoordFlag=0;
+
 	function Geocode(data)
 	{
 		//alert("data="+data);
@@ -65,48 +63,21 @@ var setCoordFlag=0;
 			separator = ",";
 			var latLng = new google.maps.LatLng(splitLatLng[0], splitLatLng[1]);
 			account_id_session = "<?php echo $account_id; ?>";
-			var getGoogleLocation=true;
-        user_lat = latLng.lat();
-        user_lng = latLng.lng(); 
-        if(user_lat=="0.0" && user_lng=="0.0")
-        {
-            address2 = "0.0,0.0:";
-            
-            document.getElementById("geocodedPostcodes").value += address2; 
-        }
-        else
-        {
-           if(setCoordFlag==0)
-            {
-                latPrev=user_lat;
-                lngPrev=user_lng;               
-            }
-            if(setCoordFlag=1)
-            {
-                var distanceFor = calculate_distance(latPrev, user_lat, lngPrev, user_lng); 
-                //alert("distanceFor="+distanceFor)
-                if(distanceFor<=0.1)
-                {  
-                    getGoogleLocation=false;
-                    document.getElementById("geocodedPostcodes").value += address2;                     
-                }
-                else
-                {
-                    //delayff-=100;
-                    //alert("in else");
-                    latPrev=user_lat;
-                    lngPrev=user_lng;
-                    getGoogleLocation=true;
-                }                    
-            }
-            setCoordFlag=1;
-        }
-                        if(getGoogleLocation==true)
-                        {
+	
+                        
 			geocoder.geocode({'latLng': latLng}, function(results, status) 
 			{
 				var foundAddress = false;
-                                
+                                 user_lat = latLng.lat();
+                                user_lng = latLng.lng(); 
+                                if(user_lat=="0.0" && user_lng=="0.0")
+                                {
+                                    address2 = "0.0,0.0:";
+
+                                    document.getElementById("geocodedPostcodes").value += address2; 
+                                }
+                                else
+                                {
                                     if (status == google.maps.GeocoderStatus.OK) 
                                     {
                                             if (results) 
@@ -172,6 +143,7 @@ var setCoordFlag=0;
                                                     //alert("user_lat="+user_lat+"user_lng="+user_lng+"address="+results[j].formatted_address);
                                             }
                                     }
+                                    }
                                 
 				
 				if((i < splitData.length-1) || (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT))
@@ -204,22 +176,8 @@ var setCoordFlag=0;
 					document.forms[0].submit();	
 				}
 			});
-                        }
-                        else
-                        {
-                            if((i < splitData.length-1))
-                            {
-                                i++; 
-                                //alert("i="+i);
-                                //$('#delay').html("Delay is " + delay.toString() + " ms");
-                                //$('#delay').html("Delay is " + delay.toString() + " ms");
-                                setTimeout("GeocodeNext()", 100);
-                            }
-                            else 
-                            {          
-                                document.forms[0].submit();	
-                            }
-                        }
+                        
+                        
 		}
 	}
 
