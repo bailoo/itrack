@@ -37,15 +37,15 @@
 
 	$data_mr = getDetailAllRouteAssignment2Next($account_id,$DbConnection);
 	
-	print_r($data_mr);
-        exit;
+
 	foreach($data_mr as $dt)
 	{		
 		$vNameM = $dt['vname_assigned_mor'];
 		$user_id_tmp = getUserID($account_id,1,$DbConnection);
 		$vname_assigned_mor[$vNameM] = $dt['route_assigned_mor']."*".$dt['update_time_mor']."*".$dt['remark_assigned_mor']."*".$dt['edit_id']."*".$user_id_tmp;
 	}	
-	
+        print_r($data_mr);
+        exit;
 	//GET ALL ROUTES
 	$route_input = array();
 	get_route_detail($account_id, "ZPME");
