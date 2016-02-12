@@ -136,7 +136,7 @@
             readFileXmlNew($vserial,$date,$requiredData,$sortBy,$parameterizeData,$SortedDataObject);           
             $sortedSize=sizeof($SortedDataObject->deviceDatetime);
             
-            if(count($SortedDataObject->deviceDatetime)>0)
+            if((count($SortedDataObject->deviceDatetime)>0) && ($date<=date('Y-m-d')))
             {               
                 $sortedSize=sizeof($SortedDataObject->deviceDatetime);                 
                 for($obi=0;$obi<$sortedSize;$obi++)
