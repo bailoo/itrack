@@ -99,12 +99,12 @@
 					</table>
 				<td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<td  class="text" colspan="2" align="center">
 					<input type="checkbox" id="serverTimeCheck" name="serverTimeCheck">
 					&nbsp;By Server Time
 				</td>
-			</tr>
+			</tr>-->
 		</table>							
 	 </fieldset>			
 		<br>

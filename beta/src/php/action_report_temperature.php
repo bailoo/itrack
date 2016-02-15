@@ -29,14 +29,15 @@
 	$dateto = $date_2[0];
 	
 	$userInterval = $_POST['user_interval'];
-if($getDataBy==1)
+/*if($getDataBy==1)
 {
 	$sortBy="g";
 }
  else 
 {
   $sortBy="h";  
- }
+ }*/
+        $sortBy="h";  
  //echo "sortBy=".$sortBy."<br>";
 	$firstDataFlag=0;
 	$endDateTS=strtotime($date2);
