@@ -1657,22 +1657,27 @@ function action_report_nearby_location(obj)
     	{
     		document.getElementById("loading_msg").style.display='none';
     	}
-  	if(document.getElementById("serverTimeCheck").checked==true)
+  	/*if(document.getElementById("serverTimeCheck").checked==true)
 	{
             var getDataBy=1;
 	}
         else
         {
             var getDataBy=0;  
-        }
+        }*/
       if(device_str!=false)
   	  {    
-        var poststr = "vehicleserial=" + encodeURI( device_str ) +				
+       /* var poststr = "vehicleserial=" + encodeURI( device_str ) +				
                     "&start_date=" + encodeURI( document.getElementById("date1").value )+
                     "&end_date=" + encodeURI( document.getElementById("date2").value )+ 
                     "&getDataBy=" + getDataBy+
-                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
-                    //alert("riz:"+poststr);
+                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value ); */                 
+           var poststr = "vehicleserial=" + encodeURI( device_str ) +				
+                    "&start_date=" + encodeURI( document.getElementById("date1").value )+
+                    "&end_date=" + encodeURI( document.getElementById("date2").value )+ 
+                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value );                 
+                 
+          //alert("riz:"+poststr);
          makePOSTRequest('src/php/action_report_temperature.htm', poststr);
   	 } 	
   }  
@@ -1717,21 +1722,26 @@ function action_report_nearby_location(obj)
     	{
     		document.getElementById("loading_msg").style.display='none';
     	}
-  	if(document.getElementById("serverTimeCheck").checked==true)
+  	/*if(document.getElementById("serverTimeCheck").checked==true)
 	{
             var getDataBy=1;
 	}
         else
         {
             var getDataBy=0;  
-        }
+        }*/
       if(device_str!=false)
   	  {    
-        var poststr = "vehicleserial=" + encodeURI( device_str ) +				
+        /*var poststr = "vehicleserial=" + encodeURI( device_str ) +				
                     "&start_date=" + encodeURI( document.getElementById("date1").value )+
                     "&end_date=" + encodeURI( document.getElementById("date2").value )+ 
                     "&getDataBy=" + getDataBy+
-                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
+                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value );  */ 
+          
+         var poststr = "vehicleserial=" + encodeURI( device_str ) +				
+                    "&start_date=" + encodeURI( document.getElementById("date1").value )+
+                    "&end_date=" + encodeURI( document.getElementById("date2").value )+                     
+                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value );
                     //alert("riz:"+poststr);
          makePOSTRequest('src/php/action_report_dispensing.htm', poststr);
   	 } 	
