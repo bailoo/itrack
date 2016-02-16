@@ -44,7 +44,7 @@ if(!empty($_POST['functionName']))
     {
        // return json_encode($parameterizeData);
        // echo "in if";
-       // $requiredData="All";
+       $requiredData="All";
        readFileXmlNew($vSerial,$dateTime,$requiredData,$sortBy,$parameterizeData);
     }
 }
