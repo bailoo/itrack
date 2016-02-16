@@ -34,6 +34,7 @@ if(!empty($_POST['functionName']))
     $dateTime=$_POST['dateTime'];
     $sortBy=$_POST['sortBy'];
     $parameterizeData=json_decode($_POST['paramObj']);
+    echo json_encode($parameterizeData);
 
     if($functionName=="deviceDataBetweenDates")
     {
@@ -41,7 +42,7 @@ if(!empty($_POST['functionName']))
     }
     else if($functionName=="readFileXmlNew")
     {
-        return json_encode($parameterizeData);
+       // return json_encode($parameterizeData);
        // echo "in if";
        // $requiredData="All";
        // readFileXmlNew($vSerial,$dateTime,$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
