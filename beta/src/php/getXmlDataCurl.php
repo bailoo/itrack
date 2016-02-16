@@ -41,9 +41,10 @@ if(!empty($_POST['functionName']))
     }
     else if($functionName=="readFileXmlNew")
     {
-        echo "in if";
-        $requiredData="All";
-        readFileXmlNew($vSerial,$dateTime,$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+        return json_encode($parameterizeData);
+       // echo "in if";
+       // $requiredData="All";
+       // readFileXmlNew($vSerial,$dateTime,$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
     }
 }
 else
