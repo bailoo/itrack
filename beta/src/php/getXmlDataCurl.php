@@ -34,7 +34,7 @@ if(!empty($_POST['functionName']))
     $dateTime=$_POST['dateTime'];
     $sortBy=$_POST['sortBy'];
     $parameterizeData=json_decode($_POST['paramObj']);
-    echo json_encode($parameterizeData);
+    //echo json_encode($parameterizeData);
 
     if($functionName=="deviceDataBetweenDates")
     {
@@ -45,7 +45,7 @@ if(!empty($_POST['functionName']))
        // return json_encode($parameterizeData);
        // echo "in if";
        // $requiredData="All";
-       // readFileXmlNew($vSerial,$dateTime,$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
+       readFileXmlNew($vSerial,$dateTime,$requiredData,$sortBy,$parameterizeData);
     }
 }
 else
@@ -63,9 +63,9 @@ function deliverResponse($status,$statusMessage,$response)
 	$jsonResponse=json_encode($responseArr);
 	echo $jsonResponse;	
 }
-function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $parameterizeData, &$dataObject) {
-    echo "vSerial=".$vSerial."<br>";
-    echo "dateToData=".$dateToData."<br>";
+function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $parameterizeData) {
+   // echo "vSerial=".$vSerial."<br>";
+    //echo "dateToData=".$dateToData."<br>";
     $dataObject=null;
     $dataObject=new data();	
     global $o_cassandra; 
@@ -88,7 +88,7 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
     $st_results = getLogByDate($o_cassandra, $imei, $dateToData, $deviceTime, $orderAsc);
 if(count($st_results)>0)
     {
-    var_dump($st_results);
+   // var_dump($st_results);
     foreach($st_results as $item) {
         $msg_type = $item->a;                 
         $ver = $item->b;
@@ -353,7 +353,7 @@ if(count($st_results)>0)
 }
 
 
-function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sortBy, $parameterizeData, &$dataObject)
+function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sortBy, $parameterizeData)
 {
     $dataObject=null;
     $dataObject=new data();
