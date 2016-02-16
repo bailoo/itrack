@@ -41,6 +41,7 @@ if(!empty($_POST['functionName']))
     }
     else if($functionName=="readFileXmlNew")
     {
+        echo "in if";
         $requiredData="All";
         readFileXmlNew($vSerial,$dateTime,$requiredData,$sortBy,$parameterizeData,$SortedDataObject);
     }
@@ -61,6 +62,8 @@ function deliverResponse($status,$statusMessage,$response)
 	echo $jsonResponse;	
 }
 function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $parameterizeData, &$dataObject) {
+    echo "vSerial=".$vSerial."<br>";
+    echo "dateToData=".$dateToData."<br>";
     $dataObject=null;
     $dataObject=new data();	
     global $o_cassandra; 
@@ -83,7 +86,7 @@ function readFileXmlNew($vSerial, $dateToData,  $requiredData, $sortBy, $paramet
     $st_results = getLogByDate($o_cassandra, $imei, $dateToData, $deviceTime, $orderAsc);
 if(count($st_results)>0)
     {
-    //var_dump($st_results);
+    var_dump($st_results);
     foreach($st_results as $item) {
         $msg_type = $item->a;                 
         $ver = $item->b;
