@@ -274,7 +274,7 @@ $sno=1;
         {
             $htmlFormat=$htmlFormat.'<table border=1 rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3 class="menu">
                                     <tr>
-                                        <td align="center" colspan=6>Report Date : '.$previousDate.'</td>
+                                        <td align="center" colspan=6>Report Date : '.$currentDate.'</td>
                                     </tr>
                                     <tr>
                                         <td>Serial No</td>
@@ -303,14 +303,14 @@ $sno=1;
     }
     $htmlFormat=$htmlFormat.'</table>';
     //echo $htmlFormat;
-      $to="support3@iembsys.com";
+      $to="shams.parwez@iembsys.com";
     $subject="Sriyam Alert Report"; 
     
     $result = $mgClient->sendMessage($domain, array(
       'from' => 'Itrack <support@iembsys.co.in>',
       'to' => $to,
       //'cc'      => 'taseen@iembsys.com',
-      'cc' => 'ashish@iemsbsys.com,kapil.maurya@iembsys.com,sriyam2@hotmail.com,sriyam1@hotmail.com,sriyam.khanna@gmail.com,sriyam@outlook.in,jyoti.jaiswal@iembsys.com',
+      //'cc' => 'ashish@iemsbsys.com,kapil.maurya@iembsys.com,sriyam2@hotmail.com,sriyam1@hotmail.com,sriyam.khanna@gmail.com,sriyam@outlook.in,jyoti.jaiswal@iembsys.com',
       //'cc'      => 'hourlyreport4@gmail.com',
       // 'bcc'     => 'astaseen83@gmail.com',
       'subject' => $subject,
