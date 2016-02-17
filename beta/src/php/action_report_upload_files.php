@@ -35,7 +35,7 @@ if($account_id=="322" || $account_id=="1100" || $account_id=="1115" || $account_
     //echo "in if";
     include_once('station_sort_mumbai.php');
 }
-else if($account_id=="231" || $account_id=="232")
+else if($account_id=="231" || $account_id=="232" || $account_id=="2068")
 {	
     //include_once('station_sort.php');
     include_once('station_sort_delhi.php');
