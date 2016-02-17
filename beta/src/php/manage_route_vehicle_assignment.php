@@ -118,10 +118,10 @@
                 }*/
 		//echo "dir=".$dir."<br>";
 		$dh = opendir($dir);
-                while (($file = readdir($dh)) !== false) {
+               /* while (($file = readdir($dh)) !== false) {
                    echo "fileName=".$file."<br>"; 
-                }
-		/*while (($file = readdir($dh)) !== false) {
+                }*/
+		while (($file = readdir($dh)) !== false) {
 			//echo "<A HREF=\"$file\">$file</A><BR>\n";
                         //echo "fileName=".$file."<br>";
 			$file_tmp = explode("#",$file);
@@ -189,7 +189,7 @@
 				}						
 			}  //
 		}
-		//closedir($dh);*/
+		//closedir($dh);
 	} //function closed			
 	
 	//############ FUNCTION ROUTE CLOSED ########################
