@@ -33,7 +33,10 @@
 		$user_id_tmp = getUserID($account_id,1,$DbConnection);
 		$vname_assigned_ev[$vNameE] = $dt['route_assigned_ev']."*".$dt['update_time_ev']."*".$dt['remark_assigned_ev']."*".$dt['edit_id']."*".$user_id_tmp;
 	}	
-
+        if($account_id=="2068")
+        {
+            print_r($vname_assigned_ev);
+        }
 
 	$data_mr = getDetailAllRouteAssignment2Next($account_id,$DbConnection);
 	
@@ -124,10 +127,6 @@
 		while (($file = readdir($dh)) !== false) {
 			//echo "<A HREF=\"$file\">$file</A><BR>\n";
                         //echo "fileName=".$file."<br>";
-                    if($account_id=="2068")
-                    {
-                        echo "fileName=".$file."<br>"; 
-                    }
 			$file_tmp = explode("#",$file);
 			$file_ext = explode(".",$file_tmp[2]);
 			if($file_ext[0]!="")
