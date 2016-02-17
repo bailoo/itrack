@@ -124,6 +124,10 @@
 		while (($file = readdir($dh)) !== false) {
 			//echo "<A HREF=\"$file\">$file</A><BR>\n";
                         //echo "fileName=".$file."<br>";
+                    if($account_id=="2068")
+                    {
+                        echo "fileName=".$file."<br>"; 
+                    }
 			$file_tmp = explode("#",$file);
 			$file_ext = explode(".",$file_tmp[2]);
 			if($file_ext[0]!="")
