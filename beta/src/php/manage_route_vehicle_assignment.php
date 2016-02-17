@@ -118,12 +118,15 @@
                 }*/
 		//echo "dir=".$dir."<br>";
 		$dh = opendir($dir);
-		while (($file = readdir($dh)) !== false) {
+                while (($file = readdir($dh)) !== false) {
+                   echo "fileName=".$file."<br>"; 
+                }
+		/*while (($file = readdir($dh)) !== false) {
 			//echo "<A HREF=\"$file\">$file</A><BR>\n";
-                        echo "fileName=".$file."<br>";
+                        //echo "fileName=".$file."<br>";
 			$file_tmp = explode("#",$file);
 			$file_ext = explode(".",$file_tmp[2]);
-			/*if($file_ext[0]!="")
+			if($file_ext[0]!="")
 			{			
 				//echo "\nfile_ext[0]=".$file_ext[0]." ,shift_time=".$shift_time;
 				if( ($file_ext[0] == "4") && ($shift_time=="ZPME") )		//###### EVENING FILE
@@ -184,9 +187,9 @@
 						fclose($handle);
 					}
 				}						
-			}  //*/
+			}  //
 		}
-		//closedir($dh);
+		//closedir($dh);*/
 	} //function closed			
 	
 	//############ FUNCTION ROUTE CLOSED ########################
