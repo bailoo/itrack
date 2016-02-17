@@ -33,10 +33,10 @@
 		$user_id_tmp = getUserID($account_id,1,$DbConnection);
 		$vname_assigned_ev[$vNameE] = $dt['route_assigned_ev']."*".$dt['update_time_ev']."*".$dt['remark_assigned_ev']."*".$dt['edit_id']."*".$user_id_tmp;
 	}	
-        if($account_id=="2068")
+        /*if($account_id=="2068")
         {
             print_r($vname_assigned_ev);
-        }
+        }*/
 
 	$data_mr = getDetailAllRouteAssignment2Next($account_id,$DbConnection);
 	
