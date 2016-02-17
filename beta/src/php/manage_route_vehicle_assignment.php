@@ -47,8 +47,8 @@
 	
 	//GET ALL ROUTES
 	$route_input = array();
-	//get_route_detail($account_id, "ZPME");
-	//get_route_detail($account_id, "ZPMM");
+	get_route_detail($account_id, "ZPME");
+	get_route_detail($account_id, "ZPMM");
 	
 	$route_input1 = array_unique($route_input);	
 	
@@ -108,9 +108,17 @@
 		//$dir = "C:\\xampp/htdocs/beta/src/php/gps_report/".$account_id."/master";
 		
                 $dir = "/var/www/html/vts/beta/src/php/gps_report/".$account_id."/master";
+                if(file_exists)
+                {
+                    echo "true";
+                }
+                else
+                {
+                    echo "false";
+                }
 		//echo "dir=".$dir."<br>";
 		$dh = opendir($dir);
-		while (($file = readdir($dh)) !== false) {
+		/*while (($file = readdir($dh)) !== false) {
 			//echo "<A HREF=\"$file\">$file</A><BR>\n";
 			$file_tmp = explode("#",$file);
 			$file_ext = explode(".",$file_tmp[2]);
@@ -176,7 +184,7 @@
 					}
 				}						
 			}  //
-		}
+		}*/
 		//closedir($dh);
 	} //function closed			
 	
