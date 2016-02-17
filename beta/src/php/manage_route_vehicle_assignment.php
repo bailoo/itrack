@@ -47,8 +47,8 @@
 	
 	//GET ALL ROUTES
 	$route_input = array();
-	get_route_detail($account_id, "ZPME");
-	get_route_detail($account_id, "ZPMM");
+	//get_route_detail($account_id, "ZPME");
+	//get_route_detail($account_id, "ZPMM");
 	
 	$route_input1 = array_unique($route_input);	
 	
