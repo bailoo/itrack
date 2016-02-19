@@ -1910,6 +1910,8 @@ function updatePolyline($account_id,$date,$polyline_id1,$DbConnection)
 {
 	$query="UPDATE polyline SET edit_id='$account_id',edit_date='$date',status='0' WHERE polyline_id='$polyline_id1' AND status='1'"; 
 	$result=mysql_query($query,$DbConnection);
+        $query_next="UPDATE polyline_register SET edit_id='$account_id',edit_date='$date',status='0' WHERE polyline_id='$polyline_id1' AND status='1'"; 
+        $result_next=mysql_query($query_next,$DbConnection);
     return $result;	
 }
 function insertPolylineAssign($vehicle_size,$local_polyline_id,$local_vehicle_ids,$account_id,$date,$DbConnection)
