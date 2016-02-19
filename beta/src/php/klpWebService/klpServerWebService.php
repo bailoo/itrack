@@ -16,15 +16,15 @@ function getVehicleDbData($vehicleName)
 {
     global $DbConnection;
     
-   /*$Query="SELECT * FROM icd_webservice_data WHERE vehicle_name='$vehicleName' ORDER BY sno DESC LIMIT 1";
+   $Query="SELECT * FROM icd_webservice_data WHERE vehicle_name='$vehicleName' ORDER BY sno DESC LIMIT 1";
    //echo "Query=".$Query."<br>";
 		  // $dataArray[]=array('query'=>$Query);
-   $Result=mysql_query($Query,$DbConnection);*/
+   $Result=mysql_query($Query,$DbConnection);
    
    //echo "result=".$Result;
-   //while($Row=mysql_fetch_object($Result))
+   while($Row=mysql_fetch_object($Result))
    {
-       /* $dataArray=array(
+        $dataArray=array(
                             'vehicleName'=>$Row->vehicle_name,
                             'icdInDatetime'=>$Row->actual_icd_in_datetime,
                             'icdOutDatetime'=>$Row->actual_icd_out_datetime,
@@ -32,11 +32,8 @@ function getVehicleDbData($vehicleName)
                             'customerOutDatetime'=>$Row->factory_out_datetime,
                             'distanceTravel'=>$Row->distance_travelled,
                             'twoHourlyDistance'=>$Row->hourly_distance
-                        );*/
+                        );
    }
-   $dataArray=array(
-                            'vehicleName'=>'demo',
-                            'icdInDatetime'=>'2016-02-19 00:12:13');
    return $dataArray;
 }
 
