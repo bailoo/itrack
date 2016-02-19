@@ -67,7 +67,7 @@ $enddate=date("Y-m-d H:i:s");
 while($row=mysql_fetch_object($result))
 {
     $getDatetimeQuery="SELECT last_execution_datetime FROM vehicle_last_execution_datetime WHERE vehicle_name="
-            . "'$row->vehicle_name'";
+            . "'$row->vehicle_name' AND customer_no='$row->factory_code'";
     $resultGetDatetime=mysql_query($getDatetimeQuery,$DbConnection);
     $rowGetDatetime=  mysql_fetch_row($resultGetDatetime);
     $startdate=$rowGetDatetime[0];    
