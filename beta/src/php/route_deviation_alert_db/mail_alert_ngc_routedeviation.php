@@ -218,8 +218,8 @@ if($header!="")
 	///===saving into database
 	date_default_timezone_set('Asia/Calcutta');
 	$current_time1 = date('Y-m-d H:i:s');
-        //$email_to='sachendra.chauhan@saahajmilk.com,rawmilk.control@gmail.com';
-        $email_to='taseen@iembsys.com';
+        $email_to='sachendra.chauhan@saahajmilk.com,rawmilk.control@gmail.com,taseen@iembsys.com';
+        //$email_to='taseen@iembsys.com';
 	//$email_to='sachendra.chauhan@saahajmilk.com,Yogendra.Singh@motherdairy.com,taseen@iembsys.com';
         //$email_to='prasad@charterhouse.in,rahul@charterhouse.in,Charterhouse GPS Team <gps.trakingitc@gmail.com>,logalert14@gmail.com';
 	$queryInsert="Insert into email_log (account_id,subject,email,message,message_type,status,create_date,create_id) Values('$account_id','NGC Vehicle RouteDeviation_$current_time1','$email_to','$header','NGC_RD',1,'$current_time1','$account_id')";
