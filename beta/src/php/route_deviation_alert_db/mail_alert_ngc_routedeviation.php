@@ -127,7 +127,7 @@ if(sizeof($data_vehicle)>0)
                 //=======[Class/Object] Class called for checking point on edge=============//
                 $get_data=new class_polyline_edge();	
                 $data_result = $get_data->get_polyline($polyline_data,$chk_latlng_array,$data_date_array,$polyline_name); //both parameters in array
-                //print_r($data_result);
+                print_r($data_result);
                 if(count($data_result)>0)
                 {
                     foreach($data_result as $dtres)
