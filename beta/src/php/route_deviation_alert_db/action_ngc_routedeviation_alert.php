@@ -70,6 +70,7 @@ function PolylineVoilationHistoryUpdate($imei,$vname,$polyline_name,$last_voilat
    $createdate=date("Y-m-d H:i:s");  
    
    $query_update="UPDATE polyline_voilation_history set last_voilation_time='$last_voilation_time',last_voilation_details='$last_voilation_details',last_voilation_location='$last_voilation_location',edit_date='$createdate' where status=1 and imeino='$imei' and vehicleno='$vname' and route='$polyline_name' and accountid='1723'";
+   echo $query_update;
    $result_update=mysql_query($query_update,$DbConnection);
 }
 function PolylineNGCAlertDelete($vid,$DbConnection)
