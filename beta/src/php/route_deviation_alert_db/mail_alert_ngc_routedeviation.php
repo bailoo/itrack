@@ -128,24 +128,37 @@ if(sizeof($data_vehicle)>0)
                 $get_data=new class_polyline_edge();	
                 $data_result = $get_data->get_polyline($polyline_data,$chk_latlng_array,$data_date_array,$polyline_name); //both parameters in array
                 //print_r($data_result);
-                foreach($data_result as $dtres)
+                if(count($data_result)>0)
                 {
-                        $dres=explode(':',$dtres);
-                        //checking previous log from polyline_ngc_alters
-                        $FirstLogDateTime=PolylineNGCAlert($vid,$DbConnection);
-                        if($FirstLogDateTime=="")
-                        {
-                            //add info into polyline_ngc_alters
-                            PolylineNGCAlertAdd($vid,$dres[5],$DbConnection);
-                            $FirstLogDateTime=$dres[5];
-                        }
-                        
-                        $catch_vid[]=$vid;
-                        $final_result[]=array('vehicle_no'=>$vname,'message'=>$dres[0],'current_loc'=>$dres[6],'datetime'=>$dres[5],'firstlogtime'=>$FirstLogDateTime);
-                        
-                        //$final_result[]=array('vehicle_no'=>$vname,'message'=>$dres[0],'current_loc'=>$dres[6],'datetime'=>$dres[5]);
-                        //print_r($final_result);
-                        
+                    foreach($data_result as $dtres)
+                    {
+                            $dres=explode(':',$dtres);
+                            //checking previous log from polyline_ngc_alters
+                            $FirstLogDateTime=PolylineNGCAlert($vid,$DbConnection);
+                            if($FirstLogDateTime=="")
+                            {
+                                //add info into polyline_ngc_alters
+                                PolylineNGCAlertAdd($vid,$dres[5],$DbConnection);
+                                $FirstLogDateTime=$dres[5];
+                            }
+
+                            $catch_vid[]=$vid;
+                            $last_halt_time=$data_val->lastHaltTimeLR[0];
+                            $diff_time_sec=strtotime($current_date)-strtotime($last_halt_time);
+                            if($diff_time_sec>0)
+                            {
+                                $halt_time=$diff_time_sec/60;
+                            }
+                            else
+                            {
+                                $halt_time=0;
+                            }
+                            $final_result[]=array('vehicle_no'=>$vname,'message'=>$dres[0],'current_loc'=>$dres[6],'datetime'=>$dres[5],'firstlogtime'=>$FirstLogDateTime,'halttime'=>$halt_time,'last_halt_time'=>$last_halt_time);
+
+                            //$final_result[]=array('vehicle_no'=>$vname,'message'=>$dres[0],'current_loc'=>$dres[6],'datetime'=>$dres[5]);
+                            //print_r($final_result);
+
+                    }
                 }
         }
         
@@ -178,7 +191,7 @@ if(sizeof($final_result)>0)
 	//save it into database
 	
 	//email
-	$header="Route Deviation Report Greater Than 1 Km From its Route<br><table border=1><tr><th>Vehicle</th><th>Message</th><th>Location</th><th>FirstVoilationDateTime</th><th>CurrentDateTime</th></tr>";
+	$header="Route Deviation Report Greater Than 1 Km From its Route<br><table border=1><tr><th>Vehicle</th><th>Message</th><th>Location</th><th>FirstVoilationDateTime</th><th>CurrentDateTime</th><th>Halt>30Mins</th></tr>";
 	foreach($final_result as $fre)
 	{
 		$header.='<tr>
@@ -186,7 +199,16 @@ if(sizeof($final_result)>0)
 		<td>'.$fre['message'].'</td>
 		<td>'.$fre['current_loc'].'</td>
                 <td>'.$fre['firstlogtime'].'</td>
-		<td>'.$fre['datetime'].'</td></tr>';
+		<td>'.$fre['datetime'].'</td>';
+                if($fre['halttime']>30)
+                {
+                   $header.= '<td>Halt Since '.$fre['halttime'].' mins ['.$fre['last_halt_time'].']</td></tr>';
+                }
+                else
+                {
+                    $header.= '<td>-</td></tr>';
+                    
+                }
 	}
 	$header.="</table>";
 }
@@ -196,7 +218,8 @@ if($header!="")
 	///===saving into database
 	date_default_timezone_set('Asia/Calcutta');
 	$current_time1 = date('Y-m-d H:i:s');
-        $email_to='sachendra.chauhan@saahajmilk.com,rawmilk.control@gmail.com';
+        //$email_to='sachendra.chauhan@saahajmilk.com,rawmilk.control@gmail.com';
+        $email_to='taseen@iembsys.com';
 	//$email_to='sachendra.chauhan@saahajmilk.com,Yogendra.Singh@motherdairy.com,taseen@iembsys.com';
         //$email_to='prasad@charterhouse.in,rahul@charterhouse.in,Charterhouse GPS Team <gps.trakingitc@gmail.com>,logalert14@gmail.com';
 	$queryInsert="Insert into email_log (account_id,subject,email,message,message_type,status,create_date,create_id) Values('$account_id','NGC Vehicle RouteDeviation_$current_time1','$email_to','$header','NGC_RD',1,'$current_time1','$account_id')";
