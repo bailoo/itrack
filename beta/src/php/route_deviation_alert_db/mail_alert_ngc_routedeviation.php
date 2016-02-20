@@ -139,7 +139,12 @@ if(sizeof($data_vehicle)>0)
                             {
                                 //add info into polyline_ngc_alters
                                 PolylineNGCAlertAdd($vid,$dres[5],$DbConnection);
+                                PolylineVoilationHistoryAddNew($imei,$vname,$polyline_name,$dres[5],$dres[0],$dres[6],$DbConnection);//first dev datetime,details,location
                                 $FirstLogDateTime=$dres[5];
+                            }
+                            else
+                            {
+                                PolylineVoilationHistoryUpdate($imei,$vname,$polyline_name,$dres[5],$dres[0],$dres[6],$DbConnection);//last dev datetime,details,location
                             }
 
                             $catch_vid[]=$vid;
