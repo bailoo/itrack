@@ -223,7 +223,7 @@ if($header!="")
 	///===saving into database
 	date_default_timezone_set('Asia/Calcutta');
 	$current_time1 = date('Y-m-d H:i:s');
-        $email_to='sachendra.chauhan@saahajmilk.com,rawmilk.control@gmail.com,taseen@iembsys.com';
+        $email_to='sachendra.chauhan@saahajmilk.com,rawmilk.control@gmail.com';
         //$email_to='taseen@iembsys.com';
 	//$email_to='sachendra.chauhan@saahajmilk.com,Yogendra.Singh@motherdairy.com,taseen@iembsys.com';
         //$email_to='prasad@charterhouse.in,rahul@charterhouse.in,Charterhouse GPS Team <gps.trakingitc@gmail.com>,logalert14@gmail.com';
