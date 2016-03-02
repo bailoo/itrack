@@ -299,6 +299,7 @@ class class_polyline_edge{
                 $data = json_decode($json, true);
                 //print_r($data);
                 $address=$data['display_name'];
+                
                 $lat_local=$data['lat'];
                 $lon_local=$data['lon'];
                 $lat_local = round(floatval($lat_local),4);
@@ -306,6 +307,7 @@ class class_polyline_edge{
                 $distance="";
                 class_polyline_edge::calculate_report_distance($latitude,$lat_local,$longitude,$lon_local,$distance);
                 $placename=round($distance,2)." km from ".$address;
+                $placename = str_replace('NH16','Unnamed Road',$placename);
                 return $placename;
 
 

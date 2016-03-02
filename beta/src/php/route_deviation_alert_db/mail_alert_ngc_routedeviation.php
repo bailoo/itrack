@@ -71,6 +71,8 @@ $parameterizeData->lastHaltTime='u';
 $parameterizeData->cellName='ab';	
 $sortBy="h";
 //date_default_timezone_set('Asia/Calcutta');
+date_default_timezone_set('Asia/Calcutta');
+$current_date3 = date('Y-m-d H:i:s');
 $current_date=date("Y-m-d");
 
 
@@ -149,7 +151,7 @@ if(sizeof($data_vehicle)>0)
 
                             $catch_vid[]=$vid;
                             $last_halt_time=$data_val->lastHaltTimeLR[0];
-                            $diff_time_sec=strtotime($current_date)-strtotime($last_halt_time);
+                            $diff_time_sec=strtotime($current_date3)-strtotime($last_halt_time);
                             if($diff_time_sec>0)
                             {
                                 $halt_time=$diff_time_sec/60;
@@ -158,6 +160,7 @@ if(sizeof($data_vehicle)>0)
                             {
                                 $halt_time=0;
                             }
+                            $last_halt_time=round($last_halt_time,2);
                             $final_result[]=array('vehicle_no'=>$vname,'message'=>$dres[0],'current_loc'=>$dres[6],'datetime'=>$dres[5],'firstlogtime'=>$FirstLogDateTime,'halttime'=>$halt_time,'last_halt_time'=>$last_halt_time);
 
                             //$final_result[]=array('vehicle_no'=>$vname,'message'=>$dres[0],'current_loc'=>$dres[6],'datetime'=>$dres[5]);
