@@ -160,7 +160,7 @@ if(sizeof($data_vehicle)>0)
                             {
                                 $halt_time=0;
                             }
-                            $last_halt_time=round($last_halt_time,2);
+                            $halt_time=round($halt_time,2);
                             $final_result[]=array('vehicle_no'=>$vname,'message'=>$dres[0],'current_loc'=>$dres[6],'datetime'=>$dres[5],'firstlogtime'=>$FirstLogDateTime,'halttime'=>$halt_time,'last_halt_time'=>$last_halt_time);
 
                             //$final_result[]=array('vehicle_no'=>$vname,'message'=>$dres[0],'current_loc'=>$dres[6],'datetime'=>$dres[5]);
