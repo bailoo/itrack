@@ -71,6 +71,8 @@ $parameterizeData->lastHaltTime='u';
 $parameterizeData->cellName='ab';	
 $sortBy="h";
 //date_default_timezone_set('Asia/Calcutta');
+date_default_timezone_set('Asia/Calcutta');
+$current_date3 = date('Y-m-d H:i:s');
 $current_date=date("Y-m-d");
 
 
@@ -149,7 +151,7 @@ if(sizeof($data_vehicle)>0)
 
                             $catch_vid[]=$vid;
                             $last_halt_time=$data_val->lastHaltTimeLR[0];
-                            $diff_time_sec=strtotime($current_date)-strtotime($last_halt_time);
+                            $diff_time_sec=strtotime($current_date3)-strtotime($last_halt_time);
                             if($diff_time_sec>0)
                             {
                                 $halt_time=$diff_time_sec/60;
@@ -223,7 +225,7 @@ if($header!="")
 	///===saving into database
 	date_default_timezone_set('Asia/Calcutta');
 	$current_time1 = date('Y-m-d H:i:s');
-        $email_to='sachendra.chauhan@saahajmilk.com,rawmilk.control@gmail.com';
+        $email_to='sachendra.chauhan@saahajmilk.com,rawmilk.control@gmail.com,taseen@iembsys.com';
         //$email_to='taseen@iembsys.com';
 	//$email_to='sachendra.chauhan@saahajmilk.com,Yogendra.Singh@motherdairy.com,taseen@iembsys.com';
         //$email_to='prasad@charterhouse.in,rahul@charterhouse.in,Charterhouse GPS Team <gps.trakingitc@gmail.com>,logalert14@gmail.com';
