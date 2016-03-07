@@ -157,14 +157,14 @@ foreach($wSData as $key => $wSValue)
        {
             $queryInsert1 = "INSERT INTO vehicle_last_execution_datetime("
                 . "vehicle_name,customer_no,last_execution_datetime) "
-                . "VALUES('$vehicleName','$locationIds','$customerOutDatetime')";
+                . "VALUES('$vehicleName','$locationIds','$wbIcdOutDatetime')";
             //echo "Query=".$queryInsert."<br><br>";
             $resultInsert1 = mysql_query($queryInsert1, $DbConnection); 
        }
        else 
        {
            //echo "in update";
-           $updateQuery = "UPDATE vehicle_last_execution_datetime SET last_execution_datetime='$customerOutDatetime'".
+           $updateQuery = "UPDATE vehicle_last_execution_datetime SET last_execution_datetime='$wbIcdOutDatetime'".
                            " WHERE vehicle_name='$vehicleName' AND customer_no='$locationIds'";
             //echo "Query=".$queryInsert."<br><br>";
             $updateQueryResult = mysql_query($updateQuery, $DbConnection); 
@@ -205,14 +205,14 @@ foreach($wSData as $key => $wSValue)
                      {
                          $queryInsert1 = "INSERT INTO vehicle_last_execution_datetime("
                              . "vehicle_name,customer_no,last_execution_datetime) "
-                             . "VALUES('$vehicleName','$locationIds','$customerOutDatetime')";
+                             . "VALUES('$vehicleName','$locationIds','$wbIcdOutDatetime')";
                          //echo "Query=".$queryInsert."<br><br>";
                          $resultInsert1 = mysql_query($queryInsert1, $DbConnection); 
                      }
                     else 
                     {
                         //echo "in update";
-                        $updateQuery = "UPDATE vehicle_last_execution_datetime SET last_execution_datetime='$customerOutDatetime'".
+                        $updateQuery = "UPDATE vehicle_last_execution_datetime SET last_execution_datetime='$wbIcdOutDatetime'".
                                         " WHERE vehicle_name='$vehicleName' AND customer_no='$locationIds'";
                          //echo "Query=".$queryInsert."<br><br>";
                          $updateQueryResult = mysql_query($updateQuery, $DbConnection); 
@@ -255,14 +255,14 @@ foreach($wSData as $key => $wSValue)
                         {
                              $queryInsert1 = "INSERT INTO vehicle_last_execution_datetime("
                                  . "vehicle_name,customer_no,last_execution_datetime) "
-                                 . "VALUES('$vehicleName','$locationIds','$customerOutDatetime')";
+                                 . "VALUES('$vehicleName','$locationIds','$wbIcdOutDatetime')";
                              //echo "Query=".$queryInsert."<br><br>";
                              $resultInsert1 = mysql_query($queryInsert1, $DbConnection); 
                         }
                         else 
                         {
                             //echo "in update";
-                            $updateQuery = "UPDATE vehicle_last_execution_datetime SET last_execution_datetime='$customerOutDatetime'".
+                            $updateQuery = "UPDATE vehicle_last_execution_datetime SET last_execution_datetime='$wbIcdOutDatetime'".
                                             " WHERE vehicle_name='$vehicleName' AND customer_no='$locationIds'";
                              //echo "Query=".$queryInsert."<br><br>";
                              $updateQueryResult = mysql_query($updateQuery, $DbConnection); 
