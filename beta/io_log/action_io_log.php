@@ -107,7 +107,7 @@ function get_log_xml_prev($vserial, $startdate, $enddate,$parameterizeData)
     $query = "SELECT vehicle_name FROM vehicle WHERE ".
     " vehicle_id IN(SELECT vehicle_id FROM vehicle_assignment ".
     "WHERE device_imei_no='$vserial' AND status=1) AND status=1";        
-    echo $query."<br>";
+    //echo $query."<br>";
     $result = mysql_query($query, $DbConnection);
     $row = mysql_fetch_object($result);
     $vname = $row->vehicle_name;    
@@ -203,7 +203,7 @@ function get_log_xml_data($vserial, $vname, $startdate, $enddate,$parameterizeDa
             $dateRangeEnd=$userdates[$i]." 23:59:59";
         }
         deviceDataBetweenDates($vserial,$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);
-        var_dump($SortedDataObject);
+        //var_dump($SortedDataObject);
     	
               
         $vehicleserial_tmp=null;      
