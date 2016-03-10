@@ -1451,7 +1451,7 @@ function getStation1(select_value)
         routeEveningFoundFlag=0;
         var num1=0;
         var vehicleLimitFlag=0;
-        deleteOverlayCustomer();
+        
         var imeiArr=document.thisform.elements['vehicleserial[]'];
             
         if(imeiArr.length!=undefined)
@@ -1812,7 +1812,8 @@ function getStation1(select_value)
                     //alert("routetmpFlag="+routeTmpFlag);
                     if(routeTmpFlag==true)
                     {
-                            tmpPlotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType, rFoundLat, rFoundLng,inci,customerFileArr,vehicleName);
+                        deleteOverlayCustomer();
+                        tmpPlotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType, rFoundLat, rFoundLng,inci,customerFileArr,vehicleName);
                     }
                 }
             }
@@ -1834,25 +1835,32 @@ function getStation1(select_value)
                 {
                     for (var key in customerFileArr)
                     {
-                        fileCustomer=routeDetail[1].trim().split("@");
-                        var customerNumOnly=parseInt(fileCustomer[0]);					   
-                        if(customerDetailOnly[customerNumOnly]!=undefined)
+                        search_text = search_text.trim();
+                        var routeDetail=customerFileArr[key].split(",");
+                        //alert("searchText="+search_text+" seFile="+routeDetail[2].trim()+" route2="+routeDetail[0]+"VehicleNameSelection="+vehicleName);
+                        if((search_text == routeDetail[2].trim()) && (vehicleName==routeDetail[0]))                                        
                         {
-                            routeEveningFoundFlag=1;
-                            dbCustomerDetail=customerDetailOnly[customerNumOnly].split(","); 
-                            routeTmpFlag=true;
-                            //alert("rNumber="+routeDetail[2].trim());
-                            rFoundRNumber[tmpCnt]=routeDetail[2].trim();
-                            rFoundLat[tmpCnt] =dbCustomerDetail[0];
-                            rFoundLng[tmpCnt] = dbCustomerDetail[1];
-                            rFoundStationName[tmpCnt] = dbCustomerDetail[1];
-                            rFoundCustomerNo[tmpCnt] = fileCustomer[0];
-                            rFoundType[tmpCnt] = dbCustomerDetail[3];
-                            tmpCnt++;
-                        }   
+                            fileCustomer=routeDetail[1].trim().split("@");
+                            var customerNumOnly=parseInt(fileCustomer[0]);					   
+                            if(customerDetailOnly[customerNumOnly]!=undefined)
+                            {
+                                routeEveningFoundFlag=1;
+                                dbCustomerDetail=customerDetailOnly[customerNumOnly].split(","); 
+                                routeTmpFlag=true;
+                                //alert("rNumber="+routeDetail[2].trim());
+                                rFoundRNumber[tmpCnt]=routeDetail[2].trim();
+                                rFoundLat[tmpCnt] =dbCustomerDetail[0];
+                                rFoundLng[tmpCnt] = dbCustomerDetail[1];
+                                rFoundStationName[tmpCnt] = dbCustomerDetail[1];
+                                rFoundCustomerNo[tmpCnt] = fileCustomer[0];
+                                rFoundType[tmpCnt] = dbCustomerDetail[3];
+                                tmpCnt++;
+                            }
+                        }
                     }  
                     if(routeTmpFlag==true)
                     {
+                        deleteOverlayCustomer();
                         tmpPlotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType, rFoundLat, rFoundLng,inci,customerFileArr,vehicleName);
                     }
                 }
