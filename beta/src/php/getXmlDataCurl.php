@@ -34,10 +34,12 @@ if(!empty($_POST['functionName']))
     $dateTime=$_POST['dateTime'];
     $sortBy=$_POST['sortBy'];
     $parameterizeData=json_decode($_POST['paramObj']);
-    //echo json_encode($parameterizeData);
+    echo json_encode($parameterizeData);
 
     if($functionName=="deviceDataBetweenDates")
     {
+        echo "in if";
+        echo "vSerial=".$vSerial."dateStart=".$dateRangeStart."endDate=".$dateRangeEnd."<br>"
        deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sortBy, $parameterizeData);            
     }
     else if($functionName=="readFileXmlNew")
