@@ -368,10 +368,10 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
    {
         $deviceTime=FALSE;
    }
-    //echo "deviceTime=".$deviceTime."<br>";
-    //echo "dateToData=".$dateToData."<br>";
-    //echo "requiredData=".$requiredData."<br>";
-    //echo "imei=".$imei."<br>"; 
+    echo "deviceTime=".$deviceTime."<br>";
+    echo "dateToData=".$dateToData."<br>";
+    echo "requiredData=".$requiredData."<br>";
+    echo "imei=".$sortBy."<br>"; 
 	
     if($parameterizeData->orderBy=="DESC")
     {
@@ -383,7 +383,7 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
     }
     $st_results = getImeiDateTimes($o_cassandra, $imei, $dateRangeStart, $dateRangeEnd, $deviceTime, $orderAsc);
 
-    //var_dump($st_results);
+    var_dump($st_results);
     if(count($st_results)>0)
     {
     foreach($st_results as $item) {
