@@ -1451,7 +1451,7 @@ function getStation1(select_value)
         routeEveningFoundFlag=0;
         var num1=0;
         var vehicleLimitFlag=0;
-        
+        deleteOverlayCustomer();
         var imeiArr=document.thisform.elements['vehicleserial[]'];
             
         if(imeiArr.length!=undefined)
@@ -1812,8 +1812,7 @@ function getStation1(select_value)
                     //alert("routetmpFlag="+routeTmpFlag);
                     if(routeTmpFlag==true)
                     {
-                        deleteOverlayCustomer();
-                        tmpPlotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType, rFoundLat, rFoundLng,inci,customerFileArr,vehicleName);
+                            tmpPlotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType, rFoundLat, rFoundLng,inci,customerFileArr,vehicleName);
                     }
                 }
             }
@@ -1835,6 +1834,7 @@ function getStation1(select_value)
                 {
                     for (var key in customerFileArr)
                     {
+                         //alert(" value="+customerFileArr[key]);
                         search_text = search_text.trim();
                         var routeDetail=customerFileArr[key].split(",");
                         //alert("searchText="+search_text+" seFile="+routeDetail[2].trim()+" route2="+routeDetail[0]+"VehicleNameSelection="+vehicleName);
@@ -1855,12 +1855,11 @@ function getStation1(select_value)
                                 rFoundCustomerNo[tmpCnt] = fileCustomer[0];
                                 rFoundType[tmpCnt] = dbCustomerDetail[3];
                                 tmpCnt++;
-                            }
+                            }  
                         }
                     }  
                     if(routeTmpFlag==true)
                     {
-                        deleteOverlayCustomer();
                         tmpPlotRoutePlantOrCustomer(rFoundRNumber,rFoundStationName, rFoundCustomerNo, rFoundType, rFoundLat, rFoundLng,inci,customerFileArr,vehicleName);
                     }
                 }
