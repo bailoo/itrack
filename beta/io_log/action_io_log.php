@@ -135,6 +135,7 @@ function get_log_xml_data($vserial, $vname, $startdate, $enddate,$parameterizeDa
     global $io7_arr;
     global $io8_arr;
     global $account_id;
+    global $sortBy;
     if($account_id=="1594")
     {
         global $ax_arr;  
