@@ -27,6 +27,7 @@ $o_cassandra = new Cassandra();
 $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
 if(!empty($_POST['functionName']))
 {
+    echo "in function";
     $functionName=$_POST['functionName'];
     $vSerial=$_POST['vSerial'];
     $dateRangeStart=$_POST['dateRangeStart'];
@@ -39,7 +40,7 @@ if(!empty($_POST['functionName']))
     if($functionName=="deviceDataBetweenDates")
     {
         echo "in if";
-        echo "vSerial=".$vSerial."dateStart=".$dateRangeStart."endDate=".$dateRangeEnd."<br>"
+        echo "vSerial=".$vSerial."dateStart=".$dateRangeStart."endDate=".$dateRangeEnd."<br>";
        deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sortBy, $parameterizeData);            
     }
     else if($functionName=="readFileXmlNew")
