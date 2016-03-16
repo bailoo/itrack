@@ -2550,6 +2550,39 @@ $flag_io_trip=0;
 											"</td>"+
 										"</tr>"+
 									"</table>",';
+                                                                        echo'"<table border=0 class=\'mystyle\'>"+
+										"<tr>"+ 
+											"<td valign=\'top\'>"+
+												"<table border=0 class=\'mystyle\'>"+
+													"<tr>"+
+														"<td height=\'1px\'></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td>'.$nbsp.'"+
+															"<a href=javascript:'.$js_function_name_jquery.'(\'src/php/polyline_violation_history.htm\',\'Polyline%20Violation%20History\'); class=\'menuitem\'>"+
+																"'.$nbsp.'<img src=\'images/report_icons/area_violation.jpeg\' style=\'border:none;width:20px;height:20px;\' class=\'help_img_css\'>"+
+															"</a>"+
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td valign=\'top\'>"+
+												"<table border=0 class=\'mystyle\'>"+
+													"<tr>"+
+														"<td height=\'1px\'></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td>"+ 	
+															"<a href=javascript:'.$js_function_name_jquery.'(\'src/php/polyline_violation_history.htm\',\'Polyline%20Violation%20History\'); class=\'menuitem\'>"+
+																"'.$nbsp.'Polyline violation History"+
+															"</a>"+
+														"</td>"+
+														
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+										"</tr>"+
+									"</table>",';
 								if($fleet_user_type==1 || $mining_user_type==1 || $courier_user_type==1 || $school_user_type ==1 || $pos_user_type==1) // for all user except person
 								{
 									echo'"<table border=0 class=\'mystyle\'>"+
