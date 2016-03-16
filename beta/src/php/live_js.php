@@ -336,6 +336,8 @@ function show_vehicle_display_option()
 var poly;
 var flightPath;
 var polyline;
+var routeMarkerStart;
+var routeMarkerEnd;
 function showRouteOnLiveMap(polylineId)                                                    
 { 
     // alert("polylineId="+polylineId);
@@ -347,8 +349,14 @@ function showRouteOnLiveMap(polylineId)
 	//alert("coord="+coord);
     if(coord!="")
     {
-         map.clearOverlays(polyline);
-        // map.clearOverlays(polyline);
+       //alert(polyline) 
+        if(polyline!=undefined && routeMarkerStart!=undefined && routeMarkerEnd!=undefined)
+        {
+            map.removeOverlay(polyline);
+            map.removeOverlay(routeMarkerStart);
+            map.removeOverlay(routeMarkerEnd);
+        }
+         //map.clearOverlays(polyline);
         var coord_test = (((((coord.split('),(')).join(':')).split('(')).join('')).split(')')).join(''); 
         var coord1 = coord_test.split(":");
         var latlngbounds = new google.maps.LatLngBounds();
@@ -366,23 +374,24 @@ function showRouteOnLiveMap(polylineId)
               
                 //var startMarkerThis=new GIcon(startMarker);
                 var startIconThis= new GIcon(startMarker);
-                var markerStart=new GMarker(polygonCoords[z],startIconThis);  
+                routeMarkerStart=new GMarker(polygonCoords[z],startIconThis);  
                 //alert("markder="+markerStart);
               
-                map.addOverlay(markerStart);
+                map.addOverlay(routeMarkerStart);
             }
             if(z==(coord1.length-1))
             {
                 var endIconThis= new GIcon(endMarker);
-                var endStart=new GMarker(polygonCoords[z],endIconThis);  
-                map.addOverlay(endStart);
+                routeMarkerEnd=new GMarker(polygonCoords[z],endIconThis);  
+                map.addOverlay(routeMarkerEnd);
             }
             latlngbounds.extend(new google.maps.LatLng(parseFloat(coord2[0]),parseFloat(coord2[1])));			
     	}
         
-        polyline = new GPolyline(polygonCoords, '#f00', 6);
+        polyline = new GPolyline(polygonCoords, '#808080', 6);
         map.setCenter(latlngbounds.getCenter());
         map.addOverlay(polyline);
+        // map.removeOverlay(polyline);
     }	
 }	
 function display_vehicle_according_divoption(obj)
