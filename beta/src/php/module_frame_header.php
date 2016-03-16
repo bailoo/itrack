@@ -36,7 +36,7 @@
 				if($size_utype_session==1)
 				{	echo '<input type="hidden" id="category" value="'.$user_typeid_array[0].'">';	}
 	
-				echo"<td align='right'>&nbsp;&nbsp;Display Option&nbsp;:&nbsp;</td>
+				echo"<td align='right'>&nbsp;Category&nbsp;:&nbsp;</td>
 					<td>
 						<select id='user_type_option' style='font-size:10px' onchange='javascript:show_main_home_vehicle(this.value);'>
 							<option value='all'>All</option>					<option value='group'>By Group</option>		<option value='user'>By User</option>
@@ -56,6 +56,23 @@
         
         if($interface == "live.php")
         {
+            $routeComboArr=getAccountRoutes($account_id,$DbConnection);
+           // print_r($routeComboArr);
+           if($routeComboArr!="No Data Found")
+            {
+               $jsonArray=json_encode($routeComboArr);
+               echo"<input type='hidden' value='".$jsonArray."' id='routeJsonData'>";
+            echo"
+                <td>
+                    &nbsp;<select id='user_type_option' style='font-size:10px' onchange='javascript:showRouteOnLiveMap(this.value);'>
+                        <option value='select'>Routes</option>";  
+                        foreach($routeComboArr as $key=>$value)
+                        {
+                            echo"<option value=".$key.">".$routeComboArr[$key]['polylineName']."</option>";
+                        }
+                    echo"</select>  &nbsp;   
+                </td>";
+            }
            echo '
 				<td>
 					<select id="mode_selector" style="font-size:10px" onchange="javascript:select_mode_dropdown(this.form);">
