@@ -155,7 +155,7 @@ echo'<form method="post" target="_blank">';
         //echo $conditionStr;
       $data=array();
       $query ="SELECT * from polyline_voilation_history USE INDEX(ime) where ($conditionStr) and status=0 and accountid= $account_id and create_date >='$date1' and create_date <='$date2'  ";       
-      //echo $query;
+      echo $query;
       $result = @mysql_query($query, $DbConnection);		 
       while($row = mysql_fetch_object($result))
       {
