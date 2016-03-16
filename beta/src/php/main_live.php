@@ -4,9 +4,9 @@
         include('main_google_key.php');
     	include('live_js_css.php');
     	//echo'<script language="javascript" src="src/js/live.js"></script>';
-        include('util_calculate_distance_js.php');	                        
-       //include('main_frame_part1.php');
-	
+        include('util_calculate_distance_js.php');	
+        include('coreDb.php');
+       //include('main_frame_part1.php');	
      ?>
 
 	 

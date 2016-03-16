@@ -39,6 +39,18 @@ customerIcon.iconSize = new GSize(10, 10);
 customerIcon.iconAnchor = new GPoint(2, 7);
 customerIcon.infoWindowAnchor = new GPoint(3, 10);
 
+var startMarker = new GIcon(); 
+startMarker.image = 'images/start_marker.png';
+/**startMarker.iconSize = new GSize(8, 8);
+startMarker.iconAnchor = new GPoint(2, 7);
+startMarker.infoWindowAnchor = new GPoint(3, 10);*/
+
+var endMarker = new GIcon(); 
+endMarker.image = 'images/stop_marker.png';
+/*endMarker.iconSize = new GSize(8, 8);
+endMarker.iconAnchor = new GPoint(2, 7);
+endMarker.infoWindowAnchor = new GPoint(3, 10);*/
+
 var RouteNMCustomer=new Array(); // Route Number Evening Customer Type
 var RouteMCustomerLat=new Array();
 var RouteMCustomerLng=new Array();
@@ -321,7 +333,58 @@ function show_vehicle_display_option()
 	document.getElementById("blackout_1").style.display = "block";
 	document.getElementById("divpopup_1").style.display = "block"; 
 }
-	
+var poly;
+var flightPath;
+var polyline;
+function showRouteOnLiveMap(polylineId)                                                    
+{ 
+    // alert("polylineId="+polylineId);
+    var testVal=document.getElementById("routeJsonData").value;
+    var routeArr = JSON.parse(testVal);
+    //alert("routeName="+routeArr[polylineId].polylineCoord);
+
+    var coord=routeArr[polylineId].polylineCoord;
+	//alert("coord="+coord);
+    if(coord!="")
+    {
+         map.clearOverlays(polyline);
+        // map.clearOverlays(polyline);
+        var coord_test = (((((coord.split('),(')).join(':')).split('(')).join('')).split(')')).join(''); 
+        var coord1 = coord_test.split(":");
+        var latlngbounds = new google.maps.LatLngBounds();
+        var polygonCoords=new Array();
+		//var polygonCoords = new google.maps.MVCArray(); // collects coordinates
+    	for(var z=0;z<coord1.length;z++)
+    	{
+            var coord2 = coord1[z].split(",");
+            //alert("lat="+parseFloat(coord2[0])+"lng="+parseFloat(coord2[1]));
+            polygonCoords[z] = new google.maps.LatLng(parseFloat(coord2[0]),parseFloat(coord2[1]));
+            if(z==0)
+            {
+               // alert("in first");
+                var pointthis = new GLatLng(parseFloat(coord2[0]),parseFloat(coord2[1]));
+              
+                //var startMarkerThis=new GIcon(startMarker);
+                var startIconThis= new GIcon(startMarker);
+                var markerStart=new GMarker(polygonCoords[z],startIconThis);  
+                //alert("markder="+markerStart);
+              
+                map.addOverlay(markerStart);
+            }
+            if(z==(coord1.length-1))
+            {
+                var endIconThis= new GIcon(endMarker);
+                var endStart=new GMarker(polygonCoords[z],endIconThis);  
+                map.addOverlay(endStart);
+            }
+            latlngbounds.extend(new google.maps.LatLng(parseFloat(coord2[0]),parseFloat(coord2[1])));			
+    	}
+        
+        polyline = new GPolyline(polygonCoords, '#f00', 6);
+        map.setCenter(latlngbounds.getCenter());
+        map.addOverlay(polyline);
+    }	
+}	
 function display_vehicle_according_divoption(obj)
 { 
 	var div_option_values=tree_validation(obj);
