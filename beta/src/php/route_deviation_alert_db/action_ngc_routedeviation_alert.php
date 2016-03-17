@@ -56,7 +56,7 @@ function PolylineVoilationHistoryAddNew($imei,$vname,$polyline_name,$first_voila
    date_default_timezone_set('Asia/Calcutta'); // add conversion based on the time zone of user
    $createdate=date("Y-m-d H:i:s"); 
    //update query to set status=0
-   $query_update="UPDATE polyline_voilation_history set status=0 where status=1 and  vehicleno='$vname' and  accountid='1723' ";
+   $query_update="UPDATE polyline_voilation_history set status=0 where status=1 and  vehicleno='$vname' and  accountid='1991' ";
    $result_update=mysql_query($query_update,$DbConnection);
    
    $query="INSERT INTO polyline_voilation_history (imeino,vehicleno,route,first_voilation_time,first_voilation_details,first_voilation_location,create_date,status,accountid)VALUES('$imei','$vname','$polyline_name','$first_voilation_time','$first_voilation_details','$first_voilation_location','$createdate',1,'1991')";
