@@ -86,16 +86,16 @@
 					</a>
 				</td>
 				<td>					
-					&nbsp;&nbsp;
+					&nbsp;
 					<span id="ref_time" style="font-size:x-small;color:red;"></span>
-						&nbsp;&nbsp;
+						&nbsp;
 						<input type="checkbox" checked id="trail_path">
 							<span style="font-size:x-small;color:green;">
-								Add Arrow
+								Arrow
 							</span>
-							&nbsp;&nbsp;
+							&nbsp;
 						<input type="checkbox" id="trail_path_real"><span style="font-size:x-small;color:green;">
-						Add Trail
+						Trail
 					</span>
 				</td>';
         }
