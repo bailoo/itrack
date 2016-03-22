@@ -2931,6 +2931,72 @@ function action_alert_polyline_route_violation(obj)
 	
 	
   }
+  function action_polyline_violation_history(obj)
+  {
+	
+    
+    // GET SELECTED VEHICLES  
+    var device_str = get_selected_vehicle(obj);
+    if(device_str==false)
+    {
+        document.getElementById("loading_msg").style.display='none';
+    }
+
+    if(device_str!=false)
+    {
+        var startDate1 = document.getElementById("date1").value;
+        var endDate1 = document.getElementById("date2").value;
+
+        var sd = startDate1.split(" ");
+        var ed = endDate1.split(" "); 
+
+        var d1 = new Date(sd[0]);
+        var m1 = d1.getTime(); 
+
+        var d2 = new Date(ed[0]);
+        var m2 = d2.getTime(); 	
+
+        var mdiff = m2 - m1;               //five Days difference    =432000000 , 30 days diff= 2592000000  (eg.30*60*60*24*1000)
+
+        //alert("mdiff="+mdiff); 
+
+        //if(mdiff > 432000000)
+        if(mdiff > 2592000000)
+        {
+          alert("Maximum 30 days report is allowed at once");
+          return false;
+        }
+
+        document.getElementById("loading_msg").style.display = ''; 
+        var poststr = "vehicleserial=" + encodeURI( device_str ) +			
+                    "&start_date=" + encodeURI( document.getElementById("date1").value )+
+                    "&end_date=" + encodeURI( document.getElementById("date2").value );  
+        //alert(poststr);
+	$.ajax({
+	type: "POST",
+	url:'src/php/action_polyline_violation_history.php',
+	data: poststr,
+	success: function(response){
+		//console.log(response);
+		//alert("response="+response);		
+		 document.getElementById('reportPrevPage').style.display="none";
+                document.getElementById('rightMenu').style.display="";
+                document.getElementById('bodyspan').style.display="";
+		$("#bodyspan").html(response);
+		//document.getElementById('loading_pending_tanker').innerHTML="";	
+	},
+	error: function()
+	{
+		alert('An unexpected error has occurred! Please try later.');
+	}
+	});
+	
+    }
+    
+   
+	
+	
+  }
   function action_alert_vehicle_reverse(obj)
   {
     document.getElementById("loading_msg").style.display = '';    
