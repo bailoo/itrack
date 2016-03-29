@@ -2185,7 +2185,7 @@ function Prev_PlotLastMarkerWithAddress(vIcon, lat, lng, mcounter, imei, vehicle
 	} */
 	//var marker = new GMarker(point, vIcon);  
 
-	PlotLastMarkerWithAddress(point, vIcon, marker1[mcounter], imei, vehiclename, speed, datetime, fuel, running_status, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8);
+	LeftPanPlotLastMarkerWithAddress(point, vIcon, marker1[mcounter], imei, vehiclename, speed, datetime, fuel, running_status, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8);
 }
 
 var ad=0;
@@ -2193,6 +2193,540 @@ var place;
 var address1=0;
 
 ////////////////////////// PLOT TRACK MARKERS WITH ADDRESSES ////////////////////////////////////////
+function LeftPanPlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed,datetime, fuel, running_status, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8) 
+{
+	 //alert("IN PLOT:"+point+":"+Icon+":"+marker+":"+imei+":"+vehiclename+":"+speed+":"+datetime+":"+fuel+":"+running_status);
+	 
+	 //:(17.66392, 75.8931):[object Object]:[object Object]:359231030166217:ACC-BC-95-100-R4:0:2011-12-16 11:23:43:0
+	 
+	 //var Icon= new GIcon(lvIcon1);
+	 //var marker = new GMarker(point, Icon);
+	 //alert("vIcon="+Icon+" ,marker="+marker);	 	
+	var accuracy;
+	var largest_accuracy;	   
+	var delay = 100;
+	 
+	var window_style1="style='color:#000000;font-family: arial, helvetica, sans-serif; font-size:11px;text-decoration:none;font-weight:bold;'";
+	var window_style2="style='color:blue;font-family: arial, helvetica, sans-serif; font-size:11px;text-decoration:none;'";
+	var io_str="";
+	var window_height="135px";
+	
+	if(imei_iotype_arr[imei]!=undefined)
+	{
+		var iotype_iovalue_str=imei_iotype_arr[imei].split(":");
+		if(iotype_iovalue_str.length==2)
+		{
+			window_height="160px";
+		}
+		else if(iotype_iovalue_str.length==3)
+		{
+			window_height="200px";
+		}
+		else if(iotype_iovalue_str.length==4)
+		{
+			window_height="190px";
+		}
+		else if(iotype_iovalue_str.length==5)
+		{
+			window_height="205px";
+		}
+		else if(iotype_iovalue_str.length==6)
+		{
+			window_height="220px";
+		}
+		else if(iotype_iovalue_str.length==7)
+		{
+			window_height="235px";
+		}
+		else if(iotype_iovalue_str.length==8)
+		{
+			window_height="250px";
+		}
+		for(var i=0;i<iotype_iovalue_str.length;i++)
+		{
+			var iotype_iovalue_str1=iotype_iovalue_str[i].split("^");
+			//alert("iotype_iovalue_str1="+iotype_iovalue_str1[0]);	
+			if(iotype_iovalue_str1[0]=="")
+			{
+				io_values="ioNotExist";
+			}
+			else
+			{
+			var io_values="io_"+iotype_iovalue_str1[0];	
+			}
+			if(io_values!="ioNotExist")
+			{
+				if(iotype_iovalue_str1[1]=="temperature")
+				{					
+					if(eval(io_values)!="" && eval(io_values)!=undefined)
+					{
+						if(eval(io_values)>=-30 && eval(io_values)<=70)
+						{
+							io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+eval(io_values)+"</td></tr>";
+						}
+						else
+						{
+							io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";
+						}
+					}
+					else
+					{
+						io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";
+					}
+				}
+				else if(iotype_iovalue_str1[1]=="ac")
+				{                                       
+					if(eval(io_values)!="" && eval(io_values)!=undefined)
+					{
+							if(eval(io_values)>500)
+							{
+									io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">OFF</td></tr>";
+							}
+							else
+							{
+									io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">ON</td></tr>";
+							}
+					}
+					else
+					{
+						io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";
+					}
+				}
+				else if(iotype_iovalue_str1[1]=="engine")
+				{
+					var getIOStr="src/php/get_io_ajax.php?content="+imei;
+					var req = getXMLHTTP();
+					req.open("GET", getIOStr, false); //third parameter is set to false here
+					req.send(null);
+					var getFinalIO = req.responseText;
+					getFinalIO=getFinalIO.split("#");
+					
+					if(eval(io_values)!="" && eval(io_values)!=undefined)
+					{
+						//alert("io="+getFinalIO[1]);
+						if(getFinalIO[1]==1)
+						{
+							if(eval(io_values)<350)
+							{
+								io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">ON</td></tr>";
+							}
+							else
+							{
+								io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">Off</td></tr>";
+							}
+						}
+						else
+						{
+							if(eval(io_values)<=350)
+							{
+									io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">Off</td></tr>";
+							}
+							else
+							{
+									io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">ON</td></tr>";
+							}
+						}
+					}
+					else
+					{
+						io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";
+					}
+				}
+				else if(iotype_iovalue_str1[1]=="door_open")
+				{                                       
+					if(eval(io_values)!="" && eval(io_values)!=undefined)
+					{
+							if(eval(io_values)<250)
+							{
+									io_str=io_str+"<tr><td "+window_style1+">Delivery Door</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">Close</td></tr>";
+							}
+							else
+							{
+									io_str=io_str+"<tr><td "+window_style1+">Delivery Door</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">Open</td></tr>";
+							}
+					}
+					else
+					{
+						io_str=io_str+"<tr><td "+window_style1+">Delivery Door</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";
+					}
+				}
+				else if(iotype_iovalue_str1[1]=="door_open2")
+				{                                       
+					if(eval(io_values)!="" && eval(io_values)!=undefined)
+					{
+							if(eval(io_values)<250)
+							{
+									io_str=io_str+"<tr><td "+window_style1+">Manhole Door</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">Close</td></tr>";
+							}
+							else
+							{
+									io_str=io_str+"<tr><td "+window_style1+">Manhole Door</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">Open</td></tr>";
+							}
+					}
+					else
+					{
+						io_str=io_str+"<tr><td "+window_style1+">Manhole Door</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";
+					}
+				}
+				else if(iotype_iovalue_str1[1]=="door_open3")
+				{                                       
+					if(eval(io_values)!="" && eval(io_values)!=undefined)
+					{
+							if(eval(io_values)<250)
+							{
+									io_str=io_str+"<tr><td "+window_style1+">Manhole Door2</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">Close</td></tr>";
+							}
+							else
+							{
+									io_str=io_str+"<tr><td "+window_style1+">Manhole Door2</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">Open</td></tr>";
+							}
+					}
+					else
+					{
+						io_str=io_str+"<tr><td "+window_style1+">Manhole Door2</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";
+					}
+				}
+
+				else 
+				{
+					if(eval(io_values)!="" && eval(io_values)!=undefined)
+					{					
+						io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+eval(io_values)+"</td></tr>";
+					}
+					else
+					{
+						io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";
+					}			
+				}
+			}
+		}
+	}
+
+	var nearest_customer_string = "";
+	var transporter_remark_string = "";
+	transporter = "-";
+	remark = "-";
+	
+	var feature_id_map = document.getElementById('station_flag_map').value;
+        //alert('fid='+feature_id_map);
+	if(feature_id_map == 1)
+	{
+            var obj=document.form1.route_opt;
+            var morningFlag=0;
+            var eveningFlag=0;
+            for(var i=0;i<obj.length;i++)
+            {		
+                if(obj[i].checked==true)
+                {
+                   if(obj[i].value==1)
+                   {
+                     eveningFlag=1;
+                   }
+                   else if(obj[i].value==2)
+                   {
+                    
+                     morningFlag=1;
+                   }
+                }
+            }        
+            //alert("morningFlag="+morningFlag+"eveningFlag="+eveningFlag);
+            
+            var lt_v = point.lat();
+            var lng_v = point.lng();
+             if(eveningFlag==1)
+                {
+                    var eCustomerLength=uniqueRouteEveningParseJson.length;
+                    //alert("len="+eCustomerLength);
+                    var e_customer_min_distance;		
+                    if(eCustomerLength>0)
+                    {
+                        var e_customer_distance_arr=new Array();
+                        var e_customer_print_str=new Array();
+                        for(var i=0;i<eCustomerLength;i++)
+                        {
+                            /*if(i<3)
+                            {
+                                alert("latPrev="+lt_v+"lngPrev="+ RouteECustomerLat[i]);
+                            }*/
+                            var customer_distance = calculate_distance(lt_v, uniqueRouteEveningParseJson[i]['lat'], lng_v, uniqueRouteEveningParseJson[i]['lng']);
+                            e_customer_distance_arr[i]=customer_distance;
+                            e_customer_print_str[customer_distance]=uniqueRouteEveningParseJson[i]['customerNo'];
+                        }
+                        e_customer_distance_arr.sort();
+                        //alert("minDistance="+e_customer_distance_arr[0]);
+                        e_customer_min_distance=e_customer_distance_arr[0];
+                        var e_customer_print_str=e_customer_print_str[e_customer_min_distance];
+                       
+                        nearest_customer_string = "<tr><td "+window_style1+">RouteNo</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+route+"</td></tr><tr><td "+window_style1+">Nearest Customer</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+e_customer_min_distance+" From "+e_customer_print_str+"</td></tr>";
+                    }                    
+                }
+                if(morningFlag==1)
+                {
+                    var mCustomerLength=uniqueRouteMorningParseJson.length;
+                    var m_customer_min_distance;		
+                    if(mCustomerLength>0)
+                    {
+                        var m_customer_distance_arr=new Array();
+                        var m_customer_print_str=new Array();
+                        for(var i=0;i<mCustomerLength;i++)
+                        {					
+                            var customer_distance = calculate_distance(lt_v, uniqueRouteMorningParseJson[i]['lat'], lng_v, uniqueRouteMorningParseJson[i]['lng']);
+                            m_customer_distance_arr[i]=customer_distance;
+                            m_customer_print_str[customer_distance]=uniqueRouteMorningParseJson[i]['customerNo'];
+                        }
+                        m_customer_distance_arr.sort();
+                        //alert("minDistance="+m_customer_distance_arr[0]);
+                        m_customer_min_distance=m_customer_distance_arr[0];
+                      var m_customer_print_str=m_customer_print_str[m_customer_min_distance];                        
+                      nearest_customer_string = "<tr><td "+window_style1+">RouteNo</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+route+"</td></tr><tr><td "+window_style1+">Nearest Customer</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+m_customer_min_distance+" From "+m_customer_print_str+"</td></tr>";
+                    }             
+                }
+		//################# GET TRANSPORTER AND REMARK #######################
+                //alert('vehiclename='+vehiclename);
+                if(morningFlag==1 || eveningFlag==1)
+                {
+                    //transporter_remark_string = "<tr><td "+window_style1+">Transporter</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr><tr><td "+window_style1+">Remark</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">-</td></tr>";			
+                    transporter_remark_string = "<tr><td "+window_style1+">Transporter</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+uniqueRouteParseJson[vehiclename]+"</td></tr>";			
+                }
+    /*if(remark_tmp.length>0 && transporter_tmp.length>0)
+		{
+			var match_v = false;
+			var sel_vehicle = "";
+			var tpt_final = "";
+			for(var j=0;j<transporter_tmp.length;j++)
+			{				
+				tpt_tmp = transporter_tmp[j].split(":");
+				sel_vehicle = tpt_tmp[0];
+				if(trim(sel_vehicle ) == trim(vehiclename))
+				{
+					match_v = true;
+					tpt_final = tpt_tmp[1];
+					break;
+				}
+			}
+			if(match_v)
+			{
+				remark = remark_tmp[0];		//####### remark will be the same each case (Vehicle & Route has single remark)
+				transporter = tpt_final;  //######### tpt string 
+				transporter_remark_string = "<tr><td "+window_style1+">Transporter</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+transporter+"</td></tr><tr><td "+window_style1+">Remark</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">"+remark+"</td></tr>";			
+			}			
+		}*/		
+		//################# TRANSPORTER AND REMARK CLOSED ####################				
+	}
+
+ var geocoder = new GClientGeocoder();
+ var address_tmp;
+ var address1_tmp;
+ var BadAddress=0;
+
+ geocoder.getLocations(point, function (result) {
+
+  var address2=""; // for getting the location from google map or xml
+	if (result.Status.code == G_GEO_SUCCESS) // OR !=200
+	{
+		var j;
+		for (var i=0; i<result.Placemark.length; i++)
+		{
+			accuracy = result.Placemark[i].AddressDetails.Accuracy;
+			address_tmp = result.Placemark[i];
+			address1_tmp = address_tmp.address;
+			//alert("address1_tmp="+address1_tmp+"accuracy="+accuracy);
+			if(accuracy!=0 && accuracy!=1 && accuracy!=2 && accuracy!=5 && accuracy!=7 && accuracy!=8)
+			{
+				if(accuracy==6)  /// this is street leve aprox accurate
+				{					
+					if((address1_tmp.indexOf("NH") ==-1) && (address1_tmp.indexOf("National Highway") ==-1) && (address1_tmp.indexOf("State Highway")==-1))
+					{					
+						address2=get_js_location(result.Placemark[i],point);
+						break;
+					}		 
+				}		
+				else if(accuracy==3) /////// this is country munciple level address 
+				{			
+					address2=get_js_location(result.Placemark[i],point);
+					break;
+				}
+				else
+				{
+					if(accuracy==4) /////////// city,village level address
+					{					
+						address2=get_js_location(result.Placemark[i],point);
+						break;			
+					}					
+				}
+			}
+		}		
+	}  // if (result.Status.code == G_GEO_SUCCESS)  CLOSED
+	else
+	{
+		address2 ="-";
+	}
+	if(address2=="" || address2=="-") // if address not come form google map then this block get address from xml
+	{					
+		address2=get_xml_location(point);
+		//alert("xml_loacation_2="+address2);	
+	}
+		
+	var place;
+	
+	///////////////////////////// SELECT LANDMARK OR GOOGLE PLACE CODE /////////////////////////////////////////////////////
+	/// IF DISTANCE CALCULATED THROUGH FILE IS LESS THAN 1 KM THEN DISPLAY LANDMARK OTHERWISE DISPLAY GOOGLE PLACE /////////
+	
+	var lt_original = point.lat();
+	var lng_original = point.lng();
+	var str = lt_original+","+lng_original;
+	
+	//var access2=document.thisform.access.value;
+		//alert('access='+str);
+
+	//if(access2=="Zone")
+	//{
+	//	var strURL="src/php/select_mining_landmark.php?content="+str;
+	//}
+	//else
+	//{
+		var strURL="src/php/select_landmark_marker.php?content="+str;
+	//}
+        
+
+	var req = getXMLHTTP();
+      
+	req.open("GET", strURL, false); //third parameter is set to false here
+	req.send(null);
+	var landmark = req.responseText;
+	
+	//alert("landmark="+landmark);
+	//return req.responseText;
+	if(landmark!="")
+		place = landmark;
+	else
+		place = address2;
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+	//alert(place);
+	/*alert("[Original latlng="+latlng+"]   <br>  [Google PT="+point+"]   largest_accuracy"+largest_accuracy+"			address1="+address1);*/
+	//alert("add before="+address1);
+	//alert("Icon="+Icon+" map="+map+" marker="+marker+ " actionmrkr="+action_marker+"  vname="+vehiclename+" spd="+speed+" dt="+datetime+" dist="+dist+" fuelltr="+fuel_litres+" fuel_level="+fuel_level);
+
+		
+    // GET FUEL LEVE LAST POSITION
+	str = imei+","+fuel;		
+	strURL="src/php/map_fuel_calibration.php?content="+str;	
+	
+	var req = getXMLHTTP();
+	req.open("GET", strURL, false); //third parameter is set to false here
+	req.send(null);
+	var fuel_level = req.responseText;		
+    //////////////////////    
+  	//alert("before plot");
+    //if(label_type!="Person")
+  	//{
+  	 //var tab_str = '<div id="tab1" class="bubble" style="height:150px;" align=left><table cellpadding=0 cellspacing=0><tr><td><font size=2 color=#000000>Vehicle</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>IMEI</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+imei + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>Speed</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+speed+' kmph</font></td></tr><tr><td><font size=2 color=#000000>Date & Time</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+datetime+' '+'&nbsp;&nbsp;</font></td></tr> <tr><td><font size=2 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+place+'</font></td></tr><tr><td><font size=2 color=#000000>Status</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+running_status+'</font></td></tr></table></div>';
+  	 //alert(tab_str);
+    	//var tab1 = new GInfoWindowTab("Info", '<div id="tab1" class="bubble" style="height:150px;" align=left><table cellpadding=0 cellspacing=0><tr><td><font size=2 color=#000000>Vehicle</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>IMEI</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+imei + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>Speed</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+speed+' kmph</font></td></tr><tr><td><font size=2 color=#000000>Date & Time</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+datetime+' '+'&nbsp;&nbsp;</font></td></tr> <tr><td><font size=2 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+place+'</font></td></tr><tr><td colspan=3><font color=blue size=2>( '+point.lat()+', '+point.lng()+' )</font></td></tr></table></div>');
+  	                       
+      day_max_speed = day_max_speed.trim();
+      day_max_speed = Math.round(day_max_speed*100)/100 + " kmph";
+	  
+	  // if(label_type!="Person")
+  	  {
+        if(day_max_speed =="0 kmph" || day_max_speed=="")
+        {
+          var day_max_speed_string = '';
+        }
+        else
+        {          
+          var day_max_speed_string = day_max_speed+' &nbsp;('+day_max_speed_time+')';
+        }
+                
+        if((document.getElementById('trail_path').checked) && (running_status=="Running"))
+        {
+          if(total_dist==0)
+          {
+           total_dist = "less than 1";
+          }
+          var tab1 = new GInfoWindowTab("Info", '<div id="tab1" class="bubble" style="'+window_height+';" align=left><table cellpadding=0 cellspacing=0><tr><td '+window_style1+'>Vehicle</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+vehiclename + '</td><td></td></tr><tr><td '+window_style1+'>IMEI</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+imei + '</td><td></td></tr><tr><td '+window_style1+'>Speed</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+speed+' kmph</td></tr><tr><td '+window_style1+'>Date & Time</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+datetime+' '+'&nbsp;&nbsp;</td></tr><!--<tr><td '+window_style1+'>Day Max Speed</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+day_max_speed_string+'</td></tr>--><tr><td '+window_style1+'>Last HaltTime</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+last_halt_time+'</td></tr><tr><td '+window_style1+'>Place</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+place+'</td></tr><tr><td '+window_style1+'>Status</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+running_status+'</td></tr><tr><td '+window_style1+'>Distance Covered</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+total_dist+'&nbsp;km</td></tr>'+io_str+''+nearest_customer_string+''+transporter_remark_string+'</table></div>');
+        }
+        else
+        {
+          var tab1 = new GInfoWindowTab("Info", '<div id="tab1" class="bubble" style="'+window_height+'" align=left><table cellpadding=0 cellspacing=0><tr><td '+window_style1+'>Vehicle</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+vehiclename + '</td><td></td></tr><tr><td '+window_style1+'>IMEI</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+imei+'</td><td></td></tr><tr><td '+window_style1+'>Speed</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+speed+' kmph</td></tr><tr><td '+window_style1+'>Date & Time</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+datetime+' '+'&nbsp;&nbsp;</td></tr><!--<tr><td '+window_style1+'>Day Max Speed</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+day_max_speed_string+'</td></tr>--><tr><td '+window_style1+'>Last HaltTime</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+last_halt_time+'</td></tr><tr><td '+window_style1+'>Place</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+place+'</td></tr><tr><td '+window_style1+'>Status</td><td>&nbsp;:&nbsp;</td><td '+window_style2+'>'+running_status+'</td></tr>'+io_str+''+nearest_customer_string+''+transporter_remark_string+'</table></div>');
+        }
+     }  
+      
+     /* if(label_type!="Person")
+  	  {
+        if(day_max_speed =="0 kmph" || day_max_speed=="")
+        {
+          var day_max_speed_string = '';
+        }
+        else
+        {          
+          var day_max_speed_string = day_max_speed+' &nbsp;('+day_max_speed_time+')';
+        }
+                
+        if((document.getElementById('trail_path').checked) && (running_status=="Running"))
+        {
+          if(total_dist==0)
+          {
+           total_dist = "less than 1";
+          }
+          var tab1 = new GInfoWindowTab("Info", '<div id="tab1" class="bubble" style="height:170px;" align=left><table cellpadding=0 cellspacing=0><tr><td><font size=2 color=#000000>Vehicle</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>IMEI</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+imei + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>Speed</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+speed+' kmph</font></td></tr><tr><td><font size=2 color=#000000>Date & Time</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+datetime+' '+'&nbsp;&nbsp;</font></td></tr> <tr><td><font size=2 color=#000000>Day Max Speed</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+day_max_speed_string+'</font></td></tr><tr><td><font size=2 color=#000000>Last HaltTime</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+last_halt_time+'</font></td></tr><tr><td><font size=2 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+place+'</font></td></tr><tr><td><font size=2 color=#000000>Status</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+running_status+'</font></td></tr><tr><td><font size=2 color=#000000>Temp</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+fuel+'</font></td><td></td></tr><tr><td><font size=2 color=#000000>Distance Covered</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+total_dist+'&nbsp;km</font></td></tr></table></div>');
+        }
+        else
+        {
+          var tab1 = new GInfoWindowTab("Info", '<div id="tab1" class="bubble" style="height:170px;" align=left><table cellpadding=0 cellspacing=0><tr><td><font size=2 color=#000000>Vehicle</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>IMEI</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+imei + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>Speed</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+speed+' kmph</font></td></tr><tr><td><font size=2 color=#000000>Date & Time</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+datetime+' '+'&nbsp;&nbsp;</font></td></tr> <tr><td><font size=2 color=#000000>Day Max Speed</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+day_max_speed_string+'</font></td></tr><tr><td><font size=2 color=#000000>Last HaltTime</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+last_halt_time+'</font></td></tr><tr><td><font size=2 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+place+'</font></td></tr><tr><td><font size=2 color=#000000>Status</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+running_status+'</font></td></tr><tr><td><font size=2 color=#000000>Temp</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+fuel+'</font></td><td></td></tr></table></div>');
+        }
+     }*/     
+    //}
+  	/*else
+  	{
+  		//var tab1 = new GInfoWindowTab("Info", '<div id="tab1" class="bubble" align=left><table cellpadding=0 cellspacing=0><tr><td><font size=2 color=#000000>Person</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>Date & Time</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+datetime+' '+'&nbsp;&nbsp;</font></td></tr> <tr><td><font size=2 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+place+'</font></td></tr><tr><td colspan=3><font color=blue size=2>( '+point.lat()+', '+point.lng()+' )</font></td></tr></table></div>');
+  		var tab1 = new GInfoWindowTab("Info", '<div id="tab1" class="bubble" style="height:100px;" align=left><table cellpadding=0 cellspacing=0><tr><td><font size=2 color=#000000>Person</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+vehiclename + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>IMEI</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+imei + '</font></td><td></td></tr><tr><td><font size=2 color=#000000>Date & Time</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+datetime+' '+'&nbsp;&nbsp;</font></td></tr> <tr><td><font size=2 color=#000000>Place</font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2>'+place+'</font></td></tr></table></div>');
+  	} */
+		//var html = new GInfoWindowTab("Info", '<div id="tab1" class="bubble">Click the "Location" tab to see the minimap</div>');
+		//var tab2 = new GInfoWindowTab("Location", '<div id="detailmap" style="height:150px;"></div>');
+
+		//alert(" tab1="+tab1+" tab2="+tab2);
+		//var infoTabs = [tab1,tab2];
+		var infoTabs = [tab1];
+                var bounds = new GLatLngBounds();
+                bounds.extend(point); 
+                var zoom = map.getBoundsZoomLevel(bounds)-7; 
+                map.setCenter(center,zoom);
+		//alert(" marker="+marker+" infoTabs="+infoTabs);
+		marker.openInfoWindowTabsHtml(infoTabs);
+		//alert("after plot");
+
+		/*var dMapDiv = document.getElementById("detailmap");
+		var detailMap = new GMap2(dMapDiv);
+		detailMap.setCenter(point , 12);
+
+		detailMap.removeMapType(G_SATELLITE_MAP);																
+
+		var topRight = new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(0,0));	
+		detailMap.addMapType(G_SATELLITE_MAP);
+		var mapControl = new GMapTypeControl();
+		detailMap.addControl(mapControl, topRight);
+
+		var topLeft = new GControlPosition(G_ANCHOR_TOP_LEFT, new GSize(5,35));
+		var mapControl2 = new GSmallMapControl();
+		//detailMap.addControl(new GSmallMapControl());
+		GEvent.addListener(detailMap, "zoomend", miniMapZoomEnd);
+		GEvent.addListener(detailMap, "moveend", miniMapMoveEnd);
+		detailMap.addControl(mapControl2, topLeft);
+
+		var CopyrightDiv = dMapDiv.firstChild.nextSibling;
+		var CopyrightImg = dMapDiv.firstChild.nextSibling.nextSibling;
+		CopyrightDiv.style.display = "none"; 
+		CopyrightImg.style.display = "none";
+		var marker3 = new GMarker(point,Icon);
+		//alert("point ="+point+" mrk3="+marker3);
+		detailMap.addOverlay(marker3);        
+
+		showMinimapRect(detailMap,marker3);   */
+     
+  });
+}
 function PlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed,datetime, fuel, running_status, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8) 
 {
 	 //alert("IN PLOT:"+point+":"+Icon+":"+marker+":"+imei+":"+vehiclename+":"+speed+":"+datetime+":"+fuel+":"+running_status);
