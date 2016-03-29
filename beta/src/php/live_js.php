@@ -2692,6 +2692,7 @@ function LeftPanPlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename
                 var bounds = new GLatLngBounds();
                 bounds.extend(point); 
                 var zoom = map.getBoundsZoomLevel(bounds)-7; 
+                var center = bounds.getCenter(); 			
                 map.setCenter(center,zoom);
 		//alert(" marker="+marker+" infoTabs="+infoTabs);
 		marker.openInfoWindowTabsHtml(infoTabs);
