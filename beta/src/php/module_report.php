@@ -2616,6 +2616,39 @@ $flag_io_trip=0;
 												"</table>"+
 											"</td>"+
 										"</tr>"+
+									"</table>",';
+                                                                         echo'"<table border=0 class=\'mystyle\'>"+
+										"<tr>"+ 
+											"<td valign=\'top\'>"+
+												"<table border=0 class=\'mystyle\'>"+
+													"<tr>"+
+														"<td height=\'1px\'></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td>'.$nbsp.'"+
+                                                                                                                        "<a href=\'src/php/weather_forecasting_drive/index.htm\' target=\'_blank\' class=\'menuitem\'>"+
+                                                                                                                                "'.$nbsp.'<img src=\'images/report_icons/vehicle_report.jpeg\' style=\'border:none;width:20px;height:20px;\' class=\'help_img_css\'>"+
+                                                                                                                        "</a>"+
+                                                                                                                "</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td valign=\'top\'>"+
+												"<table border=0 class=\'mystyle\'>"+
+													"<tr>"+
+														"<td height=\'1px\'></td>"+
+													"</tr>"+
+													"<tr>"+
+                                                                                                        
+														"<td>"+ 	
+                                                                                                                        "<a href=\'src/php/weather_forecasting_drive/index.htm\' target=\'_blank\' class=\'menuitem\'>"+
+                                                                                                                                "'.$nbsp.'Route Weather Forecasting"+
+                                                                                                                        "</a>"+
+                                                                                                                "</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+										"</tr>"+
 									"</table>"';
 								
 								}
