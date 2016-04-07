@@ -1809,21 +1809,21 @@ function updateInvoiceMdrmNext($plant_serials,$account_id,$date,$sno,$DbConnecti
 }
 function updateInvoiceMdrmNextLorry($lorry_serials,$account_id,$date,$sno,$DbConnection)
 {         
-	 $query_update_lorry = "UPDATE invoice_mdrm SET lorry_no='$lorry_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
+	 $query_update_lorry = "UPDATE invoice_mdrm SET lorry_no='$lorry_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date',edit_date_transporter_last='$date'  WHERE sno='$sno'";
 	 //echo $query_update_lorry;
          $result_update_lorry = mysql_query($query_update_lorry,$DbConnection);	
 	 return $result_update_lorry;
 }
 function updateInvoiceMdrmNextVehicle($vehicle_serials,$account_id,$date,$sno,$DbConnection)
 {         
-	 $query_update_vehicle = "UPDATE invoice_mdrm SET vehicle_no='$vehicle_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
+	 $query_update_vehicle = "UPDATE invoice_mdrm SET vehicle_no='$vehicle_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date',edit_date_transporter_last='$date'  WHERE sno='$sno'";
 	 //echo $query_update_vehicle;
          $result_update_vehicle = mysql_query($query_update_vehicle,$DbConnection);	
 	 return $result_update_vehicle;
 }
 function updateInvoiceMdrmNextInvoiceQty($qty_kg_serials,$fat_per_serials,$snf_per_serials,$fat_kg_serials,$snf_kg_serials,$account_id,$date,$sno,$DbConnection)
 {         
-	 $query_update_invoice_qty = "UPDATE invoice_mdrm SET qty_kg='$qty_kg_serials',fat_percentage='$fat_per_serials',snf_percentage='$snf_per_serials',fat_kg='$fat_kg_serials',snf_kg='$snf_kg_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
+	 $query_update_invoice_qty = "UPDATE invoice_mdrm SET qty_kg='$qty_kg_serials',fat_percentage='$fat_per_serials',snf_percentage='$snf_per_serials',fat_kg='$fat_kg_serials',snf_kg='$snf_kg_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date',edit_date_transporter_last='$date'  WHERE sno='$sno'";
 	 //echo $query_update_vehicle;
          $result_update_invoice_qty = mysql_query($query_update_invoice_qty,$DbConnection);	
 	 return $result_update_invoice_qty;
