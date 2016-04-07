@@ -680,8 +680,8 @@ border: none;
 				<!--<td>".$row_select->vehicle_no."</td>-->
 				<td>".$row_select['tanker_type']."</td>
 				<td><font color=red>".$row_select['docket_no']."</font></td>
-				<td>".$row_select['email']."</td>
-				<td>".$row_select['mobile']."</td>
+				<td>".$row_select['email']."</td>				
+                                <td>".$row_select['mobile']."<br>".$row_select['transporter_editdate']."</td>
                                    ";
                                 
                                

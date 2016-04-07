@@ -237,7 +237,17 @@
 					//echo "Query=".$Query."<br>";
 					$ResultUpdate=mysql_query($QueryUpdate,$DbConnection);
                                         */
-                                         $ResultUpdate=updateInvoiceMdrmVehicle($lorry_no,$vehicle_no,$transporter,$dock_no,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$sno_id1,$DbConnection);
+                                            if($transporter==$account_id)
+                                            {
+                                              //echo "in";
+                                                $ResultUpdate=updateInvoiceMdrmVehicleTM($lorry_no,$vehicle_no,$transporter,$dock_no,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$sno_id1,$DbConnection);
+                                            }
+                                            else
+                                            {
+                                                //echo "inthe";
+                                                $ResultUpdate=updateInvoiceMdrmVehicle($lorry_no,$vehicle_no,$transporter,$dock_no,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$sno_id1,$DbConnection);
+                                            }
+                                         //$ResultUpdate=updateInvoiceMdrmVehicle($lorry_no,$vehicle_no,$transporter,$dock_no,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$sno_id1,$DbConnection);
 					/*if($Result )
 					{*/			
 						//Insert Docket number to track
