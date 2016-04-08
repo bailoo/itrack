@@ -1,0 +1,129 @@
+/* Custom Stylesheet */
+
+
+/* Tabs Demo 1 */
+.tabs input[type=radio] {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+.tabs {
+  width: 600px;
+  height:300px;
+  float: none;
+  list-style: none;
+  position: relative;
+  padding: 0;
+  margin: 1px auto;
+
+}
+.tabs li{
+  float: left;
+}
+.tabs label {
+    display: block;
+    padding: 4px 8px;
+	border:1px;
+    border-radius: 2px 2px 0 0;
+    color: #08C;
+    font-size: 13px;
+    font-weight: normal;
+    font-family: 'Roboto', helveti;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    position: relative;
+    top: 3px;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+.tabs label:hover {
+  background: rgba(255,255,255,0.5);
+  top: 0;
+}
+
+[id^=tab]:checked + label {
+  background: #08C;
+  color: white;
+  top: 0;
+}
+
+[id^=tab]:checked ~ [id^=tab-content] {
+    display: block;
+}
+.tab-content{
+  z-index: 2;
+  display: none;
+  text-align: left;
+  width: 100%;
+  font-size: 11px;
+  
+  padding-top: 0px;
+  background: white;
+  padding: 1px;
+  color: black;
+  position: absolute;
+  top: 48px;
+  left: 0;
+  box-sizing: border-box;
+  -webkit-animation-duration: 0.5s;
+  -o-animation-duration: 0.5s;
+  -moz-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+}
+
+table.table-style-two {
+		font-family: verdana, arial, sans-serif;
+		font-size: 11px;
+		color: #333333;
+		border-width: 1px;
+		border-color: #3A3A3A;
+		border-collapse: collapse;
+	}
+	table.table-style-two th {
+		border-width: 1px;
+		padding: 4px;
+		border-style: solid;
+		border-color: #517994;
+		/*background-color: #B2CFD8;*/
+		background-color: #C0C0C0;
+		
+	}
+	table.table-style-two tr:hover td {
+		background-color: #DFEBF1;
+	}
+	table.table-style-two td {
+		border-width: 1px;
+		padding: 4px;
+		border-style: solid;
+		border-color: #517994;
+		background-color: #ffffff;
+	}
+	
+	
+	table.table-style-heading {
+		font-family: verdana, arial, sans-serif;
+		font-size: 11px;
+		color: #333333;
+		border-width: 1px;
+		border-color: #3A3A3A;
+		border-collapse: collapse;
+	}
+	table.table-style-heading th {
+		border-width: 1px;
+		padding: 4px;
+		border-style: solid;
+		border-color: #517994;
+		background-color: #FFE39E;
+	}
+	table.table-style-heading tr:hover td {
+		background-color: #DFEBF1;
+	}
+	table.table-style-heading td {
+		border-width: 1px;
+		padding: 4px;
+		border-style: solid;
+		border-color: #517994;
+		background-color: #ffffff;
+	}

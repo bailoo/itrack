@@ -1,0 +1,194 @@
+/* top level
+--------------------------------------------*/
+.menuTemplate1
+{
+    /* You will get totally diffrent menu alignment and layout by setting following margin, width, and float with different values.
+    For detailed instruction please visit www.menucool.com/horizontal/menu-layout  */
+    margin: 0 auto; width: auto;float:right;
+    /*following "behavior" works for IE6, IE7, and IE8. Other browsers will ignore it.*/
+    /*Note: htc file path(if using relative path) inside the CSS file should be relative to the page, not to the CSS file (this is unlike image path inside the CSS that is relative to the CSS file location only). 
+    So we recommend using the absolute path for the behavior file.*/
+    behavior: url("cssmenu.htc");
+    position:relative;
+    z-index:4;
+    height: 36px;
+    /*background: #55A3FA url(bg.gif);  #82c0ff*/
+       
+	background:#ffcb65;
+	background : -webkit-gradient(linear, 0 0, 0 100%, from(#ffcb65), to(#ffb13a));background: -moz-linear-gradient(top, #ffcb65, #ffb13a);
+	-ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#ffcb65, endColorStr=#ffb13a);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#ffcb65, endColorStr=#ffb13a);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffcb65", endColorstr="#ffb13a"); background: -o-linear-gradient(top,#ffcb65,#ffb13a);
+	/*background:-o-linear-gradient(bottom, #FFE48C  5%, #ffcb65 100%);	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #FFE48C), color-stop(1, #ffcb65) );
+	background:-moz-linear-gradient( center top, #FFE48C 5%, #ffcb65 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#FFE48C", endColorstr="#ffcb65");	background: -o-linear-gradient(top,#FFE48C,#ffcb65);
+    */
+    /*background:#82c0ff;
+	background:-o-linear-gradient(bottom, ghostwhite  5%, #82c0ff 100%);	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, ghostwhite), color-stop(1, #82c0ff) );
+	background:-moz-linear-gradient( center top, ghostwhite 5%, #82c0ff 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="ghostwhite", endColorstr="#82c0ff");	background: -o-linear-gradient(top,ghostwhite,#82c0ff);
+    */
+    border: 1px solid #BBB;
+    font-family: Arial, Helvetica, sans-serif;
+    list-style: none;
+    padding: 0;
+    
+}
+.menuTemplate1 li
+{
+    padding: 0;
+    float: left;
+    height: 36px;
+    position: relative;/*delete it if you want submenu to be positioned relative to the whole menu instead of this li element*/
+    color: black;
+    z-index:5;
+}
+
+.menuTemplate1 a
+{
+    padding: 0 30px;
+    line-height: 36px; /*Note: keep this value the same as the height of .menuTemplate1 li */
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    outline: 0;
+    text-decoration: none;
+    color: black;
+    position: relative;
+}
+.menuTemplate1 li:hover a, .menuTemplate1 li.onhover a
+{
+    background: white url(bg.gif) repeat-x 0 -48px;
+   
+    color: #000;
+    z-index: 9;
+}
+.menuTemplate1 a.arrow
+{
+    background: url(arrow.gif) no-repeat right center;
+}
+ 
+        
+/*Used to align a top-level item to the right*/        
+.menuTemplate1 li.menuRight
+{
+    float: right;
+    margin-right: 0px;
+}
+        
+/*for the top-level separators*/
+.menuTemplate1 li.separator
+{
+    font-size:0;
+    overflow:hidden;
+    border-left:1px solid #F7F7F7;
+    border-right:1px solid #BBBBBB;
+    z-index:4;
+}
+               
+        
+/* sub level
+--------------------------------------------*/
+        
+.menuTemplate1 .drop
+{
+    position: absolute;
+    z-index:5;
+    left: -9999px;
+    border: 1px solid #DDD;
+    border-bottom:3px solid #0F4F89;
+    background: #FFF;            
+    text-align: left;
+    padding: 20px;  
+    color:#0F4F89;
+    top:34px;              
+}
+
+.menuTemplate1 .drop a
+{
+    padding-left: 0px;
+    padding-right: 0px;
+    line-height: 26px;
+    font-size: 12px;
+    font-weight: normal;
+    display: inline;
+    text-align: left;
+    
+    position: static;
+    z-index: 0;
+    background-image:none;
+}
+
+.menuTemplate1 li:hover .drop, .menuTemplate1 li.onhover .drop
+{
+    left: -1px;/*Use this property to change offset of the dropdown*/
+    background:white url(bg-right.png) no-repeat right bottom;
+}
+.menuTemplate1 li:hover .dropToLeft, .menuTemplate1 li.onhover .dropToLeft
+{
+    left: auto;
+    right: -1px;
+    background:white url(bg-left.png) no-repeat 0 bottom;
+}
+.menuTemplate1 li:hover .dropToLeft2, .menuTemplate1 li.onhover .dropToLeft2
+{
+    left: auto;
+    right: -60px;
+}
+
+/* Elements within the drop down sub-menu
+--------------------------------------------*/
+
+.menuTemplate1 div.drop div div
+{
+    padding: 6px 20px;
+}
+.menuTemplate1 li:hover .drop a, .menuTemplate1 li.onhover .drop a
+{
+    background: none;
+    background-image:none;
+    padding:0 0;
+}
+.menuTemplate1 div.drop div a
+{
+    line-height: 24px;  
+    color: #0F4F89;
+    background:none;
+}
+.menuTemplate1 div.drop div a:hover
+{
+    text-decoration:underline;
+    cursor:pointer;
+    color:Red;
+}
+
+.menuTemplate1 div.left {float:left;}
+
+        
+/* CSS3 effects
+--------------------------------------------*/
+
+/*for top-level*/     
+.decor1_1 
+{
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    -moz-box-shadow: 0px 1px 4px #ccc;
+    -webkit-box-shadow: 0px 1px 4px #ccc;
+    box-shadow: 0px 1px 4px #ccc;
+            
+}
+
+/*for submenu.*/    
+.decor1_2 
+{
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+
+    -moz-box-shadow: 0px 12px 20px #CCCCCC;
+    -webkit-box-shadow: 0px 12px 20px #CCCCCC;
+    box-shadow: 0px 12px 20px #CCCCCC;  
+}

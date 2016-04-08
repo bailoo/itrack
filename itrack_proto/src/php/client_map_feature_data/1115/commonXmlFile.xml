@@ -1,0 +1,644 @@
+<t1>
+<marker vname="300313(7635)" cno="1002738" rno="300427" plant="1130" adt="42359 25569.33337963" hd="25569.096643519" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300313(7635)" cno="1018061" rno="300427" plant="1130" adt="42359 25569.33337963" hd="25569.096643519" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300119(4041)" cno="1007245" rno="300119" plant="1130" adt="42359 25569.333391204" hd="25569.008275463" tname="Sai Sandesh Transport Services"/>
+<marker vname="300307(4571)" cno="1002577" rno="300313" plant="1130" adt="42359 25569.333391204" hd="25569.005219907" tname="UMA M. PAWAR"/>
+<marker vname="300307(4571)" cno="1005601" rno="300303" plant="1130" adt="42359 25569.333391204" hd="25569.005219907" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300112(E2746)" cno="1002602" rno="300112" plant="1130" adt="42359 25569.333414352" hd="25569.509826389" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300414(5156)" cno="1002847" rno="300428" plant="1130" adt="42359 25569.333414352" hd="25569.666805556" tname="Poonam Kailash Falke"/>
+<marker vname="300426(5551)" cno="1002886" rno="300205" plant="1130" adt="42359 25569.333414352" hd="25569.1259375" tname="Saiprasad Enterprises"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1002602" rno="300112" plant="1130" adt="42359 25569.333414352" hd="25569.101828704" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300308(4282)" cno="1002886" rno="300205" plant="1130" adt="42359 25569.333425926" hd="25569.526747685" tname="Saiprasad Enterprises"/>
+<marker vname="300102(6665)" cno="1007032" rno="300102" plant="1130" adt="42359 25569.3334375" hd="25569.010324074" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300302(8618)" cno="1002796" rno="300302" plant="1130" adt="42359 25569.3334375" hd="25569.773900463" tname="PRASHANT NARAYAN PARAB"/>
+<marker vname="300302(8618)" cno="1013570@Wadala 2" rno="300302" plant="1130" adt="42359 25569.3334375" hd="25569.773900463" tname="PRASHANT NARAYAN PARAB"/>
+<marker vname="300205(9165)" cno="1007282" rno="300205" plant="1130" adt="42359 25569.333449074" hd="25569.754201389" tname="Saiprasad Enterprises"/>
+<marker vname="300205(9165)" cno="1013423" rno="300205" plant="1130" adt="42359 25569.333449074" hd="25569.754201389" tname="Saiprasad Enterprises"/>
+<marker vname="300404(2725)" cno="1002835" rno="300404" plant="1130" adt="42359 25569.333449074" hd="25569.128761574" tname="Shivans Transport"/>
+<marker vname="300404(2725)" cno="1017900" rno="300404" plant="1130" adt="42359 25569.333449074" hd="25569.128761574" tname="Shivans Transport"/>
+<marker vname="300203(1286)" cno="1002604" rno="300203" plant="1130" adt="42359 25569.333877315" hd="25569.080127315" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300203(1286)" cno="1009940@khargar" rno="300103" plant="1130" adt="42359 25569.333877315" hd="25569.080127315" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300417(1187)" cno="1017103" rno="300417" plant="1130" adt="42359 25569.3375" hd="25569.001527778" tname="Shivans Transport"/>
+<marker vname="300501(8872)" cno="1002738" rno="300427" plant="1130" adt="42359 25569.340300926" hd="25569.03630787" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300501(8872)" cno="1018061" rno="300427" plant="1130" adt="42359 25569.340300926" hd="25569.03630787" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300304(U2746)" cno="1002866" rno="300304" plant="1130" adt="42359 25569.34130787" hd="25569.011087963" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300304(U2746)" cno="1018277" rno="300304" plant="1130" adt="42359 25569.34130787" hd="25569.011087963" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300303(3603)" cno="1014734" rno="300301" plant="1130" adt="42359 25569.352141204" hd="25569.035497685" tname="Rajesh Y Wadla"/>
+<marker vname="300303(3603)" cno="1014734@matunga" rno="300301" plant="1130" adt="42359 25569.352141204" hd="25569.035497685" tname="Rajesh Y Wadla"/>
+<marker vname="300312(0035)" cno="1002738" rno="300427" plant="1130" adt="42359 25569.352222222" hd="25569.264074074" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300312(0035)" cno="1018061" rno="300427" plant="1130" adt="42359 25569.352222222" hd="25569.264074074" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300314(9961)" cno="1002738" rno="300427" plant="1130" adt="42359 25569.352233796" hd="25569.070844907" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300314(9961)" cno="1018061" rno="300427" plant="1130" adt="42359 25569.352233796" hd="25569.070844907" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300304(U2746)" cno="1008314" rno="300304" plant="1130" adt="42359 25569.356377315" hd="25569.003576389" tname="Shri Sai Krupa Distributors"/>
+<marker vname="Goregaon primery 2" cno="1006989" rno="300119" plant="1130" adt="42359 25569.364652778" hd="25569.006018519" tname="Sai Sandesh Transport Services"/>
+<marker vname="MH-04 EL 1820-Pune Primery" cno="1002602" rno="300112" plant="1130" adt="42359 25569.377847222" hd="25569.317453704" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300213(8841)" cno="1007032" rno="300102" plant="1130" adt="42359 25569.38462963" hd="25569.040416667" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300307(4571)" cno="1002866" rno="300304" plant="1130" adt="42359 25569.390555556" hd="25569.005243056" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300307(4571)" cno="1018277" rno="300304" plant="1130" adt="42359 25569.390555556" hd="25569.005243056" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300307(4571)" cno="1017011" rno="300307" plant="1130" adt="42359 25569.405381944" hd="25569.005266204" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300450(5920)" cno="1013467" rno="300446" plant="1130" adt="42359 25569.42474537" hd="25569.029212963" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="Goregaon primery 2" cno="1002602" rno="300112" plant="1130" adt="42359 25569.429363426" hd="25569.373009259" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300501(8872)" cno="1002738" rno="300427" plant="1130" adt="42359 25569.4384375" hd="25569.362453704" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300501(8872)" cno="1018061" rno="300427" plant="1130" adt="42359 25569.4384375" hd="25569.362453704" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300304(U2746)" cno="1002602" rno="300112" plant="1130" adt="42359 25569.461944444" hd="25569.008414352" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300418(9035)" cno="1013213" rno="300119" plant="1130" adt="42359 25569.469490741" hd="25569.033877315" tname="Sai Sandesh Transport Services"/>
+<marker vname="300404(2725)" cno="1017109" rno="300414" plant="1130" adt="42359 25569.480625" hd="25569.059490741" tname="Shivans Transport"/>
+<marker vname="300417(1187)" cno="1014578" rno="300305" plant="1130" adt="42359 25569.489409722" hd="25569.002673611" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300418(9035)" cno="1007573" rno="300119" plant="1130" adt="42359 25569.491226852" hd="25569.012141204" tname="Sai Sandesh Transport Services"/>
+<marker vname="300313(7635)" cno="1002738" rno="300427" plant="1130" adt="42359 25569.501851852" hd="25569.002164352" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300313(7635)" cno="1018061" rno="300427" plant="1130" adt="42359 25569.501851852" hd="25569.002164352" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300301(1104)" cno="1017515" rno="300427" plant="1130" adt="42359 25569.521354167" hd="25569.068576389" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300314(9961)" cno="1005949" rno="300106" plant="1130" adt="42359 25569.529722222" hd="25569.006782407" tname="Dharamraj Singh Yadav"/>
+<marker vname="300426(5551)" cno="1010007" rno="300418" plant="1130" adt="42359 25569.530543981" hd="25569.003055556" tname="Shivans Transport"/>
+<marker vname="300450(5920)" cno="1014458" rno="300446" plant="1130" adt="42359 25569.531354167" hd="25569.005856481" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300450(5920)" cno="1014637" rno="300447" plant="1130" adt="42359 25569.531354167" hd="25569.005856481" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300213(8841)" cno="1002724" rno="300102" plant="1130" adt="42359 25569.531365741" hd="25569.014849537" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300213(8841)" cno="1005248" rno="300102" plant="1130" adt="42359 25569.531365741" hd="25569.014849537" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300426(5551)" cno="1002704" rno="300401" plant="1130" adt="42359 25569.537997685" hd="25569.006921296" tname="Nemin Transport"/>
+<marker vname="300314(9961)" cno="1015818" rno="300304" plant="1130" adt="42359 25569.545717593" hd="25569.0046875" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300428(7239)" cno="1006865" rno="300301" plant="1130" adt="42359 25569.553506944" hd="25569.001527778" tname="Rajesh Y Wadla"/>
+<marker vname="300314(9961)" cno="1002797" rno="300301" plant="1130" adt="42359 25569.55400463" hd="25569.024409722" tname="Rajesh Y Wadla"/>
+<marker vname="300313(7635)" cno="1004911" rno="300308" plant="1130" adt="42359 25569.556180556" hd="25569.002546296" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300404(2725)" cno="1002835" rno="300404" plant="1130" adt="42359 25569.560960648" hd="25569.367268519" tname="Shivans Transport"/>
+<marker vname="300404(2725)" cno="1017900" rno="300404" plant="1130" adt="42359 25569.560960648" hd="25569.367268519" tname="Shivans Transport"/>
+<marker vname="300313(7635)" cno="1005517" rno="300308" plant="1130" adt="42359 25569.561273148" hd="25569.005462963" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300313(7635)" cno="1006429" rno="300308" plant="1130" adt="42359 25569.561273148" hd="25569.005462963" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300313(7635)" cno="1017836" rno="300308" plant="1130" adt="42359 25569.56775463" hd="25569.003055556" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300426(5551)" cno="1002681@Kalina" rno="300418" plant="1130" adt="42359 25569.569386574" hd="25569.005763889" tname="Shivans Transport"/>
+<marker vname="300313(7635)" cno="1002630" rno="300308" plant="1130" adt="42359 25569.571701389" hd="25569.007002315" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300313(7635)" cno="1003886" rno="300308" plant="1130" adt="42359 25569.571701389" hd="25569.007002315" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300313(7635)" cno="1002641" rno="300308" plant="1130" adt="42359 25569.583402778" hd="25569.005729167" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300418(9035)" cno="1002847" rno="300428" plant="1130" adt="42359 25569.592905093" hd="25569.081840278" tname="Poonam Kailash Falke"/>
+<marker vname="300428(7239)" cno="1013213" rno="300119" plant="1130" adt="42359 25569.59431713" hd="25569.002291667" tname="Sai Sandesh Transport Services"/>
+<marker vname="300314(9961)" cno="1002804" rno="300305" plant="1130" adt="42359 25569.595625" hd="25569.00994213" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300314(9961)" cno="1009864@Phonex" rno="300309/300313/300313/300404/300420" plant="1130" adt="42359 25569.595625" hd="25569.00994213" tname="NILESH VILASH MORE/UMA M. PAWAR/UMA M. PAWAR/Shivans Transport/BHARAT KISHAN YADAV"/>
+<marker vname="300428(7239)" cno="1007573" rno="300119" plant="1130" adt="42359 25569.598900463" hd="25569.004965278" tname="Sai Sandesh Transport Services"/>
+<marker vname="300426(5551)" cno="1002828" rno="300403" plant="1130" adt="42359 25569.599131944" hd="25569.003854167" tname="Sai Sandesh Transport Services"/>
+<marker vname="300115(1223)" cno="1004758" rno="300108" plant="1130" adt="42359 25569.606006944" hd="25569.005856481" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300115(1223)" cno="1018367" rno="300108" plant="1130" adt="42359 25569.606006944" hd="25569.005856481" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300115(1223)" cno="1018367@kurla" rno="300108" plant="1130" adt="42359 25569.606006944" hd="25569.005856481" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300106(0109)" cno="1002622" rno="300303" plant="1130" adt="42359 25569.610648148" hd="25569.004074074" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300314(9961)" cno="1007571" rno="300302" plant="1130" adt="42359 25569.61505787" hd="25569.005486111" tname="PRASHANT NARAYAN PARAB"/>
+<marker vname="300305(719)" cno="1004911" rno="300308" plant="1130" adt="42359 25569.615798611" hd="25569.009699074" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300106(0109)" cno="1002643" rno="300303/300307" plant="1130" adt="42359 25569.617511574" hd="25569.078217593" tname="VASANT NAMDEO  GHOLAP/SUHAS TRANSPORT SERVICE"/>
+<marker vname="300301(1104)" cno="1017011" rno="300307" plant="1130" adt="42359 25569.619386574" hd="25569.02099537" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002721" rno="300427" plant="1130" adt="42359 25569.621712963" hd="25569.125474537" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300212(290)" cno="1002771" rno="300108" plant="1130" adt="42359 25569.621712963" hd="25569.125474537" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002772" rno="300108" plant="1130" adt="42359 25569.621712963" hd="25569.125474537" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002773" rno="300108" plant="1130" adt="42359 25569.621712963" hd="25569.125474537" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002774" rno="300108" plant="1130" adt="42359 25569.621712963" hd="25569.125474537" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002775" rno="300108" plant="1130" adt="42359 25569.621712963" hd="25569.125474537" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002776" rno="300108" plant="1130" adt="42359 25569.621712963" hd="25569.125474537" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002777" rno="300108" plant="1130" adt="42359 25569.621712963" hd="25569.125474537" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002778" rno="300108" plant="1130" adt="42359 25569.621712963" hd="25569.125474537" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1004621" rno="300108" plant="1130" adt="42359 25569.621712963" hd="25569.125474537" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1012841" rno="300108" plant="1130" adt="42359 25569.621712963" hd="25569.125474537" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300314(9961)" cno="1002796" rno="300302" plant="1130" adt="42359 25569.622453704" hd="25569.004710648" tname="PRASHANT NARAYAN PARAB"/>
+<marker vname="300314(9961)" cno="1013570@Wadala 2" rno="300302" plant="1130" adt="42359 25569.622453704" hd="25569.004710648" tname="PRASHANT NARAYAN PARAB"/>
+<marker vname="300210(7985)" cno="1002585" rno="300102" plant="1130" adt="42359 25569.626643519" hd="25569.006979167" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300313(7635)" cno="1002738" rno="300427" plant="1130" adt="42359 25569.627824074" hd="25569.348761574" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300313(7635)" cno="1018061" rno="300427" plant="1130" adt="42359 25569.627824074" hd="25569.348761574" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300314(9961)" cno="1002798" rno="300305" plant="1130" adt="42359 25569.631273148" hd="25569.007175926" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300314(9961)" cno="1004759" rno="300301" plant="1130" adt="42359 25569.631273148" hd="25569.007175926" tname="Rajesh Y Wadla"/>
+<marker vname="300301(1104)" cno="1002867" rno="300314" plant="1130" adt="42359 25569.640891204" hd="25569.019837963" tname="Mangalmurti Transport"/>
+<marker vname="300446(2232)" cno="1013133" rno="300449" plant="1130" adt="42359 25569.646608796" hd="25569.003819444" tname="Ramful Transport"/>
+<marker vname="300105(4838)" cno="1002829" rno="300414" plant="1130" adt="42359 25569.659814815" hd="25569.117638889" tname="Shivans Transport"/>
+<marker vname="300301(1104)" cno="1007192" rno="300314" plant="1130" adt="42359 25569.66849537" hd="25569.018645833" tname="Mangalmurti Transport"/>
+<marker vname="300426(5551)" cno="1002886" rno="300205" plant="1130" adt="42359 25569.673356481" hd="25569.169768519" tname="Saiprasad Enterprises"/>
+<marker vname="300409(9156)" cno="1002630" rno="300308" plant="1130" adt="42359 25569.673460648" hd="25569.001655093" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300409(9156)" cno="1003886" rno="300308" plant="1130" adt="42359 25569.673460648" hd="25569.001655093" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300314(9961)" cno="1002738" rno="300427" plant="1130" adt="42359 25569.67369213" hd="25569.304398148" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300314(9961)" cno="1018061" rno="300427" plant="1130" adt="42359 25569.67369213" hd="25569.304398148" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300305(719)" cno="1005949" rno="300106" plant="1130" adt="42359 25569.681828704" hd="25569.006157407" tname="Dharamraj Singh Yadav"/>
+<marker vname="300301(1104)" cno="1006968" rno="300303" plant="1130" adt="42359 25569.688923611" hd="25569.002407407" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300305(719)" cno="1017090" rno="300106" plant="1130" adt="42359 25569.690532407" hd="25569.0015625" tname="Dharamraj Singh Yadav"/>
+<marker vname="300409(9156)" cno="1002722" rno="300108" plant="1130" adt="42359 25569.697141204" hd="25569.008668981" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300450(5920)" cno="1013467" rno="300446" plant="1130" adt="42359 25569.708125" hd="25569.028333333" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300305(719)" cno="1002738" rno="300427" plant="1130" adt="42359 25569.708611111" hd="25569.017233796" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300305(719)" cno="1018061" rno="300427" plant="1130" adt="42359 25569.711539352" hd="25569.014305556" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300106(0109)" cno="1002866" rno="300304" plant="1130" adt="42359 25569.71443287" hd="25569.001527778" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300201(6024)" cno="1013256" rno="300103" plant="1130" adt="42359 25569.723483796" hd="25569.007546296" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300428(7239)" cno="1007573" rno="300119" plant="1130" adt="42359 25569.734814815" hd="25569.005347222" tname="Sai Sandesh Transport Services"/>
+<marker vname="300428(7239)" cno="1013213" rno="300119" plant="1130" adt="42359 25569.737233796" hd="25569.002928241" tname="Sai Sandesh Transport Services"/>
+<marker vname="300119(4041)" cno="1002829" rno="300414" plant="1130" adt="42359 25569.784305556" hd="25569.002789352" tname="Shivans Transport"/>
+<marker vname="300446(2232)" cno="1013133" rno="300449" plant="1130" adt="42359 25569.800694444" hd="25569.002164352" tname="Ramful Transport"/>
+<marker vname="300105(4838)" cno="1006881" rno="300119" plant="1130" adt="42359 25569.807615741" hd="25569.001898148" tname="Sai Sandesh Transport Services"/>
+<marker vname="300105(4838)" cno="1006989" rno="300119" plant="1130" adt="42359 25569.816597222" hd="25569.006550926" tname="Sai Sandesh Transport Services"/>
+<marker vname="MH-04 EL 1820-Pune Primery" cno="1002602" rno="300112" plant="1130" adt="42359 25569.818900463" hd="25569.012905093" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300119(4041)" cno="1006989" rno="300119" plant="1130" adt="42359 25569.83068287" hd="25569.002037037" tname="Sai Sandesh Transport Services"/>
+<marker vname="300418(9035)" cno="1002681" rno="300418" plant="1130" adt="42359 25569.849502315" hd="25569.013032407" tname="Shivans Transport"/>
+<marker vname="300418(9035)" cno="1002697" rno="300418" plant="1130" adt="42359 25569.849502315" hd="25569.013032407" tname="Shivans Transport"/>
+<marker vname="300418(9035)" cno="1002850" rno="300418" plant="1130" adt="42359 25569.849502315" hd="25569.013032407" tname="Shivans Transport"/>
+<marker vname="300405(2691)" cno="1005733" rno="300103" plant="1130" adt="42359 25569.850335648" hd="25569.010601852" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300501(8872)" cno="1016472" rno="300428" plant="1130" adt="42359 25569.853587963" hd="25569.023576389" tname="Poonam Kailash Falke"/>
+<marker vname="300212(290)" cno="1018060" rno="300212" plant="1130" adt="42359 25569.88400463" hd="25569.011157407" tname="Rishi K Varak"/>
+<marker vname="300449(6270)" cno="1018323" rno="300446" plant="1130" adt="42359 25569.894965278" hd="25569.121574074" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300447(9576)" cno="1018323" rno="300446" plant="1130" adt="42359 25569.925185185" hd="25569.104270833" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300404(2725)" cno="1002826" rno="300404/300414" plant="1130" adt="42359 25569.938356481" hd="25569.002627315" tname="Shivans Transport"/>
+<marker vname="300446(2232)" cno="1018323" rno="300446" plant="1130" adt="42359 25569.938564815" hd="25569.137291667" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300404(2725)" cno="1015603" rno="300404" plant="1130" adt="42359 25569.946273148" hd="25569.003819444" tname="Shivans Transport"/>
+<marker vname="300450(5920)" cno="1018323" rno="300446" plant="1130" adt="42359 25569.946770833" hd="25569.091851852" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300112(E2746)" cno="1002602" rno="300112" plant="1130" adt="42359 25569.948356481" hd="25569.023865741" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300415(8748)" cno="1002602" rno="300112" plant="1130" adt="42359 25569.955578704" hd="25569.016944444" tname="Shri Sai Krupa Distributors"/>
+<marker vname="Goregaon primery 2" cno="1002602" rno="300112" plant="1130" adt="42359 25569.956388889" hd="25569.02" tname="Shri Sai Krupa Distributors"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1002602" rno="300112" plant="1130" adt="42359 25569.963888889" hd="25569.023483796" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300210(7985)" cno="1016913" rno="300210" plant="1130" adt="42359 25569.967291667" hd="25569.004201389" tname="Dharamraj Singh Yadav"/>
+<marker vname="300404(2725)" cno="1002816" rno="300417" plant="1130" adt="42359 25569.968854167" hd="25569.090451389" tname="Shivans Transport"/>
+<marker vname="300210(7985)" cno="1002593" rno="300210" plant="1130" adt="42359 25569.973923611" hd="25569.008819444" tname="Dharamraj Singh Yadav"/>
+<marker vname="300448(9870)" cno="1018323" rno="300446" plant="1130" adt="42359 25569.974756944" hd="25569.074074074" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300420(4368)" cno="1007715" rno="300420" plant="1130" adt="42359 25569.975289352" hd="25569.002789352" tname="BHARAT KISHAN YADAV"/>
+<marker vname="300102(6665)" cno="1005246" rno="300102" plant="1130" adt="42359 25569.981134259" hd="25569.013252315" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="MH-04 EL 1820-Pune Primery" cno="1018323" rno="300446" plant="1130" adt="42359 25569.98193287" hd="25569.110509259" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300106(0109)" cno="1013289" rno="300202/300210/300305" plant="1130" adt="42359 25569.982650463" hd="25569.009907407" tname="Sai Sandesh Transport Services/Dharamraj Singh Yadav/ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300106(0109)" cno="1017014" rno="300106" plant="1130" adt="42359 25569.982650463" hd="25569.009907407" tname="Dharamraj Singh Yadav"/>
+<marker vname="300210(7985)" cno="1002592" rno="300210" plant="1130" adt="42359 25569.98337963" hd="25569.006631944" tname="Dharamraj Singh Yadav"/>
+<marker vname="300308(4282)" cno="1005950" rno="300308" plant="1130" adt="42359 25569.995706019" hd="25569.010451389" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300212(290)" cno="1002721" rno="300427" plant="1130" adt="42359 25569.998148148" hd="25569.07431713" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300212(290)" cno="1002771" rno="300108" plant="1130" adt="42359 25569.998148148" hd="25569.07431713" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002772" rno="300108" plant="1130" adt="42359 25569.998148148" hd="25569.299733796" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002773" rno="300108" plant="1130" adt="42359 25569.998148148" hd="25569.299733796" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002774" rno="300108" plant="1130" adt="42359 25569.998148148" hd="25569.299733796" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002775" rno="300108" plant="1130" adt="42359 25569.998148148" hd="25569.299733796" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002776" rno="300108" plant="1130" adt="42359 25569.998148148" hd="25569.299733796" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002777" rno="300108" plant="1130" adt="42359 25569.998148148" hd="25569.299733796" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002778" rno="300108" plant="1130" adt="42359 25569.998148148" hd="25569.07431713" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1004621" rno="300108" plant="1130" adt="42359 25569.998148148" hd="25569.299733796" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1012841" rno="300108" plant="1130" adt="42359 25569.998148148" hd="25569.299733796" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300401(1239)" cno="1003810" rno="300401" plant="1130" adt="42360 25569.000173611" hd="25569.013194444" tname="Nemin Transport"/>
+<marker vname="300409(9156)" cno="1002730" rno="300112" plant="1130" adt="42360 25569.000462963" hd="25569.006759259" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300409(9156)" cno="1008823@Malad" rno="300115/300404/300409/300420" plant="1130" adt="42360 25569.000462963" hd="25569.006759259" tname="SACHIN DASHARATH THORAT/Shivans Transport/NAMDEO TANAJI DESHMUKH/BHARAT KISHAN YADAV"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1002580" rno="300112" plant="1130" adt="42360 25569.002349537" hd="25569.012986111" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300106(0109)" cno="1007244" rno="300106" plant="1130" adt="42360 25569.002604167" hd="25569.197719907" tname="Dharamraj Singh Yadav"/>
+<marker vname="300106(0109)" cno="1008499" rno="300106" plant="1130" adt="42360 25569.002604167" hd="25569.197719907" tname="Dharamraj Singh Yadav"/>
+<marker vname="300106(0109)" cno="1017961" rno="300106" plant="1130" adt="42360 25569.002604167" hd="25569.116226852" tname="Dharamraj Singh Yadav"/>
+<marker vname="300102(6665)" cno="1015719" rno="300102" plant="1130" adt="42360 25569.003564815" hd="25569.002418981" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300103(8850)" cno="1002857" rno="300103" plant="1130" adt="42360 25569.004513889" hd="25569.014247685" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300103(8850)" cno="1013456" rno="300103/300115" plant="1130" adt="42360 25569.004513889" hd="25569.014247685" tname="Pushpa Bhagwan Jadhav/SACHIN DASHARATH THORAT"/>
+<marker vname="300115(1223)" cno="1003612" rno="300115" plant="1130" adt="42360 25569.004618056" hd="25569.003819444" tname="SACHIN DASHARATH THORAT"/>
+<marker vname="300115(1223)" cno="1015140" rno="300115" plant="1130" adt="42360 25569.004618056" hd="25569.003819444" tname="SACHIN DASHARATH THORAT"/>
+<marker vname="300418(9035)" cno="1002816" rno="300417" plant="1130" adt="42360 25569.005902778" hd="25569.049131944" tname="Shivans Transport"/>
+<marker vname="300426(5551)" cno="1015590" rno="300426" plant="1130" adt="42360 25569.007256944" hd="25569.0096875" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300308(4282)" cno="1002794" rno="300308" plant="1130" adt="42360 25569.007685185" hd="25569.015798611" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300308(4282)" cno="1017161" rno="300308" plant="1130" adt="42360 25569.007685185" hd="25569.015798611" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300420(4368)" cno="1004094" rno="300420" plant="1130" adt="42360 25569.009884259" hd="25569.010821759" tname="BHARAT KISHAN YADAV"/>
+<marker vname="Goregaon primery 2" cno="1010181" rno="300415" plant="1130" adt="42360 25569.012858796" hd="25569.004074074" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300102(6665)" cno="1002585" rno="300102" plant="1130" adt="42360 25569.013368056" hd="25569.0078125" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300115(1223)" cno="1003943" rno="300115" plant="1130" adt="42360 25569.014236111" hd="25569.010868056" tname="SACHIN DASHARATH THORAT"/>
+<marker vname="300304(U2746)" cno="1015818" rno="300304" plant="1130" adt="42360 25569.015972222" hd="25569.01431713" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300304(U2746)" cno="1002648@Madanpura" rno="300304" plant="1130" adt="42360 25569.015972222" hd="25569.01431713" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300210(7985)" cno="1002594" rno="300203" plant="1130" adt="42360 25569.018229167" hd="25569.01099537" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300210(7985)" cno="1015825" rno="300213" plant="1130" adt="42360 25569.018229167" hd="25569.01099537" tname="Rajesh Y Wadla"/>
+<marker vname="300210(7985)" cno="1009966@khargar" rno="300210" plant="1130" adt="42360 25569.018229167" hd="25569.01099537" tname="Dharamraj Singh Yadav"/>
+<marker vname="300405(2691)" cno="1014656" rno="300405" plant="1130" adt="42360 25569.020104167" hd="25569.006122685" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300405(2691)" cno="1016831" rno="300414" plant="1130" adt="42360 25569.020104167" hd="25569.006122685" tname="Shivans Transport"/>
+<marker vname="300103(8850)" cno="1002580" rno="300112" plant="1130" adt="42360 25569.02318287" hd="25569.001631944" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300414(5156)" cno="1002816" rno="300417" plant="1130" adt="42360 25569.023263889" hd="25569.083796296" tname="Shivans Transport"/>
+<marker vname="300426(5551)" cno="1002708" rno="300426" plant="1130" adt="42360 25569.023472222" hd="25569.006631944" tname="Shree Sevagiri Enterprises"/>
+<marker vname="Goregaon primery 2" cno="1002680" rno="300415" plant="1130" adt="42360 25569.024143519" hd="25569.008784722" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300112(E2746)" cno="1002816" rno="300417" plant="1130" adt="42360 25569.025659722" hd="25569.112280093" tname="Shivans Transport"/>
+<marker vname="300401(1239)" cno="1002666" rno="300401" plant="1130" adt="42360 25569.026689815" hd="25569.011539352" tname="Nemin Transport"/>
+<marker vname="300415(8748)" cno="1002816" rno="300417" plant="1130" adt="42360 25569.027094907" hd="25569.212962963" tname="Shivans Transport"/>
+<marker vname="300403(4755)" cno="1002877" rno="300403" plant="1130" adt="42360 25569.027326389" hd="25569.010578704" tname="Sai Sandesh Transport Services"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1012430" rno="300112/300119/300119/300210" plant="1130" adt="42360 25569.028113426" hd="25569.008032407" tname="Shri Sai Krupa Distributors/Sai Sandesh Transport Services/Sai Sandesh Transport Services/Dharamraj Singh Yadav"/>
+<marker vname="300308(4282)" cno="1005539" rno="300308" plant="1130" adt="42360 25569.02900463" hd="25569.008912037" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300405(2691)" cno="1005909" rno="300405" plant="1130" adt="42360 25569.029189815" hd="25569.006747685" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300405(2691)" cno="1005909@Dahisar" rno="300405" plant="1130" adt="42360 25569.029189815" hd="25569.006747685" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300420(4368)" cno="1017830" rno="300420" plant="1130" adt="42360 25569.029351852" hd="25569.013425926" tname="BHARAT KISHAN YADAV"/>
+<marker vname="300102(6665)" cno="1006378" rno="300102" plant="1130" adt="42360 25569.029618056" hd="25569.006122685" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300304(U2746)" cno="1002797" rno="300301" plant="1130" adt="42360 25569.030590278" hd="25569.011712963" tname="Rajesh Y Wadla"/>
+<marker vname="300203(1286)" cno="1002594" rno="300203" plant="1130" adt="42360 25569.032962963" hd="25569.0075" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300203(1286)" cno="1015825" rno="300213" plant="1130" adt="42360 25569.032962963" hd="25569.0075" tname="Rajesh Y Wadla"/>
+<marker vname="300203(1286)" cno="1009966@khargar" rno="300210" plant="1130" adt="42360 25569.032962963" hd="25569.0075" tname="Dharamraj Singh Yadav"/>
+<marker vname="300115(1223)" cno="1009569" rno="300115" plant="1130" adt="42360 25569.033460648" hd="25569.012650463" tname="SACHIN DASHARATH THORAT"/>
+<marker vname="300426(5551)" cno="1002674" rno="300405/300426" plant="1130" adt="42360 25569.033541667" hd="25569.014305556" tname="NAMDEO TANAJI DESHMUKH/Shree Sevagiri Enterprises"/>
+<marker vname="300201(6024)" cno="1013454" rno="300115/300201" plant="1130" adt="42360 25569.034131944" hd="25569.003703704" tname="SACHIN DASHARATH THORAT/Suresh Bhagwan Zole"/>
+<marker vname="300201(6024)" cno="1013454@Thane" rno="300115/300201" plant="1130" adt="42360 25569.034131944" hd="25569.003703704" tname="SACHIN DASHARATH THORAT/Suresh Bhagwan Zole"/>
+<marker vname="300447(9576)" cno="1015802" rno="300447" plant="1130" adt="42360 25569.036076389" hd="25569.013865741" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300108(1637)" cno="1004758" rno="300108" plant="1130" adt="42360 25569.037268519" hd="25569.009791667" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300108(1637)" cno="1018367" rno="300108" plant="1130" adt="42360 25569.037268519" hd="25569.018171296" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300108(1637)" cno="1018367@kurla" rno="300108" plant="1130" adt="42360 25569.037268519" hd="25569.018171296" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300303(3603)" cno="1006968" rno="300303" plant="1130" adt="42360 25569.038657407" hd="25569.004837963" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300409(9156)" cno="1017250" rno="300409" plant="1130" adt="42360 25569.039409722" hd="25569.008148148" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1002582" rno="300112" plant="1130" adt="42360 25569.040347222" hd="25569.009178241" tname="Shri Sai Krupa Distributors"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1002726" rno="300112" plant="1130" adt="42360 25569.040347222" hd="25569.009178241" tname="Shri Sai Krupa Distributors"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1002763" rno="300112" plant="1130" adt="42360 25569.040347222" hd="25569.009178241" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300401(1239)" cno="1017899" rno="300401" plant="1130" adt="42360 25569.040648148" hd="25569.00662037" tname="Nemin Transport"/>
+<marker vname="300203(1286)" cno="1003815" rno="300203" plant="1130" adt="42360 25569.042372685" hd="25569.015266204" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300403(4755)" cno="1016982" rno="300403" plant="1130" adt="42360 25569.044143519" hd="25569.008032407" tname="Sai Sandesh Transport Services"/>
+<marker vname="300303(3603)" cno="1002623" rno="300303" plant="1130" adt="42360 25569.044641204" hd="25569.003564815" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300102(6665)" cno="1002724" rno="300102" plant="1130" adt="42360 25569.045625" hd="25569.007638889" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300102(6665)" cno="1005248" rno="300102" plant="1130" adt="42360 25569.045625" hd="25569.007638889" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300308(4282)" cno="1002641" rno="300308" plant="1130" adt="42360 25569.045798611" hd="25569.006597222" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300449(6270)" cno="1013110" rno="300449" plant="1130" adt="42360 25569.046157407" hd="25569.004675926" tname="Ramful Transport"/>
+<marker vname="300108(1637)" cno="1002721" rno="300427" plant="1130" adt="42360 25569.048078704" hd="25569.017407407" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300108(1637)" cno="1002771" rno="300108" plant="1130" adt="42360 25569.048078704" hd="25569.017407407" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300108(1637)" cno="1002772" rno="300108" plant="1130" adt="42360 25569.048078704" hd="25569.017407407" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300108(1637)" cno="1002773" rno="300108" plant="1130" adt="42360 25569.048078704" hd="25569.017407407" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300108(1637)" cno="1002774" rno="300108" plant="1130" adt="42360 25569.048078704" hd="25569.017407407" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300108(1637)" cno="1002775" rno="300108" plant="1130" adt="42360 25569.048078704" hd="25569.017407407" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300108(1637)" cno="1002776" rno="300108" plant="1130" adt="42360 25569.048078704" hd="25569.017407407" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300108(1637)" cno="1002777" rno="300108" plant="1130" adt="42360 25569.048078704" hd="25569.017407407" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300108(1637)" cno="1002778" rno="300108" plant="1130" adt="42360 25569.048078704" hd="25569.017407407" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300108(1637)" cno="1004621" rno="300108" plant="1130" adt="42360 25569.048078704" hd="25569.017407407" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300108(1637)" cno="1012841" rno="300108" plant="1130" adt="42360 25569.048078704" hd="25569.017407407" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300304(U2746)" cno="1017959" rno="300304" plant="1130" adt="42360 25569.048622685" hd="25569.01005787" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300305(719)" cno="1013289" rno="300202/300210/300305" plant="1130" adt="42360 25569.048981481" hd="25569.00369213" tname="Sai Sandesh Transport Services/Dharamraj Singh Yadav/ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300305(719)" cno="1017014" rno="300106" plant="1130" adt="42360 25569.048981481" hd="25569.00369213" tname="Dharamraj Singh Yadav"/>
+<marker vname="300119(4041)" cno="1013213" rno="300119" plant="1130" adt="42360 25569.049351852" hd="25569.019340278" tname="Sai Sandesh Transport Services"/>
+<marker vname="300420(4368)" cno="1003509" rno="300420" plant="1130" adt="42360 25569.050289352" hd="25569.002418981" tname="BHARAT KISHAN YADAV"/>
+<marker vname="300420(4368)" cno="1004723" rno="300420" plant="1130" adt="42360 25569.050289352" hd="25569.002418981" tname="BHARAT KISHAN YADAV"/>
+<marker vname="300420(4368)" cno="1003509@bandra" rno="300420" plant="1130" adt="42360 25569.050289352" hd="25569.002418981" tname="BHARAT KISHAN YADAV"/>
+<marker vname="300420(4368)" cno="1004723@bandra" rno="300420" plant="1130" adt="42360 25569.050289352" hd="25569.002418981" tname="BHARAT KISHAN YADAV"/>
+<marker vname="300426(5551)" cno="1006648" rno="300426" plant="1130" adt="42360 25569.050393519" hd="25569.006701389" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300401(1239)" cno="1002574" rno="300401" plant="1130" adt="42360 25569.051354167" hd="25569.015752315" tname="Nemin Transport"/>
+<marker vname="300401(1239)" cno="1003540" rno="300401" plant="1130" adt="42360 25569.051354167" hd="25569.015752315" tname="Nemin Transport"/>
+<marker vname="331005(JF2232)Hanumant Spare" cno="1018323" rno="300446" plant="1130" adt="42360 25569.052361111" hd="25569.006238426" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300303(3603)" cno="1009650" rno="300303/300304" plant="1130" adt="42360 25569.052407407" hd="25569.009027778" tname="VASANT NAMDEO  GHOLAP/Shri Sai Krupa Distributors"/>
+<marker vname="300308(4282)" cno="1002630" rno="300308" plant="1130" adt="42360 25569.053796296" hd="25569.086076389" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300308(4282)" cno="1003886" rno="300308" plant="1130" adt="42360 25569.053796296" hd="25569.086076389" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300202(8395)" cno="1017170" rno="300202" plant="1130" adt="42360 25569.05462963" hd="25569.00943287" tname="Sai Sandesh Transport Services"/>
+<marker vname="300420(4368)" cno="1009864@Juhu" rno="300309/300313/300313/300404/300420" plant="1130" adt="42360 25569.054872685" hd="25569.001898148" tname="NILESH VILASH MORE/UMA M. PAWAR/UMA M. PAWAR/Shivans Transport/BHARAT KISHAN YADAV"/>
+<marker vname="300405(2691)" cno="1002673" rno="300405" plant="1130" adt="42360 25569.055046296" hd="25569.027175926" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300102(6665)" cno="1007791" rno="300102" plant="1130" adt="42360 25569.055810185" hd="25569.002928241" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300420(4368)" cno="1005810" rno="300420" plant="1130" adt="42360 25569.057280093" hd="25569.002928241" tname="BHARAT KISHAN YADAV"/>
+<marker vname="300447(9576)" cno="1014458" rno="300446" plant="1130" adt="42360 25569.057326389" hd="25569.007627315" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300447(9576)" cno="1014637" rno="300447" plant="1130" adt="42360 25569.057326389" hd="25569.007627315" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300305(719)" cno="1018114" rno="300305" plant="1130" adt="42360 25569.0575" hd="25569.002291667" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300427(8830)" cno="1017714" rno="300427" plant="1130" adt="42360 25569.058043981" hd="25569.005972222" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300448(9870)" cno="1016722@ThyssenKurup" rno="300448/300450" plant="1130" adt="42360 25569.058703704" hd="25569.019664352" tname="Ramful Transport"/>
+<marker vname="300426(5551)" cno="1006836" rno="300426" plant="1130" adt="42360 25569.059166667" hd="25569.019108796" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300449(6270)" cno="1016953" rno="300449" plant="1130" adt="42360 25569.059363426" hd="25569.015393519" tname="Ramful Transport"/>
+<marker vname="300409(9156)" cno="1018341" rno="300409" plant="1130" adt="42360 25569.0603125" hd="25569.006377315" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300403(4755)" cno="1014580" rno="300403" plant="1130" adt="42360 25569.061122685" hd="25569.013541667" tname="Sai Sandesh Transport Services"/>
+<marker vname="300403(4755)" cno="1014580@kandiwali" rno="300403" plant="1130" adt="42360 25569.061122685" hd="25569.013541667" tname="Sai Sandesh Transport Services"/>
+<marker vname="300450(5920)" cno="1014450" rno="300450" plant="1130" adt="42360 25569.061608796" hd="25569.007372685" tname="Ramful Transport"/>
+<marker vname="300211(7048)" cno="1018059" rno="300211" plant="1130" adt="42360 25569.061643519" hd="25569.008148148" tname="Saiprasad Enterprises"/>
+<marker vname="300304(U2746)" cno="1008314" rno="300304" plant="1130" adt="42360 25569.062256944" hd="25569.002581019" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300102(6665)" cno="1007032" rno="300102" plant="1130" adt="42360 25569.064097222" hd="25569.076516204" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300203(1286)" cno="1006609" rno="300203" plant="1130" adt="42360 25569.064513889" hd="25569.015266204" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300203(1286)" cno="1016303" rno="300210" plant="1130" adt="42360 25569.064513889" hd="25569.015266204" tname="Dharamraj Singh Yadav"/>
+<marker vname="300305(719)" cno="1002798" rno="300305" plant="1130" adt="42360 25569.064571759" hd="25569.012233796" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300305(719)" cno="1004759" rno="300301" plant="1130" adt="42360 25569.064571759" hd="25569.012233796" tname="Rajesh Y Wadla"/>
+<marker vname="300303(3603)" cno="1002626" rno="300303/300307" plant="1130" adt="42360 25569.065" hd="25569.108912037" tname="VASANT NAMDEO  GHOLAP/SUHAS TRANSPORT SERVICE"/>
+<marker vname="300303(3603)" cno="1004635" rno="300303" plant="1130" adt="42360 25569.065" hd="25569.108912037" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300303(3603)" cno="1017600" rno="300313" plant="1130" adt="42360 25569.065" hd="25569.108912037" tname="UMA M. PAWAR"/>
+<marker vname="300418(9035)" cno="1014603" rno="300418" plant="1130" adt="42360 25569.065023148" hd="25569.005104167" tname="Shivans Transport"/>
+<marker vname="300202(8395)" cno="1007710" rno="300202" plant="1130" adt="42360 25569.065844907" hd="25569.002581019" tname="Sai Sandesh Transport Services"/>
+<marker vname="300420(4368)" cno="1005674" rno="300420" plant="1130" adt="42360 25569.066574074" hd="25569.018831019" tname="BHARAT KISHAN YADAV"/>
+<marker vname="300108(1637)" cno="1002722" rno="300108" plant="1130" adt="42360 25569.068287037" hd="25569.08369213" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300119(4041)" cno="1007573" rno="300119" plant="1130" adt="42360 25569.069456019" hd="25569.008020833" tname="Sai Sandesh Transport Services"/>
+<marker vname="300115(1223)" cno="1008823@Thane" rno="300115/300404/300409/300420" plant="1130" adt="42360 25569.070578704" hd="25569.003946759" tname="SACHIN DASHARATH THORAT/Shivans Transport/NAMDEO TANAJI DESHMUKH/BHARAT KISHAN YADAV"/>
+<marker vname="300202(8395)" cno="1005057" rno="300202" plant="1130" adt="42360 25569.070625" hd="25569.004375" tname="Sai Sandesh Transport Services"/>
+<marker vname="300418(9035)" cno="1015202" rno="300418" plant="1130" adt="42360 25569.072164352" hd="25569.005092593" tname="Shivans Transport"/>
+<marker vname="300404(2725)" cno="1008823@Inorbit" rno="300115/300404/300409/300420" plant="1130" adt="42360 25569.072337963" hd="25569.014907407" tname="SACHIN DASHARATH THORAT/Shivans Transport/NAMDEO TANAJI DESHMUKH/BHARAT KISHAN YADAV"/>
+<marker vname="300409(9156)" cno="1004890" rno="300409" plant="1130" adt="42360 25569.072523148" hd="25569.01630787" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300401(1239)" cno="1002687" rno="300401" plant="1130" adt="42360 25569.07337963" hd="25569.031851852" tname="Nemin Transport"/>
+<marker vname="300115(1223)" cno="1010012" rno="300115" plant="1130" adt="42360 25569.077013889" hd="25569.008576389" tname="SACHIN DASHARATH THORAT"/>
+<marker vname="Goregaon primery 2" cno="1002818" rno="300415" plant="1130" adt="42360 25569.077638889" hd="25569.024594907" tname="Shri Sai Krupa Distributors"/>
+<marker vname="Goregaon primery 2" cno="1017567" rno="300415" plant="1130" adt="42360 25569.077638889" hd="25569.024594907" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300201(6024)" cno="1004196" rno="300201" plant="1130" adt="42360 25569.078113426" hd="25569.143819444" tname="Suresh Bhagwan Zole"/>
+<marker vname="300406(608)" cno="1017012" rno="300406" plant="1130" adt="42360 25569.078217593" hd="25569.006747685" tname="Shivans Transport"/>
+<marker vname="300418(9035)" cno="1011257@" rno="300418" plant="1130" adt="42360 25569.078530093" hd="25569.004467593" tname="Shivans Transport"/>
+<marker vname="300426(5551)" cno="1002675" rno="300426" plant="1130" adt="42360 25569.078912037" hd="25569.004710648" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300427(8830)" cno="1002723" rno="300106" plant="1130" adt="42360 25569.079791667" hd="25569.006365741" tname="Dharamraj Singh Yadav"/>
+<marker vname="300427(8830)" cno="1002759" rno="300427" plant="1130" adt="42360 25569.079791667" hd="25569.006365741" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300305(719)" cno="1002801" rno="300305" plant="1130" adt="42360 25569.080115741" hd="25569.011851852" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300202(8395)" cno="1017105" rno="300202" plant="1130" adt="42360 25569.080601852" hd="25569.004201389" tname="Sai Sandesh Transport Services"/>
+<marker vname="300304(U2746)" cno="1009650" rno="300303/300304" plant="1130" adt="42360 25569.081759259" hd="25569.005983796" tname="VASANT NAMDEO  GHOLAP/Shri Sai Krupa Distributors"/>
+<marker vname="300203(1286)" cno="1017340" rno="300203/300210" plant="1130" adt="42360 25569.081944444" hd="25569.002164352" tname="ROHIDESHWAR GOODS TRANSPORT/Dharamraj Singh Yadav"/>
+<marker vname="300417(1187)" cno="1002816" rno="300417" plant="1130" adt="42360 25569.081967593" hd="25569.013634259" tname="Shivans Transport"/>
+<marker vname="300119(4041)" cno="1007784" rno="300119" plant="1130" adt="42360 25569.082048611" hd="25569.037025463" tname="Sai Sandesh Transport Services"/>
+<marker vname="300314(9961)" cno="1002656" rno="300312" plant="1130" adt="42360 25569.083321759" hd="25569.049340278" tname="Gouri Transport"/>
+<marker vname="300403(4755)" cno="1002819" rno="300403" plant="1130" adt="42360 25569.083657407" hd="25569.051261574" tname="Sai Sandesh Transport Services"/>
+<marker vname="300203(1286)" cno="1012589" rno="300203" plant="1130" adt="42360 25569.085243056" hd="25569.006747685" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300446(2232)" cno="1016417@Wakad" rno="300446" plant="1130" adt="42360 25569.085648148" hd="25569.004583333" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300448(9870)" cno="1011765" rno="300448" plant="1130" adt="42360 25569.086168981" hd="25569.007685185" tname="Ramful Transport"/>
+<marker vname="300426(5551)" cno="1003977" rno="300426" plant="1130" adt="42360 25569.086550926" hd="25569.005486111" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300205(9165)" cno="1002590" rno="300205" plant="1130" adt="42360 25569.087650463" hd="25569.019895833" tname="Saiprasad Enterprises"/>
+<marker vname="300205(9165)" cno="1002598" rno="300205" plant="1130" adt="42360 25569.087650463" hd="25569.019895833" tname="Saiprasad Enterprises"/>
+<marker vname="300307(4571)" cno="1015818" rno="300304" plant="1130" adt="42360 25569.088275463" hd="25569.024166667" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300307(4571)" cno="1002648@Madanpura" rno="300304" plant="1130" adt="42360 25569.088275463" hd="25569.024166667" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300447(9576)" cno="1016693" rno="300447" plant="1130" adt="42360 25569.08875" hd="25569.00775463" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300409(9156)" cno="1007033" rno="300409" plant="1130" adt="42360 25569.089722222" hd="25569.003564815" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300409(9156)" cno="1007033@vasai" rno="300409" plant="1130" adt="42360 25569.089722222" hd="25569.003564815" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300404(2725)" cno="1009864@Malad" rno="300309/300313/300313/300404/300420" plant="1130" adt="42360 25569.090173611" hd="25569.010347222" tname="NILESH VILASH MORE/UMA M. PAWAR/UMA M. PAWAR/Shivans Transport/BHARAT KISHAN YADAV"/>
+<marker vname="300405(2691)" cno="1002674" rno="300405/300426" plant="1130" adt="42360 25569.091782407" hd="25569.140405093" tname="NAMDEO TANAJI DESHMUKH/Shree Sevagiri Enterprises"/>
+<marker vname="300418(9035)" cno="1010007" rno="300418" plant="1130" adt="42360 25569.09287037" hd="25569.009085648" tname="Shivans Transport"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1002762" rno="300112" plant="1130" adt="42360 25569.093564815" hd="25569.024502315" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300446(2232)" cno="1016446" rno="300446" plant="1130" adt="42360 25569.094050926" hd="25569.008912037" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300446(2232)" cno="1016446@Wakad bridge" rno="300446" plant="1130" adt="42360 25569.094050926" hd="25569.008912037" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300420(4368)" cno="1006492" rno="300420" plant="1130" adt="42360 25569.094814815" hd="25569.0196875" tname="BHARAT KISHAN YADAV"/>
+<marker vname="300409(9156)" cno="1002718" rno="300409" plant="1130" adt="42360 25569.09494213" hd="25569.008159722" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300309(5185)" cno="1007057" rno="300309" plant="1130" adt="42360 25569.095023148" hd="25569.007256944" tname="NILESH VILASH MORE"/>
+<marker vname="300448(9870)" cno="1016692" rno="300448" plant="1130" adt="42360 25569.095266204" hd="25569.003634259" tname="Ramful Transport"/>
+<marker vname="300305(719)" cno="1011783" rno="300447" plant="1130" adt="42360 25569.097766204" hd="25569.00306713" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300305(719)" cno="1017849" rno="300305" plant="1130" adt="42360 25569.097766204" hd="25569.00306713" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="MH-04 EL 1820-Pune Primery" cno="1012398" rno="300448" plant="1130" adt="42360 25569.098125" hd="25569.159143519" tname="Ramful Transport"/>
+<marker vname="300417(1187)" cno="1002684" rno="300417" plant="1130" adt="42360 25569.098402778" hd="25569.00369213" tname="Shivans Transport"/>
+<marker vname="300417(1187)" cno="1014733" rno="300417" plant="1130" adt="42360 25569.098402778" hd="25569.00369213" tname="Shivans Transport"/>
+<marker vname="300203(1286)" cno="1002594" rno="300203" plant="1130" adt="42360 25569.100775463" hd="25569.012534722" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300203(1286)" cno="1015825" rno="300213" plant="1130" adt="42360 25569.100775463" hd="25569.012534722" tname="Rajesh Y Wadla"/>
+<marker vname="300203(1286)" cno="1009966@khargar" rno="300210" plant="1130" adt="42360 25569.100775463" hd="25569.012534722" tname="Dharamraj Singh Yadav"/>
+<marker vname="300420(4368)" cno="1004830" rno="300420" plant="1130" adt="42360 25569.100925926" hd="25569.005208333" tname="BHARAT KISHAN YADAV"/>
+<marker vname="300406(608)" cno="1017169@nalasopara" rno="300406" plant="1130" adt="42360 25569.101631944" hd="25569.011168981" tname="Shivans Transport"/>
+<marker vname="300305(719)" cno="1002804" rno="300305" plant="1130" adt="42360 25569.101979167" hd="25569.026412037" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300305(719)" cno="1009864@Phonex" rno="300309/300313/300313/300404/300420" plant="1130" adt="42360 25569.101979167" hd="25569.026412037" tname="NILESH VILASH MORE/UMA M. PAWAR/UMA M. PAWAR/Shivans Transport/BHARAT KISHAN YADAV"/>
+<marker vname="300448(9870)" cno="1012250" rno="300448" plant="1130" adt="42360 25569.103611111" hd="25569.016446759" tname="Ramful Transport"/>
+<marker vname="300448(9870)" cno="1012250@chichwad" rno="300448" plant="1130" adt="42360 25569.103611111" hd="25569.016446759" tname="Ramful Transport"/>
+<marker vname="300409(9156)" cno="1018390" rno="300409" plant="1130" adt="42360 25569.105671296" hd="25569.00306713" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300211(7048)" cno="1002581" rno="300211" plant="1130" adt="42360 25569.105960648" hd="25569.015983796" tname="Saiprasad Enterprises"/>
+<marker vname="300211(7048)" cno="1008520" rno="300211" plant="1130" adt="42360 25569.105960648" hd="25569.015983796" tname="Saiprasad Enterprises"/>
+<marker vname="300103(8850)" cno="1013256" rno="300103" plant="1130" adt="42360 25569.10619213" hd="25569.002928241" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300309(5185)" cno="1002751" rno="300309" plant="1130" adt="42360 25569.106851852" hd="25569.009490741" tname="NILESH VILASH MORE"/>
+<marker vname="300115(1223)" cno="1002859" rno="300115" plant="1130" adt="42360 25569.106979167" hd="25569.002291667" tname="SACHIN DASHARATH THORAT"/>
+<marker vname="300401(1239)" cno="1002691" rno="300401" plant="1130" adt="42360 25569.107268519" hd="25569.017905093" tname="Nemin Transport"/>
+<marker vname="300401(1239)" cno="1009864@Bandra" rno="300309/300313/300313/300404/300420" plant="1130" adt="42360 25569.107268519" hd="25569.017905093" tname="NILESH VILASH MORE/UMA M. PAWAR/UMA M. PAWAR/Shivans Transport/BHARAT KISHAN YADAV"/>
+<marker vname="300417(1187)" cno="1015203" rno="300417" plant="1130" adt="42360 25569.107326389" hd="25569.003946759" tname="Shivans Transport"/>
+<marker vname="300205(9165)" cno="1002599" rno="300205" plant="1130" adt="42360 25569.107546296" hd="25569.013854167" tname="Saiprasad Enterprises"/>
+<marker vname="Goregaon primery 2" cno="1002685" rno="300415" plant="1130" adt="42360 25569.107627315" hd="25569.160821759" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300427(8830)" cno="1013541" rno="300427" plant="1130" adt="42360 25569.107662037" hd="25569.002280093" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300202(8395)" cno="1002782" rno="300202" plant="1130" adt="42360 25569.107916667" hd="25569.016469907" tname="Sai Sandesh Transport Services"/>
+<marker vname="300202(8395)" cno="1004260@Badlapur" rno="300202" plant="1130" adt="42360 25569.107916667" hd="25569.016469907" tname="Sai Sandesh Transport Services"/>
+<marker vname="300103(8850)" cno="1009940@Koparkhairane" rno="300103" plant="1130" adt="42360 25569.112025463" hd="25569.002152778" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300409(9156)" cno="1007070" rno="300409" plant="1130" adt="42360 25569.112048611" hd="25569.004594907" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300417(1187)" cno="1017103" rno="300417" plant="1130" adt="42360 25569.11369213" hd="25569.007685185" tname="Shivans Transport"/>
+<marker vname="300213(8841)" cno="1002608" rno="300213" plant="1130" adt="42360 25569.113877315" hd="25569.003055556" tname="Rajesh Y Wadla"/>
+<marker vname="300313(7635)" cno="1009864@colaba" rno="300309/300313/300313/300404/300420" plant="1130" adt="42360 25569.114664352" hd="25569.008252315" tname="NILESH VILASH MORE/UMA M. PAWAR/UMA M. PAWAR/Shivans Transport/BHARAT KISHAN YADAV"/>
+<marker vname="300313(7635)" cno="1009864@Eliphistan" rno="300309/300313/300313/300404/300420" plant="1130" adt="42360 25569.114664352" hd="25569.008252315" tname="NILESH VILASH MORE/UMA M. PAWAR/UMA M. PAWAR/Shivans Transport/BHARAT KISHAN YADAV"/>
+<marker vname="300414(5156)" cno="1002829" rno="300414" plant="1130" adt="42360 25569.115289352" hd="25569.007581019" tname="Shivans Transport"/>
+<marker vname="300418(9035)" cno="1002816" rno="300417" plant="1130" adt="42360 25569.11568287" hd="25569.021990741" tname="Shivans Transport"/>
+<marker vname="300103(8850)" cno="1004608" rno="300103" plant="1130" adt="42360 25569.115833333" hd="25569.009166667" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300103(8850)" cno="1009194" rno="300103" plant="1130" adt="42360 25569.115833333" hd="25569.009166667" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300203(1286)" cno="1002604" rno="300203" plant="1130" adt="42360 25569.115983796" hd="25569.003935185" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300203(1286)" cno="1009940@khargar" rno="300103" plant="1130" adt="42360 25569.115983796" hd="25569.003935185" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300307(4571)" cno="1017011" rno="300307" plant="1130" adt="42360 25569.11712963" hd="25569.008831019" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300404(2725)" cno="1015603" rno="300404" plant="1130" adt="42360 25569.11818287" hd="25569.006875" tname="Shivans Transport"/>
+<marker vname="300406(608)" cno="1017439" rno="300406" plant="1130" adt="42360 25569.118402778" hd="25569.007881944" tname="-"/>
+<marker vname="300426(5551)" cno="1002766" rno="300105" plant="1130" adt="42360 25569.118460648" hd="25569.002928241" tname="NIGAPPA BHIMMAPPA TUNAKAL"/>
+<marker vname="300309(5185)" cno="1013414@kurla" rno="300309" plant="1130" adt="42360 25569.119270833" hd="25569.01119213" tname="NILESH VILASH MORE"/>
+<marker vname="300213(8841)" cno="1003513" rno="300213" plant="1130" adt="42360 25569.119861111" hd="25569.00943287" tname="Rajesh Y Wadla"/>
+<marker vname="300428(7239)" cno="1017847" rno="300428" plant="1130" adt="42360 25569.120115741" hd="25569.005810185" tname="Poonam Kailash Falke"/>
+<marker vname="300203(1286)" cno="1002610" rno="300203" plant="1130" adt="42360 25569.120555556" hd="25569.090509259" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1004826" rno="300112" plant="1130" adt="42360 25569.120613426" hd="25569.011597222" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300205(9165)" cno="1002607" rno="300205" plant="1130" adt="42360 25569.121400463" hd="25569.012465278" tname="Saiprasad Enterprises"/>
+<marker vname="300205(9165)" cno="1002607@Nerul" rno="300205" plant="1130" adt="42360 25569.121400463" hd="25569.012465278" tname="Saiprasad Enterprises"/>
+<marker vname="300409(9156)" cno="1015394" rno="300409" plant="1130" adt="42360 25569.124247685" hd="25569.004583333" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300448(9870)" cno="1012398" rno="300448" plant="1130" adt="42360 25569.124490741" hd="25569.070324074" tname="Ramful Transport"/>
+<marker vname="300447(9576)" cno="1016245" rno="300447" plant="1130" adt="42360 25569.124548611" hd="25569.006111111" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="331005(JF2232)Hanumant Spare" cno="1013133" rno="300449" plant="1130" adt="42360 25569.124814815" hd="25569.004930556" tname="Ramful Transport"/>
+<marker vname="300119(4041)" cno="1006989" rno="300119" plant="1130" adt="42360 25569.125277778" hd="25569.005960648" tname="Sai Sandesh Transport Services"/>
+<marker vname="300205(9165)" cno="1002886" rno="300205" plant="1130" adt="42360 25569.125416667" hd="25569.008449074" tname="Saiprasad Enterprises"/>
+<marker vname="300211(7048)" cno="1005591" rno="300211" plant="1130" adt="42360 25569.125636574" hd="25569.010555556" tname="Saiprasad Enterprises"/>
+<marker vname="300103(8850)" cno="1005733" rno="300103" plant="1130" adt="42360 25569.126261574" hd="25569.004965278" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300313(7635)" cno="1009864" rno="300309/300313/300313/300404/300420" plant="1130" adt="42360 25569.126354167" hd="25569.008009259" tname="NILESH VILASH MORE/UMA M. PAWAR/UMA M. PAWAR/Shivans Transport/BHARAT KISHAN YADAV"/>
+<marker vname="300446(2232)" cno="1012581" rno="300446" plant="1130" adt="42360 25569.126689815" hd="25569.016412037" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300105(4838)" cno="1002769" rno="300105" plant="1130" adt="42360 25569.127488426" hd="25569.003946759" tname="NIGAPPA BHIMMAPPA TUNAKAL"/>
+<marker vname="300401(1239)" cno="1002702" rno="300401" plant="1130" adt="42360 25569.128402778" hd="25569.016689815" tname="Nemin Transport"/>
+<marker vname="300427(8830)" cno="1002746" rno="300427" plant="1130" adt="42360 25569.128969907" hd="25569.004583333" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300428(7239)" cno="1015271" rno="300428" plant="1130" adt="42360 25569.129490741" hd="25569.011412037" tname="Poonam Kailash Falke"/>
+<marker vname="300428(7239)" cno="1015271@vikroli" rno="300428" plant="1130" adt="42360 25569.129490741" hd="25569.011412037" tname="Poonam Kailash Falke"/>
+<marker vname="300119(4041)" cno="1007245" rno="300119" plant="1130" adt="42360 25569.132256944" hd="25569.007268519" tname="Sai Sandesh Transport Services"/>
+<marker vname="300105(4838)" cno="1017969" rno="300105" plant="1130" adt="42360 25569.132835648" hd="25569.005092593" tname="NIGAPPA BHIMMAPPA TUNAKAL"/>
+<marker vname="300409(9156)" cno="1015595" rno="300409" plant="1130" adt="42360 25569.132835648" hd="25569.002928241" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300314(9961)" cno="1017100" rno="300314" plant="1130" adt="42360 25569.133946759" hd="25569.006747685" tname="Mangalmurti Transport"/>
+<marker vname="300404(2725)" cno="1002826" rno="300404/300414" plant="1130" adt="42360 25569.134236111" hd="25569.004328704" tname="Shivans Transport"/>
+<marker vname="300406(608)" cno="1006823" rno="300406" plant="1130" adt="42360 25569.135833333" hd="25569.002291667" tname="Shivans Transport"/>
+<marker vname="300309(5185)" cno="1002735" rno="300309" plant="1130" adt="42360 25569.136574074" hd="25569.017303241" tname="NILESH VILASH MORE"/>
+<marker vname="300309(5185)" cno="1002808" rno="300309" plant="1130" adt="42360 25569.136574074" hd="25569.017303241" tname="NILESH VILASH MORE"/>
+<marker vname="300309(5185)" cno="1014457" rno="300309" plant="1130" adt="42360 25569.136574074" hd="25569.017303241" tname="NILESH VILASH MORE"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1002730" rno="300112" plant="1130" adt="42360 25569.136666667" hd="25569.015034722" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300403(4755)" cno="1002814" rno="300403" plant="1130" adt="42360 25569.136701389" hd="25569.023483796" tname="Sai Sandesh Transport Services"/>
+<marker vname="300307(4571)" cno="1002636" rno="300307" plant="1130" adt="42360 25569.13755787" hd="25569.01994213" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300307(4571)" cno="1002638" rno="300307" plant="1130" adt="42360 25569.13755787" hd="25569.01994213" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300307(4571)" cno="1002652" rno="300307" plant="1130" adt="42360 25569.13755787" hd="25569.01994213" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300420(4368)" cno="1017714" rno="300427" plant="1130" adt="42360 25569.138391204" hd="25569.011898148" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300103(8850)" cno="1002857" rno="300103" plant="1130" adt="42360 25569.138483796" hd="25569.003043981" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300103(8850)" cno="1013456" rno="300103/300115" plant="1130" adt="42360 25569.138483796" hd="25569.003043981" tname="Pushpa Bhagwan Jadhav/SACHIN DASHARATH THORAT"/>
+<marker vname="300427(8830)" cno="1006869" rno="300427" plant="1130" adt="42360 25569.140289352" hd="25569.003055556" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300313(7635)" cno="1007721" rno="300313" plant="1130" adt="42360 25569.140983796" hd="25569.018321759" tname="UMA M. PAWAR"/>
+<marker vname="300409(9156)" cno="1014628" rno="300409" plant="1130" adt="42360 25569.141400463" hd="25569.008796296" tname="NAMDEO TANAJI DESHMUKH"/>
+<marker vname="300308(4282)" cno="1005517" rno="300308" plant="1130" adt="42360 25569.1415625" hd="25569.051400463" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300308(4282)" cno="1006429" rno="300308" plant="1130" adt="42360 25569.1415625" hd="25569.051400463" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300428(7239)" cno="1005151" rno="300428" plant="1130" adt="42360 25569.141921296" hd="25569.008194444" tname="Poonam Kailash Falke"/>
+<marker vname="300119(4041)" cno="1007349" rno="300119" plant="1130" adt="42360 25569.142326389" hd="25569.017685185" tname="Sai Sandesh Transport Services"/>
+<marker vname="300119(4041)" cno="1012430@Kenlington" rno="300112/300119/300119/300210" plant="1130" adt="42360 25569.142326389" hd="25569.017685185" tname="Shri Sai Krupa Distributors/Sai Sandesh Transport Services/Sai Sandesh Transport Services/Dharamraj Singh Yadav"/>
+<marker vname="300449(6270)" cno="1011782" rno="300449" plant="1130" adt="42360 25569.143009259" hd="25569.007638889" tname="Ramful Transport"/>
+<marker vname="300449(6270)" cno="1014283" rno="300449" plant="1130" adt="42360 25569.143009259" hd="25569.007638889" tname="Ramful Transport"/>
+<marker vname="300449(6270)" cno="1011782@gadital" rno="300449" plant="1130" adt="42360 25569.143009259" hd="25569.007638889" tname="Ramful Transport"/>
+<marker vname="300305(719)" cno="1006879" rno="300305" plant="1130" adt="42360 25569.143368056" hd="25569.006747685" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300105(4838)" cno="1002728" rno="300105" plant="1130" adt="42360 25569.143796296" hd="25569.006747685" tname="NIGAPPA BHIMMAPPA TUNAKAL"/>
+<marker vname="300406(608)" cno="1017947" rno="300406" plant="1130" adt="42360 25569.143842593" hd="25569.005729167" tname="Shivans Transport"/>
+<marker vname="300301(1104)" cno="1014734" rno="300301" plant="1130" adt="42360 25569.144814815" hd="25569.001527778" tname="Rajesh Y Wadla"/>
+<marker vname="300301(1104)" cno="1014734@matunga" rno="300301" plant="1130" adt="42360 25569.144814815" hd="25569.001527778" tname="Rajesh Y Wadla"/>
+<marker vname="300301(1104)" cno="1014734@Matunga 2" rno="300301" plant="1130" adt="42360 25569.144814815" hd="25569.001527778" tname="Rajesh Y Wadla"/>
+<marker vname="300213(8841)" cno="1006990" rno="300213" plant="1130" adt="42360 25569.146689815" hd="25569.002037037" tname="Rajesh Y Wadla"/>
+<marker vname="300304(U2746)" cno="1002616" rno="300307" plant="1130" adt="42360 25569.14693287" hd="25569.010833333" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300304(U2746)" cno="1006864" rno="300307" plant="1130" adt="42360 25569.14693287" hd="25569.010833333" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300304(U2746)" cno="1012388" rno="300304" plant="1130" adt="42360 25569.14693287" hd="25569.010833333" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300314(9961)" cno="1002648" rno="300304" plant="1130" adt="42360 25569.146979167" hd="25569.003703704" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300314(9961)" cno="1004525" rno="300314" plant="1130" adt="42360 25569.146979167" hd="25569.003703704" tname="Mangalmurti Transport"/>
+<marker vname="300446(2232)" cno="1017297" rno="300447" plant="1130" adt="42360 25569.147303241" hd="25569.026724537" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300446(2232)" cno="1012581@PDCII" rno="300446" plant="1130" adt="42360 25569.147303241" hd="25569.0425" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300202(8395)" cno="1004163@anbernath" rno="300202" plant="1130" adt="42360 25569.147395833" hd="25569.009548611" tname="Sai Sandesh Transport Services"/>
+<marker vname="300202(8395)" cno="1017858@Ambernath" rno="300202" plant="1130" adt="42360 25569.147395833" hd="25569.009548611" tname="Sai Sandesh Transport Services"/>
+<marker vname="300112(E2746)" cno="1008500" rno="300411" plant="1130" adt="42360 25569.148275463" hd="25569.007118056" tname="Shivans Transport"/>
+<marker vname="300301(1104)" cno="1002798" rno="300305" plant="1130" adt="42360 25569.148761574" hd="25569.003055556" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300301(1104)" cno="1004759" rno="300301" plant="1130" adt="42360 25569.148761574" hd="25569.003055556" tname="Rajesh Y Wadla"/>
+<marker vname="300401(1239)" cno="1009991" rno="300401" plant="1130" adt="42360 25569.149548611" hd="25569.008657407" tname="Nemin Transport"/>
+<marker vname="300103(8850)" cno="1007837" rno="300103" plant="1130" adt="42360 25569.149930556" hd="25569.006354167" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300427(8830)" cno="1002799" rno="300427" plant="1130" adt="42360 25569.150983796" hd="25569.013738426" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300305(719)" cno="1006868" rno="300305" plant="1130" adt="42360 25569.151134259" hd="25569.005127315" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300305(719)" cno="1014578@Barc" rno="300305" plant="1130" adt="42360 25569.151134259" hd="25569.005127315" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300418(9035)" cno="1002681" rno="300418" plant="1130" adt="42360 25569.151469907" hd="25569.062534722" tname="Shivans Transport"/>
+<marker vname="300418(9035)" cno="1002697" rno="300418" plant="1130" adt="42360 25569.151469907" hd="25569.062534722" tname="Shivans Transport"/>
+<marker vname="300418(9035)" cno="1002850" rno="300418" plant="1130" adt="42360 25569.151469907" hd="25569.062534722" tname="Shivans Transport"/>
+<marker vname="300414(5156)" cno="1002815" rno="300414" plant="1130" adt="42360 25569.152118056" hd="25569.004722222" tname="Shivans Transport"/>
+<marker vname="300314(9961)" cno="1002867" rno="300314" plant="1130" adt="42360 25569.15224537" hd="25569.005474537" tname="Mangalmurti Transport"/>
+<marker vname="300449(6270)" cno="1016417@hadapsar" rno="300446" plant="1130" adt="42360 25569.15255787" hd="25569.011446759" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300428(7239)" cno="1002752" rno="300428" plant="1130" adt="42360 25569.1540625" hd="25569.008298611" tname="Poonam Kailash Falke"/>
+<marker vname="300106(0109)" cno="1017090" rno="300106" plant="1130" adt="42360 25569.155798611" hd="25569.002164352" tname="Dharamraj Singh Yadav"/>
+<marker vname="300305(719)" cno="1018439" rno="300305" plant="1130" adt="42360 25569.157569444" hd="25569.0196875" tname="ROHIDESHWAR GOODS TRANSPORT"/>
+<marker vname="300301(1104)" cno="1002797" rno="300301" plant="1130" adt="42360 25569.157673611" hd="25569.003298611" tname="Rajesh Y Wadla"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1004464" rno="300112" plant="1130" adt="42360 25569.158449074" hd="25569.024351852" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300103(8850)" cno="1002860" rno="300103" plant="1130" adt="42360 25569.158958333" hd="25569.006747685" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300112(E2746)" cno="1002825" rno="300411" plant="1130" adt="42360 25569.159212963" hd="25569.012604167" tname="Shivans Transport"/>
+<marker vname="300112(E2746)" cno="1002827@Petrol pump" rno="300411" plant="1130" adt="42360 25569.159212963" hd="25569.012604167" tname="Shivans Transport"/>
+<marker vname="300314(9961)" cno="1007192" rno="300314" plant="1130" adt="42360 25569.159247685" hd="25569.011469907" tname="Mangalmurti Transport"/>
+<marker vname="300417(1187)" cno="1012620" rno="300417" plant="1130" adt="42360 25569.162037037" hd="25569.007905093" tname="Shivans Transport"/>
+<marker vname="300102(6665)" cno="1001240" rno="300102" plant="1130" adt="42360 25569.162048611" hd="25569.027210648" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300313(7635)" cno="1017600" rno="300313" plant="1130" adt="42360 25569.162106481" hd="25569.005844907" tname="UMA M. PAWAR"/>
+<marker vname="300105(4838)" cno="1002739" rno="300105" plant="1130" adt="42360 25569.162152778" hd="25569.007002315" tname="NIGAPPA BHIMMAPPA TUNAKAL"/>
+<marker vname="300105(4838)" cno="1002739@thane" rno="300105" plant="1130" adt="42360 25569.162152778" hd="25569.007002315" tname="NIGAPPA BHIMMAPPA TUNAKAL"/>
+<marker vname="300202(8395)" cno="1002781" rno="300202" plant="1130" adt="42360 25569.162627315" hd="25569.031886574" tname="Sai Sandesh Transport Services"/>
+<marker vname="300202(8395)" cno="1004163" rno="300202" plant="1130" adt="42360 25569.162627315" hd="25569.031886574" tname="Sai Sandesh Transport Services"/>
+<marker vname="300213(8841)" cno="1016912" rno="300213" plant="1130" adt="42360 25569.16337963" hd="25569.004722222" tname="Rajesh Y Wadla"/>
+<marker vname="300403(4755)" cno="1002817" rno="300403" plant="1130" adt="42360 25569.163784722" hd="25569.002800926" tname="Sai Sandesh Transport Services"/>
+<marker vname="300403(4755)" cno="1002817@goregaon" rno="300403" plant="1130" adt="42360 25569.163784722" hd="25569.002800926" tname="Sai Sandesh Transport Services"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1005592" rno="300112" plant="1130" adt="42360 25569.164097222" hd="25569.006944444" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300106(0109)" cno="1005949" rno="300106" plant="1130" adt="42360 25569.164953704" hd="25569.005092593" tname="Dharamraj Singh Yadav"/>
+<marker vname="300414(5156)" cno="1017109" rno="300414" plant="1130" adt="42360 25569.165243056" hd="25569.008576389" tname="Shivans Transport"/>
+<marker vname="300428(7239)" cno="1016472" rno="300428" plant="1130" adt="42360 25569.165543981" hd="25569.010081019" tname="Poonam Kailash Falke"/>
+<marker vname="300108(1637)" cno="1002719" rno="300108" plant="1130" adt="42360 25569.165787037" hd="25569.016770833" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300301(1104)" cno="1017568" rno="300301" plant="1130" adt="42360 25569.167847222" hd="25569.00369213" tname="Rajesh Y Wadla"/>
+<marker vname="300301(1104)" cno="1017568@chembur" rno="300301" plant="1130" adt="42360 25569.167847222" hd="25569.00369213" tname="Rajesh Y Wadla"/>
+<marker vname="300401(1239)" cno="1002704" rno="300401" plant="1130" adt="42360 25569.168287037" hd="25569.025104167" tname="Nemin Transport"/>
+<marker vname="300449(6270)" cno="1011902@Magarpatta" rno="300449" plant="1130" adt="42360 25569.168460648" hd="25569.006226852" tname="Ramful Transport"/>
+<marker vname="300449(6270)" cno="1011902@vimanagar" rno="300449" plant="1130" adt="42360 25569.168460648" hd="25569.006226852" tname="Ramful Transport"/>
+<marker vname="300449(6270)" cno="1016417@kharadi" rno="300446" plant="1130" adt="42360 25569.168460648" hd="25569.006226852" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300313(7635)" cno="1003790" rno="300313" plant="1130" adt="42360 25569.169351852" hd="25569.019872685" tname="UMA M. PAWAR"/>
+<marker vname="300313(7635)" cno="1003790@nariman point" rno="300313" plant="1130" adt="42360 25569.169351852" hd="25569.019872685" tname="UMA M. PAWAR"/>
+<marker vname="300313(7635)" cno="1009864@Marol" rno="300309/300313/300313/300404/300420" plant="1130" adt="42360 25569.169351852" hd="25569.019872685" tname="NILESH VILASH MORE/UMA M. PAWAR/UMA M. PAWAR/Shivans Transport/BHARAT KISHAN YADAV"/>
+<marker vname="300403(4755)" cno="1002828" rno="300403" plant="1130" adt="42360 25569.170532407" hd="25569.023738426" tname="Sai Sandesh Transport Services"/>
+<marker vname="300105(4838)" cno="1002766" rno="300105" plant="1130" adt="42360 25569.171898148" hd="25569.00255787" tname="NIGAPPA BHIMMAPPA TUNAKAL"/>
+<marker vname="300103(8850)" cno="1002603" rno="300103" plant="1130" adt="42360 25569.172569444" hd="25569.004328704" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300417(1187)" cno="1017946" rno="300417" plant="1130" adt="42360 25569.173668981" hd="25569.004594907" tname="Shivans Transport"/>
+<marker vname="300112(E2746)" cno="1002821" rno="300411" plant="1130" adt="42360 25569.174340278" hd="25569.017256944" tname="Shivans Transport"/>
+<marker vname="300112(E2746)" cno="1002823" rno="300411" plant="1130" adt="42360 25569.174340278" hd="25569.017256944" tname="Shivans Transport"/>
+<marker vname="300301(1104)" cno="1002573" rno="300301" plant="1130" adt="42360 25569.175092593" hd="25569.013877315" tname="Rajesh Y Wadla"/>
+<marker vname="300213(8841)" cno="1013413" rno="300213" plant="1130" adt="42360 25569.175358796" hd="25569.008414352" tname="Rajesh Y Wadla"/>
+<marker vname="300210(7985)" cno="1017528" rno="300210" plant="1130" adt="42360 25569.176087963" hd="25569.021157407" tname="Dharamraj Singh Yadav"/>
+<marker vname="300427(8830)" cno="1002738" rno="300427" plant="1130" adt="42360 25569.176168981" hd="25569.018958333" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300427(8830)" cno="1018061" rno="300427" plant="1130" adt="42360 25569.176168981" hd="25569.018958333" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300307(4571)" cno="1002575" rno="300307" plant="1130" adt="42360 25569.176701389" hd="25569.004467593" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300307(4571)" cno="1009671" rno="300313" plant="1130" adt="42360 25569.176701389" hd="25569.004467593" tname="UMA M. PAWAR"/>
+<marker vname="300428(7239)" cno="1002847" rno="300428" plant="1130" adt="42360 25569.176898148" hd="25569.00556713" tname="Poonam Kailash Falke"/>
+<marker vname="300414(5156)" cno="1002821" rno="300411" plant="1130" adt="42360 25569.178020833" hd="25569.013888889" tname="Shivans Transport"/>
+<marker vname="300414(5156)" cno="1002823" rno="300411" plant="1130" adt="42360 25569.178020833" hd="25569.013888889" tname="Shivans Transport"/>
+<marker vname="300449(6270)" cno="1016953@Back Side" rno="300449" plant="1130" adt="42360 25569.179143519" hd="25569.011828704" tname="Ramful Transport"/>
+<marker vname="300426(5551)" cno="1002886" rno="300205" plant="1130" adt="42360 25569.179618056" hd="25569.030613426" tname="Saiprasad Enterprises"/>
+<marker vname="300303(3603)" cno="1002577" rno="300313" plant="1130" adt="42360 25569.179756944" hd="25569.011076389" tname="UMA M. PAWAR"/>
+<marker vname="300303(3603)" cno="1005601" rno="300303" plant="1130" adt="42360 25569.179756944" hd="25569.011076389" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300304(U2746)" cno="1018277" rno="300304" plant="1130" adt="42360 25569.181111111" hd="25569.077986111" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300307(4571)" cno="1005045" rno="300307" plant="1130" adt="42360 25569.182696759" hd="25569.004328704" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300309(5185)" cno="1013414" rno="300309" plant="1130" adt="42360 25569.185428241" hd="25569.01369213" tname="NILESH VILASH MORE"/>
+<marker vname="300106(0109)" cno="1017961" rno="300106" plant="1130" adt="42360 25569.186076389" hd="25569.014247685" tname="Dharamraj Singh Yadav"/>
+<marker vname="300304(U2746)" cno="1002866" rno="300304" plant="1130" adt="42360 25569.187222222" hd="25569.071875" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300450(5920)" cno="1016956" rno="300450" plant="1130" adt="42360 25569.187685185" hd="25569.018958333" tname="Ramful Transport"/>
+<marker vname="300428(7239)" cno="1007446" rno="300428" plant="1130" adt="42360 25569.188321759" hd="25569.004189815" tname="Poonam Kailash Falke"/>
+<marker vname="300213(8841)" cno="1016832" rno="300213" plant="1130" adt="42360 25569.188645833" hd="25569.003055556" tname="Rajesh Y Wadla"/>
+<marker vname="300307(4571)" cno="1002577" rno="300313" plant="1130" adt="42360 25569.189189815" hd="25569.001782407" tname="UMA M. PAWAR"/>
+<marker vname="300102(6665)" cno="1013451" rno="300102" plant="1130" adt="42360 25569.191203704" hd="25569.012615741" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300446(2232)" cno="1013467@Hinjewadi" rno="300446" plant="1130" adt="42360 25569.192037037" hd="25569.009027778" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300446(2232)" cno="1016417@Infosys" rno="300446" plant="1130" adt="42360 25569.192037037" hd="25569.009027778" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300303(3603)" cno="1002616" rno="300307" plant="1130" adt="42360 25569.192094907" hd="25569.013240741" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300303(3603)" cno="1006864" rno="300307" plant="1130" adt="42360 25569.192094907" hd="25569.013240741" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300303(3603)" cno="1012388" rno="300304" plant="1130" adt="42360 25569.192094907" hd="25569.013240741" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300307(4571)" cno="1002616" rno="300307" plant="1130" adt="42360 25569.192118056" hd="25569.017071759" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300307(4571)" cno="1006864" rno="300307" plant="1130" adt="42360 25569.192118056" hd="25569.017071759" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300307(4571)" cno="1012388" rno="300304" plant="1130" adt="42360 25569.192118056" hd="25569.017071759" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300301(1104)" cno="1002618" rno="300301" plant="1130" adt="42360 25569.192141204" hd="25569.007002315" tname="Rajesh Y Wadla"/>
+<marker vname="300313(7635)" cno="1002577" rno="300313" plant="1130" adt="42360 25569.192534722" hd="25569.033761574" tname="UMA M. PAWAR"/>
+<marker vname="300313(7635)" cno="1005601" rno="300303" plant="1130" adt="42360 25569.192534722" hd="25569.033761574" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300108(1637)" cno="1004892" rno="300108" plant="1130" adt="42360 25569.193101852" hd="25569.014108796" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300308(4282)" cno="1004911" rno="300308" plant="1130" adt="42360 25569.194108796" hd="25569.006875" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300417(1187)" cno="1002816" rno="300417" plant="1130" adt="42360 25569.194479167" hd="25569.043101852" tname="Shivans Transport"/>
+<marker vname="300119(4041)" cno="1006881" rno="300119" plant="1130" adt="42360 25569.19474537" hd="25569.00662037" tname="Sai Sandesh Transport Services"/>
+<marker vname="300414(5156)" cno="1002827@malad" rno="300411" plant="1130" adt="42360 25569.195381944" hd="25569.006122685" tname="Shivans Transport"/>
+<marker vname="300414(5156)" cno="1002827@malvani" rno="300411" plant="1130" adt="42360 25569.195381944" hd="25569.006122685" tname="Shivans Transport"/>
+<marker vname="300449(6270)" cno="1011564" rno="300449" plant="1130" adt="42360 25569.19619213" hd="25569.005347222" tname="Ramful Transport"/>
+<marker vname="300112(E2746)" cno="1002827@malad" rno="300411" plant="1130" adt="42360 25569.196550926" hd="25569.005023148" tname="Shivans Transport"/>
+<marker vname="300112(E2746)" cno="1002827@malvani" rno="300411" plant="1130" adt="42360 25569.196550926" hd="25569.005023148" tname="Shivans Transport"/>
+<marker vname="300403(4755)" cno="1014580" rno="300403" plant="1130" adt="42360 25569.197199074" hd="25569.005601852" tname="Sai Sandesh Transport Services"/>
+<marker vname="300403(4755)" cno="1014580@kandiwali" rno="300403" plant="1130" adt="42360 25569.197199074" hd="25569.005601852" tname="Sai Sandesh Transport Services"/>
+<marker vname="300213(8841)" cno="1017099" rno="300213" plant="1130" adt="42360 25569.19755787" hd="25569.00599537" tname="Rajesh Y Wadla"/>
+<marker vname="300448(9870)" cno="1011881" rno="300448" plant="1130" adt="42360 25569.200925926" hd="25569.012199074" tname="Ramful Transport"/>
+<marker vname="300308(4282)" cno="1017836" rno="300308" plant="1130" adt="42360 25569.203564815" hd="25569.007210648" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300119(4041)" cno="1006935" rno="300119" plant="1130" adt="42360 25569.203784722" hd="25569.003726852" tname="Sai Sandesh Transport Services"/>
+<marker vname="300301(1104)" cno="1018596" rno="300301" plant="1130" adt="42360 25569.204618056" hd="25569.006076389" tname="Rajesh Y Wadla"/>
+<marker vname="300102(6665)" cno="1002749" rno="300102" plant="1130" adt="42360 25569.207037037" hd="25569.068078704" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300213(8841)" cno="1002611" rno="300213" plant="1130" adt="42360 25569.207372685" hd="25569.002418981" tname="Rajesh Y Wadla"/>
+<marker vname="300301(1104)" cno="1006878@wadala" rno="300301" plant="1130" adt="42360 25569.207638889" hd="25569.003055556" tname="Rajesh Y Wadla"/>
+<marker vname="300428(7239)" cno="1006872@ghatkopar" rno="300428" plant="1130" adt="42360 25569.207777778" hd="25569.014282407" tname="Poonam Kailash Falke"/>
+<marker vname="300119(4041)" cno="1007009" rno="300119" plant="1130" adt="42360 25569.208275463" hd="25569.076851852" tname="Sai Sandesh Transport Services"/>
+<marker vname="300303(3603)" cno="1002622" rno="300303" plant="1130" adt="42360 25569.208506944" hd="25569.009039352" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300403(4755)" cno="1002819" rno="300403" plant="1130" adt="42360 25569.21119213" hd="25569.048831019" tname="Sai Sandesh Transport Services"/>
+<marker vname="300308(4282)" cno="1002630" rno="300308" plant="1130" adt="42360 25569.211284722" hd="25569.012905093" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300308(4282)" cno="1003886" rno="300308" plant="1130" adt="42360 25569.211284722" hd="25569.012905093" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300213(8841)" cno="1018216" rno="300213" plant="1130" adt="42360 25569.212465278" hd="25569.003194444" tname="Rajesh Y Wadla"/>
+<marker vname="Goregaon primery 2" cno="1002669" rno="300415" plant="1130" adt="42360 25569.215150463" hd="25569.004456019" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300449(6270)" cno="1013258" rno="300449" plant="1130" adt="42360 25569.215300926" hd="25569.021921296" tname="Ramful Transport"/>
+<marker vname="300106(0109)" cno="1002723" rno="300106" plant="1130" adt="42360 25569.215972222" hd="25569.009675926" tname="Dharamraj Singh Yadav"/>
+<marker vname="300106(0109)" cno="1002759" rno="300427" plant="1130" adt="42360 25569.215972222" hd="25569.009675926" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300307(4571)" cno="1002643" rno="300303/300307" plant="1130" adt="42360 25569.216400463" hd="25569.043460648" tname="VASANT NAMDEO  GHOLAP/SUHAS TRANSPORT SERVICE"/>
+<marker vname="300414(5156)" cno="1002816" rno="300417" plant="1130" adt="42360 25569.221701389" hd="25569.01630787" tname="Shivans Transport"/>
+<marker vname="300303(3603)" cno="1002643" rno="300303/300307" plant="1130" adt="42360 25569.221875" hd="25569.011319444" tname="VASANT NAMDEO  GHOLAP/SUHAS TRANSPORT SERVICE"/>
+<marker vname="300112(E2746)" cno="1002816" rno="300417" plant="1130" adt="42360 25569.222094907" hd="25569.015659722" tname="Shivans Transport"/>
+<marker vname="300119(4041)" cno="1007573" rno="300119" plant="1130" adt="42360 25569.222789352" hd="25569.009155093" tname="Sai Sandesh Transport Services"/>
+<marker vname="300201(6024)" cno="1002785" rno="300201" plant="1130" adt="42360 25569.227060185" hd="25569.004085648" tname="Suresh Bhagwan Zole"/>
+<marker vname="300201(6024)" cno="1006486" rno="300201" plant="1130" adt="42360 25569.227060185" hd="25569.004085648" tname="Suresh Bhagwan Zole"/>
+<marker vname="300313(7635)" cno="1009671" rno="300313" plant="1130" adt="42360 25569.229097222" hd="25569.015011574" tname="UMA M. PAWAR"/>
+<marker vname="300308(4282)" cno="1002794" rno="300308" plant="1130" adt="42360 25569.229189815" hd="25569.004201389" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300308(4282)" cno="1017161" rno="300308" plant="1130" adt="42360 25569.229189815" hd="25569.004201389" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300446(2232)" cno="1014455" rno="300446" plant="1130" adt="42360 25569.232314815" hd="25569.007060185" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300309(5185)" cno="1007405" rno="300309" plant="1130" adt="42360 25569.232453704" hd="25569.006226852" tname="NILESH VILASH MORE"/>
+<marker vname="300201(6024)" cno="1002785@Kalyan" rno="300201" plant="1130" adt="42360 25569.232546296" hd="25569.041574074" tname="Suresh Bhagwan Zole"/>
+<marker vname="300202(8395)" cno="1007710" rno="300202" plant="1130" adt="42360 25569.233321759" hd="25569.002291667" tname="Sai Sandesh Transport Services"/>
+<marker vname="300308(4282)" cno="1005539" rno="300308" plant="1130" adt="42360 25569.234918981" hd="25569.004247685" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300307(4571)" cno="1005045" rno="300307" plant="1130" adt="42360 25569.236215278" hd="25569.002164352" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300307(4571)" cno="1002636" rno="300307" plant="1130" adt="42360 25569.240289352" hd="25569.009814815" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300307(4571)" cno="1002638" rno="300307" plant="1130" adt="42360 25569.240289352" hd="25569.009814815" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300307(4571)" cno="1002652" rno="300307" plant="1130" adt="42360 25569.240289352" hd="25569.009814815" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300201(6024)" cno="1005988" rno="300201" plant="1130" adt="42360 25569.240856481" hd="25569.004212963" tname="Suresh Bhagwan Zole"/>
+<marker vname="300308(4282)" cno="1005950" rno="300308" plant="1130" adt="42360 25569.241967593" hd="25569.005763889" tname="Shree Sevagiri Enterprises"/>
+<marker vname="300313(7635)" cno="1002866" rno="300304" plant="1130" adt="42360 25569.246018519" hd="25569.002673611" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300313(7635)" cno="1018277" rno="300304" plant="1130" adt="42360 25569.246018519" hd="25569.002673611" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300108(1637)" cno="1002722" rno="300108" plant="1130" adt="42360 25569.248599537" hd="25569.026435185" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300302(8618)" cno="1007571" rno="300302" plant="1130" adt="42360 25569.249895833" hd="25569.003981481" tname="PRASHANT NARAYAN PARAB"/>
+<marker vname="300201(6024)" cno="1018529" rno="300201" plant="1130" adt="42360 25569.250196759" hd="25569.008310185" tname="Suresh Bhagwan Zole"/>
+<marker vname="300303(3603)" cno="1002616" rno="300307" plant="1130" adt="42360 25569.251863426" hd="25569.002766204" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300303(3603)" cno="1006864" rno="300307" plant="1130" adt="42360 25569.251863426" hd="25569.002766204" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300303(3603)" cno="1012388" rno="300304" plant="1130" adt="42360 25569.251863426" hd="25569.002766204" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300302(8618)" cno="1002796" rno="300302" plant="1130" adt="42360 25569.254768519" hd="25569.030486111" tname="PRASHANT NARAYAN PARAB"/>
+<marker vname="300302(8618)" cno="1013570@Wadala 2" rno="300302" plant="1130" adt="42360 25569.254768519" hd="25569.030486111" tname="PRASHANT NARAYAN PARAB"/>
+<marker vname="300303(3603)" cno="1002577" rno="300313" plant="1130" adt="42360 25569.256412037" hd="25569.00712963" tname="UMA M. PAWAR"/>
+<marker vname="300303(3603)" cno="1005601" rno="300303" plant="1130" adt="42360 25569.256412037" hd="25569.00712963" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300211(7048)" cno="1002581" rno="300211" plant="1130" adt="42360 25569.25931713" hd="25569.006319444" tname="Saiprasad Enterprises"/>
+<marker vname="300211(7048)" cno="1008520" rno="300211" plant="1130" adt="42360 25569.25931713" hd="25569.006319444" tname="Saiprasad Enterprises"/>
+<marker vname="300446(2232)" cno="1016417@Lupin" rno="300446" plant="1130" adt="42360 25569.259351852" hd="25569.015451389" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300447(9576)" cno="1011950@Khadakwasla" rno="300447" plant="1130" adt="42360 25569.259710648" hd="25569.004456019" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300418(9035)" cno="1002681" rno="300418" plant="1130" adt="42360 25569.260347222" hd="25569.010324074" tname="Shivans Transport"/>
+<marker vname="300418(9035)" cno="1002697" rno="300418" plant="1130" adt="42360 25569.260347222" hd="25569.010324074" tname="Shivans Transport"/>
+<marker vname="300418(9035)" cno="1002850" rno="300418" plant="1130" adt="42360 25569.260347222" hd="25569.010324074" tname="Shivans Transport"/>
+<marker vname="300403(4755)" cno="1002814" rno="300403" plant="1130" adt="42360 25569.261805556" hd="25569.015162037" tname="Sai Sandesh Transport Services"/>
+<marker vname="300303(3603)" cno="1002651" rno="300303" plant="1130" adt="42360 25569.270150463" hd="25569.012731481" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300449(6270)" cno="1016953@Back Side" rno="300449" plant="1130" adt="42360 25569.270578704" hd="25569.006493056" tname="Ramful Transport"/>
+<marker vname="300304(U2746)" cno="1009650" rno="300303/300304" plant="1130" adt="42360 25569.274270833" hd="25569.005601852" tname="VASANT NAMDEO  GHOLAP/Shri Sai Krupa Distributors"/>
+<marker vname="Goregaon primery 2" cno="1002818" rno="300415" plant="1130" adt="42360 25569.274560185" hd="25569.016851852" tname="Shri Sai Krupa Distributors"/>
+<marker vname="Goregaon primery 2" cno="1017567" rno="300415" plant="1130" adt="42360 25569.274560185" hd="25569.016851852" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300201(6024)" cno="1004196" rno="300201" plant="1130" adt="42360 25569.276678241" hd="25569.008275463" tname="Suresh Bhagwan Zole"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1002582" rno="300112" plant="1130" adt="42360 25569.278171296" hd="25569.002673611" tname="Shri Sai Krupa Distributors"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1002726" rno="300112" plant="1130" adt="42360 25569.278171296" hd="25569.002673611" tname="Shri Sai Krupa Distributors"/>
+<marker vname="MH 43 E 0147-Goregaon primery" cno="1002763" rno="300112" plant="1130" adt="42360 25569.278171296" hd="25569.002673611" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300403(4755)" cno="1016982" rno="300403" plant="1130" adt="42360 25569.284016204" hd="25569.018993056" tname="Sai Sandesh Transport Services"/>
+<marker vname="300303(3603)" cno="1002626" rno="300303/300307" plant="1130" adt="42360 25569.285162037" hd="25569.003310185" tname="VASANT NAMDEO  GHOLAP/SUHAS TRANSPORT SERVICE"/>
+<marker vname="300303(3603)" cno="1004635" rno="300303" plant="1130" adt="42360 25569.285162037" hd="25569.003310185" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300449(6270)" cno="1016417@Salisbary" rno="300446" plant="1130" adt="42360 25569.290300926" hd="25569.005011574" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300303(3603)" cno="1009650" rno="300303/300304" plant="1130" adt="42360 25569.291400463" hd="25569.006111111" tname="VASANT NAMDEO  GHOLAP/Shri Sai Krupa Distributors"/>
+<marker vname="300119(4041)" cno="1006989" rno="300119" plant="1130" adt="42360 25569.291689815" hd="25569.008136574" tname="Sai Sandesh Transport Services"/>
+<marker vname="300447(9576)" cno="1004232" rno="300447" plant="1130" adt="42360 25569.29318287" hd="25569.017546296" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300447(9576)" cno="1016417" rno="300446" plant="1130" adt="42360 25569.29318287" hd="25569.017546296" tname="HANUMANT TUKARAM GAVKARE"/>
+<marker vname="300212(290)" cno="1002721" rno="300427" plant="1130" adt="42360 25569.293923611" hd="25569.003958333" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300212(290)" cno="1002771" rno="300108" plant="1130" adt="42360 25569.293923611" hd="25569.003958333" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300212(290)" cno="1002778" rno="300108" plant="1130" adt="42360 25569.293923611" hd="25569.003958333" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300304(U2746)" cno="1002616" rno="300307" plant="1130" adt="42360 25569.295833333" hd="25569.028101852" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300304(U2746)" cno="1006864" rno="300307" plant="1130" adt="42360 25569.295833333" hd="25569.028101852" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300304(U2746)" cno="1012388" rno="300304" plant="1130" adt="42360 25569.295833333" hd="25569.028101852" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300418(9035)" cno="1004830" rno="300420" plant="1130" adt="42360 25569.297569444" hd="25569.005092593" tname="BHARAT KISHAN YADAV"/>
+<marker vname="300418(9035)" cno="1006492" rno="300420" plant="1130" adt="42360 25569.297569444" hd="25569.005092593" tname="BHARAT KISHAN YADAV"/>
+<marker vname="300314(9961)" cno="1002867" rno="300314" plant="1130" adt="42360 25569.299918981" hd="25569.0096875" tname="Mangalmurti Transport"/>
+<marker vname="300303(3603)" cno="1006968" rno="300303" plant="1130" adt="42360 25569.300810185" hd="25569.002673611" tname="VASANT NAMDEO  GHOLAP"/>
+<marker vname="300303(3603)" cno="1007192" rno="300314" plant="1130" adt="42360 25569.300810185" hd="25569.006365741" tname="Mangalmurti Transport"/>
+<marker vname="300307(4571)" cno="1002616" rno="300307" plant="1130" adt="42360 25569.303622685" hd="25569.020393519" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300307(4571)" cno="1006864" rno="300307" plant="1130" adt="42360 25569.303622685" hd="25569.020393519" tname="SUHAS TRANSPORT SERVICE"/>
+<marker vname="300307(4571)" cno="1012388" rno="300304" plant="1130" adt="42360 25569.303622685" hd="25569.020393519" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300119(4041)" cno="1007784" rno="300119" plant="1130" adt="42360 25569.304918981" hd="25569.021759259" tname="Sai Sandesh Transport Services"/>
+<marker vname="300308(4282)" cno="1013256" rno="300103" plant="1130" adt="42360 25569.308483796" hd="25569.001782407" tname="Pushpa Bhagwan Jadhav"/>
+<marker vname="300314(9961)" cno="1007192" rno="300314" plant="1130" adt="42360 25569.3121875" hd="25569.003564815" tname="Mangalmurti Transport"/>
+<marker vname="300314(9961)" cno="1002648" rno="300304" plant="1130" adt="42360 25569.319826389" hd="25569.003043981" tname="Shri Sai Krupa Distributors"/>
+<marker vname="300314(9961)" cno="1004525" rno="300314" plant="1130" adt="42360 25569.319826389" hd="25569.003043981" tname="Mangalmurti Transport"/>
+<marker vname="300418(9035)" cno="1002681" rno="300418" plant="1130" adt="42360 25569.320127315" hd="25569.012743056" tname="Shivans Transport"/>
+<marker vname="300418(9035)" cno="1002697" rno="300418" plant="1130" adt="42360 25569.320127315" hd="25569.012743056" tname="Shivans Transport"/>
+<marker vname="300418(9035)" cno="1002850" rno="300418" plant="1130" adt="42360 25569.320127315" hd="25569.012743056" tname="Shivans Transport"/>
+<marker vname="300307(4571)" cno="1005045" rno="300307" plant="1130" adt="42360 25569.328472222" hd="25569.003310185" tname="SUHAS TRANSPORT SERVICE"/>
+<a1 datetime="unknown"/>
+</t1>

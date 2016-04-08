@@ -1,0 +1,109 @@
+/* 
+    Document   : common
+    Created on : Mar 25, 2014, 11:01:27 AM
+    Author     : taseen
+    Description:
+        Purpose of the stylesheet follows.
+*/
+body{
+     font-family: 'Open Sans', sans-serif;
+font-size: 9.5pt;
+
+}
+root { 
+    display: block;
+}
+.itrack { font-family: sans-serif ;
+         color: red;
+         text-align: center;
+         font-style: italic;
+         font-weight: bold;
+         font-size: small;
+         
+}
+.itrack1 { font-family: sans-serif;
+         color: navy;
+         text-align: center;
+         font-style: italic;
+         font-size: 16px;
+         font-weight: bold;
+}
+.header {
+        font-family: sans-serif;
+         color: red;
+         text-align: center;
+         font-weight: bold;
+         font-size: 10px;
+         font-style: italic;
+}
+.login {
+        font-family: sans-serif;
+         color: royalblue;
+         text-align: left;
+         font-weight: bold;
+         position:relative;
+}
+.login1 {
+        font-family: sans-serif;
+         color: royalblue;
+         text-align: center;
+         font-weight: bold;
+         position:relative;
+}
+ /* attributes of the container element of textbox */
+      .loginboxdiv{
+      margin:0px;
+      height:21px;
+      width:146px;
+      background:url(./webroot/images/login_bg.gif) no-repeat bottom;
+      }
+      .loginboxdiv_a{
+      margin:0px;
+      height:21px;
+      width:146px;
+      background:url(./webroot/images/login_bg.gif) no-repeat bottom;
+      }
+      /* attributes of the input box */
+      .loginbox
+      {
+      background:none;
+      border:none;
+      width:134px;
+      height:15px;
+      margin:0;
+      padding: 2px 7px 0px 7px;
+      font-family:Verdana, Arial, Helvetica, sans-serif;
+      font-size:11px;
+      }
+.button
+{
+display: inline-block;
+
+background: #C6250A;
+border-radius: 5px;
+border: 1px solid #911B07;
+box-shadow: 0px 1px 5px rgba(0,0,0,.4);
+letter-spacing: 1px;
+text-align: center;
+text-decoration: none;
+text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+text-transform: uppercase;
+font-family: 'Oswald', sans-serif;
+font-size: 1.10em;
+font-weight: 400;
+color: #FFFFFF;
+}
+
+.loginform{
+    background:ghostwhite;
+	background:-o-linear-gradient(bottom, ghostwhite  5%, white 100%);	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, ghostwhite), color-stop(1, white) );
+	background:-moz-linear-gradient( center top, ghostwhite 5%, white 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="ghostwhite", endColorstr="white");	background: -o-linear-gradient(top,ghostwhite,white);
+}
+
+.bodyform{
+    background:#666\9;
+	background:-o-linear-gradient(bottom, #666  5%, white 100%);	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #666\9), color-stop(1, white) );
+	background:-moz-linear-gradient( center top, #666 5%, white 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#666\9', endColorstr="white");	background: -o-linear-gradient(top,'#666\9',white);
+}
