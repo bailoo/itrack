@@ -1,0 +1,435 @@
+
+BODY
+{font-family: arial, verdana, tahoma, sans-serif;
+font-size: 8pt;
+margin: 0px;
+margin-left: 3px;
+margin-right: 3px;
+padding: 0px;}
+
+td.welcome
+{background-color:white;
+font-size: 11pt;
+text-decoration: none;
+color: gray;
+font-weight: bold}
+
+td.srl
+{
+  vertical-align: text-top;
+  font-weight: bold;
+  width:100px;
+  text-align:right;
+}
+
+td.srr
+{
+  vertical-align: text-top;
+  text-align:left;
+}
+
+td.srb
+{
+  vertical-align: text-top;
+  text-align:justify;
+}
+
+td.vt
+{
+  vertical-align: text-top;
+  font-weight: bold;
+  text-align:right;
+}
+
+td.vc
+{
+  vertical-align: text-center;
+  font-weight: bold;
+  text-align:right;
+}
+
+P
+{padding-top: 10px;
+margin: 0px;}
+
+H1
+{
+  font-weight: normal;
+  padding-top: 15px;
+  margin: 0;
+}
+
+table.navbar
+{font-size: 8pt;
+margin: 0px;
+padding: 0px; 
+border: 0px; 
+font-weight: normal;}
+
+td.text
+{color: black;
+font-size: 8pt;
+margin: 0px;
+padding: 0px;
+font-weight: normal;
+}
+th.text
+{color: black;
+font-size: 8pt;
+margin: 0px;
+padding: 0px;
+font-weight: normal;
+}
+
+td.text1
+{color: gray;
+font-size: 10pt;
+margin: 0px;
+padding: 0px;
+font-weight: normal;
+}
+
+table.menu
+{font-size: 8pt;
+margin: 0px;
+padding: 0px;
+font-weight: normal;}
+
+td.menuNormal
+{padding: 0px;
+color: black;
+font-weight: normal;
+vertical-align: middle;
+//background-color: #f0f7ff;}
+
+td.menuHover
+{padding: 0px;
+color: black;
+font-weight: normal;
+vertical-align: middle;
+/*remove the following line for drop-down menu with images*/
+background-color: lightgrey;}
+
+div.menuNormal
+{display: none;
+position: static;}
+
+div.menuHover
+{border: 1px solid black;
+background-color: #EEEDF2;
+display: inline;
+position: absolute;}
+
+a.menuitem:link
+{text-decoration: none;
+color: black;
+//background-color: #f3f7fb;
+display: block;}
+
+a.menuitem:visited
+{text-decoration: none;
+color: black;
+//background-color: #f3f7fb;
+display: block;}
+
+a.menuitem:hover
+{text-decoration: none;
+color: red;
+background-color: #c3c3c3;
+display: block;}
+
+a.menuitem:active
+{text-decoration: none;
+color: red;
+background-color: lightgrey;
+display: block;}
+
+a.menuitem2:link
+{font-size: 10pt;
+text-decoration: none;
+font-weight: normal;
+color: black;
+display: block;}
+
+a.menuitem2:visited
+{font-size: 10pt;
+text-decoration: none;
+color: black;
+background-color: lighyblue;
+display: inline;}
+
+a.menuitem2:hover
+{font-size: 10pt;
+text-decoration: none;
+background-color: lightgrey;
+color: red;
+display: inline}
+
+a.menuitem2:active
+{font-size: 10pt;
+text-decoration: none;
+background-color: lightgrey;
+color: red;
+display: inline} 
+
+a.map_text_bt:link,a.map_text_bt:visited
+{
+display:block;
+font-weight:bold;
+color:#FFFFFF;
+background-color:#98bf21;
+width:80px;
+text-align:center;
+padding:4px;
+text-decoration:none;
+}
+a.map_text_bt:hover,a.map_text_bt:active
+{
+background-color:#7A991A;
+}
+
+.frame_header_table
+{
+  font-size:12px;
+  font-family:Arial;
+}
+
+.hs1
+{
+  color:black;
+  text-decoration:none;
+}
+
+.hs2
+{
+  color:blue;
+  text-decoration:none;
+}
+
+.hs3
+{
+  color:#444444;
+  text-decoration:none;
+  font-size:13px;
+  font-style:strong;
+}
+
+.module_left_menu
+{
+  font-size:12px;
+  font-family:Arial;
+}
+
+.module_logo
+{
+  font-size:9pt;
+  font-family:Arial;
+  color:#FF832B;
+}
+
+.module_copyright
+{
+  font-size:7pt;
+  font-family:Arial;
+}
+
+.manage_interface
+{
+  font-size:12px;
+  font-family:Arial; 
+}
+
+.report_fieldset
+{
+  font-size:12px;
+  font-family:Arial; 
+  width: 50%;  
+}
+
+.manage_fieldset
+{
+  font-size:12px;
+  font-family:Arial; 
+  width: 50%;  
+}
+
+.manage_fieldset_test
+{
+  font-size:12px;
+  font-family:Arial; 
+  width: 100%;
+  text-align:center;    
+}
+
+.report_text
+{
+  font-size:12px;
+  font-family:Arial;    
+}
+
+.report_heading
+{
+  color: black;
+  font-size: 10pt;
+  margin: 0px;
+  padding: 0px;
+  font-weight: bold;
+}
+
+.manage_menu
+{
+  font-size:11px;
+  font-family:Arial;
+  width:100%; 
+}
+
+tr.mb1
+{
+  height:7%;  
+}
+ 
+tr.mb2
+{
+  height:88%;  
+}
+
+tr.mb3
+{
+  height:5%;  
+}
+
+td.module_select_track1
+{
+  width:28%;  
+}
+ 
+td.module_select_track2
+{
+  width:3%;  
+}
+table.module_index
+{
+  font-size:12px;
+  font-family:Arial;
+  background-color:#c3c3c3;
+  width:27%;
+}
+td.module_index1
+{
+  font-size:12px;
+  font-family:Arial; 
+  width:20%;  
+}
+td.module_index2
+{
+  font-size:12px;
+  font-family:Arial; 
+  width:22%;
+} 
+td.module_index3
+{
+  font-size:12px;
+  font-family:Arial; 
+  width:3%;  
+}
+.module_index_copyright
+{
+  font-size:11px;
+  font-family:Arial;
+}
+
+.module_map
+{
+  width:100%; 
+  height:100%;
+  display:none;
+}
+
+.module_text
+{
+  width:100%; 
+  height:100%;
+}
+
+
+@media print  
+{
+ .noprint  { display: none; } 
+}
+@media screen 
+{ 
+.noscreen { display: none; } 
+}
+
+
+# DATALOG STYLE
+
+		div.scrollTableContainer 
+		{
+			height: 495px;
+			overflow: auto;
+			width: 1016px;
+		
+			position: relative;
+		}
+
+			/* The different widths below are due to the way the scroll bar is implamented */
+
+			/* All browsers (but especially IE) -18*/
+		div.scrollTableContainer table 
+		{
+		width: 1000px;
+		overflow: auto;
+		height: 440px;
+		overflow-x: hidden;
+		}
+
+			/* Modern browsers (but especially firefox ) */
+		div.scrollTableContainer table
+		{
+		width: 1016px;
+		overflow: auto;
+		height: 438px;
+		overflow-x: hidden;
+		
+		}
+
+			/* Modern browsers (but especially firefox ) */
+		div.scrollTableContainer table>tbody 
+		{		
+		height: 472px;
+		width: 1040px;
+		overflow-x: hidden;
+		}
+
+		div.scrollTableContainer thead tr 
+		{
+		position:relative;
+		top: expression(offsetParent.scrollTop); /*IE5+ only*/
+		/* fixes the header being over too far in IE, doesn’t seem to affect FF */
+		left: 0px;
+	
+		}
+
+
+			/* Modern browsers (but especially firefox ) */
+		div.scrollTableContainer table>tfoot 
+		{
+		overflow: auto;
+		overflow-x: hidden;
+		}
+
+		div.scrollTableContainer tfoot tr
+		{
+		position:relative;
+		top: expression(offsetParent.scrollTop); /*IE5+ only*/
+		/* fixes the header being over too far in IE, doesn’t seem to affect FF */
+		left: 0px;
+		}
+
+			/*prevent Mozilla scrollbar from hiding cell content*/
+		div.scrollTableContainer td:last-child 
+		{			
+			padding-right: 20px;
+		}
+# DATALOG STYLE CLOSED

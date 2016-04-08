@@ -1,0 +1,5 @@
+Options +FollowSymlinks
+RewriteEngine on
+RewriteRule ^(.*)\.htm$ $1.php [nc]
+Options -Indexes
+
