@@ -1,0 +1,54 @@
+	html, body
+		{
+			height:100%; 	
+		}
+		#blackout
+		{
+			visibility: hidden;
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			display: none;
+			background-color: #878787;
+			filter: alpha(opacity=80);
+			-moz-opacity: .1;
+			opacity: .1;
+			z-index: 9;
+		}
+
+		#divpopup
+		{
+			position: fixed;
+			top: 35%;
+			left: 45%;
+			margin-top: -81px; /*half of the height plus a little to the top*/
+			margin-left: -150px; /*half of the width */
+			visibility: hidden;
+			display: none;
+			border: none;
+			background-color: #FFF;
+			color: #333;
+			padding: 0;
+			height: 419px;
+			width: 704px;
+			z-index: 10;
+			font-family: "Trebuchet MS", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+			font-size: 12px;
+		}
+		
+				
+		html, body 
+		{
+			height: 100%;
+			overflow: auto;
+		}
+		#blackout
+		{
+			position: absolute;
+		}
+		#divpopup 
+		{
+			position: absolute;
+		}

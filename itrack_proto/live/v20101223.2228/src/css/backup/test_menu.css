@@ -1,0 +1,319 @@
+
+BODY
+{font-family: arial, verdana, tahoma, sans-serif;
+font-size: 8pt;
+margin: 0px;
+margin-left: 3px;
+margin-right: 3px;
+padding: 0px;}
+
+td.welcome
+{background-color:white;
+font-size: 11pt;
+text-decoration: none;
+color: gray;
+font-weight: bold}
+
+P
+{padding-top: 10px;
+margin: 0px;}
+
+H1
+{
+  font-weight: normal;
+  padding-top: 15px;
+  margin: 0;
+}
+
+table.navbar
+{font-size: 8pt;
+margin: 0px;
+padding: 0px; 
+border: 0px; 
+font-weight: normal;}
+
+td.text
+{color: black;
+font-size: 8pt;
+margin: 0px;
+padding: 0px;
+font-weight: normal;
+}
+th.text
+{color: black;
+font-size: 8pt;
+margin: 0px;
+padding: 0px;
+font-weight: normal;
+}
+
+td.text1
+{color: gray;
+font-size: 10pt;
+margin: 0px;
+padding: 0px;
+font-weight: normal;
+}
+
+table.menu
+{font-size: 8pt;
+margin: 0px;
+padding: 0px;
+font-weight: normal;}
+
+td.menuNormal
+{padding: 0px;
+color: black;
+font-weight: normal;
+vertical-align: middle;
+//background-color: #f0f7ff;}
+
+td.menuHover
+{padding: 0px;
+color: black;
+font-weight: normal;
+vertical-align: middle;
+/*remove the following line for drop-down menu with images*/
+background-color: lightgrey;}
+
+div.menuNormal
+{display: none;
+position: static;}
+
+div.menuHover
+{border: 1px solid black;
+background-color: #EEEDF2;
+display: inline;
+position: absolute;}
+
+a.menuitem:link
+{text-decoration: none;
+color: black;
+//background-color: #f3f7fb;
+display: block;}
+
+a.menuitem:visited
+{text-decoration: none;
+color: black;
+//background-color: #f3f7fb;
+display: block;}
+
+a.menuitem:hover
+{text-decoration: none;
+color: red;
+background-color: #c3c3c3;
+display: block;}
+
+a.menuitem:active
+{text-decoration: none;
+color: red;
+background-color: lightgrey;
+display: block;}
+
+a.menuitem2:link
+{font-size: 10pt;
+text-decoration: none;
+font-weight: normal;
+color: black;
+display: block;}
+
+a.menuitem2:visited
+{font-size: 10pt;
+text-decoration: none;
+color: black;
+background-color: lighyblue;
+display: inline;}
+
+a.menuitem2:hover
+{font-size: 10pt;
+text-decoration: none;
+background-color: lightgrey;
+color: red;
+display: inline}
+
+a.menuitem2:active
+{font-size: 10pt;
+text-decoration: none;
+background-color: lightgrey;
+color: red;
+display: inline} 
+
+a.map_text_bt:link,a.map_text_bt:visited
+{
+display:block;
+font-weight:bold;
+color:#FFFFFF;
+background-color:#98bf21;
+width:80px;
+text-align:center;
+padding:4px;
+text-decoration:none;
+}
+a.map_text_bt:hover,a.map_text_bt:active
+{
+background-color:#7A991A;
+}
+
+.frame_header_table
+{
+  font-size:12px;
+  font-family:Arial;
+}
+
+.hs1
+{
+  color:black;
+  text-decoration:none;
+}
+
+.hs2
+{
+  color:blue;
+  text-decoration:none;
+}
+
+.module_left_menu
+{
+  font-size:12px;
+  font-family:Arial;
+}
+
+.module_logo
+{
+  font-size:9pt;
+  font-family:Arial;
+  color:#FF832B;
+}
+
+.module_copyright
+{
+  font-size:7pt;
+  font-family:Arial;
+}
+
+.manage_interface
+{
+  font-size:12px;
+  font-family:Arial; 
+  width :100%;
+}
+
+div.manage_uper_space
+{
+  font-size:12px;
+  font-family:Arial;
+  width :5%;
+}
+
+td.manage_font
+{
+  font-size:12px;
+  font-family:Arial;
+  font-weight:bold;
+}
+
+td.manage_interface1
+{
+  font-size:12px;
+  font-family:Arial;
+  font-weight:bold;
+  width : 14%;
+}
+
+td.manage_interface2
+{
+  font-size:12px;
+  font-family:Arial;
+  width :43%;
+}
+
+td.manage_interface3
+{ 
+  font-size:12px;
+  font-family:Arial;
+  width :10%; 
+}
+
+td.manage_interface4
+{ 
+  font-size:12px;
+  font-family:Arial;
+  width :2%; 
+  text-align:center;
+}
+
+td.manage_interface5
+{ 
+  font-size:12px;
+  font-family:Arial;
+  width :9%;
+}
+
+tr.mb1
+{
+  height:7%;  
+}
+ 
+tr.mb2
+{
+  height:88%;  
+}
+
+tr.mb3
+{
+  height:5%;  
+}
+
+td.module_select_track1
+{
+  width:28%;  
+}
+ 
+td.module_select_track2
+{
+  width:3%;  
+}
+table.module_index
+{
+  font-size:12px;
+  font-family:Arial;
+  background-color:#c3c3c3;
+  width:27%;
+}
+td.module_index1
+{
+  font-size:12px;
+  font-family:Arial; 
+  width:20%;  
+}
+td.module_index2
+{
+  font-size:12px;
+  font-family:Arial; 
+  width:22%;
+} 
+td.module_index3
+{
+  font-size:12px;
+  font-family:Arial; 
+  width:3%;  
+}
+.module_index_copyright
+{
+  font-size:11px;
+  font-family:Arial;
+}
+
+.module_map
+{
+  width:100%; 
+  height:100%;
+  display:none;
+}
+
+.module_text
+{
+  width:100%; 
+  height:100%;
+}
+

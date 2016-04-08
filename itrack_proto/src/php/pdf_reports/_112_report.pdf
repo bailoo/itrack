@@ -1,0 +1,804 @@
+%PDF-1.3
+%‚„œ”
+
+1 0 obj
+<< /Type /Catalog
+/Outlines 2 0 R
+/Pages 3 0 R >>
+endobj
+2 0 obj
+<< /Type /Outlines /Count 0 >>
+endobj
+3 0 obj
+<< /Type /Pages
+/Kids [6 0 R
+10 0 R
+]
+/Count 2
+/Resources <<
+/ProcSet 4 0 R
+/Font << 
+/F1 9 0 R >>
+/XObject << 
+/I1 8 0 R >>
+>>
+/MediaBox [0.000 0.000 595.280 841.890]
+ >>
+endobj
+4 0 obj
+[/PDF /Text /ImageC ]
+endobj
+5 0 obj
+<<
+/Creator (R and OS php pdf writer, http://www.ros.co.nz)
+/CreationDate (D:20150820)
+>>
+endobj
+6 0 obj
+<< /Type /Page
+/Parent 3 0 R
+/Contents 7 0 R
+>>
+endobj
+7 0 obj
+<<
+/Length 17751 >>
+stream
+
+q
+150.000 0 0 17.829 215.000 806.890 cm
+/I1 Do
+Q
+0.000 0.000 0.000 rg
+0.800 0.800 0.800 RG
+BT 132.830 780.330 Td /F1 10.0 Tf  (Vehicle Information-Last Data \(2015-08-04 00:00:00 2015-08-20 13:18:27\)) Tj ET
+BT 32.640 764.082 Td /F1 8.0 Tf  (SNo) Tj ET
+BT 50.356 764.082 Td /F1 8.0 Tf  (Vehicle Name) Tj ET
+BT 194.921 764.082 Td /F1 8.0 Tf  (IMEI) Tj ET
+BT 264.308 764.082 Td /F1 8.0 Tf  (Date Time) Tj ET
+BT 341.323 764.082 Td /F1 8.0 Tf  (Place) Tj ET
+BT 485.888 764.082 Td /F1 8.0 Tf  (Speed\(Kmph\)) Tj ET
+BT 537.733 764.082 Td /F1 8.0 Tf  (Status) Tj ET
+BT 32.640 749.034 Td /F1 8.0 Tf  (1) Tj ET
+BT 50.356 749.034 Td /F1 8.0 Tf  (Alibaug-Mumbai) Tj ET
+BT 194.921 749.034 Td /F1 8.0 Tf  (862170011625868) Tj ET
+BT 264.308 749.034 Td /F1 8.0 Tf  (2015-08-11 13:23:36) Tj ET
+BT 341.323 749.034 Td /F1 8.0 Tf  (0.3 km from Alibag  Rewas Road, Man) Tj ET
+BT 341.323 739.786 Td /F1 8.0 Tf  (Tarf Zirad, Maharashtra 402201, India-) Tj ET
+BT 341.323 730.538 Td /F1 8.0 Tf  (\(18.688,72.878\)) Tj ET
+BT 485.888 749.034 Td /F1 8.0 Tf  (0) Tj ET
+BT 537.733 749.034 Td /F1 8.0 Tf  (NA) Tj ET
+BT 32.640 717.290 Td /F1 8.0 Tf  (2) Tj ET
+BT 50.356 717.290 Td /F1 8.0 Tf  (Amarapuram-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 717.290 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 717.290 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 717.290 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 717.290 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 717.290 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 704.042 Td /F1 8.0 Tf  (3) Tj ET
+BT 50.356 704.042 Td /F1 8.0 Tf  (Bagapaar-UP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 704.042 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 704.042 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 704.042 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 704.042 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 704.042 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 690.794 Td /F1 8.0 Tf  (4) Tj ET
+BT 50.356 690.794 Td /F1 8.0 Tf  (BAITWALIA-UP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 690.794 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 690.794 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 690.794 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 690.794 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 690.794 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 677.546 Td /F1 8.0 Tf  (5) Tj ET
+BT 50.356 677.546 Td /F1 8.0 Tf  (Banaganapalle -AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 677.546 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 677.546 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 677.546 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 677.546 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 677.546 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 664.298 Td /F1 8.0 Tf  (6) Tj ET
+BT 50.356 664.298 Td /F1 8.0 Tf  (Bariyarpur-UP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 664.298 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 664.298 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 664.298 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 664.298 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 664.298 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 651.050 Td /F1 8.0 Tf  (7) Tj ET
+BT 50.356 651.050 Td /F1 8.0 Tf  (Barmer-HPCL \(SB-23.06.2015\)]) Tj ET
+BT 194.921 651.050 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 651.050 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 651.050 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 651.050 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 651.050 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 637.802 Td /F1 8.0 Tf  (8) Tj ET
+BT 50.356 637.802 Td /F1 8.0 Tf  (Barwaraja Pakad-UP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 637.802 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 637.802 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 637.802 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 637.802 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 637.802 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 624.554 Td /F1 8.0 Tf  (9) Tj ET
+BT 50.356 624.554 Td /F1 8.0 Tf  (Beluguppa-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 624.554 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 624.554 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 624.554 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 624.554 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 624.554 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 611.306 Td /F1 8.0 Tf  (10) Tj ET
+BT 50.356 611.306 Td /F1 8.0 Tf  (Bihta-Hpcl \(SB-23.06.2015\)]) Tj ET
+BT 194.921 611.306 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 611.306 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 611.306 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 611.306 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 611.306 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 598.058 Td /F1 8.0 Tf  (11) Tj ET
+BT 50.356 598.058 Td /F1 8.0 Tf  (Challur-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 598.058 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 598.058 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 598.058 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 598.058 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 598.058 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 584.810 Td /F1 8.0 Tf  (12) Tj ET
+BT 50.356 584.810 Td /F1 8.0 Tf  (Charakonda-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 584.810 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 584.810 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 584.810 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 584.810 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 584.810 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 571.562 Td /F1 8.0 Tf  (13) Tj ET
+BT 50.356 571.562 Td /F1 8.0 Tf  (Chitra Jharkhand]) Tj ET
+BT 194.921 571.562 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 571.562 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 571.562 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 571.562 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 571.562 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 558.314 Td /F1 8.0 Tf  (14) Tj ET
+BT 50.356 558.314 Td /F1 8.0 Tf  (Dharur-AP_IOCL \(SB 05/04/2015\)]) Tj ET
+BT 194.921 558.314 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 558.314 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 558.314 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 558.314 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 558.314 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 545.066 Td /F1 8.0 Tf  (15) Tj ET
+BT 50.356 545.066 Td /F1 8.0 Tf  (Dondapadu-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 545.066 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 545.066 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 545.066 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 545.066 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 545.066 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 531.818 Td /F1 8.0 Tf  (16) Tj ET
+BT 50.356 531.818 Td /F1 8.0 Tf  (Dornipadu-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 531.818 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 531.818 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 531.818 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 531.818 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 531.818 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 518.570 Td /F1 8.0 Tf  (17) Tj ET
+BT 50.356 518.570 Td /F1 8.0 Tf  (Duggondi_AL_IOCL \(SB 05/04/2015\)]) Tj ET
+BT 194.921 518.570 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 518.570 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 518.570 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 518.570 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 518.570 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 505.322 Td /F1 8.0 Tf  (18) Tj ET
+BT 50.356 505.322 Td /F1 8.0 Tf  (Gandhari-AP]) Tj ET
+BT 194.921 505.322 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 505.322 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 505.322 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 505.322 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 505.322 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 492.074 Td /F1 8.0 Tf  (19) Tj ET
+BT 50.356 492.074 Td /F1 8.0 Tf  (Ghanpur-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 492.074 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 492.074 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 492.074 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 492.074 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 492.074 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 478.826 Td /F1 8.0 Tf  (20) Tj ET
+BT 50.356 478.826 Td /F1 8.0 Tf  (Govandi_RCF]) Tj ET
+BT 194.921 478.826 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 478.826 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 478.826 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 478.826 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 478.826 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 465.578 Td /F1 8.0 Tf  (21) Tj ET
+BT 50.356 465.578 Td /F1 8.0 Tf  (Gudur-AP New \(SB 05/04/2015\)]) Tj ET
+BT 194.921 465.578 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 465.578 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 465.578 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 465.578 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 465.578 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 452.330 Td /F1 8.0 Tf  (22) Tj ET
+BT 50.356 452.330 Td /F1 8.0 Tf  (Jhabua-8138-Gail\(SB-17/02/15\)]) Tj ET
+BT 194.921 452.330 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 452.330 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 452.330 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 452.330 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 452.330 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 439.082 Td /F1 8.0 Tf  (23) Tj ET
+BT 50.356 439.082 Td /F1 8.0 Tf  (Jhabua-8142-Gail\(SB-17/02/15\)]) Tj ET
+BT 194.921 439.082 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 439.082 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 439.082 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 439.082 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 439.082 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 425.834 Td /F1 8.0 Tf  (24) Tj ET
+BT 50.356 425.834 Td /F1 8.0 Tf  (jhabua 8139-Gail\(SB-17/02/15\)]) Tj ET
+BT 194.921 425.834 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 425.834 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 425.834 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 425.834 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 425.834 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 412.586 Td /F1 8.0 Tf  (25) Tj ET
+BT 50.356 412.586 Td /F1 8.0 Tf  (jhabua 8140 - Gail\(SB-17/02/15\)]) Tj ET
+BT 194.921 412.586 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 412.586 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 412.586 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 412.586 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 412.586 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 399.338 Td /F1 8.0 Tf  (26) Tj ET
+BT 50.356 399.338 Td /F1 8.0 Tf  (jhajpur_JSL]) Tj ET
+BT 194.921 399.338 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 399.338 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 399.338 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 399.338 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 399.338 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 386.090 Td /F1 8.0 Tf  (27) Tj ET
+BT 50.356 386.090 Td /F1 8.0 Tf  (Jharkhand \(SB 05/03/2015\)]) Tj ET
+BT 194.921 386.090 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 386.090 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 386.090 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 386.090 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 386.090 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 372.842 Td /F1 8.0 Tf  (28) Tj ET
+BT 50.356 372.842 Td /F1 8.0 Tf  (Karnataka_AMM) Tj ET
+BT 194.921 372.842 Td /F1 8.0 Tf  (862170018367597) Tj ET
+BT 264.308 372.842 Td /F1 8.0 Tf  (2015-08-13 10:42:36) Tj ET
+BT 341.323 372.842 Td /F1 8.0 Tf  (0.06 km from State Highway 93,) Tj ET
+BT 341.323 363.594 Td /F1 8.0 Tf  (Karnataka 581329, India-) Tj ET
+BT 341.323 354.346 Td /F1 8.0 Tf  (\(15.308,74.744\)) Tj ET
+BT 485.888 372.842 Td /F1 8.0 Tf  (114.9) Tj ET
+BT 537.733 372.842 Td /F1 8.0 Tf  (NA) Tj ET
+BT 32.640 341.098 Td /F1 8.0 Tf  (29) Tj ET
+BT 50.356 341.098 Td /F1 8.0 Tf  (Karsgutti-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 341.098 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 341.098 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 341.098 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 341.098 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 341.098 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 327.850 Td /F1 8.0 Tf  (30) Tj ET
+BT 50.356 327.850 Td /F1 8.0 Tf  (Kasia 2_WF]) Tj ET
+BT 194.921 327.850 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 327.850 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 327.850 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 327.850 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 327.850 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 314.602 Td /F1 8.0 Tf  (31) Tj ET
+BT 50.356 314.602 Td /F1 8.0 Tf  (Kataram-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 314.602 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 314.602 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 314.602 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 314.602 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 314.602 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 301.354 Td /F1 8.0 Tf  (32) Tj ET
+BT 50.356 301.354 Td /F1 8.0 Tf  (Kathtaron-UP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 301.354 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 301.354 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 301.354 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 301.354 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 301.354 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 288.106 Td /F1 8.0 Tf  (33) Tj ET
+BT 50.356 288.106 Td /F1 8.0 Tf  (Khadda-UP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 288.106 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 288.106 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 288.106 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 288.106 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 288.106 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 274.858 Td /F1 8.0 Tf  (34) Tj ET
+BT 50.356 274.858 Td /F1 8.0 Tf  (Khera-MP]) Tj ET
+BT 194.921 274.858 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 274.858 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 274.858 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 274.858 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 274.858 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 261.610 Td /F1 8.0 Tf  (35) Tj ET
+BT 50.356 261.610 Td /F1 8.0 Tf  (Kistaram-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 261.610 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 261.610 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 261.610 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 261.610 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 261.610 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 248.362 Td /F1 8.0 Tf  (36) Tj ET
+BT 50.356 248.362 Td /F1 8.0 Tf  (Kohir-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 248.362 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 248.362 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 248.362 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 248.362 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 248.362 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 235.114 Td /F1 8.0 Tf  (37) Tj ET
+BT 50.356 235.114 Td /F1 8.0 Tf  (Kommala-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 235.114 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 235.114 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 235.114 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 235.114 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 235.114 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 221.866 Td /F1 8.0 Tf  (38) Tj ET
+BT 50.356 221.866 Td /F1 8.0 Tf  (Kondurg-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 221.866 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 221.866 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 221.866 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 221.866 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 221.866 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 208.618 Td /F1 8.0 Tf  (39) Tj ET
+BT 50.356 208.618 Td /F1 8.0 Tf  (Kosigi-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 208.618 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 208.618 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 208.618 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 208.618 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 208.618 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 195.370 Td /F1 8.0 Tf  (40) Tj ET
+BT 50.356 195.370 Td /F1 8.0 Tf  (Koyyuru-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 195.370 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 195.370 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 195.370 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 195.370 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 195.370 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 182.122 Td /F1 8.0 Tf  (41) Tj ET
+BT 50.356 182.122 Td /F1 8.0 Tf  (Kuberasthan-UP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 182.122 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 182.122 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 182.122 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 182.122 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 182.122 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 168.874 Td /F1 8.0 Tf  (42) Tj ET
+BT 50.356 168.874 Td /F1 8.0 Tf  (Lepakshi-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 168.874 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 168.874 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 168.874 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 168.874 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 168.874 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 155.626 Td /F1 8.0 Tf  (43) Tj ET
+BT 50.356 155.626 Td /F1 8.0 Tf  (Lucknow]) Tj ET
+BT 194.921 155.626 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 155.626 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 155.626 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 155.626 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 155.626 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 142.378 Td /F1 8.0 Tf  (44) Tj ET
+BT 50.356 142.378 Td /F1 8.0 Tf  (Maddur-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 142.378 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 142.378 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 142.378 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 142.378 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 142.378 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 129.130 Td /F1 8.0 Tf  (45) Tj ET
+BT 50.356 129.130 Td /F1 8.0 Tf  (Madgula-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 129.130 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 129.130 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 129.130 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 129.130 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 129.130 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 115.882 Td /F1 8.0 Tf  (46) Tj ET
+BT 50.356 115.882 Td /F1 8.0 Tf  (Mahanandi-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 115.882 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 115.882 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 115.882 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 115.882 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 115.882 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 102.634 Td /F1 8.0 Tf  (47) Tj ET
+BT 50.356 102.634 Td /F1 8.0 Tf  (Maheshwaram-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 102.634 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 102.634 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 102.634 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 102.634 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 102.634 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 89.386 Td /F1 8.0 Tf  (48) Tj ET
+BT 50.356 89.386 Td /F1 8.0 Tf  (Majhawara-UP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 89.386 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 89.386 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 89.386 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 89.386 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 89.386 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 76.138 Td /F1 8.0 Tf  (49) Tj ET
+BT 50.356 76.138 Td /F1 8.0 Tf  (Manchukonda-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 76.138 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 76.138 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 76.138 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 76.138 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 76.138 Td /F1 8.0 Tf  (-) Tj ET
+0.000 0.000 0.000 RG
+0.5 w
+31.640 775.330 m 31.640 72.338 l S
+0.5 w
+49.356 775.330 m 49.356 72.338 l S
+0.5 w
+193.921 775.330 m 193.921 72.338 l S
+0.5 w
+263.308 775.330 m 263.308 72.338 l S
+0.5 w
+340.323 775.330 m 340.323 72.338 l S
+0.5 w
+484.888 775.330 m 484.888 72.338 l S
+0.5 w
+536.733 775.330 m 536.733 72.338 l S
+0.5 w
+561.640 775.330 m 561.640 72.338 l S
+0.5 w
+31.390 775.330 m 561.890 775.330 l S
+31.640 760.282 m 561.640 760.282 l S
+31.390 72.338 m 561.890 72.338 l S
+endstream
+endobj
+
+8 0 obj
+<<
+/Type /XObject
+/Subtype /Image
+/Width 631
+/Height 75
+/ColorSpace /DeviceRGB
+/Filter /DCTDecode
+/BitsPerComponent 8
+/Length 9136 >>
+stream
+ˇÿˇ‡ JFIF  ` `  ˇ€ C 		
+ $.' ",#(7),01444'9=82<.342ˇ€ C			2!!22222222222222222222222222222222222222222222222222ˇ¿  Kw" ˇƒ           	
+ˇƒ µ   } !1AQa"q2Åë°#B±¡R—$3brÇ	
+%&'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyzÉÑÖÜáàâäíìîïñóòôö¢£§•¶ß®©™≤≥¥µ∂∑∏π∫¬√ƒ≈∆«»… “”‘’÷◊ÿŸ⁄·‚„‰ÂÊÁËÈÍÒÚÛÙıˆ˜¯˘˙ˇƒ        	
+ˇƒ µ  w !1AQaq"2ÅBë°±¡	#3Rbr—
+$4·%Ò&'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyzÇÉÑÖÜáàâäíìîïñóòôö¢£§•¶ß®©™≤≥¥µ∂∑∏π∫¬√ƒ≈∆«»… “”‘’÷◊ÿŸ⁄‚„‰ÂÊÁËÈÍÚÛÙıˆ˜¯˘˙ˇ⁄   ? ˜˙(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä
+(¢Ä*O™XZ…Â‹^€ƒˇ ›íUS˘O∂æ¥ºœŸÆ°õo_-√cÚØù><Èv/¥ª∂àF˜ñÂÊ£0cÛ{û~üZÙÔÑ>“¥øXj[É®^Aônñ⁄NvèE»‰
+Ùj‡°OG7≈“ƒ)^V=ä(Ø8∞¢ä( ¢ä( ¢ä( ¢ä( ¢ä( ¢ä( ¢äØ}yüaqy1ƒPF“πˆQì¸©•wdä+Õ~|J∫Ò∆±™[\Y√o∫,ê˘dìÇH‰ûßßa^ï⁄¥≠Ftg…5f$Ô™
++…4Ì‚,'ºû˙A¢˘Ã€‰î</xEè<68Ë0A9?≈ÎtÎRT⁄JI›tÓQEb0¢ä( ¢ä(	om°}í‹DçËŒ§˚}°c˝Ò\/é¥´(/≠ØñÛÓ	G'ë¿' v5g√æ±‘t•ö}‰ñ<+`
+ÚÂç´ıáB1’yûÇ¬Sˆ
+¥•£Ú;Ωµv¬‹FO†aV+œ5oÀÏ0X«+€‹•¿À=˜t¿«9ˆ#ÆÙ]®´Ë1]8j’j9*ëµézÙÈ¡'	^„®¢äÎ9¬ä(†
+∑⁄ç¶õíÓeâI¿œznü©⁄jqª⁄IΩQ∂ìÇ9¸k«§.Öˇ ∏@‘„˙‘~#Ïw_Ôå˛UÁK5ãT-£Glp—xWZ˙¶u‘QEz'QE QEçq‚ù"ﬁFçÆÉ2ú0E'ïl+P r»Ø2Ò<IâÊH¿Ç1«©Î¸´—Ï¯≥á˝¡¸´Õ¡‚™U≠:s˚'v+
+T°8˝¢zŒø◊tÌ6O*Ê·VLg`?ß÷¥kâÒÏqè±J ÛôIˆ∆k|uy–¢ÍCteÑ•’î%≥:€Ë5U∏∑m—∂@$c•Y¨hQ˚±5øZa™:î£7ªFu‡©‘îFQEndùÆÈ⁄lûUÕ¬¨òŒ¿2O≠h◊„ÿ„bîÊ32ìÌå◊&:ºËQu!∫:pî£Z≤Ñ∂g[c}£j∑Ì∫6»åt´5Å·ç
+?v&∑ÎL5GRîf˜hŒº:íÇË¬´O®Ÿ[H±œwN›‰
+O‡kÀæ2|@º‰0Ë˙Lç› íuÎ˙B}jèÖæ
+ÈöóÜÌoı€ÀŸu®÷m—Mè( êr}OÂÎ^¥pqçZ¥¨û⁄]≥mlèeD≈THÑ∞ åı‘˙Üﬂuù'‚Éœ©[Õ‰ÈÇB∑§,§Çâ¥û*KpN1ÉÉ≈{ıcä£
+3ÂÑπï∑∂÷°EW1AEPEd¯ó\ã√~æ’ÊP…mÌ§„qË‚HÃ¸0ÒÕﬂé4À˚õÀh†íﬁpÅbŒ6ëë‘ı≠£B§©:©{®WW±ﬁQEà¬ä(†ä(†ä(†ä(†ä(†ä(†ûˇ h_˘to˙ı˝
+Ω_·ó¸ìm˛ΩáÛ5Â¥/¸å:7˝zø˛Ö^±«˛I∂Öˇ ^√˘ö˜1_Ú,•Íˇ S8¸lÛàˇ <Y†¯∆ÔJ¥0Z[¬´ÂÄ°Ÿ¡‰9=âÙ™Wö∑≈Îè'à^‚E”í?¥nÖbFÚ˙Ó*J„ü†œΩc¸o$|Kúé¢⁄/‰kË£˛˘\øŸò∆8ˇ U[‘ù<>å£N-À{¢U€zúG¬/â7˛+öÁI÷Z'ºÇ1,S(⁄dLÄA2	è_nv˛+¯´YóÜ#Ω“#ãtìûy0|¨Ù¬ûπ¡’„übﬁ∂ì˘
+ı_éÚN%ˇ Ø®øùcä√Rßò∆
+>Î∂û£ãn<Û√˛3¯£„'∫áEπç¸•Ã§GœOôá‡‡g◊”Üi?¸a·//ƒÚ¥ÒE0éÍ;Ä7†?ƒ¨=à#®#ÛÆ´ˆyÁC÷}ÆP„µ¬|n¬¸Lú‡«º$Ò◊É]Òçò òWM(€∂Ω	’EJÁ”í\E≥\I"¨JÖŸ…‡(Œ}+≈/æ&¯è∆û)R•¨LX«Pƒ®ÍÁÇ};úé‰WW„˚õ®>K-± µ¨+#⁄B∂–p}y¬~œêƒuùVbŒS‹.‡OÙØ/	ÜÑ0ı12Wq—/‘πI›"Áàn~'|;µèS∏÷b’¨Z@≤f=ﬁ_nr2ß≠wﬁÒî¸1pt˚ó”µ4Pì*ÄÌå3’NÎ–‘ﬂ—·û∫$ ÅoëüP¿è◊„ü%π_\Eo%Ïú Ω∞p~π ~&Æ4·â¡NªIJ¶óÌ+.º]„}∆'G÷<MyÇÈcû`è/#ÁÜ*r3^·Ò7Tº“~ﬁÍ:m˘µ∏ãaIoÕñ ˆ9„“ºÎ„ÔÜDSX¯ñ›ó?gπ Åì’π∆G‡+é÷ºm®x◊√^¨19ªéEäV-ƒÔ˜#˝9ÓkÆ8h‚°FºI|[t7-”=·ﬁ1÷˜Î˙æπs.ïÙKv ôÿœ›˚£'°ŒG±Œ|ºWÒƒ“hﬁx4òR)$Ãª›î`eéﬁH3‘◊≠ËM∑Öº-gßEÜ  $êç†ê2Œ}2rÚ1„Ìœ≈w©ˇ ¬ˇ n’Ø¯yÚB1ñ⁄ùÅÍH*ÙÆrçzµ'
+wÌŸzÙ)ËílÕµ¯õ‚ˇ xª˚ƒ”CyàÁfv√åH¨=àl˘W°|dáT∏¯}s.õtë€«áª^wIL)Qêx#È^„f◊gÒ‘œ‚kx·‘”|I¥®O·ÉÚ‡z˙◊–^89¯;®ü˙áØÚ◊ã£
+S√’äWvΩ∂{t—‚_
+¥M{W’o∞µaßI#Ãì'êOØ„_ExK÷4ü5∂°¨∂ß®¸Ã.&å*©?t 0JèrI…Á†3˚=˝Ω¨ﬂfO˝
+æÇ?t˝+ü;´'äp“ ›<ä¶Ω”Áœ
+|NÒn≠Ò√NøºQj˜OñÎ
+(ÊŒ3¡«~’´Ò~˜∆^‘`‘Ù˝~ËiWD†çW»qŒ”« å‡˚˙ü?i#„ü˝Ñ‰ˇ –öæåÒœÜ„ÒWÑ/¥¬Å¶hÀ€ìèñUÂyÌœÿöﬂÏpÿ™Oïr¥Æ¨(›≈òµªΩw¡?jø’$æº∫ d
+X∆é£9<¸«“º…uœ¯É‚MÔáÙèÃ;ôUe˘|¥ç	éÿ~$
+Á<„ÎØC¨⁄⁄As	(oısåÄ~úú˝zo¿o=∂óy‚K°∫k„Â@«Æ≈?1œªqˇ  ˜™ƒañ’≠$öœ¸Ñ•Õdtﬁ:ÒÏ_Ù;XYÕ˛´$acê‡`»·@ÔË œ•rñı›EØ€ƒÚCÁCb™z‡ïË1ñ∆Oqí+Ü¯Õs=◊ƒõ®'v	
+Fà•≤@3ú˙◊¢√‡/>ùv~9ÚÌºïUÒé°∫ˇ ÖfÙ¯zs∫Rñ∫´¸ê˘õm¯YÒV˜ƒ⁄õhz‹qõ¬Ö·∏åé™W◊9ÜΩvº∑¡ˇ †ÊΩkÆ^ÍÚﬁ_@Ô 	ƒfe+ŒI'Æ{s^•^f=·›k·ˆ˝KçÌ©√¸Dˇ òO˝v˝ “xoƒ6zfï‰‹ñû=i~!ˇ Ã+˛ª?˛ÄkC¬ñÚË™Ô
+3lí†˜Øîö®ÛÏ›ùèn. π’ı4,<Ka®›≠¥!ëÅ yg†ıÙ¸iﬁ$ø∫”tIÓ≠àÃÁÑçÿÔèNı£¡íë¢} ç„#ˇ Ü§Aˇ ñ&ΩI˚H—ó3÷›6í´U•Œj«^Ò£q‰Z»Ø!˚†qÎJ<G≠ÈãC®.Ú fF¿»=‘è∆¶/¸\˚ ˛u_«á ≥°∂rÔ°^]eÑ˙«;ΩœjJì≈}_ër˛%÷‘<M¨¿◊,6Ì¬·ÜÔ®'ØÈI†¯™Ë^≠ñß¸MÂÜaÜFŒ0+¢Á¸ãˆúy˝”Á≈◊ûãz ˇ «k¢≥´B4Î©∂›Øÿ¬åi÷ïJ.)%{w:øà¯z?˙˙ãˇ BÆAè[h'K*©?>‚OÂ[˛>ˇ ër/˙˘ãˇ B¶x˛=nøﬂ ´O⁄„„€NÇ√œŸ‡dÏûΩLÿ¸C≠Ë∑©o©©êï¿ÀP√É˛zWok®[›ÿ-‰R	ÓÙ«\◊)ÒNÕ=óH¡æõƒ
+°ßM:¯7S•ÿ$⁄›€êπ⁄}9˙ìNû"¶ºË∑Ãí∏ßBËB™\≠ªﬂ_‘µΩWÏöC§0 ŸêÄr=~üOZØu©kﬁπâ.ÓÍ'…ˇ <èc”Û™≥ªª∏üÏw^Dà£'úÁ5∑/Ñı+ÈSÌ⁄Øôûõ3˘sXSû'K⁄B¸ÕÈÆÜµ!á°WŸ ‹´}57]∂èD]MŒ#e»\åìÈıÕsñ˙ûΩ‚)§˚≠≠∫N3è«◊ßJ•‚M:M ∆¬)KZÉ#úüôúúÛé‹öÈ|ëØá‚)˜ôòπ#9ˇ WR´Væ!Pìµñæg;ßNé€E^ÔKÙGowi¨oÊÛÁVRŒNwÕz|,v	# $û√Ê˛,›ˇ 	u◊˝rã¯ıu˙‹íG·(H&%RC`Äp:÷8'Ï*◊∂∂5≈ßZùı2ßÒ6£™Íc—ïPq!‰ê:ü@:VGàlu[6âµœ¥,ÑÏÁÖ#€_ ¥¸ë´«oıÅT.GAìû˘
+ƒ<„K«O9Ûˇ |Œqï|´‘ìø‡i	FÜ24aﬂ±µ·2Ö;U{ƒ”Ex4Ì3k\n
+Œy¡'¶=~æµc¬%áár[s`Wc∑ö⁄"N…4í±1-É…Î˙VµqSßÜ•o#:XxTƒUúˆçŒÇˇ ˛]"æ{Ùö<ÄÀÅÑœ∂9«Á[∫º∫•ÑíÃrC˛≥û>øJÃπÊµxÜ9u|ƒ›T°«ˇ ^´jh%Ï÷∑“N®í≥|∏POLw‰˛u§^"å›Dü"Z‹…™5`†⁄ÁoK!n<M®Í∫áÿÙeTúHy$ß–ïë‚VÕ¢mFÛÌ!;9·Hò˙˛Uß‡4å›^;¨
+°r:ú‡˛_êß¸CŒ4ºtÛü?˜¡Æi∆URØRNˇ Å”	FÜ24aﬂ±µ·2á;VÌsæœˆÁ˚Ì¸Î¢ØkÔáá°‰‚◊ÔÁÍxˇ ∆Ø_k±¡ÆÈQ¥Û⁄∆R‚›FYì®eÓHÁ#úåcß<ÁÄ˛3>Égç‚Ky§Ç #ä‚1óçTck/|cØ_≠{µÊ≠ßX\Aow{o”∂ÿ£í@¨Áß ı‰◊=‚Øá>Òdn˜vÇ≤8∫ÉÂ|ÛåˆnΩÎËhci∫+äç„—ıGãΩ‚mh^"“|IeˆΩ&ˆ;ò∫6” üB:É^MÒ~Î∆~ΩãU”ı˚Ö“nÀÚ◊jòd‰ÖÈ»#8>«>ßÀÁR¯q„õ®ÏnÿÀapcf*ŒÄÙaœvÌ€÷æõÒ~Ü<[‡{ÀŸßÄI
+∂Y ‹£$qœÍkY·°ÅƒS©~jrÔÿÊMu0~Î˙áà<5Œß®5Â“]<eú¢Ö\æyıØ;–uˇ x∑‚<˙fü‚;•∞äwgô X±úFO FO•q˛ÒÂ˜Ét˝gOÜ'€£Ú‘Ô«ì oŒz˛ÉÒˆOÅû:WÑÊ’gM∑îô"4»_‘π˜WN+µ™“¥æü˘Õd`x∑‚_àı/Ö|5,vCœæ{®,Ïpr–=ÜkWäZâÏ4i5ÈßπΩ#ÏÚFCF¸‡˝ÂÁoÜ8û9≠ﬂ¸'‘§Ò˛$¥˘πi>–ˆ¡ˆ»írw#{ê8¡Œ;ó†|d◊t=U4œY4ÀlíC…‚Ìí:7Èüz)∆2§•Öåee™{ﬂ∏=˝„°¯˜o´Ÿœ“ç5%q!ùœ›'«‡qÎ«´√ﬁ%’Ù›B]^˛ÀA*¨ÑdÓ8ÙÈ^âÒ¢Óˇ ÖÇÓ÷Uñﬁi†í9‰2ìêEd˛œ?Ú÷?ÎÂ?Ùöe™M%t˚WôÈ∂Úü¯Ye÷ıFªkHK\^J™ÖœRp0 Ï?íyØ*”¸_„Oâ∫’ıøÜn·—Ùªd•u¸ìépNNL/≠tnß∑é'dIÆQ´c#ì∑‹ ºÛ·oÜºE´ËW∑Ò”œ	* ƒ2	«9ÎÏk&ü’eâõWΩïˆ_"§ﬂ5ç;Øà5¯u‚x¥ØÕ©m±_)ç“!„r∑9`é£ÒÆÔ‚gåıO¯6”W–VKßAˆó¡Ú’ÜTÖ=s˙W9/¡}g^æ'Ò[ﬁ]´≤2X}	8óZΩÒgKáC¯;o•€≥º6èo
+3ú≥„'ﬁõ˙≠J‘TlÂzÀFÚL„|7„ä>.íÍ-xe0Ä“1ä5	ú‡eΩq¿ˆ˙—eÒ{≈ﬁ÷.¥œYãŸ ;^'a©∆AÉ”•tü≥œ:≥ÌpÉˇ Æ„x‚U¡ m¢?°ØB0°W<+¶πRÈøN§j¢•s≠π’~/xáJ÷üo≠Ñ™&ÜrÇBò»#wÃŸ«„ûi|+¯Øw‚Et-wÀ7n§€‹®Ê`d´\r=„Í:√∫x ˆX¯ˇ Ää˘á¡ü'∆;0£Ò2êvÂ´èX™Ua(% Æö‹ßx¥zÔ≈Øâﬁ6⁄vêà∑∑Ê4Ó°Ñj@R}ÎâÒüÙ⁄¯äÁƒLˆ∑B6eÅÄÚ7åçˇ (UÅú„'ôÙäáçc∑Ω≤∏H5Kt1®êùì/$)Ù ˜˜9Ìè3∂Òøé~œìÆZã$cäÈrIn:sèJx(”ù˚5∫{ø@ïÔ©Óma¸¶ÀØJÚÍRFdë§P¨1*¿¡
+T˘¢ßßä¥ÔËëÍzs§Ïí'˚—?uoÃphØ
+µ’Is+;Ïh∂7(¢äÃgÕ?µø¯¢!ßiáìcAæKv]Áw$8ÁäÙ?Ö^)ûÀ√öñëm5ºdE?íŒéIÅÚüLıÈ÷ΩK–QÅÈ^ï\|ja£á‰—uπ
+6w>Z¯ê◊æ*ÒÌÂıéì®d Û-Ÿl‡ú«9Î^Ëö≥ÀüÌ‚¬Òf:qO≤òHnÃm∆qû˛úÙÆ«–R„äö¯ÔkNù>[(yÇçõgÀ?°·o[ÍwZ.°%æ”˘p1e@‹úu¿ÙØO¯Á}$æ∑—m¨nÓ..fYwE2"Ø\ëﬂ$qˇ ÷ØV¿ÙQW[1ˆ∏à◊q’yˆ+1ÌZrjöeÊùwnÚm∏I^&¿|§nËN:ûMq,ıg‚=Ï∂∫]„E§!åÌêHÈúÛ_N`Çì–Sßô∏b•âÂ’Ùv«%·πm¸a‡!gß‹[∆—;à'å°8 íA!áÛÂ6~Ò/¬è>ßeß‹Í∫[)BˆÍX¥déTd@ÁÓ3»Ø°(ÆzXŸSÊI{≤›∆ÁÜ¯„≈öˇ è¥ËÙ¯sTé)vΩ‹ìC∑8Á`9€å„íGJÓ>x<§ª\H%‘ÆÇôŸNU1¸+Ìœ'øÇªúJZ*c£Ï πcø®(Îva¯√@_¯SQ“	
+˜ÄÆ9R}≤}≥^Aá·ﬁ£i‚ôu]^“kt”À"$»Pº§cå¿NFFvï'ú{›®„j“£*1zHSw)Í∂'R“nÏÑûYûå>3¥ëÄqﬁæj–-|]√≈3M˝É-√¥M"&x‰M¿¸å=JÉÎÍ;W‘4`’X\k°A«ö2›£}Oï<Wßx◊ƒ∫£¯ñˇ √óëóT¬Em&Tq…ø>¶ΩÀ√Û?é>\i◊∂6a6Nn#¿f>uerG∂A8Õw8îVòå¬U°r•ÀµÑ°f|≈·Ë¸aªƒW@h3‹¥—òâX^H‹√!\gÈ◊ê;{ÜâÆk–xN˜YÒUÇ√*3I≠î,“ÄrrƒÓÙ„« u∏µ¨o÷Zî‚Ø’˜cc‰ØçWNÒ§> }˙DäÂÆ%âÉíp2:Û_W⁄‹%Âú7(≤*M∫¨àQÄ#8*yÿÚ*\AKF;ı∑„k+c |Î„ØÖ⁄≠«ƒÜ˛Õµy,ıIº‘ìc2F«ó√ÓÄry#Ç6‰Ò^˚§È∞Ë˙E¶ùoì¥KñÍp1ìÍOSÔWh®ƒcj◊Ñ!7§AE'ty/≈ﬂÜóû'öoFU{ÿ¢ÚÊ∑8U*Tˇ xdå£úÛ˛¯ã‚ˇ XÆè©¯^˙ˇ Ïﬂ∫åÏx‹ @ÓúÆ:q¯„ßΩR`z
+÷˜ÏU±Rä€∫˘ãó[£Ç5«éumVÁUÒ"Æüß [È¬5∏êCì˜ÜûI<˝ıWYÛ È[–§¨p~1ùµ+∏m°µúõf-º° í„éi⁄&Øs£i˛D∫|Ó7
+èZÓvÉÿQµ}y?nÎ©Ÿ˙Ç∆Gÿ™.KÃ‡µü_Í∂Ê{+ò#Á!If@3˘U˝hKk‡òÙ˚àeíy„XòF•∂úsìË+Æ⁄æÇå‘U¨˝Á)›µb*>ÍålìπÁﬁí}3P_:Œró,"ﬁ®N√ÿëÈ€=≥ÈOÒïº◊z‹-±ä"õÇúúı¸w€@Ï(⁄P+?ÏﬂˆaÕ°£«ˇ ¥{~]L/^m“~œ$G%™‡∆pAŒ6ûç”†ˇ 
+‚•Ç‚}r{ÿÏÊ%«ôµ◊0?•zñ•W–U÷¿{Zp¶ÂìGÏ™Jj;ú∑âCk>Y≠‡ú‚D-¢`„ksÚ„?Á=+C‘nÙiDöeÀâHe;z{W°`c§⁄=:ò:™™ïöV&û/ñì§„t›œ?ñœZÒEËíhçº ûbù©¯pNßQ]|:5º:'ˆ`ÀDP´1,OS”œ>ï¢ -])ﬁR’ΩŸqR®îVâlè8:øÜµ,P¥™N–Ë•ïáæ:tÔZÚköÓ¢ãéûˆÚti[ê=∆F?üNï◊‡‘ @+*y{•uNmG±≠Lj©¨‡úªò⁄Üà⁄ûãµ‘ﬁe‘jù∑p98Ù<◊-cq≠xrF∑k)6$‡!e„∏#éœ<C§ ¢¥≠ÅåÊ™E⁄K©±rÑ]9+≈Ù<ªSÉTΩ∏mN{	Åp£	”éΩÎ∑“•Œç-ΩÕ¨±Ö˝À˘ãÄˇ (Â}G8œ®5µÅË)@≈F/Tg)9_õr´„XF<∂ÂÿÛπ4›W√:É\Z≈$–Ùä[pÙ r?œæ´K´xÅQõOuH	+Ñ<í1¯˛Ë§fåAYK+\ÆõQ}#òæe9E9.ß%‡Î…ñ!ßKgpü+H$h ™åÅÜœBs¿Î¡¸sµø^ÿj/aIÔ0◊,á©‡u¸=kæ ‘Ωkieù“ì€fgl„U‘äﬂtq∞¯õWíÿBö[µ√,ò8‰c˙÷∆õe}u§Õµ'ö˜ü/ yj@˘xÎﬁ∂vèAKZR√J?ƒìëïJÒó¡v˙v´·ùEÁµÜI·‡E-∏z9˛ø\7VóVÒ£6ü"§ï¬I¸
+Ù\÷åA\≤ ◊+Ñf‘_C¶9ãÊSîSíÍr^Ωôc|∂w	Ú¥ÇFå™®6zû^„◊R jZÙ0Ù}ç5N˜±«Zßµõù≠s√æ+¯≈æ.èƒzLOykH·?ºÑ©˛ÓrFy„◊ß≠Y>2jI Ö<™5J20±È∑={bΩrì–W™±±î#
+∞RÂ€°œÀ≠”<√ıˇ xπ¸G‚ãAco-¡∏ñ4úÇ.IÿÁú|è~«•¨¯û”¬^π’.éJ.ÿ£Ô$á¢ˇ û’ùlE\\‚≠‰íJ(˘Î≈^éÛ„U∆áß≤ï∫∫FƒauπC9∆1ÚÂé;Å_MÿŸAßiˆˆ6®#∑∑âbç™å˘
+ˇ Å˙|∫ﬂâµü_±íe;QõüûBKb ËÊΩ‚∫Ûj“sÖÔ»í˘ì‘Vx‚N£¨]È˙Üß¶]H€öŒéÑ¸Ñ‡•}ˆËA¨›gKÒ'≈Ø[ﬁßáÂ”,£EÉÕ∏V
+ƒ± ‰ûÿq…Ø£1H *#ô8æx¡s⁄◊ˇ Ä>Ná!‚_≈©|8oÿ2©Ç›#µiπ˘£n„ÔåÔúWéx3SÒó√ÎõÕ"/‹Õ5‘à@í›ÿË+∆9‰ÇGæì§«µeC*t•JKö/]{ç∆ÓÁw†j~3¯t⁄oâVﬁ◊S∫BÁ»Oñî‡ì»A¡ı ˜Ø—‡Òœ¬}bB∫T∑V≥|≤$hœ∏pu8Œ^;•®¿=©·ÒÚ•SqN2Ë7‘Ú‚ˇ à5πÜ◊A—e–mIƒ◊∑(o=Fı åv úû£≠OÒ∆ˆW≈∂âoeyssq* ^("™u…dí8ˇ ÎW¨`î`¢¢8®¬¨jF	(Ùˇ Ç∫ZÁÜ¸º∏“n.tkÕ.ˆ&Ωc*NamäTtcèó#8'∏«q\ß≈´MCW¯èy5æóz–F©o!Ü˝£í	3ú˙s t`z
+ÈÜh„äñ%CV∂∏π=€ÆÉ‚X¿©®µï˙˝é!ê}ïƒå  ;èòzz„;¯djéÌµ€ùˇ …K¶∏uX∞í@‰Û¿ıØ¨ÒÌIÅË+<6=PUç˘¸¡∆ˆ<[‚eáãfÒè‚ù+Îã·GHbFDﬂxÜãÔr1€‘qúü¯èƒ¨mÙM;¬7∞™J&íIí`ºzüNïÙ&aE,"ç‡õéœ¸˚ÉçŒK·œÉˇ ·∫ÿ  ◊sHgπ(IP‰ÄO`}NO¿+Æ¢∏jTïIπÀvRV–(¢äÅÖQ@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@e¯É√∫gâÙß”uk>›à`7*√°rjQN2qw[Åï·Ôiû“∆ü•[˘0.r≈ôòÒñ'íp ˙ :
+’¢ä%''w∏QHä(†ä(†ä(†ä(†ä(†ä(†ä(†ˇŸ
+endstream
+endobj
+
+9 0 obj
+<< /Type /Font
+/Subtype /Type1
+/Name /F1
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+>>
+endobj
+10 0 obj
+<< /Type /Page
+/Parent 3 0 R
+/Contents 11 0 R
+>>
+endobj
+11 0 obj
+<<
+/Length 10214 >>
+stream
+
+0.000 0.000 0.000 rg
+0.000 0.000 0.000 RG
+0.5 w
+0.000 0.000 0.000 rg
+BT 32.640 780.642 Td /F1 8.0 Tf  (SNo) Tj ET
+BT 50.356 780.642 Td /F1 8.0 Tf  (Vehicle Name) Tj ET
+BT 194.921 780.642 Td /F1 8.0 Tf  (IMEI) Tj ET
+BT 264.308 780.642 Td /F1 8.0 Tf  (Date Time) Tj ET
+BT 341.323 780.642 Td /F1 8.0 Tf  (Place) Tj ET
+BT 485.888 780.642 Td /F1 8.0 Tf  (Speed\(Kmph\)) Tj ET
+BT 537.733 780.642 Td /F1 8.0 Tf  (Status) Tj ET
+BT 32.640 765.594 Td /F1 8.0 Tf  (50) Tj ET
+BT 50.356 765.594 Td /F1 8.0 Tf  (Medaram-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 765.594 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 765.594 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 765.594 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 765.594 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 765.594 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 752.346 Td /F1 8.0 Tf  (51) Tj ET
+BT 50.356 752.346 Td /F1 8.0 Tf  (Mondikunta AP]) Tj ET
+BT 194.921 752.346 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 752.346 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 752.346 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 752.346 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 752.346 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 739.098 Td /F1 8.0 Tf  (52) Tj ET
+BT 50.356 739.098 Td /F1 8.0 Tf  (Mumbai_ Tata Power \(SB 05/04/2015\)]) Tj ET
+BT 194.921 739.098 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 739.098 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 739.098 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 739.098 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 739.098 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 725.850 Td /F1 8.0 Tf  (53) Tj ET
+BT 50.356 725.850 Td /F1 8.0 Tf  (Nellutla-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 725.850 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 725.850 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 725.850 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 725.850 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 725.850 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 712.602 Td /F1 8.0 Tf  (54) Tj ET
+BT 50.356 712.602 Td /F1 8.0 Tf  (Nyalkal-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 712.602 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 712.602 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 712.602 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 712.602 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 712.602 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 699.354 Td /F1 8.0 Tf  (55) Tj ET
+BT 50.356 699.354 Td /F1 8.0 Tf  (OR-Damanjodi3063]) Tj ET
+BT 194.921 699.354 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 699.354 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 699.354 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 699.354 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 699.354 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 686.106 Td /F1 8.0 Tf  (56) Tj ET
+BT 50.356 686.106 Td /F1 8.0 Tf  (OR-Damanjodi9805 \(new\)]) Tj ET
+BT 194.921 686.106 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 686.106 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 686.106 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 686.106 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 686.106 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 672.858 Td /F1 8.0 Tf  (57) Tj ET
+BT 50.356 672.858 Td /F1 8.0 Tf  (OR 15 M 1433]) Tj ET
+BT 194.921 672.858 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 672.858 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 672.858 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 672.858 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 672.858 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 659.610 Td /F1 8.0 Tf  (58) Tj ET
+BT 50.356 659.610 Td /F1 8.0 Tf  (Parsa Sumali-UP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 659.610 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 659.610 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 659.610 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 659.610 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 659.610 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 646.362 Td /F1 8.0 Tf  (59) Tj ET
+BT 50.356 646.362 Td /F1 8.0 Tf  (PeddaPappur-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 646.362 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 646.362 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 646.362 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 646.362 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 646.362 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 633.114 Td /F1 8.0 Tf  (60) Tj ET
+BT 50.356 633.114 Td /F1 8.0 Tf  (Rajpet-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 633.114 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 633.114 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 633.114 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 633.114 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 633.114 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 619.866 Td /F1 8.0 Tf  (61) Tj ET
+BT 50.356 619.866 Td /F1 8.0 Tf  (Ranipur-UP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 619.866 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 619.866 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 619.866 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 619.866 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 619.866 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 606.618 Td /F1 8.0 Tf  (62) Tj ET
+BT 50.356 606.618 Td /F1 8.0 Tf  (RCF_Chembur_1754) Tj ET
+BT 194.921 606.618 Td /F1 8.0 Tf  (862170016971531) Tj ET
+BT 264.308 606.618 Td /F1 8.0 Tf  (2015-08-12 14:56:38) Tj ET
+BT 341.323 606.618 Td /F1 8.0 Tf  (0.27 km from 464, GT Road,) Tj ET
+BT 341.323 597.370 Td /F1 8.0 Tf  (Lakhanpur, Khyora, Kanpur, Uttar) Tj ET
+BT 341.323 588.122 Td /F1 8.0 Tf  (Pradesh 208024, India-\(26.495,80.280\)) Tj ET
+BT 485.888 606.618 Td /F1 8.0 Tf  (0) Tj ET
+BT 537.733 606.618 Td /F1 8.0 Tf  (NA) Tj ET
+BT 32.640 574.874 Td /F1 8.0 Tf  (63) Tj ET
+BT 50.356 574.874 Td /F1 8.0 Tf  (Re_862170018371391_GPS Problem]) Tj ET
+BT 194.921 574.874 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 574.874 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 574.874 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 574.874 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 574.874 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 561.626 Td /F1 8.0 Tf  (64) Tj ET
+BT 50.356 561.626 Td /F1 8.0 Tf  (Shahbad-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 561.626 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 561.626 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 561.626 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 561.626 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 561.626 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 548.378 Td /F1 8.0 Tf  (65) Tj ET
+BT 50.356 548.378 Td /F1 8.0 Tf  (Siswa Bazar-UP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 548.378 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 548.378 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 548.378 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 548.378 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 548.378 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 535.130 Td /F1 8.0 Tf  (66) Tj ET
+BT 50.356 535.130 Td /F1 8.0 Tf  (Sunkesula-AP]) Tj ET
+BT 194.921 535.130 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 535.130 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 535.130 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 535.130 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 535.130 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 521.882 Td /F1 8.0 Tf  (67) Tj ET
+BT 50.356 521.882 Td /F1 8.0 Tf  (THUTHIBARI-UP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 521.882 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 521.882 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 521.882 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 521.882 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 521.882 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 508.634 Td /F1 8.0 Tf  (68) Tj ET
+BT 50.356 508.634 Td /F1 8.0 Tf  (Tirumalayapalem-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 508.634 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 508.634 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 508.634 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 508.634 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 508.634 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 495.386 Td /F1 8.0 Tf  (69) Tj ET
+BT 50.356 495.386 Td /F1 8.0 Tf  (UP75 M 5964_Auraiya]) Tj ET
+BT 194.921 495.386 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 495.386 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 495.386 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 495.386 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 495.386 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 482.138 Td /F1 8.0 Tf  (70) Tj ET
+BT 50.356 482.138 Td /F1 8.0 Tf  (Vallabhi-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 482.138 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 482.138 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 482.138 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 482.138 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 482.138 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 468.890 Td /F1 8.0 Tf  (71) Tj ET
+BT 50.356 468.890 Td /F1 8.0 Tf  (Veldhurthy-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 468.890 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 468.890 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 468.890 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 468.890 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 468.890 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 455.642 Td /F1 8.0 Tf  (72) Tj ET
+BT 50.356 455.642 Td /F1 8.0 Tf  (ve_861074027067753]) Tj ET
+BT 194.921 455.642 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 455.642 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 455.642 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 455.642 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 455.642 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 442.394 Td /F1 8.0 Tf  (73) Tj ET
+BT 50.356 442.394 Td /F1 8.0 Tf  (ve_862170018321008 \(SB 31/10/2014\)]) Tj ET
+BT 194.921 442.394 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 442.394 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 442.394 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 442.394 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 442.394 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 429.146 Td /F1 8.0 Tf  (74) Tj ET
+BT 50.356 429.146 Td /F1 8.0 Tf  (Vijaipur-GAIL]) Tj ET
+BT 194.921 429.146 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 429.146 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 429.146 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 429.146 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 429.146 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 415.898 Td /F1 8.0 Tf  (75) Tj ET
+BT 50.356 415.898 Td /F1 8.0 Tf  (Yellanur-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 415.898 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 415.898 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 415.898 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 415.898 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 415.898 Td /F1 8.0 Tf  (-) Tj ET
+BT 32.640 402.650 Td /F1 8.0 Tf  (76) Tj ET
+BT 50.356 402.650 Td /F1 8.0 Tf  (Zaffargadh-AP \(SB 05/04/2015\)]) Tj ET
+BT 194.921 402.650 Td /F1 8.0 Tf  (-) Tj ET
+BT 264.308 402.650 Td /F1 8.0 Tf  (-) Tj ET
+BT 341.323 402.650 Td /F1 8.0 Tf  (-) Tj ET
+BT 485.888 402.650 Td /F1 8.0 Tf  (-) Tj ET
+BT 537.733 402.650 Td /F1 8.0 Tf  (-) Tj ET
+0.5 w
+31.640 790.090 m 31.640 398.850 l S
+0.5 w
+49.356 790.090 m 49.356 398.850 l S
+0.5 w
+193.921 790.090 m 193.921 398.850 l S
+0.5 w
+263.308 790.090 m 263.308 398.850 l S
+0.5 w
+340.323 790.090 m 340.323 398.850 l S
+0.5 w
+484.888 790.090 m 484.888 398.850 l S
+0.5 w
+536.733 790.090 m 536.733 398.850 l S
+0.5 w
+561.640 790.090 m 561.640 398.850 l S
+0.5 w
+31.390 790.090 m 561.890 790.090 l S
+31.640 776.842 m 561.640 776.842 l S
+31.390 398.850 m 561.890 398.850 l S
+BT 30.000 391.402 Td /F1 8.0 Tf  ( ) Tj ET
+BT 30.000 382.154 Td /F1 8.0 Tf  ( ) Tj ET
+BT 30.000 372.906 Td /F1 8.0 Tf  ( ) Tj ET
+endstream
+endobj
+
+xref
+0 12
+0000000000 65535 f 
+0000000015 00000 n 
+0000000080 00000 n 
+0000000126 00000 n 
+0000000313 00000 n 
+0000000350 00000 n 
+0000000455 00000 n 
+0000000518 00000 n 
+0000018323 00000 n 
+0000027627 00000 n 
+0000027734 00000 n 
+0000027799 00000 n 
+
+trailer
+  << /Size 12
+     /Root 1 0 R
+     /Info 5 0 R
+  >>
+startxref
+38068
+%%EOF
