@@ -1,596 +1,0 @@
-%PDF-1.3
-%‚„œ”
-
-1 0 obj
-<< /Type /Catalog
-/Outlines 2 0 R
-/Pages 3 0 R >>
-endobj
-2 0 obj
-<< /Type /Outlines /Count 0 >>
-endobj
-3 0 obj
-<< /Type /Pages
-/Kids [6 0 R
-10 0 R
-]
-/Count 2
-/Resources <<
-/ProcSet 4 0 R
-/Font << 
-/F1 9 0 R >>
-/XObject << 
-/I1 8 0 R >>
->>
-/MediaBox [0.000 0.000 595.280 841.890]
- >>
-endobj
-4 0 obj
-[/PDF /Text /ImageC ]
-endobj
-5 0 obj
-<<
-/Creator (R and OS php pdf writer, http://www.ros.co.nz)
-/CreationDate (D:20150907)
->>
-endobj
-6 0 obj
-<< /Type /Page
-/Parent 3 0 R
-/Contents 7 0 R
->>
-endobj
-7 0 obj
-<<
-/Length 15750 >>
-stream
-
-q
-150.000 0 0 17.829 215.000 806.890 cm
-/I1 Do
-Q
-0.000 0.000 0.000 rg
-0.800 0.800 0.800 RG
-BT 100.030 780.330 Td /F1 10.0 Tf  (Vehicle :-  \(862170018367118 \)  DateTime :2015-09-06 22:00:00 - 2015-09-07 09:46:08 \)) Tj ET
-BT 32.640 764.082 Td /F1 8.0 Tf  (SNo) Tj ET
-BT 50.356 764.082 Td /F1 8.0 Tf  (Date) Tj ET
-BT 93.677 764.082 Td /F1 8.0 Tf  (Time) Tj ET
-BT 127.124 764.082 Td /F1 8.0 Tf  (Place) Tj ET
-BT 510.794 764.082 Td /F1 8.0 Tf  (Speed\(Kmph\)) Tj ET
-BT 32.640 749.034 Td /F1 8.0 Tf  (1) Tj ET
-BT 50.356 749.034 Td /F1 8.0 Tf  (2015-09-06) Tj ET
-BT 93.677 749.034 Td /F1 8.0 Tf  (22:00:10) Tj ET
-BT 127.124 749.034 Td /F1 8.0 Tf  (0.26 km from Aligarh - Kanpur Road Dubiyana Uttar Pradesh 209205 India-\(26.67607,80.14583\)) Tj ET
-BT 510.794 749.034 Td /F1 8.0 Tf  (35.19) Tj ET
-BT 32.640 735.786 Td /F1 8.0 Tf  (2) Tj ET
-BT 50.356 735.786 Td /F1 8.0 Tf  (2015-09-06) Tj ET
-BT 93.677 735.786 Td /F1 8.0 Tf  (22:10:15) Tj ET
-BT 127.124 735.786 Td /F1 8.0 Tf  (0.01 km from N.I.F PLANT-\(26.6636,80.15025\)) Tj ET
-BT 510.794 735.786 Td /F1 8.0 Tf  (0.37) Tj ET
-BT 32.640 722.538 Td /F1 8.0 Tf  (3) Tj ET
-BT 50.356 722.538 Td /F1 8.0 Tf  (2015-09-06) Tj ET
-BT 93.677 722.538 Td /F1 8.0 Tf  (22:20:19) Tj ET
-BT 127.124 722.538 Td /F1 8.0 Tf  (0.1 km from N.I.F PLANT-\(26.66426,80.15084\)) Tj ET
-BT 510.794 722.538 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 709.290 Td /F1 8.0 Tf  (4) Tj ET
-BT 50.356 709.290 Td /F1 8.0 Tf  (2015-09-06) Tj ET
-BT 93.677 709.290 Td /F1 8.0 Tf  (22:30:26) Tj ET
-BT 127.124 709.290 Td /F1 8.0 Tf  (0.03 km from N.I.F PLANT-\(26.66385,80.15023\)) Tj ET
-BT 510.794 709.290 Td /F1 8.0 Tf  (0.19) Tj ET
-BT 32.640 696.042 Td /F1 8.0 Tf  (5) Tj ET
-BT 50.356 696.042 Td /F1 8.0 Tf  (2015-09-06) Tj ET
-BT 93.677 696.042 Td /F1 8.0 Tf  (22:40:33) Tj ET
-BT 127.124 696.042 Td /F1 8.0 Tf  (0.01 km from N.I.F PLANT-\(26.66368,80.15025\)) Tj ET
-BT 510.794 696.042 Td /F1 8.0 Tf  (0.93) Tj ET
-BT 32.640 682.794 Td /F1 8.0 Tf  (6) Tj ET
-BT 50.356 682.794 Td /F1 8.0 Tf  (2015-09-06) Tj ET
-BT 93.677 682.794 Td /F1 8.0 Tf  (22:50:39) Tj ET
-BT 127.124 682.794 Td /F1 8.0 Tf  (0.11 km from N.I.F PLANT-\(26.66389,80.15129\)) Tj ET
-BT 510.794 682.794 Td /F1 8.0 Tf  (0.19) Tj ET
-BT 32.640 669.546 Td /F1 8.0 Tf  (7) Tj ET
-BT 50.356 669.546 Td /F1 8.0 Tf  (2015-09-06) Tj ET
-BT 93.677 669.546 Td /F1 8.0 Tf  (23:01:17) Tj ET
-BT 127.124 669.546 Td /F1 8.0 Tf  (0.11 km from N.I.F PLANT-\(26.66385,80.1513\)) Tj ET
-BT 510.794 669.546 Td /F1 8.0 Tf  (0.19) Tj ET
-BT 32.640 656.298 Td /F1 8.0 Tf  (8) Tj ET
-BT 50.356 656.298 Td /F1 8.0 Tf  (2015-09-06) Tj ET
-BT 93.677 656.298 Td /F1 8.0 Tf  (23:11:22) Tj ET
-BT 127.124 656.298 Td /F1 8.0 Tf  (0.11 km from N.I.F PLANT-\(26.66388,80.15133\)) Tj ET
-BT 510.794 656.298 Td /F1 8.0 Tf  (0.56) Tj ET
-BT 32.640 643.050 Td /F1 8.0 Tf  (9) Tj ET
-BT 50.356 643.050 Td /F1 8.0 Tf  (2015-09-06) Tj ET
-BT 93.677 643.050 Td /F1 8.0 Tf  (23:59:21) Tj ET
-BT 127.124 643.050 Td /F1 8.0 Tf  (0.11 km from N.I.F PLANT-\(26.6639,80.15126\)) Tj ET
-BT 510.794 643.050 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 629.802 Td /F1 8.0 Tf  (10) Tj ET
-BT 50.356 629.802 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 629.802 Td /F1 8.0 Tf  (00:09:31) Tj ET
-BT 127.124 629.802 Td /F1 8.0 Tf  (0.11 km from N.I.F PLANT-\(26.66393,80.15129\)) Tj ET
-BT 510.794 629.802 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 616.554 Td /F1 8.0 Tf  (11) Tj ET
-BT 50.356 616.554 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 616.554 Td /F1 8.0 Tf  (00:19:33) Tj ET
-BT 127.124 616.554 Td /F1 8.0 Tf  (0.04 km from Aligarh - Kanpur Road Dubiyana Uttar Pradesh 209205 India-\(26.67407,80.14602\)) Tj ET
-BT 510.794 616.554 Td /F1 8.0 Tf  (0.37) Tj ET
-BT 32.640 603.306 Td /F1 8.0 Tf  (12) Tj ET
-BT 50.356 603.306 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 603.306 Td /F1 8.0 Tf  (00:29:39) Tj ET
-BT 127.124 603.306 Td /F1 8.0 Tf  (0.2 km from Aligarh - Kanpur Road Newada Udhau Uttar Pradesh 209210 India-\(26.72171,80.10853\)) Tj ET
-BT 510.794 603.306 Td /F1 8.0 Tf  (50.37) Tj ET
-BT 32.640 590.058 Td /F1 8.0 Tf  (13) Tj ET
-BT 50.356 590.058 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 590.058 Td /F1 8.0 Tf  (00:39:44) Tj ET
-BT 127.124 590.058 Td /F1 8.0 Tf  (0.07 km from Aligarh - Kanpur Road Uttari Uttar Pradesh 209210 India-\(26.76057,80.08795\)) Tj ET
-BT 510.794 590.058 Td /F1 8.0 Tf  (16.85) Tj ET
-BT 32.640 576.810 Td /F1 8.0 Tf  (14) Tj ET
-BT 50.356 576.810 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 576.810 Td /F1 8.0 Tf  (00:49:50) Tj ET
-BT 127.124 576.810 Td /F1 8.0 Tf  (0.14 km from Aligarh - Kanpur Road Mohammadnagar Chandari Uttar Pradesh 209210 India-) Tj ET
-BT 127.124 567.562 Td /F1 8.0 Tf  (\(26.81427,80.07532\)) Tj ET
-BT 510.794 576.810 Td /F1 8.0 Tf  (39.82) Tj ET
-BT 32.640 554.314 Td /F1 8.0 Tf  (15) Tj ET
-BT 50.356 554.314 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 554.314 Td /F1 8.0 Tf  (00:59:55) Tj ET
-BT 127.124 554.314 Td /F1 8.0 Tf  (0.18 km from Lucknow-Mauhan-Hasanganj-Rasulabad Marg Nasirapur Uttar Pradesh 209202 India-) Tj ET
-BT 127.124 545.066 Td /F1 8.0 Tf  (\(26.85617,80.05186\)) Tj ET
-BT 510.794 554.314 Td /F1 8.0 Tf  (55.37) Tj ET
-BT 32.640 531.818 Td /F1 8.0 Tf  (16) Tj ET
-BT 50.356 531.818 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 531.818 Td /F1 8.0 Tf  (01:10:01) Tj ET
-BT 127.124 531.818 Td /F1 8.0 Tf  (0.3 km from Lucknow-Mauhan-Hasanganj-Rasulabad Marg Katri Akberpur Seng Uttar Pradesh 209868) Tj ET
-BT 127.124 522.570 Td /F1 8.0 Tf  (India-\(26.88408,80.10249\)) Tj ET
-BT 510.794 531.818 Td /F1 8.0 Tf  (43.52) Tj ET
-BT 32.640 509.322 Td /F1 8.0 Tf  (17) Tj ET
-BT 50.356 509.322 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 509.322 Td /F1 8.0 Tf  (01:20:06) Tj ET
-BT 127.124 509.322 Td /F1 8.0 Tf  (0.02 km from Lucknow-Mauhan-Hasanganj-Rasulabad Marg Jirik Pur Uttar Pradesh 209868 India-) Tj ET
-BT 127.124 500.074 Td /F1 8.0 Tf  (\(26.88218,80.17292\)) Tj ET
-BT 510.794 509.322 Td /F1 8.0 Tf  (5.37) Tj ET
-BT 32.640 486.826 Td /F1 8.0 Tf  (18) Tj ET
-BT 50.356 486.826 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 486.826 Td /F1 8.0 Tf  (01:30:23) Tj ET
-BT 127.124 486.826 Td /F1 8.0 Tf  (0.11 km from Lucknow-Mauhan-Hasanganj-Rasulabad Marg Bhikhari Pur Kasba Uttar Pradesh 209868) Tj ET
-BT 127.124 477.578 Td /F1 8.0 Tf  (India-\(26.88703,80.19418\)) Tj ET
-BT 510.794 486.826 Td /F1 8.0 Tf  (0.37) Tj ET
-BT 32.640 464.330 Td /F1 8.0 Tf  (19) Tj ET
-BT 50.356 464.330 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 464.330 Td /F1 8.0 Tf  (01:41:45) Tj ET
-BT 127.124 464.330 Td /F1 8.0 Tf  (0.11 km from Lucknow-Mauhan-Hasanganj-Rasulabad Marg Bhikhari Pur Kasba Uttar Pradesh 209868) Tj ET
-BT 127.124 455.082 Td /F1 8.0 Tf  (India-\(26.887,80.19423\)) Tj ET
-BT 510.794 464.330 Td /F1 8.0 Tf  (0.37) Tj ET
-BT 32.640 441.834 Td /F1 8.0 Tf  (20) Tj ET
-BT 50.356 441.834 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 441.834 Td /F1 8.0 Tf  (01:51:51) Tj ET
-BT 127.124 441.834 Td /F1 8.0 Tf  (0.11 km from Lucknow-Mauhan-Hasanganj-Rasulabad Marg Bhikhari Pur Kasba Uttar Pradesh 209868) Tj ET
-BT 127.124 432.586 Td /F1 8.0 Tf  (India-\(26.88696,80.19418\)) Tj ET
-BT 510.794 441.834 Td /F1 8.0 Tf  (0.37) Tj ET
-BT 32.640 419.338 Td /F1 8.0 Tf  (21) Tj ET
-BT 50.356 419.338 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 419.338 Td /F1 8.0 Tf  (02:01:56) Tj ET
-BT 127.124 419.338 Td /F1 8.0 Tf  (0.02 km from Bilhour Bypass Road Bangarmau Uttar Pradesh 209868 India-\(26.89644,80.20582\)) Tj ET
-BT 510.794 419.338 Td /F1 8.0 Tf  (39.82) Tj ET
-BT 32.640 406.090 Td /F1 8.0 Tf  (22) Tj ET
-BT 50.356 406.090 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 406.090 Td /F1 8.0 Tf  (02:12:01) Tj ET
-BT 127.124 406.090 Td /F1 8.0 Tf  (0.33 km from Lucknow-Mauhan-Hasanganj-Rasulabad Marg Bangarmau Uttar Pradesh 209868 India-) Tj ET
-BT 127.124 396.842 Td /F1 8.0 Tf  (\(26.89093,80.21953\)) Tj ET
-BT 510.794 406.090 Td /F1 8.0 Tf  (0.19) Tj ET
-BT 32.640 383.594 Td /F1 8.0 Tf  (23) Tj ET
-BT 50.356 383.594 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 383.594 Td /F1 8.0 Tf  (02:37:21) Tj ET
-BT 127.124 383.594 Td /F1 8.0 Tf  (0.31 km from Lucknow-Mauhan-Hasanganj-Rasulabad Marg Bangarmau Uttar Pradesh 209868 India-) Tj ET
-BT 127.124 374.346 Td /F1 8.0 Tf  (\(26.89075,80.21936\)) Tj ET
-BT 510.794 383.594 Td /F1 8.0 Tf  (16.67) Tj ET
-BT 32.640 361.098 Td /F1 8.0 Tf  (24) Tj ET
-BT 50.356 361.098 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 361.098 Td /F1 8.0 Tf  (02:47:26) Tj ET
-BT 127.124 361.098 Td /F1 8.0 Tf  (0.24 km from State Highway 38 Fatehpur Khalsa Uttar Pradesh 209869 India-\(26.93856,80.19501\)) Tj ET
-BT 510.794 361.098 Td /F1 8.0 Tf  (62.04) Tj ET
-BT 32.640 347.850 Td /F1 8.0 Tf  (25) Tj ET
-BT 50.356 347.850 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 347.850 Td /F1 8.0 Tf  (02:57:32) Tj ET
-BT 127.124 347.850 Td /F1 8.0 Tf  (0.56 km from State Highway 38 Atwara Chak Kola Uttar Pradesh 209869 India-\(26.97604,80.17532\)) Tj ET
-BT 510.794 347.850 Td /F1 8.0 Tf  (32.22) Tj ET
-BT 32.640 334.602 Td /F1 8.0 Tf  (26) Tj ET
-BT 50.356 334.602 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 334.602 Td /F1 8.0 Tf  (03:07:42) Tj ET
-BT 127.124 334.602 Td /F1 8.0 Tf  (0.03 km from State Highway 38 Mallawan Uttar Pradesh 241303 India-\(27.02833,80.15464\)) Tj ET
-BT 510.794 334.602 Td /F1 8.0 Tf  (39.45) Tj ET
-BT 32.640 321.354 Td /F1 8.0 Tf  (27) Tj ET
-BT 50.356 321.354 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 321.354 Td /F1 8.0 Tf  (03:17:47) Tj ET
-BT 127.124 321.354 Td /F1 8.0 Tf  (0.08 km from State Highway 38 Mallawan Uttar Pradesh 241303 India-\(27.03707,80.15159\)) Tj ET
-BT 510.794 321.354 Td /F1 8.0 Tf  (0.19) Tj ET
-BT 32.640 308.106 Td /F1 8.0 Tf  (28) Tj ET
-BT 50.356 308.106 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 308.106 Td /F1 8.0 Tf  (03:27:53) Tj ET
-BT 127.124 308.106 Td /F1 8.0 Tf  (0.08 km from State Highway 38 Mallawan Uttar Pradesh 241303 India-\(27.03712,80.1518\)) Tj ET
-BT 510.794 308.106 Td /F1 8.0 Tf  (0.19) Tj ET
-BT 32.640 294.858 Td /F1 8.0 Tf  (29) Tj ET
-BT 50.356 294.858 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 294.858 Td /F1 8.0 Tf  (03:37:58) Tj ET
-BT 127.124 294.858 Td /F1 8.0 Tf  (0.23 km from State Highway 38 Piprawan Uttar Pradesh 241302 India-\(27.07368,80.14539\)) Tj ET
-BT 510.794 294.858 Td /F1 8.0 Tf  (2.78) Tj ET
-BT 32.640 281.610 Td /F1 8.0 Tf  (30) Tj ET
-BT 50.356 281.610 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 281.610 Td /F1 8.0 Tf  (03:48:05) Tj ET
-BT 127.124 281.610 Td /F1 8.0 Tf  (0.29 km from Bhaghauli Road Sharda Nagar Uttar Pradesh 241302 India-\(27.11569,80.14109\)) Tj ET
-BT 510.794 281.610 Td /F1 8.0 Tf  (11.48) Tj ET
-BT 32.640 268.362 Td /F1 8.0 Tf  (31) Tj ET
-BT 50.356 268.362 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 268.362 Td /F1 8.0 Tf  (03:58:10) Tj ET
-BT 127.124 268.362 Td /F1 8.0 Tf  (0.13 km from Old Post Office Road Sharda Nagar Uttar Pradesh 241302 India-\(27.11864,80.14043\)) Tj ET
-BT 510.794 268.362 Td /F1 8.0 Tf  (0.19) Tj ET
-BT 32.640 255.114 Td /F1 8.0 Tf  (32) Tj ET
-BT 50.356 255.114 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 255.114 Td /F1 8.0 Tf  (04:08:49) Tj ET
-BT 127.124 255.114 Td /F1 8.0 Tf  (0.13 km from Old Post Office Road Sharda Nagar Uttar Pradesh 241302 India-\(27.11861,80.1404\)) Tj ET
-BT 510.794 255.114 Td /F1 8.0 Tf  (1.85) Tj ET
-BT 32.640 241.866 Td /F1 8.0 Tf  (33) Tj ET
-BT 50.356 241.866 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 241.866 Td /F1 8.0 Tf  (04:18:54) Tj ET
-BT 127.124 241.866 Td /F1 8.0 Tf  (0.15 km from Nagheta Road Rudamau Uttar Pradesh 241302 India-\(27.11716,80.12549\)) Tj ET
-BT 510.794 241.866 Td /F1 8.0 Tf  (41.11) Tj ET
-BT 32.640 228.618 Td /F1 8.0 Tf  (34) Tj ET
-BT 50.356 228.618 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 228.618 Td /F1 8.0 Tf  (04:29:00) Tj ET
-BT 127.124 228.618 Td /F1 8.0 Tf  (0.22 km from Nagheta Road Naumalikpur Uttar Pradesh 241301 India-\(27.15231,80.07095\)) Tj ET
-BT 510.794 228.618 Td /F1 8.0 Tf  (41.3) Tj ET
-BT 32.640 215.370 Td /F1 8.0 Tf  (35) Tj ET
-BT 50.356 215.370 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 215.370 Td /F1 8.0 Tf  (04:39:10) Tj ET
-BT 127.124 215.370 Td /F1 8.0 Tf  (0.22 km from Unnamed Road Newada Bilgram Uttar Pradesh 241301 India-\(27.17321,80.0351\)) Tj ET
-BT 510.794 215.370 Td /F1 8.0 Tf  (2.41) Tj ET
-BT 32.640 202.122 Td /F1 8.0 Tf  (36) Tj ET
-BT 50.356 202.122 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 202.122 Td /F1 8.0 Tf  (04:49:16) Tj ET
-BT 127.124 202.122 Td /F1 8.0 Tf  (0.51 km from State Highway 21 Bilgram Uttar Pradesh 241301 India-\(27.1782,80.03738\)) Tj ET
-BT 510.794 202.122 Td /F1 8.0 Tf  (25.56) Tj ET
-BT 32.640 188.874 Td /F1 8.0 Tf  (37) Tj ET
-BT 50.356 188.874 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 188.874 Td /F1 8.0 Tf  (04:59:21) Tj ET
-BT 127.124 188.874 Td /F1 8.0 Tf  (0.28 km from State Highway 21 Gurauli Uttar Pradesh 241301 India-\(27.20259,80.05013\)) Tj ET
-BT 510.794 188.874 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 175.626 Td /F1 8.0 Tf  (38) Tj ET
-BT 50.356 175.626 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 175.626 Td /F1 8.0 Tf  (05:09:27) Tj ET
-BT 127.124 175.626 Td /F1 8.0 Tf  (1.22 km from Baghauli Road Ramapur Uttar Pradesh 241403 India-\(27.25094,80.06968\)) Tj ET
-BT 510.794 175.626 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 162.378 Td /F1 8.0 Tf  (39) Tj ET
-BT 50.356 162.378 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 162.378 Td /F1 8.0 Tf  (05:19:32) Tj ET
-BT 127.124 162.378 Td /F1 8.0 Tf  (0.02 km from State Highway 21 Joora Uttar Pradesh 241001 India-\(27.3009,80.09549\)) Tj ET
-BT 510.794 162.378 Td /F1 8.0 Tf  (40.74) Tj ET
-BT 32.640 149.130 Td /F1 8.0 Tf  (40) Tj ET
-BT 50.356 149.130 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 149.130 Td /F1 8.0 Tf  (05:29:37) Tj ET
-BT 127.124 149.130 Td /F1 8.0 Tf  (0.18 km from State Highway 21 Tans Khera Uttar Pradesh 241001 India-\(27.35299,80.11705\)) Tj ET
-BT 510.794 149.130 Td /F1 8.0 Tf  (44.08) Tj ET
-BT 32.640 135.882 Td /F1 8.0 Tf  (41) Tj ET
-BT 50.356 135.882 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 135.882 Td /F1 8.0 Tf  (05:39:48) Tj ET
-BT 127.124 135.882 Td /F1 8.0 Tf  (0.04 km from State Highway 25 Koyal Bagh Colony Hardoi Uttar Pradesh 241001 India-) Tj ET
-BT 127.124 126.634 Td /F1 8.0 Tf  (\(27.39493,80.13138\)) Tj ET
-BT 510.794 135.882 Td /F1 8.0 Tf  (21.3) Tj ET
-BT 32.640 113.386 Td /F1 8.0 Tf  (42) Tj ET
-BT 50.356 113.386 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 113.386 Td /F1 8.0 Tf  (05:49:53) Tj ET
-BT 127.124 113.386 Td /F1 8.0 Tf  (0.01 km from Jail Road Subhash Nagar Hardoi Uttar Pradesh 241001 India-\(27.40072,80.12645\)) Tj ET
-BT 510.794 113.386 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 100.138 Td /F1 8.0 Tf  (43) Tj ET
-BT 50.356 100.138 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 100.138 Td /F1 8.0 Tf  (05:59:59) Tj ET
-BT 127.124 100.138 Td /F1 8.0 Tf  (0.01 km from Jail Road Subhash Nagar Hardoi Uttar Pradesh 241001 India-\(27.40071,80.1264\)) Tj ET
-BT 510.794 100.138 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 86.890 Td /F1 8.0 Tf  (44) Tj ET
-BT 50.356 86.890 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 86.890 Td /F1 8.0 Tf  (06:10:04) Tj ET
-BT 127.124 86.890 Td /F1 8.0 Tf  (0.02 km from Jail Road Subhash Nagar Hardoi Uttar Pradesh 241001 India-\(27.40071,80.12638\)) Tj ET
-BT 510.794 86.890 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 73.642 Td /F1 8.0 Tf  (45) Tj ET
-BT 50.356 73.642 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 73.642 Td /F1 8.0 Tf  (06:22:00) Tj ET
-BT 127.124 73.642 Td /F1 8.0 Tf  (0.01 km from Jail Road Subhash Nagar Hardoi Uttar Pradesh 241001 India-\(27.40073,80.1264\)) Tj ET
-BT 510.794 73.642 Td /F1 8.0 Tf  (0.37) Tj ET
-0.000 0.000 0.000 RG
-0.5 w
-31.640 775.330 m 31.640 69.842 l S
-0.5 w
-49.356 775.330 m 49.356 69.842 l S
-0.5 w
-92.677 775.330 m 92.677 69.842 l S
-0.5 w
-126.124 775.330 m 126.124 69.842 l S
-0.5 w
-509.794 775.330 m 509.794 69.842 l S
-0.5 w
-561.640 775.330 m 561.640 69.842 l S
-0.5 w
-31.390 775.330 m 561.890 775.330 l S
-31.640 760.282 m 561.640 760.282 l S
-31.390 69.842 m 561.890 69.842 l S
-endstream
-endobj
-
-8 0 obj
-<<
-/Type /XObject
-/Subtype /Image
-/Width 631
-/Height 75
-/ColorSpace /DeviceRGB
-/Filter /DCTDecode
-/BitsPerComponent 8
-/Length 9136 >>
-stream
-ˇÿˇ‡ JFIF  ` `  ˇ€ C 		
- $.' ",#(7),01444'9=82<.342ˇ€ C			2!!22222222222222222222222222222222222222222222222222ˇ¿  Kw" ˇƒ           	
-ˇƒ µ   } !1AQa"q2Åë°#B±¡R—$3brÇ	
-%&'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyzÉÑÖÜáàâäíìîïñóòôö¢£§•¶ß®©™≤≥¥µ∂∑∏π∫¬√ƒ≈∆«»… “”‘’÷◊ÿŸ⁄·‚„‰ÂÊÁËÈÍÒÚÛÙıˆ˜¯˘˙ˇƒ        	
-ˇƒ µ  w !1AQaq"2ÅBë°±¡	#3Rbr—
-$4·%Ò&'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyzÇÉÑÖÜáàâäíìîïñóòôö¢£§•¶ß®©™≤≥¥µ∂∑∏π∫¬√ƒ≈∆«»… “”‘’÷◊ÿŸ⁄‚„‰ÂÊÁËÈÍÚÛÙıˆ˜¯˘˙ˇ⁄   ? ˜˙(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä*O™XZ…Â‹^€ƒˇ ›íUS˘O∂æ¥ºœŸÆ°õo_-√cÚØù><Èv/¥ª∂àF˜ñÂÊ£0cÛ{û~üZÙÔÑ>“¥øXj[É®^Aônñ⁄NvèE»‰
-Ùj‡°OG7≈“ƒ)^V=ä(Ø8∞¢ä( ¢ä( ¢ä( ¢ä( ¢ä( ¢ä( ¢äØ}yüaqy1ƒPF“πˆQì¸©•wdä+Õ~|J∫Ò∆±™[\Y√o∫,ê˘dìÇH‰ûßßa^ï⁄¥≠Ftg…5f$Ô™
-+…4Ì‚,'ºû˙A¢˘Ã€‰î</xEè<68Ë0A9?≈ÎtÎRT⁄JI›tÓQEb0¢ä( ¢ä(	om°}í‹DçËŒ§˚}°c˝Ò\/é¥´(/≠ØñÛÓ	G'ë¿' v5g√æ±‘t•ö}‰ñ<+`
-ÚÂç´ıáB1’yûÇ¬Sˆ
-¥•£Ú;Ωµv¬‹FO†aV+œ5oÀÏ0X«+€‹•¿À=˜t¿«9ˆ#ÆÙ]®´Ë1]8j’j9*ëµézÙÈ¡'	^„®¢äÎ9¬ä(†
-∑⁄ç¶õíÓeâI¿œznü©⁄jqª⁄IΩQ∂ìÇ9¸k«§.Öˇ ∏@‘„˙‘~#Ïw_Ôå˛UÁK5ãT-£Glp—xWZ˙¶u‘QEz'QE QEçq‚ù"ﬁFçÆÉ2ú0E'ïl+P r»Ø2Ò<IâÊH¿Ç1«©Î¸´—Ï¯≥á˝¡¸´Õ¡‚™U≠:s˚'v+
-T°8˝¢zŒø◊tÌ6O*Ê·VLg`?ß÷¥kâÒÏqè±J ÛôIˆ∆k|uy–¢ÍCteÑ•’î%≥:€Ë5U∏∑m—∂@$c•Y¨hQ˚±5øZa™:î£7ªFu‡©‘îFQEndùÆÈ⁄lûUÕ¬¨òŒ¿2O≠h◊„ÿ„bîÊ32ìÌå◊&:ºËQu!∫:pî£Z≤Ñ∂g[c}£j∑Ì∫6»åt´5Å·ç
-?v&∑ÎL5GRîf˜hŒº:íÇË¬´O®Ÿ[H±œwN›‰
-O‡kÀæ2|@º‰0Ë˙Lç› íuÎ˙B}jèÖæ
-ÈöóÜÌoı€ÀŸu®÷m—Mè( êr}OÂÎ^¥pqçZ¥¨û⁄]≥mlèeD≈THÑ∞ åı‘˙Üﬂuù'‚Éœ©[Õ‰ÈÇB∑§,§Çâ¥û*KpN1ÉÉ≈{ıcä£
-3ÂÑπï∑∂÷°EW1AEPEd¯ó\ã√~æ’ÊP…mÌ§„qË‚HÃ¸0ÒÕﬂé4À˚õÀh†íﬁpÅbŒ6ëë‘ı≠£B§©:©{®WW±ﬁQEà¬ä(†ä(†ä(†ä(†ä(†ä(†ûˇ h_˘to˙ı˝
-Ω_·ó¸ìm˛ΩáÛ5Â¥/¸å:7˝zø˛Ö^±«˛I∂Öˇ ^√˘ö˜1_Ú,•Íˇ S8¸lÛàˇ <Y†¯∆ÔJ¥0Z[¬´ÂÄ°Ÿ¡‰9=âÙ™Wö∑≈Îè'à^‚E”í?¥nÖbFÚ˙Ó*J„ü†œΩc¸o$|Kúé¢⁄/‰kË£˛˘\øŸò∆8ˇ U[‘ù<>å£N-À{¢U€zúG¬/â7˛+öÁI÷Z'ºÇ1,S(⁄dLÄA2	è_nv˛+¯´YóÜ#Ω“#ãtìûy0|¨Ù¬ûπ¡’„übﬁ∂ì˘
-ı_éÚN%ˇ Ø®øùcä√Rßò∆
->Î∂û£ãn<Û√˛3¯£„'∫áEπç¸•Ã§GœOôá‡‡g◊”Üi?¸a·//ƒÚ¥ÒE0éÍ;Ä7†?ƒ¨=à#®#ÛÆ´ˆyÁC÷}ÆP„µ¬|n¬¸Lú‡«º$Ò◊É]Òçò òWM(€∂Ω	’EJÁ”í\E≥\I"¨JÖŸ…‡(Œ}+≈/æ&¯è∆û)R•¨LX«Pƒ®ÍÁÇ};úé‰WW„˚õ®>K-± µ¨+#⁄B∂–p}y¬~œêƒuùVbŒS‹.‡OÙØ/	ÜÑ0ı12Wq—/‘πI›"Áàn~'|;µèS∏÷b’¨Z@≤f=ﬁ_nr2ß≠wﬁÒî¸1pt˚ó”µ4Pì*ÄÌå3’NÎ–‘ﬂ—·û∫$ ÅoëüP¿è◊„ü%π_\Eo%Ïú Ω∞p~π ~&Æ4·â¡NªIJ¶óÌ+.º]„}∆'G÷<MyÇÈcû`è/#ÁÜ*r3^·Ò7Tº“~ﬁÍ:m˘µ∏ãaIoÕñ ˆ9„“ºÎ„ÔÜDSX¯ñ›ó?gπ Åì’π∆G‡+é÷ºm®x◊√^¨19ªéEäV-ƒÔ˜#˝9ÓkÆ8h‚°FºI|[t7-”=·ﬁ1÷˜Î˙æπs.ïÙKv ôÿœ›˚£'°ŒG±Œ|ºWÒƒ“hﬁx4òR)$Ãª›î`eéﬁH3‘◊≠ËM∑Öº-gßEÜ  $êç†ê2Œ}2rÚ1„Ìœ≈w©ˇ ¬ˇ n’Ø¯yÚB1ñ⁄ùÅÍH*ÙÆrçzµ'
-wÌŸzÙ)ËílÕµ¯õ‚ˇ xª˚ƒ”CyàÁfv√åH¨=àl˘W°|dáT∏¯}s.õtë€«áª^wIL)Qêx#È^„f◊gÒ‘œ‚kx·‘”|I¥®O·ÉÚ‡z˙◊–^89¯;®ü˙áØÚ◊ã£
-S√’äWvΩ∂{t—‚_
-¥M{W’o∞µaßI#Ãì'êOØ„_ExK÷4ü5∂°¨∂ß®¸Ã.&å*©?t 0JèrI…Á†3˚=˝Ω¨ﬂfO˝
-æÇ?t˝+ü;´'äp“ ›<ä¶Ω”Áœ
-|NÒn≠Ò√NøºQj˜OñÎ
-(ÊŒ3¡«~’´Ò~˜∆^‘`‘Ù˝~ËiWD†çW»qŒ”« å‡˚˙ü?i#„ü˝Ñ‰ˇ –öæåÒœÜ„ÒWÑ/¥¬Å¶hÀ€ìèñUÂyÌœÿöﬂÏpÿ™Oïr¥Æ¨(›≈òµªΩw¡?jø’$æº∫ d
-X∆é£9<¸«“º…uœ¯É‚MÔáÙèÃ;ôUe˘|¥ç	éÿ~$
-Á<„ÎØC¨⁄⁄As	(oısåÄ~úú˝zo¿o=∂óy‚K°∫k„Â@«Æ≈?1œªqˇ  ˜™ƒañ’≠$öœ¸Ñ•Õdtﬁ:ÒÏ_Ù;XYÕ˛´$acê‡`»·@ÔË œ•rñı›EØ€ƒÚCÁCb™z‡ïË1ñ∆Oqí+Ü¯Õs=◊ƒõ®'v	
-Fà•≤@3ú˙◊¢√‡/>ùv~9ÚÌºïUÒé°∫ˇ ÖfÙ¯zs∫Rñ∫´¸ê˘õm¯YÒV˜ƒ⁄õhz‹qõ¬Ö·∏åé™W◊9ÜΩvº∑¡ˇ †ÊΩkÆ^ÍÚﬁ_@Ô 	ƒfe+ŒI'Æ{s^•^f=·›k·ˆ˝KçÌ©√¸Dˇ òO˝v˝ “xoƒ6zfï‰‹ñû=i~!ˇ Ã+˛ª?˛ÄkC¬ñÚË™Ô
-3lí†˜Øîö®ÛÏ›ùèn. π’ı4,<Ka®›≠¥!ëÅ yg†ıÙ¸iﬁ$ø∫”tIÓ≠àÃÁÑçÿÔèNı£¡íë¢} ç„#ˇ Ü§Aˇ ñ&ΩI˚H—ó3÷›6í´U•Œj«^Ò£q‰Z»Ø!˚†qÎJ<G≠ÈãC®.Ú fF¿»=‘è∆¶/¸\˚ ˛u_«á ≥°∂rÔ°^]eÑ˙«;ΩœjJì≈}_ër˛%÷‘<M¨¿◊,6Ì¬·ÜÔ®'ØÈI†¯™Ë^≠ñß¸MÂÜaÜFŒ0+¢Á¸ãˆúy˝”Á≈◊ûãz ˇ «k¢≥´B4Î©∂›Øÿ¬åi÷ïJ.)%{w:øà¯z?˙˙ãˇ BÆAè[h'K*©?>‚OÂ[˛>ˇ ër/˙˘ãˇ B¶x˛=nøﬂ ´O⁄„„€NÇ√œŸ‡dÏûΩLÿ¸C≠Ë∑©o©©êï¿ÀP√É˛zWok®[›ÿ-‰R	ÓÙ«\◊)ÒNÕ=óH¡æõƒ
-°ßM:¯7S•ÿ$⁄›€êπ⁄}9˙ìNû"¶ºË∑Ãí∏ßBËB™\≠ªﬂ_‘µΩWÏöC§0 ŸêÄr=~üOZØu©kﬁπâ.ÓÍ'…ˇ <èc”Û™≥ªª∏üÏw^Dà£'úÁ5∑/Ñı+ÈSÌ⁄Øôûõ3˘sXSû'K⁄B¸ÕÈÆÜµ!á°WŸ ‹´}57]∂èD]MŒ#e»\åìÈıÕsñ˙ûΩ‚)§˚≠≠∫N3è«◊ßJ•‚M:M ∆¬)KZÉ#úüôúúÛé‹öÈ|ëØá‚)˜ôòπ#9ˇ WR´Væ!Pìµñæg;ßNé€E^ÔKÙGowi¨oÊÛÁVRŒNwÕz|,v	# $û√Ê˛,›ˇ 	u◊˝rã¯ıu˙‹íG·(H&%RC`Äp:÷8'Ï*◊∂∂5≈ßZùı2ßÒ6£™Íc—ïPq!‰ê:ü@:VGàlu[6âµœ¥,ÑÏÁÖ#€_ ¥¸ë´«oıÅT.GAìû˘
-ƒ<„K«O9Ûˇ |Œqï|´‘ìø‡i	FÜ24aﬂ±µ·2Ö;U{ƒ”Ex4Ì3k\n
-Œy¡'¶=~æµc¬%áár[s`Wc∑ö⁄"N…4í±1-É…Î˙VµqSßÜ•o#:XxTƒUúˆçŒÇˇ ˛]"æ{Ùö<ÄÀÅÑœ∂9«Á[∫º∫•ÑíÃrC˛≥û>øJÃπÊµxÜ9u|ƒ›T°«ˇ ^´jh%Ï÷∑“N®í≥|∏POLw‰˛u§^"å›Dü"Z‹…™5`†⁄ÁoK!n<M®Í∫áÿÙeTúHy$ß–ïë‚VÕ¢mFÛÌ!;9·Hò˙˛Uß‡4å›^;¨
-°r:ú‡˛_êß¸CŒ4ºtÛü?˜¡Æi∆URØRNˇ Å”	FÜ24aﬂ±µ·2á;VÌsæœˆÁ˚Ì¸Î¢ØkÔáá°‰‚◊ÔÁÍxˇ ∆Ø_k±¡ÆÈQ¥Û⁄∆R‚›FYì®eÓHÁ#úåcß<ÁÄ˛3>Égç‚Ky§Ç #ä‚1óçTck/|cØ_≠{µÊ≠ßX\Aow{o”∂ÿ£í@¨Áß ı‰◊=‚Øá>Òdn˜vÇ≤8∫ÉÂ|ÛåˆnΩÎËhci∫+äç„—ıGãΩ‚mh^"“|IeˆΩ&ˆ;ò∫6” üB:É^MÒ~Î∆~ΩãU”ı˚Ö“nÀÚ◊jòd‰ÖÈ»#8>«>ßÀÁR¯q„õ®ÏnÿÀapcf*ŒÄÙaœvÌ€÷æõÒ~Ü<[‡{ÀŸßÄI
-∂Y ‹£$qœÍkY·°ÅƒS©~jrÔÿÊMu0~Î˙áà<5Œß®5Â“]<eú¢Ö\æyıØ;–uˇ x∑‚<˙fü‚;•∞äwgô X±úFO FO•q˛ÒÂ˜Ét˝gOÜ'€£Ú‘Ô«ì oŒz˛ÉÒˆOÅû:WÑÊ’gM∑îô"4»_‘π˜WN+µ™“¥æü˘Õd`x∑‚_àı/Ö|5,vCœæ{®,Ïpr–=ÜkWäZâÏ4i5ÈßπΩ#ÏÚFCF¸‡˝ÂÁoÜ8û9≠ﬂ¸'‘§Ò˛$¥˘πi>–ˆ¡ˆ»írw#{ê8¡Œ;ó†|d◊t=U4œY4ÀlíC…‚Ìí:7Èüz)∆2§•Öåee™{ﬂ∏=˝„°¯˜o´Ÿœ“ç5%q!ùœ›'«‡qÎ«´√ﬁ%’Ù›B]^˛ÀA*¨ÑdÓ8ÙÈ^âÒ¢Óˇ ÖÇÓ÷Uñﬁi†í9‰2ìêEd˛œ?Ú÷?ÎÂ?Ùöe™M%t˚WôÈ∂Úü¯Ye÷ıFªkHK\^J™ÖœRp0 Ï?íyØ*”¸_„Oâ∫’ıøÜn·—Ùªd•u¸ìépNNL/≠tnß∑é'dIÆQ´c#ì∑‹ ºÛ·oÜºE´ËW∑Ò”œ	* ƒ2	«9ÎÏk&ü’eâõWΩïˆ_"§ﬂ5ç;Øà5¯u‚x¥ØÕ©m±_)ç“!„r∑9`é£ÒÆÔ‚gåıO¯6”W–VKßAˆó¡Ú’ÜTÖ=s˙W9/¡}g^æ'Ò[ﬁ]´≤2X}	8óZΩÒgKáC¯;o•€≥º6èo
-3ú≥„'ﬁõ˙≠J‘TlÂzÀFÚL„|7„ä>.íÍ-xe0Ä“1ä5	ú‡eΩq¿ˆ˙—eÒ{≈ﬁ÷.¥œYãŸ ;^'a©∆AÉ”•tü≥œ:≥ÌpÉˇ Æ„x‚U¡ m¢?°ØB0°W<+¶πRÈøN§j¢•s≠π’~/xáJ÷üo≠Ñ™&ÜrÇBò»#wÃŸ«„ûi|+¯Øw‚Et-wÀ7n§€‹®Ê`d´\r=„Í:√∫x ˆX¯ˇ Ää˘á¡ü'∆;0£Ò2êvÂ´èX™Ua(% Æö‹ßx¥zÔ≈Øâﬁ6⁄vêà∑∑Ê4Ó°Ñj@R}ÎâÒüÙ⁄¯äÁƒLˆ∑B6eÅÄÚ7åçˇ (UÅú„'ôÙäáçc∑Ω≤∏H5Kt1®êùì/$)Ù ˜˜9Ìè3∂Òøé~œìÆZã$cäÈrIn:sèJx(”ù˚5∫{ø@ïÔ©Óma¸¶ÀØJÚÍRFdë§P¨1*¿¡
-T˘¢ßßä¥ÔËëÍzs§Ïí'˚—?uoÃphØ
-µ’Is+;Ïh∂7(¢äÃgÕ?µø¯¢!ßiáìcAæKv]Áw$8ÁäÙ?Ö^)ûÀ√öñëm5ºdE?íŒéIÅÚüLıÈ÷ΩK–QÅÈ^ï\|ja£á‰—uπ
-6w>Z¯ê◊æ*ÒÌÂıéì®d Û-Ÿl‡ú«9Î^Ëö≥ÀüÌ‚¬Òf:qO≤òHnÃm∆qû˛úÙÆ«–R„äö¯ÔkNù>[(yÇçõgÀ?°·o[ÍwZ.°%æ”˘p1e@‹úu¿ÙØO¯Á}$æ∑—m¨nÓ..fYwE2"Ø\ëﬂ$qˇ ÷ØV¿ÙQW[1ˆ∏à◊q’yˆ+1ÌZrjöeÊùwnÚm∏I^&¿|§nËN:ûMq,ıg‚=Ï∂∫]„E§!åÌêHÈúÛ_N`Çì–Sßô∏b•âÂ’Ùv«%·πm¸a‡!gß‹[∆—;à'å°8 íA!áÛÂ6~Ò/¬è>ßeß‹Í∫[)BˆÍX¥déTd@ÁÓ3»Ø°(ÆzXŸSÊI{≤›∆ÁÜ¯„≈öˇ è¥ËÙ¯sTé)vΩ‹ìC∑8Á`9€å„íGJÓ>x<§ª\H%‘ÆÇôŸNU1¸+Ìœ'øÇªúJZ*c£Ï πcø®(Îva¯√@_¯SQ“	
-˜ÄÆ9R}≤}≥^Aá·ﬁ£i‚ôu]^“kt”À"$»Pº§cå¿NFFvï'ú{›®„j“£*1zHSw)Í∂'R“nÏÑûYûå>3¥ëÄqﬁæj–-|]√≈3M˝É-√¥M"&x‰M¿¸å=JÉÎÍ;W‘4`’X\k°A«ö2›£}Oï<Wßx◊ƒ∫£¯ñˇ √óëóT¬Em&Tq…ø>¶ΩÀ√Û?é>\i◊∂6a6Nn#¿f>uerG∂A8Õw8îVòå¬U°r•ÀµÑ°f|≈·Ë¸aªƒW@h3‹¥—òâX^H‹√!\gÈ◊ê;{ÜâÆk–xN˜YÒUÇ√*3I≠î,“ÄrrƒÓÙ„« u∏µ¨o÷Zî‚Ø’˜cc‰ØçWNÒ§> }˙DäÂÆ%âÉíp2:Û_W⁄‹%Âú7(≤*M∫¨àQÄ#8*yÿÚ*\AKF;ı∑„k+c |Î„ØÖ⁄≠«ƒÜ˛Õµy,ıIº‘ìc2F«ó√ÓÄry#Ç6‰Ò^˚§È∞Ë˙E¶ùoì¥KñÍp1ìÍOSÔWh®ƒcj◊Ñ!7§AE'ty/≈ﬂÜóû'öoFU{ÿ¢ÚÊ∑8U*Tˇ xdå£úÛ˛¯ã‚ˇ XÆè©¯^˙ˇ Ïﬂ∫åÏx‹ @ÓúÆ:q¯„ßΩR`z
-÷˜ÏU±Rä€∫˘ãó[£Ç5«éumVÁUÒ"Æüß [È¬5∏êCì˜ÜûI<˝ıWYÛ È[–§¨p~1ùµ+∏m°µúõf-º° í„éi⁄&Øs£i˛D∫|Ó7
-èZÓvÉÿQµ}y?nÎ©Ÿ˙Ç∆Gÿ™.KÃ‡µü_Í∂Ê{+ò#Á!If@3˘U˝hKk‡òÙ˚àeíy„XòF•∂úsìË+Æ⁄æÇå‘U¨˝Á)›µb*>ÍålìπÁﬁí}3P_:Œró,"ﬁ®N√ÿëÈ€=≥ÈOÒïº◊z‹-±ä"õÇúúı¸w€@Ï(⁄P+?ÏﬂˆaÕ°£«ˇ ¥{~]L/^m“~œ$G%™‡∆pAŒ6ûç”†ˇ 
-‚•Ç‚}r{ÿÏÊ%«ôµ◊0?•zñ•W–U÷¿{Zp¶ÂìGÏ™Jj;ú∑âCk>Y≠‡ú‚D-¢`„ksÚ„?Á=+C‘nÙiDöeÀâHe;z{W°`c§⁄=:ò:™™ïöV&û/ñì§„t›œ?ñœZÒEËíhçº ûbù©¯pNßQ]|:5º:'ˆ`ÀDP´1,OS”œ>ï¢ -])ﬁR’ΩŸqR®îVâlè8:øÜµ,P¥™N–Ë•ïáæ:tÔZÚköÓ¢ãéûˆÚti[ê=∆F?üNï◊‡‘ @+*y{•uNmG±≠Lj©¨‡úªò⁄Üà⁄ûãµ‘ﬁe‘jù∑p98Ù<◊-cq≠xrF∑k)6$‡!e„∏#éœ<C§ ¢¥≠ÅåÊ™E⁄K©±rÑ]9+≈Ù<ªSÉTΩ∏mN{	Åp£	”éΩÎ∑“•Œç-ΩÕ¨±Ö˝À˘ãÄˇ (Â}G8œ®5µÅË)@≈F/Tg)9_õr´„XF<∂ÂÿÛπ4›W√:É\Z≈$–Ùä[pÙ r?œæ´K´xÅQõOuH	+Ñ<í1¯˛Ë§fåAYK+\ÆõQ}#òæe9E9.ß%‡Î…ñ!ßKgpü+H$h ™åÅÜœBs¿Î¡¸sµø^ÿj/aIÔ0◊,á©‡u¸=kæ ‘Ωkieù“ì€fgl„U‘äﬂtq∞¯õWíÿBö[µ√,ò8‰c˙÷∆õe}u§Õµ'ö˜ü/ yj@˘xÎﬁ∂vèAKZR√J?ƒìëïJÒó¡v˙v´·ùEÁµÜI·‡E-∏z9˛ø\7VóVÒ£6ü"§ï¬I¸
-Ù\÷åA\≤ ◊+Ñf‘_C¶9ãÊSîSíÍr^Ωôc|∂w	Ú¥ÇFå™®6zû^„◊R jZÙ0Ù}ç5N˜±«Zßµõù≠s√æ+¯≈æ.èƒzLOykH·?ºÑ©˛ÓrFy„◊ß≠Y>2jI Ö<™5J20±È∑={bΩrì–W™±±î#
-∞RÂ€°œÀ≠”<√ıˇ xπ¸G‚ãAco-¡∏ñ4úÇ.IÿÁú|è~«•¨¯û”¬^π’.éJ.ÿ£Ô$á¢ˇ û’ùlE\\‚≠‰íJ(˘Î≈^éÛ„U∆áß≤ï∫∫FƒauπC9∆1ÚÂé;Å_MÿŸAßiˆˆ6®#∑∑âbç™å˘
-ˇ Å˙|∫ﬂâµü_±íe;QõüûBKb ËÊΩ‚∫Ûj“sÖÔ»í˘ì‘Vx‚N£¨]È˙Üß¶]H€öŒéÑ¸Ñ‡•}ˆËA¨›gKÒ'≈Ø[ﬁßáÂ”,£EÉÕ∏V
-ƒ± ‰ûÿq…Ø£1H *#ô8æx¡s⁄◊ˇ Ä>Ná!‚_≈©|8oÿ2©Ç›#µiπ˘£n„ÔåÔúWéx3SÒó√ÎõÕ"/‹Õ5‘à@í›ÿË+∆9‰ÇGæì§«µeC*t•JKö/]{ç∆ÓÁw†j~3¯t⁄oâVﬁ◊S∫BÁ»Oñî‡ì»A¡ı ˜Ø—‡Òœ¬}bB∫T∑V≥|≤$hœ∏pu8Œ^;•®¿=©·ÒÚ•SqN2Ë7‘Ú‚ˇ à5πÜ◊A—e–mIƒ◊∑(o=Fı åv úû£≠OÒ∆ˆW≈∂âoeyssq* ^("™u…dí8ˇ ÎW¨`î`¢¢8®¬¨jF	(Ùˇ Ç∫ZÁÜ¸º∏“n.tkÕ.ˆ&Ωc*NamäTtcèó#8'∏«q\ß≈´MCW¯èy5æóz–F©o!Ü˝£í	3ú˙s t`z
-ÈÜh„äñ%CV∂∏π=€ÆÉ‚X¿©®µï˙˝é!ê}ïƒå  ;èòzz„;¯djéÌµ€ùˇ …K¶∏uX∞í@‰Û¿ıØ¨ÒÌIÅË+<6=PUç˘¸¡∆ˆ<[‚eáãfÒè‚ù+Îã·GHbFDﬂxÜãÔr1€‘qúü¯èƒ¨mÙM;¬7∞™J&íIí`ºzüNïÙ&aE,"ç‡õéœ¸˚ÉçŒK·œÉˇ ·∫ÿ  ◊sHgπ(IP‰ÄO`}NO¿+Æ¢∏jTïIπÀvRV–(¢äÅÖQ@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@e¯É√∫gâÙß”uk>›à`7*√°rjQN2qw[Åï·Ôiû“∆ü•[˘0.r≈ôòÒñ'íp ˙ :
-’¢ä%''w∏QHä(†ä(†ä(†ä(†ä(†ä(†ä(†ˇŸ
-endstream
-endobj
-
-9 0 obj
-<< /Type /Font
-/Subtype /Type1
-/Name /F1
-/BaseFont /Helvetica
-/Encoding /WinAnsiEncoding
->>
-endobj
-10 0 obj
-<< /Type /Page
-/Parent 3 0 R
-/Contents 11 0 R
->>
-endobj
-11 0 obj
-<<
-/Length 7703 >>
-stream
-
-0.000 0.000 0.000 rg
-0.000 0.000 0.000 RG
-0.5 w
-0.000 0.000 0.000 rg
-BT 32.640 780.642 Td /F1 8.0 Tf  (SNo) Tj ET
-BT 50.356 780.642 Td /F1 8.0 Tf  (Date) Tj ET
-BT 93.677 780.642 Td /F1 8.0 Tf  (Time) Tj ET
-BT 127.124 780.642 Td /F1 8.0 Tf  (Place) Tj ET
-BT 510.794 780.642 Td /F1 8.0 Tf  (Speed\(Kmph\)) Tj ET
-BT 32.640 765.594 Td /F1 8.0 Tf  (46) Tj ET
-BT 50.356 765.594 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 765.594 Td /F1 8.0 Tf  (06:32:05) Tj ET
-BT 127.124 765.594 Td /F1 8.0 Tf  (0.03 km from State Highway 25 Koyal Bagh Colony Hardoi Uttar Pradesh 241001 India-) Tj ET
-BT 127.124 756.346 Td /F1 8.0 Tf  (\(27.39672,80.12506\)) Tj ET
-BT 510.794 765.594 Td /F1 8.0 Tf  (4.44) Tj ET
-BT 32.640 743.098 Td /F1 8.0 Tf  (47) Tj ET
-BT 50.356 743.098 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 743.098 Td /F1 8.0 Tf  (06:42:11) Tj ET
-BT 127.124 743.098 Td /F1 8.0 Tf  (0.01 km from Cinema Road Hardoi Uttar Pradesh 241001 India-\(27.39407,80.12958\)) Tj ET
-BT 510.794 743.098 Td /F1 8.0 Tf  (0.19) Tj ET
-BT 32.640 729.850 Td /F1 8.0 Tf  (48) Tj ET
-BT 50.356 729.850 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 729.850 Td /F1 8.0 Tf  (06:52:16) Tj ET
-BT 127.124 729.850 Td /F1 8.0 Tf  (0.01 km from Cinema Road Hardoi Uttar Pradesh 241001 India-\(27.39281,80.1265\)) Tj ET
-BT 510.794 729.850 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 716.602 Td /F1 8.0 Tf  (49) Tj ET
-BT 50.356 716.602 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 716.602 Td /F1 8.0 Tf  (07:02:22) Tj ET
-BT 127.124 716.602 Td /F1 8.0 Tf  (0.04 km from Mahatma Gandhi Marg Hardoi Uttar Pradesh 241001 India-\(27.39316,80.12441\)) Tj ET
-BT 510.794 716.602 Td /F1 8.0 Tf  (0.19) Tj ET
-BT 32.640 703.354 Td /F1 8.0 Tf  (50) Tj ET
-BT 50.356 703.354 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 703.354 Td /F1 8.0 Tf  (07:12:27) Tj ET
-BT 127.124 703.354 Td /F1 8.0 Tf  (0.01 km from State Highway 21 Mominabad Hardoi Uttar Pradesh 241001 India-\(27.38699,80.12301\)) Tj ET
-BT 510.794 703.354 Td /F1 8.0 Tf  (0.37) Tj ET
-BT 32.640 690.106 Td /F1 8.0 Tf  (51) Tj ET
-BT 50.356 690.106 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 690.106 Td /F1 8.0 Tf  (07:22:33) Tj ET
-BT 127.124 690.106 Td /F1 8.0 Tf  (0 km from Circular Road Hardoi Uttar Pradesh 241001 India-\(27.38254,80.11975\)) Tj ET
-BT 510.794 690.106 Td /F1 8.0 Tf  (0.56) Tj ET
-BT 32.640 676.858 Td /F1 8.0 Tf  (52) Tj ET
-BT 50.356 676.858 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 676.858 Td /F1 8.0 Tf  (07:32:38) Tj ET
-BT 127.124 676.858 Td /F1 8.0 Tf  (0.01 km from Circular Road Hardoi Uttar Pradesh 241001 India-\(27.38397,80.12731\)) Tj ET
-BT 510.794 676.858 Td /F1 8.0 Tf  (0.19) Tj ET
-BT 32.640 663.610 Td /F1 8.0 Tf  (53) Tj ET
-BT 50.356 663.610 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 663.610 Td /F1 8.0 Tf  (07:42:43) Tj ET
-BT 127.124 663.610 Td /F1 8.0 Tf  (0.03 km from State Highway 21 Mominabad Hardoi Uttar Pradesh 241001 India-\(27.38794,80.12341\)) Tj ET
-BT 510.794 663.610 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 650.362 Td /F1 8.0 Tf  (54) Tj ET
-BT 50.356 650.362 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 650.362 Td /F1 8.0 Tf  (07:52:49) Tj ET
-BT 127.124 650.362 Td /F1 8.0 Tf  (0.23 km from Baba Mandir Road Hardoi Uttar Pradesh 241001 India-\(27.38987,80.11951\)) Tj ET
-BT 510.794 650.362 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 637.114 Td /F1 8.0 Tf  (55) Tj ET
-BT 50.356 637.114 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 637.114 Td /F1 8.0 Tf  (08:02:54) Tj ET
-BT 127.124 637.114 Td /F1 8.0 Tf  (0.22 km from Baba Mandir Road Hardoi Uttar Pradesh 241001 India-\(27.39141,80.12105\)) Tj ET
-BT 510.794 637.114 Td /F1 8.0 Tf  (0.37) Tj ET
-BT 32.640 623.866 Td /F1 8.0 Tf  (56) Tj ET
-BT 50.356 623.866 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 623.866 Td /F1 8.0 Tf  (08:13:00) Tj ET
-BT 127.124 623.866 Td /F1 8.0 Tf  (0.08 km from Bawan Road Hardoi Uttar Pradesh 241001 India-\(27.39224,80.11967\)) Tj ET
-BT 510.794 623.866 Td /F1 8.0 Tf  (0.37) Tj ET
-BT 32.640 610.618 Td /F1 8.0 Tf  (57) Tj ET
-BT 50.356 610.618 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 610.618 Td /F1 8.0 Tf  (08:23:05) Tj ET
-BT 127.124 610.618 Td /F1 8.0 Tf  (0.02 km from Hardoi-Sawaizpur Road Subhash Nagar Hardoi Uttar Pradesh 241001 India-) Tj ET
-BT 127.124 601.370 Td /F1 8.0 Tf  (\(27.39356,80.11665\)) Tj ET
-BT 510.794 610.618 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 588.122 Td /F1 8.0 Tf  (58) Tj ET
-BT 50.356 588.122 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 588.122 Td /F1 8.0 Tf  (08:33:11) Tj ET
-BT 127.124 588.122 Td /F1 8.0 Tf  (0.21 km from Baba Mandir Road Hardoi Uttar Pradesh 241001 India-\(27.39129,80.12099\)) Tj ET
-BT 510.794 588.122 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 574.874 Td /F1 8.0 Tf  (59) Tj ET
-BT 50.356 574.874 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 574.874 Td /F1 8.0 Tf  (08:43:16) Tj ET
-BT 127.124 574.874 Td /F1 8.0 Tf  (0.07 km from Jail Road Koyal Bagh Colony Hardoi Uttar Pradesh 241001 India-\(27.39976,80.12877\)) Tj ET
-BT 510.794 574.874 Td /F1 8.0 Tf  (20.0) Tj ET
-BT 32.640 561.626 Td /F1 8.0 Tf  (60) Tj ET
-BT 50.356 561.626 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 561.626 Td /F1 8.0 Tf  (08:53:22) Tj ET
-BT 127.124 561.626 Td /F1 8.0 Tf  (0.01 km from Jail Road Subhash Nagar Hardoi Uttar Pradesh 241001 India-\(27.40071,80.12642\)) Tj ET
-BT 510.794 561.626 Td /F1 8.0 Tf  (0.56) Tj ET
-BT 32.640 548.378 Td /F1 8.0 Tf  (61) Tj ET
-BT 50.356 548.378 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 548.378 Td /F1 8.0 Tf  (09:03:27) Tj ET
-BT 127.124 548.378 Td /F1 8.0 Tf  (0.01 km from Jail Road Subhash Nagar Hardoi Uttar Pradesh 241001 India-\(27.4007,80.12649\)) Tj ET
-BT 510.794 548.378 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 535.130 Td /F1 8.0 Tf  (62) Tj ET
-BT 50.356 535.130 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 535.130 Td /F1 8.0 Tf  (09:13:32) Tj ET
-BT 127.124 535.130 Td /F1 8.0 Tf  (0.01 km from Jail Road Subhash Nagar Hardoi Uttar Pradesh 241001 India-\(27.40068,80.12652\)) Tj ET
-BT 510.794 535.130 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 521.882 Td /F1 8.0 Tf  (63) Tj ET
-BT 50.356 521.882 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 521.882 Td /F1 8.0 Tf  (09:23:49) Tj ET
-BT 127.124 521.882 Td /F1 8.0 Tf  (0.01 km from Jail Road Subhash Nagar Hardoi Uttar Pradesh 241001 India-\(27.40069,80.1265\)) Tj ET
-BT 510.794 521.882 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 508.634 Td /F1 8.0 Tf  (64) Tj ET
-BT 50.356 508.634 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 508.634 Td /F1 8.0 Tf  (09:33:54) Tj ET
-BT 127.124 508.634 Td /F1 8.0 Tf  (0.01 km from Jail Road Subhash Nagar Hardoi Uttar Pradesh 241001 India-\(27.40071,80.12649\)) Tj ET
-BT 510.794 508.634 Td /F1 8.0 Tf  (0.0) Tj ET
-BT 32.640 495.386 Td /F1 8.0 Tf  (65) Tj ET
-BT 50.356 495.386 Td /F1 8.0 Tf  (2015-09-07) Tj ET
-BT 93.677 495.386 Td /F1 8.0 Tf  (09:46:01) Tj ET
-BT 127.124 495.386 Td /F1 8.0 Tf  (0.01 km from Jail Road Subhash Nagar Hardoi Uttar Pradesh 241001 India-\(27.4007,80.12647\)) Tj ET
-BT 510.794 495.386 Td /F1 8.0 Tf  (0.37) Tj ET
-BT 32.640 482.138 Td /F1 8.0 Tf  (66) Tj ET
-BT 50.356 482.138 Td /F1 8.0 Tf  (-) Tj ET
-BT 93.677 482.138 Td /F1 8.0 Tf  (-) Tj ET
-BT 127.124 482.138 Td /F1 8.0 Tf  (0.01 km from Jail Road Subhash Nagar Hardoi Uttar Pradesh 241001 India-\(27.4007,80.12647\)) Tj ET
-BT 510.794 482.138 Td /F1 8.0 Tf  (-) Tj ET
-0.5 w
-31.640 790.090 m 31.640 478.338 l S
-0.5 w
-49.356 790.090 m 49.356 478.338 l S
-0.5 w
-92.677 790.090 m 92.677 478.338 l S
-0.5 w
-126.124 790.090 m 126.124 478.338 l S
-0.5 w
-509.794 790.090 m 509.794 478.338 l S
-0.5 w
-561.640 790.090 m 561.640 478.338 l S
-0.5 w
-31.390 790.090 m 561.890 790.090 l S
-31.640 776.842 m 561.640 776.842 l S
-31.390 478.338 m 561.890 478.338 l S
-BT 30.000 470.890 Td /F1 8.0 Tf  ( ) Tj ET
-BT 30.000 461.642 Td /F1 8.0 Tf  ( ) Tj ET
-BT 30.000 452.394 Td /F1 8.0 Tf  ( ) Tj ET
-endstream
-endobj
-
-xref
-0 12
-0000000000 65535 f 
-0000000015 00000 n 
-0000000080 00000 n 
-0000000126 00000 n 
-0000000313 00000 n 
-0000000350 00000 n 
-0000000455 00000 n 
-0000000518 00000 n 
-0000016322 00000 n 
-0000025626 00000 n 
-0000025733 00000 n 
-0000025798 00000 n 
-
-trailer
-  << /Size 12
-     /Root 1 0 R
-     /Info 5 0 R
-  >>
-startxref
-33555
-%%EOF

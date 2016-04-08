@@ -1,936 +1,0 @@
-%PDF-1.3
-%‚„œ”
-
-1 0 obj
-<< /Type /Catalog
-/Outlines 2 0 R
-/Pages 3 0 R >>
-endobj
-2 0 obj
-<< /Type /Outlines /Count 0 >>
-endobj
-3 0 obj
-<< /Type /Pages
-/Kids [6 0 R
-10 0 R
-12 0 R
-]
-/Count 3
-/Resources <<
-/ProcSet 4 0 R
-/Font << 
-/F1 9 0 R >>
-/XObject << 
-/I1 8 0 R >>
->>
-/MediaBox [0.000 0.000 595.280 841.890]
- >>
-endobj
-4 0 obj
-[/PDF /Text /ImageC ]
-endobj
-5 0 obj
-<<
-/Creator (R and OS php pdf writer, http://www.ros.co.nz)
-/CreationDate (D:20151203)
->>
-endobj
-6 0 obj
-<< /Type /Page
-/Parent 3 0 R
-/Contents 7 0 R
->>
-endobj
-7 0 obj
-<<
-/Length 14032 >>
-stream
-
-q
-150.000 0 0 17.829 215.000 806.890 cm
-/I1 Do
-Q
-0.000 0.000 0.000 rg
-0.800 0.800 0.800 RG
-BT 132.830 780.330 Td /F1 10.0 Tf  (Vehicle Information-Last Data \(2015-12-03 00:00:00 2015-12-03 11:02:45\)) Tj ET
-BT 32.640 764.082 Td /F1 8.0 Tf  (SNo) Tj ET
-BT 50.356 764.082 Td /F1 8.0 Tf  (Vehicle Name) Tj ET
-BT 155.626 764.082 Td /F1 8.0 Tf  (IMEI) Tj ET
-BT 225.013 764.082 Td /F1 8.0 Tf  (Date Time) Tj ET
-BT 302.028 764.082 Td /F1 8.0 Tf  (Place) Tj ET
-BT 485.888 764.082 Td /F1 8.0 Tf  (Speed\(Kmph\)) Tj ET
-BT 537.733 764.082 Td /F1 8.0 Tf  (Status) Tj ET
-BT 32.640 749.034 Td /F1 8.0 Tf  (1) Tj ET
-BT 50.356 749.034 Td /F1 8.0 Tf  (BR-01-GD-5758\(Purn.\)) Tj ET
-BT 155.626 749.034 Td /F1 8.0 Tf  (862170016975755) Tj ET
-BT 225.013 749.034 Td /F1 8.0 Tf  (2015-12-03 11:06:18) Tj ET
-BT 302.028 749.034 Td /F1 8.0 Tf  (0.36 km from Patna  Bakhtiyarpur Rd, Narayan) Tj ET
-BT 302.028 739.786 Td /F1 8.0 Tf  (Nagar, Paijawa, Patna, Bihar 800009, India-) Tj ET
-BT 302.028 730.538 Td /F1 8.0 Tf  (\(25.573,85.249\)) Tj ET
-BT 485.888 749.034 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 749.034 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 717.290 Td /F1 8.0 Tf  (2) Tj ET
-BT 50.356 717.290 Td /F1 8.0 Tf  (BR-01-GD-5759\(Pur.\)) Tj ET
-BT 155.626 717.290 Td /F1 8.0 Tf  (862170016973073) Tj ET
-BT 225.013 717.290 Td /F1 8.0 Tf  (2015-12-03 11:05:56) Tj ET
-BT 302.028 717.290 Td /F1 8.0 Tf  (0.06 km from Unnamed Road, Bazaar Samiti,) Tj ET
-BT 302.028 708.042 Td /F1 8.0 Tf  (Sumitra Nagar, Begampur, Patna, Bihar 800009,) Tj ET
-BT 302.028 698.794 Td /F1 8.0 Tf  (India-\(25.574,85.248\)) Tj ET
-BT 485.888 717.290 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 717.290 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 685.546 Td /F1 8.0 Tf  (3) Tj ET
-BT 50.356 685.546 Td /F1 8.0 Tf  (BR-01-GD-5960\(Patna\)) Tj ET
-BT 155.626 685.546 Td /F1 8.0 Tf  (861074026113574) Tj ET
-BT 225.013 685.546 Td /F1 8.0 Tf  (2015-12-03 11:06:31) Tj ET
-BT 302.028 685.546 Td /F1 8.0 Tf  (0.9 km from NH31 Samail Kathihr Katihar Bihar) Tj ET
-BT 302.028 676.298 Td /F1 8.0 Tf  (India-\(25.509,87.298\)) Tj ET
-BT 485.888 685.546 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 685.546 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 663.050 Td /F1 8.0 Tf  (4) Tj ET
-BT 50.356 663.050 Td /F1 8.0 Tf  (BR-01-GD-8381\(Patna\)) Tj ET
-BT 155.626 663.050 Td /F1 8.0 Tf  (861074026113798) Tj ET
-BT 225.013 663.050 Td /F1 8.0 Tf  (2015-12-03 10:49:05) Tj ET
-BT 302.028 663.050 Td /F1 8.0 Tf  (1.12 km from NH131A Purnia Bihar 854301 India-) Tj ET
-BT 302.028 653.802 Td /F1 8.0 Tf  (\(25.780,87.538\)) Tj ET
-BT 485.888 663.050 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 663.050 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 640.554 Td /F1 8.0 Tf  (5) Tj ET
-BT 50.356 640.554 Td /F1 8.0 Tf  (BR-01-GD-8382\(Patna\)) Tj ET
-BT 155.626 640.554 Td /F1 8.0 Tf  (861074026114416) Tj ET
-BT 225.013 640.554 Td /F1 8.0 Tf  (2015-12-03 11:06:29) Tj ET
-BT 302.028 640.554 Td /F1 8.0 Tf  (1.09 km from NH131A Purnia Bihar 854301 India-) Tj ET
-BT 302.028 631.306 Td /F1 8.0 Tf  (\(25.780,87.53\)) Tj ET
-BT 485.888 640.554 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 640.554 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 618.058 Td /F1 8.0 Tf  (6) Tj ET
-BT 50.356 618.058 Td /F1 8.0 Tf  (BR-01-GE-3883\(Patna\)) Tj ET
-BT 155.626 618.058 Td /F1 8.0 Tf  (865733024476251) Tj ET
-BT 225.013 618.058 Td /F1 8.0 Tf  (2015-12-03 11:05:50) Tj ET
-BT 302.028 618.058 Td /F1 8.0 Tf  (2.12 km from NH31 Begusarai Begusari Begusarai) Tj ET
-BT 302.028 608.810 Td /F1 8.0 Tf  (Bihar India-\(25.415,86.15\)) Tj ET
-BT 485.888 618.058 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 618.058 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 595.562 Td /F1 8.0 Tf  (7) Tj ET
-BT 50.356 595.562 Td /F1 8.0 Tf  (BR-01-GE-3884\(Patna\)) Tj ET
-BT 155.626 595.562 Td /F1 8.0 Tf  (865733024505661) Tj ET
-BT 225.013 595.562 Td /F1 8.0 Tf  (2015-12-03 11:05:49) Tj ET
-BT 302.028 595.562 Td /F1 8.0 Tf  (0.37 km from Patna  Bakhtiyarpur Rd, Narayan) Tj ET
-BT 302.028 586.314 Td /F1 8.0 Tf  (Nagar, Paijawa, Patna, Bihar 800009, India-) Tj ET
-BT 302.028 577.066 Td /F1 8.0 Tf  (\(25.57,85.249\)) Tj ET
-BT 485.888 595.562 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 595.562 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 563.818 Td /F1 8.0 Tf  (8) Tj ET
-BT 50.356 563.818 Td /F1 8.0 Tf  (BR-01-GE-3885\(Patna\)) Tj ET
-BT 155.626 563.818 Td /F1 8.0 Tf  (865733024505901) Tj ET
-BT 225.013 563.818 Td /F1 8.0 Tf  (2015-12-03 11:05:56) Tj ET
-BT 302.028 563.818 Td /F1 8.0 Tf  (0.37 km from Patna  Bakhtiyarpur Rd, Narayan) Tj ET
-BT 302.028 554.570 Td /F1 8.0 Tf  (Nagar, Paijawa, Patna, Bihar 800009, India-) Tj ET
-BT 302.028 545.322 Td /F1 8.0 Tf  (\(25.57,85.24\)) Tj ET
-BT 485.888 563.818 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 563.818 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 532.074 Td /F1 8.0 Tf  (9) Tj ET
-BT 50.356 532.074 Td /F1 8.0 Tf  (BR-01-GE-3886\(Patna\)) Tj ET
-BT 155.626 532.074 Td /F1 8.0 Tf  (865733024479479) Tj ET
-BT 225.013 532.074 Td /F1 8.0 Tf  (2015-12-03 11:06:02) Tj ET
-BT 302.028 532.074 Td /F1 8.0 Tf  (0.02 km from Unnamed Road, Bazaar Samiti,) Tj ET
-BT 302.028 522.826 Td /F1 8.0 Tf  (Sumitra Nagar, Begampur, Patna, Bihar 800009,) Tj ET
-BT 302.028 513.578 Td /F1 8.0 Tf  (India-\(25.57,85.248\)) Tj ET
-BT 485.888 532.074 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 532.074 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 500.330 Td /F1 8.0 Tf  (10) Tj ET
-BT 50.356 500.330 Td /F1 8.0 Tf  (MP-09-KB-5998\(RANIA\)) Tj ET
-BT 155.626 500.330 Td /F1 8.0 Tf  (359231037355862) Tj ET
-BT 225.013 500.330 Td /F1 8.0 Tf  (2015-12-03 11:06:32) Tj ET
-BT 302.028 500.330 Td /F1 8.0 Tf  (0.21 km from 122/450, Shastri Nagar, Shastri) Tj ET
-BT 302.028 491.082 Td /F1 8.0 Tf  (Nagar, Kanpur, Uttar Pradesh 208005, India-) Tj ET
-BT 302.028 481.834 Td /F1 8.0 Tf  (\(26.463,80.301\)) Tj ET
-BT 485.888 500.330 Td /F1 8.0 Tf  (8.7) Tj ET
-BT 537.733 500.330 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 468.586 Td /F1 8.0 Tf  (11) Tj ET
-BT 50.356 468.586 Td /F1 8.0 Tf  (UP-14-AT-8591\(RANIA\)) Tj ET
-BT 155.626 468.586 Td /F1 8.0 Tf  (862170018383669) Tj ET
-BT 225.013 468.586 Td /F1 8.0 Tf  (2015-12-03 11:06:21) Tj ET
-BT 302.028 468.586 Td /F1 8.0 Tf  (0.25 km from Kanpur  Allahabad Hwy, Nauwa) Tj ET
-BT 302.028 459.338 Td /F1 8.0 Tf  (Bagh, Bakandha, Uttar Pradesh 212601, India-) Tj ET
-BT 302.028 450.090 Td /F1 8.0 Tf  (\(25.955,80.796\)) Tj ET
-BT 485.888 468.586 Td /F1 8.0 Tf  (82.59) Tj ET
-BT 537.733 468.586 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 436.842 Td /F1 8.0 Tf  (12) Tj ET
-BT 50.356 436.842 Td /F1 8.0 Tf  (UP-14-AT-8592\(RANIA\)) Tj ET
-BT 155.626 436.842 Td /F1 8.0 Tf  (862170018315034) Tj ET
-BT 225.013 436.842 Td /F1 8.0 Tf  (2015-12-03 11:06:38) Tj ET
-BT 302.028 436.842 Td /F1 8.0 Tf  (0.02 km from Kanpur  Allahabad Hwy, Chitaura,) Tj ET
-BT 302.028 427.594 Td /F1 8.0 Tf  (Uttar Pradesh 212601, India-\(25.974,80.768\)) Tj ET
-BT 485.888 436.842 Td /F1 8.0 Tf  (70.14) Tj ET
-BT 537.733 436.842 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 414.346 Td /F1 8.0 Tf  (13) Tj ET
-BT 50.356 414.346 Td /F1 8.0 Tf  (UP-14-AT-8593\(RANIA\)) Tj ET
-BT 155.626 414.346 Td /F1 8.0 Tf  (862170018366490) Tj ET
-BT 225.013 414.346 Td /F1 8.0 Tf  (2015-12-03 11:02:29) Tj ET
-BT 302.028 414.346 Td /F1 8.0 Tf  (0.18 km from Kanpur  Allahabad Hwy, Fatehpur,) Tj ET
-BT 302.028 405.098 Td /F1 8.0 Tf  (Uttar Pradesh 212601, India-\(25.95,80.812\)) Tj ET
-BT 485.888 414.346 Td /F1 8.0 Tf  (74.46) Tj ET
-BT 537.733 414.346 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 391.850 Td /F1 8.0 Tf  (14) Tj ET
-BT 50.356 391.850 Td /F1 8.0 Tf  (UP-77-N-0742\(RANIA\)) Tj ET
-BT 155.626 391.850 Td /F1 8.0 Tf  (359231030274128) Tj ET
-BT 225.013 391.850 Td /F1 8.0 Tf  (2015-12-03 04:20:36) Tj ET
-BT 302.028 391.850 Td /F1 8.0 Tf  (0.39 km from Kanpur Bypass Naubasta Kanpur) Tj ET
-BT 302.028 382.602 Td /F1 8.0 Tf  (Kanpur Nagar Uttar Pradesh 208027 India-) Tj ET
-BT 302.028 373.354 Td /F1 8.0 Tf  (\(26.417,80.328\)) Tj ET
-BT 485.888 391.850 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 391.850 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 360.106 Td /F1 8.0 Tf  (15) Tj ET
-BT 50.356 360.106 Td /F1 8.0 Tf  (UP-77-N-1753\(RANIA\)) Tj ET
-BT 155.626 360.106 Td /F1 8.0 Tf  (861074027068546) Tj ET
-BT 225.013 360.106 Td /F1 8.0 Tf  (2015-12-03 11:06:51) Tj ET
-BT 302.028 360.106 Td /F1 8.0 Tf  (0.05 km from Nehru Marg, Subhash Ganj, Jhansi,) Tj ET
-BT 302.028 350.858 Td /F1 8.0 Tf  (Uttar Pradesh 284002, India-\(25.45,78.581\)) Tj ET
-BT 485.888 360.106 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 360.106 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 337.610 Td /F1 8.0 Tf  (16) Tj ET
-BT 50.356 337.610 Td /F1 8.0 Tf  (UP-77-N-1754\(RANIA\)) Tj ET
-BT 155.626 337.610 Td /F1 8.0 Tf  (359231037359203) Tj ET
-BT 225.013 337.610 Td /F1 8.0 Tf  (2015-12-03 10:58:29) Tj ET
-BT 302.028 337.610 Td /F1 8.0 Tf  (0.14 km from JhansiKanpur Hwy, Hansemau,) Tj ET
-BT 302.028 328.362 Td /F1 8.0 Tf  (Uttar Pradesh 209312, India-\(26.251,79.862\)) Tj ET
-BT 485.888 337.610 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 337.610 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 315.114 Td /F1 8.0 Tf  (17) Tj ET
-BT 50.356 315.114 Td /F1 8.0 Tf  (UP-77-N-1755\(RANIA\)) Tj ET
-BT 155.626 315.114 Td /F1 8.0 Tf  (359231031740861) Tj ET
-BT 225.013 315.114 Td /F1 8.0 Tf  (2015-12-03 11:06:47) Tj ET
-BT 302.028 315.114 Td /F1 8.0 Tf  (0.16 km from JhansiKanpur Hwy, Hansemau,) Tj ET
-BT 302.028 305.866 Td /F1 8.0 Tf  (Uttar Pradesh 209312, India-\(26.252,79.861\)) Tj ET
-BT 485.888 315.114 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 315.114 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 292.618 Td /F1 8.0 Tf  (18) Tj ET
-BT 50.356 292.618 Td /F1 8.0 Tf  (UP-77-N-1756\(RANIA\)) Tj ET
-BT 155.626 292.618 Td /F1 8.0 Tf  (359231036826046) Tj ET
-BT 225.013 292.618 Td /F1 8.0 Tf  (2015-12-03 11:06:54) Tj ET
-BT 302.028 292.618 Td /F1 8.0 Tf  (0.18 km from KanpurJhansi Hwy, Bhaunti, Rania,) Tj ET
-BT 302.028 283.370 Td /F1 8.0 Tf  (Uttar Pradesh 209304, India-\(26.40,80.084\)) Tj ET
-BT 485.888 292.618 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 292.618 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 270.122 Td /F1 8.0 Tf  (19) Tj ET
-BT 50.356 270.122 Td /F1 8.0 Tf  (UP-77-N-1770\(RANIA\)) Tj ET
-BT 155.626 270.122 Td /F1 8.0 Tf  (359231037347307) Tj ET
-BT 225.013 270.122 Td /F1 8.0 Tf  (2015-12-03 10:58:21) Tj ET
-BT 302.028 270.122 Td /F1 8.0 Tf  (0.02 km from Lord William Bentinck Ln,) Tj ET
-BT 302.028 260.874 Td /F1 8.0 Tf  (Gadarianpurwa, Pratapganj, Fazalganj, Shastri) Tj ET
-BT 302.028 251.626 Td /F1 8.0 Tf  (Nagar, Kanpur, Uttar Pradesh 208012, India-) Tj ET
-BT 302.028 242.378 Td /F1 8.0 Tf  (\(26.458,80.3\)) Tj ET
-BT 485.888 270.122 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 270.122 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 229.130 Td /F1 8.0 Tf  (20) Tj ET
-BT 50.356 229.130 Td /F1 8.0 Tf  (UP-77- N -1780\(RANIA\)) Tj ET
-BT 155.626 229.130 Td /F1 8.0 Tf  (359231031740846) Tj ET
-BT 225.013 229.130 Td /F1 8.0 Tf  (2015-12-03 10:58:24) Tj ET
-BT 302.028 229.130 Td /F1 8.0 Tf  (0.09 km from Harlalka Rd, Shahganj, Uttar) Tj ET
-BT 302.028 219.882 Td /F1 8.0 Tf  (Pradesh 223101, India-\(26.05,82.682\)) Tj ET
-BT 485.888 229.130 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 229.130 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 206.634 Td /F1 8.0 Tf  (21) Tj ET
-BT 50.356 206.634 Td /F1 8.0 Tf  (UP-77-N-1781\(RANIA\)) Tj ET
-BT 155.626 206.634 Td /F1 8.0 Tf  (359231031741034) Tj ET
-BT 225.013 206.634 Td /F1 8.0 Tf  (2015-12-03 10:58:39) Tj ET
-BT 302.028 206.634 Td /F1 8.0 Tf  (0.33 km from 3, Mufti Tola, Mufti Tola, Anand) Tj ET
-BT 302.028 197.386 Td /F1 8.0 Tf  (Nagar, Kabirganj, Etawah, Uttar Pradesh 206001,) Tj ET
-BT 302.028 188.138 Td /F1 8.0 Tf  (India-\(26.771,79.025\)) Tj ET
-BT 485.888 206.634 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 206.634 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 174.890 Td /F1 8.0 Tf  (22) Tj ET
-BT 50.356 174.890 Td /F1 8.0 Tf  (UP-77-N-1782\(RANIA\)) Tj ET
-BT 155.626 174.890 Td /F1 8.0 Tf  (359231031716416) Tj ET
-BT 225.013 174.890 Td /F1 8.0 Tf  (2015-12-03 11:06:44) Tj ET
-BT 302.028 174.890 Td /F1 8.0 Tf  (0.06 km from Aligarh  Kanpur Rd, Chaubepur) Tj ET
-BT 302.028 165.642 Td /F1 8.0 Tf  (Pankhan, Uttar Pradesh 209203, India-) Tj ET
-BT 302.028 156.394 Td /F1 8.0 Tf  (\(26.606,80.206\)) Tj ET
-BT 485.888 174.890 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 174.890 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 143.146 Td /F1 8.0 Tf  (23) Tj ET
-BT 50.356 143.146 Td /F1 8.0 Tf  (UP-77-N-1796\(RANIA\)) Tj ET
-BT 155.626 143.146 Td /F1 8.0 Tf  (359231031721952) Tj ET
-BT 225.013 143.146 Td /F1 8.0 Tf  (2015-12-03 10:58:43) Tj ET
-BT 302.028 143.146 Td /F1 8.0 Tf  (0.21 km from JhansiKanpur Hwy, Patepur, Uttar) Tj ET
-BT 302.028 133.898 Td /F1 8.0 Tf  (Pradesh 209101, India-\(26.328,79.955\)) Tj ET
-BT 485.888 143.146 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 143.146 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 120.650 Td /F1 8.0 Tf  (24) Tj ET
-BT 50.356 120.650 Td /F1 8.0 Tf  (UP-77-N-1797\(RANIA\)) Tj ET
-BT 155.626 120.650 Td /F1 8.0 Tf  (359231031743485) Tj ET
-BT 225.013 120.650 Td /F1 8.0 Tf  (2015-12-03 11:02:50) Tj ET
-BT 302.028 120.650 Td /F1 8.0 Tf  (0.02 km from Aligarh  Kanpur Rd, Chaubepur) Tj ET
-BT 302.028 111.402 Td /F1 8.0 Tf  (Pankhan, Uttar Pradesh 209203, India-) Tj ET
-BT 302.028 102.154 Td /F1 8.0 Tf  (\(26.606,80.206\)) Tj ET
-BT 485.888 120.650 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 120.650 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 88.906 Td /F1 8.0 Tf  (25) Tj ET
-BT 50.356 88.906 Td /F1 8.0 Tf  (UP-78-BN-6353\(RANIA\)) Tj ET
-BT 155.626 88.906 Td /F1 8.0 Tf  (861074027068850) Tj ET
-BT 225.013 88.906 Td /F1 8.0 Tf  (2015-12-03 10:58:48) Tj ET
-BT 302.028 88.906 Td /F1 8.0 Tf  (0.21 km from Lal Bazar Road Mauranipur,) Tj ET
-BT 302.028 79.658 Td /F1 8.0 Tf  (Mauranipur, Uttar Pradesh 284204, India-) Tj ET
-BT 302.028 70.410 Td /F1 8.0 Tf  (\(25.245,79.138\)) Tj ET
-BT 485.888 88.906 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 88.906 Td /F1 8.0 Tf  (NA) Tj ET
-0.000 0.000 0.000 RG
-0.5 w
-31.640 775.330 m 31.640 66.610 l S
-0.5 w
-49.356 775.330 m 49.356 66.610 l S
-0.5 w
-154.626 775.330 m 154.626 66.610 l S
-0.5 w
-224.013 775.330 m 224.013 66.610 l S
-0.5 w
-301.028 775.330 m 301.028 66.610 l S
-0.5 w
-484.888 775.330 m 484.888 66.610 l S
-0.5 w
-536.733 775.330 m 536.733 66.610 l S
-0.5 w
-561.640 775.330 m 561.640 66.610 l S
-0.5 w
-31.390 775.330 m 561.890 775.330 l S
-31.640 760.282 m 561.640 760.282 l S
-31.390 66.610 m 561.890 66.610 l S
-endstream
-endobj
-
-8 0 obj
-<<
-/Type /XObject
-/Subtype /Image
-/Width 631
-/Height 75
-/ColorSpace /DeviceRGB
-/Filter /DCTDecode
-/BitsPerComponent 8
-/Length 9136 >>
-stream
-ˇÿˇ‡ JFIF  ` `  ˇ€ C 		
- $.' ",#(7),01444'9=82<.342ˇ€ C			2!!22222222222222222222222222222222222222222222222222ˇ¿  Kw" ˇƒ           	
-ˇƒ µ   } !1AQa"q2Åë°#B±¡R—$3brÇ	
-%&'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyzÉÑÖÜáàâäíìîïñóòôö¢£§•¶ß®©™≤≥¥µ∂∑∏π∫¬√ƒ≈∆«»… “”‘’÷◊ÿŸ⁄·‚„‰ÂÊÁËÈÍÒÚÛÙıˆ˜¯˘˙ˇƒ        	
-ˇƒ µ  w !1AQaq"2ÅBë°±¡	#3Rbr—
-$4·%Ò&'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyzÇÉÑÖÜáàâäíìîïñóòôö¢£§•¶ß®©™≤≥¥µ∂∑∏π∫¬√ƒ≈∆«»… “”‘’÷◊ÿŸ⁄‚„‰ÂÊÁËÈÍÚÛÙıˆ˜¯˘˙ˇ⁄   ? ˜˙(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä
-(¢Ä*O™XZ…Â‹^€ƒˇ ›íUS˘O∂æ¥ºœŸÆ°õo_-√cÚØù><Èv/¥ª∂àF˜ñÂÊ£0cÛ{û~üZÙÔÑ>“¥øXj[É®^Aônñ⁄NvèE»‰
-Ùj‡°OG7≈“ƒ)^V=ä(Ø8∞¢ä( ¢ä( ¢ä( ¢ä( ¢ä( ¢ä( ¢äØ}yüaqy1ƒPF“πˆQì¸©•wdä+Õ~|J∫Ò∆±™[\Y√o∫,ê˘dìÇH‰ûßßa^ï⁄¥≠Ftg…5f$Ô™
-+…4Ì‚,'ºû˙A¢˘Ã€‰î</xEè<68Ë0A9?≈ÎtÎRT⁄JI›tÓQEb0¢ä( ¢ä(	om°}í‹DçËŒ§˚}°c˝Ò\/é¥´(/≠ØñÛÓ	G'ë¿' v5g√æ±‘t•ö}‰ñ<+`
-ÚÂç´ıáB1’yûÇ¬Sˆ
-¥•£Ú;Ωµv¬‹FO†aV+œ5oÀÏ0X«+€‹•¿À=˜t¿«9ˆ#ÆÙ]®´Ë1]8j’j9*ëµézÙÈ¡'	^„®¢äÎ9¬ä(†
-∑⁄ç¶õíÓeâI¿œznü©⁄jqª⁄IΩQ∂ìÇ9¸k«§.Öˇ ∏@‘„˙‘~#Ïw_Ôå˛UÁK5ãT-£Glp—xWZ˙¶u‘QEz'QE QEçq‚ù"ﬁFçÆÉ2ú0E'ïl+P r»Ø2Ò<IâÊH¿Ç1«©Î¸´—Ï¯≥á˝¡¸´Õ¡‚™U≠:s˚'v+
-T°8˝¢zŒø◊tÌ6O*Ê·VLg`?ß÷¥kâÒÏqè±J ÛôIˆ∆k|uy–¢ÍCteÑ•’î%≥:€Ë5U∏∑m—∂@$c•Y¨hQ˚±5øZa™:î£7ªFu‡©‘îFQEndùÆÈ⁄lûUÕ¬¨òŒ¿2O≠h◊„ÿ„bîÊ32ìÌå◊&:ºËQu!∫:pî£Z≤Ñ∂g[c}£j∑Ì∫6»åt´5Å·ç
-?v&∑ÎL5GRîf˜hŒº:íÇË¬´O®Ÿ[H±œwN›‰
-O‡kÀæ2|@º‰0Ë˙Lç› íuÎ˙B}jèÖæ
-ÈöóÜÌoı€ÀŸu®÷m—Mè( êr}OÂÎ^¥pqçZ¥¨û⁄]≥mlèeD≈THÑ∞ åı‘˙Üﬂuù'‚Éœ©[Õ‰ÈÇB∑§,§Çâ¥û*KpN1ÉÉ≈{ıcä£
-3ÂÑπï∑∂÷°EW1AEPEd¯ó\ã√~æ’ÊP…mÌ§„qË‚HÃ¸0ÒÕﬂé4À˚õÀh†íﬁpÅbŒ6ëë‘ı≠£B§©:©{®WW±ﬁQEà¬ä(†ä(†ä(†ä(†ä(†ä(†ûˇ h_˘to˙ı˝
-Ω_·ó¸ìm˛ΩáÛ5Â¥/¸å:7˝zø˛Ö^±«˛I∂Öˇ ^√˘ö˜1_Ú,•Íˇ S8¸lÛàˇ <Y†¯∆ÔJ¥0Z[¬´ÂÄ°Ÿ¡‰9=âÙ™Wö∑≈Îè'à^‚E”í?¥nÖbFÚ˙Ó*J„ü†œΩc¸o$|Kúé¢⁄/‰kË£˛˘\øŸò∆8ˇ U[‘ù<>å£N-À{¢U€zúG¬/â7˛+öÁI÷Z'ºÇ1,S(⁄dLÄA2	è_nv˛+¯´YóÜ#Ω“#ãtìûy0|¨Ù¬ûπ¡’„übﬁ∂ì˘
-ı_éÚN%ˇ Ø®øùcä√Rßò∆
->Î∂û£ãn<Û√˛3¯£„'∫áEπç¸•Ã§GœOôá‡‡g◊”Üi?¸a·//ƒÚ¥ÒE0éÍ;Ä7†?ƒ¨=à#®#ÛÆ´ˆyÁC÷}ÆP„µ¬|n¬¸Lú‡«º$Ò◊É]Òçò òWM(€∂Ω	’EJÁ”í\E≥\I"¨JÖŸ…‡(Œ}+≈/æ&¯è∆û)R•¨LX«Pƒ®ÍÁÇ};úé‰WW„˚õ®>K-± µ¨+#⁄B∂–p}y¬~œêƒuùVbŒS‹.‡OÙØ/	ÜÑ0ı12Wq—/‘πI›"Áàn~'|;µèS∏÷b’¨Z@≤f=ﬁ_nr2ß≠wﬁÒî¸1pt˚ó”µ4Pì*ÄÌå3’NÎ–‘ﬂ—·û∫$ ÅoëüP¿è◊„ü%π_\Eo%Ïú Ω∞p~π ~&Æ4·â¡NªIJ¶óÌ+.º]„}∆'G÷<MyÇÈcû`è/#ÁÜ*r3^·Ò7Tº“~ﬁÍ:m˘µ∏ãaIoÕñ ˆ9„“ºÎ„ÔÜDSX¯ñ›ó?gπ Åì’π∆G‡+é÷ºm®x◊√^¨19ªéEäV-ƒÔ˜#˝9ÓkÆ8h‚°FºI|[t7-”=·ﬁ1÷˜Î˙æπs.ïÙKv ôÿœ›˚£'°ŒG±Œ|ºWÒƒ“hﬁx4òR)$Ãª›î`eéﬁH3‘◊≠ËM∑Öº-gßEÜ  $êç†ê2Œ}2rÚ1„Ìœ≈w©ˇ ¬ˇ n’Ø¯yÚB1ñ⁄ùÅÍH*ÙÆrçzµ'
-wÌŸzÙ)ËílÕµ¯õ‚ˇ xª˚ƒ”CyàÁfv√åH¨=àl˘W°|dáT∏¯}s.õtë€«áª^wIL)Qêx#È^„f◊gÒ‘œ‚kx·‘”|I¥®O·ÉÚ‡z˙◊–^89¯;®ü˙áØÚ◊ã£
-S√’äWvΩ∂{t—‚_
-¥M{W’o∞µaßI#Ãì'êOØ„_ExK÷4ü5∂°¨∂ß®¸Ã.&å*©?t 0JèrI…Á†3˚=˝Ω¨ﬂfO˝
-æÇ?t˝+ü;´'äp“ ›<ä¶Ω”Áœ
-|NÒn≠Ò√NøºQj˜OñÎ
-(ÊŒ3¡«~’´Ò~˜∆^‘`‘Ù˝~ËiWD†çW»qŒ”« å‡˚˙ü?i#„ü˝Ñ‰ˇ –öæåÒœÜ„ÒWÑ/¥¬Å¶hÀ€ìèñUÂyÌœÿöﬂÏpÿ™Oïr¥Æ¨(›≈òµªΩw¡?jø’$æº∫ d
-X∆é£9<¸«“º…uœ¯É‚MÔáÙèÃ;ôUe˘|¥ç	éÿ~$
-Á<„ÎØC¨⁄⁄As	(oısåÄ~úú˝zo¿o=∂óy‚K°∫k„Â@«Æ≈?1œªqˇ  ˜™ƒañ’≠$öœ¸Ñ•Õdtﬁ:ÒÏ_Ù;XYÕ˛´$acê‡`»·@ÔË œ•rñı›EØ€ƒÚCÁCb™z‡ïË1ñ∆Oqí+Ü¯Õs=◊ƒõ®'v	
-Fà•≤@3ú˙◊¢√‡/>ùv~9ÚÌºïUÒé°∫ˇ ÖfÙ¯zs∫Rñ∫´¸ê˘õm¯YÒV˜ƒ⁄õhz‹qõ¬Ö·∏åé™W◊9ÜΩvº∑¡ˇ †ÊΩkÆ^ÍÚﬁ_@Ô 	ƒfe+ŒI'Æ{s^•^f=·›k·ˆ˝KçÌ©√¸Dˇ òO˝v˝ “xoƒ6zfï‰‹ñû=i~!ˇ Ã+˛ª?˛ÄkC¬ñÚË™Ô
-3lí†˜Øîö®ÛÏ›ùèn. π’ı4,<Ka®›≠¥!ëÅ yg†ıÙ¸iﬁ$ø∫”tIÓ≠àÃÁÑçÿÔèNı£¡íë¢} ç„#ˇ Ü§Aˇ ñ&ΩI˚H—ó3÷›6í´U•Œj«^Ò£q‰Z»Ø!˚†qÎJ<G≠ÈãC®.Ú fF¿»=‘è∆¶/¸\˚ ˛u_«á ≥°∂rÔ°^]eÑ˙«;ΩœjJì≈}_ër˛%÷‘<M¨¿◊,6Ì¬·ÜÔ®'ØÈI†¯™Ë^≠ñß¸MÂÜaÜFŒ0+¢Á¸ãˆúy˝”Á≈◊ûãz ˇ «k¢≥´B4Î©∂›Øÿ¬åi÷ïJ.)%{w:øà¯z?˙˙ãˇ BÆAè[h'K*©?>‚OÂ[˛>ˇ ër/˙˘ãˇ B¶x˛=nøﬂ ´O⁄„„€NÇ√œŸ‡dÏûΩLÿ¸C≠Ë∑©o©©êï¿ÀP√É˛zWok®[›ÿ-‰R	ÓÙ«\◊)ÒNÕ=óH¡æõƒ
-°ßM:¯7S•ÿ$⁄›€êπ⁄}9˙ìNû"¶ºË∑Ãí∏ßBËB™\≠ªﬂ_‘µΩWÏöC§0 ŸêÄr=~üOZØu©kﬁπâ.ÓÍ'…ˇ <èc”Û™≥ªª∏üÏw^Dà£'úÁ5∑/Ñı+ÈSÌ⁄Øôûõ3˘sXSû'K⁄B¸ÕÈÆÜµ!á°WŸ ‹´}57]∂èD]MŒ#e»\åìÈıÕsñ˙ûΩ‚)§˚≠≠∫N3è«◊ßJ•‚M:M ∆¬)KZÉ#úüôúúÛé‹öÈ|ëØá‚)˜ôòπ#9ˇ WR´Væ!Pìµñæg;ßNé€E^ÔKÙGowi¨oÊÛÁVRŒNwÕz|,v	# $û√Ê˛,›ˇ 	u◊˝rã¯ıu˙‹íG·(H&%RC`Äp:÷8'Ï*◊∂∂5≈ßZùı2ßÒ6£™Íc—ïPq!‰ê:ü@:VGàlu[6âµœ¥,ÑÏÁÖ#€_ ¥¸ë´«oıÅT.GAìû˘
-ƒ<„K«O9Ûˇ |Œqï|´‘ìø‡i	FÜ24aﬂ±µ·2Ö;U{ƒ”Ex4Ì3k\n
-Œy¡'¶=~æµc¬%áár[s`Wc∑ö⁄"N…4í±1-É…Î˙VµqSßÜ•o#:XxTƒUúˆçŒÇˇ ˛]"æ{Ùö<ÄÀÅÑœ∂9«Á[∫º∫•ÑíÃrC˛≥û>øJÃπÊµxÜ9u|ƒ›T°«ˇ ^´jh%Ï÷∑“N®í≥|∏POLw‰˛u§^"å›Dü"Z‹…™5`†⁄ÁoK!n<M®Í∫áÿÙeTúHy$ß–ïë‚VÕ¢mFÛÌ!;9·Hò˙˛Uß‡4å›^;¨
-°r:ú‡˛_êß¸CŒ4ºtÛü?˜¡Æi∆URØRNˇ Å”	FÜ24aﬂ±µ·2á;VÌsæœˆÁ˚Ì¸Î¢ØkÔáá°‰‚◊ÔÁÍxˇ ∆Ø_k±¡ÆÈQ¥Û⁄∆R‚›FYì®eÓHÁ#úåcß<ÁÄ˛3>Égç‚Ky§Ç #ä‚1óçTck/|cØ_≠{µÊ≠ßX\Aow{o”∂ÿ£í@¨Áß ı‰◊=‚Øá>Òdn˜vÇ≤8∫ÉÂ|ÛåˆnΩÎËhci∫+äç„—ıGãΩ‚mh^"“|IeˆΩ&ˆ;ò∫6” üB:É^MÒ~Î∆~ΩãU”ı˚Ö“nÀÚ◊jòd‰ÖÈ»#8>«>ßÀÁR¯q„õ®ÏnÿÀapcf*ŒÄÙaœvÌ€÷æõÒ~Ü<[‡{ÀŸßÄI
-∂Y ‹£$qœÍkY·°ÅƒS©~jrÔÿÊMu0~Î˙áà<5Œß®5Â“]<eú¢Ö\æyıØ;–uˇ x∑‚<˙fü‚;•∞äwgô X±úFO FO•q˛ÒÂ˜Ét˝gOÜ'€£Ú‘Ô«ì oŒz˛ÉÒˆOÅû:WÑÊ’gM∑îô"4»_‘π˜WN+µ™“¥æü˘Õd`x∑‚_àı/Ö|5,vCœæ{®,Ïpr–=ÜkWäZâÏ4i5ÈßπΩ#ÏÚFCF¸‡˝ÂÁoÜ8û9≠ﬂ¸'‘§Ò˛$¥˘πi>–ˆ¡ˆ»írw#{ê8¡Œ;ó†|d◊t=U4œY4ÀlíC…‚Ìí:7Èüz)∆2§•Öåee™{ﬂ∏=˝„°¯˜o´Ÿœ“ç5%q!ùœ›'«‡qÎ«´√ﬁ%’Ù›B]^˛ÀA*¨ÑdÓ8ÙÈ^âÒ¢Óˇ ÖÇÓ÷Uñﬁi†í9‰2ìêEd˛œ?Ú÷?ÎÂ?Ùöe™M%t˚WôÈ∂Úü¯Ye÷ıFªkHK\^J™ÖœRp0 Ï?íyØ*”¸_„Oâ∫’ıøÜn·—Ùªd•u¸ìépNNL/≠tnß∑é'dIÆQ´c#ì∑‹ ºÛ·oÜºE´ËW∑Ò”œ	* ƒ2	«9ÎÏk&ü’eâõWΩïˆ_"§ﬂ5ç;Øà5¯u‚x¥ØÕ©m±_)ç“!„r∑9`é£ÒÆÔ‚gåıO¯6”W–VKßAˆó¡Ú’ÜTÖ=s˙W9/¡}g^æ'Ò[ﬁ]´≤2X}	8óZΩÒgKáC¯;o•€≥º6èo
-3ú≥„'ﬁõ˙≠J‘TlÂzÀFÚL„|7„ä>.íÍ-xe0Ä“1ä5	ú‡eΩq¿ˆ˙—eÒ{≈ﬁ÷.¥œYãŸ ;^'a©∆AÉ”•tü≥œ:≥ÌpÉˇ Æ„x‚U¡ m¢?°ØB0°W<+¶πRÈøN§j¢•s≠π’~/xáJ÷üo≠Ñ™&ÜrÇBò»#wÃŸ«„ûi|+¯Øw‚Et-wÀ7n§€‹®Ê`d´\r=„Í:√∫x ˆX¯ˇ Ää˘á¡ü'∆;0£Ò2êvÂ´èX™Ua(% Æö‹ßx¥zÔ≈Øâﬁ6⁄vêà∑∑Ê4Ó°Ñj@R}ÎâÒüÙ⁄¯äÁƒLˆ∑B6eÅÄÚ7åçˇ (UÅú„'ôÙäáçc∑Ω≤∏H5Kt1®êùì/$)Ù ˜˜9Ìè3∂Òøé~œìÆZã$cäÈrIn:sèJx(”ù˚5∫{ø@ïÔ©Óma¸¶ÀØJÚÍRFdë§P¨1*¿¡
-T˘¢ßßä¥ÔËëÍzs§Ïí'˚—?uoÃphØ
-µ’Is+;Ïh∂7(¢äÃgÕ?µø¯¢!ßiáìcAæKv]Áw$8ÁäÙ?Ö^)ûÀ√öñëm5ºdE?íŒéIÅÚüLıÈ÷ΩK–QÅÈ^ï\|ja£á‰—uπ
-6w>Z¯ê◊æ*ÒÌÂıéì®d Û-Ÿl‡ú«9Î^Ëö≥ÀüÌ‚¬Òf:qO≤òHnÃm∆qû˛úÙÆ«–R„äö¯ÔkNù>[(yÇçõgÀ?°·o[ÍwZ.°%æ”˘p1e@‹úu¿ÙØO¯Á}$æ∑—m¨nÓ..fYwE2"Ø\ëﬂ$qˇ ÷ØV¿ÙQW[1ˆ∏à◊q’yˆ+1ÌZrjöeÊùwnÚm∏I^&¿|§nËN:ûMq,ıg‚=Ï∂∫]„E§!åÌêHÈúÛ_N`Çì–Sßô∏b•âÂ’Ùv«%·πm¸a‡!gß‹[∆—;à'å°8 íA!áÛÂ6~Ò/¬è>ßeß‹Í∫[)BˆÍX¥déTd@ÁÓ3»Ø°(ÆzXŸSÊI{≤›∆ÁÜ¯„≈öˇ è¥ËÙ¯sTé)vΩ‹ìC∑8Á`9€å„íGJÓ>x<§ª\H%‘ÆÇôŸNU1¸+Ìœ'øÇªúJZ*c£Ï πcø®(Îva¯√@_¯SQ“	
-˜ÄÆ9R}≤}≥^Aá·ﬁ£i‚ôu]^“kt”À"$»Pº§cå¿NFFvï'ú{›®„j“£*1zHSw)Í∂'R“nÏÑûYûå>3¥ëÄqﬁæj–-|]√≈3M˝É-√¥M"&x‰M¿¸å=JÉÎÍ;W‘4`’X\k°A«ö2›£}Oï<Wßx◊ƒ∫£¯ñˇ √óëóT¬Em&Tq…ø>¶ΩÀ√Û?é>\i◊∂6a6Nn#¿f>uerG∂A8Õw8îVòå¬U°r•ÀµÑ°f|≈·Ë¸aªƒW@h3‹¥—òâX^H‹√!\gÈ◊ê;{ÜâÆk–xN˜YÒUÇ√*3I≠î,“ÄrrƒÓÙ„« u∏µ¨o÷Zî‚Ø’˜cc‰ØçWNÒ§> }˙DäÂÆ%âÉíp2:Û_W⁄‹%Âú7(≤*M∫¨àQÄ#8*yÿÚ*\AKF;ı∑„k+c |Î„ØÖ⁄≠«ƒÜ˛Õµy,ıIº‘ìc2F«ó√ÓÄry#Ç6‰Ò^˚§È∞Ë˙E¶ùoì¥KñÍp1ìÍOSÔWh®ƒcj◊Ñ!7§AE'ty/≈ﬂÜóû'öoFU{ÿ¢ÚÊ∑8U*Tˇ xdå£úÛ˛¯ã‚ˇ XÆè©¯^˙ˇ Ïﬂ∫åÏx‹ @ÓúÆ:q¯„ßΩR`z
-÷˜ÏU±Rä€∫˘ãó[£Ç5«éumVÁUÒ"Æüß [È¬5∏êCì˜ÜûI<˝ıWYÛ È[–§¨p~1ùµ+∏m°µúõf-º° í„éi⁄&Øs£i˛D∫|Ó7
-èZÓvÉÿQµ}y?nÎ©Ÿ˙Ç∆Gÿ™.KÃ‡µü_Í∂Ê{+ò#Á!If@3˘U˝hKk‡òÙ˚àeíy„XòF•∂úsìË+Æ⁄æÇå‘U¨˝Á)›µb*>ÍålìπÁﬁí}3P_:Œró,"ﬁ®N√ÿëÈ€=≥ÈOÒïº◊z‹-±ä"õÇúúı¸w€@Ï(⁄P+?ÏﬂˆaÕ°£«ˇ ¥{~]L/^m“~œ$G%™‡∆pAŒ6ûç”†ˇ 
-‚•Ç‚}r{ÿÏÊ%«ôµ◊0?•zñ•W–U÷¿{Zp¶ÂìGÏ™Jj;ú∑âCk>Y≠‡ú‚D-¢`„ksÚ„?Á=+C‘nÙiDöeÀâHe;z{W°`c§⁄=:ò:™™ïöV&û/ñì§„t›œ?ñœZÒEËíhçº ûbù©¯pNßQ]|:5º:'ˆ`ÀDP´1,OS”œ>ï¢ -])ﬁR’ΩŸqR®îVâlè8:øÜµ,P¥™N–Ë•ïáæ:tÔZÚköÓ¢ãéûˆÚti[ê=∆F?üNï◊‡‘ @+*y{•uNmG±≠Lj©¨‡úªò⁄Üà⁄ûãµ‘ﬁe‘jù∑p98Ù<◊-cq≠xrF∑k)6$‡!e„∏#éœ<C§ ¢¥≠ÅåÊ™E⁄K©±rÑ]9+≈Ù<ªSÉTΩ∏mN{	Åp£	”éΩÎ∑“•Œç-ΩÕ¨±Ö˝À˘ãÄˇ (Â}G8œ®5µÅË)@≈F/Tg)9_õr´„XF<∂ÂÿÛπ4›W√:É\Z≈$–Ùä[pÙ r?œæ´K´xÅQõOuH	+Ñ<í1¯˛Ë§fåAYK+\ÆõQ}#òæe9E9.ß%‡Î…ñ!ßKgpü+H$h ™åÅÜœBs¿Î¡¸sµø^ÿj/aIÔ0◊,á©‡u¸=kæ ‘Ωkieù“ì€fgl„U‘äﬂtq∞¯õWíÿBö[µ√,ò8‰c˙÷∆õe}u§Õµ'ö˜ü/ yj@˘xÎﬁ∂vèAKZR√J?ƒìëïJÒó¡v˙v´·ùEÁµÜI·‡E-∏z9˛ø\7VóVÒ£6ü"§ï¬I¸
-Ù\÷åA\≤ ◊+Ñf‘_C¶9ãÊSîSíÍr^Ωôc|∂w	Ú¥ÇFå™®6zû^„◊R jZÙ0Ù}ç5N˜±«Zßµõù≠s√æ+¯≈æ.èƒzLOykH·?ºÑ©˛ÓrFy„◊ß≠Y>2jI Ö<™5J20±È∑={bΩrì–W™±±î#
-∞RÂ€°œÀ≠”<√ıˇ xπ¸G‚ãAco-¡∏ñ4úÇ.IÿÁú|è~«•¨¯û”¬^π’.éJ.ÿ£Ô$á¢ˇ û’ùlE\\‚≠‰íJ(˘Î≈^éÛ„U∆áß≤ï∫∫FƒauπC9∆1ÚÂé;Å_MÿŸAßiˆˆ6®#∑∑âbç™å˘
-ˇ Å˙|∫ﬂâµü_±íe;QõüûBKb ËÊΩ‚∫Ûj“sÖÔ»í˘ì‘Vx‚N£¨]È˙Üß¶]H€öŒéÑ¸Ñ‡•}ˆËA¨›gKÒ'≈Ø[ﬁßáÂ”,£EÉÕ∏V
-ƒ± ‰ûÿq…Ø£1H *#ô8æx¡s⁄◊ˇ Ä>Ná!‚_≈©|8oÿ2©Ç›#µiπ˘£n„ÔåÔúWéx3SÒó√ÎõÕ"/‹Õ5‘à@í›ÿË+∆9‰ÇGæì§«µeC*t•JKö/]{ç∆ÓÁw†j~3¯t⁄oâVﬁ◊S∫BÁ»Oñî‡ì»A¡ı ˜Ø—‡Òœ¬}bB∫T∑V≥|≤$hœ∏pu8Œ^;•®¿=©·ÒÚ•SqN2Ë7‘Ú‚ˇ à5πÜ◊A—e–mIƒ◊∑(o=Fı åv úû£≠OÒ∆ˆW≈∂âoeyssq* ^("™u…dí8ˇ ÎW¨`î`¢¢8®¬¨jF	(Ùˇ Ç∫ZÁÜ¸º∏“n.tkÕ.ˆ&Ωc*NamäTtcèó#8'∏«q\ß≈´MCW¯èy5æóz–F©o!Ü˝£í	3ú˙s t`z
-ÈÜh„äñ%CV∂∏π=€ÆÉ‚X¿©®µï˙˝é!ê}ïƒå  ;èòzz„;¯djéÌµ€ùˇ …K¶∏uX∞í@‰Û¿ıØ¨ÒÌIÅË+<6=PUç˘¸¡∆ˆ<[‚eáãfÒè‚ù+Îã·GHbFDﬂxÜãÔr1€‘qúü¯èƒ¨mÙM;¬7∞™J&íIí`ºzüNïÙ&aE,"ç‡õéœ¸˚ÉçŒK·œÉˇ ·∫ÿ  ◊sHgπ(IP‰ÄO`}NO¿+Æ¢∏jTïIπÀvRV–(¢äÅÖQ@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@Q@e¯É√∫gâÙß”uk>›à`7*√°rjQN2qw[Åï·Ôiû“∆ü•[˘0.r≈ôòÒñ'íp ˙ :
-’¢ä%''w∏QHä(†ä(†ä(†ä(†ä(†ä(†ä(†ˇŸ
-endstream
-endobj
-
-9 0 obj
-<< /Type /Font
-/Subtype /Type1
-/Name /F1
-/BaseFont /Helvetica
-/Encoding /WinAnsiEncoding
->>
-endobj
-10 0 obj
-<< /Type /Page
-/Parent 3 0 R
-/Contents 11 0 R
->>
-endobj
-11 0 obj
-<<
-/Length 14442 >>
-stream
-
-0.000 0.000 0.000 rg
-0.000 0.000 0.000 RG
-0.5 w
-0.000 0.000 0.000 rg
-BT 32.640 780.642 Td /F1 8.0 Tf  (SNo) Tj ET
-BT 50.356 780.642 Td /F1 8.0 Tf  (Vehicle Name) Tj ET
-BT 155.626 780.642 Td /F1 8.0 Tf  (IMEI) Tj ET
-BT 225.013 780.642 Td /F1 8.0 Tf  (Date Time) Tj ET
-BT 302.028 780.642 Td /F1 8.0 Tf  (Place) Tj ET
-BT 485.888 780.642 Td /F1 8.0 Tf  (Speed\(Kmph\)) Tj ET
-BT 537.733 780.642 Td /F1 8.0 Tf  (Status) Tj ET
-BT 32.640 765.594 Td /F1 8.0 Tf  (26) Tj ET
-BT 50.356 765.594 Td /F1 8.0 Tf  (UP-78-BN-9711\(RANIA\)) Tj ET
-BT 155.626 765.594 Td /F1 8.0 Tf  (862170017809904) Tj ET
-BT 225.013 765.594 Td /F1 8.0 Tf  (2015-12-03 11:07:00) Tj ET
-BT 302.028 765.594 Td /F1 8.0 Tf  (0.07 km from Aligarh  Kanpur Rd, Chaubepur) Tj ET
-BT 302.028 756.346 Td /F1 8.0 Tf  (Pankhan, Uttar Pradesh 209203, India-) Tj ET
-BT 302.028 747.098 Td /F1 8.0 Tf  (\(26.606,80.207\)) Tj ET
-BT 485.888 765.594 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 765.594 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 733.850 Td /F1 8.0 Tf  (27) Tj ET
-BT 50.356 733.850 Td /F1 8.0 Tf  (UP-78-BN-9713\(RANIA\)) Tj ET
-BT 155.626 733.850 Td /F1 8.0 Tf  (862170018377760) Tj ET
-BT 225.013 733.850 Td /F1 8.0 Tf  (2015-12-03 11:07:19) Tj ET
-BT 302.028 733.850 Td /F1 8.0 Tf  (0.83 km from Lambhua Dhopap Rd, Lambhua,) Tj ET
-BT 302.028 724.602 Td /F1 8.0 Tf  (Uttar Pradesh 222302, India-\(26.141,82.230\)) Tj ET
-BT 485.888 733.850 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 733.850 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 711.354 Td /F1 8.0 Tf  (28) Tj ET
-BT 50.356 711.354 Td /F1 8.0 Tf  (UP-78-BN-9730\(RANIA\)) Tj ET
-BT 155.626 711.354 Td /F1 8.0 Tf  (359231031707282) Tj ET
-BT 225.013 711.354 Td /F1 8.0 Tf  (2015-12-03 11:05:27) Tj ET
-BT 302.028 711.354 Td /F1 8.0 Tf  (0.21 km from Kerakat Rd, Saraibiru, Uttar Pradesh) Tj ET
-BT 302.028 702.106 Td /F1 8.0 Tf  (222142, India-\(25.638,82.920\)) Tj ET
-BT 485.888 711.354 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 711.354 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 688.858 Td /F1 8.0 Tf  (29) Tj ET
-BT 50.356 688.858 Td /F1 8.0 Tf  (UP-78-BN-9731\(RANIA\)) Tj ET
-BT 155.626 688.858 Td /F1 8.0 Tf  (359231030133357) Tj ET
-BT 225.013 688.858 Td /F1 8.0 Tf  (2015-12-03 11:07:19) Tj ET
-BT 302.028 688.858 Td /F1 8.0 Tf  (0.04 km from KanpurJhansi Hwy, Barhauli, Uttar) Tj ET
-BT 302.028 679.610 Td /F1 8.0 Tf  (Pradesh 209112, India-\(26.24,79.854\)) Tj ET
-BT 485.888 688.858 Td /F1 8.0 Tf  (77.55) Tj ET
-BT 537.733 688.858 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 666.362 Td /F1 8.0 Tf  (30) Tj ET
-BT 50.356 666.362 Td /F1 8.0 Tf  (UP-78-BN-9758\(RANIA\)) Tj ET
-BT 155.626 666.362 Td /F1 8.0 Tf  (359231036830642) Tj ET
-BT 225.013 666.362 Td /F1 8.0 Tf  (2015-12-03 11:07:26) Tj ET
-BT 302.028 666.362 Td /F1 8.0 Tf  (0.28 km from SH71 Bnda Banda Uttar Pradesh) Tj ET
-BT 302.028 657.114 Td /F1 8.0 Tf  (India-\(25.399,80.624\)) Tj ET
-BT 485.888 666.362 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 666.362 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 643.866 Td /F1 8.0 Tf  (31) Tj ET
-BT 50.356 643.866 Td /F1 8.0 Tf  (UP-78-BN-9760\(RANIA\)) Tj ET
-BT 155.626 643.866 Td /F1 8.0 Tf  (359231030309486) Tj ET
-BT 225.013 643.866 Td /F1 8.0 Tf  (2015-12-03 10:58:58) Tj ET
-BT 302.028 643.866 Td /F1 8.0 Tf  (11.85 km from SH29 Shhjahnpur Shahjahanpur) Tj ET
-BT 302.028 634.618 Td /F1 8.0 Tf  (Uttar Pradesh India-\(27.810,79.797\)) Tj ET
-BT 485.888 643.866 Td /F1 8.0 Tf  (37.97) Tj ET
-BT 537.733 643.866 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 621.370 Td /F1 8.0 Tf  (32) Tj ET
-BT 50.356 621.370 Td /F1 8.0 Tf  (UP-78-BN-9761\(RANIA\)) Tj ET
-BT 155.626 621.370 Td /F1 8.0 Tf  (862170016972836) Tj ET
-BT 225.013 621.370 Td /F1 8.0 Tf  (2015-12-03 11:07:23) Tj ET
-BT 302.028 621.370 Td /F1 8.0 Tf  (0.37 km from MDR89C Mohanlalganj Lucknow) Tj ET
-BT 302.028 612.122 Td /F1 8.0 Tf  (Uttar Pradesh 227305 India-\(26.703,81.012\)) Tj ET
-BT 485.888 621.370 Td /F1 8.0 Tf  (37.41) Tj ET
-BT 537.733 621.370 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 598.874 Td /F1 8.0 Tf  (33) Tj ET
-BT 50.356 598.874 Td /F1 8.0 Tf  (UP-78-BN-9826\(RANIA\)) Tj ET
-BT 155.626 598.874 Td /F1 8.0 Tf  (359231031715392) Tj ET
-BT 225.013 598.874 Td /F1 8.0 Tf  (2015-12-03 09:42:10) Tj ET
-BT 302.028 598.874 Td /F1 8.0 Tf  (4.47 km from Kanpur Bypass Naubasta Kanpur) Tj ET
-BT 302.028 589.626 Td /F1 8.0 Tf  (Kanpur Nagar Uttar Pradesh 208027 India-) Tj ET
-BT 302.028 580.378 Td /F1 8.0 Tf  (\(26.401,80.365\)) Tj ET
-BT 485.888 598.874 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 598.874 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 567.130 Td /F1 8.0 Tf  (34) Tj ET
-BT 50.356 567.130 Td /F1 8.0 Tf  (UP-78-BN-9987\(RANIA\)) Tj ET
-BT 155.626 567.130 Td /F1 8.0 Tf  (862170018367928) Tj ET
-BT 225.013 567.130 Td /F1 8.0 Tf  (2015-12-03 10:59:12) Tj ET
-BT 302.028 567.130 Td /F1 8.0 Tf  (0.07 km from Aligarh  Kanpur Rd, Chaubepur) Tj ET
-BT 302.028 557.882 Td /F1 8.0 Tf  (Pankhan, Uttar Pradesh 209203, India-) Tj ET
-BT 302.028 548.634 Td /F1 8.0 Tf  (\(26.606,80.207\)) Tj ET
-BT 485.888 567.130 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 567.130 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 535.386 Td /F1 8.0 Tf  (35) Tj ET
-BT 50.356 535.386 Td /F1 8.0 Tf  (UP-78-BT-0141\(RANIA\)) Tj ET
-BT 155.626 535.386 Td /F1 8.0 Tf  (359231030308470) Tj ET
-BT 225.013 535.386 Td /F1 8.0 Tf  (2015-12-03 11:05:27) Tj ET
-BT 302.028 535.386 Td /F1 8.0 Tf  (5.29 km from NH335 Bnda Banda Uttar Pradesh) Tj ET
-BT 302.028 526.138 Td /F1 8.0 Tf  (India-\(25.495,80.364\)) Tj ET
-BT 485.888 535.386 Td /F1 8.0 Tf  (76.35) Tj ET
-BT 537.733 535.386 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 512.890 Td /F1 8.0 Tf  (36) Tj ET
-BT 50.356 512.890 Td /F1 8.0 Tf  (UP-78-BT-0481\(RANIA\)) Tj ET
-BT 155.626 512.890 Td /F1 8.0 Tf  (865733021571005) Tj ET
-BT 225.013 512.890 Td /F1 8.0 Tf  (2015-12-03 11:04:51) Tj ET
-BT 302.028 512.890 Td /F1 8.0 Tf  (0.07 km from Aligarh  Kanpur Rd, Chaubepur) Tj ET
-BT 302.028 503.642 Td /F1 8.0 Tf  (Pankhan, Uttar Pradesh 209203, India-) Tj ET
-BT 302.028 494.394 Td /F1 8.0 Tf  (\(26.606,80.207\)) Tj ET
-BT 485.888 512.890 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 512.890 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 481.146 Td /F1 8.0 Tf  (37) Tj ET
-BT 50.356 481.146 Td /F1 8.0 Tf  (UP-78-BT-2704\(RANIA\)) Tj ET
-BT 155.626 481.146 Td /F1 8.0 Tf  (359231030297004) Tj ET
-BT 225.013 481.146 Td /F1 8.0 Tf  (2015-12-03 11:06:50) Tj ET
-BT 302.028 481.146 Td /F1 8.0 Tf  (0.31 km from Aligarh  Kanpur Rd, Nonha Kalan,) Tj ET
-BT 302.028 471.898 Td /F1 8.0 Tf  (Uttar Pradesh 209203, India-\(26.610,80.204\)) Tj ET
-BT 485.888 481.146 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 481.146 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 458.650 Td /F1 8.0 Tf  (38) Tj ET
-BT 50.356 458.650 Td /F1 8.0 Tf  (UP-78-BT-4086\(RANIA\)) Tj ET
-BT 155.626 458.650 Td /F1 8.0 Tf  (359231031742875) Tj ET
-BT 225.013 458.650 Td /F1 8.0 Tf  (2015-12-03 11:07:43) Tj ET
-BT 302.028 458.650 Td /F1 8.0 Tf  (0.01 km from KanpurJhansi Hwy, Pukhrayan,) Tj ET
-BT 302.028 449.402 Td /F1 8.0 Tf  (Uttar Pradesh 209112, India-\(26.212,79.826\)) Tj ET
-BT 485.888 458.650 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 458.650 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 436.154 Td /F1 8.0 Tf  (39) Tj ET
-BT 50.356 436.154 Td /F1 8.0 Tf  (UP-78-BT-4088\(RANIA\)) Tj ET
-BT 155.626 436.154 Td /F1 8.0 Tf  (359231036828349) Tj ET
-BT 225.013 436.154 Td /F1 8.0 Tf  (2015-12-03 11:07:40) Tj ET
-BT 302.028 436.154 Td /F1 8.0 Tf  (0.14 km from KanpurJhansi Hwy, Budhera) Tj ET
-BT 302.028 426.906 Td /F1 8.0 Tf  (Bhoganipur, Uttar Pradesh 209112, India-) Tj ET
-BT 302.028 417.658 Td /F1 8.0 Tf  (\(26.195,79.806\)) Tj ET
-BT 485.888 436.154 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 436.154 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 404.410 Td /F1 8.0 Tf  (40) Tj ET
-BT 50.356 404.410 Td /F1 8.0 Tf  (UP-78-BT-4089\(RANIA\)]) Tj ET
-BT 155.626 404.410 Td /F1 8.0 Tf  (-) Tj ET
-BT 225.013 404.410 Td /F1 8.0 Tf  (-) Tj ET
-BT 302.028 404.410 Td /F1 8.0 Tf  (-) Tj ET
-BT 485.888 404.410 Td /F1 8.0 Tf  (-) Tj ET
-BT 537.733 404.410 Td /F1 8.0 Tf  (-) Tj ET
-BT 32.640 391.162 Td /F1 8.0 Tf  (41) Tj ET
-BT 50.356 391.162 Td /F1 8.0 Tf  (UP-78-BT-4090\(RANIA\)) Tj ET
-BT 155.626 391.162 Td /F1 8.0 Tf  (359231030308124) Tj ET
-BT 225.013 391.162 Td /F1 8.0 Tf  (2015-12-03 10:59:22) Tj ET
-BT 302.028 391.162 Td /F1 8.0 Tf  (0.08 km from Aligarh  Kanpur Rd, Chaubepur) Tj ET
-BT 302.028 381.914 Td /F1 8.0 Tf  (Pankhan, Uttar Pradesh 209203, India-) Tj ET
-BT 302.028 372.666 Td /F1 8.0 Tf  (\(26.606,80.207\)) Tj ET
-BT 485.888 391.162 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 391.162 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 359.418 Td /F1 8.0 Tf  (42) Tj ET
-BT 50.356 359.418 Td /F1 8.0 Tf  (UP-78-BT-4134\(RANIA\)) Tj ET
-BT 155.626 359.418 Td /F1 8.0 Tf  (359231030308850) Tj ET
-BT 225.013 359.418 Td /F1 8.0 Tf  (2015-12-03 11:07:50) Tj ET
-BT 302.028 359.418 Td /F1 8.0 Tf  (0.1 km from JhansiKanpur Hwy, Hansemau, Uttar) Tj ET
-BT 302.028 350.170 Td /F1 8.0 Tf  (Pradesh 209312, India-\(26.251,79.862\)) Tj ET
-BT 485.888 359.418 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 359.418 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 336.922 Td /F1 8.0 Tf  (43) Tj ET
-BT 50.356 336.922 Td /F1 8.0 Tf  (UP-78-BT-4135\(RANIA\)) Tj ET
-BT 155.626 336.922 Td /F1 8.0 Tf  (861074026112774) Tj ET
-BT 225.013 336.922 Td /F1 8.0 Tf  (2015-12-03 11:07:59) Tj ET
-BT 302.028 336.922 Td /F1 8.0 Tf  (3.59 km from SH46 Khajuna Fatehpur Uttar) Tj ET
-BT 302.028 327.674 Td /F1 8.0 Tf  (Pradesh 212657 India-\(26.104,80.432\)) Tj ET
-BT 485.888 336.922 Td /F1 8.0 Tf  (90.93) Tj ET
-BT 537.733 336.922 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 314.426 Td /F1 8.0 Tf  (44) Tj ET
-BT 50.356 314.426 Td /F1 8.0 Tf  (UP-78-BT-4137\(RANIA\)) Tj ET
-BT 155.626 314.426 Td /F1 8.0 Tf  (359231030302333) Tj ET
-BT 225.013 314.426 Td /F1 8.0 Tf  (2015-12-03 10:59:26) Tj ET
-BT 302.028 314.426 Td /F1 8.0 Tf  (0.38 km from JhansiKanpur Hwy, Daheli Sujanpur,) Tj ET
-BT 302.028 305.178 Td /F1 8.0 Tf  (Kanpur, Uttar Pradesh 208015, India-) Tj ET
-BT 302.028 295.930 Td /F1 8.0 Tf  (\(26.403,80.360\)) Tj ET
-BT 485.888 314.426 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 314.426 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 282.682 Td /F1 8.0 Tf  (45) Tj ET
-BT 50.356 282.682 Td /F1 8.0 Tf  (UP-78-BT-4138\(RANIA\)) Tj ET
-BT 155.626 282.682 Td /F1 8.0 Tf  (862170018365450) Tj ET
-BT 225.013 282.682 Td /F1 8.0 Tf  (2015-12-03 11:07:59) Tj ET
-BT 302.028 282.682 Td /F1 8.0 Tf  (0.02 km from Allahabad  Faizabad Rd, Dadupur,) Tj ET
-BT 302.028 273.434 Td /F1 8.0 Tf  (Sultanpur, Uttar Pradesh 228001, India-) Tj ET
-BT 302.028 264.186 Td /F1 8.0 Tf  (\(26.243,82.086\)) Tj ET
-BT 485.888 282.682 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 282.682 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 250.938 Td /F1 8.0 Tf  (46) Tj ET
-BT 50.356 250.938 Td /F1 8.0 Tf  (UP-78-BT-4145\(RANIA\)) Tj ET
-BT 155.626 250.938 Td /F1 8.0 Tf  (359231031719667) Tj ET
-BT 225.013 250.938 Td /F1 8.0 Tf  (2015-12-03 10:59:42) Tj ET
-BT 302.028 250.938 Td /F1 8.0 Tf  (1.02 km from SH34 Phephena Ballia Uttar) Tj ET
-BT 302.028 241.690 Td /F1 8.0 Tf  (Pradesh 277503 India-\(25.797,84.005\)) Tj ET
-BT 485.888 250.938 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 250.938 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 228.442 Td /F1 8.0 Tf  (47) Tj ET
-BT 50.356 228.442 Td /F1 8.0 Tf  (UP-78-BT-4300\(RANIA\)) Tj ET
-BT 155.626 228.442 Td /F1 8.0 Tf  (359231030309775) Tj ET
-BT 225.013 228.442 Td /F1 8.0 Tf  (2015-12-03 11:08:01) Tj ET
-BT 302.028 228.442 Td /F1 8.0 Tf  (0.05 km from JhansiKanpur Hwy, Kalpi, Uttar) Tj ET
-BT 302.028 219.194 Td /F1 8.0 Tf  (Pradesh 285204, India-\(26.122,79.748\)) Tj ET
-BT 485.888 228.442 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 228.442 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 205.946 Td /F1 8.0 Tf  (48) Tj ET
-BT 50.356 205.946 Td /F1 8.0 Tf  (UP-78-BT-4301\(RANIA\)) Tj ET
-BT 155.626 205.946 Td /F1 8.0 Tf  (359231037352760) Tj ET
-BT 225.013 205.946 Td /F1 8.0 Tf  (2015-12-03 11:08:18) Tj ET
-BT 302.028 205.946 Td /F1 8.0 Tf  (4.73 km from NH19 Handia Allahabad Uttar) Tj ET
-BT 302.028 196.698 Td /F1 8.0 Tf  (Pradesh 221503 India-\(25.365,82.165\)) Tj ET
-BT 485.888 205.946 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 205.946 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 183.450 Td /F1 8.0 Tf  (49) Tj ET
-BT 50.356 183.450 Td /F1 8.0 Tf  (UP-78-BT-4302\(RANIA\)) Tj ET
-BT 155.626 183.450 Td /F1 8.0 Tf  (359231031742503) Tj ET
-BT 225.013 183.450 Td /F1 8.0 Tf  (2015-12-03 11:08:16) Tj ET
-BT 302.028 183.450 Td /F1 8.0 Tf  (0.03 km from Lucknow  Sultanpur Rd,) Tj ET
-BT 302.028 174.202 Td /F1 8.0 Tf  (Khaniyapurva, Uttar Pradesh 228155, India-) Tj ET
-BT 302.028 164.954 Td /F1 8.0 Tf  (\(26.305,81.937\)) Tj ET
-BT 485.888 183.450 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 183.450 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 151.706 Td /F1 8.0 Tf  (50) Tj ET
-BT 50.356 151.706 Td /F1 8.0 Tf  (UP-78-BT-4303\(RANIA\)) Tj ET
-BT 155.626 151.706 Td /F1 8.0 Tf  (359231030308439) Tj ET
-BT 225.013 151.706 Td /F1 8.0 Tf  (2015-12-03 10:44:08) Tj ET
-BT 302.028 151.706 Td /F1 8.0 Tf  (0.01 km from Aligarh  Kanpur Rd, Chaubepur) Tj ET
-BT 302.028 142.458 Td /F1 8.0 Tf  (Pankhan, Uttar Pradesh 209203, India-) Tj ET
-BT 302.028 133.210 Td /F1 8.0 Tf  (\(26.606,80.206\)) Tj ET
-BT 485.888 151.706 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 151.706 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 119.962 Td /F1 8.0 Tf  (51) Tj ET
-BT 50.356 119.962 Td /F1 8.0 Tf  (UP-78-BT-4304\(RANIA\)) Tj ET
-BT 155.626 119.962 Td /F1 8.0 Tf  (862170017811140) Tj ET
-BT 225.013 119.962 Td /F1 8.0 Tf  (2015-12-03 10:59:46) Tj ET
-BT 302.028 119.962 Td /F1 8.0 Tf  (0.01 km from Lot Number 2, Mughal Sarai, Uttar) Tj ET
-BT 302.028 110.714 Td /F1 8.0 Tf  (Pradesh 232101, India-\(25.285,83.119\)) Tj ET
-BT 485.888 119.962 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 119.962 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 97.466 Td /F1 8.0 Tf  (52) Tj ET
-BT 50.356 97.466 Td /F1 8.0 Tf  (UP-78-BT-4372\(RANIA\)) Tj ET
-BT 155.626 97.466 Td /F1 8.0 Tf  (862170017810431) Tj ET
-BT 225.013 97.466 Td /F1 8.0 Tf  (2015-12-03 11:08:26) Tj ET
-BT 302.028 97.466 Td /F1 8.0 Tf  (0.18 km from Unnamed Road, Bijauli Industrial) Tj ET
-BT 302.028 88.218 Td /F1 8.0 Tf  (Area, Jhansi, Uttar Pradesh 284135, India-) Tj ET
-BT 302.028 78.970 Td /F1 8.0 Tf  (\(25.369,78.541\)) Tj ET
-BT 485.888 97.466 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 97.466 Td /F1 8.0 Tf  (NA) Tj ET
-0.5 w
-31.640 790.090 m 31.640 75.170 l S
-0.5 w
-49.356 790.090 m 49.356 75.170 l S
-0.5 w
-154.626 790.090 m 154.626 75.170 l S
-0.5 w
-224.013 790.090 m 224.013 75.170 l S
-0.5 w
-301.028 790.090 m 301.028 75.170 l S
-0.5 w
-484.888 790.090 m 484.888 75.170 l S
-0.5 w
-536.733 790.090 m 536.733 75.170 l S
-0.5 w
-561.640 790.090 m 561.640 75.170 l S
-0.5 w
-31.390 790.090 m 561.890 790.090 l S
-31.640 776.842 m 561.640 776.842 l S
-31.390 75.170 m 561.890 75.170 l S
-endstream
-endobj
-
-12 0 obj
-<< /Type /Page
-/Parent 3 0 R
-/Contents 13 0 R
->>
-endobj
-13 0 obj
-<<
-/Length 11460 >>
-stream
-
-0.000 0.000 0.000 rg
-0.000 0.000 0.000 RG
-0.5 w
-0.000 0.000 0.000 rg
-BT 32.640 780.642 Td /F1 8.0 Tf  (SNo) Tj ET
-BT 50.356 780.642 Td /F1 8.0 Tf  (Vehicle Name) Tj ET
-BT 155.626 780.642 Td /F1 8.0 Tf  (IMEI) Tj ET
-BT 225.013 780.642 Td /F1 8.0 Tf  (Date Time) Tj ET
-BT 302.028 780.642 Td /F1 8.0 Tf  (Place) Tj ET
-BT 485.888 780.642 Td /F1 8.0 Tf  (Speed\(Kmph\)) Tj ET
-BT 537.733 780.642 Td /F1 8.0 Tf  (Status) Tj ET
-BT 32.640 765.594 Td /F1 8.0 Tf  (53) Tj ET
-BT 50.356 765.594 Td /F1 8.0 Tf  (UP-78-BT-4430\(RANIA\)) Tj ET
-BT 155.626 765.594 Td /F1 8.0 Tf  (359231031721358) Tj ET
-BT 225.013 765.594 Td /F1 8.0 Tf  (2015-12-03 11:08:30) Tj ET
-BT 302.028 765.594 Td /F1 8.0 Tf  (0.1 km from KanpurJhansi Hwy, Bhaunti, Rania,) Tj ET
-BT 302.028 756.346 Td /F1 8.0 Tf  (Uttar Pradesh 209304, India-\(26.408,80.084\)) Tj ET
-BT 485.888 765.594 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 765.594 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 743.098 Td /F1 8.0 Tf  (54) Tj ET
-BT 50.356 743.098 Td /F1 8.0 Tf  (UP-78-BT-5930\(RANIA\)) Tj ET
-BT 155.626 743.098 Td /F1 8.0 Tf  (861074026114366) Tj ET
-BT 225.013 743.098 Td /F1 8.0 Tf  (2015-12-03 11:08:32) Tj ET
-BT 302.028 743.098 Td /F1 8.0 Tf  (0.09 km from Aligarh  Kanpur Rd, Chaubepur) Tj ET
-BT 302.028 733.850 Td /F1 8.0 Tf  (Pankhan, Uttar Pradesh 209203, India-) Tj ET
-BT 302.028 724.602 Td /F1 8.0 Tf  (\(26.606,80.207\)) Tj ET
-BT 485.888 743.098 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 743.098 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 711.354 Td /F1 8.0 Tf  (55) Tj ET
-BT 50.356 711.354 Td /F1 8.0 Tf  (UP-78-BT-8101\(RANIA\)) Tj ET
-BT 155.626 711.354 Td /F1 8.0 Tf  (862170016975524) Tj ET
-BT 225.013 711.354 Td /F1 8.0 Tf  (2015-12-03 11:08:34) Tj ET
-BT 302.028 711.354 Td /F1 8.0 Tf  (0.07 km from Aligarh  Kanpur Rd, Chaubepur) Tj ET
-BT 302.028 702.106 Td /F1 8.0 Tf  (Pankhan, Uttar Pradesh 209203, India-) Tj ET
-BT 302.028 692.858 Td /F1 8.0 Tf  (\(26.606,80.207\)) Tj ET
-BT 485.888 711.354 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 711.354 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 679.610 Td /F1 8.0 Tf  (56) Tj ET
-BT 50.356 679.610 Td /F1 8.0 Tf  (UP-78-BT-8102\(RANIA\)]) Tj ET
-BT 155.626 679.610 Td /F1 8.0 Tf  (-) Tj ET
-BT 225.013 679.610 Td /F1 8.0 Tf  (-) Tj ET
-BT 302.028 679.610 Td /F1 8.0 Tf  (-) Tj ET
-BT 485.888 679.610 Td /F1 8.0 Tf  (-) Tj ET
-BT 537.733 679.610 Td /F1 8.0 Tf  (-) Tj ET
-BT 32.640 666.362 Td /F1 8.0 Tf  (57) Tj ET
-BT 50.356 666.362 Td /F1 8.0 Tf  (UP-78-BT-8103\(RANIA\)) Tj ET
-BT 155.626 666.362 Td /F1 8.0 Tf  (359231031719782) Tj ET
-BT 225.013 666.362 Td /F1 8.0 Tf  (2015-12-03 11:08:23) Tj ET
-BT 302.028 666.362 Td /F1 8.0 Tf  (4.28 km from Kanpur Bypass Naubasta Kanpur) Tj ET
-BT 302.028 657.114 Td /F1 8.0 Tf  (Kanpur Nagar Uttar Pradesh 208027 India-) Tj ET
-BT 302.028 647.866 Td /F1 8.0 Tf  (\(26.401,80.363\)) Tj ET
-BT 485.888 666.362 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 666.362 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 634.618 Td /F1 8.0 Tf  (58) Tj ET
-BT 50.356 634.618 Td /F1 8.0 Tf  (UP-78-CN-2214\(RANIA\)) Tj ET
-BT 155.626 634.618 Td /F1 8.0 Tf  (862170016971812) Tj ET
-BT 225.013 634.618 Td /F1 8.0 Tf  (2015-12-03 11:08:41) Tj ET
-BT 302.028 634.618 Td /F1 8.0 Tf  (0.1 km from KanpurJhansi Hwy, Bhaunti, Rania,) Tj ET
-BT 302.028 625.370 Td /F1 8.0 Tf  (Uttar Pradesh 209304, India-\(26.408,80.084\)) Tj ET
-BT 485.888 634.618 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 634.618 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 612.122 Td /F1 8.0 Tf  (59) Tj ET
-BT 50.356 612.122 Td /F1 8.0 Tf  (UP-78-CN-2224 \(Rania\)) Tj ET
-BT 155.626 612.122 Td /F1 8.0 Tf  (865733021570361) Tj ET
-BT 225.013 612.122 Td /F1 8.0 Tf  (2015-12-03 11:08:28) Tj ET
-BT 302.028 612.122 Td /F1 8.0 Tf  (0.98 km from Grand Trunk Road Panipat Haryana) Tj ET
-BT 302.028 602.874 Td /F1 8.0 Tf  (132100 India-\(29.329,76.98\)) Tj ET
-BT 485.888 612.122 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 612.122 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 589.626 Td /F1 8.0 Tf  (60) Tj ET
-BT 50.356 589.626 Td /F1 8.0 Tf  (UP-78-CN-2231\(RANIA\)) Tj ET
-BT 155.626 589.626 Td /F1 8.0 Tf  (359231030153868) Tj ET
-BT 225.013 589.626 Td /F1 8.0 Tf  (2015-12-03 11:00:05) Tj ET
-BT 302.028 589.626 Td /F1 8.0 Tf  (0.15 km from Grand Trunk Rd, Hesla, Jharkhand) Tj ET
-BT 302.028 580.378 Td /F1 8.0 Tf  (825322, India-\(24.064,85.874\)) Tj ET
-BT 485.888 589.626 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 589.626 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 567.130 Td /F1 8.0 Tf  (61) Tj ET
-BT 50.356 567.130 Td /F1 8.0 Tf  (UP-78-CN-2250\(RANIA\)) Tj ET
-BT 155.626 567.130 Td /F1 8.0 Tf  (359231031719568) Tj ET
-BT 225.013 567.130 Td /F1 8.0 Tf  (2015-12-03 11:08:40) Tj ET
-BT 302.028 567.130 Td /F1 8.0 Tf  (0.1 km from KanpurJhansi Hwy, Bhaunti, Rania,) Tj ET
-BT 302.028 557.882 Td /F1 8.0 Tf  (Uttar Pradesh 209304, India-\(26.408,80.084\)) Tj ET
-BT 485.888 567.130 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 567.130 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 544.634 Td /F1 8.0 Tf  (62) Tj ET
-BT 50.356 544.634 Td /F1 8.0 Tf  (UP-78-CN-2251\(RANIA\)) Tj ET
-BT 155.626 544.634 Td /F1 8.0 Tf  (359231031721408) Tj ET
-BT 225.013 544.634 Td /F1 8.0 Tf  (2015-12-03 10:59:36) Tj ET
-BT 302.028 544.634 Td /F1 8.0 Tf  (0.08 km from Aligarh  Kanpur Rd, Chaubepur) Tj ET
-BT 302.028 535.386 Td /F1 8.0 Tf  (Pankhan, Uttar Pradesh 209203, India-) Tj ET
-BT 302.028 526.138 Td /F1 8.0 Tf  (\(26.606,80.207\)) Tj ET
-BT 485.888 544.634 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 544.634 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 512.890 Td /F1 8.0 Tf  (63) Tj ET
-BT 50.356 512.890 Td /F1 8.0 Tf  (UP-78-CN-2252\(RANIA\)) Tj ET
-BT 155.626 512.890 Td /F1 8.0 Tf  (359231039741978) Tj ET
-BT 225.013 512.890 Td /F1 8.0 Tf  (2015-12-03 11:02:38) Tj ET
-BT 302.028 512.890 Td /F1 8.0 Tf  (0.21 km from Unnamed Road, Maharashtra) Tj ET
-BT 302.028 503.642 Td /F1 8.0 Tf  (441104, India-\(21.169,79.253\)) Tj ET
-BT 485.888 512.890 Td /F1 8.0 Tf  (87.02) Tj ET
-BT 537.733 512.890 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 490.394 Td /F1 8.0 Tf  (64) Tj ET
-BT 50.356 490.394 Td /F1 8.0 Tf  (UP-78-CN-2253\(RANIA\)) Tj ET
-BT 155.626 490.394 Td /F1 8.0 Tf  (862170016973313) Tj ET
-BT 225.013 490.394 Td /F1 8.0 Tf  (2015-12-03 11:08:49) Tj ET
-BT 302.028 490.394 Td /F1 8.0 Tf  (0.07 km from MDR 91C, Bijnor, Uttar Pradesh) Tj ET
-BT 302.028 481.146 Td /F1 8.0 Tf  (226008, India-\(26.735,80.886\)) Tj ET
-BT 485.888 490.394 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 490.394 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 467.898 Td /F1 8.0 Tf  (65) Tj ET
-BT 50.356 467.898 Td /F1 8.0 Tf  (UP-78-CN-2255\(RANIA\)) Tj ET
-BT 155.626 467.898 Td /F1 8.0 Tf  (862170018365575) Tj ET
-BT 225.013 467.898 Td /F1 8.0 Tf  (2015-12-03 11:08:46) Tj ET
-BT 302.028 467.898 Td /F1 8.0 Tf  (0.14 km from Grand Trunk Rd, Hesla, Jharkhand) Tj ET
-BT 302.028 458.650 Td /F1 8.0 Tf  (825322, India-\(24.064,85.874\)) Tj ET
-BT 485.888 467.898 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 467.898 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 445.402 Td /F1 8.0 Tf  (66) Tj ET
-BT 50.356 445.402 Td /F1 8.0 Tf  (UP-78-CN-2256\(RANIA\)) Tj ET
-BT 155.626 445.402 Td /F1 8.0 Tf  (861074027068371) Tj ET
-BT 225.013 445.402 Td /F1 8.0 Tf  (2015-12-03 11:06:56) Tj ET
-BT 302.028 445.402 Td /F1 8.0 Tf  (0.07 km from Gorakhpur Rd, Kolia, Ekdanga, Uttar) Tj ET
-BT 302.028 436.154 Td /F1 8.0 Tf  (Pradesh 273016, India-\(26.738,83.320\)) Tj ET
-BT 485.888 445.402 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 445.402 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 422.906 Td /F1 8.0 Tf  (67) Tj ET
-BT 50.356 422.906 Td /F1 8.0 Tf  (UP-78-CN-2259\(RANIA\)) Tj ET
-BT 155.626 422.906 Td /F1 8.0 Tf  (862170017810522) Tj ET
-BT 225.013 422.906 Td /F1 8.0 Tf  (2015-12-03 11:00:19) Tj ET
-BT 302.028 422.906 Td /F1 8.0 Tf  (0.04 km from Kanpur  Allahabad Hwy, Uttar) Tj ET
-BT 302.028 413.658 Td /F1 8.0 Tf  (Pradesh 212664, India-\(26.000,80.73\)) Tj ET
-BT 485.888 422.906 Td /F1 8.0 Tf  (41.3) Tj ET
-BT 537.733 422.906 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 400.410 Td /F1 8.0 Tf  (68) Tj ET
-BT 50.356 400.410 Td /F1 8.0 Tf  (UP-78-CN-2262\(RANIA\)) Tj ET
-BT 155.626 400.410 Td /F1 8.0 Tf  (359231035566429) Tj ET
-BT 225.013 400.410 Td /F1 8.0 Tf  (2015-12-03 11:08:49) Tj ET
-BT 302.028 400.410 Td /F1 8.0 Tf  (0.17 km from Grand Trunk Rd, Hesla, Jharkhand) Tj ET
-BT 302.028 391.162 Td /F1 8.0 Tf  (825322, India-\(24.064,85.874\)) Tj ET
-BT 485.888 400.410 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 400.410 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 377.914 Td /F1 8.0 Tf  (69) Tj ET
-BT 50.356 377.914 Td /F1 8.0 Tf  (UP-78-CN-2263\(RANIA\)) Tj ET
-BT 155.626 377.914 Td /F1 8.0 Tf  (359231035552890) Tj ET
-BT 225.013 377.914 Td /F1 8.0 Tf  (2015-12-03 11:08:52) Tj ET
-BT 302.028 377.914 Td /F1 8.0 Tf  (0.12 km from JhansiKanpur Hwy, Umaran, Uttar) Tj ET
-BT 302.028 368.666 Td /F1 8.0 Tf  (Pradesh 209101, India-\(26.389,80.028\)) Tj ET
-BT 485.888 377.914 Td /F1 8.0 Tf  (0) Tj ET
-BT 537.733 377.914 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 355.418 Td /F1 8.0 Tf  (70) Tj ET
-BT 50.356 355.418 Td /F1 8.0 Tf  (UP-78-CN-2264\(RANIA\)) Tj ET
-BT 155.626 355.418 Td /F1 8.0 Tf  (862170010251039) Tj ET
-BT 225.013 355.418 Td /F1 8.0 Tf  (2015-12-03 11:08:50) Tj ET
-BT 302.028 355.418 Td /F1 8.0 Tf  (3.57 km from NH44 Jhansi Jhnsi Jhansi Uttar) Tj ET
-BT 302.028 346.170 Td /F1 8.0 Tf  (Pradesh 284001 India-\(25.143,78.455\)) Tj ET
-BT 485.888 355.418 Td /F1 8.0 Tf  (86.02) Tj ET
-BT 537.733 355.418 Td /F1 8.0 Tf  (NA) Tj ET
-BT 32.640 332.922 Td /F1 8.0 Tf  (71) Tj ET
-BT 50.356 332.922 Td /F1 8.0 Tf  (BR-01-GD-5962\(Accidental\)]) Tj ET
-BT 155.626 332.922 Td /F1 8.0 Tf  (-) Tj ET
-BT 225.013 332.922 Td /F1 8.0 Tf  (-) Tj ET
-BT 302.028 332.922 Td /F1 8.0 Tf  (-) Tj ET
-BT 485.888 332.922 Td /F1 8.0 Tf  (-) Tj ET
-BT 537.733 332.922 Td /F1 8.0 Tf  (-) Tj ET
-BT 32.640 319.674 Td /F1 8.0 Tf  (72) Tj ET
-BT 50.356 319.674 Td /F1 8.0 Tf  (UP-14-AT-8590\(RANIA\)]) Tj ET
-BT 155.626 319.674 Td /F1 8.0 Tf  (-) Tj ET
-BT 225.013 319.674 Td /F1 8.0 Tf  (-) Tj ET
-BT 302.028 319.674 Td /F1 8.0 Tf  (-) Tj ET
-BT 485.888 319.674 Td /F1 8.0 Tf  (-) Tj ET
-BT 537.733 319.674 Td /F1 8.0 Tf  (-) Tj ET
-BT 32.640 306.426 Td /F1 8.0 Tf  (73) Tj ET
-BT 50.356 306.426 Td /F1 8.0 Tf  (UP-78-BN-9970\(RANIA\)]) Tj ET
-BT 155.626 306.426 Td /F1 8.0 Tf  (-) Tj ET
-BT 225.013 306.426 Td /F1 8.0 Tf  (-) Tj ET
-BT 302.028 306.426 Td /F1 8.0 Tf  (-) Tj ET
-BT 485.888 306.426 Td /F1 8.0 Tf  (-) Tj ET
-BT 537.733 306.426 Td /F1 8.0 Tf  (-) Tj ET
-BT 32.640 293.178 Td /F1 8.0 Tf  (74) Tj ET
-BT 50.356 293.178 Td /F1 8.0 Tf  (UP-78-CN-2229\(RANIA\)]) Tj ET
-BT 155.626 293.178 Td /F1 8.0 Tf  (-) Tj ET
-BT 225.013 293.178 Td /F1 8.0 Tf  (-) Tj ET
-BT 302.028 293.178 Td /F1 8.0 Tf  (-) Tj ET
-BT 485.888 293.178 Td /F1 8.0 Tf  (-) Tj ET
-BT 537.733 293.178 Td /F1 8.0 Tf  (-) Tj ET
-BT 32.640 279.930 Td /F1 8.0 Tf  (75) Tj ET
-BT 50.356 279.930 Td /F1 8.0 Tf  (UP-78-CN-2230\(RANIA\)]) Tj ET
-BT 155.626 279.930 Td /F1 8.0 Tf  (-) Tj ET
-BT 225.013 279.930 Td /F1 8.0 Tf  (-) Tj ET
-BT 302.028 279.930 Td /F1 8.0 Tf  (-) Tj ET
-BT 485.888 279.930 Td /F1 8.0 Tf  (-) Tj ET
-BT 537.733 279.930 Td /F1 8.0 Tf  (-) Tj ET
-0.5 w
-31.640 790.090 m 31.640 276.130 l S
-0.5 w
-49.356 790.090 m 49.356 276.130 l S
-0.5 w
-154.626 790.090 m 154.626 276.130 l S
-0.5 w
-224.013 790.090 m 224.013 276.130 l S
-0.5 w
-301.028 790.090 m 301.028 276.130 l S
-0.5 w
-484.888 790.090 m 484.888 276.130 l S
-0.5 w
-536.733 790.090 m 536.733 276.130 l S
-0.5 w
-561.640 790.090 m 561.640 276.130 l S
-0.5 w
-31.390 790.090 m 561.890 790.090 l S
-31.640 776.842 m 561.640 776.842 l S
-31.390 276.130 m 561.890 276.130 l S
-BT 30.000 268.682 Td /F1 8.0 Tf  ( ) Tj ET
-BT 30.000 259.434 Td /F1 8.0 Tf  ( ) Tj ET
-BT 30.000 250.186 Td /F1 8.0 Tf  ( ) Tj ET
-endstream
-endobj
-
-xref
-0 14
-0000000000 65535 f 
-0000000015 00000 n 
-0000000080 00000 n 
-0000000126 00000 n 
-0000000320 00000 n 
-0000000357 00000 n 
-0000000462 00000 n 
-0000000525 00000 n 
-0000014611 00000 n 
-0000023915 00000 n 
-0000024022 00000 n 
-0000024087 00000 n 
-0000038584 00000 n 
-0000038649 00000 n 
-
-trailer
-  << /Size 14
-     /Root 1 0 R
-     /Info 5 0 R
-  >>
-startxref
-50164
-%%EOF

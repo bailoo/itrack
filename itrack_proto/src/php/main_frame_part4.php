@@ -1,2 +1,0 @@
-</td>
-<td class="mystyle">
