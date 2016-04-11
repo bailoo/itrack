@@ -27,7 +27,8 @@
 				</tr>
 			</table>';
 	}
-			
+if($account_id==1)
+{
 echo'<center>
 	<form name="manage1">
 		<fieldset class="manage_fieldset">
@@ -48,5 +49,24 @@ echo'<center>
 		<div style"display:none;" id="edit_div"> </div>
 	</form>
 </center>'; 
+}
+else
+{
+    echo'<center>
+	<form name="manage1">
+		<fieldset class="manage_fieldset">
+			<legend><strong>'.$report_type.'</strong></legend>
+				<table border="0" class="manage_interface" align="center">
+					<tr>
+						<td>						
+							<input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_edit_vehicle_prev.php\')"/> Edit / Delete&nbsp;&nbsp;&nbsp;							
+						</td>
+					</tr>
+				</table>     
+		</fieldset>
+		<div style"display:none;" id="edit_div"> </div>
+	</form>
+</center>'; 
+}
 ?>
 	

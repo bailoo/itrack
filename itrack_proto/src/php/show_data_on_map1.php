@@ -148,478 +148,250 @@ function show_balloon_marker(marker_number)
 }
 function show_data_on_map(report_format)
 {	
-	imei_iotype_arr.length=0;
-  //alert(report_format);
-  //var time_zone=document.thisform.time_zone.value;
-	var access="1";   /////set access temporarily
-	var time_interval=document.thisform.interval.value;  
-	var startdateDoc=document.thisform.start_date.value;		
-	var enddateDoc=document.thisform.end_date.value;
+    imei_iotype_arr.length=0;
+    //alert(report_format);
+    //var time_zone=document.thisform.time_zone.value;
+    var access="1";   /////set access temporarily
+    var time_interval=document.thisform.interval.value;  
+    var startdateDoc=document.thisform.start_date.value;		
+    var enddateDoc=document.thisform.end_date.value;
 	
-	var startdate = startdateDoc.replace('/', '-');
-	startdate = startdate.replace('/', '-');
-	var enddate = enddateDoc.replace('/', '-');
-	enddate = enddate.replace('/', '-');  		
-	var display_mode=document.thisform.mode;   /////// 1=last_postoin  and 2=track 		
-	var imeino1;
-	var vid;
-	var text_report_io_element="";
-	vid = "";
+    var startdate = startdateDoc.replace('/', '-');
+    startdate = startdate.replace('/', '-');
+    var enddate = enddateDoc.replace('/', '-');
+    enddate = enddate.replace('/', '-');  		
+    var display_mode=document.thisform.mode;   /////// 1=last_postoin  and 2=track 		
+    var imeino1;
+    var vid;
+    var text_report_io_element="";
+    vid = "";
 	
-	var obj_unique= {};
-	for(i=0;i<display_mode.length;i++)
-	{
-    if(display_mode[i].checked)
+    var obj_unique= {};
+    for(i=0;i<display_mode.length;i++)
     {
-      var mode=display_mode[i].value;
-      
-      if(mode == 1)
-      {  
-        imeino1=document.thisform.elements['vehicleserial[]'];
-      }
-      else if(mode == 2)
-      {
-        imeino1=document.thisform.vehicleserial_radio; 
-      }
-    }
-  }
-  
-  //alert("display_mode="+mode+" ,imei="+imeino1); 
-  var uniqueImeiArr=new Array();
-	var num1=0; 
-	var dt = home_date_time_validation(mode);
-	if(dt==true)
-	{ 
-		if(mode==1)               // LAST POSITION
-		{
-			if(imeino1.length!=undefined)
-			{
-				var mlpi=0;  // map last position increment 
-				for(i=0;i<imeino1.length;i++)
-				{
-					if(imeino1[i].checked)
-					{
-						uniqueImeiArr[mlpi]=imeino1[i].value;
-						//alert('value'+j);
-						//alert('value'+uniqueImeiArr[j]);
-						mlpi++;
-						num1 = 1;						
-					}
-				}
-				
-				imeino1=_.uniq(uniqueImeiArr)
-					
-//alert("len="+imeino1.length);		
-				if(num1==1)
-				{
-					for(i=0;i<imeino1.length;i++)
-					{
-						//alert("imei="+imeino1[i]);
-						var value_tmp=imeino1[i];
-						var vid_local=value_tmp.split("*");
-						if(vid_local[1]!="tmp_str")
-						{
-							imei_iotype_arr[vid_local[0]]=vid_local[1];				
-						}
-						text_report_io_element=text_report_io_element+vid_local[1]+",";	
-						//alert("text_report_io_element="+text_report_io_element+"vid_local="+vid_local[1]);
-						vid=vid+vid_local[0]+",";				
-					}
-				}
-			}
-			else
-			{
-				if(imeino1.checked)
-				{
-					var value_tmp=imeino1.value;					
-					var vid_local=value_tmp.split("*");
-					if(vid_local[1]!="tmp_str")
-					{
-						imei_iotype_arr[vid_local[0]]=vid_local[1];				
-					}
-					text_report_io_element=text_report_io_element+vid_local[1]+",";				
-					vid=vid+vid_local[0]+",";
-					num1 = 1;
-				}
-			}
-			if(num1==0)
-			{
-				alert("Please Select At Least One Vehicle");							
-				return false;  			
-			}
-			var strIOElement = text_report_io_element.length;
-				text_report_io_element = text_report_io_element.slice(0,strIOElement-1);
-			var strLen = vid.length;
-			vid = vid.slice(0,strLen-1);
-			/*else
-			{
-				for(id in obj_unique) 
-				{				
-					if(obj_unique.hasOwnProperty(id)) 
-					{ 
-						var vid_local=(obj_unique[id]).split("*");
-						if(vid_local[1]!="tmp_str")
-						{
-							imei_iotype_arr[vid_local[0]]=vid_local[1];				
-						}
-						text_report_io_element=vid_local[1];
-						vid=vid+vid_local[0]+",";
-					}
-				}
-				var strLen = vid.length;
-				vid = vid.slice(0,strLen-1);
-			}	*/
-		}
-		else if(mode==2)        // TRACK
-		{
-		  if(imeino1.length!=undefined)
-			{      
-				for(i=0;i<imeino1.length;i++)
-				{
-					if(imeino1[i].checked)
-					{
-						//alert("imeino1="+imeino1[i].value);
-						var vid_local=(imeino1[i].value).split("*");
-						
-						/*if(vid_local[1]!="tmp_str")
-						{
-							imei_iotype_arr[vid_local[0]]=vid_local[1];					
-						}*/
-						text_report_io_element=vid_local[1];
-						//alert("text_report_io_element1="+text_report_io_element);
-						vid =  vid + vid_local[0];
-						//alert("vid="+vid);
-						num1 = 1;
-					}
-				}
-			}
-			else
-			{
-				if(imeino1.checked)
-				{
-					var vid_local=(imeino1.value).split("*");
-					if(vid_local[1]!="tmp_str")
-					{
-						imei_iotype_arr[vid_local[0]]=vid_local[1];	
-					}
-					text_report_io_element=vid_local[1];
-					//alert("text_report_io_element2="+text_report_io_element);
-					vid =  vid + vid_local[0];			
-					num1 = 1;
-				}        
-			}      
-			if(num1==0)
-			{
-				alert("Please Select At Least One Vehicle");							
-				return false;  			
-			}              	 
-		}
-		
-		/*else if(mode==2 && count>1)
-		{
-			alert("Please Select One Vehicle For Track");
-			return false;
-		}*/
-		 
-		//alert("vid="+vid);
-    //else if(num1==1)
-                //alert("num1="+num1);
-		if(num1 == 1)
-		{
-			var feature_id_map = document.getElementById('station_flag_map').value;
-                        //alert('feature_id_map='+feature_id_map)
-			if(feature_id_map==1)
-			{
-                            uniqueCustomerParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueCustomerArrNew']); ?> );
-                            //alert("len="+uniqueCustomerParseJson[1011564]);
-                            uniquePlantParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniquePlantArrNew']); ?> );
-                            uniqueChillingParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueChillingArrNew']); ?> );
-                            uniqueRouteMorningParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteArrMorningNew']); ?> );
-                            uniqueRouteEveningParseJson=JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteArrEveningNew']); ?> );
-                            //alert("routeNo="+uniqueRouteMorningParseJson.length);
-    
-                                var bname = navigator.appName;	
-				var xml_data_this;
-				/*xml_data_this="";
-				var plantRouteEvening = "<?php echo $_SESSION['uniquePlantRouteEvening']; ?>";
-				xmlObj = null; 			
-				var dest_station_test="src/php/client_map_feature_data/"+plantRouteEvening+".xml";
-				//alert("dest_station_test="+dest_station_test);
-				xmlObj = loadXML(dest_station_test);
-				dataReceived=false;
-				if (bname == "Microsoft Internet Explorer")
-				{    
-					if(xmlObj!=null)	
-					{                                      
-						xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-						if(xml_data_this1.length>0)
-						{
-							dataReceived=true;
-						}
-					}                                     
-				}
-				else
-				{   
-					xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-					//alert("length 1:"+xml_data.length);    
-					var xml_data_this1 = xmlObj.documentElement.getElementsByTagName("a1");
-					// alert("length 2:"+xml_data1.length);
-					if(xml_data_this1.length>0)
-					{
-						dataReceived=true;
-					}
-				}
-				if(dataReceived==true)
-				{
-					for (var k = 0; k < xml_data_this.length; k++) 
-					{
-						RouteNEPlant[k] = xml_data_this[k].getAttribute("routeNo");
-						RouteEPlantLat[k] = xml_data_this[k].getAttribute("lat");
-						RouteEPlantLng[k] = xml_data_this[k].getAttribute("lng");			
-						RouteEPlantStationNo[k] = xml_data_this[k].getAttribute("station");					
-						RouteEPlantNo[k] = xml_data_this[k].getAttribute("customer");
-						RouteEPlantType[k] = xml_data_this[k].getAttribute("type"); 						
-					} 
-				}
-				
-				xml_data_this="";
-				var plantRouteMorning = "<?php echo $_SESSION['uniquePlantRouteMorning']; ?>";
-				xmlObj = null; 			
-				var dest_station_test="src/php/client_map_feature_data/"+plantRouteMorning+".xml";
-				//alert("dest_station_test="+dest_station_test);
-				xmlObj = loadXML(dest_station_test);
-				dataReceived=false;
-				if (bname == "Microsoft Internet Explorer")
-				{    
-					if(xmlObj!=null)	
-					{                                      
-						xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-						if(xml_data_this1.length>0)
-						{
-							dataReceived=true;
-						}
-					}                                     
-				}
-				else
-				{   
-					xml_data_this = xmlObj.documentElement.getElementsByTagName("marker");
-					//alert("length 1:"+xml_data.length);    
-					var xml_data_this1 = xmlObj.documentElement.getElementsByTagName("a1");
-					// alert("length 2:"+xml_data1.length);
-					if(xml_data_this1.length>0)
-					{
-						dataReceived=true;
-					}
-				}
-				if(dataReceived==true)
-				{
-					for (var k = 0; k < xml_data_this.length; k++) 
-					{																													
-						RouteNMPlant[k] = xml_data_this[k].getAttribute("routeNo");
-						RouteMPlantLat[k] = xml_data_this[k].getAttribute("lat");
-						RouteMPlantLng[k] = xml_data_this[k].getAttribute("lng");			
-						RouteMPlantStationNo[k] = xml_data_this[k].getAttribute("station");					
-						RouteMPlantNo[k] = xml_data_this[k].getAttribute("customer");
-						RouteMPlantType[k] = xml_data_this[k].getAttribute("type"); 
-					} 
-				}*/
-			}
-			var schedule_location_flag = document.getElementById('schedule_location_flag').value;
-			//alert("schedule_location_flag="+schedule_location_flag);
-			if(schedule_location_flag==1)
-			{
-				var bname = navigator.appName;	
-				var xml_data_this;
-				var session_schedule_location1 = "<?php echo $_SESSION['unique_schedule_location']; ?>";
-				//alert("session_schedule_location1="+session_schedule_location1);
-				var xmlObjThis = null; 			
-				var dest_location_test="src/php/schedule_location_data/"+session_schedule_location1+".xml";
-				xmlObjThis = loadXML(dest_location_test);
-				var dataReceived=false;
-				if (bname == "Microsoft Internet Explorer")
-				{    
-					if(xmlObjThis!=null)	
-					{                                      
-						xml_data_this = xmlObjThis.documentElement.getElementsByTagName("marker");
-						var xml_data_this1 = xmlObjThis.documentElement.getElementsByTagName("a1");
-						if(xml_data_this1.length>0)
-						{
-							dataReceived=true;
-						}
-					}                                     
-				}
-				else
-				{   
-					xml_data_this = xmlObjThis.documentElement.getElementsByTagName("marker");
-					//alert("length 1:"+xml_data.length);    
-					var xml_data_this1 = xmlObjThis.documentElement.getElementsByTagName("a1");
-					// alert("length 2:"+xml_data1.length);
-					if(xml_data_this1.length>0)
-					{
-						dataReceived=true;
-					}
-				}			
-				
-				if(dataReceived==true)
-				{			
-					for (var k = 0; k < xml_data_this.length; k++) 
-					{
-						schedule_location_id[k] = xml_data_this[k].getAttribute("location_id");					
-						schedule_location_name[k] = xml_data_this[k].getAttribute("location_name");
-						schedule_lat[k] = xml_data_this[k].getAttribute("lat");
-						schedule_lng[k] = xml_data_this[k].getAttribute("lng");						
-						schedule_location_counter++; 				
-					} 
-				}			
-			}
-			if(report_format=="map_report")
-			{
-				document.getElementById('prepage').style.visibility='visible';
-				startup_var = 1;
-				var status;
-				var time_interval;
-				var pt_for_zoom;
-				var zoom_level;	
-				var n=new Array();
+        if(display_mode[i].checked)
+        {
+            var mode=display_mode[i].value;
+            if(mode == 1)
+            {  
+                //imeino1=document.thisform.elements['vehicleserial[]'];
+                imeino1=document.thisform.vehicleserial_radio; 
+            }
+            else if(mode == 2)
+            {
+                imeino1=document.thisform.vehicleserial_radio; 
+            }
+        }
+    }  
+    //alert("display_mode="+mode+" ,imei="+imeino1); 
+    var uniqueImeiArr=new Array();
+    var num1=0; 
+    var dt = home_date_time_validation(mode);
+    if(dt==true)
+    { 
+        if(imeino1.length!=undefined)
+        {      
+            for(i=0;i<imeino1.length;i++)
+            {
+                if(imeino1[i].checked)
+                {
+                    //alert("imeino1="+imeino1[i].value);
+                    var vid_local=(imeino1[i].value).split("*");
+                    /*if(vid_local[1]!="tmp_str")
+                    {
+                        imei_iotype_arr[vid_local[0]]=vid_local[1];					
+                    }*/
+                    text_report_io_element=vid_local[1];
+                    //alert("text_report_io_element1="+text_report_io_element);
+                    vid =  vid + vid_local[0];
+                    //alert("vid="+vid);
+                    num1 = 1;
+                }
+            }
+        }
+        else
+        {
+            if(imeino1.checked)
+            {
+                var vid_local=(imeino1.value).split("*");
+                if(vid_local[1]!="tmp_str")
+                {
+                        imei_iotype_arr[vid_local[0]]=vid_local[1];	
+                }
+                text_report_io_element=vid_local[1];
+                //alert("text_report_io_element2="+text_report_io_element);
+                vid =  vid + vid_local[0];			
+                num1 = 1;
+            }        
+        }      
+        if(num1==0)
+        {
+                alert("Please Select At Least One Vehicle");							
+                return false;  			
+        }  	
+        if(num1 == 1)
+        {
+            var feature_id_map = document.getElementById('station_flag_map').value;
+            //alert('feature_id_map='+feature_id_map)
+            if(feature_id_map==1)
+            {
+                uniqueCustomerParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueCustomerArrNew']); ?> );
+                //alert("len="+uniqueCustomerParseJson[1011564]);
+                uniquePlantParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniquePlantArrNew']); ?> );
+                uniqueChillingParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueChillingArrNew']); ?> );
+                uniqueRouteMorningParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteArrMorningNew']); ?> );
+                uniqueRouteEveningParseJson=JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteArrEveningNew']); ?> );
+                //alert("routeNo="+uniqueRouteMorningParseJson.length);
 
-				if(document.forms[0].pt_for_zoom.value==1 && document.forms[0].zoom_level.value==1)
-				{status = "ON";}
-				else{status = "OFF";  pt_for_zoom = "0";  zoom_level = "0";} 
-
-				//initialize(); 
-				var diffdate;
-				var difftype;
-
-				/*if(time_zone=="IST")
-				{
-					diffdate = 0;
-					difftype = 0;
-				}
-				else if(time_zone=="GMT")
-				{
-					diffdate = 19800000;
-					difftype = 1;
-				}*/
-			  diffdate = 0;
-				difftype = 0;
-				//load(vid,mode,startdate,enddate,pt_for_zoom,zoom_level,status,access,time_interval);		
-				flag_play=0;
-				play_interval=0;
-				/* comment further improve
-				var play_stop=document.getElementById('play_stop').value;
+                var bname = navigator.appName;	
+                var xml_data_this;
+            }
+            var schedule_location_flag = document.getElementById('schedule_location_flag').value;
+            //alert("schedule_location_flag="+schedule_location_flag);
+            if(schedule_location_flag==1)
+            {
+                var bname = navigator.appName;	
+                var xml_data_this;
+                var session_schedule_location1 = "<?php echo $_SESSION['unique_schedule_location']; ?>";
+                //alert("session_schedule_location1="+session_schedule_location1);
+                var xmlObjThis = null; 			
+                var dest_location_test="src/php/schedule_location_data/"+session_schedule_location1+".xml";
+                xmlObjThis = loadXML(dest_location_test);
+                var dataReceived=false;
+                if (bname == "Microsoft Internet Explorer")
+                {    
+                    if(xmlObjThis!=null)	
+                    {                                      
+                        xml_data_this = xmlObjThis.documentElement.getElementsByTagName("marker");
+                        var xml_data_this1 = xmlObjThis.documentElement.getElementsByTagName("a1");
+                        if(xml_data_this1.length>0)
+                        {
+                            dataReceived=true;
+                        }
+                    }                                     
+                }
+                else
+                {   
+                    xml_data_this = xmlObjThis.documentElement.getElementsByTagName("marker");
+                    //alert("length 1:"+xml_data.length);    
+                    var xml_data_this1 = xmlObjThis.documentElement.getElementsByTagName("a1");
+                    // alert("length 2:"+xml_data1.length);
+                    if(xml_data_this1.length>0)
+                    {
+                        dataReceived=true;
+                    }
+                }			
 				
-				if(play_stop=="Stop Play"){
-					document.getElementById('play_stop').value="Track Play";
-				}*/
-				load(vid,mode,startdate,enddate,pt_for_zoom,zoom_level,status,access,time_interval,flag_play,play_interval);	
-			} 
-			else if(report_format=="text_report")
-			{
-				/* comment further improve
-				var play_stop=document.getElementById('play_stop').value;
-				if(play_stop=="Stop Play"){
-					//alert("Track Playing Stop due to Text Report Request");
-					document.getElementById('play_stop').value="Track Play";
-				}
-				*/
-				var date = new Date();
-				var dest = "../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
-				if(document.thisform.location.checked==true)
-				{
-					var data_with_location="1";					
-				}
-				else
-				{
-					var data_with_location="0";
-				}
-				
-				/*var poststr = "vserial=" + encodeURI(vid)+
-				"&mode="+encodeURI(mode)+
-				"&start_date="+startdate+
-				"&end_date="+enddate+
-				"&time_zone="+encodeURI(time_zone)+
-				"&xml_file="+encodeURI(dest);*/
+                if(dataReceived==true)
+                {			
+                    for (var k = 0; k < xml_data_this.length; k++) 
+                    {
+                        schedule_location_id[k] = xml_data_this[k].getAttribute("location_id");					
+                        schedule_location_name[k] = xml_data_this[k].getAttribute("location_name");
+                        schedule_lat[k] = xml_data_this[k].getAttribute("lat");
+                        schedule_lng[k] = xml_data_this[k].getAttribute("lng");						
+                        schedule_location_counter++; 				
+                    } 
+                }			
+            }
+            if(report_format=="map_report")
+            {
+                document.getElementById('prepage').style.visibility='visible';
+                startup_var = 1;
+                var status;
+                var time_interval;
+                var pt_for_zoom;
+                var zoom_level;     
+                var n=new Array();
 
-				//alert(vid)
-				if(mode==1)
-				{
-					//alert("vid="+vid);
-				  //document.ld.action="src/php/Last_data_prev.php?vserial="+vid+"&startdate="+startdate+"&enddate="+enddate+"&mode="+mode+"&time_interval="+time_interval+"&time_zone="+time_zone+"&xml_file="+dest;
-					//document.ld.action="src/php/Last_data_prev.php?vserial="+vid+"&text_report_io_element="+text_report_io_element+"&startdate="+startdate+"&enddate="+enddate+"&mode="+mode+"&time_interval="+time_interval+"&xml_file="+dest;
-					document.ld.xml_file.value=dest;
-					document.ld.vserial.value=vid;
-					document.ld.startdate.value=startdate;
-					document.ld.enddate.value=enddate;
-					document.ld.text_report_io_element.value=text_report_io_element;
-					document.ld.mode.value=mode;
-					document.ld.time_interval.value=time_interval;
-					document.ld.dwt.value=data_with_location;
-					document.ld.lastcategory.value=document.getElementById("category").value;
-					document.ld.submit();
-					
-					/*document.ld.action="Last_data_prev?tmpval1="+dest+"&tmpval2="+vid+"&tmpval3="+startdate+"&tmpval4="+enddate+"&tmpval5="+text_report_io_element+"&tmpval6="+mode+"&tmpval7="+time_interval+"&ltmpval8="+data_with_location;
-					document.ld.target="_blank";
-					document.ld.submit();*/
-					//makePOSTRequest('src/php/Last_data_prev.php', poststr);
-				}
-				else if(mode==2)
-				{				
-					//document.fd.action="src/php/Full_data_prev.php?vserial="+vid+"&startdate="+startdate+"&enddate="+enddate+"&mode="+mode+"&time_interval="+time_interval+"&time_zone="+time_zone+"&xml_file="+dest;
-					//document.fd.action="src/php/Full_data_prev.php?vserial="+vid+"&text_report_io_element="+text_report_io_element+"&startdate="+startdate+"&enddate="+enddate+"&mode="+mode+"&time_interval="+time_interval+"&xml_file="+dest;
-					document.fd.xml_file.value=dest;
-					document.fd.vserial.value=vid;
-					document.fd.startdate.value=startdate;
-					document.fd.enddate.value=enddate;
-					document.fd.text_report_io_element.value=text_report_io_element;
-					document.fd.mode.value=mode;
-					document.fd.time_interval.value=time_interval;
-					document.fd.dwt.value=data_with_location;
-					document.ld.lastcategory.value=document.getElementById("category").value;
-					document.fd.submit();
-					/*document.fd.action="Full_data_prev?tmpval1="+dest+"&tmpval2="+vid+"&tmpval3="+startdate+"&tmpval4="+enddate+"&tmpval5="+text_report_io_element+"&tmpval6="+mode+"&tmpval7="+time_interval+"&ltmpval8="+data_with_location;
-					document.fd.target="_blank";
-					document.fd.submit();*/
-					//makePOSTRequest('src/php/Full_data_prev.php', poststr);
-				}
-			} //else if  
-			else if(report_format=="play_report")
-			{
-				document.getElementById('prepage').style.visibility='visible';
-				startup_var = 1;
-				var status;
-				var time_interval;
-				var pt_for_zoom;
-				var zoom_level;	
-				var n=new Array();
-
-				if(document.forms[0].pt_for_zoom.value==1 && document.forms[0].zoom_level.value==1)
-				{status = "ON";}
-				else{status = "OFF";  pt_for_zoom = "0";  zoom_level = "0";} 
-
-				//initialize(); 
-				var diffdate;
-				var difftype;
-
+                if(document.forms[0].pt_for_zoom.value==1 && document.forms[0].zoom_level.value==1)
+                {status = "ON";}
+                else{status = "OFF";  pt_for_zoom = "0";  zoom_level = "0";}  
+                var diffdate;
+                var difftype;
+                diffdate = 0;
+                difftype = 0;
 				
-			    diffdate = 0;
-				difftype = 0;
-				flag_play=1;
-				play_interval=document.getElementById('play_interval').value;
-				var play_stop=document.getElementById('play_stop').value;
-				if(play_stop=="Stop Play"){
-					document.getElementById('play_stop').value="Track Play";
-					document.getElementById('prepage').style.visibility='hidden';
-				}
-				else if(play_stop=="Track Play"){
-					document.getElementById('play_stop').value="Stop Play";
-					load(vid,mode,startdate,enddate,pt_for_zoom,zoom_level,status,access,time_interval,flag_play,play_interval);
-				}
-				
-				
-									
-			} //else if
-		} // if num =1
-	} // if dt = true
+                flag_play=0;
+                play_interval=0;				
+                load(vid,mode,startdate,enddate,pt_for_zoom,zoom_level,status,access,time_interval,flag_play,play_interval);	
+            } 
+            else if(report_format=="text_report")
+            {
+                var date = new Date();
+                var dest = "../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
+                if(document.thisform.location.checked==true)
+                {
+                    var data_with_location="1";					
+                }
+                else
+                {
+                    var data_with_location="0";
+                }
+                if(mode==1)
+                {
+                    document.ld.xml_file.value=dest;
+                    document.ld.vserial.value=vid;
+                    document.ld.startdate.value=startdate;
+                    document.ld.enddate.value=enddate;
+                    document.ld.text_report_io_element.value=text_report_io_element;
+                    document.ld.mode.value=mode;
+                    document.ld.time_interval.value=time_interval;
+                    document.ld.dwt.value=data_with_location;
+                    document.ld.lastcategory.value=document.getElementById("category").value;
+                    document.ld.submit();
+                }
+                else if(mode==2)
+                {
+                    document.fd.xml_file.value=dest;
+                    document.fd.vserial.value=vid;
+                    document.fd.startdate.value=startdate;
+                    document.fd.enddate.value=enddate;
+                    document.fd.text_report_io_element.value=text_report_io_element;
+                    document.fd.mode.value=mode;
+                    document.fd.time_interval.value=time_interval;
+                    document.fd.dwt.value=data_with_location;
+                    document.ld.lastcategory.value=document.getElementById("category").value;
+                    document.fd.submit();
+                }
+            } //else if  
+            else if(report_format=="play_report")
+            {
+                document.getElementById('prepage').style.visibility='visible';
+                startup_var = 1;
+                var status;
+                var time_interval;
+                var pt_for_zoom;
+                var zoom_level;	
+                var n=new Array();
+
+                if(document.forms[0].pt_for_zoom.value==1 && document.forms[0].zoom_level.value==1)
+                {status = "ON";}
+                else{status = "OFF";  pt_for_zoom = "0";  zoom_level = "0";} 
+
+                //initialize(); 
+                var diffdate;
+                var difftype;
+
+
+                diffdate = 0;
+                difftype = 0;
+                flag_play=1;
+                play_interval=document.getElementById('play_interval').value;
+                var play_stop=document.getElementById('play_stop').value;
+                if(play_stop=="Stop Play")
+                {
+                    document.getElementById('play_stop').value="Track Play";
+                    document.getElementById('prepage').style.visibility='hidden';
+                }
+                else if(play_stop=="Track Play")
+                {
+                    document.getElementById('play_stop').value="Stop Play";
+                    load(vid,mode,startdate,enddate,pt_for_zoom,zoom_level,status,access,time_interval,flag_play,play_interval);
+                }					
+            } //else if
+        } // if num =1
+    } // if dt = true
 }  // function closed
 // for storing all point of plant and custormer
 

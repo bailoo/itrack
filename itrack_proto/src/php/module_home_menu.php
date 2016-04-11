@@ -40,8 +40,8 @@
             include('module_vehicle.php');                       
             include('module_select_track.php');
           //include('module_refresh.php');
-            include('module_mouse_action.php');
-		echo'<tr>
+            //include('module_mouse_action.php');
+		/*echo'<tr>
 				<td>
 					<table border="0" class="module_left_menu">
 						<tr>
@@ -58,12 +58,12 @@
 						</tr>
 					</table>
 				</td>
-			</tr>';
+			</tr>';*/
 			
             include('module_latlng.php');
             include('module_speed_symbol.php');
             
-             if($flag_station==1)
+           /*  if($flag_station==1)
             {
               include('module_station.php');
             }
@@ -71,7 +71,7 @@
             {
              include('module_schedule_location.php');
             }  
-			 include('module_landmark.php');                         
+			// include('module_landmark.php');  */                       
         ?>
         </table>	
 		 

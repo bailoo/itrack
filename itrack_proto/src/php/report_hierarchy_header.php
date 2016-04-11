@@ -98,7 +98,7 @@
         //echo "<br>2";
         echo'<td align="left">
                 &nbsp;
-                <INPUT TYPE="checkbox"  name="vehicleserial[]" VALUE="'.$vehicle_imei.'">
+                <INPUT TYPE="checkbox"  name="vehicleserial" VALUE="'.$vehicle_imei.'">
             </td>
              <td class=\'text\'>
                 &nbsp;<A HREF="#" style="text-decoration:none;" onclick="main_vehicle_information('.$vehicle_id.')">
@@ -135,15 +135,9 @@
                 echo'<tr>';
                 }         		
                     echo'<td align="left">';
-                if($report_station_halt_option=="1")
-                {
-                    //echo'<INPUT TYPE="radio"  name="station_vehicle_id" VALUE="'.$vehicleid_or_imei[$vehicle].','.$vehicle.'">';
-                    echo'<INPUT TYPE="checkbox"  name="station_vehicle_id[]" VALUE="'.$vehicleid_or_imei[$vehicle].','.$vehicle.'">';
-                }
-                else
-                {
-                    echo'<INPUT TYPE="checkbox"  name="vehicleserial[]" VALUE="'.$vehicleid_or_imei[$vehicle].'">';
-                }
+             
+                    echo'<INPUT TYPE="radio"  name="vehicleserial" VALUE="'.$vehicleid_or_imei[$vehicle].'">';
+            
                 echo'</td>
                     <td class=\'text\'> 				
                         <font color="'.$color.'">
