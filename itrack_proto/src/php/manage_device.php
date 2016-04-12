@@ -47,7 +47,7 @@
             </strong>
           </legend>
           ";
-          if($device_permission==1)
+          if($account_id==1)
           {
             echo'<input type="radio" name="option" value="new" onclick="javascript:;manage_show_file(\'src/php/manage_add_device.php\');"> &nbsp;New';
           }							
