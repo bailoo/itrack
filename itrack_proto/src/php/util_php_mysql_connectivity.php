@@ -1,15 +1,15 @@
 <?php
-	$file = "setup/mysql.php"; if(file_exists($file)) { include_once($file); }
-	$file = "../../setup/mysql.php"; if(file_exists($file)) { include_once($file); }
-        $file = "../../../setup/mysql.php"; if(file_exists($file)) { include_once($file); }
-	$HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
-        //$HOST = "localhost";
-	// $DBASE = "iespl_vts_beta";
-	// $USER = "root";
-	// $PASSWD = "mysql";
-	//$HOST = "db.itracksolution.co.in";
-	//$HOST = "111.118.181.156";
-	//$HOST = "111.118.182.147";
+	/*$file = "../../setup/mysql.php"; 
+	if(file_exists($file))
+	{ 
+		include_once($file); 
+	}*/
+$pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+//print_r($pathInPieces);
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]."/".$pathInPieces[4];
+	include_once($pathToRoot."/setup/mysql.php"); 
+	$HOST = "localhost";
+	
 	$DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server is down. Please try after few minutes.");
 	mysql_select_db ($DBASE, $DbConnection) or die("could not find DB");
   

@@ -3,7 +3,8 @@
 <table border=0 cellspacing="0" cellpadding="0" id="sliderFrame" width='100%'>
     <tr>
         <td>
-            <div id="ribbon"></div>
+            <img src="webroot/css/creative/images/mobiletracking.jpg" alt="<b>Live Mobile Tracking </b> <br> Live Tracking on Mobile" />
+            <!--<div id="ribbon"></div>
             <div id="slider">
                 <img src="webroot/css/creative/images/speedcar.jpg" alt="<b>iTracksolution</b> <br> Track Your Vehicle anywhere in the world Live"  style="text-align: center"/>
                 <img src="webroot/css/creative/images/slider-4.jpg" alt="<b>Mobile Tracking </b> <br> Get SMS Alert and Live Tracking on Mobile" />
@@ -16,7 +17,7 @@
                   <img src="webroot/css/creative/images/drive-smarter.jpg" alt="<b>Fuel Consumption </b> <br> Monitor your vehicle Fuel anytime" />
                  <img src="webroot/css/creative/images/speed_v.png" alt="<b>Speed Voilation</b> <br>Get Alert by SMS and Report"/>
                  <img src="webroot/css/creative/images/mobiletracking.jpg" alt="<b>Live Mobile Tracking </b> <br> Live Tracking on Mobile" />
-            </div>
+            </div>-->
             
         </td>
         <td>
@@ -25,7 +26,7 @@
                             <td align='center'>
                             <div style="z-index: 1;" id="standout" class="mdfg tp10 flt clr" >
                                 <form name="myform" method = "post" action ="login.php" >
-                                    <table align='center' class='menu' cellpadding=0 cellspacing=0 border=0>
+                                    <table align='center' class='menu' cellpadding=3 cellspacing=3 border=0>
                                             <tr>
                                                     <td align="left">
                                                             <b> <font color='#D88202'><font size='4px'>Login In</font></font>
@@ -36,26 +37,16 @@
                                                             <hr>
                                                     </td>
                                             </tr>
-                                            <tr>
-                                                    <td height='2px'>					
-                                                    </td>
-                                            </tr>
+                                           
                                             <tr>
                                                     <td align="left">
                                                             <b>Group Id
                                                     </td>
                                             </tr>
-                                            <tr>
-                                                    <td height='2px'>					
-                                                    </td>
-                                            </tr>
+                                            
                                             <tr>
                                                     <td align="left">
                                                             <input maxlength="10" class="wm-fields"  name="group_id"  title="STD" type="text">
-                                                    </td>
-                                            </tr>
-                                            <tr>
-                                                    <td height='5px'>					
                                                     </td>
                                             </tr>
                                             <tr>
@@ -64,27 +55,15 @@
                                                     </td>
                                             </tr>
                                             <tr>
-                                                    <td height='2px'>					
-                                                    </td>
-                                            </tr>
-                                            <tr>
                                                     <td align="left">
                                                             <input  class="wm-fields"name="user_id" title="STD" type="text">
-                                                    </td>
-                                            </tr>
-                                            <tr>
-                                                    <td height='5px'>					
                                                     </td>
                                             </tr>
                                             <tr>
                                                     <td align="left">
                                                             <b>Password
                                                     </td>
-                                            </tr>
-                                            <tr>
-                                                    <td height='2px'>					
-                                                    </td>
-                                            </tr>
+                                            </tr>                                           
                                             <tr>
                                                     <td align="left">
                                                             <input  class="wm-fields"name="password" title="STD" type="password">
@@ -107,37 +86,6 @@
                                                     </td>
                                             </tr>
                                             
-                                    </table>
-                                </form>
-                                <form name="myform1" method = "post" action ="/src/php/last_consignment_location.php" >
-                                      <table align='center' class='menu' cellpadding=0 cellspacing=0 border=0>
-                                            <tr>
-                                                    <td>
-                                                    <fieldset style='color:black;font-size:11px;font-weight:bold;'>
-                                                            <legend>Enter Docket No	</legend>
-                                                            <table border=0 cellspacing=0 cellpadding=0>								
-                                                                    <tr>
-                                                                            <td align="left">
-                                                                                            <input class="wm-fields12" name="docket_no" title="STD" type="text">
-                                                                            </td>
-                                                                            <td valign='top'>
-                                                                                    <div class="gray btn flt btns">
-                                                                                            <a class="selbuspopup evpush GAQ_C_BUSCONTB" style="color: #1C1C1C;font-weight:bold;" href="#divreqcallpopup" onclick='document.myform1.submit();'>
-                                                                                                    Go
-                                                                                            </a>
-                                                                                    </div>
-                                                                            </td>
-                                                                    </tr>
-                                                            </table>
-                                                    </fieldset>
-                                                    </td>
-                                            </tr>
-                                            <tr>
-                                                    <td height='10px'>					
-                                                    </td>
-                                            </tr>
-                                           
-
                                     </table>
                                 </form>
                             </div>

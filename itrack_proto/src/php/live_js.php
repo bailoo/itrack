@@ -529,214 +529,188 @@ function SelectAll(set_type)
 
 function filter_live_vehicle(obj,jsActionNo)
 {  
-	//alert("filter live vehicle");
-	var result ="";
-	if(route_div_flag ==1)
-	{
-		var s_vehicle =document.forms[0].elements['live_vehicles[]'];
-		
-		//var obj = document.forms[0].live_opt;
-		//alert("obj="+obj);		
-		//var result_v =checkbox_selection(obj);
-		//var s_vehicle = result_v.split(',');
-		
-		var obj_r;
-		//alert("route_shift1="+route_shift);
-		if(route_shift ==1)
-		{
-			obj_r=document.forms[0].elements['route_ev[]'];
-		}
-		else if(route_shift ==2)
-		{
-			obj_r=document.forms[0].elements['route_mor[]'];
-		}
-		
-		//alert("obj_r="+obj_r)
-		var result_r=checkbox_selection(obj_r);
-		var str1 = result_r.split(',');
-		
-		//alert("size_v="+s_vehicle.length+" ,route_len="+str1.length);
-		var k=0;		
-		for(var i=0;i<str1.length;i++)
-		{			
-			var str2 = str1[i].split(':');
-			var route = str2[0];
-			var r_vehicle = str2[1];
-			//alert("str1="+str1+" ,route="+route+" ,r_v="+r_vehicle);
-			
-			if(s_vehicle.length!=undefined)
-			{
-				//alert("obj.length="+s_vehicle.length);
-				for (var j=0;j<s_vehicle.length;j++)
-				{																	
-					//s_vehicle_tmp = s_vehicle_tmp.substring(0, s_vehicle_tmp.length - 1);
-					var str_vehicle_final = s_vehicle[j].value.split('*');
-					var s_vehicle_tmp = str_vehicle_final[0];
-					//alert("sV="+trim(s_vehicle_tmp)+" ,rV="+trim(r_vehicle));
-					
-					if(trim(s_vehicle_tmp) == trim(r_vehicle))
-					{
-						//alert("matched vehicle");
-						if(k==0)
-						{
-							result = result +""+trim(s_vehicle_tmp)+"#";
-						}
-						else
-						{
-							result = result +","+trim(s_vehicle_tmp)+"#";
-						}
-						k++;
-						break;
-					}
-				}
-			}
-		}
-		//alert("result in route="+result);
-	}
-	else
-	{
-		var obj=document.forms[0].elements['live_vehicles[]'];
-		result=checkbox_selection(obj);
-		//alert("result in vehicle="+result);
-	}
-	//alert(result);
+    //alert("filter live vehicle");
+    var result ="";
+    if(route_div_flag ==1)
+    {
+        var obj_r;
+        if(route_shift ==1)
+        {
+            obj_r=document.forms[0].elements['route_ev[]'];
+        }
+        else if(route_shift ==2)
+        {
+            obj_r=document.forms[0].elements['route_mor[]'];
+        }
+        var s_vehicle =document.forms[0].elements['live_vehicles[]'];
 
-	var s1 = result.split(',');
-	var time_int;
-	//alert("s1 len="+s1.length);
+        var obj_r;
+        //alert("route_shift1="+route_shift);
+        if(route_shift ==1)
+        {
+            obj_r=document.forms[0].elements['route_ev[]'];
+        }
+        else if(route_shift ==2)
+        {
+            obj_r=document.forms[0].elements['route_mor[]'];
+        }
+        var result_r=checkbox_selection(obj_r);
+        var str1 = result_r.split(',');
+        var k=0;		
+        for(var i=0;i<str1.length;i++)
+        {			
+            var str2 = str1[i].split(':');
+            var route = str2[0];
+            var r_vehicle = str2[1];			
+            if(s_vehicle.length!=undefined)
+            {
+                //alert("obj.length="+s_vehicle.length);
+                for (var j=0;j<s_vehicle.length;j++)
+                {																	
+                    //s_vehicle_tmp = s_vehicle_tmp.substring(0, s_vehicle_tmp.length - 1);
+                    var str_vehicle_final = s_vehicle[j].value.split('*');
+                    var s_vehicle_tmp = str_vehicle_final[0];
+                    //alert("sV="+trim(s_vehicle_tmp)+" ,rV="+trim(r_vehicle));					
+                    if(trim(s_vehicle_tmp) == trim(r_vehicle))
+                    {
+                        //alert("matched vehicle");
+                        if(k==0)
+                        {
+                            result = result +""+trim(s_vehicle_tmp)+"#";
+                        }
+                        else
+                        {
+                            result = result +","+trim(s_vehicle_tmp)+"#";
+                        }
+                        k++;
+                        break;
+                    }
+                }
+            }
+        }
+        //alert("result in route="+result);
+    }
+    else
+    {
+        var obj=document.forms[0].elements['live_vehicles[]'];
+        result=checkbox_selection(obj);
+        //alert("result in vehicle="+result);
+    }
+    //alert(result);
 
-	time_int = document.forms[0].autoref_combo.value;    // TIME INT VALUE BEFORE
+    var s1 = result.split(',');
+    var time_int;
+    //alert("s1 len="+s1.length);
 
-	if(s1.length>1)
-	{
-		//alert(time_int);
-		if(time_int>0 && time_int < 120)
-		{
-		  document.forms[0].autoref_combo.value = 120;
-		} 
-	}      
-	if(s1.length>100)
-	{
-		alert("Please select maximum 100 Vehicles at a time");
-		return false;
-	} 
+    time_int = document.forms[0].autoref_combo.value;    // TIME INT VALUE BEFORE
 
-	//document.getElementById('ref_time').style.display= '';
+    if(s1.length>1)
+    {
+        //alert(time_int);
+        if(time_int>0 && time_int < 120)
+        {
+            document.forms[0].autoref_combo.value = 120;
+        } 
+    }      
+    if(s1.length>10)
+    {
+        alert("Please select maximum 10 Vehicles at a time");
+        return false;
+    } 
+    if(s1.length>1)
+    {
+        if(time_int == 0)
+        {
+            document.getElementById('ref_time').innerHTML = "Refresh Time : (disabled)";
+        }		
+        else
+        {			
+            if(time_int<=120)
+            {				
+                document.getElementById('ref_time').innerHTML = "Refresh Time : ("+2+" mins)";
+            }
+            else
+            {
+                time_int = time_int / 60;
+                document.getElementById('ref_time').innerHTML = "Refresh Time : ("+time_int+" mins)";
+            }
+        }
+    }
+    else
+    {
+        if(time_int == 0)
+        {
+            document.getElementById('ref_time').innerHTML = "Refresh Time : (disabled)";
+        }
+        else if(time_int >0 && time_int< 60)
+        {    
+            document.getElementById('ref_time').innerHTML = "Refresh Time : ("+time_int+" secs)";
+        }
+        else
+        {
+            time_int = time_int / 60;
+            document.getElementById('ref_time').innerHTML = "Refresh Time : ("+time_int+" mins)";
+        }
+    }  
+    imei_data = result;
+    //var refresh_rate = document.forms[0].autoref_combo.value;
+    //alert("result="+result);  
+    //var s1 = result.split(',');
 
-	//time_int = document.forms[0].autoref_combo.value;     // TIME INT VALUE AFTER
-	//alert(time_int);
-	if(s1.length>1)
-	{
-		if(time_int == 0)
-		{
-			document.getElementById('ref_time').innerHTML = "Refresh Time : (disabled)";
-		}		
-		else
-		{			
-			if(time_int<=120)
-			{				
-				document.getElementById('ref_time').innerHTML = "Refresh Time : ("+2+" mins)";
-			}
-			else
-			{
-				time_int = time_int / 60;
-				document.getElementById('ref_time').innerHTML = "Refresh Time : ("+time_int+" mins)";
-			}
-		}
-	}
-	else
-	{
-		if(time_int == 0)
-		{
-			document.getElementById('ref_time').innerHTML = "Refresh Time : (disabled)";
-		}
-		else if(time_int >0 && time_int< 60)
-		{    
-			document.getElementById('ref_time').innerHTML = "Refresh Time : ("+time_int+" secs)";
-		}
-		else
-		{
-			time_int = time_int / 60;
-			document.getElementById('ref_time').innerHTML = "Refresh Time : ("+time_int+" mins)";
-		}
-	}
+    close_popup();
+    //alert("s1.len="+s1.length);
+
+    if (GBrowserIsCompatible()) 
+    {
+        liveDataDisplay=[[]];
+        //alert("in GBrowserIsCompatible")
+        map.clearOverlays();	
+    }	
+    /*if((browser=="Microsoft Internet Explorer") && (version>=4)) // for internet xeplorer
+    {
+        alert("Retrieving data ..... plz wait!");
+    } */ 
+    document.getElementById('prepage').style.visibility='visible'; 
   
-	imei_data = result;
-	//var refresh_rate = document.forms[0].autoref_combo.value;
-	//alert("result="+result);  
-	//var s1 = result.split(',');
+    pt = null;
+    imei1 = null;
+    vname1 = null;
+    speed1 = null;
+    fuel1 = null;
+    datetime1 = null;
+    marker1 = null;
+    day_max_speed1 = null;
+    day_max_speed_time1 = null;
+    last_halt_time1 = null;  
 
-	close_popup();
-	//alert("s1.len="+s1.length);
+    pt = new Array();        //  RE-Initialise marker array vairables
+    imei1 = new Array();
+    vname1 = new Array();
+    speed1 = new Array();
+    fuel1 = new Array();
+    datetime1 = new Array();
+    marker1 = new Array();
+    day_max_speed1 = new Array();
+    day_max_speed_time1 = new Array();
+    last_halt_time1 = new Array();   
 
-	if (GBrowserIsCompatible()) 
-	{
-            liveDataDisplay=[[]];
-		//alert("in GBrowserIsCompatible")
-		map.clearOverlays();	
-	}	
-	/*if((browser=="Microsoft Internet Explorer") && (version>=4)) // for internet xeplorer
-	{
-		alert("Retrieving data ..... plz wait!");
-	} */ 
-	document.getElementById('prepage').style.visibility='visible';
-    
-	/*if(s1.length>0)
-	{
-	//alert("In Moving V");  		
-	  
-	for(var i=0;i<s1.length;i++)
-	{
-	  var s2 = s1[i].split('#');
-	  imei_tmp = s2[0];
-	  date_tmp = s2[1];       
-		 
-	  alert("In Moving:"+imei_tmp);
-	  //alert("date_tmp1="+date_tmp);
-	  movingVehicle_prev(result);    // FOR MOVING VEHICLE FOR NOW       
-	  //LP_prev('.$stopped_vimei[$i].')              
-	}
-	}   */  
-  
-	pt = null;
-	imei1 = null;
-	vname1 = null;
-	speed1 = null;
-	fuel1 = null;
-	datetime1 = null;
-	marker1 = null;
-	day_max_speed1 = null;
-	day_max_speed_time1 = null;
-	last_halt_time1 = null;  
+    point_prev = null;
+    vid_prev = null;
+    dist_prev = null;
+    marker_prev = null;
+    label_prev = null;
+    angle_prev = null;
+    trail_flag = false;
 
-	pt = new Array();        //  RE-Initialise marker array vairables
-	imei1 = new Array();
-	vname1 = new Array();
-	speed1 = new Array();
-	fuel1 = new Array();
-	datetime1 = new Array();
-	marker1 = new Array();
-	day_max_speed1 = new Array();
-	day_max_speed_time1 = new Array();
-	last_halt_time1 = new Array();   
+    point_prev = new Array();   //  RE-Initialise trail array vairables
+    vid_prev = new Array();
+    dist_prev = new Array();
+    marker_prev = new Array();
+    label_prev = new Array();
+    angle_prev = new Array();
+    date_prev = new Array(); 
 
-	point_prev = null;
-	vid_prev = null;
-	dist_prev = null;
-	marker_prev = null;
-	label_prev = null;
-	angle_prev = null;
-	trail_flag = false;
-
-	point_prev = new Array();   //  RE-Initialise trail array vairables
-	vid_prev = new Array();
-	dist_prev = new Array();
-	marker_prev = new Array();
-	label_prev = new Array();
-	angle_prev = new Array();
-	date_prev = new Array(); 
-
-	movingVehicle_prev(jsActionNo);    // FOR MOVING VEHICLE FOR NOW 
+    movingVehicle_prev(jsActionNo);    // FOR MOVING VEHICLE FOR NOW 
 }
 
 function auto_refresh_moving_data()

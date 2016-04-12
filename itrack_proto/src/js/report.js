@@ -3,39 +3,39 @@
   {
     alert("hello");
   } */
-function show_upload_format(param_value)
-{
-        if(param_value=="upload_format1")
-        {
-                document.getElementById("format_type").value="";
-                document.getElementById("format_type").value="upload_format1";
-                document.getElementById("upload_format2").style.display="none";
-                document.getElementById("upload_format3").style.display="none";
-                document.getElementById("upload_format1").style.display="";			
-        }
-        if(param_value=="upload_format2")
-        {
-                document.getElementById("format_type").value="";
-                document.getElementById("format_type").value="upload_format2";
-                document.getElementById("upload_format1").style.display="none";
-                document.getElementById("upload_format3").style.display="none";	
-                document.getElementById("upload_format2").style.display="";			
-        }
-        if(param_value=="upload_format3")
-        {
-                document.getElementById("format_type").value="";
-                document.getElementById("format_type").value="upload_format3";
-                document.getElementById("upload_format1").style.display="none";
-                document.getElementById("upload_format2").style.display="none";
-                document.getElementById("upload_format3").style.display="";			
-        }
-}
-
-function report_upload_file(filename,title)            // manage.js
-{
-        var poststr ="";
-        makePOSTRequest(filename, poststr); 
-}	
+	function show_upload_format(param_value)
+	{
+		if(param_value=="upload_format1")
+		{
+			document.getElementById("format_type").value="";
+			document.getElementById("format_type").value="upload_format1";
+			document.getElementById("upload_format2").style.display="none";
+			document.getElementById("upload_format3").style.display="none";
+			document.getElementById("upload_format1").style.display="";			
+		}
+		if(param_value=="upload_format2")
+		{
+			document.getElementById("format_type").value="";
+			document.getElementById("format_type").value="upload_format2";
+			document.getElementById("upload_format1").style.display="none";
+			document.getElementById("upload_format3").style.display="none";	
+			document.getElementById("upload_format2").style.display="";			
+		}
+		if(param_value=="upload_format3")
+		{
+			document.getElementById("format_type").value="";
+			document.getElementById("format_type").value="upload_format3";
+			document.getElementById("upload_format1").style.display="none";
+			document.getElementById("upload_format2").style.display="none";
+			document.getElementById("upload_format3").style.display="";			
+		}
+	}
+  
+	function report_upload_file(filename,title)            // manage.js
+	{
+		var poststr ="";
+		makePOSTRequest(filename, poststr); 
+	}	
   
   function action_report_fuel_halt(obj)
   {
@@ -454,15 +454,14 @@ if(document.getElementById('acc').value=='1')
     makePOSTRequest('src/php/datagap_getdivinfo.htm', poststr);
   } 
 
-  /////////////////////  REPORT MODULE /////////////////////////////////////////  	  	
-   function report_person_invalid_data(filename,title)            // manage.js
+  /////////////////////  REPORT MODULE /////////////////////////////////////////  
+    function report_person_invalid_data(filename,title)            // manage.js
     {
         showManageLoadingMessage();
         var poststr = "title=" + encodeURI(title);	
         //alert("poststr="+poststr);
         makePOSTRequest(filename, poststr);
     }
-  
   function report_common_prev(filename,title)            // manage.js
 	{
 		showManageLoadingMessage();
@@ -498,9 +497,9 @@ if(document.getElementById('acc').value=='1')
 	
 	function report_show_auto_manager(filename,title)            // manage.js
 	{	
-	//alert("file_name="+filename+"title="+title);
-    var poststr = "title=" + encodeURI(title);	
-    makePOSTRequest(filename, poststr);
+            //alert("file_name="+filename+"title="+title);
+            var poststr = "title=" + encodeURI(title);	
+            makePOSTRequest(filename, poststr);
 	}
 	
 	function showManageLoadingMessage()
@@ -644,53 +643,6 @@ if(document.getElementById('acc').value=='1')
 		document.thisform.submit();
 	} 
   }
-  
-function action_report_inactive_data()
-{
-    var obj=document.thisform;
-    var device_str = get_selected_vehicle(obj); 
-    if(device_str!=false)
-    {
-        if(document.getElementById("duration").value=="select")
-        {
-            alert("Please select duration");
-            return false;
-        }
-        else
-        {
-
-            document.getElementById("loading_msg").style.display = ''; 
-            var poststr ="vehicleserial="+ encodeURI( device_str )+
-                    "&timeDuration="+encodeURI( document.getElementById("duration").value);                
-            //alert("poststr:"+poststr);
-            makePOSTRequest('src/php/action_report_inactive_data.htm', poststr); 
-        }
-    }
-    
-}
-
-function action_report_nogps_data()
-{
-    var obj=document.thisform;
-    var device_str = get_selected_vehicle(obj); 
-    if(device_str!=false)
-    {
-        if(document.getElementById("duration").value=="select")
-        {
-            alert("Please select duration");
-            return false;
-        }
-        else
-        {
-
-            document.getElementById("loading_msg").style.display = ''; 
-            var poststr ="vehicleserial="+ encodeURI( device_str )+
-                    "&timeDuration="+encodeURI( document.getElementById("duration").value);                
-           //alert("poststr:"+poststr);
-           makePOSTRequest('src/php/action_report_nogps_data.htm', poststr); 
-        }
-    }
-}
 
 function report_moto_trip_display(file_name,title)
   {
@@ -1181,7 +1133,38 @@ function report_moto_trip_display(file_name,title)
 	
 	function get_selected_vehicle(obj)
 	{
-		var flag=0;
+            var flag=0;
+            obj=obj.vehicleserial;
+            if(obj.length!=undefined)
+            {
+                    for (var i=0;i<obj.length;i++)
+                    {
+                            if(obj[i].checked==true)
+                            {
+                                    var id=obj[i].value;
+                                    flag=1;
+                            }	  
+                    }
+            }
+            else
+            {
+                    if(obj.checked==true)
+                    {
+                            id=obj.value;
+                            flag=1;
+                    }
+            }
+            if(flag==0)
+            {
+                    alert("Please Select Atleast One Option");
+                    return false;
+            }
+            else
+            {
+              // alert("id="+id);
+                    return id;
+            }
+		/*var flag=0;
 		var i;
 		var s = obj.elements['vehicleserial[]'];		
 		var vehicle_str="";
@@ -1219,7 +1202,7 @@ function report_moto_trip_display(file_name,title)
 		else
 		{	  
 			return vehicle_str;
-		}	
+		}*/	
 	}
 
 function get_selected_vehicle_radio(obj)
@@ -1352,6 +1335,7 @@ function get_selected_vehicle_radio(obj)
     // GET SELECTED VEHICLES 
 
     var device_str = get_selected_vehicle(obj);
+    //alert("deviceStr="+device_str);
 
 	if(device_str==false)
 	{
@@ -1565,7 +1549,7 @@ function action_report_nearby_location(obj)
       return false;
     }
     
-    document.getElementById("loading_msg").style.display = '';  
+   
     
     //var device_str = get_selected_vehicle(obj); 
     var rec = obj.vehicleserial;
@@ -1577,14 +1561,15 @@ function action_report_nearby_location(obj)
   	}
 	
     if(device_str!=false)
-  	{    
+  	{  
+             document.getElementById("loading_msg").style.display = '';  
       var poststr = "vehicleserial=" + encodeURI( device_str ) +					
                     "&start_date=" + encodeURI( document.getElementById("date1").value )+
                     "&end_date=" + encodeURI( document.getElementById("date2").value )+  
                     "&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
                     //alert("riz:"+poststr);  
   	}                     
-    makePOSTRequest('src/php/action_report_distance.htm', poststr);
+    //makePOSTRequest('src/php/action_report_distance.htm', poststr);
   }
   
    /*function showReportPrevPage(displayPageName,selected_account_id,selected_options_value,s_vehicle_display_option)
@@ -1657,95 +1642,27 @@ function action_report_nearby_location(obj)
     	{
     		document.getElementById("loading_msg").style.display='none';
     	}
-  	/*if(document.getElementById("serverTimeCheck").checked==true)
+  	if(document.getElementById("serverTimeCheck").checked==true)
 	{
             var getDataBy=1;
 	}
         else
         {
             var getDataBy=0;  
-        }*/
+        }
       if(device_str!=false)
   	  {    
-       /* var poststr = "vehicleserial=" + encodeURI( device_str ) +				
+        var poststr = "vehicleserial=" + encodeURI( device_str ) +				
                     "&start_date=" + encodeURI( document.getElementById("date1").value )+
                     "&end_date=" + encodeURI( document.getElementById("date2").value )+ 
                     "&getDataBy=" + getDataBy+
-                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value ); */                 
-           var poststr = "vehicleserial=" + encodeURI( device_str ) +				
-                    "&start_date=" + encodeURI( document.getElementById("date1").value )+
-                    "&end_date=" + encodeURI( document.getElementById("date2").value )+ 
-                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value );                 
-                 
-          //alert("riz:"+poststr);
+                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
+                    //alert("riz:"+poststr);
          makePOSTRequest('src/php/action_report_temperature.htm', poststr);
   	 } 	
   }  
   
   
-  function action_report_flowRate(obj)
-  {
-	//alert("FlowRate");
-      // GET SELECTED VEHICLES 
-	document.getElementById("loading_msg").style.display = '';  
-	var device_str = get_selected_vehicle(obj); 
-	if(device_str==false)
-	{
-		document.getElementById("loading_msg").style.display='none';
-	}
-	if(document.getElementById("serverTimeCheck").checked==true)
-	{
-		var getDataBy=1;
-	}
-	else
-	{
-		var getDataBy=0;  
-	}
-	if(device_str!=false)
-	{    
-		var poststr = "vehicleserial=" + encodeURI( device_str ) +				
-		"&start_date=" + encodeURI( document.getElementById("date1").value )+
-		"&end_date=" + encodeURI( document.getElementById("date2").value )+ 
-		"&getDataBy=" + getDataBy+
-		"&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
-		//alert("riz:"+poststr);
-		makePOSTRequest('src/php/action_report_flowRate.htm', poststr);
-	} 	
-  } 
-  
-  function action_report_dispensing(obj)
-  {
-      // GET SELECTED VEHICLES 
-      document.getElementById("loading_msg").style.display = '';  
-      var device_str = get_selected_vehicle(obj); 
-    	if(device_str==false)
-    	{
-    		document.getElementById("loading_msg").style.display='none';
-    	}
-  	/*if(document.getElementById("serverTimeCheck").checked==true)
-	{
-            var getDataBy=1;
-	}
-        else
-        {
-            var getDataBy=0;  
-        }*/
-      if(device_str!=false)
-  	  {    
-        /*var poststr = "vehicleserial=" + encodeURI( device_str ) +				
-                    "&start_date=" + encodeURI( document.getElementById("date1").value )+
-                    "&end_date=" + encodeURI( document.getElementById("date2").value )+ 
-                    "&getDataBy=" + getDataBy+
-                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value );  */ 
-          
-         var poststr = "vehicleserial=" + encodeURI( device_str ) +				
-                    "&start_date=" + encodeURI( document.getElementById("date1").value )+
-                    "&end_date=" + encodeURI( document.getElementById("date2").value )+                     
-                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value );
-                    //alert("riz:"+poststr);
-         makePOSTRequest('src/php/action_report_dispensing.htm', poststr);
-  	 } 	
-  }  
   //1.PERFORMANCE REPORT  
   
   function action_report_performance(obj)
@@ -1783,26 +1700,17 @@ function action_report_nearby_location(obj)
     var rec = obj.days;
     var device_str = get_selected_vehicle(obj);
 	
-	if(obj.reportType.checked==true)
-	{
-	var reportType="speed";
-	}
-	else
-	{
-		var reportType="noSpeed";
-	}
    
     if(device_str!=false)
     {	
     	var day_str = radio_selection(rec); 
     	if(day_str!=false)
     	{
-    		document.getElementById("loading_msg").style.display = '';  
-    		var poststr = "vehicleserial=" + encodeURI( device_str ) +						 
-    					  "&month=" + encodeURI( document.getElementById("month").value )+
-    					  "&year=" + encodeURI( document.getElementById("year").value )+
-    					  "&days=" + encodeURI( day_str )+
-						  "&reportType=" + encodeURI(reportType);
+            document.getElementById("loading_msg").style.display = '';  
+            var poststr = "vehicleserial=" + encodeURI( device_str ) +						 
+                        "&month=" + encodeURI( document.getElementById("month").value )+
+                        "&year=" + encodeURI( document.getElementById("year").value )+
+                        "&days=" + encodeURI( day_str );
         //alert(poststr);							  
     	}
     }     					
@@ -1930,8 +1838,32 @@ function action_report_nearby_location(obj)
   //1.SUMMARY REPORT  
   
   function action_report_summary(obj)
-  {    
-    document.getElementById("loading_msg").style.display = '';
+  {  
+      // GET SELECTED VEHICLES    
+    var startDate1 = document.getElementById("date1").value;
+    var endDate1 = document.getElementById("date2").value;
+    
+    var sd = startDate1.split(" ");
+    var ed = endDate1.split(" "); 
+    
+    var d1 = new Date(sd[0]);
+    var m1 = d1.getTime(); 
+    
+    var d2 = new Date(ed[0]);
+    var m2 = d2.getTime(); 	
+    
+    var mdiff = m2 - m1;               //five Days difference    =432000000 , 30 days diff= 2592000000  (eg.30*60*60*24*1000)
+    
+    //alert("mdiff="+mdiff); 
+	
+    //if(mdiff > 432000000)
+    if(mdiff > 864000000)
+    {
+      alert("Maximum 10 days report is allowed at once");
+      return false;
+    }
+    
+    
     
     var device_str = get_selected_vehicle(obj); 
 	if(device_str==false)
@@ -1941,12 +1873,13 @@ function action_report_nearby_location(obj)
 	
     if(device_str!=false)
 	{
+            document.getElementById("loading_msg").style.display = '';
     var poststr = "vehicleserial=" + encodeURI( device_str ) +				
                   "&start_date=" + encodeURI( document.getElementById("date1").value )+
                   "&end_date=" + encodeURI( document.getElementById("date2").value );                  
                   //alert("riz:"+poststr); 
 	}                   
-    makePOSTRequest('src/php/action_report_summary.htm', poststr);
+    //makePOSTRequest('src/php/action_report_summary.htm', poststr);
   }  
   
 
@@ -2255,7 +2188,7 @@ function action_report_nearby_location(obj)
   				var hrto  =  document.getElementById("hrto").value;
   				var mito  =  document.getElementById("mito").value;
   				var ssto	=  document.getElementById("ssto").value;
-  				var date1 = date+" "+hrfrom+":"+mifrom+":"+ssfrom;
+  				date1 = date+" "+hrfrom+":"+mifrom+":"+ssfrom;
   				var date2 = date+" "+hrto+":"+mito+":"+ssto;
   
   				var poststr = "account_id_local="+account_id_local1+
@@ -2928,72 +2861,6 @@ function action_alert_polyline_route_violation(obj)
 		alert('An unexpected error has occurred! Please try later.');
 	}
 	});
-	
-	
-  }
-  function action_polyline_violation_history(obj)
-  {
-	
-    
-    // GET SELECTED VEHICLES  
-    var device_str = get_selected_vehicle(obj);
-    if(device_str==false)
-    {
-        document.getElementById("loading_msg").style.display='none';
-    }
-
-    if(device_str!=false)
-    {
-        var startDate1 = document.getElementById("date1").value;
-        var endDate1 = document.getElementById("date2").value;
-
-        var sd = startDate1.split(" ");
-        var ed = endDate1.split(" "); 
-
-        var d1 = new Date(sd[0]);
-        var m1 = d1.getTime(); 
-
-        var d2 = new Date(ed[0]);
-        var m2 = d2.getTime(); 	
-
-        var mdiff = m2 - m1;               //five Days difference    =432000000 , 30 days diff= 2592000000  (eg.30*60*60*24*1000)
-
-        //alert("mdiff="+mdiff); 
-
-        //if(mdiff > 432000000)
-        if(mdiff > 2592000000)
-        {
-          alert("Maximum 30 days report is allowed at once");
-          return false;
-        }
-
-        document.getElementById("loading_msg").style.display = ''; 
-        var poststr = "vehicleserial=" + encodeURI( device_str ) +			
-                    "&start_date=" + encodeURI( document.getElementById("date1").value )+
-                    "&end_date=" + encodeURI( document.getElementById("date2").value );  
-        //alert(poststr);
-	$.ajax({
-	type: "POST",
-	url:'src/php/action_polyline_violation_history.php',
-	data: poststr,
-	success: function(response){
-		//console.log(response);
-		//alert("response="+response);		
-		 document.getElementById('reportPrevPage').style.display="none";
-                document.getElementById('rightMenu').style.display="";
-                document.getElementById('bodyspan').style.display="";
-		$("#bodyspan").html(response);
-		//document.getElementById('loading_pending_tanker').innerHTML="";	
-	},
-	error: function()
-	{
-		alert('An unexpected error has occurred! Please try later.');
-	}
-	});
-	
-    }
-    
-   
 	
 	
   }
@@ -4113,7 +3980,7 @@ function checkbox_selection_datalog(obj1)
 }
   //1.Visit Detail REPORT  
   
- function action_report_visitDetail(obj)
+  function action_report_visitDetail(obj)
   {
     // GET SELECTED VEHICLES 
     //alert("one="+document.getElementById("loading_msg").style.display);     
@@ -4131,7 +3998,53 @@ function checkbox_selection_datalog(obj1)
                    
         makePOSTRequest('src/php/action_report_visitDetail.htm', poststr);
     }
-  }     
+  } 
+function action_report_inactive_data()
+{
+    var obj=document.thisform;
+    var device_str = get_selected_vehicle(obj); 
+    if(device_str!=false)
+    {
+        if(document.getElementById("duration").value=="select")
+        {
+            alert("Please select duration");
+            return false;
+        }
+        else
+        {
+
+            document.getElementById("loading_msg").style.display = ''; 
+            var poststr ="vehicleserial="+ encodeURI( device_str )+
+                    "&timeDuration="+encodeURI( document.getElementById("duration").value);                
+            //alert("poststr:"+poststr);
+            makePOSTRequest('src/php/action_report_inactive_data.htm', poststr); 
+        }
+    }
+    
+}
+
+function action_report_nogps_data()
+{
+    var obj=document.thisform;
+    var device_str = get_selected_vehicle(obj); 
+    if(device_str!=false)
+    {
+        if(document.getElementById("duration").value=="select")
+        {
+            alert("Please select duration");
+            return false;
+        }
+        else
+        {
+
+            document.getElementById("loading_msg").style.display = ''; 
+            var poststr ="vehicleserial="+ encodeURI( device_str )+
+                    "&timeDuration="+encodeURI( document.getElementById("duration").value);                
+           //alert("poststr:"+poststr);
+           makePOSTRequest('src/php/action_report_nogps_data.htm', poststr); 
+        }
+    }
+}
   
   	function report_upload_file_1(filename,title,upload_type)
 	{

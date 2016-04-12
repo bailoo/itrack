@@ -19,8 +19,13 @@ for($k=0;$k<$size_feature_session;$k++)
 		<?php
 		if($flag_station)
 		{			
-			echo '<center><input type="radio" name="live_opt" value="1" checked onclick="javascript:show_live_div();"><strong>Vehicle</strong>&nbsp;&nbsp;<input type="radio" name="live_opt" value="2" onclick="javascript:show_live_div();"><strong>Route</strong></center>';
-			echo '<center><div id="show_route_opt" style="display:none;"><table rules=all style="font-size:10px;" border=1><tr><td><input type="radio" name="route_opt" value="1" onclick="javascript:show_all_routes();"><strong>Evening</strong>&nbsp;&nbsp;<input type="radio" name="route_opt" value="2" onclick="javascript:show_all_routes();"><strong>Morning</strong></td></tr></table></div></center>';
+			echo '<center>'
+                    . '<input type="radio" name="live_opt" value="1" checked onclick="javascript:show_live_div();">'
+                                . '<strong>Vehicle</strong>'
+                                . '&nbsp;&nbsp;'
+                                . '<!--<input type="radio" name="live_opt" value="2" onclick="javascript:show_live_div();">'
+                                . '<strong>Route</strong>--></center>';
+			//echo '<center><div id="show_route_opt" style="display:none;"><table rules=all style="font-size:10px;" border=1><tr><td><input type="radio" name="route_opt" value="1" onclick="javascript:show_all_routes();"><strong>Evening</strong>&nbsp;&nbsp;<input type="radio" name="route_opt" value="2" onclick="javascript:show_all_routes();"><strong>Morning</strong></td></tr></table></div></center>';
 		}
 		?>
 		<table width="100%" cellspacing=0 cellpadding=0>

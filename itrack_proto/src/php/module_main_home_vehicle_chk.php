@@ -172,8 +172,8 @@ echo"</table>";
           echo '
           <tr>
             <td align="left">             
-              <span id="'.$vchk.'"><INPUT TYPE="checkbox"  name="vehicleserial[]" VALUE="'.$imei_arr[$vehicle].'"></span>
-              <span id="'.$vrad.'" style="display:none;"><INPUT TYPE="radio"  name="vehicleserial_radio" VALUE="'.$imei_arr[$vehicle].'"></span>              
+              <span id="'.$vchk.'"><INPUT TYPE="radio"  name="vehicleserial" VALUE="'.$imei_arr[$vehicle].'"></span>
+              <!--<span id="'.$vrad.'" style="display:none;"><INPUT TYPE="radio"  name="vehicleserial_radio" VALUE="'.$imei_arr[$vehicle].'"></span>-->              
             </td>
             <td>
               <font color="'.$color.'">'.$vehicle.'</font>

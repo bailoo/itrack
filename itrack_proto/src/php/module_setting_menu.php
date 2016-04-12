@@ -69,51 +69,8 @@
 																			"</tr>"+
 																			"<tr>"+
 																				"<td>'.$nbsp.'"+ 
-																					"<a href=javascript:'.$js_function_name.'(\'src/php/setting_account_preferrence_prev.htm\',\'first_stage\',\'Account%20Preferrence\'); class=\'menuitem\'>"+
-																						"'.$nbsp.'Account Preferrence"+
-																					"</a>"+
-																				"</td>"+
-																			"</tr>"+
-																		"</table>"+
-																	"</td>"+
-																"</tr>"+
-															"</table>",editable:false, children:													
-															[
-															]},
-														{type:"Text",
-															label:"<table border=0 class=\'mystyle\'>"+
-																"<tr>"+ 																				
-																	"<td valign=\'top\'>"+
-																		"<table border=0 class=\'mystyle\'>"+
-																			"<tr>"+
-																				"<td height=\'1px\'></td>"+
-																			"</tr>"+
-																			"<tr>"+
-																				"<td>'.$nbsp.'"+ 
 																					"<a href=javascript:'.$js_function_name.'(\'src/php/setting_account_password_prev.htm\',\'first_stage\',\'Change%20Password\'); class=\'menuitem\'>"+
 																						"'.$nbsp.'Change Password"+
-																					"</a>"+
-																				"</td>"+
-																			"</tr>"+
-																		"</table>"+
-																	"</td>"+
-																"</tr>"+
-															"</table>",editable:false, children:															
-															[
-															]},
-															
-															{type:"Text",
-															label:"<table border=0 class=\'mystyle\'>"+
-																"<tr>"+ 																				
-																	"<td valign=\'top\'>"+
-																		"<table border=0 class=\'mystyle\'>"+
-																			"<tr>"+
-																				"<td height=\'1px\'></td>"+
-																			"</tr>"+
-																			"<tr>"+
-																				"<td>'.$nbsp.'"+ 
-																					"<a href=javascript:'.$js_function_name.'(\'src/php/setting_color_prev.htm\',\'first_stage\',\'Change%20Color\'); class=\'menuitem\'>"+
-																						"'.$nbsp.'Change Color"+
 																					"</a>"+
 																				"</td>"+
 																			"</tr>"+
