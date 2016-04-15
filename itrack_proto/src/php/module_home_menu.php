@@ -1,5 +1,5 @@
 <table border='0' width="100%" height="100%" cellspacing="0" cellspacing="0">
-    <tr class="left_tr1">
+    <tr class="left_tr1" valign="top" height="7%">
       <td>
         <?php 
 		include('module_logo.php');  
@@ -59,9 +59,13 @@
 					</table>
 				</td>
 			</tr>';*/
-			
+echo'<tr>
+<td>&nbsp;</td>
+</tr>';			
             include('module_latlng.php');
-            include('module_speed_symbol.php');
+echo'<tr><td>&nbsp;</td></tr>';
+echo'<tr><td>&nbsp;</td></tr>';           
+ include('module_speed_symbol.php');
             
            /*  if($flag_station==1)
             {
@@ -108,7 +112,7 @@
     </td>
   </tr>  
   <tr class="left_tr3">
-      <td>          
+      <td valign="bottom">          
           <?php include('module_copyright.php');?>
       </td>
   </tr>

@@ -19,6 +19,7 @@
 <body class="body_part" topmargin="0">
 
   <?php
+
     $flag_station = 0;
 	$flag_visit_track = 0;
     

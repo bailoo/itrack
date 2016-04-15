@@ -1569,7 +1569,7 @@ function action_report_nearby_location(obj)
                     "&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
                     //alert("riz:"+poststr);  
   	}                     
-    //makePOSTRequest('src/php/action_report_distance.htm', poststr);
+    makePOSTRequest('src/php/action_report_distance.htm', poststr);
   }
   
    /*function showReportPrevPage(displayPageName,selected_account_id,selected_options_value,s_vehicle_display_option)
@@ -1879,7 +1879,7 @@ function action_report_nearby_location(obj)
                   "&end_date=" + encodeURI( document.getElementById("date2").value );                  
                   //alert("riz:"+poststr); 
 	}                   
-    //makePOSTRequest('src/php/action_report_summary.htm', poststr);
+    makePOSTRequest('src/php/action_report_summary.htm', poststr);
   }  
   
 

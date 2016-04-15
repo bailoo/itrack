@@ -1,12 +1,18 @@
 <?php 
+
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
     include_once('Hierarchy.php');
     include_once('util_session_variable.php');
     include_once('util_php_mysql_connectivity.php');
     include_once('active_vehicle_func.php');
+    $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
+//print_r($pathInPieces);
     //if($account_id!=2)
     {
-    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
-    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
+    include_once($pathToRoot."/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    include_once($pathToRoot."/phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
     
     $o_cassandra = new Cassandra();	
     $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
@@ -74,13 +80,13 @@
     //echo "category1=".$category1."<br>";
     //echo "user_type_option=".$user_type_option."temp_type=".$tmp_type."<br>";
     echo "<table width=100% border=0 cellspacing=0 cellpadding=0 class='module_left_menu'>";		
-    echo"<tr>
+/*    echo"<tr>
             <td class='text' colspan='2'>
                 <span id='all'>
                     &nbsp;<input type='checkbox' name='all' value='1' onClick='javascript:SelectAll(\"vehicle\");'>&nbsp;&nbsp;&nbsp;Select All	( ".$tmp_type." )			         
                 </span>
             </td>			
-        </tr>";	
+        </tr>";	*/
     
     if($display_type=="default" || $display_type=="single")
     { 
@@ -172,7 +178,7 @@ echo"</table>";
           echo '
           <tr>
             <td align="left">             
-              <span id="'.$vchk.'"><INPUT TYPE="radio"  name="vehicleserial" VALUE="'.$imei_arr[$vehicle].'"></span>
+              <span id="'.$vchk.'"><INPUT TYPE="radio"  name="vehicleserial_radio" VALUE="'.$imei_arr[$vehicle].'"></span>
               <!--<span id="'.$vrad.'" style="display:none;"><INPUT TYPE="radio"  name="vehicleserial_radio" VALUE="'.$imei_arr[$vehicle].'"></span>-->              
             </td>
             <td>

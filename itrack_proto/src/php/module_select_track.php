@@ -98,12 +98,12 @@
                 <td class="module_select_track2" align="center">:</td>
                 <td>
                    <select name='interval' style="width:78%">
-                    <option value='auto'>Auto</option> 
+                   <!--<option value='auto'>Auto</option> 
                     <option value="5">5 sec</option>
                     <option value="30" selected>30 sec</option>
   									<option value="60">1 min</option>
   									<option value="120">2 min</option>
-  									<option value="240">4 min</option>
+  									<option value="240">4 min</option>-->
   									<option value="300">5 min</option>
   									<option value="600">10 min</option>
   									<option value="900">15 min</option>

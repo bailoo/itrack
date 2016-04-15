@@ -28,10 +28,10 @@ echo'<table border="0" align=center class="manage_interface" cellspacing="2" cel
 			<input type="text" name="make" id="make">
 			</td>
 		</tr>';
-		$query="SELECT * FROM feature_mapping WHERE feature_type='hw' AND status=1";
+		/*$query="SELECT * FROM feature_mapping WHERE feature_type='hw' AND status=1";
 		//echo "query=".$query;
-		$result=mysql_query($query,$DbConnection);
-	echo'<tr>
+		$result=mysql_query($query,$DbConnection);*/
+	echo'<!--<tr>
 			<td colspan="4" align="center">
 				<table border="0" class="manage_interface">
 					<tr>
@@ -49,7 +49,7 @@ echo'<table border="0" align=center class="manage_interface" cellspacing="2" cel
 		echo'
 				</table>
 			</td>			
-		</tr>
+		</tr>-->
 		
 		<tr>                    									
 			<td align="center" colspan="3">

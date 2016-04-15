@@ -33,6 +33,16 @@ function home_date_time_validation(b)
     alert("Start date is greater than end date.Please correct it.");
     return false;
   }
+ var difference_sec = (cp_enddate1 - cp_startdate1)/1000;
+        var totalMinutes = difference_sec / 60;
+       var minutesPerDay=24*60;
+        
+            var days = totalMinutes / minutesPerDay;
+    if(days>30)
+    {
+        alert("Date ranage must be less than 30 days.");
+        return false;
+    }
   return true;
 }
 

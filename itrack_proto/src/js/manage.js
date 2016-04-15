@@ -1434,8 +1434,8 @@ function show_consignment_vehicle(account_id_this)
 		//alert("action_type="+action_type);
 		if(action_type == "add")
 		{
-			var obj=document.manage1.elements['io_name[]'];
-			var result=device_checkbox_selection(obj);
+			//var obj=document.manage1.elements['io_name[]'];
+			//var result=device_checkbox_selection(obj);
 			//alert("result="+result);	  
 			var result_validaton = validate_manage_add_device(action_type); 			
 			if(result_validaton!=false)

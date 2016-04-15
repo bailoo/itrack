@@ -183,12 +183,13 @@ function show_data_on_map(report_format)
             }
         }
     }  
-    //alert("display_mode="+mode+" ,imei="+imeino1); 
+   // alert("display_mode="+mode+" ,imei="+imeino1); 
     var uniqueImeiArr=new Array();
     var num1=0; 
     var dt = home_date_time_validation(mode);
     if(dt==true)
-    { 
+    {
+//alert("in if"); 
         if(imeino1.length!=undefined)
         {      
             for(i=0;i<imeino1.length;i++)
@@ -313,21 +314,22 @@ function show_data_on_map(report_format)
                 difftype = 0;
 				
                 flag_play=0;
-                play_interval=0;				
+                play_interval=0;			
+                //alert("vid="+vid);	
                 load(vid,mode,startdate,enddate,pt_for_zoom,zoom_level,status,access,time_interval,flag_play,play_interval);	
             } 
             else if(report_format=="text_report")
             {
                 var date = new Date();
                 var dest = "../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
-                if(document.thisform.location.checked==true)
+                /*if(document.thisform.location.checked==true)
                 {
                     var data_with_location="1";					
                 }
                 else
                 {
                     var data_with_location="0";
-                }
+                }*/
                 if(mode==1)
                 {
                     document.ld.xml_file.value=dest;
@@ -337,8 +339,8 @@ function show_data_on_map(report_format)
                     document.ld.text_report_io_element.value=text_report_io_element;
                     document.ld.mode.value=mode;
                     document.ld.time_interval.value=time_interval;
-                    document.ld.dwt.value=data_with_location;
-                    document.ld.lastcategory.value=document.getElementById("category").value;
+                    document.ld.dwt.value=1;
+                    document.ld.lastcategory.value=1;
                     document.ld.submit();
                 }
                 else if(mode==2)
@@ -350,8 +352,8 @@ function show_data_on_map(report_format)
                     document.fd.text_report_io_element.value=text_report_io_element;
                     document.fd.mode.value=mode;
                     document.fd.time_interval.value=time_interval;
-                    document.fd.dwt.value=data_with_location;
-                    document.ld.lastcategory.value=document.getElementById("category").value;
+                    document.fd.dwt.value=1;
+                    document.ld.lastcategory.value=1;
                     document.fd.submit();
                 }
             } //else if  

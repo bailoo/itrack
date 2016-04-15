@@ -607,7 +607,7 @@ function show_report_1(responce)
 	function show_main_home_vehicle(display_type)
 	{
 		//alert("main home vehicle"+display_type);    
-    document.getElementById("vehicle_milstone").value='';
+//    document.getElementById("vehicle_milstone").value='';
 		
     if(display_type=="default")
 		{
@@ -620,17 +620,17 @@ function show_report_1(responce)
           display_mode[i].checked = true;
         }
       }*/ 			
-      document.getElementById("category").value=document.getElementById("default_category").value;
+   //   document.getElementById("category").value=document.getElementById("default_category").value;
 		}
 		//initialize();
 		
-		if(document.getElementById("user_type_option").value!="select")
+//		if(document.getElementById("user_type_option").value!="select")
 		{
-			if(display_type=="default" || document.getElementById("user_type_option").value=="all" || display_type=="single")
+			/*if(display_type=="default" || document.getElementById("user_type_option").value=="all" || display_type=="single")
 			{
 				if(display_type=="default" && display_type!="single")
 				{
-					var category="&category="+document.getElementById("default_category").value;
+					var category="&category=all";
 					//alert("category="+category);
 				}
 				else if(document.getElementById("user_type_option").value=="all")
@@ -647,7 +647,7 @@ function show_report_1(responce)
 					//alert("category="+category);
 				}
 				var poststr = "display_type1=" + display_type+category;
-				//alert("poststr="+poststr);
+				alert("poststr="+poststr);
 				makePOSTRequest('src/php/module_main_home_vehicle_chk.php', poststr);
 			}	
 			else
@@ -656,7 +656,11 @@ function show_report_1(responce)
 							   "&category="+document.getElementById("category").value;	
 				//alert("poststr1="+poststr);							   
 				makePOSTRequest('src/php/module_selection_information.php', poststr);	
-			}
+			}*/
+                       var poststr = "display_type1=" + encodeURI(display_type)+
+							   "&category=1";	
+				//alert("poststr1="+poststr);							   
+				makePOSTRequest('src/php/module_main_home_vehicle_chk.php', poststr);
 		}	
 	}
 

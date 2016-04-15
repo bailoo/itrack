@@ -171,7 +171,7 @@ class GoogleMapHelper{
 
 		$map .= "
 			var initialLocation;
-			var jsChillingPlant=".$cPlant.";
+			//var jsChillingPlant=".$cPlant.";
 			//alert('js='+jsChillingPlant);
 initialLocation = new google.maps.LatLng({$lat},{$lng});
 //alert('INIT='+initialLocation);
@@ -186,7 +186,7 @@ center: initialLocation,
 
 		    };
 		    {$id} = new google.maps.Map(document.getElementById('$id'), myOptions);	
-			var mining_test=document.getElementById('category').value;
+			/*var mining_test=document.getElementById('category').value;
 			//alert('mining_test='+mining_test);
 			if(mining_test=='5' || (document.getElementById('mining_user').value==5))
 			{
@@ -196,7 +196,7 @@ center: initialLocation,
 			else if(document.thisform.geofence_feature.checked==true)/////// for other users
 			{
 				show_geofence(map_canvas);				
-			}
+			}*/
 var input = (document.getElementById('pac-input'));		
   map_canvas.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
   var searchBox = new google.maps.places.SearchBox((input)); 
@@ -1206,7 +1206,7 @@ var input = (document.getElementById('pac-input'));
 						alert('Sorry! Either -GPS or Data Not Found');
 						exit;
 					}
-					var mouse_action = document.forms[0].mouse_action.value; // for google map mouseOver and click option
+					//var mouse_action = document.forms[0].mouse_action.value; // for google map mouseOver and click option
 					var latlngbounds = new google.maps.LatLngBounds();	
 					var str='';
 					var strURL='src/php/select_landmark.php?content='+str;        
@@ -1296,7 +1296,7 @@ var input = (document.getElementById('pac-input'));
 										
 						google.maps.event.addListener
 						(
-							marker, mouse_action, infoCallbackTrack(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,marker,ioStrLocal,dTravelLocal,feature_id_map,dMobileNoLocal)
+							marker, 'click', infoCallbackTrack(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,marker,ioStrLocal,dTravelLocal,feature_id_map,dMobileNoLocal)
 						);						
 						
 						var line = new google.maps.Polyline
@@ -1312,7 +1312,7 @@ var input = (document.getElementById('pac-input'));
 					}
 					map.setCenter(latlngbounds.getCenter());
 					map.fitBounds(latlngbounds);	
-					if(document.getElementById('category').value=='5')
+					/*if(document.getElementById('category').value=='5')
 					{
 						document.getElementById('vehicle_milstone').value='vehicle_zoom';			
 						show_milestones(map);		
@@ -1320,7 +1320,7 @@ var input = (document.getElementById('pac-input'));
 					else if((document.thisform.geofence_feature.checked==true) && (document.getElementById('category').value!=5))
 					{
 						show_geofence(map_canvas);				
-					}
+					}*/
 					for(var i=1;i<latarr.length;i++)
 					{
 						lat1 = latarr[i-1];
@@ -1814,7 +1814,7 @@ var input = (document.getElementById('pac-input'));
 						alert('Sorry! Either -GPS or Data Not Found');
 						exit;
 					}
-					var mouse_action = document.forms[0].mouse_action.value; // for google map mouseOver and click option
+					//var mouse_action = document.forms[0].mouse_action.value; // for google map mouseOver and click option
 					var latlngbounds = new google.maps.LatLngBounds();
 					var str='';
 					var strURL='src/php/select_landmark.php?content='+str;        
@@ -1855,7 +1855,7 @@ var input = (document.getElementById('pac-input'));
 							markers.push(marker);					
 						google.maps.event.addListener
 						(						
-							marker, mouse_action, infoCallback(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,ioStrLocal,marker,dMaxSpeedLocal,lHaltSpeedLocal,dMobNoLocal)
+							marker, 'click', infoCallback(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,ioStrLocal,marker,dMaxSpeedLocal,lHaltSpeedLocal,dMobNoLocal)
 						);					
 					}
 					

@@ -3,22 +3,25 @@
 //include_once("read_data_cassandra_db.php");     //##### INCLUDE CASSANDRA API
 $isReport=isset($isReport)?$isReport:0;
 $isReport2=isset($isReport2)?$isReport2:0;
-
+$pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
+//print_r($pathInPieces);
+//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]."/".$pathInPieces[4];
+$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
 if($isReport) 
 {
-   include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
-   include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
+   include_once($pathToRoot."/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
+   include_once($pathToRoot."/phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
 } 
 else if($isReport2) 
 {
-   include_once("../../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
-   include_once("../../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
+   include_once($pathToRoot."/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API*/
+   include_once($pathToRoot."/phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
 } 
 else 
 {      
    // echo "in else";
-    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
-    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
+    include_once($pathToRoot."/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    include_once($pathToRoot."/phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    //##### INCLUDE CASSANDRA API*/
 }
 //echo "EXISTS=".file_exists("../../../../../phpApi/libLog.php")."<br>";
 
