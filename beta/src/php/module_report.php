@@ -777,6 +777,42 @@ $flag_io_trip=0;
 												"</td>"+
 											"</tr>"+
 										"</table>",';
+
+
+echo'"<table border=0 class=\'mystyle\'>"+
+											"<tr>"+ 
+												"<td valign=\'top\'>"+
+													"<table border=0 class=\'mystyle\'>"+
+														"<tr>"+
+															"<td height=\'1px\'></td>"+
+														"</tr>"+
+														"<tr>"+
+															"<td>'.$nbsp.'"+
+																"<a href=\'customer_plant_home.htm\' target=\'_blank\' class=\'menuitem\'>"+
+																	"'.$nbsp.'<img src=\'images/report_icons/vehicle_report.jpeg\' style=\'border:none;width:20px;height:20px;\' class=\'help_img_css\'>"+
+																"</a>"+
+															"</td>"+
+														"</tr>"+
+													"</table>"+
+												"</td>"+
+												"<td valign=\'top\'>"+
+													"<table border=0 class=\'mystyle\'>"+
+														"<tr>"+
+															"<td height=\'1px\'></td>"+
+														"</tr>"+
+														"<tr>"+
+															"<td>"+ 	
+																"<a href=\'customer_plant_home.htm\' target=\'_blank\' class=\'menuitem\'>"+
+																	"'.$nbsp.'Customer/Plant On Map"+
+																"</a>"+
+															"</td>"+
+														"</tr>"+
+													"</table>"+
+												"</td>"+
+											"</tr>"+
+										"</table>",';
+
+
 										}
 										
 										echo'"<table border=0 class=\'mystyle\'>"+
