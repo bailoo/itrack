@@ -64,7 +64,7 @@ function getCustomerPlantChillingRecord($account_id,$type,$DbConnection)
     $query = "SELECT DISTINCT station_name,station_coord,customer_no,type FROM station WHERE ".
             "user_account_id='$account_id' AND type='$type' AND status=1";
     $result = mysql_query($query,$DbConnection);
-    
+    $dataArr=array(array());
     while($row=mysql_fetch_object($result))
     {
        $dataArr[]=array(
@@ -76,12 +76,49 @@ function getCustomerPlantChillingRecord($account_id,$type,$DbConnection)
     }
     return $dataArr;
 }
-
 function closeTransporterVehicleTrip($trip_id,$DbConnection)
 {
     $query="UPDATE transporter_vehicle_trips set status=0 WHERE serial=$trip_id AND status=1";
     $result=mysql_query($query,$DbConnection);
     return $result;
+}
+function updateCustomerOrder($updateDataObj,$DbConnection)
+{
+	$query="";
+	$query.="UPDATE customer_orders SET OrderStatus=$updateDataObj->status,EditID=$updateDataObj->edit_id"; 
+	$query.=",EditDate='$updateDataObj->edit_date',Remark='$updateDataObj->remark' WHERE sno=$updateDataObj->order_id";
+	//echo "query=".$query."<br>";			
+	$result=mysql_query($query,$DbConnection); 
+	return $result;  
+}
+function getTransporterName($DbConnection)
+{
+	$Query="";
+	$Query.="SELECT account_detail.account_id,account_detail.name FROM account,account_detail WHERE ";
+	$Query.="account.account_id=account_detail.account_id AND account.status=1 AND account.user_type='transporter'";
+	//echo "query=".$Query;           
+	$Result=mysql_query($Query,$DbConnection);
+	while($Row=mysql_fetch_object($Result))
+	{
+		$resArr[$Row->account_id]=$Row->name;
+	}
+	return $resArr;
+}
+function getCustomerName($DbConnection)
+{
+	$Query="";
+	$Query.="SELECT account_detail.account_id,account_detail.name FROM account,account_detail WHERE ";
+	$Query.="account.account_id=account_detail.account_id AND account.status=1 AND account.user_type='customer'";
+	//echo "query=".$Query;           
+	$Result=mysql_query($Query,$DbConnection);
+	while($Row=mysql_fetch_object($Result))
+	{
+		$resArr[$Row->account_id]=$Row->name;
+	}
+	if(isset($resArr))
+	{
+		return $resArr; 
+	}     
 }
 function getSuspendaccountDetail($post_user_id,$status,$DbConnection)
 {
@@ -99,6 +136,343 @@ function getSuspendaccountDetail($post_user_id,$status,$DbConnection)
     }
     return $suspendRemark;
 }
+function getAllCityNameCityId($DbConnection)
+{
+    $Query="SELECT city_id,city_name,state_id FROM city WHERE status=1";
+    //echo "query=".$query;    
+    $Result=mysql_query($Query,$DbConnection);
+    while($Row=mysql_fetch_object($Result))
+    {
+        $resArr[$Row->city_id]=$Row->city_name;
+    }
+    return $resArr;
+}
+function getTransporterRouteDetail($vehicleId,$DbConnection)
+{
+    $Query="SELECT serial,material_type_id,from_country_id,to_country_id,from_state_id,to_state_id,".
+             "from_city_id,to_city_id FROM transporter_vehicle_route_assignment WHERE vehicle_id=$vehicleId AND status=1";
+    //echo "query=".$Query."<br>";
+    $Result=mysql_query($Query,$DbConnection);
+    //$resArr=array(array());
+    while($Row=mysql_fetch_object($Result))
+    {
+        $resArr[]=array(
+                        'serial'=>$Row->serial,
+                        'material_type_id'=>$Row->material_type_id,  
+                        'from_country_id'=>$Row->from_country_id,
+                        'to_country_id'=>$Row->to_country_id,
+                        'from_state_id'=>$Row->from_state_id,
+                        'to_state_id'=>$Row->to_state_id,
+                        'from_city_id'=>$Row->from_city_id,
+                        'to_city_id'=>$Row->to_city_id
+                    );           
+    }
+    return $resArr;
+}
+function insertTransporterRate($insertDataObj,$DbC)
+{
+    $query="INSERT INTO transportation_rate(from_city_id,to_city_id,capacity,door_status,".
+		   "referigerated,rate_per_km,min_rate,discount_percentage,".
+                    "create_id,create_date,status)VALUES(".
+                "'$insertDataObj->from_city_id','$insertDataObj->to_city_id','$insertDataObj->capacity',".
+		   "'$insertDataObj->close_open','$insertDataObj->refrigerated','$insertDataObj->rate_per_km',".
+                "'$insertDataObj->min_rate',$insertDataObj->discount_percentage,".
+                "$insertDataObj->create_id,'$insertDataObj->create_date',$insertDataObj->status)";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbC);
+    return $result;
+}
+function insertOnRoadAssitanceDetail($insertDataObj,$DbConnection)
+{
+	$query="";
+	$query.="INSERT INTO on_road_assistance ";
+	$query.="(vehicle_id,account_id,date_of_booking,problem,contact_no,location_coord,landmark,";
+	$query.="create_id,create_date,status)";
+	$query.=" VALUES($insertDataObj->vehicle_id,$insertDataObj->create_id,'$insertDataObj->date_of_booking',";
+	$query.="'$insertDataObj->problem','$insertDataObj->contact_no','$insertDataObj->location_coord',";
+	$query.="'$insertDataObj->landmark',$insertDataObj->create_id,'$insertDataObj->create_date',$insertDataObj->status)";
+	$result=mysql_query($query,$DbConnection);
+   //echo "Query=".$query."<br>";
+	return $result;
+}
+function closeBookingRoadAssistance($updateDataObj,$DbConnection)
+{
+	$query="";
+	$query.="UPDATE on_road_assistance set status=$updateDataObj->update_status,edit_id=$updateDataObj->edit_id,";
+	$query.="edit_date='$updateDataObj->edit_date',feedback='$updateDataObj->feedback' WHERE serial=";
+	$query.="$updateDataObj->assistanceId AND status=$updateDataObj->condition_status";	
+	// echo "Query=".$query."<br>";
+	$result=mysql_query($query,$DbConnection);
+	return $result; 
+}
+function getOpenBookingCaseRA($account_id,$DbConnection)
+{
+	$query="";
+	$query.="SELECT DISTINCT vehicle.vehicle_name,on_road_assistance.* FROM vehicle,";
+	$query.="on_road_assistance WHERE vehicle.status=1 AND on_road_assistance.status=1 AND ";
+	$query.="vehicle.vehicle_id=on_road_assistance.vehicle_id AND on_road_assistance.account_id=";
+	$query.="$account_id";
+	//echo "query=".$query."<br>";
+	$result=mysql_query($query,$DbConnection);
+
+	$cnt=0;
+	while($row=mysql_fetch_object($result))
+	{
+		$tripVehicleArr[$cnt]=array(
+					'serial'=>$row->serial,
+					'vehicle_id'=>$row->vehicle_id,
+					'vehicle_name'=>$row->vehicle_name,
+					'date_of_booking'=>$row->date_of_booking,                     
+					'landmark'=>$row->landmark,
+					'contact_no'=>$row->contact_no,
+					'problem'=>$row->problem                       
+				); 
+		$cnt++;
+	}
+	return $tripVehicleArr;  
+}
+function updateTransporterVehicle($updateDataObj,$DbConnection)
+{
+   $query="UPDATE transporter_vehicles SET vehicle_no='$updateDataObj->vehicle_no',model_no='$updateDataObj->model_number'".
+           ",registration_no='$updateDataObj->registration_number',insurance_no='$updateDataObj->insurance_number',".
+           "insurance_validity='$updateDataObj->validity_date',	pollution_no='$updateDataObj->pollution_number',".
+           "year_of_purchase='$updateDataObj->year_of_purchase',regrigerated_nonregrigerated=$updateDataObj->regrigerated_nonRegrigerated,".
+           "capacity='$updateDataObj->capacity',close_open=$updateDataObj->close_open,edit_id=$updateDataObj->create_id,".
+           "edit_date='$updateDataObj->create_date' WHERE vehicle_id=$updateDataObj->vehicle_id AND status=1";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbConnection); 
+    return $result;
+}
+function getCityByStateId($stateId,$DbConnection)
+{
+    $query="SELECT DISTINCT city_id,city_name FROM city WHERE state_id=$stateId AND status=1";
+    //echo "query=".$query;    
+    $result=mysql_query($query,$DbConnection);
+
+    while($row=mysql_fetch_object($result))
+    {
+        $resArr[$row->city_id]=$row->city_name;
+    }
+    if(isset($resArr))
+    {
+    return $resArr;
+    }
+}
+function checkVehicleOnRoadAssistanceTable($vehicleId,$DbConnection)
+{
+	$query="SELECT vehicle_id FROM on_road_assistance WHERE vehicle_id=$vehicleId AND status=1";
+	//echo "query=".$query."<br>";
+	$result=mysql_query($query,$DbConnection);
+	$numRows=mysql_num_rows($result);
+	return $numRows;
+}
+function getAllVehicleIdVehicleAvailabilities($account_id,$DbConnection)
+{
+    $query="SELECT vehicle_id,status FROM vehicle_availabilities WHERE account_id=$account_id AND (status=1 OR status=2)";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbConnection);
+    //$numRows=  mysql_num_rows($result);
+            
+    while($row=mysql_fetch_object($result))
+    {
+        $vehicleIdArr[$row->vehicle_id]=$row->status;
+    }
+    if(isset($vehicleIdArr))
+    {
+        return $vehicleIdArr;
+    }
+    
+}
+
+function insertVehicleStatus($insertDataObj,$insertVehicleArr,$DbConnection)
+{
+    $query="";
+    $query.="INSERT INTO vehicle_availabilities(vehicle_id,account_id,available_notavailable,bycompany_byown,status,create_id,create_date) VALUES";				
+    $query_string2="";
+    foreach($insertVehicleArr as $key=>$value)
+    {
+		$query.="($key,$insertDataObj->create_id,1,1,$value,$insertDataObj->create_id,'$insertDataObj->create_date'),";     
+    }			
+  
+    //echo "Query=".$query."<br>";
+	$query=substr($query,0,-1);
+    $result=mysql_query($query,$DbConnection);
+    return $result;            
+}
+function updateVehicleAvailabilitiesStatus($updateDataObj,$DbConnection)
+{
+   // echo "vehicleId=".$insertDataObj->vehicle_id."<br>";
+    $vehicleIdArr=explode(",",$updateDataObj->vehicle_id);
+    $vehicleSize=sizeof($vehicleIdArr);
+    $query="";
+    $query.="UPDATE vehicle_availabilities set status=$updateDataObj->update_status,edit_id=$updateDataObj->edit_id";
+    $query.=",edit_date='$updateDataObj->edit_date' WHERE vehicle_id=$updateDataObj->vehicle_id";
+    $query.=" AND account_id=$updateDataObj->edit_id";
+    //echo "Query=".$query."<br>";
+    $result=mysql_query($query,$DbConnection);
+    return $result;            
+}
+function getAllAvailableVehicle($account_id,$DbConnection)
+{
+    $query="SELECT vehicle_id FROM vehicle_availabilities WHERE account_id=$account_id AND status=1";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbConnection);
+    //$numRows=  mysql_num_rows($result);
+    
+    while($row=mysql_fetch_object($result))
+    {
+        $vehicleIdArr[$row->vehicle_id]=$row->vehicle_id;
+    }
+    if(isset($vehicleIdArr))
+    {
+        return $vehicleIdArr;
+    }    
+}
+function getAllVehicleTripVehicles($account_id,$DbConnection)
+{
+    $query="";
+    $query.="SELECT DISTINCT vehicle.vehicle_name,transporter_vehicle_trips.* FROM vehicle,";
+    $query.=" transporter_vehicle_trips WHERE vehicle.status=1 AND transporter_vehicle_trips.status=1 AND ";
+    $query.="vehicle.vehicle_id=transporter_vehicle_trips.vehicle_id AND transporter_vehicle_trips.account_id=";
+    $query.="$account_id";
+   // echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbConnection);
+    //$tripVehicleArr=array(array());
+    $cnt=0;
+    while($row=mysql_fetch_object($result))
+    {
+        $tripVehicleArr[$cnt]=array(
+                    'serial'=>$row->serial,
+                    'vehicle_id'=>$row->vehicle_id,
+                    'vehicle_name'=>$row->vehicle_name,
+                    'material_type_id'=>$row->material_type_id,  
+                    'from_country_id'=>$row->from_country_id,
+                    'to_country_id'=>$row->to_country_id,
+                    'from_state_id'=>$row->from_state_id,
+                    'to_state_id'=>$row->to_state_id,
+                    'from_city_id'=>$row->from_city_id,
+                    'to_city_id'=>$row->to_city_id,
+                    'from_address'=>$row->from_address,
+                    'to_address'=>$row->to_address,
+                    'dispatch_date'=>$row->dispatch_date,
+                    'arrival_date'=>$row->arrival_date                        
+                ); 
+        $cnt++;
+    }
+    return $tripVehicleArr;        
+}
+function getStateRoadPermitForm($stateId,$DbConnection)
+{
+    $query="SELECT form_name,invoice_amount FROM state_entry_forms WHERE state_id=$stateId AND status=1";
+    $result=mysql_query($query,$DbConnection);
+    $numRows=mysql_num_rows($result);
+    if($numRows==0)
+    {
+        $stateEntryString="formNotFound";
+    }
+    else
+    {
+        $row=mysql_fetch_row($result);
+        $stateEntryString=$row[0]."@".$row[1];
+    }
+    return $stateEntryString;
+}
+function insertTransporterVehicleTrip($insertDataObj,$DbConnection)
+{
+    $query="";
+    $query.="INSERT INTO transporter_vehicle_trips ";
+    $query.="(vehicle_id,account_id,from_country_id,to_country_id,from_state_id,to_state_id,from_city_id,to_city_id,";
+    $query.="from_address,to_address,customer_name,order_request_id,material_type_id,material_remark,quantity,invoice_amount,";
+    $query.="road_permit,dispatch_date,arrival_date,driver_name,driver_mobile_no,invoice_number,";
+    $query.="road_permit_sc_path,invoice_sc_path,create_id,create_date,status)";
+    $query.=" VALUES($insertDataObj->vehicle_id,$insertDataObj->create_id,$insertDataObj->from_country_id,";
+    $query.="$insertDataObj->to_country_id,$insertDataObj->from_state_id,$insertDataObj->to_state_id,";
+    $query.="$insertDataObj->from_city_id,$insertDataObj->to_city_id,'$insertDataObj->from_address',";
+    $query.="'$insertDataObj->to_address','$insertDataObj->customer_name',1,$insertDataObj->material_type_id,'$insertDataObj->material_remark',10,'$insertDataObj->invoice_amount',";
+    $query.="1,'$insertDataObj->dispatch_date','$insertDataObj->arrival_date','$insertDataObj->driver_name',";
+    $query.="'$insertDataObj->driver_mob_no','$insertDataObj->invoice_number','$insertDataObj->road_permit_scan_copy',";
+    $query.="'$insertDataObj->invoice_copy',$insertDataObj->create_id,'$insertDataObj->create_date',$insertDataObj->status)";
+    $result=mysql_query($query,$DbConnection);
+	//echo "Query=".$query."<br>";
+    return $result;
+}
+
+function getCity($stateId,$DbConnection)
+{
+    $Query="SELECT city_id,city_name FROM city  WHERE state_id=$stateId AND status=1";
+    //echo "query=".$query;    
+    $Result=mysql_query($Query,$DbConnection);
+    $resArr=array();
+    while($Row=mysql_fetch_object($Result))
+    {
+        $resArr[$Row->city_id]=$Row->city_name;
+    }
+    return $resArr;
+}
+
+function getAllVehicleVAExceptTrip($account_id,$DbConnection)
+{
+    $query="SELECT vehicle_id,status FROM vehicle_availabilities WHERE account_id=$account_id AND (status=1 OR status=0)";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbConnection);
+    //$numRows=  mysql_num_rows($result);
+
+    while($row=mysql_fetch_object($result))
+    {
+        $vehicleIdArr[$row->vehicle_id]=$row->status;
+    }
+    if(isset($vehicleIdArr))
+    {
+        return $vehicleIdArr;
+    }    
+}
+
+function insertTransporterVehicle($insertDataObj,$DbC)
+{
+    $query="INSERT INTO transporter_vehicles(vehicle_id,account_id,vehicle_no,model_no,registration_no,insurance_no,".
+		   "insurance_validity,	pollution_no,year_of_purchase,regrigerated_nonregrigerated,capacity,close_open,".
+                    "create_id,create_date,status)VALUES('$insertDataObj->vehicle_id',$insertDataObj->create_id,".
+                "'$insertDataObj->vehicle_no','$insertDataObj->model_number','$insertDataObj->registration_number',".
+		   "'$insertDataObj->insurance_number','$insertDataObj->validity_date','$insertDataObj->pollution_number',".
+                "'$insertDataObj->year_of_purchase',$insertDataObj->regrigerated_nonRegrigerated,'$insertDataObj->capacity',".
+                "$insertDataObj->close_open,$insertDataObj->create_id,'$insertDataObj->create_date',$insertDataObj->status)";
+    //echo "query=".$query."<br>";
+	$result=mysql_query($query,$DbC);
+    return $result;
+}
+function getTransporterVehicleDetails($account_id,$DbConnection)
+{
+    $Query="SELECT vehicle_id,vehicle_no FROM transporter_vehicles WHERE account_id=$account_id AND status=1";
+    $Result=mysql_query($Query,$DbConnection);    
+    while($Row=mysql_fetch_object($Result))
+    {
+        $resArr[$Row->vehicle_id]=$Row->vehicle_no;
+    }
+    return $resArr;
+}
+ function getTransporterVehicleDetail($vehicleId,$DbConnection)
+        {
+             $Query="SELECT vehicle_no,model_no,registration_no,insurance_no,insurance_validity,".
+                     "pollution_no,year_of_purchase,regrigerated_nonregrigerated,capacity,close_open FROM ".
+                     "transporter_vehicles WHERE vehicle_id=$vehicleId AND status=1";
+            $Result=mysql_query($Query,$DbConnection);    
+            while($Row=mysql_fetch_object($Result))
+            {
+                $resArr['vehicle_no']=$Row->vehicle_no;
+                $resArr['model_no']=$Row->model_no;
+                $resArr['registration_no']=$Row->registration_no;
+                $resArr['insurance_no']=$Row->insurance_no;
+                $resArr['insurance_validity']=$Row->insurance_validity;
+                $resArr['pollution_no']=$Row->pollution_no;               
+                $resArr['year_of_purchase']=$Row->year_of_purchase;
+                $resArr['regrigerated_nonregrigerated']=$Row->regrigerated_nonregrigerated;
+                $resArr['capacity']=$Row->capacity;
+                $resArr['vehicle_no']=$Row->vehicle_no;                
+            }
+            return $resArr;
+        }
+
+
 function getMaxSpeed($vSerial,$status,$DbConnection)
 {
   $query_geo = "select vehicle.max_speed FROM vehicle,vehicle_assignment WHERE vehicle.".
@@ -125,7 +499,7 @@ function stationRecord($accId,$DbConnection)
     //$query = "SELECT * FROM station WHERE status=1 limit 100";
     $result = mysql_query($query,$DbConnection);
     $numrows = mysql_num_rows($result); 
-    
+    $dataArr=array(array());
     while($row = mysql_fetch_object($result))
     {
         $dataArr=array(
@@ -140,27 +514,178 @@ function stationRecord($accId,$DbConnection)
     }
     return $dataArr;
 }
-
-function getAccountRoutes($accId,$DbConnection)
+function validateTransporterRouteAssignment($insertDataObj,$DbConnection)
 {
-    $Query="SELECT polyline_id,polyline_name,polyline_coord FROM polyline WHERE user_account_id=$accId AND status=1";
+	$Query="SELECT serial FROM transporter_vehicle_route_assignment WHERE vehicle_id=$insertDataObj->vehicle_id".
+			" AND from_country_id=$insertDataObj->from_country_id AND to_country_id=$insertDataObj->to_country_id".
+			" AND from_state_id=$insertDataObj->from_state_id AND to_state_id=$insertDataObj->to_state_id".
+			" AND from_city_id=$insertDataObj->from_city_id AND to_city_id=$insertDataObj->to_city_id AND status=1";
+	//echo "Query=".$Query."<br>";
+	$Result=mysql_query( $Query,$DbConnection);
+	$numRows=mysql_num_rows($Result);
+	return $numRows;
+}
+function insertTransporterVehicleRouteAssignment($insertDataObj,$DbConnection)
+{
+	$Query="INSERT INTO transporter_vehicle_route_assignment(vehicle_id,material_type_id,from_country_id,to_country_id,".
+			"from_state_id,to_state_id,from_city_id,to_city_id,status,create_id,create_date)".
+			" VALUES($insertDataObj->vehicle_id,$insertDataObj->material_type_id,$insertDataObj->from_country_id,".
+			"$insertDataObj->to_country_id,$insertDataObj->from_state_id,$insertDataObj->to_state_id,".
+			"$insertDataObj->from_city_id,$insertDataObj->to_city_id,1,$insertDataObj->create_id,".
+			"'$insertDataObj->create_date')";
+	//echo "Query=".$Query."<br>";
+	$Result=mysql_query( $Query,$DbConnection);     
+	return $Result;
+}
+function getAllCity($DbConnection)
+{
+    $Query="SELECT city_id,city_name,state_id FROM city WHERE status=1";
+    //echo "query=".$query;    
     $Result=mysql_query($Query,$DbConnection);
-    $numRows=  mysql_num_rows($Result);
-    if($numRows>0)
+    $resArr=array(array());
+    while($Row=mysql_fetch_object($Result))
     {
-        while($row=mysql_fetch_object($Result))
-        {
-            $routeArr[$row->polyline_id]=array(
-                                                "polylineName"=>$row->polyline_name,
-                                                "polylineCoord"=>base64_decode($row->polyline_coord)
-                                            );
-        }
-        return $routeArr;
+        $resArr[]=array(
+                        'city_id'=>$Row->city_id,
+                        'city_name'=>$Row->city_name,
+                        'state_id'=>$Row->state_id
+                        );
     }
-    else
+    return $resArr;
+}
+function getAllState($DbConnection)
+{
+    $Query="SELECT state_id,state_name,country_id FROM state  WHERE status=1";
+    //echo "query=".$query;    
+    $Result=mysql_query($Query,$DbConnection);
+    //$resArr=array(array());
+	$cnt=0;
+    while($Row=mysql_fetch_object($Result))
     {
-        return "No Data Found";
+        $resArr[$cnt]=array(
+                        'state_id'=>$Row->state_id,
+                        'state_name'=>$Row->state_name,
+                        'country_id'=>$Row->country_id
+                        );
+						$cnt++;
     }
+    return $resArr;
+}
+function getState($countryId,$DbConnection)
+{
+    $Query="SELECT state_id,state_name FROM state WHERE country_id=$countryId AND status=1";
+    //echo "query=".$query;    
+    $Result=mysql_query($Query,$DbConnection);
+    $resArr=array();
+    while($Row=mysql_fetch_object($Result))
+    {
+        $resArr[$Row->state_id]=$Row->state_name;
+    }
+    return $resArr;
+}
+function insertMaterialInfo($insertDataObj,$DbC)
+{
+    $query="INSERT INTO material(material_name,material_type_id,material_code,remark,".
+           "create_id,create_date,status)VALUES('$insertDataObj->material_name','$insertDataObj->material_type_id',".
+            "'$insertDataObj->material_code','$insertDataObj->remark',$insertDataObj->create_id,".
+            "'$insertDataObj->create_date',$insertDataObj->status)";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbC);
+    return $result;
+}
+function getMaterialMaxCnt($DbConnection)
+{
+        $query ="SELECT Max(material_id)+1 as material_id FROM material";  ///// for auto increament of geo_id ///////////   
+        $result=mysql_query($query,$DbConnection);
+        $row=mysql_fetch_row($result);
+        return $row[0];
+}
+function updateMaterialInfo($updateDataObj,$DbConnection)
+{
+   $query="UPDATE material SET material_name='$updateDataObj->material_name',material_type_id='$updateDataObj->material_type_id'".
+           ",remark='$updateDataObj->remark',edit_id=$updateDataObj->create_id,".
+           "edit_date='$updateDataObj->create_date' WHERE material_id=$updateDataObj->material_id AND status=1";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbConnection); 
+    return $result;
+}
+function deleteMaterialInfo($material_id,$DbConnection)
+{
+   $query="UPDATE material SET status=0 WHERE material_id=$material_id AND status=1";
+   $result=mysql_query($query,$DbConnection); 
+   return $result;  
+}
+
+function getMaterialInfoDetail($material_id,$DbConnection)
+{
+     $Query="SELECT material_name,material_type_id,remark FROM material WHERE material_id=$material_id AND status=1";
+     //echo "query=".$Query."<br>";
+    $Result=mysql_query($Query,$DbConnection);    
+    while($Row=mysql_fetch_object($Result))
+    {
+        $resArr['material_name']=$Row->material_name;
+        $resArr['material_type_id']=$Row->material_type_id;
+        $resArr['remark']=$Row->remark;        
+                        
+    }
+    return $resArr;
+}
+function getMaterialTypeDetail($DbConnection)
+{
+     $Query="SELECT material_type_id,material_type_name FROM material_type WHERE status=1";
+     //echo "query=".$Query."<br>";
+    $Result=mysql_query($Query,$DbConnection); 
+    $resArr=array();
+    while($Row=mysql_fetch_object($Result))
+    {
+        //echo "materilaName=".$Row->material_type_name."<br>";
+        $resArr[$Row->material_type_id]=$Row->material_type_name;
+    }
+    //print_r($resArr);
+    return $resArr;
+}
+function getMaterialName($DbConnection)
+{
+    $Query="SELECT material_id,material_name FROM material WHERE status=1";
+    $Result=mysql_query($Query,$DbConnection);  
+    $resArr=array();
+    while($Row=mysql_fetch_object($Result))
+    {
+        $resArr[$Row->material_id]=$Row->material_name;
+    }
+   // print_r()
+    return $resArr;  
+}
+
+
+function getCountryArr($DbConnection)
+{
+     $Query="SELECT country_id,country_name FROM country WHERE status=1";
+     $Result=mysql_query($Query,$DbConnection); 
+     $resArr=array();
+     while($Row=mysql_fetch_object($Result))
+     {
+         $resArr[$Row->country_id]=$Row->country_name;
+     }
+     return $resArr;
+}
+function updateTransporterRouteAssignment($updateDataObj,$DbConnection)
+{
+	$Query="UPDATE transporter_vehicle_route_assignment SET material_type_id=$updateDataObj->material_type_id,from_country_id".
+			"=$updateDataObj->from_country_id,to_country_id=$updateDataObj->to_country_id,".
+			 "from_state_id=$updateDataObj->from_state_id,to_state_id=$updateDataObj->to_state_id,".
+			 "from_city_id=$updateDataObj->from_city_id,to_city_id=$updateDataObj->to_city_id,edit_id=".
+			 "$updateDataObj->create_id,edit_date='$updateDataObj->create_date' WHERE serial=$updateDataObj->routeId".
+			" AND status=1";
+	//echo "Query=".$Query."<br>";
+	$Result=mysql_query( $Query,$DbConnection);     
+	return $Result;
+}
+function deleteTransporterRouteAssignment($routeId,$DbConnection)
+{
+   $query="UPDATE transporter_vehicle_route_assignment SET status=0 WHERE serial=$routeId AND status=1";
+   $result=mysql_query($query,$DbConnection); 
+   return $result;  
 }
 
 function getRouteMorning($accId,$status,$DbConnection)
@@ -171,7 +696,8 @@ function getRouteMorning($accId,$status,$DbConnection)
     //$query = "SELECT * FROM station WHERE status=1 limit 100";
     $result = mysql_query($query,$DbConnection);
     $numrows = mysql_num_rows($result); 
-    
+    $dataArr=array(array());
+
     while($row = mysql_fetch_object($result))
     {
         $dataArr[]=array(
@@ -189,7 +715,7 @@ function getRouteEvening($accId,$status,$DbConnection)
     //echo "query=".$query."<br>";
     $result = mysql_query($query,$DbConnection);
     $numrows = mysql_num_rows($result); 
-    
+    $dataArr=array(array());
     while($row = mysql_fetch_object($result))
     {
         $dataArr[]=array(
@@ -203,7 +729,7 @@ function getMasterFileDetail($accId,$DbConnection)
 {
     $Query="Select * FROM master_file WHERE account_id='$accId' AND status=1";
     $Result=mysql_query($Query, $DbConnection);
-    
+    $dataArr=array(array());
     while($Row=mysql_fetch_object($Result))
     {
        $dataArr[]=array(
@@ -217,11 +743,13 @@ function getMasterFileDetail($accId,$DbConnection)
     return $dataArr;
 }
 
+
+
 function getReportFileDetail($accId,$DbConnection)
 {
     $Query="Select * FROM get_report_file WHERE account_id='$accId' AND status=1";	
     $Result=mysql_query($Query, $DbConnection);
-    
+    $dataArr=array(array());
     while($Row=mysql_fetch_object($Result))
     {
        $dataArr[]=array(
@@ -242,6 +770,72 @@ function getLatLngPermission($accId,$DbConnection)
     $row=mysql_fetch_row($result);
     return $row[0];
 }
+function insertComapanyInfo($insertDataObj,$DbC)
+{
+    $query="INSERT INTO my_transporters(account_id,firm_name,contact_name,personal_contact_no,home_contact_no,".
+		   "office_contact_no,tin_no,country_id,state_id,city_id,address,email_id,".
+                    "create_id,create_date,status)VALUES($insertDataObj->create_id,".
+                "'$insertDataObj->firm_name','$insertDataObj->contact_name','$insertDataObj->personal_contact_no',".
+		   "'$insertDataObj->home_contact_no','$insertDataObj->office_contact_no','$insertDataObj->tin_no',".
+                "'$insertDataObj->country_id',$insertDataObj->state_id,'$insertDataObj->city_id','$insertDataObj->address',".
+                "'$insertDataObj->email_id',$insertDataObj->create_id,'$insertDataObj->create_date',$insertDataObj->status)";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbC);
+   return $result;
+}
+
+         function getCompanyInfoDetail($branchId,$DbConnection)
+{
+     $Query="SELECT firm_name,contact_name,personal_contact_no,home_contact_no,office_contact_no,".
+             "tin_no,country_id,state_id,city_id,address,email_id FROM ".
+             "my_transporters WHERE serial=$branchId AND status=1";
+     //echo "query=".$Query."<br>";
+    $Result=mysql_query($Query,$DbConnection);    
+    while($Row=mysql_fetch_object($Result))
+    {
+        $resArr['firm_name']=$Row->firm_name;
+        $resArr['contact_name']=$Row->contact_name;
+        $resArr['personal_contact_no']=$Row->personal_contact_no;
+        $resArr['home_contact_no']=$Row->home_contact_no;
+        $resArr['office_contact_no']=$Row->office_contact_no;
+        $resArr['tin_no']=$Row->tin_no;               
+        $resArr['country_id']=$Row->country_id;
+        $resArr['state_id']=$Row->state_id;
+        $resArr['city_id']=$Row->city_id;
+        $resArr['address']=$Row->address;
+        $resArr['email_id']=$Row->email_id;
+                        
+    }
+    return $resArr;
+}
+function updateCompanyInfo($updateDataObj,$DbConnection)
+{
+   $query="UPDATE my_transporters SET firm_name='$updateDataObj->firm_name',contact_name='$updateDataObj->contact_name'".
+           ",personal_contact_no='$updateDataObj->personal_contact_no',home_contact_no='$updateDataObj->home_contact_no',".
+           "office_contact_no='$updateDataObj->office_contact_no',tin_no='$updateDataObj->tin_no',".
+           "country_id=$updateDataObj->country_id,state_id=$updateDataObj->state_id,".
+           "city_id=$updateDataObj->city_id,address='$updateDataObj->address',email_id='$updateDataObj->email_id',edit_id=$updateDataObj->create_id,".
+           "edit_date='$updateDataObj->create_date' WHERE serial=$updateDataObj->branch_id AND status=1";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbConnection); 
+    return $result;
+}
+function deleteCompanyInfo($branchId,$DbConnection)
+{
+   $query="UPDATE my_transporters SET status=0 WHERE serial=$branchId AND status=1";
+   $result=mysql_query($query,$DbConnection); 
+   return $result;  
+}
+function getCompanyName($account_id,$DbConnection)
+{
+  $Query="SELECT serial,firm_name FROM my_transporters WHERE account_id=$account_id AND status=1";
+    $Result=mysql_query($Query,$DbConnection);    
+    while($Row=mysql_fetch_object($Result))
+    {
+        $resArr[$Row->serial]=$Row->firm_name;
+    }
+    return $resArr;  
+}
 function getAccoutDetailForLogin($post_group_id,$post_user_id,$post_password,$DbConnection)
 {
     $query="SELECT account.account_id,account.user_type,account.group_id FROM account,account_detail WHERE (account.group_id=".
@@ -255,6 +849,7 @@ function getAccoutDetailForLogin($post_group_id,$post_user_id,$post_password,$Db
     //echo "user_type=".$row->user_type."<br>";
     $account_id=$row->account_id;
                 $userTypeLogin=$row->user_type;
+				$dataArr=array(array());
     $dataArr[]=array(
                         'account_id'=>$row->account_id,
                         'user_type'=>$row->user_type
@@ -267,7 +862,7 @@ function getLoadCell2Detail($vehicle_serial,$startdate,$enddate,$DbConnection)
     $query = "SELECT * FROM load_cell_2 WHERE imei='$vehicle_serial' AND status=1 AND datetime_1 BETWEEN '$startdate' AND '$enddate'";
     //echo $query;
     $result = mysql_query($query,$DbConnection);
- 
+ $dataArr=array(array());
     while($row=mysql_fetch_object($result))
     {
         $dataArr[]=array(
@@ -925,6 +1520,7 @@ function insertAccountDetail($account_id1,$post_user_name,$distance_variable,$ve
 			"admin_id,account_admin_id,permission,create_id,create_date) VALUES".
 			"('$account_id1','$post_user_name',$distance_variable,'$vehicle_group_id1','$company_id1',".
 			"'$admin_id1','$admin_id2','$post_ac_type','$account_id','$date')";
+        //echo "AccountQuery=".$query;
 	$result=mysql_query($query,$DbC);
 	return $result;	
 }
@@ -933,7 +1529,8 @@ function insertAccountFeature($list_fname,$account_id1,$list_fvalue,$post_user_t
 {
 	$query="INSERT INTO account_feature(account_id".$list_fname.",user_type_id,create_id,create_date)".
 		   " VALUES('$account_id1'$list_fvalue,'$post_user_type','$account_id','$date')";
-	$result=mysql_query($query,$DbC);
+	//echo "FeatureQuery=".$query;
+        $result=mysql_query($query,$DbC);
 	return $result;	
 }
 
@@ -941,7 +1538,8 @@ function insertAccountPreference($account_id1,$time_zone1,$latlng1,$refresh_rate
 {
 	$query="INSERT INTO account_preference(account_id,time_zone,latlng,refresh_rate,create_id,create_date)".
 		   " VALUES('$account_id1','$time_zone1','$latlng1','$refresh_rate1','$account_id','$date')";
-	$result=mysql_query($query,$DbC);
+	//echo "PreferenceQuery=".$query;
+        $result=mysql_query($query,$DbC);
 	return $result;	
 }
 
@@ -1200,26 +1798,27 @@ function insertLandmark($account_size,$local_account_ids,$max_no,$landmark_name1
 	return $result;
 }
 
-function insertVtsTrip($account_size,$local_account_ids,$landmark_name1,$landmark_point1,$landmark_name2,$landmark_point2,$trip_startdate,$DbConnection)
+function insertVtsTrip($vehicle_size,$vehicle_ids,$local_account_id,$landmark_name1,$landmark_point1,$landmark_name2,$landmark_point2,$trip_startdate,$DbConnection)
 {             
-        $query_string1="INSERT INTO vts_trips(account_id,source_name,source_coord,destination_name,destination_coord,trip_start_date,status,create_id,create_date) VALUES";
-	for($i=0;$i<$account_size;$i++)
+	$query_string1="INSERT INTO vts_trips(account_id,vehicle_id,source_name,source_coord,destination_name,destination_coord,trip_start_date,status,create_id,create_date) VALUES";
+	
+	for($i=0;$i<$vehicle_size;$i++)
 	{
-            //echo "accout_id=".$local_account_ids[$i]."<br>";
-            $query_trip="SELECT trip_id FROM vts_trips WHERE account_id='$local_account_ids[$i]' AND status=1 AND (source_name='$landmark_name1' AND destination_name='$landmark_name2') OR (source_coord='$landmark_point1' AND destination_coord='$landmark_point2')";
-            $result_trip = mysql_query($query_trip,$DbConnection); 
-            $numrows = mysql_num_rows($result_trip);
-            
-            if($numrows==0) {
-                if($i==$account_size-1)
-                {
-                    $query_string2.="('$local_account_ids[$i]','$landmark_name1','$landmark_point1','$landmark_name2','$landmark_point2','$trip_startdate','1','$account_id','$date');";
-                }
-                else
-                {
-                    $query_string2.="('$local_account_ids[$i]','$landmark_name1','$landmark_point1','$landmark_name2','$landmark_point2','$trip_startdate','1','$account_id','$date'),";
-                }
-            }
+		//echo "accout_id=".$local_account_ids[$i]."<br>";
+		$query_trip="SELECT trip_id FROM vts_trips WHERE account_id='$local_account_id' AND vehicle_id='$vehicle_ids[$i]' AND status=1 AND (source_name='$landmark_name1' AND destination_name='$landmark_name2') OR (source_coord='$landmark_point1' AND destination_coord='$landmark_point2')";
+		$result_trip = mysql_query($query_trip,$DbConnection); 
+		$numrows = mysql_num_rows($result_trip);
+		
+		if($numrows==0) {
+			if($i==$vehicle_size-1)
+			{
+				$query_string2.="('$local_account_id','$vehicle_ids[$i]','$landmark_name1','$landmark_point1','$landmark_name2','$landmark_point2','$trip_startdate','1','$account_id','$date');";
+			}
+			else
+			{
+				$query_string2.="('$local_account_id','$vehicle_ids[$i]','$landmark_name1','$landmark_point1','$landmark_name2','$landmark_point2','$trip_startdate','1','$account_id','$date'),";
+			}
+		}
 	}
 	$query=$query_string1.$query_string2; 
 	//echo "query=".$query;
@@ -1228,23 +1827,28 @@ function insertVtsTrip($account_size,$local_account_ids,$landmark_name1,$landmar
 	return $result;
 }
 
-function getAlreadyExistingTrips($account_size,$local_account_ids,$landmark_name1,$landmark_point1,$landmark_name2,$landmark_point2,$DbConnection) {
+function getAlreadyExistingTrips($vehicle_size,$vehicle_ids,$local_account_id,$landmark_name1,$landmark_point1,$landmark_name2,$landmark_point2,$DbConnection) {
 
     $existing_trips = array();
-    for($i=0;$i<$account_size;$i++)
+    for($i=0;$i<$vehicle_size;$i++)
     {
-        $query_account_name ="SELECT name FROM account_detail WHERE account_id='$local_account_ids[$i]'";
+        $query_account_name ="SELECT name FROM account_detail WHERE account_id='$local_account_id'";
         $result_account_name = mysql_query($query_account_name, $DbConnection);
         $row_name = mysql_fetch_object($result_account_name);
-        $name = $row_name->name;
+        $account_name = $row_name->name;
         
-        $query_trip="SELECT source_name,destination_name FROM vts_trips WHERE account_id='$local_account_ids[$i]' AND status=1 AND (source_name='$landmark_name1' AND destination_name='$landmark_name2') OR (source_coord='$landmark_point1' AND destination_coord='$landmark_point2')";
+        $query_trip="SELECT account_id,vehicle_id,source_name,destination_name FROM vts_trips WHERE account_id='$local_account_id' AND vehicle_id='$vehicle_ids[$i]' AND status=1 AND (source_name='$landmark_name1' AND destination_name='$landmark_name2') OR (source_coord='$landmark_point1' AND destination_coord='$landmark_point2')";
         $result_trip = mysql_query($query_trip,$DbConnection); 
         $numrows = mysql_num_rows($result_trip);
+		
+		$query_vehicle = "SELECT vehicle_name FROM vehicle WHERE vehicle_id='$vehicle_ids[$i]' AND status=1";
+		$result_vehicle = mysql_query($query_vehicle,$DbConnection);
+		$row_vehicle = mysql_fetch_object($result_vehicle);
+		$vehicle_name = $row_vehicle->vehicle_name;
         
         if($numrows>0) {
             if($row_trip = mysql_fetch_object($result_trip)) {
-                $existing_trips[] = $name.",".$row_trip->source_name.",".$row_trip->destination_name;
+                $existing_trips[] = $account_name.",".$row_trip->vehicle_name.",".$row_trip->source_name.",".$row_trip->destination_name;
             }
         }
     }  
@@ -1259,8 +1863,21 @@ function getVts_TripDetail($account_id,$DbConnection)
 	$Result=  mysql_query($Query,$DbConnection); 
 	while($Row = mysql_fetch_object($Result))
 	{ 
+        $query_account_name ="SELECT name FROM account_detail WHERE account_id='$account_id'";
+        $result_account_name = mysql_query($query_account_name, $DbConnection);
+        $row_name = mysql_fetch_object($result_account_name);
+        $name = $row_name->name;
+		
+		$vehicle_id = $Row->vehicle_id;
+		$query_vehicle = "SELECT vehicle_name FROM vehicle WHERE vehicle_id='$vehicle_id' AND status=1";
+		$result_vehicle = mysql_query($query_vehicle,$DbConnection);
+		$row_vehicle = mysql_fetch_object($result_vehicle);
+		$vehicle_name = $row_vehicle->vehicle_name;		
+		
             $data[]=array(	
                     'trip_id'=>$Row->trip_id,
+					'account_name'=>$name,
+					'vehicle_name'=>$vehicle_name,
                     'source_name'=>$Row->source_name,
                     'destination_name'=>$Row->destination_name,
                     'trip_start_date'=>$Row->trip_start_date
@@ -1271,12 +1888,14 @@ function getVts_TripDetail($account_id,$DbConnection)
 
 function closeTrips($trip_ids,$DbConnection)
 {
-    for($i=0;$i<sizeof($trip_ids);$i++) {
-        $query="UPDATE vts_trips SET status=0 WHERE trip_id='$trip_ids[$i]]'";     
+    $trip_ids_tmp = explode(',',$trip_ids);
+	for($i=0;$i<sizeof($trip_ids_tmp);$i++) {
+        $query="UPDATE vts_trips SET status=0 WHERE trip_id='$trip_ids_tmp[$i]]'";     
         $result=mysql_query($query,$DbConnection);
     }
     return $result;
 }
+
 function getLandmarkMaxSerial($DbConnection)
 {
 	$query ="select Max(sno)+1 as seiral_no from landmark";  ///// for auto increament of landmark_id ///////////   
@@ -1730,7 +2349,7 @@ function updateInvoiceMdrmTP($lorry_no,$transporter,$email,$mobile,$qty_kg,$fat_
 {
         $QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',transporter_account_id='$transporter',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',
 				fat_kg = '$fat_kg',snf_kg='$snf_kg',milk_age='$milk_age',dispatch_time='$dispatch_time',target_time='$target_time',validity_time='$validity_time',plant='$plant',chilling_plant='$chillplant',
-				tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',edit_id='$account_id', edit_date='$date',edit_date_transporter_last='$date',invoice_status=5,status=1 WHERE sno='$sno_id1' "; 
+				tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',edit_id='$account_id', edit_date='$date',invoice_status=5,status=1 WHERE sno='$sno_id1' "; 
         $ResultUpdate=mysql_query($QueryUpdate,$DbConnection);
 	return $ResultUpdate;
 }
@@ -1769,16 +2388,6 @@ function updateInvoiceMdrmVehicle($lorry_no,$vehicle_no,$transporter,$dock_no,$e
 	$QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',vehicle_no='$vehicle_no',transporter_account_id='$transporter',docket_no='$dock_no',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',
 				fat_kg = '$fat_kg',snf_kg='$snf_kg',milk_age='$milk_age',dispatch_time='$dispatch_time',target_time='$target_time',validity_time='$validity_time',plant='$plant',chilling_plant='$chillplant',
 				tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',parent_account_id='$account_id',edit_id='$account_id',edit_date='$date',invoice_status=1,status=1 WHERE sno='$sno_id1' ";  
-				$ResultUpdate=mysql_query($QueryUpdate,$DbConnection);
-				return $ResultUpdate;
-}
-
-function updateInvoiceMdrmVehicleTM($lorry_no,$vehicle_no,$transporter,$dock_no,$email,$mobile,$qty_kg,$fat_per,$snf_per,$fat_kg,$snf_kg,$milk_age,$dispatch_time,$target_time,$validity_time,$plant,$chillplant,$tanker_type,$driver_name,$driver_mobile,$account_id,$date,$sno_id1,$DbConnection)
-{
-        
-	$QueryUpdate="UPDATE `invoice_mdrm` SET lorry_no= '$lorry_no',vehicle_no='$vehicle_no',transporter_account_id='$transporter',docket_no='$dock_no',email='$email',mobile='$mobile',qty_kg='$qty_kg',fat_percentage='$fat_per',snf_percentage='$snf_per',
-				fat_kg = '$fat_kg',snf_kg='$snf_kg',milk_age='$milk_age',dispatch_time='$dispatch_time',target_time='$target_time',validity_time='$validity_time',plant='$plant',chilling_plant='$chillplant',
-				tanker_type='$tanker_type',driver_name='$driver_name',driver_mobile='$driver_mobile',parent_account_id='$account_id',edit_id='$account_id',edit_date='$date',edit_date_transporter_last='$date',invoice_status=1,status=1 WHERE sno='$sno_id1' ";  
 				$ResultUpdate=mysql_query($QueryUpdate,$DbConnection);
 				return $ResultUpdate;
 }
@@ -1825,7 +2434,7 @@ function updateInvoiceMdrmNoApproved_flag_add($plant_serials,$invoice_material_s
 									fat_per_ft='$fat_per_ft_serials',snf_per_ft='$snf_per_ft_serials',testing_status='$testing_status_serials',qty_ct='$qty_ct_serials',
 						temp_ct='$temp_ct_serials',acidity_ct='$acidity_ct_serials',mbrt_min_ct='$mbrt_min_ct_serials',mbrt_br_ct='$mbrt_br_ct_serials',
 						mbrt_rm_ct='$mbrt_rm_ct_serials',protien_per_ct='$protien_per_ct_serials',sodium_ct='$sodium_ct_serials',fat_per_rt='$fat_per_rt_serials',
-						snf_per_rt='$snf_per_rt_serials' , adultration_ct='$adultration_ct_serials' , otheradultration_ct='$otheradultration_ct_serials' ,edit_date='$date',edit_date_plant_first='$date' WHERE sno='$sno'";
+						snf_per_rt='$snf_per_rt_serials' , adultration_ct='$adultration_ct_serials' , otheradultration_ct='$otheradultration_ct_serials' ,edit_date='$date' WHERE sno='$sno'";
 						//echo "1a=". $query_update;
 						$result_update = mysql_query($query_update,$DbConnection);
     return $result_update;
@@ -1871,7 +2480,7 @@ function updateInvoiceMdrmNoApprovedUnload_flag_add($plant_serials,$invoice_mate
 									fat_per_ft='$fat_per_ft_serials',snf_per_ft='$snf_per_ft_serials',testing_status='$testing_status_serials',qty_ct='$qty_ct_serials',
 						temp_ct='$temp_ct_serials',acidity_ct='$acidity_ct_serials',mbrt_min_ct='$mbrt_min_ct_serials',mbrt_br_ct='$mbrt_br_ct_serials',
 						mbrt_rm_ct='$mbrt_rm_ct_serials',protien_per_ct='$protien_per_ct_serials',sodium_ct='$sodium_ct_serials',fat_per_rt='$fat_per_rt_serials',
-						snf_per_rt='$snf_per_rt_serials',adultration_ct='$adultration_ct_serials' , otheradultration_ct='$otheradultration_ct_serials' ,edit_date='$date',edit_date_plant_first='$date' WHERE sno='$sno'";
+						snf_per_rt='$snf_per_rt_serials',adultration_ct='$adultration_ct_serials' , otheradultration_ct='$otheradultration_ct_serials' ,edit_date='$date' WHERE sno='$sno'";
 						//echo "1b=". $query_update;
 						$result_update = mysql_query($query_update,$DbConnection);
                                              return $result_update;
@@ -1893,21 +2502,21 @@ function updateInvoiceMdrmNext($plant_serials,$account_id,$date,$sno,$DbConnecti
 }
 function updateInvoiceMdrmNextLorry($lorry_serials,$account_id,$date,$sno,$DbConnection)
 {         
-	 $query_update_lorry = "UPDATE invoice_mdrm SET lorry_no='$lorry_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date',edit_date_transporter_last='$date'  WHERE sno='$sno'";
+	 $query_update_lorry = "UPDATE invoice_mdrm SET lorry_no='$lorry_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
 	 //echo $query_update_lorry;
          $result_update_lorry = mysql_query($query_update_lorry,$DbConnection);	
 	 return $result_update_lorry;
 }
 function updateInvoiceMdrmNextVehicle($vehicle_serials,$account_id,$date,$sno,$DbConnection)
 {         
-	 $query_update_vehicle = "UPDATE invoice_mdrm SET vehicle_no='$vehicle_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date',edit_date_transporter_last='$date'  WHERE sno='$sno'";
+	 $query_update_vehicle = "UPDATE invoice_mdrm SET vehicle_no='$vehicle_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
 	 //echo $query_update_vehicle;
          $result_update_vehicle = mysql_query($query_update_vehicle,$DbConnection);	
 	 return $result_update_vehicle;
 }
 function updateInvoiceMdrmNextInvoiceQty($qty_kg_serials,$fat_per_serials,$snf_per_serials,$fat_kg_serials,$snf_kg_serials,$account_id,$date,$sno,$DbConnection)
 {         
-	 $query_update_invoice_qty = "UPDATE invoice_mdrm SET qty_kg='$qty_kg_serials',fat_percentage='$fat_per_serials',snf_percentage='$snf_per_serials',fat_kg='$fat_kg_serials',snf_kg='$snf_kg_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date',edit_date_transporter_last='$date'  WHERE sno='$sno'";
+	 $query_update_invoice_qty = "UPDATE invoice_mdrm SET qty_kg='$qty_kg_serials',fat_percentage='$fat_per_serials',snf_percentage='$snf_per_serials',fat_kg='$fat_kg_serials',snf_kg='$snf_kg_serials',parent_account_id='$account_id' ,edit_id='$account_id',edit_date='$date'  WHERE sno='$sno'";
 	 //echo $query_update_vehicle;
          $result_update_invoice_qty = mysql_query($query_update_invoice_qty,$DbConnection);	
 	 return $result_update_invoice_qty;
@@ -2026,8 +2635,6 @@ function updatePolyline($account_id,$date,$polyline_id1,$DbConnection)
 {
 	$query="UPDATE polyline SET edit_id='$account_id',edit_date='$date',status='0' WHERE polyline_id='$polyline_id1' AND status='1'"; 
 	$result=mysql_query($query,$DbConnection);
-        $query_next="UPDATE polyline_register SET edit_id='$account_id',edit_date='$date',status='0' WHERE polyline_id='$polyline_id1' AND status='1'"; 
-        $result_next=mysql_query($query_next,$DbConnection);
     return $result;	
 }
 function insertPolylineAssign($vehicle_size,$local_polyline_id,$local_vehicle_ids,$account_id,$date,$DbConnection)
@@ -3339,6 +3946,7 @@ function updateVtsTrip($landmark_name1,$landmark_point1,$zoom_level1,$account_id
 	$result=mysql_query($query,$DbConnection); 
 	return $result;
 }
+
 function getScheduleLocationDetail($locationId,$status,$DbConnection)
 {
   $Query1="SELECT * FROM schedule_location WHERE location_id IN(".$locationId.") AND status=$status";
@@ -5036,7 +5644,7 @@ function getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$order,$use
         $data_invoice=array();
 	while($row_select = mysql_fetch_object($result))
 	{
-		$data_invoice[]=array('uid'=>$row_select->uid,'nme'=>$row_select->nme,'sno'=>$row_select->sno,'invoice_status'=>$row_select->invoice_status,'unload_accept_time'=>$row_select->unload_accept_time,'create_date'=>$row_select->create_date,'transporter_account_id'=>$row_select->transporter_account_id,'create_id'=>$row_select->create_id,'qty_kg'=>$row_select->qty_kg,'plant_acceptance_time'=>$row_select->plant_acceptance_time,'system_time'=>$row_select->system_time,'close_type'=>$row_select->close_type,'milk_age'=>$row_select->milk_age,'dispatch_time'=>$row_select->dispatch_time,'unload_estimated_time'=>$row_select->unload_estimated_time,'lorry_no'=>$row_select->lorry_no,'target_time'=>$row_select->target_time,'vehicle_no'=>$row_select->vehicle_no,'plant'=>$row_select->plant,'tanker_type'=>$row_select->tanker_type,'docket_no'=>$row_select->docket_no,'email'=>$row_select->email,'mobile'=>$row_select->mobile,'fat_percentage'=>$row_select->fat_percentage,'snf_percentage'=>$row_select->snf_percentage,'fat_kg'=>$row_select->fat_kg,'snf_kg'=>$row_select->snf_kg,'driver_name'=>$row_select->driver_name,'driver_mobile'=>$row_select->driver_mobile,'validity_time'=>$row_select->validity_time,'chilling_plant'=>$row_select->chilling_plant,'unload_estimated_datetime'=>$row_select->unload_estimated_datetime,'fat_per_ft'=>$row_select->fat_per_ft,'snf_per_ft'=>$row_select->snf_per_ft,'qty_ct'=>$row_select->qty_ct,'temp_ct'=>$row_select->temp_ct,'acidity_ct'=>$row_select->acidity_ct,'mbrt_min_ct'=>$row_select->mbrt_min_ct,'mbrt_rm_ct'=>$row_select->mbrt_rm_ct,'mbrt_br_ct'=>$row_select->mbrt_br_ct,'protien_per_ct'=>$row_select->protien_per_ct,'sodium_ct'=>$row_select->sodium_ct,'testing_status'=>$row_select->testing_status,'fat_per_rt'=>$row_select->fat_per_rt,'snf_per_rt'=>$row_select->snf_per_rt,'adultration_ct'=>$row_select->adultration_ct,'otheradultration_ct'=>$row_select->otheradultration_ct,'edit_date'=>$row_select->edit_date,'invoice_material'=>$row_select->invoice_material,'lecino'=>$row_select->lecino,'transporter_editdate'=>$row_select->edit_date_transporter_last,'plant_editdate'=>$row_select->edit_date_plant_first);
+		$data_invoice[]=array('uid'=>$row_select->uid,'nme'=>$row_select->nme,'sno'=>$row_select->sno,'invoice_status'=>$row_select->invoice_status,'unload_accept_time'=>$row_select->unload_accept_time,'create_date'=>$row_select->create_date,'transporter_account_id'=>$row_select->transporter_account_id,'create_id'=>$row_select->create_id,'qty_kg'=>$row_select->qty_kg,'plant_acceptance_time'=>$row_select->plant_acceptance_time,'system_time'=>$row_select->system_time,'close_type'=>$row_select->close_type,'milk_age'=>$row_select->milk_age,'dispatch_time'=>$row_select->dispatch_time,'unload_estimated_time'=>$row_select->unload_estimated_time,'lorry_no'=>$row_select->lorry_no,'target_time'=>$row_select->target_time,'vehicle_no'=>$row_select->vehicle_no,'plant'=>$row_select->plant,'tanker_type'=>$row_select->tanker_type,'docket_no'=>$row_select->docket_no,'email'=>$row_select->email,'mobile'=>$row_select->mobile,'fat_percentage'=>$row_select->fat_percentage,'snf_percentage'=>$row_select->snf_percentage,'fat_kg'=>$row_select->fat_kg,'snf_kg'=>$row_select->snf_kg,'driver_name'=>$row_select->driver_name,'driver_mobile'=>$row_select->driver_mobile,'validity_time'=>$row_select->validity_time,'chilling_plant'=>$row_select->chilling_plant,'unload_estimated_datetime'=>$row_select->unload_estimated_datetime,'fat_per_ft'=>$row_select->fat_per_ft,'snf_per_ft'=>$row_select->snf_per_ft,'qty_ct'=>$row_select->qty_ct,'temp_ct'=>$row_select->temp_ct,'acidity_ct'=>$row_select->acidity_ct,'mbrt_min_ct'=>$row_select->mbrt_min_ct,'mbrt_rm_ct'=>$row_select->mbrt_rm_ct,'mbrt_br_ct'=>$row_select->mbrt_br_ct,'protien_per_ct'=>$row_select->protien_per_ct,'sodium_ct'=>$row_select->sodium_ct,'testing_status'=>$row_select->testing_status,'fat_per_rt'=>$row_select->fat_per_rt,'snf_per_rt'=>$row_select->snf_per_rt,'adultration_ct'=>$row_select->adultration_ct,'otheradultration_ct'=>$row_select->otheradultration_ct,'edit_date'=>$row_select->edit_date,'invoice_material'=>$row_select->invoice_material,'lecino'=>$row_select->lecino);
 
 	}
         return $data_invoice;
@@ -5089,7 +5697,7 @@ function getInvoiceMDRMTargetDate($condition,$startdate,$enddate,$conditionStr,$
         $data_invoice=array();
 	while($row_select = mysql_fetch_object($result))
 	{
-		$data_invoice[]=array('uid'=>$row_select->uid,'nme'=>$row_select->nme,'sno'=>$row_select->sno,'invoice_status'=>$row_select->invoice_status,'unload_accept_time'=>$row_select->unload_accept_time,'create_date'=>$row_select->create_date,'transporter_account_id'=>$row_select->transporter_account_id,'create_id'=>$row_select->create_id,'qty_kg'=>$row_select->qty_kg,'plant_acceptance_time'=>$row_select->plant_acceptance_time,'system_time'=>$row_select->system_time,'close_type'=>$row_select->close_type,'milk_age'=>$row_select->milk_age,'dispatch_time'=>$row_select->dispatch_time,'unload_estimated_time'=>$row_select->unload_estimated_time,'lorry_no'=>$row_select->lorry_no,'target_time'=>$row_select->target_time,'vehicle_no'=>$row_select->vehicle_no,'plant'=>$row_select->plant,'tanker_type'=>$row_select->tanker_type,'docket_no'=>$row_select->docket_no,'email'=>$row_select->email,'mobile'=>$row_select->mobile,'fat_percentage'=>$row_select->fat_percentage,'snf_percentage'=>$row_select->snf_percentage,'fat_kg'=>$row_select->fat_kg,'snf_kg'=>$row_select->snf_kg,'driver_name'=>$row_select->driver_name,'driver_mobile'=>$row_select->driver_mobile,'validity_time'=>$row_select->validity_time,'chilling_plant'=>$row_select->chilling_plant,'unload_estimated_datetime'=>$row_select->unload_estimated_datetime,'fat_per_ft'=>$row_select->fat_per_ft,'snf_per_ft'=>$row_select->snf_per_ft,'qty_ct'=>$row_select->qty_ct,'temp_ct'=>$row_select->temp_ct,'acidity_ct'=>$row_select->acidity_ct,'mbrt_min_ct'=>$row_select->mbrt_min_ct,'mbrt_rm_ct'=>$row_select->mbrt_rm_ct,'mbrt_br_ct'=>$row_select->mbrt_br_ct,'protien_per_ct'=>$row_select->protien_per_ct,'sodium_ct'=>$row_select->sodium_ct,'testing_status'=>$row_select->testing_status,'fat_per_rt'=>$row_select->fat_per_rt,'snf_per_rt'=>$row_select->snf_per_rt,'adultration_ct'=>$row_select->adultration_ct,'otheradultration_ct'=>$row_select->otheradultration_ct,'edit_date'=>$row_select->edit_date,'invoice_material'=>$row_select->invoice_material,'lecino'=>$row_select->lecino,'transporter_editdate'=>$row_select->edit_date_transporter_last,'plant_editdate'=>$row_select->edit_date_plant_first);
+		$data_invoice[]=array('uid'=>$row_select->uid,'nme'=>$row_select->nme,'sno'=>$row_select->sno,'invoice_status'=>$row_select->invoice_status,'unload_accept_time'=>$row_select->unload_accept_time,'create_date'=>$row_select->create_date,'transporter_account_id'=>$row_select->transporter_account_id,'create_id'=>$row_select->create_id,'qty_kg'=>$row_select->qty_kg,'plant_acceptance_time'=>$row_select->plant_acceptance_time,'system_time'=>$row_select->system_time,'close_type'=>$row_select->close_type,'milk_age'=>$row_select->milk_age,'dispatch_time'=>$row_select->dispatch_time,'unload_estimated_time'=>$row_select->unload_estimated_time,'lorry_no'=>$row_select->lorry_no,'target_time'=>$row_select->target_time,'vehicle_no'=>$row_select->vehicle_no,'plant'=>$row_select->plant,'tanker_type'=>$row_select->tanker_type,'docket_no'=>$row_select->docket_no,'email'=>$row_select->email,'mobile'=>$row_select->mobile,'fat_percentage'=>$row_select->fat_percentage,'snf_percentage'=>$row_select->snf_percentage,'fat_kg'=>$row_select->fat_kg,'snf_kg'=>$row_select->snf_kg,'driver_name'=>$row_select->driver_name,'driver_mobile'=>$row_select->driver_mobile,'validity_time'=>$row_select->validity_time,'chilling_plant'=>$row_select->chilling_plant,'unload_estimated_datetime'=>$row_select->unload_estimated_datetime,'fat_per_ft'=>$row_select->fat_per_ft,'snf_per_ft'=>$row_select->snf_per_ft,'qty_ct'=>$row_select->qty_ct,'temp_ct'=>$row_select->temp_ct,'acidity_ct'=>$row_select->acidity_ct,'mbrt_min_ct'=>$row_select->mbrt_min_ct,'mbrt_rm_ct'=>$row_select->mbrt_rm_ct,'mbrt_br_ct'=>$row_select->mbrt_br_ct,'protien_per_ct'=>$row_select->protien_per_ct,'sodium_ct'=>$row_select->sodium_ct,'testing_status'=>$row_select->testing_status,'fat_per_rt'=>$row_select->fat_per_rt,'snf_per_rt'=>$row_select->snf_per_rt,'adultration_ct'=>$row_select->adultration_ct,'otheradultration_ct'=>$row_select->otheradultration_ct,'edit_date'=>$row_select->edit_date,'invoice_material'=>$row_select->invoice_material,'lecino'=>$row_select->lecino);
 
 	}
         return $data_invoice;
@@ -5176,6 +5784,232 @@ function updateRawMilkInvoiceMaterial($material_name1,$material_code1,$account_i
 	$query="UPDATE rawmilk_material SET name='$material_name1',code='$material_code1',edit_id='$account_id',edit_date='$date' WHERE sno='$snoid1'";
 	$result=mysql_query($query,$DbConnection); 
 	return $result;
+}
+
+function getCityDetail($source,$DbConnection) {
+    $data=array();  
+    //$query = "SELECT sno,name,code FROM rawmilk_material WHERE sno='$sno' and status=1 ";
+    $query = "SELECT city.city_id,city.city_name,state.state_id,state.state_name,country.country_id,country.country_name FROM ".
+        "city,state,country WHERE city.city_name like '".$source."%' AND city.state_id=state.state_id AND ".
+        "state.country_id=country.country_id limit 0,20";    
+    //echo $query;
+    $result=mysql_query($query,$DbConnection);            							
+    while($row=mysql_fetch_object($result)) {       		
+        $data[]=array('city_id'=>$row->city_id,'city_name'=>$row->city_name,'state_name'=>$row->state_name,'country_name'=>$row->country_name);	
+    }
+    return $data;
+}
+
+function get_material_types($DbConnection) {
+    $data=array();  
+    //$query = "SELECT sno,name,code FROM rawmilk_material WHERE sno='$sno' and status=1 ";
+    $query = "SELECT material_type_id,material_type_name FROM material_type WHERE status=1";
+    //echo $query;
+    $result=mysql_query($query,$DbConnection);            							
+    while($row=mysql_fetch_object($result)) {       		
+        $data[]=array('material_type_id'=>$row->material_type_id,'material_type_name'=>$row->material_type_name);	
+    }
+    return $data;
+}
+
+
+function getTransporterDetail($refrigerated,$door_close,$capacity,$city_id_source,$city_id_dest,$category,$DbConnection) {
+
+        $query = "SELECT
+        my_transporters.account_id AS m_account_id,
+        my_transporters.firm_name AS m_firm_name,
+        my_transporters.contact_name AS m_contact_name,
+        my_transporters.office_contact_no AS m_office_contact_no,
+        my_transporters.personal_contact_no AS m_personal_contact_no,
+        my_transporters.address AS m_address,        
+        city.city_name AS c_city_name,
+        transporter_vehicles.close_open AS v_close_open,
+        transporter_vehicles.regrigerated_nonregrigerated AS v_regrigerated_nonregrigerated,
+        transporter_vehicles.vehicle_id AS v_vehicle_id,
+        transporter_vehicles.capacity AS v_capacity, 
+        transporter_vehicle_route_assignment.from_city_id AS r_from_city_id, 
+        transporter_vehicle_route_assignment.to_city_id AS r_to_city_id
+        
+        FROM my_transporters 
+        LEFT JOIN transporter_vehicles ON 
+
+        my_transporters.account_id=transporter_vehicles.account_id AND transporter_vehicles.capacity > '$capacity' AND 
+        transporter_vehicles.regrigerated_nonregrigerated='$refrigerated' AND transporter_vehicles.close_open ='$door_close' 
+
+        INNER JOIN transporter_vehicle_route_assignment ON 
+        transporter_vehicle_route_assignment.vehicle_id=transporter_vehicles.vehicle_id AND transporter_vehicle_route_assignment.material_type_id = '$category' AND 
+        transporter_vehicle_route_assignment.from_city_id='$city_id_source' AND transporter_vehicle_route_assignment.to_city_id='$city_id_dest' 
+
+        INNER JOIN vehicle_availabilities ON 
+        vehicle_availabilities.vehicle_id = transporter_vehicle_route_assignment.vehicle_id AND vehicle_availabilities.status=1 
+
+        INNER JOIN material_type ON 
+        material_type.material_type_id = transporter_vehicle_route_assignment.material_type_id 
+
+        INNER JOIN city ON 
+        city.city_id = transporter_vehicle_route_assignment.from_city_id 
+
+
+        INNER JOIN state ON 
+        state.state_id = city.state_id 
+
+        INNER JOIN country ON 
+        country.country_id = state.country_id 
+
+	GROUP BY (transporter_vehicle_route_assignment.from_city_id)";
+
+
+
+//city.city_id = transporter_vehicle_route_assignment.to_city_id 
+//GROUP BY (my_transporters.account_id)";
+
+        //echo "QUERY=".$query;
+        $result = mysql_query($query,$DbConnection);
+        $transporter_ids =  array();
+        /*$transporter =  array(array());
+        $contact_name =  array(array());
+        $office_contact =  array(array());
+        $mobile =  array(array());
+        $address =  array(array());
+        $city =  array(array());
+        $vehicle_preference =  array(array());
+        $available_vehicles =  array(array());
+        $capacity = array(array());
+        $rate = array(array());
+        $discount = array(array());*/
+        $transporter =  array();
+        $contact_name =  array();
+        $office_contact =  array();
+        $mobile =  array();
+        $address =  array();
+        $city =  array();
+        $vehicle_preference =  array();
+        $available_vehicles =  array();
+        $capacity = array();
+        $rate = array();
+        $discount = array();        
+        $from_city_id =  array();
+        $to_city_id =  array();
+        
+        $door = ""; $referigerated="";
+        
+        while($row=mysql_fetch_object($result)) {
+            //$row
+            /*$transporter_ids[] =  $row->account_id;
+            $transporter[$row->account_id] =  $row->firm_name;
+            $contact_name[$row->account_id] =  $row->contact_name;
+            $office_contact[$row->account_id] =  $row->office_contact_no;
+            $mobile[$row->account_id] =  $row->personal_contact_no;
+            $address[$row->account_id] =  $row->address;
+            $city[$row->account_id] =  $row->city_name;
+            
+            $bool_door =  $row->close_open;
+            $bool_refrigerated = $row->regrigerated_nonregrigerated;*/
+            $account_id_tmp = $row->m_account_id;
+            $transporter_ids[] =  $account_id_tmp;
+            $transporter[$row->m_account_id] =  $row->m_firm_name;
+            $contact_name[$row->m_account_id] =  $row->m_contact_name;
+            $office_contact[$row->m_account_id] =  $row->m_office_contact_no;
+            $mobile[$row->m_account_id] =  $row->m_personal_contact_no;
+            $address[$row->m_account_id] =  $row->m_address;
+            $city[$row->m_account_id] =  $row->c_city_name;
+            $capacity_tmp = $row->v_capacity;
+            $capacity[$row->m_account_id] =  $capacity_tmp;
+
+	    $from_city_id_tmp = $row->r_from_city_id;
+	    $to_city_id_tmp = $row->r_to_city_id;
+            $from_city_id[$row->m_account_id] =  $from_city_id_tmp;
+            $to_city_id[$row->m_account_id] = $to_city_id_tmp;
+            
+            $bool_door =  $row->v_close_open;
+            $bool_refrigerated = $row->v_regrigerated_nonregrigerated;            
+          
+            $vehicle_preference[$row->m_account_id] =  $bool_door.":".$bool_refrigerated;
+            $available_vehicles[$row->m_account_id][] =  $row->v_vehicle_id;
+            
+            //## FIND ROUTE RATE
+            $QUERY_RATE = "SELECT transportation_rate.rate_per_km,transportation_rate.discount_percentage FROM ".
+                    "transportation_rate WHERE ".
+                    "transportation_rate.from_city_id = '$row->r_from_city_id' AND ".
+                    "transportation_rate.to_city_id = '$row->r_to_city_id' AND ".
+                    "transportation_rate.capacity = '$capacity_tmp' AND ".
+                    "transportation_rate.door_status = '$bool_door' AND ".
+                    "transportation_rate.referigerated = '$bool_refrigerated' AND ".
+                    "transportation_rate.create_id = '$account_id_tmp' AND ".
+                    "transportation_rate.status=1";
+            $result_rate = mysql_query($QUERY_RATE,$DbConnection);
+            if($row_rate = mysql_fetch_object($result_rate)) {
+                $rate[$row->m_account_id] = $row_rate->rate_per_km;
+                $discount[$row->m_account_id] = $row_rate->discount_percentage;
+                //echo "1-Rate=".$row_rate->rate_per_km." ,discount=".$row_rate->discount_percentage;
+            } else {
+                $rate[$row->m_account_id] = 0;
+                $discount[$row->m_account_id] = 0;
+                //echo "2-Rate=".$row_rate->rate_per_km." ,discount=".$row_rate->discount_percentage;
+            }                   
+        }
+        if( (sizeof($transporter_ids)>0) && (($to_city_id_tmp==$city_id_dest)||($to_city_id_tmp=='')) ) {
+        //if( sizeof($transporter_ids)>0) {
+            return array($transporter_ids,$transporter,$contact_name,$office_contact,$mobile,$address,$city,$vehicle_preference,$capacity,$rate,$discount,$available_vehicles,$from_city_id,$to_city_id);
+        }
+} 
+
+function check_road_permit($city_id,$DbConnection) {
+    $str = "";
+    $QUERY = "SELECT state_id FROM city WHERE city_id='$city_id'";
+    $RES = mysql_query($QUERY,$Dbconnection);
+    if($row_state_id = mysql_fetch_object($RES)) {
+        $state_id = $row_state_id->state_id;
+        //CHECK form name also-pending
+        $QUERY2 = "SELECT invoice_amount,form_applicable FROM state_entry_forms WHERE state_id='$state_id' AND status=1";
+        $RES2 = mysql_query($QUERY2,$DbConnection);
+        if($row_check = mysql_fetch_object($RES2)) {
+            $form_applicable = $row_check->form_applicable;
+            $invoice_amount = $row_check->invoice_amount;
+            $str = $form_applicable.":".$invoice_amount;
+        }
+    }
+    return $str;
+}
+
+function insertCustomerOrderDetail($CustomerID,$TransporterID,$FromCityID,$FromAddress,$ToCityID,$ToAddress,$AvailableVehicles,$MaterialTypeID,$Item,$Capacity,$Rate,$DoorStatus,$Referigerated,$InvoiceAmount,$RoadPermitCopy,$InvoiceCopy,$BookingDate,$Remark,$DbConnection) {
+
+    $order_id ='';
+    $QueryExisting = "SELECT sno FROM customer_orders WHERE CustomerID='$CustomerID' AND TransporterID='$TransporterID' AND ".
+            "FromCityID='$FromCityID' AND FromAddress='$FromAddress' AND ToCityID='$ToCityID' AND ".
+            "ToAddress='$ToAddress' AND MaterialTypeID='$MaterialTypeID' AND Capacity='$Capacity' AND ".
+            "Rate='$Rate' AND DoorStatus='$DoorStatus' AND Referigerated='$Referigerated' AND ".
+            "InvoiceAmount='$InvoiceAmount' AND OrderDate='$BookingDate' AND OrderStatus=1";
+    //echo $QueryExisting;
+    $ResultExisting = mysql_query($QueryExisting, $DbConnection);
+    $numrows = mysql_num_rows($ResultExisting);
+    
+    if($numrows ==0) {
+        $QUERY_ORDER = "INSERT INTO customer_orders(CustomerID,TransporterID,FromCityID,FromAddress,ToCityID,ToAddress,VehicleQuantity,MaterialTypeID,Item,Capacity,Rate,DoorStatus,Referigerated,InvoiceAmount,OrderDate,OrderStatus,Remark) VALUES ".
+            "('$CustomerID','$TransporterID','$FromCityID','$FromAddress','$ToCityID','$ToAddress','$AvailableVehicles','$MaterialTypeID','$Item','$Capacity','$Rate','$DoorStatus','$Referigerated','$InvoiceAmount','$BookingDate',1,'$Remark')";   
+
+        //echo "Q1=".$QUERY_ORDER."<br>";
+        $result=mysql_query($QUERY_ORDER,$DbConnection);
+
+        if($result == false) {
+            return $order_id;
+        } else {        
+            $QueryID = "SELECT Max(sno) AS order_id FROM customer_orders WHERE CustomerID='$CustomerID' AND TransporterID='$TransporterID' AND FromCityID='$FromCityID'";
+            //echo "Q2=".$QueryID;
+            $resultID = mysql_query($QueryID,$DbConnection);
+            if($row_id = mysql_fetch_object($resultID)) {
+                $order_id = $row_id->order_id;
+            }
+        }
+    }
+    return $order_id;    
+}
+
+function updateCustomerOrderDetail($order_id,$RoadPermitCopy_path,$InvoiceCopy_path,$DbConnection) {
+    
+    $QUERY = "UPDATE customer_orders SET RoadPermitCopy='$RoadPermitCopy_path',InvoiceCopy='$InvoiceCopy_path' WHERE sno='$order_id'";
+    $result = mysql_query($QUERY,$DbConnection);
+    
 }
 //========================================================//
 //////////// end of hierarchy class ////////

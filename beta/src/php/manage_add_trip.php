@@ -5,9 +5,28 @@
     $root=$_SESSION['root'];  
     echo "add##"; 
     //include_once('tree_hierarchy_information.php');	
-    echo'<div id="portal_vehicle_information">';	
-    include_once('manage_checkbox_account_new.php');  	
-    echo'</div>'; 
+    //echo'<div id="portal_vehicle_information">';	
+    //include_once('manage_checkbox_account_new.php');  
+	$root=$_SESSION['root'];
+	include_once('tree_hierarchy_information_trip.php');
+		
+	echo"<table width='70%' align='center'>
+		<tr>
+			<td><br>
+				<fieldset class='assignment_manage_fieldset'>
+					<legend>
+						<strong>Accounts</strong>
+					</legend>
+					<div style='height:350px;overflow:auto'>";
+						include_once('manage_radio_account.php'); 
+				echo"</div>
+				</fieldset>
+			</td>
+		</tr>
+	</table>";
+
+	echo '<br><div style"display:none;" id="vehicle_div"> </div><br>';
+		
     echo'
     <div style="height:5px;"></div>
     <table border="0" class="manage_interface">

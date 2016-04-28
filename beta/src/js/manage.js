@@ -1069,7 +1069,7 @@ function accounts_for_device()
 	function manage_show_file(file_name)
 	{
 		//alert(file_name);
-		showManageLoadingMessage();	
+		//showManageLoadingMessage();	
 		makePOSTRequest(file_name, '');
 	}	
 	function manage_show_file_jquery(file_name)
@@ -4665,7 +4665,6 @@ function select_all_sectors(obj)
  }
    
       
-   
  function manage_add_landmark() 
  {
    makePOSTRequest('src/php/manage_add_landmark.htm', '');
@@ -4676,34 +4675,34 @@ function select_all_sectors(obj)
 	//alert("action_type1="+action_type);	
 	if(action_type=="add" || action_type=="edit") 
 	{
-		var landmark_name=document.getElementById("landmark_name").value;     
-		var landmark_point=document.getElementById("landmark_point").value;     
-		var zoom_level=document.getElementById("select_zoom_level").value;		
+            var landmark_name=document.getElementById("landmark_name").value;     
+            var landmark_point=document.getElementById("landmark_point").value;     
+            var zoom_level=document.getElementById("select_zoom_level").value;		
 	}
-    if(action_type=="add") 
-    {        
-  		var obj=document.manage1.elements['manage_id[]'];
-  		var result=checkbox_selection(obj);
-		//alert("result="+result);      
-  		if(result!=false)
-  		{
-			var form_validation=landmark_form_validation(landmark_name,landmark_point,zoom_level);
-			//alert("form_validation="+form_validation);
-			if(form_validation!=false)
-			{
-				var poststr = "action_type=" + action_type +
-							  "&account_id_local=" + encodeURI(result) +		 
-							  "&landmark_name=" + encodeURI(landmark_name) +
-							  "&landmark_point=" + encodeURI(landmark_point)+
-							  "&zoom_level=" + encodeURI(zoom_level);
-			}
-		}                          
-    }  
+        if(action_type=="add") 
+        {        
+            var obj=document.manage1.elements['manage_id[]'];
+            var result=checkbox_selection(obj);
+            //alert("result="+result);      
+            if(result!=false)
+            {
+                var form_validation=landmark_form_validation(landmark_name,landmark_point,zoom_level);
+                //alert("form_validation="+form_validation);
+                if(form_validation!=false)
+                {
+                    var poststr = "action_type=" + action_type +
+                    "&account_id_local=" + encodeURI(result) +		 
+                    "&landmark_name=" + encodeURI(landmark_name) +
+                    "&landmark_point=" + encodeURI(landmark_point)+
+                    "&zoom_level=" + encodeURI(zoom_level);
+                }
+            }                          
+        }  
 
     if(action_type=="edit")
     {
 	  var account_id_local=document.getElementById("account_id_local").value;
-      var landmark_id=document.getElementById("landmark_id").value; 
+            var landmark_id=document.getElementById("landmark_id").value; 
 	  var form_validation=landmark_form_validation(landmark_name,landmark_point,zoom_level);
 		//alert("form_validation="+form_validation);
 		if(form_validation!=false)
@@ -4777,42 +4776,48 @@ function action_manage_vts_trip(action_type)
         var landmark_point2=document.getElementById("landmark2_point").value;   
         var trip_startdate=document.getElementById("date1").value;		
 
-        var obj=document.manage1.elements['manage_id[]'];
-        var result=checkbox_selection(obj);
+		var obj_account =document.manage1.elements['manage_id'];
+		//alert("obj_account="+obj_account);  
+		var result_account = radio_selection(obj_account);
+		//alert("result_account="+result_account);  
+        var obj_vehicle =document.manage1.elements['vehicleserial[]'];
+        var result_vehicle =checkbox_selection(obj_vehicle);
+		//alert("result_vehicle="+result_vehicle);  
         //alert("result="+result);      
-        if(result!=false)
+        if(result_account!=false && result_vehicle!=false)
         {
             var form_validation=trip_form_validation(landmark_name1,landmark_point1,landmark_name2,landmark_point2,trip_startdate);
             //alert("form_validation="+form_validation);
             if(form_validation!=false)
             {
                 var poststr = "action_type=" + action_type +
-                    "&account_id_local=" + encodeURI(result) +		 
+                    "&account_id_local=" + encodeURI(result_account) +	
+					"&vehicle_ids=" + encodeURI(result_vehicle) +						
                     "&landmark_name1=" + encodeURI(landmark_name1) +
                     "&landmark_point1=" + encodeURI(landmark_point1)+
                     "&landmark_name2=" + encodeURI(landmark_name2) +
                     "&landmark_point2=" + encodeURI(landmark_point2)+							  
                     "&trip_startdate=" + encodeURI(trip_startdate);
-		    showManageLoadingMessage();
+					showManageLoadingMessage();
             }
         }
     }
 
     if(action_type=="close")
     {
-	  var account_id_local=document.getElementById("account_id_local").value;
+		var account_id_local=document.getElementById("account_id_local").value;
           var obj=document.manage1.elements['trip_id[]'];
           //alert("obj="+obj+" ,account_id_local="+account_id_local);
           var trip_ids=checkbox_selection(obj);
           //alert("result="+trip_ids);
           //var trip_id=document.getElementById("trip_id").value;
-	  var poststr = "action_type=" + action_type +
+		var poststr = "action_type=" + action_type +
                         "&trip_ids=" +trip_ids+
-                        "&account_id_local=" +account_id_local;
-			showManageLoadingMessage();
+                        "&account_id_local=" +account_id_local;	
+		showManageLoadingMessage();						
     }	 
     //alert("poststr="+poststr);
-    //showManageLoadingMessage();
+    
     makePOSTRequest('src/php/action_manage_vts_trip.htm', poststr);
 }  
 function trip_form_validation(landmark_name1,landmark_point1,landmark_name2,landmark_point2,trip_startdate)
@@ -4853,6 +4858,12 @@ function trip_form_validation(landmark_name1,landmark_point1,landmark_name2,land
       document.getElementById("trip_startdate").focus();
       return false;
     }	
+}
+
+function show_trip_vehicles(account_id) {
+	//alert("k");
+	var poststr = "account_id=" + account_id;                       
+	makePOSTRequest('src/php/report_hierarchy_header_trip.htm', poststr);
 }
 
 function manage_availability_1(obj, source, type)
@@ -5211,16 +5222,16 @@ function clearSelection()
 		alert("Sorry, the Google Maps API is not compatible with this browser");
 	}
 	
-	
-	function deleteOverlays() 
-	{
-		for (var i = 0; i < landmarkMarkers.length; i++) 
-		{
-			landmarkMarkers[i].setMap(null);
-		}
-	}
-}
-
+        function deleteOverlays() 
+        {
+            for (var i = 0; i < landmarkMarkers.length; i++) 
+            {
+                landmarkMarkers[i].setMap(null);
+            }
+        }
+       }
+       
+       
 	function manage_landmark_trip(param)
 	{	
             var landmark_point = param+"_point";
@@ -5684,7 +5695,6 @@ function showCoordinateInterface(param_1)
     } 
 }
 
-
 function clear_initialize()
 {
     if(common_event=="geofencing")
@@ -5835,9 +5845,10 @@ function close_landmark_div(close_pararm)
    }
    document.getElementById("landmark_point").value="";    /////// at the time of add landmark
    document.getElementById("landmark_point").value=document.getElementById("prev_landmark_point").value;  ///at the time of edit landmark
-   prev_landmark_point
+   
    div_close_block();
 }
+
 
 function close_trip_div(close_pararm)
 {
@@ -15038,3 +15049,4 @@ function show_invoiceRawMIlkMaterial()
       //alert(poststr);
     }
  }
+ 

@@ -14,11 +14,11 @@
             
             <?php
                 if(sizeof($data)>0) {
-                    echo "<tr><td style='background-color:lightgrey;'><strong>Source Location</strong></td><td style='background-color:lightgrey;'><strong>Destination Location</strong></td><td style='background-color:lightgrey;'><strong>Trip StartDate</strong></td><td><font color=red><strong>Close</strong></font></td></tr>";
+                    echo "<tr><td style='background-color:lightgrey;'><strong>Account</strong><td style='background-color:lightgrey;'><strong>Vehicle</strong><td style='background-color:lightgrey;'><strong>Source Location</strong></td><td style='background-color:lightgrey;'><strong>Destination Location</strong></td><td style='background-color:lightgrey;'><strong>Trip StartDate</strong></td><td><font color=red><strong>Close</strong></font></td></tr>";
 
-                    for($i=0;$i<sizeof($data);$i++) {
+                    for($i=0;$i<sizeof($data);$i++) {						 
                         echo "<tr>";
-                        echo "<td>".$data[$i]['source_name']."</td><td>".$data[$i]['destination_name']."</td><td>".$data[$i]['trip_start_date']."</td><td><input type=checkbox name=\"trip_id[]\" value='".$data[$i]['trip_id']."'></td>";                        
+                        echo "<td>".$data[$i]['account_name']."</td><td>".$data[$i]['vehicle_name']."</td><td>".$data[$i]['source_name']."</td><td>".$data[$i]['destination_name']."</td><td>".$data[$i]['trip_start_date']."</td><td><input type=checkbox name=\"trip_id[]\" value='".$data[$i]['trip_id']."'></td>";                        
                         echo"</tr>";
                     }
                 }

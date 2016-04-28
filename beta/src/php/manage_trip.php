@@ -5,8 +5,7 @@
   
         echo"<input type='hidden' id='prev_landmark1_point'>";
         echo"<input type='hidden' id='prev_landmark2_point'>";
-	//echo"<input type='hidden' id='zoom_level'>"; 
-	
+	//echo"<input type='hidden' id='zoom_level'>"; 	
 	echo '<center>
             <form name="manage1">
                     <fieldset class="manage_fieldset">
@@ -20,7 +19,8 @@
                                             </tr>
                                     </table>     
                     </fieldset>
-                    <div style"display:none;" id="edit_div"> </div>			
+                    											
+					<div style"display:none;" id="edit_div"> </div>					
             </form>
     </center>'; 
 ?>  

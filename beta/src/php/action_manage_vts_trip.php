@@ -6,9 +6,12 @@ include_once('coreDb.php');
 $DEBUG = 0;
 
 $action_type1 = $_POST['action_type'];
-$local_account_ids = $_POST['account_id_local'];
-$local_account_ids = explode(",", $local_account_ids);
-$account_size = sizeof($local_account_ids);
+$local_account_id = $_POST['account_id_local'];
+$vehicle_ids_tmp = $_POST['vehicle_ids'];
+
+$vehicle_ids = explode(",", $vehicle_ids_tmp);
+$vehicle_size = sizeof($vehicle_ids);
+
 //echo "ActionType=".$action_type1;
 if ($action_type1 == "add") {
     $landmark_name1 = trim($_POST['landmark_name1']);
@@ -17,7 +20,7 @@ if ($action_type1 == "add") {
     $landmark_point2 = $_POST['landmark_point2'];    
     $trip_startdate = $_POST['trip_startdate'];
 
-    $existing_trips = getAlreadyExistingTrips($account_size,$local_account_ids,$landmark_name1,$landmark_point1,$landmark_name2,$landmark_point2,$DbConnection);
+    $existing_trips = getAlreadyExistingTrips($vehicle_size,$vehicle_ids,$local_account_id,$landmark_name1,$landmark_point1,$landmark_name2,$landmark_point2,$DbConnection);
     
     if(sizeof($existing_trips)>0) {        
         echo "<div align=center><h3>Following trips are already added <h3><br><br>";
@@ -29,7 +32,7 @@ if ($action_type1 == "add") {
         echo "</div>";
     }
         
-    $result = insertVtsTrip($account_size,$local_account_ids,$landmark_name1,$landmark_point1,$landmark_name2,$landmark_point2,$trip_startdate,$DbConnection);
+    $result = insertVtsTrip($vehicle_size,$vehicle_ids,$local_account_id,$landmark_name1,$landmark_point1,$landmark_name2,$landmark_point2,$trip_startdate,$DbConnection);
     if ($result) {
         $flag = 1;
         $action_perform = "Added";
