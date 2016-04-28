@@ -1267,7 +1267,11 @@ function show_option_with_value(type, option)      // type="manage/report/settin
 			}
     	  }
 		  
-		  
+		  else if(result1[0].trim()=="vehicle_trip")
+    	  {
+				//alert(result1[1]);
+				document.getElementById("vehicle_div").innerHTML = result1[1];				
+    	  }		  
 		
           /*else if(result1[0]=="route_vehicle")
           {                         
