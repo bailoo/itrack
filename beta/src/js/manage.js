@@ -4793,6 +4793,7 @@ function action_manage_vts_trip(action_type)
                     "&landmark_name2=" + encodeURI(landmark_name2) +
                     "&landmark_point2=" + encodeURI(landmark_point2)+							  
                     "&trip_startdate=" + encodeURI(trip_startdate);
+		    showManageLoadingMessage();
             }
         }
     }
@@ -4807,10 +4808,11 @@ function action_manage_vts_trip(action_type)
           //var trip_id=document.getElementById("trip_id").value;
 	  var poststr = "action_type=" + action_type +
                         "&trip_ids=" +trip_ids+
-                        "&account_id_local=" +account_id_local;					    			 
+                        "&account_id_local=" +account_id_local;
+			showManageLoadingMessage();
     }	 
     //alert("poststr="+poststr);
-    showManageLoadingMessage();
+    //showManageLoadingMessage();
     makePOSTRequest('src/php/action_manage_vts_trip.htm', poststr);
 }  
 function trip_form_validation(landmark_name1,landmark_point1,landmark_name2,landmark_point2,trip_startdate)
