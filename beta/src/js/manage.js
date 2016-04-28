@@ -4764,6 +4764,95 @@ function select_all_sectors(obj)
 		  return false;
 		}				
 	}
+        
+        
+function action_manage_vts_trip(action_type)
+ {
+    //alert("action_type1="+action_type);	
+    if(action_type=="add") 
+    {
+        var landmark_name1=document.getElementById("landmark1_name").value;     
+        var landmark_point1=document.getElementById("landmark1_point").value; 
+        var landmark_name2=document.getElementById("landmark2_name").value;     
+        var landmark_point2=document.getElementById("landmark2_point").value;   
+        var trip_startdate=document.getElementById("date1").value;		
+
+        var obj=document.manage1.elements['manage_id[]'];
+        var result=checkbox_selection(obj);
+        //alert("result="+result);      
+        if(result!=false)
+        {
+            var form_validation=trip_form_validation(landmark_name1,landmark_point1,landmark_name2,landmark_point2,trip_startdate);
+            //alert("form_validation="+form_validation);
+            if(form_validation!=false)
+            {
+                var poststr = "action_type=" + action_type +
+                    "&account_id_local=" + encodeURI(result) +		 
+                    "&landmark_name1=" + encodeURI(landmark_name1) +
+                    "&landmark_point1=" + encodeURI(landmark_point1)+
+                    "&landmark_name2=" + encodeURI(landmark_name2) +
+                    "&landmark_point2=" + encodeURI(landmark_point2)+							  
+                    "&trip_startdate=" + encodeURI(trip_startdate);
+            }
+        }
+    }
+
+    if(action_type=="close")
+    {
+	  var account_id_local=document.getElementById("account_id_local").value;
+          var obj=document.manage1.elements['trip_id[]'];
+          //alert("obj="+obj+" ,account_id_local="+account_id_local);
+          var trip_ids=checkbox_selection(obj);
+          //alert("result="+trip_ids);
+          //var trip_id=document.getElementById("trip_id").value;
+	  var poststr = "action_type=" + action_type +
+                        "&trip_ids=" +trip_ids+
+                        "&account_id_local=" +account_id_local;					    			 
+    }	 
+    //alert("poststr="+poststr);
+    showManageLoadingMessage();
+    makePOSTRequest('src/php/action_manage_vts_trip.htm', poststr);
+}  
+function trip_form_validation(landmark_name1,landmark_point1,landmark_name2,landmark_point2,trip_startdate)
+{
+    if(landmark_name1=="") 
+    {
+      alert("Please Enter Source Name"); 
+      document.getElementById("landmark_name1").focus();
+      return false;
+    }
+    if(landmark_name2=="") 
+    {
+      alert("Please Enter Destination Name"); 
+      document.getElementById("landmark_name2").focus();
+      return false;
+    }		
+    if(landmark_point1=="") 
+    {
+      alert("Please fill Source gps coordinate");
+      document.getElementById("landmark_point1").focus();
+      return false;
+    }
+    if(landmark_point2=="") 
+    {
+      alert("Please fill Destination gps coordinate");
+      document.getElementById("landmark_point2").focus();
+      return false;
+    }
+    if(landmark_point2=="") 
+    {
+      alert("Please fill Destination gps coordinate");
+      document.getElementById("landmark_point2").focus();
+      return false;
+    }	
+    if(trip_startdate=="") 
+    {
+      alert("Please fill Trip startdate");
+      document.getElementById("trip_startdate").focus();
+      return false;
+    }	
+}
+
 function manage_availability_1(obj, source, type)
 {
     if(document.getElementById(source).value!="")
@@ -5130,6 +5219,81 @@ function clearSelection()
 	}
 }
 
+	function manage_landmark_trip(param)
+	{	
+            var landmark_point = param+"_point";
+            var prev_landmark_point = "prev_"+param+"_point";
+            //alert("param="+param);
+		if(GBrowserIsCompatible())
+		{	
+		var lat_lng=document.getElementById(landmark_point).value; 
+		if(lat_lng!="")  
+		{     
+                    landmark_map_part(lat_lng);
+                    document.getElementById(prev_landmark_point).value = lat_lng;
+                    lat_lng=lat_lng.split(","); 
+                    var point=new google.maps.LatLng(parseFloat(lat_lng[0]), parseFloat(lat_lng[1]));		
+                    var lat=point.lat();  
+                    var lng=point.lng();        
+
+                    var contentString = '<div style="height:10px"></div><table>'
+                    +'<tr><td style="font-size:11px;">'+point+'</td></tr>'               
+                    +'</table><div style="height:10px"></div>'			 					
+                    +'<center><input type="button" value="OK" onclick="javascript:return save_landmark_details(\''+landmark_point+'\')" /></center>';
+                    var icon1 = {
+                        url: 'images/landmark.png',
+                        size: new google.maps.Size(10, 10),
+                        scaledSize: new google.maps.Size(10, 10)
+                    };
+                    var infowindow = new google.maps.InfoWindow();
+                    marker = new google.maps.Marker({position: point,icon:icon1, map: map});
+                    infowindow.setContent(contentString);
+                    infowindow.open(map, marker);
+                    landmarkMarkers.push(marker);			  
+		}
+		else
+		{
+                    //alert("in else");
+                    var lat_lng="";        
+                    landmark_map_part(lat_lng);
+                    //map.clearOverlays();
+		}
+
+		google.maps.event.addListener(map, 'click', function(event) 
+		{		
+                    deleteOverlays();
+                    var icon1 = {
+                        url: 'images/landmark.png',
+                        size: new google.maps.Size(10, 10),
+                        scaledSize: new google.maps.Size(10, 10)
+                    };
+                    marker = new google.maps.Marker({position: event.latLng, icon:icon1, map: map});
+                    document.getElementById(landmark_point).value=event.latLng.lat()+","+event.latLng.lng();
+                    var contentString='<div style="height:10px"></div><table>'
+                        +'<tr><td style="font-size:11px">'+event.latLng+'</td></tr>'               
+                        +'</table><div style="height:10px"></div>'			 					
+                        +'<center><input type="button" value="OK" onclick="javascript:return save_landmark_details(\''+landmark_point+'\')" /></center>';
+
+                    var infowindow = new google.maps.InfoWindow();
+                    infowindow.setContent(contentString);
+                    infowindow.open(map, marker);
+                    landmarkMarkers.push(marker);
+		});		   
+            }
+            else 
+            {
+                alert("Sorry, the Google Maps API is not compatible with this browser");
+            }        
+            
+            function deleteOverlays() 
+            {
+                for (var i = 0; i < landmarkMarkers.length; i++) 
+                {
+                    landmarkMarkers[i].setMap(null);
+                }
+            }            
+        }       
+
 	function landmark_map_part(lat_lng)
 	{
 		if(lat_lng=="")
@@ -5473,45 +5637,51 @@ function addFeatureEntry(name, color)
 ///////////////geofencing and route handling feature for pop up map /////////////
 function showCoordinateInterface(param_1)
 {
-	///////////for visibility of map in the hidden div pop /////////////////
-	document.getElementById("blackout").style.visibility = "visible";
-	document.getElementById("divpopup").style.visibility = "visible";
-	document.getElementById("blackout").style.display = "block";
-	document.getElementById("divpopup").style.display = "block"; 
-	///////////////////////////////////////////////////////////////////////////
-
-  common_event=param_1; 
-	//alert(common_event);
-  if(common_event=="landmark") ////////only for landmark
-  {
-    manage_landmark(common_event);   
-  }
-  else if(common_event=="location")
-  {
-	manage_location(common_event);
-  }
-  //for making polyline
-  else if(common_event=="polyline")
+    ///////////for visibility of map in the hidden div pop /////////////////
+    document.getElementById("blackout").style.visibility = "visible";
+    document.getElementById("divpopup").style.visibility = "visible";
+    document.getElementById("blackout").style.display = "block";
+    document.getElementById("divpopup").style.display = "block"; 
+    ///////////////////////////////////////////////////////////////////////////
+    
+    common_event=param_1; 
+    //alert(common_event);
+    //alert(common_event);
+    if(common_event=="landmark") ////////only for landmark
+    {
+        manage_landmark(common_event);   
+    }
+    else if( (common_event=="landmark1") || (common_event=="landmark2") ) ////////only for landmark
+    {
+        manage_landmark_trip(common_event);   
+    }
+    else if(common_event=="location")
+    {
+        manage_location(common_event);
+    }
+    //for making polyline
+    else if(common_event=="polyline")
     {
        //document.getElementById("close_geo_route_coord").value = document.getElementById("polyline_coord").value; // kept last geo coord details for closing pop up div
-		refreshIntervalId = setInterval(keep_alive,8400000);  //My session expires at 140 minutes
-		manage_draw_polyline_route();
+        refreshIntervalId = setInterval(keep_alive,8400000);  //My session expires at 140 minutes
+        manage_draw_polyline_route();
     }
-  else///////for geofencing and route both ////////////
-  {   	 
-    if(common_event=="geofencing")
-    {
-       document.getElementById("close_geo_route_coord").value = document.getElementById("geo_coord").value; // kept last geo coord details for closing pop up div 
-    }   
-    else if(common_event=="sector")
-    {
-      document.getElementById("close_geo_route_coord").value = document.getElementById("sector_coord").value; // kept last geo coord details for closing pop up div
+    else///////for geofencing and route both ////////////
+    {   	 
+      if(common_event=="geofencing")
+      {
+         document.getElementById("close_geo_route_coord").value = document.getElementById("geo_coord").value; // kept last geo coord details for closing pop up div 
+      }   
+      else if(common_event=="sector")
+      {
+        document.getElementById("close_geo_route_coord").value = document.getElementById("sector_coord").value; // kept last geo coord details for closing pop up div
+      } 
+
+      refreshIntervalId = setInterval(keep_alive,840000);  //My session expires at 15 minutes
+      manage_draw_geofencing_route();
     } 
-	
-	refreshIntervalId = setInterval(keep_alive,840000);  //My session expires at 15 minutes
-    manage_draw_geofencing_route();
-  } 
 }
+
 
 function clear_initialize()
 {
@@ -5640,7 +5810,7 @@ function createInputMarker(point)
 
  function save_landmark_details(point_id)
  {
-    var coord_point=document.getElementById("landmark_point").value;
+    var coord_point=document.getElementById(point_id).value;
     if(coord_point=="")
     {
       alert("Please Enter Points");
@@ -5649,7 +5819,7 @@ function createInputMarker(point)
     else
     {
       div_close_block();
-      document.getElementById("landmark_point").value =  coord_point;
+      document.getElementById(point_id).value =  coord_point;
     }
     return false;
  }
@@ -5664,6 +5834,22 @@ function close_landmark_div(close_pararm)
    document.getElementById("landmark_point").value="";    /////// at the time of add landmark
    document.getElementById("landmark_point").value=document.getElementById("prev_landmark_point").value;  ///at the time of edit landmark
    prev_landmark_point
+   div_close_block();
+}
+
+function close_trip_div(close_pararm)
+{
+   var txt="Are You Sure You Want To Close Without Saving Points";
+   if(!confirm(txt))
+   {
+     return false; 
+   }
+   document.getElementById("landmark1_point").value="";    /////// at the time of add landmark
+   document.getElementById("landmark1_point").value=document.getElementById("prev_landmark1_point").value;  ///at the time of edit landmark
+
+   document.getElementById("landmark2_point").value="";    /////// at the time of add landmark
+   document.getElementById("landmark2_point").value=document.getElementById("prev_landmark2_point").value;  ///at the time of edit landmark
+    
    div_close_block();
 }
 

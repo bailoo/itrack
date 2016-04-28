@@ -62,6 +62,8 @@
 
         <script type="text/javascript">
             var gmarkers = [];
+			var map;
+			
             function initialize(customers_json, plants_json) {
             //alert(customers_json);
             var customerArr= JSON.parse(customers_json);
@@ -69,11 +71,11 @@
 
             //alert(customerArr);
             var mapOptions = {
-                    zoom: 10,
+                    zoom: 14,
                     center: new google.maps.LatLng(20.5937, 78.9629),
                     mapTypeId: google.maps.MapTypeId.ROADMAP
             }                                                         
-            var map = new google.maps.Map(document.getElementById("googlemap"), mapOptions);
+            map = new google.maps.Map(document.getElementById("googlemap"), mapOptions);
 
             /*var input = document.getElementById('pac-input');
             var searchBox = new google.maps.places.SearchBox(input);
@@ -121,7 +123,7 @@
                 });
                 
                 var latlngobj = new google.maps.LatLng(splitCustomerData[0], splitCustomerData[1]);						
-		latlngbounds.extend(latlngobj);                
+				latlngbounds.extend(latlngobj);                
 
                 gmarkers.push(marker);
                 
@@ -144,7 +146,9 @@
 
                 google.maps.event.addListener(marker, 'click', (function(marker,key,lat,lng,stationName) {
                     return function() {
-
+                    map.setZoom(16);
+					map.setCenter(new google.maps.LatLng(lat,lng));
+                    
                     var station_no_tag = 'CustomerNo';
                     var station_name_tag = 'CustomerName';
                                      
@@ -203,7 +207,7 @@
                 });
 
                 var latlngobj = new google.maps.LatLng(splitCustomerData[0], splitCustomerData[1]);						
-		latlngbounds.extend(latlngobj);
+				latlngbounds.extend(latlngobj);
                 
                 gmarkers.push(marker);
                 
@@ -214,6 +218,9 @@
 
                 google.maps.event.addListener(marker, 'click', (function(marker,key,lat,lng,plantName) {
                     return function() {
+					
+					map.setZoom(16);
+					map.setCenter(new google.maps.LatLng(lat,lng));
 
                     var plant_no_tag = 'PlantNo';
                     var plant_name_tag = 'PlantName';				                   
@@ -248,7 +255,7 @@
 
                  i++;
             }            
-            
+             
             map.setCenter(latlngbounds.getCenter());					
             /*if(latarr.length>0 && latarr.length<2)
             {
@@ -256,15 +263,163 @@
             }
             else
             {*/
-                map.fitBounds(latlngbounds);
+                //map.setZoom(10);
+				map.fitBounds(latlngbounds);							
+				//map.setZoom(8);
+				//map.setCenter(latlngbounds.getCenter());
             //}            
             //####### PLOT URL STRING
             //alert(customer_plant_list);
-            document.getElementById('customer_plant_id').innerHTML = customer_plant_list;            
+            document.getElementById('customer_plant_id').innerHTML = customer_plant_list;
+
+
+		//######## FUNCTION GEOFENCE
+		var markers = new Array();
+		
+		if(document.getElementById('GEOFENCE').checked){
+			show_geofence(map);
+		}
+		
+		function show_geofence(map)
+		{
+			//alert("geo");
+			var req = getXMLHTTP();
+			req.open("GET", "src/php/getGeofencePoints.php", false); //third parameter is set to false here
+			req.send(null);
+			//alert("response="+req.responseText);
+			var data = req.responseText;
+			var xml = xmlParse(data);		
+			if(data!="Geofence Not Found")
+			{
+				var geo_point_data = xml.documentElement.getElementsByTagName("marker");
+				var i;	
+				var bounds_global = new google.maps.LatLngBounds();		
+				var point_global;
+				var infowindow;
+				for(i=0; i<geo_point_data.length; i++) 
+				{
+					if (infowindow) infowindow.close();
+					infowindow = new google.maps.InfoWindow();
+					var polygon = new Array();		
+					var p = 0;	
+					var geo_name = geo_point_data[i].getAttribute("geo_name");
+					//alert("geoName1="+geo_name);
+					var geo_points = geo_point_data[i].getAttribute("points");
+					var geo_points1=geo_points.split(',');	
+					var bounds = new google.maps.LatLngBounds();	
+					var point;			
+					//alert("len="+geo_points1.length);
+					for(var j=0;j<geo_points1.length;j++)
+					{
+						//alert("geo_points=");
+						if(j==0)
+						{							
+							var coord_global = geo_points1[j].split(" ");	
+							//alert("coord="+coord_global);
+							point_global = new google.maps.LatLng(parseFloat(coord_global[0]),parseFloat(coord_global[1]));		//alert("point="+point);
+							bounds_global.extend(point_global);
+						}
+							
+						var coord = geo_points1[j].split(" ");	
+						//alert("coord="+coord);
+						point = new google.maps.LatLng(parseFloat(coord[0]),parseFloat(coord[1]));		//alert("point="+point);
+						bounds.extend(point);	
+					}			
+					var center = bounds.getCenter();	
+					//var zoom = map.getBoundsZoomLevel(bounds)-5;	//map.setCenter(center,zoom);				
+					var temp_center="";		
+					temp_center=temp_center+"0"+center+"0";		
+					var center2 = temp_center.split("(");	
+					var center3 = center2[1].split(")");				
+					var center4 = center3[0].split(",");	
+					//var latlng = new GLatLng(center4[0], center4[1]);	
+					var latlng = new google.maps.LatLng(center4[0], center4[1]);				
+					var marker = new MarkerWithLabel({
+					position: latlng,
+					draggable: true,							
+					map:map,
+					icon: {path: google.maps.SymbolPath.CIRCLE,},
+					labelContent: '<table><tr><td><font color="green" size=2><b>'+geo_name+'</b></font></td></tr></table>',
+					labelAnchor: new google.maps.Point(-2, 12)
+					});
+					markers.push(marker);
+					var point1;
+					var bounds1 = new google.maps.LatLngBounds();				
+					var geo_points2=geo_points.split(',');
+					var lastpt = geo_points2.length-1;
+					var pts = new Array();
+					var addListenersOnPolygon = function(polygon) {
+					google.maps.event.addListener(polygon,'click', function(event) {
+						//alert("geoName="+geofencePolygon.geoName);
+
+						contentStr='<table>'+
+						'<tr>'+
+						'<td><font color=blue><strong>Geofence Name</strong></font></td>'+
+						'<td>:</td>'+
+						'<td><strong>'+polygon.geoName+'</strong></td>'+
+						'</tr></table>';
+						infowindow.setContent(contentStr);
+						if (event) {
+							point = event.latLng;
+						}
+						infowindow.setPosition(point);
+						infowindow.open(map);
+						// map.openInfoWindowHtml(point,html); 
+						}); 
+					}
+								
+					//alert("len2="+geo_points2.length+" ,map="+map);
+					for(var j=0;j<geo_points2.length;j++)
+					{
+						var points = geo_points2[j].split(" ");				
+						pts[j] = new google.maps.LatLng(parseFloat(points[0]),parseFloat(points[1]));				
+						if(j == lastpt)
+						{
+							j++;
+							points = geo_points2[0].split(" ");											
+							pts[j] = new google.maps.LatLng(parseFloat(points[0]),parseFloat(points[1]));
+							var geofencePolygon = new google.maps.Polygon({
+							paths: pts,
+							strokeColor: '#FF0000',
+							strokeOpacity: 0.8,
+							strokeWeight: 2,
+							fillColor: '#FF0000',
+							fillOpacity: 0.0,
+								geoName:geo_name
+							});
+							markers.push(geofencePolygon);
+							geofencePolygon.setMap(map);
+							addListenersOnPolygon(geofencePolygon);
+							p++;	
+						}	// if closed
+					}
+				}			
+			}
+		}
+
+		function xmlParse(str) 
+		{
+			if (typeof ActiveXObject != 'undefined' && typeof GetObject != 'undefined') 
+			{
+				var doc = new ActiveXObject('Microsoft.XMLDOM');
+				doc.loadXML(str);
+				return doc;
+			}
+
+			if (typeof DOMParser != 'undefined') 
+			{
+				return (new DOMParser()).parseFromString(str, 'text/xml');
+			}
+			return createElement('div', null);
+		}
+
+		//########### CLOSED FUNCTION GEOFENCE
         }
+		
+		//alert("map1="+map);
         google.maps.event.addDomListener(window, 'load', initialize);
         //#### GOOGLE MAP CLOSED
-    
+   
         function ChangeText(oFileInput, sTargetID) {
             document.getElementById(sTargetID).value = oFileInput.value;
         }
@@ -315,6 +470,7 @@
          alert("Request failed: " + textStatus);
          });
          }*/
+
        </script>  
     </head>
     <body class="body_part" topmargin="0"  onload="javascript:resize('home')"  onresize="javascript:resize('home')">

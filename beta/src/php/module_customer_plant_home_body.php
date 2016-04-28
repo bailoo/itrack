@@ -36,7 +36,7 @@ $INSTITUTION = $_POST['INSTITUTION'];
 $FS = $_POST['FS'];
 $DISTRIBUTOR = $_POST['DISTRIBUTOR'];
 $PLANTS = $_POST['PLANTS'];
-
+$GEOFENCE = $_POST['GEOFENCE'];
 
 if ($filter_flag == '') {
     //echo "<br>CUSTOMER All";

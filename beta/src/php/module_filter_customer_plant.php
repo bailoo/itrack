@@ -50,6 +50,12 @@
                         } else {
                             echo '<tr><td><input type="checkbox" name="PLANTS"> &nbsp;<div class="tooltip"><font color="#ff0000"><strong>PLANTS</strong></font><span class="tooltiptext">(ALL)</span></div></td></tr>';
                         }
+						
+						if ($GEOFENCE == 'on') {
+                            echo '<tr><td><input type="checkbox" name="GEOFENCE" id="GEOFENCE" checked> &nbsp;<div class="tooltip"><font color="#ff00f0"><strong>GEOFENCE</strong></font><span class="tooltiptext">Show Geofence on map</span></div></td></tr>';
+                        } else {
+                            echo '<tr><td><input type="checkbox" name="GEOFENCE" id="GEOFENCE"> &nbsp;<div class="tooltip"><font color="#ff00f0"><strong>GEOFENCE</strong></font><span class="tooltiptext">Show Geofence on map</span></div></td></tr>';
+                        }						
                         ?>
                         
                     </table>				

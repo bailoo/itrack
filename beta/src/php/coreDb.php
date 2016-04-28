@@ -76,6 +76,13 @@ function getCustomerPlantChillingRecord($account_id,$type,$DbConnection)
     }
     return $dataArr;
 }
+
+function closeTransporterVehicleTrip($trip_id,$DbConnection)
+{
+    $query="UPDATE transporter_vehicle_trips set status=0 WHERE serial=$trip_id AND status=1";
+    $result=mysql_query($query,$DbConnection);
+    return $result;
+}
 function getSuspendaccountDetail($post_user_id,$status,$DbConnection)
 {
     $query_suspend="SELECT remark FROM account WHERE user_id='$post_user_id' AND status=$status";  // status=4 means account suspended for some reason
@@ -1193,6 +1200,83 @@ function insertLandmark($account_size,$local_account_ids,$max_no,$landmark_name1
 	return $result;
 }
 
+function insertVtsTrip($account_size,$local_account_ids,$landmark_name1,$landmark_point1,$landmark_name2,$landmark_point2,$trip_startdate,$DbConnection)
+{             
+        $query_string1="INSERT INTO vts_trips(account_id,source_name,source_coord,destination_name,destination_coord,trip_start_date,status,create_id,create_date) VALUES";
+	for($i=0;$i<$account_size;$i++)
+	{
+            //echo "accout_id=".$local_account_ids[$i]."<br>";
+            $query_trip="SELECT trip_id FROM vts_trips WHERE account_id='$local_account_ids[$i]' AND status=1 AND (source_name='$landmark_name1' AND destination_name='$landmark_name2') OR (source_coord='$landmark_point1' AND destination_coord='$landmark_point2')";
+            $result_trip = mysql_query($query_trip,$DbConnection); 
+            $numrows = mysql_num_rows($result_trip);
+            
+            if($numrows==0) {
+                if($i==$account_size-1)
+                {
+                    $query_string2.="('$local_account_ids[$i]','$landmark_name1','$landmark_point1','$landmark_name2','$landmark_point2','$trip_startdate','1','$account_id','$date');";
+                }
+                else
+                {
+                    $query_string2.="('$local_account_ids[$i]','$landmark_name1','$landmark_point1','$landmark_name2','$landmark_point2','$trip_startdate','1','$account_id','$date'),";
+                }
+            }
+	}
+	$query=$query_string1.$query_string2; 
+	//echo "query=".$query;
+	//}
+	$result=mysql_query($query,$DbConnection);  
+	return $result;
+}
+
+function getAlreadyExistingTrips($account_size,$local_account_ids,$landmark_name1,$landmark_point1,$landmark_name2,$landmark_point2,$DbConnection) {
+
+    $existing_trips = array();
+    for($i=0;$i<$account_size;$i++)
+    {
+        $query_account_name ="SELECT name FROM account_detail WHERE account_id='$local_account_ids[$i]'";
+        $result_account_name = mysql_query($query_account_name, $DbConnection);
+        $row_name = mysql_fetch_object($result_account_name);
+        $name = $row_name->name;
+        
+        $query_trip="SELECT source_name,destination_name FROM vts_trips WHERE account_id='$local_account_ids[$i]' AND status=1 AND (source_name='$landmark_name1' AND destination_name='$landmark_name2') OR (source_coord='$landmark_point1' AND destination_coord='$landmark_point2')";
+        $result_trip = mysql_query($query_trip,$DbConnection); 
+        $numrows = mysql_num_rows($result_trip);
+        
+        if($numrows>0) {
+            if($row_trip = mysql_fetch_object($result_trip)) {
+                $existing_trips[] = $name.",".$row_trip->source_name.",".$row_trip->destination_name;
+            }
+        }
+    }  
+    //print_r($existing_trips); 
+    return $existing_trips;
+}
+
+function getVts_TripDetail($account_id,$DbConnection)
+{
+	$Query="SELECT * FROM vts_trips WHERE account_id='$account_id' AND status=1";
+	//echo "QueryAll=".$Query."<br>";
+	$Result=  mysql_query($Query,$DbConnection); 
+	while($Row = mysql_fetch_object($Result))
+	{ 
+            $data[]=array(	
+                    'trip_id'=>$Row->trip_id,
+                    'source_name'=>$Row->source_name,
+                    'destination_name'=>$Row->destination_name,
+                    'trip_start_date'=>$Row->trip_start_date
+            );
+	}
+	return $data;
+}
+
+function closeTrips($trip_ids,$DbConnection)
+{
+    for($i=0;$i<sizeof($trip_ids);$i++) {
+        $query="UPDATE vts_trips SET status=0 WHERE trip_id='$trip_ids[$i]]'";     
+        $result=mysql_query($query,$DbConnection);
+    }
+    return $result;
+}
 function getLandmarkMaxSerial($DbConnection)
 {
 	$query ="select Max(sno)+1 as seiral_no from landmark";  ///// for auto increament of landmark_id ///////////   
@@ -3248,6 +3332,13 @@ function updateLandmark($landmark_name1,$landmark_point1,$zoom_level1,$account_i
 	return $result;
 }
 
+function updateVtsTrip($landmark_name1,$landmark_point1,$zoom_level1,$account_id,$date,$landmark_id1,$DbConnection)
+{
+	$query="UPDATE landmark SET landmark_name='$landmark_name1',landmark_coord='$landmark_point1',zoom_level='$zoom_level1',edit_id='$account_id',edit_date='$date' WHERE landmark_id='$landmark_id1'";
+	//echo "update_query=".$query."<br>";;
+	$result=mysql_query($query,$DbConnection); 
+	return $result;
+}
 function getScheduleLocationDetail($locationId,$status,$DbConnection)
 {
   $Query1="SELECT * FROM schedule_location WHERE location_id IN(".$locationId.") AND status=$status";

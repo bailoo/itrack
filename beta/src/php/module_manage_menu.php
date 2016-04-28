@@ -538,6 +538,39 @@ $contetnbsp="&nbsp;";
 										"</tr>"+
 									"</table>",editable:false, children:
 									[]},';
+                                                                
+                                                                
+								echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_trip.htm\');>"+
+																"<img src=\'images/manage/trip.jpg\' style='.$style1.'>"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_trip.htm\'); class=\'menuitem\'>"+
+																"'.$contetnbsp.'Vehicle Trip"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';                                                                
 									echo'{type:"Text",
 									label:"<table border=0 class=mystyle>"+
 										"<tr>"+ 																	
