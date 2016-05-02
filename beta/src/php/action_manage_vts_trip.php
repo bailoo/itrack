@@ -11,7 +11,7 @@ $vehicle_ids_tmp = $_POST['vehicle_ids'];
 
 $vehicle_ids = explode(",", $vehicle_ids_tmp);
 $vehicle_size = sizeof($vehicle_ids);
-
+//echo "\nVsize=".$vehicle_size;
 //echo "ActionType=".$action_type1;
 if ($action_type1 == "add") {
     $landmark_name1 = trim($_POST['landmark_name1']);
@@ -27,7 +27,7 @@ if ($action_type1 == "add") {
         
         for($i=0;$i<sizeof($existing_trips);$i++) {
             $existing_trips_str = explode(",",$existing_trips[$i]);
-            echo "<font color=blue>[".$existing_trips_str[0]."]</font>::*nbsp;<strong>".$existing_trips_str[1]."->".$existing_trips_str[2]."</strong><br>";
+            echo "<font color=blue>[".$existing_trips_str[0]."]</font>::&nbsp;<strong>".$existing_trips_str[1]."->".$existing_trips_str[2]."</strong><br>";
         }
         echo "</div>";
     }

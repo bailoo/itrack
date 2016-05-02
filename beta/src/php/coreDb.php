@@ -1200,10 +1200,10 @@ function insertVtsTrip($vehicle_size,$vehicle_ids,$local_account_id,$landmark_na
 	for($i=0;$i<$vehicle_size;$i++)
 	{
 		//echo "accout_id=".$local_account_ids[$i]."<br>";
-		$query_trip="SELECT trip_id FROM vts_trips WHERE account_id='$local_account_id' AND vehicle_id='$vehicle_ids[$i]' AND status=1 AND (source_name='$landmark_name1' AND destination_name='$landmark_name2') OR (source_coord='$landmark_point1' AND destination_coord='$landmark_point2')";
+		$query_trip="SELECT trip_id FROM vts_trips WHERE account_id='$local_account_id' AND vehicle_id='$vehicle_ids[$i]' AND status=1 AND ((source_name='$landmark_name1' AND destination_name='$landmark_name2') OR (source_coord='$landmark_point1' AND destination_coord='$landmark_point2'))";
 		$result_trip = mysql_query($query_trip,$DbConnection); 
 		$numrows = mysql_num_rows($result_trip);
-		
+	//echo $query_trip;	
 		if($numrows==0) {
 			if($i==$vehicle_size-1)
 			{
@@ -1232,15 +1232,18 @@ function getAlreadyExistingTrips($vehicle_size,$vehicle_ids,$local_account_id,$l
         $row_name = mysql_fetch_object($result_account_name);
         $account_name = $row_name->name;
         
-        $query_trip="SELECT account_id,vehicle_id,source_name,destination_name FROM vts_trips WHERE account_id='$local_account_id' AND vehicle_id='$vehicle_ids[$i]' AND status=1 AND (source_name='$landmark_name1' AND destination_name='$landmark_name2') OR (source_coord='$landmark_point1' AND destination_coord='$landmark_point2')";
+        $query_trip="SELECT account_id,vehicle_id,source_name,destination_name FROM vts_trips WHERE account_id='$local_account_id' AND vehicle_id='$vehicle_ids[$i]' AND status=1 AND ((source_name='$landmark_name1' AND destination_name='$landmark_name2') OR (source_coord='$landmark_point1' AND destination_coord='$landmark_point2'))";
         $result_trip = mysql_query($query_trip,$DbConnection); 
         $numrows = mysql_num_rows($result_trip);
+
+//echo $query_trip;
 		
 		$query_vehicle = "SELECT vehicle_name FROM vehicle WHERE vehicle_id='$vehicle_ids[$i]' AND status=1";
 		$result_vehicle = mysql_query($query_vehicle,$DbConnection);
 		$row_vehicle = mysql_fetch_object($result_vehicle);
 		$vehicle_name = $row_vehicle->vehicle_name;
-        
+    
+//echo "Numrow=".$numrows;    
         if($numrows>0) {
             if($row_trip = mysql_fetch_object($result_trip)) {
                 $existing_trips[] = $account_name.",".$row_trip->vehicle_name.",".$row_trip->source_name.",".$row_trip->destination_name;
