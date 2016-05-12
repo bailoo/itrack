@@ -2,23 +2,27 @@
   include_once('util_session_variable.php');
   include_once('util_php_mysql_connectivity.php');
   include_once('user_type_setting.php');
-  //include_once('common_xml_element.php');
+ // include_once('common_xml_element.php');
   //print_r($root);
   //echo "<br>z=".$root->data->AccountID;
   //casandra------
   include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
   include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
- //include_once("util_casandra_call.php");
   $o_cassandra = new Cassandra();	
   $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
-
-  
+  $vehicle_color1=getColorFromAP($account_id,$DbConnection); /// A->Account P->Preference
+   $vcolor = explode(':',$vehicle_color1); //account_name:active:inactive
+    $vcolor1 = "#".$vcolor[0];
+    $vcolor2 = "#".$vcolor[1];
+    $vcolor3 = "#".$vcolor[2];
+  //---------------
   $common_id1=$account_id;
-  
+  /*
   $query="SELECT DISTINCT device_imei_no from device_assignment where account_id='$account_id' and status='1'";
   //echo $query;
   $result=mysql_query($query,$DbConnection);
-   function common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name,$option_name)
+  */
+  function common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name,$option_name)
 	{	
 		//casandra
                 global $o_cassandra;
@@ -38,61 +42,16 @@
 		include("/var/www/html/vts/beta/src/php/common_xml_path.php");
 		$xml_file =$xml_data."/".$current_date."/".$vehicle_imei.".xml";
                 */
-                //$vehicle_imei= '861074026115546';
-                
-               $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $current_date);
+                 $logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $current_date);
                 if($logResult!='')
                 {
                     $vehicle_active_flag=1;
                 }
-                 //$vehicle_active_flag=1;
+                
 		//========XXXXXXXXXXXXXXXXXXXXXXX===========//
 		//if(file_exists($xml_file))
                 if($vehicle_active_flag==1)
 		{		
-		echo'<td align="left">&nbsp;<INPUT TYPE="radio"  name="vehicleserial_radio" VALUE="'.$vehicle_imei.'"></td>
-			   <td class=\'text\'>&nbsp;
-				 <font color="darkgreen">'.$vehicle_name.'</font>
-		
-			   </td>';
-		}
-		else
-		{
-			echo'<td align="left">&nbsp;
-					<INPUT TYPE="radio"  name="vehicleserial_radio" VALUE="'.$vehicle_imei.'">
-				</td>
-				<td class=\'text\'>
-				  <font color="grey">'.$vehicle_name.'</font>
-					
-				</td>';
-		}
-		if($td_cnt==3)
-		{ 
-			echo'</tr>';
-		}
-
-	}
-  function common_function_for_vehicle_old($vehicle_imei,$vehicle_id,$vehicle_name,$option_name)
-	{	
-		//$td_cnt++;
-		global $td_cnt;
-		if($td_cnt==1)
-		{
-			echo'<tr>';
-		}
-		
-		//date_default_timezone_set('Asia/Calcutta');
-		$current_date = date('Y-m-d');
-
-		$xml_file = "../../../xml_vts/xml_data/".$current_date."/".$vehicle_imei.".xml";
-		//====code updated on 13032015=============//
-		include("/var/www/html/vts/beta/src/php/common_xml_path.php");
-		$xml_file =$xml_data."/".$current_date."/".$vehicle_imei.".xml";
-		
-		//========XXXXXXXXXXXXXXXXXXXXXXX===========//
-		if(file_exists($xml_file))
-		{
-		//echo"in";
 		echo'<td align="left">&nbsp;<INPUT TYPE="radio"  name="vehicleserial_radio" VALUE="'.$vehicle_imei.'"></td>
 			   <td class=\'text\'>&nbsp;
 				 <font color="darkgreen">'.$vehicle_name.'</font>
@@ -128,7 +87,6 @@
 				{
 					$td_cnt =0;
 					for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
-                                        //for($j=0;$j<2;$j++)
 					{			    
 						$vehicle_id = $AccountNode->data->VehicleID[$j];
 						$vehicle_name = $AccountNode->data->VehicleName[$j];
@@ -173,10 +131,10 @@
   
 ?>
 <div id="blackout"></div>
-<div id="divpopupmap">
+<div id="divpopup">
 
-		<a href="#" onclick="toggle_visibility('foo');" style="text-decoration:none">Route from History <span id='for_polyline_name'></span> </a>
-        <div id="foo" style='display:none;'>
+	<a href="#" onclick="toggle_visibility('foo');" style="text-decoration:none">Route from History <span id='for_polyline_name'></span> </a>
+        <div id="foo" >
 			<table table width=100% align=center>
 				<tr>
 					<td align=center><span>Select Vehicle<a href="#" onclick="toggle_visibility('foo');" style="text-decoration:none"> | Hide</a></span></td>
@@ -285,13 +243,13 @@
 		<td class="manage_interfarce" align="center"><a href="javascript:clear_initialize()" style="text-decoration:none"><span>Clear/Refresh</span></a></td>
 		<td class="manage_interfarce" align="center"><a href="#" onclick="javascript:return save_route_or_geofencing()" style="text-decoration:none"><span>OK</span></a></td>
 		
-		<!--<td class="manage_interfarce" align="center"><a href='#' Onclick="javascript:return remove_data_on_map_manage_polyline('map_report');" style="text-decoration:none"><span>Remove Overlays</span></a></td>-->
-		<td class="manage_interfarce" align="center"><a href="#" onclick="javascript:return close_div_polyline()" style="text-decoration:none"><span>[ X ]</span></a></td>
+		<td class="manage_interfarce" align="center"><a href='#' Onclick="javascript:return remove_data_on_map_manage_polyline('map_report');" style="text-decoration:none"><span>Remove Overlays</span></a></td>
+		<td class="manage_interfarce" align="center"><a href="#" onclick="javascript:return close_div()" style="text-decoration:none"><span>[ X ]</span></a></td>
 	</tr>
 	         			
 	<tr>
 		<td colspan="5" valign="top" align="justify">
-			<div id="map_div" style="width:925px; height:570px; position: relative; background-color: rgb(229, 227, 223);" class="ukseries_div_map"></div>							
+			<div id="map_div" style="width:707px; height:397px; position: relative; background-color: rgb(229, 227, 223);" class="ukseries_div_map"></div>							
 		</td>	
    </tr>							
   </table>
