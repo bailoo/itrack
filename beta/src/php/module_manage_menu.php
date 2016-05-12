@@ -633,7 +633,37 @@ $contetnbsp="&nbsp;";
 										"</tr>"+
 									"</table>",editable:false, children:
 									[]},';
-									
+									echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_polyline_history.htm\');>"+
+																"<img src=\'images/manage/geofence.png\' style='.$style1.'>"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_polyline_history.htm\'); class=\'menuitem\'>"+
+																"'.$contetnbsp.'Route from History"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';
 									if($flag_invoice)
 									{
 									echo'{type:"Text",

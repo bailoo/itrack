@@ -361,7 +361,229 @@ function show_data_on_map_manage_polyline(report_format)
 	} // if dt = true
 }  // function closed
 // for storing all point of plant and custormer
+function show_overlay_on_map_manage_polyline(report_format)
+{	
+	imei_iotype_arr.length=0;
+	//alert(report_format);  
+	var access="1";   /////set access temporarily
+	var time_interval=document.manage1.interval.value;	
+	var startdateDoc=document.manage1.start_date.value;		
+	var enddateDoc=document.manage1.end_date.value;
+	//alert("startdateDoc="+startdateDoc+"enddateDoc="+enddateDoc);
+	var startdate = startdateDoc.replace('/', '-');
+	startdate = startdate.replace('/', '-');
+	var enddate = enddateDoc.replace('/', '-');
+	enddate = enddate.replace('/', '-');  		
+	var display_mode=document.manage1.mode;   /////// 1=last_postoin  and 2=track 		
+	//alert("display_mode="+display_mode);
+	var imeino1;
+	var vid;
+	var text_report_io_element="";
+	vid = "";	
+	var obj_unique= {};
+	if(display_mode.length!=undefined)
+	{
+		for(i=0;i<display_mode.length;i++)
+		{
+		if(display_mode[i].checked)
+		{
+		  var mode=display_mode[i].value;
+		  //alert("mode="+mode);
+		  if(mode == 1)
+		  {  
+			imeino1=document.manage1.elements['vehicleserial[]'];
+		  }
+		  else if(mode == 2)
+		  {
+			imeino1=document.manage1.vehicleserial_radio; 
+			//alert("imei="+imeino1);
+		  }
+		}
+	  }
+	}
+	else
+	{
+		if(display_mode.checked)
+		{
+		  var mode=display_mode.value;
+		  //alert("mode="+mode);
+		  if(mode == 1)
+		  {  
+			imeino1=document.manage1.elements['vehicleserial[]'];
+		  }
+		  else if(mode == 2)
+		  {
+			imeino1=document.manage1.vehicleserial_radio; 
+			//alert("imei="+imeino1);
+		  }
+		}
+	}
+  
+	//alert("display_mode="+mode+" ,imei="+imeino1); 
+	var uniqueImeiArr=new Array();
+	var num1=0; 
+	var dt = manage_date_time_validation(mode);
+	if(dt==true)
+	{ 
+		if(mode==1)               // LAST POSITION
+		{
+			if(imeino1.length!=undefined)
+			{
+				var mlpi=0;  // map last position increment 
+				for(i=0;i<imeino1.length;i++)
+				{
+					if(imeino1[i].checked)
+					{
+						uniqueImeiArr[mlpi]=imeino1[i].value;
+						//alert('value'+j);
+						//alert('value'+uniqueImeiArr[j]);
+						mlpi++;
+						num1 = 1;						
+					}
+				}
+				imeino1=uniqueImeiArr.filter( onlyUnique );		
+				if(num1==1)
+				{
+					for(i=0;i<imeino1.length;i++)
+					{						
+						var value_tmp=imeino1[i];
+						var vid_local=value_tmp.split("*");
+						if(vid_local[1]!="tmp_str")
+						{
+							imei_iotype_arr[vid_local[0]]=vid_local[1];				
+						}
+						text_report_io_element=text_report_io_element+vid_local[1]+",";	
+						//alert("text_report_io_element="+text_report_io_element+"vid_local="+vid_local[1]);
+						vid=vid+vid_local[0]+",";				
+					}
+				}
+			}
+			else
+			{
+				if(imeino1.checked)
+				{
+					var value_tmp=imeino1.value;					
+					var vid_local=value_tmp.split("*");
+					if(vid_local[1]!="tmp_str")
+					{
+						imei_iotype_arr[vid_local[0]]=vid_local[1];				
+					}
+					text_report_io_element=text_report_io_element+vid_local[1]+",";				
+					vid=vid+vid_local[0]+",";
+					num1 = 1;
+				}
+			}
+			if(num1==0)
+			{
+				alert("Please Select At Least One Vehicle");							
+				return false;  			
+			}
+			var strIOElement = text_report_io_element.length;
+				text_report_io_element = text_report_io_element.slice(0,strIOElement-1);
+			var strLen = vid.length;
+			vid = vid.slice(0,strLen-1);
+			/*else
+			{
+				for(id in obj_unique) 
+				{				
+					if(obj_unique.hasOwnProperty(id)) 
+					{ 
+						var vid_local=(obj_unique[id]).split("*");
+						if(vid_local[1]!="tmp_str")
+						{
+							imei_iotype_arr[vid_local[0]]=vid_local[1];				
+						}
+						text_report_io_element=vid_local[1];
+						vid=vid+vid_local[0]+",";
+					}
+				}
+				var strLen = vid.length;
+				vid = vid.slice(0,strLen-1);
+			}	*/
+		}
+		else if(mode==2)        // TRACK
+		{
+		
+		  if(imeino1.length!=undefined)
+			{      
+				for(i=0;i<imeino1.length;i++)
+				{
+					if(imeino1[i].checked)
+					{
+						//alert("imeino1="+imeino1[i].value);
+						var vid_local=(imeino1[i].value).split("*");
+						
+						/*if(vid_local[1]!="tmp_str")
+						{
+							imei_iotype_arr[vid_local[0]]=vid_local[1];					
+						}*/
+						text_report_io_element=vid_local[1];
+						//alert("text_report_io_element1="+text_report_io_element);
+						vid =  vid + vid_local[0];
+						//alert("vid="+vid);
+						num1 = 1;
+					}
+				}
+			}
+			else
+			{
+				if(imeino1.checked)
+				{
+					var vid_local=(imeino1.value).split("*");
+					if(vid_local[1]!="tmp_str")
+					{
+						imei_iotype_arr[vid_local[0]]=vid_local[1];	
+					}
+					text_report_io_element=vid_local[1];
+					//alert("text_report_io_element2="+text_report_io_element);
+					vid =  vid + vid_local[0];			
+					num1 = 1;
+				}        
+			}      
+			if(num1==0)
+			{
+				alert("Please Select At Least One Vehicle");							
+				return false;  			
+			}
+			//alert("vid="+vid);
+		}
+		if(num1 == 1)
+		{
+			//alert("report_format"+report_format);
+			if(report_format=="map_report")
+			{
+				//alert("visible");
+				document.getElementById('prepage').style.visibility='visible';
+				startup_var = 1;
+				var status;
+				var time_interval;
+				var pt_for_zoom;
+				var zoom_level;	
+				var n=new Array();
+				/*
+				if(document.forms[0].pt_for_zoom.value==1 && document.forms[0].zoom_level.value==1)
+				{status = "ON";}
+				else{status = "OFF";  pt_for_zoom = "0";  zoom_level = "0";} 
+				*/
+				status = "OFF";  pt_for_zoom = "0";  zoom_level = "0";
+				//initialize(); 
+				var diffdate;
+				var difftype;
 
+			
+			    diffdate = 0;
+				difftype = 0;
+				
+				flag_play=0;
+				play_interval=0;
+				
+				//alert("map="+report_format);
+				load_overlay(vid,mode,startdate,enddate,pt_for_zoom,zoom_level,status,access,time_interval,flag_play,play_interval);	
+			} 
+		} // if num =1
+	} // if dt = true
+}  // function closed
+// for storing all point of plant and custormer
 function onlyUnique(value, index, self) { 
     return self.indexOf(value) === index;
 }
@@ -1542,7 +1764,30 @@ function search_landmark()
 			}
 		}); //GEvent.addListener closed 
 	}
-
+    function load_overlay(vserial,dmode,startdate,enddate,pt_for_zoom,zoom_level,status,access,time_interval,flag_play,play_interval)
+  {
+		Load_Data_overlay(vserial,startdate,enddate,pt_for_zoom,zoom_level,status,access,dmode,time_interval,flag_play,play_interval);
+	
+		GEvent.addListener(map,"click", function(overlay,point) 
+		{ 											
+			var ltlng;   ////////// for display lat long on click while ltlng set="show"
+			if(document.forms[0].latlng.checked == true)
+			{
+				ltlng = document.forms[0].latlng.value="show";		
+			}
+			else
+			{
+				ltlng = document.forms[0].latlng.value="";
+			}
+					
+			if(ltlng=="show")
+			{
+				var myHtml = "<font size='2' color='#000000'>The GPoint value is: " + map.fromLatLngToDivPixel(point) + "<br>"+point + "<br>" + "<center>at zoom level " + map.getZoom()+"</font></center>";
+				map.openInfoWindow(point, myHtml);
+			}
+		}); //GEvent.addListener closed 
+	}
+        
 	var browser=navigator.appName;
 	var b_version=navigator.appVersion;
 	var version=parseFloat(b_version);
@@ -2439,7 +2684,7 @@ function Load_Data(vserial,startdate,enddate,pt_for_zoom,zoom_level,status,acces
 				"&flag_play=" + encodeURI(flag_play) +
 				"&play_interval=" + encodeURI(play_interval) +
                 "&time_interval=" + encodeURI(time_interval);
-			alert("poststr="+poststr);	
+			//alert("poststr="+poststr);	
 				$.ajax({
 		type: "POST",
 		url:'src/php/get_filtered_xml_polyline.php',
@@ -2453,7 +2698,7 @@ function Load_Data(vserial,startdate,enddate,pt_for_zoom,zoom_level,status,acces
 		document.getElementById('prepage').style.visibility='hidden';
 		// document.getElementById('dummy_div').innerHTML=responsedatas;
 		//document.getElementById('debugDiv').style.display="";
-                alert(response);
+                //alert(response);
 		//document.getElementById('debugDiv').innerHTML=response;
 		},
 		error: function()
@@ -2465,6 +2710,86 @@ function Load_Data(vserial,startdate,enddate,pt_for_zoom,zoom_level,status,acces
 
 } //function load1 closed
 
+function Load_Data_overlay(vserial,startdate,enddate,pt_for_zoom,zoom_level,status,access,dmode,time_interval,flag_play,play_interval)
+{ 
+  var d1 = new Date();			// CURRENT DATE IN MILLISECONDS
+  var curr_date = d1.getDate();
+  var curr_month = d1.getMonth();
+  var curr_year = d1.getFullYear();
+  var current_date;
+  
+  var month_tmp;
+  var day_tmp;
+
+	if(curr_month<9)
+	{
+		curr_month = curr_month+1;
+		month_tmp = "0"+curr_month;
+	}
+	else
+	{
+		curr_month = curr_month+1;
+		month_tmp = curr_month;
+	}
+
+	if(curr_date<10)
+		day_tmp = "0"+curr_date;
+	else
+		day_tmp = curr_date;
+
+	current_date = curr_year+"-"+month_tmp+"-"+day_tmp;
+	var current_dtstr =	curr_year+"/"+month_tmp+"/"+day_tmp+" 23:59:59"; // USE THIS VARIABLE FOR 10 DAYS CONDITION IF ANY
+	
+  		if(vserial!=null)
+  		{
+  		 //alert('check');
+        var date = new Date();
+        // COPY ORIGINAL XML FILE        
+		    var dest = "../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
+		    //alert("dest="+dest);
+        //var dest = "src/php/xml_tmp/filtered_xml/tmp_1296469048456.xml";
+        thisdest = dest;
+        thismode = dmode;
+        thisaccess = access;
+        //var dest = "xml_tmp/filtered_xml/tmp_1295185453465.xml" ;
+        // alert("d="+dest);        
+        
+        // MAKE FILTERED COPY        
+        var poststr = "xml_file=" + encodeURI( dest )+
+                "&mode=" + encodeURI( dmode )+
+				"&home_report_type=map_report"+
+                "&vserial=" + encodeURI( vserial )+
+                "&startdate=" + encodeURI( startdate )+
+                "&enddate=" + encodeURI( enddate )+ 
+				"&flag_play=" + encodeURI(flag_play) +
+				"&play_interval=" + encodeURI(play_interval) +
+                                 "&point_type=line"  +
+                "&time_interval=" + encodeURI(time_interval);
+			//alert("poststr="+poststr);	
+				$.ajax({
+		type: "POST",
+		url:'src/php/get_filtered_xml_polyline.php',
+		data: poststr,
+		success: function(response){
+		//console.log(response);
+		//alert("response="+response);
+                //var flag_polyline=0;
+		document.getElementById('dummy_div').style.display='none';
+		$("#dummy_div").html(response);
+		
+		document.getElementById('prepage').style.visibility='hidden';
+		// document.getElementById('dummy_div').innerHTML=responsedatas;
+		document.getElementById('debugDiv').style.display="";
+		document.getElementById('debugDiv').innerHTML=response;
+		},
+		error: function()
+		{
+		alert('An unexpected error has occurred! Please try later.');
+		}
+		});
+      } // if vid closed
+
+} //function load1 closed
 
 function isFile(str){
 var O= AJ();

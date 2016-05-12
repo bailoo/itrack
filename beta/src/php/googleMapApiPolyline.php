@@ -37,7 +37,88 @@ class GoogleMapHelper{
 	var $defaultStrokeOpacity = 1.0;							// Line opacity 0.1 - 1
 	var $defaultStrokeWeight = 2;							// Line Weight in pixels
 
-	
+	function addPolylineMarker($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$io_str_last,$d_travel_str)
+        {
+            echo "map_id=".$map_id."<br>";
+		
+            if($map_id == null) 
+            {
+                    return null;
+            }
+             $polyline_marker="<script>";
+            if(is_array($latarr) && is_array($lngarr))
+            {
+                    $latJs=json_encode($latarr);
+                    $lngJS=json_encode($lngarr);
+                    $polyline_marker .= "
+			
+			setPolylineMarker({$map_id},{$latJs},{$lngJS}".");";
+                        
+                    $polyline_marker .= "function setPolylineMarker(map,latarr, lngarr)
+                        {
+                            map_div = new google.maps.Map(document.getElementById('map_div'), 
+                            {
+                              zoom: 5,
+                              center: new google.maps.LatLng(22.755920681486405, 78.2666015625),
+                              mapTypeId: google.maps.MapTypeId.ROADMAP,
+                              disableDefaultUI: true,
+                              zoomControl: true
+                            });
+                            
+                            if((latarr.length ==1) && (!latarr[0]) && (!lngarr[0]))
+                            {
+                                    alert('Sorry! Either -GPS or Data Not Found!!');
+                                    exit;
+                            }
+                            flag_polyline=0;
+                            var latlngbounds = new google.maps.LatLngBounds();
+                            var polygonCoords=new Array();
+                            for(var i=0;i<latarr.length;i++)
+                            {
+                                var lat_tmp=latarr[i];
+                                var lng_tmp=lngarr[i];
+                                polygonCoords[i] = new google.maps.LatLng(parseFloat(lat_tmp),parseFloat(lng_tmp));	 
+                                latlngbounds.extend(new google.maps.LatLng(parseFloat(lat_tmp),parseFloat(lng_tmp)));
+                            }
+                            var polyOptions_temp = {
+                            strokeColor: '#000000',
+                            strokeOpacity: 1.0,
+                            strokeWeight: 3,
+                            editable: true
+                            };
+                            poly = new google.maps.Polyline(polyOptions_temp);
+                            map_div.setCenter(latlngbounds.getCenter());
+                            map_div.fitBounds(latlngbounds);
+                            poly.setMap(map_div);	
+		
+                            //alert(flightPath);
+		
+                            flightPath = new google.maps.Polyline({
+                            path: polygonCoords,
+                            geodesic: true,
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 1.0,
+                            strokeWeight: 2
+                            });
+                           
+                            flightPath.setMap(map_div);
+
+                            setSelection(flightPath);
+                        }";
+                    $polyline_marker .= "</script>";
+                    return $polyline_marker;
+                   /* $z=0;
+                   $polyline_marker.="
+                            deleteOverlays();
+                           var latlngbounds = new google.maps.LatLngBounds();
+                           var polygonCoords=new Array();
+                           polygonCoords[z] = new google.maps.LatLng(parseFloat(coord2[0]),parseFloat(coord2[1]));	 
+                           latlngbounds.extend(new google.maps.LatLng(parseFloat(coord2[0]),parseFloat(coord2[1])));
+                           ";
+                  $z++ ;  */      
+                    
+            }
+        }
 	function addMultipleMarker($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$io_str_last,$d_travel_str)
 	{
 		//print_r($latarr);
