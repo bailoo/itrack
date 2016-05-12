@@ -176,7 +176,7 @@
 <div id="divpopupmap">
 
 		<a href="#" onclick="toggle_visibility('foo');" style="text-decoration:none">Route from History <span id='for_polyline_name'></span> </a>
-        <div id="foo" >
+        <div id="foo" style='display:none;'>
 			<table table width=100% align=center>
 				<tr>
 					<td align=center><span>Select Vehicle<a href="#" onclick="toggle_visibility('foo');" style="text-decoration:none"> | Hide</a></span></td>
