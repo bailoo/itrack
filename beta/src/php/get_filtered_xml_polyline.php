@@ -107,17 +107,21 @@ if ($home_report_type == "map_report" || $home_report_type == "play_report") {
         for ($di = 0; $di <= ($date_size - 1); $di++) {
             if($date_size==1)
                 {
-                    $dateRangeStart=$date_1;
-                    $dateRangeEnd=$date_2;
+                    //$dateRangeStart=$date_1;
+                    //$dateRangeEnd=$date_2;
+                    $dateRangeStart=$startdate;
+                    $dateRangeEnd=$enddate;
                 }
                 else if($di==($date_size-1))
                 {
                     $dateRangeStart=$userdates[$di]." 00:00:00";
-                    $dateRangeEnd=$date_2;
+                    //$dateRangeEnd=$date_2;
+                    $dateRangeEnd=$enddate;
                 }
                 else if($di==0)
                 {
-                    $dateRangeStart=$date_1;
+                    //$dateRangeStart=$date_1;
+                    $dateRangeStart=$startdate;
                     $dateRangeEnd=$userdates[$di]." 23:59:59";
                 }
                 else
