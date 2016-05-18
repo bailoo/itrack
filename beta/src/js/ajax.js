@@ -427,12 +427,17 @@ function show_option_with_value(type, option)      // type="manage/report/settin
             document.getElementById('geo_name').value=result1[1];
             document.getElementById('geo_coord').value=result1[2];           
           }
-		   else if(result1[0]=="manage_polyline_coord")
+          else if(result1[0]=="manage_polyline_coord")
           {
             document.getElementById("coord_area").style.display="";  /////////for enabling coord input type in Existing option
             document.getElementById('polyline_name').value=result1[1];
             document.getElementById('polyline_coord').value=result1[2];           
           }
+          else if(result1[0]=="live_polyline")
+          {
+            document.getElementById("selected_routes").style.display="";  /////////for enabling coord input type in Existing option
+            document.getElementById('selected_routes').value=result1[1];            
+          }          
           else if(result1[1]=="calibration_detail")
           {
             //alert("result1="+result1[1]+"result2="+result1[2]);
@@ -612,7 +617,7 @@ function show_option_with_value(type, option)      // type="manage/report/settin
           }
           else if(result1[0].trim()=="map_show_vehicle" || result1[0].trim()=="live_show_vehicle" || result1[0].trim()=="live_show_vehicle_open")
           {
-            //alert("map show vehicle");  
+            alert("map show vehicle="+result1[0].trim());  
             //alert("result="+result1[1]);			
 		        // document.getElementById('main_display_vehicle').value="1";
             //alert("disp:"+document.getElementById('loading_live').style.display);            
@@ -633,8 +638,8 @@ function show_option_with_value(type, option)      // type="manage/report/settin
               }
               document.getElementById('show_vehicle').style.display ="";              
               document.getElementById('show_vehicle').innerHTML = result1[1]; 
-			 document.getElementById('vehicleloadmessage').style.display ="none";
-			  document.getElementById('vehicleloadmessage1').style.display ="";
+              document.getElementById('vehicleloadmessage').style.display ="none";
+	      document.getElementById('vehicleloadmessage1').style.display ="";
             }
              else if(result1[0].trim()=="live_show_vehicle_open")
             { 
