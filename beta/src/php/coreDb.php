@@ -134,12 +134,9 @@ function stationRecord($accId,$DbConnection)
     return $dataArr;
 }
 
-function getAccountRoutes($accId,$route_names,$DbConnection)
+function getAccountRoutes($accId,$DbConnection)
 {
-    $Query="SELECT DISTINCT polyline_id,polyline_name,polyline_coord FROM polyline WHERE ".
-            "polyline_name IN($route_names) AND ".
-            "user_account_id=$accId AND status=1";
-    //echo $Query;
+    $Query="SELECT polyline_id,polyline_name,polyline_coord FROM polyline WHERE user_account_id=$accId AND status=1";
     $Result=mysql_query($Query,$DbConnection);
     $numRows=  mysql_num_rows($Result);
     if($numRows>0)
