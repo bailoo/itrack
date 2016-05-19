@@ -178,4 +178,3 @@ for($k=0;$k<$size_feature_session;$k++)
 			</TR>			
 		</table>
 </div>
-  
