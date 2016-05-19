@@ -34,10 +34,16 @@ arrowIcon.iconAnchor = new GPoint(10,10);
 arrowIcon.infoWindowAnchor = new GPoint(3,10);
 
 var customerIcon= new GIcon();
-customerIcon.image = 'images/customer_images/star_green.png';
+customerIcon.image = 'images/customer_plant_on_map/station.png';
 customerIcon.iconSize = new GSize(10, 10);
 customerIcon.iconAnchor = new GPoint(2, 7);
 customerIcon.infoWindowAnchor = new GPoint(3, 10);
+
+var customerMarker = new GIcon(); 
+customerMarker.image = 'images/customer_plant_on_map/station.png';
+
+var routeMarker = new GIcon();
+routeMarker.image = 'images/green_Marker1.png';
 
 var startMarker = new GIcon(); 
 startMarker.image = 'images/start_marker.png';
@@ -84,7 +90,7 @@ var marker1 = new Array();
 var day_max_speed1 = new Array();
 var day_max_speed_time1 = new Array();
 var last_halt_time1 = new Array();
-var imei_iotype_arr=new Array();
+var imei_iotype_arr = new Array();
 
 var lat_customer_tmp=new Array();
 var lng_customer_tmp=new Array();
@@ -256,6 +262,7 @@ function show_all_routes()
 		
 function show_live_vehicles()
 {
+    alert("Show live vehicles");
   var display_type="single";
 	var poststr = "display_type1=" + encodeURI(display_type);      
 	//alert(poststr);
@@ -338,30 +345,50 @@ var flightPath;
 var polyline;
 var routeMarkerStart;
 var routeMarkerEnd;
-function showRouteOnLiveMap(polylineId)                                                    
+//var routeMarker = new Array();
+var gmarkersCustomer = new Array();
+var markerCustomer;		
+    
+function showRouteOnLiveMap(polylineId, shift)                                                    
 { 
-    // alert("polylineId="+polylineId);
+    //alert("polylineId="+polylineId+",shift="+shift);
     var testVal=document.getElementById("routeJsonData").value;
     var routeArr = JSON.parse(testVal);
     //alert("routeName="+routeArr[polylineId].polylineCoord);
 
     var coord=routeArr[polylineId].polylineCoord;
+    var route_name=routeArr[polylineId].polylineName;
 	//alert("coord="+coord);
     if(coord!="")
     {
        //alert(polyline) 
+        /*if(polyline!=undefined && routeMarker.length >0)
+        {
+            map.removeOverlay(polyline);
+            for(var z=0;z<routeMarker.length;z++) {                
+                map.removeOverlay(routeMarker[z]);
+            }
+        }*/        
         if(polyline!=undefined && routeMarkerStart!=undefined && routeMarkerEnd!=undefined)
         {
             map.removeOverlay(polyline);
             map.removeOverlay(routeMarkerStart);
             map.removeOverlay(routeMarkerEnd);
         }
+        if(gmarkersCustomer.length>0) {
+            for(var z=0;z<gmarkersCustomer.length;z++) {
+                map.removeOverlay(gmarkersCustomer[z]);
+            }
+        }
          //map.clearOverlays(polyline);
+        //routeMarker = new Array();
+        gmarkersCustomer = new Array();
+
         var coord_test = (((((coord.split('),(')).join(':')).split('(')).join('')).split(')')).join(''); 
         var coord1 = coord_test.split(":");
         var latlngbounds = new google.maps.LatLngBounds();
         var polygonCoords=new Array();
-		//var polygonCoords = new google.maps.MVCArray(); // collects coordinates
+	//var polygonCoords = new google.maps.MVCArray(); // collects coordinates
     	for(var z=0;z<coord1.length;z++)
     	{
             var coord2 = coord1[z].split(",");
@@ -378,22 +405,140 @@ function showRouteOnLiveMap(polylineId)
                 //alert("markder="+markerStart);
               
                 map.addOverlay(routeMarkerStart);
+                
+                GEvent.addListener(routeMarkerStart, "click", function()
+                {
+                    GetRouteInfo(routeMarkerStart,route_name);
+                    //map.addOverlay(action_marker);
+                });
             }
             if(z==(coord1.length-1))
             {
+                /*var routeMarkerThis= new GIcon(routeMarker);
+                routeMarker[z]=new GMarker(polygonCoords[z],routeMarkerThis);  
+                map.addOverlay(routeMarker[z]);*/
                 var endIconThis= new GIcon(endMarker);
                 routeMarkerEnd=new GMarker(polygonCoords[z],endIconThis);  
                 map.addOverlay(routeMarkerEnd);
+                
+                GEvent.addListener(routeMarkerEnd, "click", function()
+                {
+                    GetRouteInfo(routeMarkerEnd,route_name);
+                    //map.addOverlay(action_marker);
+                });                
             }
-            latlngbounds.extend(new google.maps.LatLng(parseFloat(coord2[0]),parseFloat(coord2[1])));			
+            latlngbounds.extend(new google.maps.LatLng(parseFloat(coord2[0]),parseFloat(coord2[1])));
     	}
         
         polyline = new GPolyline(polygonCoords, '#808080', 6);
         map.setCenter(latlngbounds.getCenter());
         map.addOverlay(polyline);
         // map.removeOverlay(polyline);
-    }	
+    }
+    
+    //###### PLOT CUSTOMERS    
+    var search_text = route_name;
+    //alert("searchText="+search_text);
+
+    if(shift=="2") {
+            uniqueRouteMorningParseJson = JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteArrMorningNew']); ?> );
+
+            var routeLength=0;
+            var tmpCnt=0;
+            var routeTmpFlag = false;
+            var routeLength=0;
+            routeLength=uniqueRouteMorningParseJson.length;
+
+            if(parseInt(routeLength)>0)
+            {
+                    //alert("in if");
+                    for(var i=0;i<routeLength;i++)
+                    {
+                            //search_text = search_text.trim();
+                            //alert("route1="+uniqueRouteMorningParseJson[i]['routeNo']+" route2="+search_text);
+                            if(search_text.trim() == uniqueRouteMorningParseJson[i]['routeNo'].trim())                                        
+                            {							   
+                                    routeTmpFlag=true;
+                                    route_no = uniqueRouteMorningParseJson[i]['routeNo'];
+                                    lat = uniqueRo.uteMorningParseJson[i]['lat'];
+                                    lng = uniqueRouteMorningParseJson[i]['lng'];
+                                    //rFoundStationName[tmpCnt] = uniqueRouteMorningParseJson[i]['stationName'];
+                                    station_no = uniqueRouteMorningParseJson[i]['customerNo'];
+                                    type = uniqueRouteMorningParseJson[i]['type'];
+
+                                    if(lat!="-" && lng!="-")
+                                    {
+                                            marker = CreateCustomerMarker(lat,lng,station_no,type,route_no);		
+                                            gmarkersCustomer.push(marker);
+                                    }			
+                                    //tmpCnt++;
+                            }    
+                    } 	
+            }
+    } else if(shift=="1") {
+            uniqueRouteEveningParseJson=JSON.parse( <?php echo json_encode($_SESSION['uniqueRouteArrEveningNew']); ?> );	
+
+            var routeLength=0;
+            var tmpCnt=0;
+            var routeTmpFlag = false;
+            var routeLength=0;
+            routeLength=uniqueRouteEveningParseJson.length;
+
+            if(parseInt(routeLength)>0)
+            {
+                    //alert("routelen="+routeLength);
+                    for(var i=0;i<routeLength;i++)
+                    {
+                            //search_text = search_text.trim();
+                            //alert("route1="+uniqueRouteEveningParseJson[i]['routeNo']);
+                            /*if(i==0) {
+                                uniqueRouteEveningParseJson[i]['routeNo'] = '@210521';
+                            }*/
+                            
+                            if(search_text.trim() == uniqueRouteEveningParseJson[i]['routeNo'].trim())                                        
+                            {	
+                                    //alert("match_found");
+                                    routeTmpFlag=true;
+                                    route_no = uniqueRouteEveningParseJson[i]['routeNo'];
+                                    lat = uniqueRouteEveningParseJson[i]['lat'];
+                                    lng = uniqueRouteEveningParseJson[i]['lng'];
+                                    //rFoundStationName[tmpCnt] = uniqueRouteMorningParseJson[i]['stationName'];
+                                    station_no = uniqueRouteEveningParseJson[i]['customerNo'];
+                                    type = uniqueRouteEveningParseJson[i]['type'];
+
+                                    if(lat!="-" && lng!="-")
+                                    {
+                                        //lat="26.65675";
+                                        //lng="80.87897";
+                                        //alert("beforeCustomerPlot, lat="+lat+" ,lng="+lng+", station_no="+station_no+" ,type="+type+" ,route_no="+route_no);
+                                        marker = CreateCustomerMarker(lat,lng,station_no,type,route_no);
+                                        //alert("marker="+marker);
+                                        gmarkersCustomer.push(marker);
+                                        //alert("afterCustomerPlot");
+                                    }			
+                                    //tmpCnt++;
+                            }    
+                    } 	
+            }	
+    }
+    
+    for(var m=0;m<gmarkersCustomer.length;m++) {
+        //alert("gm="+gmarkersCustomer[m]);
+        map.addOverlay(gmarkersCustomer[m]);        
+    }
+
+} //### showRouteOnLiveMap closed
+
+function GetRouteInfo(marker1,route_no)
+{
+	alert("Route No : "+route_no);
+	/*var data_str = "<tr><strong>Route No</strong></font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2><strong>"+route_no +"</strong></font></td><td></tr>";
+		
+	var tab1 = new GInfoWindowTab("Info", '<div id="tab1" class="bubble" style="height:100px;" align=left><table cellpadding=0 cellspacing=0>'+data_str+'</table></div>');
+	var infoTabs = [tab1];
+	marker1.openInfoWindowTabsHtml(infoTabs);*/
 }	
+
 function display_vehicle_according_divoption(obj)
 { 
 	var div_option_values=tree_validation(obj);
@@ -527,17 +672,19 @@ function SelectAll(set_type)
 }	
 
 
+var poststr_route='';
 function filter_live_vehicle(obj,jsActionNo)
 {  
 	//alert("filter live vehicle");
 	var result ="";
 	if(route_div_flag ==1)
 	{
+           // alert("in if");
 		var s_vehicle =document.forms[0].elements['live_vehicles[]'];
-		
+		//alert("in if 1");
 		//var obj = document.forms[0].live_opt;
 		//alert("obj="+obj);		
-		//var result_v =checkbox_selection(obj);
+		//var result_v =c//heckbox_selection(obj);
 		//var s_vehicle = result_v.split(',');
 		
 		var obj_r;
@@ -554,16 +701,28 @@ function filter_live_vehicle(obj,jsActionNo)
 		//alert("obj_r="+obj_r)
 		var result_r=checkbox_selection(obj_r);
 		var str1 = result_r.split(',');
-		
+                //alert(" route_len="+str1.length);
+		//alert("size_v="+s_vehicle.length);
 		//alert("size_v="+s_vehicle.length+" ,route_len="+str1.length);
 		var k=0;		
+		var final_route_str = '';
 		for(var i=0;i<str1.length;i++)
 		{			
 			var str2 = str1[i].split(':');
 			var route = str2[0];
+			var route_tmp = route.split('/');
+			for(var p=0;p<route_tmp.length;p++) 
+			{
+				/*if(p==0) {
+					final_route_str = final_route_str+""+route;
+				}
+				else {*/
+					final_route_str = final_route_str+""+route.trim()+",";
+				//}
+			}
 			var r_vehicle = str2[1];
 			//alert("str1="+str1+" ,route="+route+" ,r_v="+r_vehicle);
-			
+	//alert("str2="+str2+" ,route="+route+" ,r_v="+r_vehicle+" ,route_shift="+route_shift);		
 			if(s_vehicle.length!=undefined)
 			{
 				//alert("obj.length="+s_vehicle.length);
@@ -592,14 +751,24 @@ function filter_live_vehicle(obj,jsActionNo)
 			}
 		}
 		//alert("result in route="+result);
+                
+                final_route_str = final_route_str.replace(/\//g, "-");
+//alert("CALL1");
+                poststr_route = "shift=" + encodeURI( route_shift )+
+                        "&route_names=" + encodeURI( final_route_str );                   
 	}
 	else
 	{
+        //alert("iin else");
 		var obj=document.forms[0].elements['live_vehicles[]'];
 		result=checkbox_selection(obj);
 		//alert("result in vehicle="+result);
 	}
-	//alert(result);
+	//alert(result);                                  
+                                                                   
+        //alert("poststr1="+poststr);
+        //makePOSTRequestMap('src/php/get_polyline_detail.php', poststr);
+
 
 	var s1 = result.split(',');
 	var time_int;
@@ -668,7 +837,7 @@ function filter_live_vehicle(obj,jsActionNo)
 
 	close_popup();
 	//alert("s1.len="+s1.length);
-
+//alert("befforeGB");
 	if (GBrowserIsCompatible()) 
 	{
             liveDataDisplay=[[]];
@@ -735,7 +904,7 @@ function filter_live_vehicle(obj,jsActionNo)
 	label_prev = new Array();
 	angle_prev = new Array();
 	date_prev = new Array(); 
-
+//alert("movingVehicle_prev");
 	movingVehicle_prev(jsActionNo);    // FOR MOVING VEHICLE FOR NOW 
 }
 
@@ -1175,8 +1344,7 @@ var dist_array = new Array();
 
 function Load_MovingData_Map(startdate,enddate,pt_for_zoom,zoom_level,status)
 {  
-	//alert("In load moving data");
-	
+//alert("In load moving data");
   if (GBrowserIsCompatible()) 
   {	  			
   		//alert("in GBrowserIsCompatible")
@@ -1203,12 +1371,11 @@ function Load_MovingData_Map(startdate,enddate,pt_for_zoom,zoom_level,status)
                 "&enddate=" + encodeURI( enddate );                       
                                                                    
         //alert("poststr1="+poststr);
-        makePOSTRequestMap('src/php/get_filtered_xml_live.php', poststr);
+        makePOSTRequestMap1('src/php/get_filtered_xml_live.php', poststr);
         
-        //alert("length1="+liveDataDisplay.length);
-        
-		    //makePOSTRequestMap('src/php/get_filtered_xml.php', poststr);			
-			  thisdest = "../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
+        //alert("length1="+liveDataDisplay.length);        
+        //makePOSTRequestMap('src/php/get_filtered_xml.php', poststr);			
+	thisdest = "../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
         TryCnt =0;
         //clearTimeout(timer);
         //timer = setTimeout('displayInfo_live()',1000);        
@@ -3608,13 +3775,17 @@ function getXMLHTTP()
 }*/
 function checkbox_selection(obj)
 {
-	imei_iotype_arr.length=0;
+        //alert("checkbox selection1");
+	imei_iotype_arr = new Array();
+        //imei_iotype_arr.length=0;
+        //alert("checkbox selection2");
 	var result_1 = {};
 	var flag=0;
 	var cnt=0;
 	var value_str="";
 	if(obj.length!=undefined)
 	{
+            //alert("If defined");
 		for (var i=0;i<obj.length;i++)
 		{
 			if(obj[i].checked==true)
@@ -3637,9 +3808,11 @@ function checkbox_selection(obj)
 	}
 	else
 	{
+            //("else");
 		if(obj.checked==true)
 		{
-			var value_1=obj.value;
+		//alert("true");
+                var value_1=obj.value;
 			result_1[value_1]=value_1;			
 			flag=1;	
 		}
@@ -3653,6 +3826,7 @@ function checkbox_selection(obj)
 	{
 		if(flag==1)
 		{
+                    //alert("flag1");
 			for(id in result_1) 
 			{				
 				if(result_1.hasOwnProperty(id)) 
@@ -3667,7 +3841,8 @@ function checkbox_selection(obj)
 				}
 			}
 			var strLen = value_str.length;
-			value_str = value_str.slice(0,strLen-1);		
+			value_str = value_str.slice(0,strLen-1);
+                        //alert("val_str="+value_str);
 		}
 		return value_str;
 	}
@@ -3720,7 +3895,7 @@ function checkbox_selection(obj)
 //////////////////  MAKE POST REQUEST  ///////////////////////
 
 	var http_request = false;
-	function makePOSTRequestMap(url, parameters) 
+	function makePOSTRequestMap1(url, parameters) 
 	{
 		//alert("IN POST REQ");
 		http_request = false;
@@ -3756,25 +3931,30 @@ function checkbox_selection(obj)
 		return false;
 		}
 
-		http_request.onreadystatechange = alertContentsMap;
+		http_request.onreadystatechange = alertContentsMap1;
 		http_request.open('POST', url, true);
 		http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		http_request.setRequestHeader("Content-length", parameters.length);
-		http_request.setRequestHeader("Connection", "close");
+		//http_request.setRequestHeader("Content-length", parameters.length);
+		//http_request.setRequestHeader("Connection", "close");
 		http_request.send(parameters);
+                //alert("Closed");
 	}
    
-  function alertContentsMap()
+  function alertContentsMap1()
   {
-    //alert("IN alert CNT");
+    //alert("in fun");
+    //alert("IN alert CNT="+http_request.readyState);
     if (http_request.readyState == 4) 
     {
+        //alert("IN alert CNT2="+http_request.status);
        if (http_request.status == 200) 
        {
           result = http_request.responseText;
-		  //alert("result="+result);
+          //alert("RESSSS="+result);
           liveDataDisplay = JSON.parse(result);
           displayInfo_live();
+	  //alert("poststr="+poststr_route);
+	  makePOSTRequestRoute('src/php/get_polyline_detail.php', poststr_route);
           //alert("length="+liveDataDisplay.length);
           //alert("lat="+testJsonStr[0]['']);
        }
@@ -3837,7 +4017,79 @@ function checkbox_selection(obj)
 				blink("blinkMe","green","white",500);
             }
         }
-    }   
+    }  
+
+
+
+//### ROUTE
+	var http_request2 = false;
+	function makePOSTRequestRoute(url, parameters) 
+	{
+		//alert("IN POST REQ:url="+url+" ,param="+parameters);
+		http_request2 = false;
+		if (window.XMLHttpRequest) 
+		{ 
+			http_request2 = new XMLHttpRequest();
+			if (http_request2.overrideMimeType)
+			{
+				// set type accordingly to anticipated content type
+				//http_request.overrideMimeType('text/xml');
+				http_request2.overrideMimeType('text/html');
+			}
+		}
+		else if (window.ActiveXObject) 
+		{ // IE
+		try 
+		{
+		http_request2 = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e) 
+		{
+		try 
+		{
+		http_request2 = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		catch (e)
+		{}
+		}
+		}
+		if (!http_request2) 
+		{
+		alert('Cannot create XMLHTTP instance');
+		return false;
+		}
+
+		http_request2.onreadystatechange = alertContentsRoute;
+		http_request2.open('POST', url, true);
+		http_request2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		//http_request.setRequestHeader("Content-length", parameters.length);
+		//http_request.setRequestHeader("Connection", "close");
+		http_request2.send(parameters);
+		//alert("End");
+	}
+   
+  function alertContentsRoute()
+  {
+    //alert("IN alert CNT");
+    if (http_request2.readyState == 4) 
+    {
+       if (http_request2.status == 200) 
+       {
+          result = http_request2.responseText;
+           //alert("resultR="+result);
+           var result1=result.split("##"); 
+           //alert("res1="+result1[0].trim());
+          if(result1[0].trim()=="live_polyline")
+          {
+            //alert("BeforeRes="+document.getElementById("selected_routes").style.display);
+            document.getElementById("selected_routes").style.display="";  /////////for enabling coord input type in Existing option
+            //document.getElementById('selected_routes').value=result1[1];
+            document.getElementById('selected_routes').innerHTML = result1[1];
+            //alert("InnerHtml="+document.getElementById('selected_routes').innerHTML);
+          }
+       }
+    }
+  } 
 /////////// CODE FOR SELECTING LANDMARK ON ZOOM ///////////////////////////////////////
 
 function getLandMark1(event,newzoomlevel)
@@ -4107,9 +4359,9 @@ function CreateCustomerMarker(lat,lng,station_no,type,route_no)
 {	
 	var point = new GLatLng(parseFloat(lat),parseFloat(lng));
 	
-	//alert("Debug1="+point);
+	//alert("InCreateMarker="+point+" ,customerIcon="+customerIcon);
 	var Icon;
-	Icon= new GIcon(customerIcon);
+	Icon= new GIcon(customerMarker);
 			
 	var marker;	
 	marker = new GMarker(point, Icon);
@@ -4148,18 +4400,18 @@ function PlotCustomerMarker(point,Icon, marker, point,station_no,type,route_no)
 	var window_style2="style='color:blue;font-family: arial, helvetica, sans-serif; font-size:11px;text-decoration:none;'";
 	var window_height=125;
 	
-	if(type=="0") 
+        //if(type=="0") 
 	type = "Customer";
 	var data_str = "<tr><td><font size=2 color=#000000><strong>Station No</strong></font></td><td>&nbsp;<strong>:</strong>&nbsp;</td><td><font color=blue size=2><strong>"+station_no +"</strong></font></td><td></tr><tr><td><font size=2 color=#000000><strong>Station Type</strong></font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2><strong>"+type +"</strong></font></td><td></tr><tr><td><font size=2 color=#000000><strong>Route No</strong></font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2><strong>"+route_no +"</strong></font></td><td></tr><tr><td><font size=2 color=#000000><strong>Point</strong></font></td><td>&nbsp;:&nbsp;</td><td><font color=blue size=2><strong>"+point +"</strong></font></td><td></tr>";
 		
 	var tab1 = new GInfoWindowTab("Info", '<div id="tab1" class="bubble" style="height:100px;" align=left><table cellpadding=0 cellspacing=0>'+data_str+'</table></div>');
-	var tab2 = new GInfoWindowTab("Location", '<div id="detailmap" style="height:160px;"></div>');
+        //var tab2 = new GInfoWindowTab("Location", '<div id="detailmap" style="height:160px;"></div>');
 
 	//alert("tab1="+tab1);
 	var infoTabs = [tab1];
 	marker.openInfoWindowTabsHtml(infoTabs);
 
-	var dMapDiv = document.getElementById("detailmap");
+	/*var dMapDiv = document.getElementById("detailmap");
 	var detailMap = new GMap2(dMapDiv);
 	detailMap.setCenter(point , 12);
 
@@ -4185,7 +4437,7 @@ function PlotCustomerMarker(point,Icon, marker, point,station_no,type,route_no)
 	//alert("point ="+point+" mrk3="+marker3);
 	detailMap.addOverlay(marker3);
 
-	showMinimapRect(detailMap,marker3); 
+	showMinimapRect(detailMap,marker3); */
 }
 
 //######## POST REQUEST CUSTOMER 2
