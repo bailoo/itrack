@@ -262,7 +262,7 @@ function show_all_routes()
 		
 function show_live_vehicles()
 {
-    alert("Show live vehicles");
+    //alert("Show live vehicles");
   var display_type="single";
 	var poststr = "display_type1=" + encodeURI(display_type);      
 	//alert(poststr);
