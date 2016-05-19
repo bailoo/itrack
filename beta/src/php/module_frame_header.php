@@ -56,7 +56,7 @@
         
         if($interface == "live.php")
         {
-            $routeComboArr=getAccountRoutes($account_id,$DbConnection);
+         /*   $routeComboArr=getAccountRoutes($account_id,$DbConnection);
            // print_r($routeComboArr);
            if($routeComboArr!="No Data Found")
             {
@@ -72,7 +72,14 @@
                         }
                     echo"</select>  &nbsp;   
                 </td>";
-            }
+            }          
+          */
+           echo '<td><span id="selected_routes" style="display:none;"></span></td>';
+
+	   /*echo '<script type="text/javascript">
+		document.getElementById("selected_routes").style.display="";
+		document.getElementById("selected_routes").innerHTML = document.getElementById("selected_routes").value;
+		</script>';*/
            echo '
 				<td>
 					<select id="mode_selector" style="font-size:10px" onchange="javascript:select_mode_dropdown(this.form);">
