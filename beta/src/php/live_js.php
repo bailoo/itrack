@@ -3493,7 +3493,7 @@ function ShowMarker(point, landmark)
 	var tab2 = new GInfoWindowTab("Location", '<div id="detailmap" style="height:150px;"></div>');
 	var infoTabs = [tab1,tab2];
 	marker.openInfoWindowTabsHtml(infoTabs);
- 	var dMapDiv = document.getElementById("detailmap");
+ 	/*var dMapDiv = document.getElementById("detailmap");
 	var detailMap = new GMap2(dMapDiv);
 	detailMap.setCenter(point , 12);
  	detailMap.removeMapType(G_SATELLITE_MAP);																
@@ -3519,7 +3519,7 @@ function ShowMarker(point, landmark)
 	GEvent.addListener(map, "click", function(overlay,point) {
 		if (!overlay) {
 		  ew.hide();
-		}
+		}*/
 	});
  	return marker;
 }
@@ -4395,7 +4395,7 @@ function CreateCustomerMarker(lat,lng,station_no,type,route_no)
 
 function PlotCustomerMarker(point,Icon, marker, point,station_no,type,route_no)
 {
-	//alert("IN PlotCustomerMarker");
+	alert("CustomerNo="+station_no);
 	var window_style1="style='color:#000000;font-family: arial, helvetica, sans-serif; font-size:11px;text-decoration:none;font-weight:bold;'";
 	var window_style2="style='color:blue;font-family: arial, helvetica, sans-serif; font-size:11px;text-decoration:none;'";
 	var window_height=125;
@@ -4410,7 +4410,6 @@ function PlotCustomerMarker(point,Icon, marker, point,station_no,type,route_no)
 	//alert("tab1="+tab1);
 	var infoTabs = [tab1];
 	marker.openInfoWindowTabsHtml(infoTabs);
-
 	/*var dMapDiv = document.getElementById("detailmap");
 	var detailMap = new GMap2(dMapDiv);
 	detailMap.setCenter(point , 12);
