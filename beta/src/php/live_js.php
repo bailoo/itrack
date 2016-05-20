@@ -460,14 +460,23 @@ function showRouteOnLiveMap(polylineId, shift)
                             {							   
                                     routeTmpFlag=true;
                                     route_no = uniqueRouteMorningParseJson[i]['routeNo'];
-                                    lat = uniqueRo.uteMorningParseJson[i]['lat'];
+                                    lat = uniqueRouteMorningParseJson[i]['lat'];
                                     lng = uniqueRouteMorningParseJson[i]['lng'];
                                     //rFoundStationName[tmpCnt] = uniqueRouteMorningParseJson[i]['stationName'];
                                     station_no = uniqueRouteMorningParseJson[i]['customerNo'];
                                     type = uniqueRouteMorningParseJson[i]['type'];
 
+/*alert("Customer="+station_no);
+alert("lat="+lat);
+alert("lng="+lng);
+alert("route_no="+route_no);*/
+
                                     if(lat!="-" && lng!="-")
                                     {
+/*alert("Customers:"+station_no);
+alert("lat2="+lat);
+alert("lng2="+lng);
+alert("route_no2="+route_no);*/
                                             marker = CreateCustomerMarker(lat,lng,station_no,type,route_no);		
                                             gmarkersCustomer.push(marker);
                                     }			
