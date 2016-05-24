@@ -10,7 +10,8 @@ $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3];
 //echo $pathToRoot."/setup/mysql.php"; 
 	include_once($pathToRoot."/setup/mysql.php"); 
-	$HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
+	//$HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
+$HOST = "nimbumirchi.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
 	
 	$DbConnection = mysql_connect($HOST,$USER,$PASSWD) or die("Connection to server is down. Please try after few minutes.");
 	mysql_select_db ($DBASE, $DbConnection) or die("could not find DB");

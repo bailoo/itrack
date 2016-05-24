@@ -7,15 +7,17 @@ echo "DB";
 	}
 
     if ($DEBUG_OFFLINE) {
-        /*$USER = "root";
-        $HOST = "localhost";
-        $PASSWD = "mysql";*/
-        $USER = "bailoo";
-        $HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
-        $PASSWD = 'neon04$VTS';
+        //$USER = "bailoo";
+        //$HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
+        //$PASSWD = 'neon04$VTS';
+
+        $USER = "nimbumirchidb";
+        $HOST = "nimbumirchi.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
+        $PASSWD = 'nm#db0516';
+ 
     } else {
-        $USER = "bailoo";
-        $HOST = "itrackdb.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
-        $PASSWD = 'neon04$VTS';
+        $USER = "nimbumirchidb";
+        $HOST = "nimbumirchi.c4pqfsdaiccz.us-east-1.rds.amazonaws.com";
+        $PASSWD = 'nm#db0516';
     }
 ?>
