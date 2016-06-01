@@ -190,17 +190,17 @@ echo'
                      
                         if($interface == "help.php")
                         {
-                                echo '<li class="active"><a href="help.htm" style="padding: 5px 5px;"><span class="fa fa-rss "&nbsp;Help><span></a></li>';
+                                echo '<li class="active"><a href="help.htm" style="padding: 5px 5px;"><span class="fa fa-rss "><span>&nbsp;Help</a></li>';
                         }
                         else
                         { 
-                                echo '<li><a href="help.htm" style="padding: 5px 5px;"><span class="fa fa-rss ">&nbsp;Help<span></a></li>';
+                                echo '<li><a href="help.htm" style="padding: 5px 5px;"><span class="fa fa-rss "><span>&nbsp;Help</a></li>';
                         }
                      
                     echo'
                         <li class="divider"></li>
 
-                        <li><a href="logout.htm" style="padding: 5px 5px;"><span class="fa fa-circle-o-notch">&nbsp;Logout<span></a></li>
+                        <li><a href="logout.htm" style="padding: 5px 5px;"><span class="fa fa-circle-o-notch"><span>&nbsp;Logout</a></li>
                     </ul>
                 </li>
                 
