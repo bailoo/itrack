@@ -10,7 +10,7 @@ padding-left: 0px;
 margin-bottom: 3px;  
 }
 
-
+/*
 ol, ul {
 margin-left: 0;
 padding-left: 0;
@@ -20,7 +20,7 @@ margin-left: 1.55em;
 }
 ul li {
 margin-left: 1em;
-}
+}*/
 
 .treeview li.submenu{ /* Style for LI that contains sub lists (other ULs). */
 background: white url(list.gif) no-repeat left 1px;
