@@ -18,7 +18,11 @@
     <!-- Custom styles for this template -->
     <link href="src/thirdparty/ast_bs/dashboard.css" rel="stylesheet">
     <link href="src/thirdparty/ast_bs/theme.css" rel="stylesheet">
-	
+    <!-- Bootstrap toggle -->
+     <link href="src/thirdparty/ast_bs/dist/css/bootstrap-toggle.css" rel="stylesheet">
+
+     <script src="src/thirdparty/ast_bs/dist/js/bootstrap-toggle.min.js"></script>
+
     <!--<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
     <script type="text/javascript" src="src/js/jquery-2.1.1.min.js"></script>
     <script src="src/thirdparty/ast_bs/dist/js/bootstrap-toggle.js"></script>  
