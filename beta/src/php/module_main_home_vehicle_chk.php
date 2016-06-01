@@ -199,7 +199,7 @@ echo"</table>";
       { 
          
         natcasesort($vehicle_name_arr);
-        $img=0;
+        //$img=0;
         foreach($vehicle_name_arr as $vehicle)
         {
           if($s==0)
@@ -214,31 +214,31 @@ echo"</table>";
             $vrad = "vradio".$s;          
           }
           $icon_display="";
-          if($vehicle_type_arr[$img]=='<i class="fa fa-star-half-o" aria-hidden="true"></i>')//none
+          if($vehicle_type_arr[$vehicle]=='<i class="fa fa-star-half-o" aria-hidden="true"></i>')//none
           {
               $icon_display='<i class="fa fa-user" aria-hidden="true"></i>';
           }
-          else if($vehicle_type_arr[$img]=="truck")
+          else if($vehicle_type_arr[$vehicle]=="truck")
           {
               $icon_display='<i class="fa fa-truck" aria-hidden="true"></i>';
           }
-          else if($vehicle_type_arr[$img]=="bus")
+          else if($vehicle_type_arr[$vehicle]=="bus")
           {
               $icon_display='<i class="fa fa-bus" aria-hidden="true"></i>';
           }
-          else if($vehicle_type_arr[$img]=="bike")
+          else if($vehicle_type_arr[$vehicle]=="bike")
           {
               $icon_display='<i class="fa fa-motorcycle" aria-hidden="true"></i>';
           }
-          else if($vehicle_type_arr[$img]=="car")
+          else if($vehicle_type_arr[$vehicle]=="car")
           {
               $icon_display='<i class="fa fa-car" aria-hidden="true"></i>';
           }
-          else if($vehicle_type_arr[$img]=="person")
+          else if($vehicle_type_arr[$vehicle]=="person")
           {
               $icon_display='<i class="fa fa-male" aria-hidden="true"></i>';
           }
-          else if($vehicle_type_arr[$img]=="")
+          else if($vehicle_type_arr[$vehicle]=="")
           {
               $icon_display="";
           }
@@ -253,7 +253,7 @@ echo"</table>";
             </td>
           </tr>
           ';
-          $s++;$img++;
+          $s++;//$img++;
         }
       }
   }
@@ -319,7 +319,8 @@ echo"</table>";
                             $color= $vcolor2;
                             $vehicle_name_arr[$color][] =$vehicle_name; 
                             $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
-                            $vehicle_type_arr[]=$vehicle_type;
+                            //$vehicle_type_arr[]=$vehicle_type;
+                             $vehicle_type_arr[$color][$vehicle_name]=$vehicle_type;
                         }
                         else
                         {
@@ -351,7 +352,8 @@ echo"</table>";
                             $color= $vcolor3;      					  
                             $vehicle_name_arr[$color][] =$vehicle_name; 
                             $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
-                            $vehicle_type_arr[]=$vehicle_type;
+                            //$vehicle_type_arr[]=$vehicle_type;
+                            $vehicle_type_arr[$color][$vehicle_name]=$vehicle_type;
                         }
                     }
                 }
@@ -375,9 +377,9 @@ echo"</table>";
             active_inactive_count($grn_cnt,$gry_cnt);
             //echo "<br>color:".$color;  
             $color=@$vcolor2;
-            common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color,@$vehicle_type_arr); 
+            common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color,@$vehicle_type_arr[$color]); 
             $color=@$vcolor3; 
-            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,@$vehicle_type_arr);
+            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
         }
         $ChildCount=$AccountNode->ChildCnt;
         for($i=0;$i<$ChildCount;$i++)   /////////////this is for show child vehicle only ///////////
