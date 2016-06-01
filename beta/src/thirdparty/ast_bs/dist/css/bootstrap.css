@@ -1584,6 +1584,7 @@ pre code {
   max-height: 340px;
   overflow-y: scroll;
 }
+/*
 .container {
   padding-right: 15px;
   padding-left: 15px;
@@ -1605,6 +1606,7 @@ pre code {
     width: 1170px;
   }
 }
+*/
 .container-fluid {
   padding-right: 15px;
   padding-left: 15px;
