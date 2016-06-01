@@ -131,36 +131,36 @@ echo'
                 } 
                 else
                 { 
-                        echo '<li><a href="home.htm" style="padding: 5px 5px;"><span class="fa fa-home">&nbsp;Home<span></a></li>'; 
+                        echo '<li><a href="home.htm" style="padding: 5px 5px;"><span class="fa fa-home"><span>&nbsp;Home</a></li>'; 
                 }
                 //================//LIVE=======================               
                 if($interface == "live.php")
                 {
-                       echo '<li class="active"><a href="live.htm" style="padding: 5px 5px;"><span class="fa fa-bolt">&nbsp;Live<span></a></li>'; 
+                       echo '<li class="active"><a href="live.htm" style="padding: 5px 5px;"><span class="fa fa-bolt"><span>&nbsp;Live</a></li>'; 
                 } 
                 else
                 { 
-                       echo '<li><a href="live.htm" style="padding: 5px 5px;"><span class="fa fa-bolt">&nbsp;Live<span></a></li>';  
+                       echo '<li><a href="live.htm" style="padding: 5px 5px;"><span class="fa fa-bolt"><span>&nbsp;Live</a></li>';  
                 }
                 
                 if($session_user_permission==1)
                 {
                     if($interface == "manage.php")
                     {
-                            echo '<li class="active"><a href="manage.htm" style="padding: 5px 5px;"><span class="fa fa-gavel ">&nbsp;Manage<span></a></li>';
+                            echo '<li class="active"><a href="manage.htm" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage</a></li>';
                     }
                     else
                     { 
-                            echo '<li><a href="manage.htm" style="padding: 5px 5px;"><span class="fa fa-gavel ">&nbsp;Manage<span></a></li>';
+                            echo '<li><a href="manage.htm" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage</a></li>';
                     }
                 }
                 if($interface == "report.php")
                 {
-                        echo '<li class="active"><a href="report.htm" style="padding: 5px 5px;"><span class="fa fa-newspaper-o">&nbsp;Report<span></a></li>';
+                        echo '<li class="active"><a href="report.htm" style="padding: 5px 5px;"><span class="fa fa-newspaper-o"><span>&nbsp;Report</a></li>';
                 } 
                 else
                 { 
-                        echo '<li><a href="report.htm" style="padding: 5px 5px;"><span class="fa fa-newspaper-o">&nbsp;Report<span></a></li>';
+                        echo '<li><a href="report.htm" style="padding: 5px 5px;"><span class="fa fa-newspaper-o"><span>&nbsp;Report</a></li>';
                 }
                 
               echo'
@@ -179,28 +179,28 @@ echo'
                         {
                           if($interface == "setting.php")
                           {
-                                  echo '<li class="active"><a href="setting.htm" style="padding: 5px 5px;"><span class="fa fa-cog">&nbsp;Setting</span></a></li>';
+                                  echo '<li class="active"><a href="setting.htm" style="padding: 5px 5px;"><span class="fa fa-cog"><span>&nbsp;Setting</a></li>';
                           } 
                           else
                           { 
-                                  echo '<li><a href="setting.htm" style="padding: 5px 5px;"><span class="fa fa-cog">&nbsp;Setting</span></a></li>';
+                                  echo '<li><a href="setting.htm" style="padding: 5px 5px;"><span class="fa fa-cog"><span>&nbsp;Setting</a></li>';
                           }
                         }
                       }
                      
                         if($interface == "help.php")
                         {
-                                echo '<li class="active"><a href="help.htm" style="padding: 5px 5px;"><span class="fa fa-rss "></span>&nbsp;Help</a></li>';
+                                echo '<li class="active"><a href="help.htm" style="padding: 5px 5px;"><span class="fa fa-rss "><span>&nbsp;Help</a></li>';
                         }
                         else
                         { 
-                                echo '<li><a href="help.htm" style="padding: 5px 5px;"><span class="fa fa-rss "></span>&nbsp;Help</a></li>';
+                                echo '<li><a href="help.htm" style="padding: 5px 5px;"><span class="fa fa-rss "><span>&nbsp;Help</a></li>';
                         }
                      
                     echo'
                         <li class="divider"></li>
 
-                        <li><a href="logout.htm" style="padding: 5px 5px;"><span class="fa fa-circle-o-notch"></span>&nbsp;Logout</a></li>
+                        <li><a href="logout.htm" style="padding: 5px 5px;"><span class="fa fa-circle-o-notch"><span>&nbsp;Logout</a></li>
                     </ul>
                 </li>
                 
