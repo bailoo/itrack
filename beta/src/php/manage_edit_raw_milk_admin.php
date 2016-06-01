@@ -52,7 +52,7 @@ border: none;
 white-space: nowrap;
 }
 .tablescroll th div{
-/*position: absolute;*/
+position: absolute;
 
 background: transparent;
 /*color: #fff;*/
