@@ -3,16 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">  
   <head> 
     <!-- Bootstrap core CSS -->
-    
-    <link href="src/thirdparty/ast_bs/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="src/thirdparty/ast_bs/dist/css/simple-sidebar.css" rel="stylesheet">
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="src/thirdparty/ast_bs/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="src/thirdparty/ast_bs/dashboard.css" rel="stylesheet">
-    <link href="src/thirdparty/ast_bs/theme.css" rel="stylesheet">
-	 
+    <link href="src/thirdparty/ast_bs/dist/css/bootstrap.css" rel="stylesheet">   
     <!--<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
     <script type="text/javascript" src="src/js/jquery-2.1.1.min.js"></script> 
     <script src="src/thirdparty/ast_bs/dist/js/bootstrap-toggle.js"></script>  
