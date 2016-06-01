@@ -186,7 +186,7 @@ center: initialLocation,
 
 		    };
 		    {$id} = new google.maps.Map(document.getElementById('$id'), myOptions);	
-			var mining_test=document.getElementById('category').value;
+			/*var mining_test=document.getElementById('category').value;
 			//alert('mining_test='+mining_test);
 			if(mining_test=='5' || (document.getElementById('mining_user').value==5))
 			{
@@ -194,6 +194,10 @@ center: initialLocation,
 				show_milestones(map_canvas);
 			}
 			else if(document.thisform.geofence_feature.checked==true)/////// for other users
+			{
+				show_geofence(map_canvas);				
+			}*/
+                        if(document.thisform.geofence_feature.checked==true)/////// for other users
 			{
 				show_geofence(map_canvas);				
 			}
