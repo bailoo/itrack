@@ -20,7 +20,7 @@
 		</tr>
 	    <tr valign="top" id='vehicleloadmessage1'>
         <td colspan=''>
-            <div id="show_vehicle" style="display:none;height:300px;width:100%;overflow:auto;"></div>
+            <div id="show_vehicle" style="display:none;height:320px;width:100%;overflow:auto;"></div>
 			
 			<div id="blackout_3"> </div>
 				<div id="divpopup_3">
