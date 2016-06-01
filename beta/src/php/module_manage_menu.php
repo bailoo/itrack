@@ -107,7 +107,7 @@ $contetnbsp="&nbsp;";
                                                             if($flag_proc_admin!=1)
                                                             {
 								echo'{type:"Text",
-									label:"<table border=0 class=mystyle>"+
+									label:"<table border=0 cellspacing=0 cellpading=0 class=mystyle>"+
 										"<tr>"+ 																	
 											"<td valign=\'top\'>"+
 												"<table border=0 class=mystyle>"+													
