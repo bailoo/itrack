@@ -9,7 +9,7 @@
 		<style type="text/css">
 		@import url("http://www.google.com/uds/css/gsearch.css");
 		@import url("http://www.google.com/uds/solutions/localsearch/gmlocalsearch.css");
-		}
+		
 		</style>
 		<?php
 		include_once("main_google_key.php");

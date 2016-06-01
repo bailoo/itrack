@@ -3,13 +3,13 @@
   include("user_type_setting.php");
 ?>
 <table border='0' width="100%" height="100%" cellspacing="0" cellpadding="0">
-<tr class="setting_left_tr1">
+<!--<tr class="setting_left_tr1">
       <td>
           <?php 
             include('module_logo.php');	//echo "user_type=".$user_type;            
           ?> 
       </td>
-    </tr>
+    </tr>-->
   <tr class="setting_left_tr2">
     <td valign="top">       
           <table border='0' width="100%" class="menu" cellspacing="0" cellpadding="0">		           
@@ -17,7 +17,7 @@
 				$nbsp="&nbsp;";
                 echo'<tr>
 						<td> 
-						<table width="100%" border="0" bgcolor="grey" cellspacing="1" cellpadding="1">
+						<table class="menu alert alert-warning" width="100%" border="0" bgcolor="" cellspacing="1" cellpadding="1">
 							<tr>
 								<td><strong>&nbsp;Settings</strong></td>
 							</tr>

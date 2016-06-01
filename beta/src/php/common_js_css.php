@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="src/css/search_style.css?<?php echo time();?>">
 <script language="javascript" src="src/js/datetimepicker.js"></script>
 <script language="javascript" src="src/js/datetimepicker_sd.js"></script>
-<script type="text/javascript" src="src/js/jquery.js"></script> 
+<!--<script type="text/javascript" src="src/js/jquery.js"></script>-->
 <?php
 $getUrlModule=$_SERVER['REQUEST_URI'];
 //echo "getUrlModule1=".$getUrlModule."<br>";
@@ -28,7 +28,7 @@ else
 	echo'<script language="javascript" src="src/js/ajax.js?<?php echo time();?>"></script>';
 }
 ?>
-<script type="text/javascript" src="src/js/jquery-1.3.2.js"></script> 
+<!--<script type="text/javascript" src="src/js/jquery-1.3.2.js"></script>-->
 
 
 <style type="text/css">

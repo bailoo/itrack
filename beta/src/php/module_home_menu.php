@@ -1,8 +1,12 @@
+
+<table  width="100%" height="98%" cellspacing="0" cellspacing="0" style="background-color: rgb(253, 255, 210);" >
+    <tr>
+        <td valign="top">
 <table border='0' width="100%" height="100%" cellspacing="0" cellspacing="0">
     <tr class="left_tr1">
       <td>
         <?php 
-		include('module_logo.php');  
+		//include('module_logo.php');  
 		include('user_type_setting.php');
 		?>       
       </td>
@@ -10,7 +14,7 @@
   <tr class="left_tr2">
     <td valign="top">
       <div style="overflow-x:hidden;overflow-y:auto;" id="leftMenu">  
-      <form name="thisform">
+      <!--<form name="thisform">-->
   		<?php 
   			if(@$mining_user_type==1 && $account_id!=1)
   			{
@@ -33,15 +37,15 @@
       <input type="hidden" name="veh_validation">
       <input type="hidden" name="GEarthStatus">	
       <input type="hidden" name="earthmode">					
-      <input type="hidden" name="len2">		      
+      <input type="hidden" name="len2">		    
         <table border='0' width="100%" class='module_left_menu' cellspacing="0" cellpadding="0">
         <?php			
            // include('module_superuser.php');
             include('module_vehicle.php');                       
             include('module_select_track.php');
           //include('module_refresh.php');
-            include('module_mouse_action.php');
-		echo'<tr>
+            //include('module_mouse_action.php');
+		/*echo'<tr>
 				<td>
 					<table border="0" class="module_left_menu">
 						<tr>
@@ -58,8 +62,8 @@
 						</tr>
 					</table>
 				</td>
-			</tr>';
-			
+			</tr>';*/
+		/*	
             include('module_latlng.php');
             include('module_speed_symbol.php');
             
@@ -71,12 +75,16 @@
             {
              include('module_schedule_location.php');
             }  
-			 include('module_landmark.php');                         
+			 include('module_landmark.php');  
+            */
         ?>
-        </table>	
-		 
-         </form>
-		<form  name="fd" action="src/php/Full_data_prev.htm" method="post" target="_blank">	
+        </table>
+   
+       <?php
+	//echo'<span style="position:absolute; margin-left:250px; top:87%;z-index:99;">';include('module_speed_symbol.php');echo'</span>';
+        ?>
+         <!--</form>-->
+		<!--<form  name="fd" action="src/php/Full_data_prev.htm" method="post" target="_blank">	
 			<input type="hidden" name="xml_file"/>
 			<input type="hidden" name="vserial">
 			<input type="hidden" name="startdate">
@@ -103,7 +111,7 @@
 			<input type="hidden" name="vserial">			
 			<input type="hidden" name="text_report_io_element">			
 			<input type="hidden" name="dwt">
-		</form>
+		</form>-->
       </div>
     </td>
   </tr>  
@@ -113,7 +121,9 @@
       </td>
   </tr>
 </table>
-
+</td>
+    </tr>
+</table>   
   	
 	
 		  

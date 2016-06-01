@@ -10,14 +10,14 @@
   $row_logo2=mysql_fetch_object($result_logo2);
   $logo_file1=$row_logo2->logo_file;                          
   $company_name1=$row_logo2->company_name;
-  $img='<img type="IMAGE" src="'.$logo_file1.'" height="35">';
+  $img='<img type="IMAGE" src="'.$logo_file1.'" height="25">';
   $host = $_SERVER['HTTP_HOST'];
   include('gethostnameurl.php');  
 ?> 
- <?php echo' <table border="0" width="100%" valing="top" class="module_logo" bgcolor="'.$bgcolor.'">';?>
+ <?php echo' <table border="0"  valing="top" class="module_logo" >';?>
     <tr>
       <td><?php echo $img; ?></td>
-      <td align="center"><?php echo "<font color='#333333'><b>".$company_name1."</b></font>"; ?></td>
+      <td align="center"><?php echo "<font color='navy'><b>iTRACKSOLUTION</b></font>"; ?></td>
     </tr>
   </table>
  

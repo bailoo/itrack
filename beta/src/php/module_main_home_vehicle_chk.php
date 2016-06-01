@@ -73,14 +73,18 @@
     //echo "<br>CURRENT_TIME=".$current_time;
     //echo "category1=".$category1."<br>";
     //echo "user_type_option=".$user_type_option."temp_type=".$tmp_type."<br>";
-    echo "<table width=100% border=0 cellspacing=0 cellpadding=0 class='module_left_menu'>";		
+    //echo "<table width=100% border=0 cellspacing=0 cellpadding=0 class='module_left_menu'>";
+    echo "<table width=100% border=0 cellspacing=0 cellpadding=0 class='table table-condensed' style='line-height:0' >";		
     echo"<tr>
-            <td class='text' colspan='2'>
+           <thead>
+            <th  colspan='2' style='border:none;text-align:left'>
                 <span id='all'>
                     &nbsp;<input type='checkbox' name='all' value='1' onClick='javascript:SelectAll(\"vehicle\");'>&nbsp;&nbsp;&nbsp;Select All	( ".$tmp_type." )			         
                 </span>
-            </td>			
-        </tr>";	
+            </th>
+            </thead>
+        </tr>";
+    
     
     if($display_type=="default" || $display_type=="single")
     { 
@@ -131,18 +135,20 @@ echo"</table>";
       global $vcolor1;
       global $vcolor2;
       global $vcolor3;
-           
-      echo '
+        
+       echo '
       <tr>
-        <td colspan="2">            
-          (
-            <font color="'.$vcolor2.'">Active : '.$grn_cnt.'</font>
+        
+        <td colspan="2" style="border:none;text-align:left" ">            
+          
+            <font color="'.$vcolor2.'">Active <span class="badge">'.$grn_cnt.'</span> </font>
             /
-            <font color="'.$vcolor3.'">InActive : '.$gry_cnt.'</font>
-          )
+            <font color="'.$vcolor3.'">InActive<span class="badge">'.$gry_cnt.'</span></font>
+         
         </td>
+        
       </tr>
-      ';    
+      ';  
    }
   
   $s=0; 
@@ -185,6 +191,69 @@ echo"</table>";
       }
   }
   
+  function common_display_vehicle_image($vehicle_name_arr,$imei_arr,$color,$vehicle_type_arr)
+  {      
+      global $s;
+      
+      if(sizeof($vehicle_name_arr)>0)
+      { 
+         
+        natcasesort($vehicle_name_arr);
+        
+        foreach($vehicle_name_arr as $vehicle)
+        {
+          if($s==0)
+          {
+            //echo "<br>ss=".$s;
+            $vchk = "vcheckbox";
+            $vrad = "vradio";
+          }
+          else
+          {
+            $vchk = "vcheckbox".$s;
+            $vrad = "vradio".$s;          
+          }
+          $icon_display="";
+          if($vehicle_type_arr[$s]=='<i class="fa fa-star-half-o" aria-hidden="true"></i>')//none
+          {
+              $icon_display='<i class="fa fa-user" aria-hidden="true"></i>';
+          }
+          else if($vehicle_type_arr[$s]=="truck")
+          {
+              $icon_display='<i class="fa fa-truck" aria-hidden="true"></i>';
+          }
+          else if($vehicle_type_arr[$s]=="bus")
+          {
+              $icon_display='<i class="fa fa-bus" aria-hidden="true"></i>';
+          }
+          else if($vehicle_type_arr[$s]=="bike")
+          {
+              $icon_display='<i class="fa fa-motorcycle" aria-hidden="true"></i>';
+          }
+          else if($vehicle_type_arr[$s]=="car")
+          {
+              $icon_display='<i class="fa fa-car" aria-hidden="true"></i>';
+          }
+          else if($vehicle_type_arr[$s]=="")
+          {
+              $icon_display="";
+          }
+          echo '
+          <tr>
+            <td align="left">             
+              <span id="'.$vchk.'"><INPUT TYPE="checkbox"  name="vehicleserial[]" VALUE="'.$imei_arr[$vehicle].'"></span>
+              <span id="'.$vrad.'" style="display:none;"><INPUT TYPE="radio"  name="vehicleserial_radio" VALUE="'.$imei_arr[$vehicle].'"></span>              
+            </td>
+            <td>
+              <font color="'.$color.'">'.$icon_display.'&nbsp;'.$vehicle.'</font>
+            </td>
+          </tr>
+          ';
+          $s++;
+        }
+      }
+  }
+  
     function show_all_vehicle($AccountNode,$account_id_local,$category1)
     {
         global $today_date2;
@@ -205,6 +274,7 @@ echo"</table>";
         $vehicle_name_arr=array();
         $imei_arr=array();
         $vehicle_color=array();
+        $vehicle_type_arr=array();
         $veh_flag=1; 
 		  
         for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)   ///////this is for show root vehicle of any account /////////
@@ -217,7 +287,7 @@ echo"</table>";
                 $vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
                 ///array_search('green', $array);
                 $iovalueandtypearr = @$AccountNode->data->DeviceIOTypeValue[$j];
-
+                $vehicle_type = $AccountNode->data->VehicleType[$j];
                 $tmp_iotype_str="";
                 if(count($iovalueandtypearr)>0)
                 {					
@@ -245,10 +315,12 @@ echo"</table>";
                             $color= $vcolor2;
                             $vehicle_name_arr[$color][] =$vehicle_name; 
                             $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
+                            $vehicle_type_arr[]=$vehicle_type;
                         }
                         else
                         {
                             $currentFilePath="/mnt/itrack/beta/src/php/vehicleStatus";
+			    //$currentFilePath="C:\\xampp/htdocs/itrack_rnd/beta_lf/src/php/vehicleStatus";
                             $iterator = new FilesystemIterator($currentFilePath);                       
                             //echo "imeiNo11=".count($iterator)."<br>";
                             $fileFoundFlag=0;
@@ -275,6 +347,7 @@ echo"</table>";
                             $color= $vcolor3;      					  
                             $vehicle_name_arr[$color][] =$vehicle_name; 
                             $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
+                            $vehicle_type_arr[]=$vehicle_type;
                         }
                     }
                 }
@@ -282,12 +355,14 @@ echo"</table>";
         }
         if($veh_flag==0)
         {
-        echo'<tr>
-                <td colspan="2">
+        echo'<tr>                
+                <thead>
+                <th colspan="2" style="border:none;text-align:left">
                     <font color="'.$vcolor1.'">
                         '.$account_name.'
                     </font> 
-                </td>
+                   </thead>
+                </th>
             </tr>';
             $grn_cnt=sizeof(@$vehicle_name_arr[$vcolor2]);
             //echo "sixe_of_green_vehicle=".$grn_cnt."<br>";
@@ -296,9 +371,9 @@ echo"</table>";
             active_inactive_count($grn_cnt,$gry_cnt);
             //echo "<br>color:".$color;  
             $color=@$vcolor2;
-            common_display_vehicle(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color); 
+            common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color,@$vehicle_type_arr); 
             $color=@$vcolor3; 
-            common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
+            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,@$vehicle_type_arr);
         }
         $ChildCount=$AccountNode->ChildCnt;
         for($i=0;$i<$ChildCount;$i++)   /////////////this is for show child vehicle only ///////////

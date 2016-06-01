@@ -1,28 +1,10 @@
 <?php ?>
 <tr valign="top">
-  <td>
+  <td valign="top">
     <table border="0" class='module_left_menu' width=100%>
-   <!--<tr>
-        <td colspan=''>
-            Select Vehicles
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Group By
-				</td>  				
-				<td>
-				  None
-				</td>
-				<td>
-				  Type
-				</td>
-				<td>
-				  Tag
-				</td> 				
-      </tr>-->
-	  <tr id='vehicleloadmessage'>
-			<td>
+  
+	  <tr id='vehicleloadmessage' valign="top">
+			<td valign="top">
 				<table align="center" cellspacing='1' cellpadding='1' valign="top" border=0>
 					<tr>
 						<td>
@@ -38,7 +20,7 @@
 		</tr>
 	    <tr valign="top" id='vehicleloadmessage1'>
         <td colspan=''>
-            <div id="show_vehicle" style="display:none;height:200px;width:100%;overflow:auto;"></div>
+            <div id="show_vehicle" style="display:none;height:300px;width:100%;overflow:auto;"></div>
 			
 			<div id="blackout_3"> </div>
 				<div id="divpopup_3">

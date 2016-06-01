@@ -6,7 +6,7 @@
   $tech_supp_no=$row_copyright1->tech_supp_no;
    include('gethostnameurl.php');
 ?>
-<?php echo '<table border="0" class="module_copyright" width="100%" bgcolor="'.$bgcolor.'" >';?>
+<?php echo ' <div class="alert alert-warning" style="padding:0px;bottom-margin:0px"><table border="0" class="module_copyright" width="100%" >';?>
   <tr>
     <td>
          <center>                  
@@ -21,5 +21,6 @@
           </center>
     </td>        
   </tr>
-</table>
+  </table></div>
+
 
