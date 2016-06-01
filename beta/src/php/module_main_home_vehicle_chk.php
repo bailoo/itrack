@@ -199,7 +199,7 @@ echo"</table>";
       { 
          
         natcasesort($vehicle_name_arr);
-        
+        $img=0;
         foreach($vehicle_name_arr as $vehicle)
         {
           if($s==0)
@@ -214,27 +214,31 @@ echo"</table>";
             $vrad = "vradio".$s;          
           }
           $icon_display="";
-          if($vehicle_type_arr[$s]=='<i class="fa fa-star-half-o" aria-hidden="true"></i>')//none
+          if($vehicle_type_arr[$img]=='<i class="fa fa-star-half-o" aria-hidden="true"></i>')//none
           {
               $icon_display='<i class="fa fa-user" aria-hidden="true"></i>';
           }
-          else if($vehicle_type_arr[$s]=="truck")
+          else if($vehicle_type_arr[$img]=="truck")
           {
               $icon_display='<i class="fa fa-truck" aria-hidden="true"></i>';
           }
-          else if($vehicle_type_arr[$s]=="bus")
+          else if($vehicle_type_arr[$img]=="bus")
           {
               $icon_display='<i class="fa fa-bus" aria-hidden="true"></i>';
           }
-          else if($vehicle_type_arr[$s]=="bike")
+          else if($vehicle_type_arr[$img]=="bike")
           {
               $icon_display='<i class="fa fa-motorcycle" aria-hidden="true"></i>';
           }
-          else if($vehicle_type_arr[$s]=="car")
+          else if($vehicle_type_arr[$img]=="car")
           {
               $icon_display='<i class="fa fa-car" aria-hidden="true"></i>';
           }
-          else if($vehicle_type_arr[$s]=="")
+          else if($vehicle_type_arr[$img]=="person")
+          {
+              $icon_display='<i class="fa fa-male" aria-hidden="true"></i>';
+          }
+          else if($vehicle_type_arr[$img]=="")
           {
               $icon_display="";
           }
@@ -249,7 +253,7 @@ echo"</table>";
             </td>
           </tr>
           ';
-          $s++;
+          $s++;$img++;
         }
       }
   }
