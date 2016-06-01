@@ -226,7 +226,7 @@ echo"</table>";
           {
               $icon_display='<i class="fa fa-bus" aria-hidden="true"></i>';
           }
-          else if($vehicle_type_arr[$vehicle]=="bike")
+          else if($vehicle_type_arr[$vehicle]=="motorbike")
           {
               $icon_display='<i class="fa fa-motorcycle" aria-hidden="true"></i>';
           }
