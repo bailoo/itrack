@@ -83,7 +83,7 @@ echo'<a href="#menu-toggle" class="btn btn-default" id="menu-toggle" style="posi
 echo'<input id="pac-input" class="controls" type="text" placeholder="Search Box">';
 $googleMapthisapi=new GoogleMapHelper();
 echo $googleMapthisapi->map($options);
-echo'<p id="prepage" style="position:absolute; font-family:arial; font-size:16; left:48%; top:220px; layer-background-color:#e5e3df; height:10%; width:20%; visibility:hidden"><img src="images/load_data.gif">';		
+echo'<p id="prepage" style="position:absolute; font-family:arial; font-size:16; left:40%; top:220px; layer-background-color:#e5e3df; height:10%; width:20%; visibility:hidden"><img src="images/load_data.gif">';		
 echo '<div id="dummy_div" style=""/>';
 
 
