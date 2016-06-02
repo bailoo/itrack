@@ -224,12 +224,12 @@ th {
     display: table-header-group;
   }
   tr,
-  img {
+  /*img {
     page-break-inside: avoid;
   }
   img {
     max-width: 100% !important;
-  }
+  }*/
   p,
   h2,
   h3 {
