@@ -7,7 +7,7 @@
     <table width="250px" class='module_left_menu' bgcolor=''>
       <tr data-toggle="collapse" data-target="#filterbaloon"  class="panel-heading">
         <td class="panel panel-primary">
-          <span class="glyphicon glyphicon-map-marker">&nbsp;Filter Speed Balloons&nbsp;<span class="glyphicon glyphicon-triangle-bottom">
+          <i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;Filter Speed Balloons&nbsp;<span class="glyphicon glyphicon-triangle-bottom">
         </td>
       </tr>
       <tr id="filterbaloon" class="collapse">
