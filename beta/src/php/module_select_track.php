@@ -31,7 +31,7 @@
                      <?php
                        //if($account_id==2)
                        {
-                       echo'<a href="#" onclick="show_current_last_data();" class="hs2"><i class="fa fa-road" aria-hidden="true"></i>&nbsp;
+                       echo'<a href="#" data-toggle="tooltip" data-placement="right" title="Text Report Current Location!" onclick="show_current_last_data();" class="hs2"><i class="fa fa-road" aria-hidden="true"></i>&nbsp;
                                        <img src="../../images/live/live_vehicle.gif" width="8px" hieght="8px" style="border:none;">
                                </a>  ';
                         
