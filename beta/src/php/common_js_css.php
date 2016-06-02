@@ -29,7 +29,24 @@ else
 }
 ?>
 <!--<script type="text/javascript" src="src/js/jquery-1.3.2.js"></script>-->
-<script type="text/javascript" src="src/js/jquery-2.1.1.min.js"></script> 
+<!--<script type="text/javascript" src="src/js/jquery-2.1.1.min.js"></script> -->
+<?php
+if (strpos($getUrlModule, 'report.htm') !== false) {
+    echo '<script type="text/javascript" src="src/js/jquery-2.1.1.min.js"></script>';
+}
+else if (strpos($getUrlModule, 'manage.htm') !== false) {
+    echo '<script type="text/javascript" src="src/js/jquery-2.1.1.min.js"></script>';
+}
+else if (strpos($getUrlModule, 'setting.htm') !== false) {
+    echo '<script type="text/javascript" src="src/js/jquery-2.1.1.min.js"></script>';
+}
+else if (strpos($getUrlModule, 'help.htm') !== false) {
+    echo '<script type="text/javascript" src="src/js/jquery-2.1.1.min.js"></script>';
+}
+else {
+    echo '<script type="text/javascript" src="src/js/jquery-1.3.2.js"></script>';
+}
+?>
 
 <style type="text/css">
 
