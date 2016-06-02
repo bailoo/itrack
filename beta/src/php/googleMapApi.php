@@ -72,12 +72,12 @@ class GoogleMapHelper{
         padding: 0px
       }
       .controls {
-        margin-top: 16px;
+        margin-top: 11px;
         border: 1px solid transparent;
         border-radius: 2px 0 0 2px;
         box-sizing: border-box;
         -moz-box-sizing: border-box;
-        height: 32px;
+        height: 25px;
         outline: none;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       }
