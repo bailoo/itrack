@@ -15,7 +15,7 @@
 	<!-- Bootstrap theme -->
     <link href="src/thirdparty/ast_bs/dist/css/bootstrap-theme.min.css" rel="stylesheet">
    
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
     <!--<script type="text/javascript" src="src/js/jquery-2.1.1.min.js"></script>--> 
     <script src="src/thirdparty/ast_bs/dist/js/bootstrap-toggle.js"></script>  
     <!-- Custom Fonts -->
