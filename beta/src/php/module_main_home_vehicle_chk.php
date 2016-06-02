@@ -47,7 +47,8 @@
     }
     else if($user_type_option=="all" || $user_type_option=="")
     {
-            $tmp_type="All";
+            //$tmp_type="All";
+            $tmp_type="Category By All";
     }
 	
     $function_name="get_".$common_div_option;
