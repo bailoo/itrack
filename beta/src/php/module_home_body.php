@@ -24,7 +24,8 @@ echo'
                     <table>
                         <tr>
                             <td>
-                                <span class="glyphicon glyphicon-pushpin" >
+                                <A HREF="javascript:window.print()"><i class="fa fa-print" aria-hidden="true"></i></a>
+                                <i class="fa fa-map-pin" aria-hidden="true"></i>
                                 <select name="mouse_action" onchange="show_data_on_map(\'map_report\');">
                                    <option value="click">Mouse Click</option>
                                    <option value="mouseover">Mouse Over</option>
