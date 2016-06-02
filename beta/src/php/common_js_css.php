@@ -28,7 +28,7 @@ else
 	echo'<script language="javascript" src="src/js/ajax.js?<?php echo time();?>"></script>';
 }
 ?>
-<!--<script type="text/javascript" src="src/js/jquery-1.3.2.js"></script>-->
+<script type="text/javascript" src="src/js/jquery-1.3.2.js"></script>
 
 
 <style type="text/css">
