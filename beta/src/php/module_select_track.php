@@ -17,7 +17,7 @@
           <td colspan="2" align="center">
               
 
-                 <ul class="nav nav-tabs">
+                 <ul class="nav nav-tabs" style="border-bottom: 1px solid #baa5a5;margin-bottom: 3px;">
                     <li class="active"><a href="#mapview" data-toggle="tab"><i class="fa fa fa-map" aria-hidden="true"></i>
 
 &nbsp;Map</a></li>
