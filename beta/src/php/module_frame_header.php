@@ -20,7 +20,7 @@ echo "<input type='hidden' id='vehicle_milstone'>";
 
 echo'  
   <div style="margin:0px;">
-    <nav role="navigation" class="navbar navbar-default navbar-fixed-top" style="min-height:0px;margin-bottom:0px;background-image: linear-gradient(to bottom, rgb(255, 255, 255) 0px, rgb(255, 251, 225) 100%);box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 5px rgba(0,0,0,.75);" >
+    <nav role="navigation" class="navbar navbar-default navbar-fixed-top" style="min-height:0px;margin-bottom:0px;background-image: linear-gradient(to bottom, rgb(255, 255, 255) 0px, rgb(239, 239, 239) 100%);box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 5px rgba(0,0,0,.75);" >
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
