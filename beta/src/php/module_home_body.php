@@ -80,7 +80,7 @@ echo'
  </span>
  ';
 echo'<span style="position:absolute; right:50px; top:87%;z-index:99;">';include('module_speed_symbol.php');echo'</span>';
-echo'<a href="#menu-toggle" class="btn btn-default" id="menu-toggle" style="position:absolute; left:0px; top:40%;z-index:99;"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span></a>';
+echo'<a href="#menu-toggle" class="btn btn-default" id="menu-toggle" style="position:absolute; left:0px; top:40%;z-index:99;"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></a>';
 echo'<input id="pac-input" class="controls" type="text" placeholder="Search Box">';
 $googleMapthisapi=new GoogleMapHelper();
 echo $googleMapthisapi->map($options);
