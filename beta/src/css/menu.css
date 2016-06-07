@@ -346,7 +346,7 @@ background-color:#7A991A;
 
 .manage_fieldset
 {
-  font-size:12px;
+  /*font-size:12px;*/
   font-family:Arial; 
   width: 50%;  
 }
@@ -574,7 +574,7 @@ td.module_index3
 		{
 		position:relative;
 		top: expression(offsetParent.scrollTop); /*IE5+ only*/
-		/* fixes the header being over too far in IE, doesn’t seem to affect FF */
+		/* fixes the header being over too far in IE, doesnï¿½t seem to affect FF */
 		left: 0px;
 	
 		}
@@ -591,7 +591,7 @@ td.module_index3
 		{
 		position:relative;
 		top: expression(offsetParent.scrollTop); /*IE5+ only*/
-		/* fixes the header being over too far in IE, doesn’t seem to affect FF */
+		/* fixes the header being over too far in IE, doesnï¿½t seem to affect FF */
 		left: 0px;
 		}
 
