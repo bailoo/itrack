@@ -35,7 +35,7 @@ echo'
             echo'           
         </div>
         <!-- Collection of nav links, forms, and other content for toggling -->       
-        <div id="navbarCollapse" class="collapse navbar-collapse" >            
+        <div id="navbarCollapse" class="collapse navbar-collapse" style="padding-right:130px">            
             <ul class="nav navbar-nav navbar-right" style="font-size:14px;">
              ';
                 if($interface=="home.php" || $interface=="live.php")
