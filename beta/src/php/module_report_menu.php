@@ -6,12 +6,12 @@
     </tr>-->
   <tr  class="mb2">
     <td valign="top"> 
-            <table border='0' width="100%" cellspacing="0" cellpadding="0" class="menu">		           
+            <table border='0' width="100%" cellspacing="0" cellpadding="0" class="menu" style="font-size:12px">		           
               <?php
                  
                 echo'<tr>
                 	<td> 
-                    <table class="menu alert alert-warning" width="100%" border="0" bgcolor="" cellspacing="1" cellpadding="1">
+                    <table class="menu alert alert-warning" width="100%" border="0" bgcolor="" cellspacing="1" cellpadding="1" style="font-size:12px">
                     	<tr>
                     		<td><strong>&nbsp;Report</strong></td>
                     	</tr>
