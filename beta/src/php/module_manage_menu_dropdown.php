@@ -79,7 +79,9 @@ for($k=0;$k<$size_feature_session;$k++)
 }
 $nbsp="&nbsp;&nbsp;";
 $contetnbsp="&nbsp;";
-        echo'                       
+        echo'  
+            <li><a href="manage.htm" >Main-Manage</a></li>
+            <li class="divider"></li>
             <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Accounts</a>
                     <ul class="dropdown-menu" style="width:200px">
                         ';
