@@ -35,7 +35,7 @@ echo'
             echo'           
         </div>
         <!-- Collection of nav links, forms, and other content for toggling -->       
-        <div id="navbarCollapse" class="collapse navbar-collapse" style="padding-right:130px">            
+        <div id="navbarCollapse" class="collapse navbar-collapse" style="padding-right:5px">            
             <ul class="nav navbar-nav navbar-right" style="font-size:14px;">
              ';
                 if($interface=="home.php" || $interface=="live.php")
@@ -187,7 +187,7 @@ echo'
                 }
                 
               echo'
-                
+                <li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li>
                 <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-top:5px;padding-bottom:0px"><font color=green>'.$user_name.'</font> <span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
                 <ul class="dropdown-menu">
                     
