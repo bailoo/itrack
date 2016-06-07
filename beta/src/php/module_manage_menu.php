@@ -1423,3 +1423,28 @@ $contetnbsp="&nbsp;";
       </td>
   </tr>
 </table>							  
+<?php
+//echo "ddd".$_SESSION['drop_down_menu_js_type'];
+if($_SESSION['drop_down_menu_js_type']=='undefined')
+{
+ ?>
+<script>
+    window.onload = function () 
+    {        
+     manage_show_file( <?php echo "'" .$_SESSION['drop_down_menu_file'] . "'"; ?> );
+    }
+</script>
+ <?php
+}
+else if($_SESSION['drop_down_menu_js_type']=='manage_show_file_jquery')
+{
+ ?>
+<script>
+    window.onload = function () 
+    {        
+     manage_show_file_jquery( <?php echo "'" .$_SESSION['drop_down_menu_file'] . "'"; ?> );
+    }
+</script>
+ <?php
+}
+?>
