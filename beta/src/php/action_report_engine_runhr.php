@@ -209,7 +209,7 @@ $m1=date('M',mktime(0,0,0,$month,1));
   
   echo'<center>';   
   report_title("Engine Run Hour Report",$date1,$date2);   
-	echo'<div style="overflow: auto;height: 285px; width: 600px;" align="center">';
+	echo'<div style="overflow: auto;height: 485px; width: 800px;" align="center">';
    
  
   			             
@@ -244,7 +244,8 @@ $m1=date('M',mktime(0,0,0,$month,1));
       	<td class="text" align="center"><b>'.$title.'</b> <div style="height:8px;"></div></td>
       </tr>
       </table>
-      <table border=1 width="90%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
+      <!--<table border=1 width="90%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>-->
+      <table class="table table-condened table-hover">
       <tr>
 			<td class="text" align="left"><b>SNo</b></td>
 			<td class="text" align="left"><b>Start Time </b></td>
