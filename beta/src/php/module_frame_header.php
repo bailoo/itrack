@@ -147,11 +147,33 @@ echo'
                 {
                     if($interface == "manage.php")
                     {
-                            echo '<li class="active"><a href="manage.htm" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage</a></li>';
+                            //echo '<li class="active"><a href="manage.htm" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage</a></li>';
+                        echo'<li class="dropdown active">
+                                    <a  class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage
+                                    <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                      <!--<li><a href="#">Page 1-1</a></li>-->
+                                      ';
+                                      include('module_manage_menu_dropdown.php');
+                                      echo'
+                                     
+                                    </ul>
+                                  </li>';
                     }
                     else
                     { 
-                            echo '<li><a href="manage.htm" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage</a></li>';
+                            //echo '<li><a href="manage.htm" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage</a></li>';
+                         echo'<li class="dropdown">
+                                <a  class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage
+                                <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                  <!--<li><a href="#">Page 1-1</a></li>-->
+                                  ';
+                                  include('module_manage_menu_dropdown.php');
+                                  echo'
+
+                                </ul>
+                              </li>';
                     }
                 }
                 if($interface == "report.php")
