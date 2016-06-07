@@ -147,8 +147,8 @@ echo'
                 {
                     if($interface == "manage.php")
                     {
-                            //echo '<li class="active"><a href="manage.htm" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage</a></li>';
-                        echo'<li class="dropdown active">
+                            echo '<li class="active"><a href="manage.htm" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage</a></li>';
+                       /* echo'<li class="dropdown active">
                                     <a  class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage
                                     <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
@@ -158,12 +158,12 @@ echo'
                                       echo'
                                      
                                     </ul>
-                                  </li>';
+                                  </li>';*/
                     }
                     else
                     { 
-                            //echo '<li><a href="manage.htm" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage</a></li>';
-                         echo'<li class="dropdown">
+                            echo '<li><a href="manage.htm" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage</a></li>';
+                         /*echo'<li class="dropdown">
                                 <a  class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 5px 5px;"><span class="fa fa-gavel "><span>&nbsp;Manage
                                 <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -173,7 +173,7 @@ echo'
                                   echo'
 
                                 </ul>
-                              </li>';
+                              </li>';*/
                     }
                 }
                 if($interface == "report.php")
