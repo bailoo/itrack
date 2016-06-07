@@ -84,7 +84,7 @@ $contetnbsp="&nbsp;";
 			  <?php                 
                 echo'<tr>
                 	<td> 
-                    <table class="menu alert alert-warning" width="100%" border="0" bgcolor="grey" cellspacing="1" cellpadding="1">
+                    <table class="menu alert alert-warning" width="100%" border="0" bgcolor="grey" cellspacing="1" cellpadding="1" style="font-size:12px">
                     	<tr>
                     		<td><strong>&nbsp;Manage</strong></td>
                     	</tr>
