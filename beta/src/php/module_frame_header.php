@@ -1,4 +1,17 @@
 <script type="text/javascript" src="src/js/switcher_menu.js"></script>
+
+<script>
+    (function($){
+	$(document).ready(function(){
+		$('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
+			event.preventDefault(); 
+			event.stopPropagation(); 
+			$(this).parent().siblings().removeClass('open');
+			$(this).parent().toggleClass('open');
+		});
+	});
+    })(jQuery);
+</script>
 <?php
 
 include_once('util_session_variable.php');
@@ -179,15 +192,37 @@ echo'
                 }
                 if($interface == "report.php")
                 {
-                        echo '<li class="active"><a href="report.htm" style="padding: 5px 5px;"><span class="fa fa-newspaper-o"><span>&nbsp;Report</a></li>';
+                        //echo '<li class="active"><a href="report.htm" style="padding: 5px 5px;"><span class="fa fa-newspaper-o"><span>&nbsp;Report</a></li>';
+                        echo'<li class="dropdown active">
+                            <a  class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 5px 5px;"><span class="fa fa-newspaper "><span>&nbsp;Report
+                            <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                              <!--<li><a href="#">Page 1-1</a></li>-->
+                              ';
+                              include('module_report_menu_dropdown.php');
+                              echo'
+
+                            </ul>
+                          </li>';
                 } 
                 else
                 { 
-                        echo '<li><a href="report.htm" style="padding: 5px 5px;"><span class="fa fa-newspaper-o"><span>&nbsp;Report</a></li>';
+                        //echo '<li><a href="report.htm" style="padding: 5px 5px;"><span class="fa fa-newspaper-o"><span>&nbsp;Report</a></li>';
+                        echo'<li class="dropdown">
+                            <a  class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 5px 5px;"><span class="fa fa-newspaper "><span>&nbsp;Report
+                            <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                              <!--<li><a href="#">Page 1-1</a></li>-->
+                              ';
+                              include('module_report_menu_dropdown.php');
+                              echo'
+
+                            </ul>
+                          </li>';
                 }
                 
               echo'
-                <li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li>
+                <li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li>
                 <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-top:5px;padding-bottom:0px"><font color=green>'.$user_name.'</font> <span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
                 <ul class="dropdown-menu">
                     

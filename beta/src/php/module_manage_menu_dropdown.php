@@ -5,25 +5,14 @@
 .dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
 .dropdown-submenu:hover>a:after{border-left-color:#555;}
 .dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
-.dropdown-submenu:hover .dropdown-menu {
+dropdown-submenu:hover .dropdown-menu {
 		display: block;
 	}
  .dropdown-submenu .dropdown-menu {
 		display: none;
 	}
 </style>
-<script>
-    (function($){
-	$(document).ready(function(){
-		$('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
-			event.preventDefault(); 
-			event.stopPropagation(); 
-			$(this).parent().siblings().removeClass('open');
-			$(this).parent().toggleClass('open');
-		});
-	});
-    })(jQuery);
-</script>
+
 <?php
 
 $flag_sector = 0;
@@ -84,7 +73,7 @@ for($k=0;$k<$size_feature_session;$k++)
 }
 $nbsp="&nbsp;&nbsp;";
 $contetnbsp="&nbsp;";
-        echo'  
+        echo'
             <li><a href="manage.htm" >Main-Manage</a></li>
             <li class="divider"></li>
             <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Accounts</a>
