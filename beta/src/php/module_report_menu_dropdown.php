@@ -383,7 +383,7 @@ $js_function_name_switcher="report_show_file_switcher";
             echo'<li class="divider"></li>';
         }
         echo'<li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Alert</a>
-                    <ul class="dropdown-menu" style="width:200px">
+                    <ul class="dropdown-menu" style="width:230px">
                         ';
                         if($flag_vehicle_reverse)
                         {
