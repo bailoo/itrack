@@ -49,7 +49,7 @@ echo'
         </div>
         <!-- Collection of nav links, forms, and other content for toggling -->       
         <div id="navbarCollapse" class="collapse navbar-collapse" style="padding-right:5px">            
-            <ul class="nav navbar-nav navbar-right" style="font-size:14px;">
+            <ul class="nav navbar-nav navbar-right" style="font-size:14px;font-weight:bold;margin-right:0px;"">
              ';
                 if($interface=="home.php" || $interface=="live.php")
                 {
