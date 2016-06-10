@@ -609,14 +609,12 @@
 		}
 		
 				
-		/*html, body 
+		html, body 
 		{
 			height: 100%;
 			overflow: auto;
-		}*/
-                html, body {
-                    overflow-x: hidden;
-                  }
+		}
+               
 		
 
 		
