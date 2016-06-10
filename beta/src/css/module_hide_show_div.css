@@ -33,7 +33,6 @@
 			background-color: #FFF;
 			color: #333;
 			padding: 0;
-                        overflow: auto;
 			height: 419px;
 			width: 704px;
 			z-index: 10;
@@ -73,7 +72,7 @@
 			background-color: #ffffff;
 			color: #333;
 			padding: 0;
-			overflow: auto;
+			
 			height:700px;
 			width: 80%;
 			z-index: 10;
@@ -96,7 +95,6 @@
 			background-color: #FFF;
 			color: #333;
 			padding: 0;
-                        overflow: auto;
 			height: 200px;
 			width: 300px;
 			z-index: 10;
@@ -117,7 +115,6 @@
 			background-color: #FFF;
 			color: #333;
 			padding: 0;
-                        overflow: auto;
 			height: 200px;
 			width: 300px;
 			z-index: 10;
@@ -138,7 +135,6 @@
 			background-color: #FFF;
 			color: #333;
 			padding: 0;
-                        overflow: auto;
 			height: 250px;
 			width: 300px;
 			z-index: 10;
@@ -159,7 +155,6 @@
 			background-color: #FFF;
 			color: #333;
 			padding: 0;
-                        overflow: auto;
 			height: 200px;
 			width: 300px;
 			z-index: 10;
@@ -181,7 +176,6 @@
 			background-color: #FFF;
 			color: #333;
 			padding: 0;
-                        overflow: auto;
 			height: auto;
 			width: 500px;
 			z-index: 10;
@@ -620,6 +614,9 @@
 			height: 100%;
 			overflow: auto;
 		}*/
+                html, body {
+                    overflow-x: hidden;
+                  }
 		
 
 		
