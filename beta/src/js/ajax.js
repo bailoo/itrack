@@ -1284,7 +1284,8 @@ function show_option_with_value(type, option)      // type="manage/report/settin
 			//hideManageLoadingMessage();
 	//alert(result1[0]);
 			document.getElementById('bodyspan').innerHTML =result;
-                        $('body, html').animate({scrollTop:$('form').offset().top-50}, 'slow');
+                        //$('body, html').animate({scrollTop:$('form').offset().top-50}, 'slow');
+                        $("html,body").animate({ scrollTop: 0 }, "slow");
           }                  
        }
        else 

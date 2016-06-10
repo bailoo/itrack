@@ -1088,7 +1088,8 @@ function accounts_for_device()
 			//alert("response="+response);		
 			document.getElementById('bodyspan').innerHTML="";	
 			$("#bodyspan").html(response);
-			$('body, html').animate({scrollTop:$('html').offset().top-50}, 'slow');
+			//$('body, html').animate({scrollTop:$('html').offset().top-50}, 'slow');
+                         $("html,body").animate({ scrollTop: 0 }, "slow");
 		},
 		error: function()
 		{
