@@ -4,7 +4,12 @@
 	include_once('util_php_mysql_connectivity.php');
 	$root=$_SESSION['root'];
 	include_once('tree_hierarchy_information.php');
-		echo"<table width='70%' align='center'>
+        echo'<ol class="breadcrumb">
+                <li><a href="#">Manage</a></li>
+                <li class="active"><b>Accounts</b>                  
+                </li>
+            </ol>';
+		/*echo"<table width='70%' align='center'>
 			<tr>
 				<td><br>
 					<fieldset class='assignment_manage_fieldset'>
@@ -15,6 +20,17 @@
 							include_once('manage_radio_group_account.php'); 
 					echo"</div>
 					</fieldset>
+				</td>
+			</tr>
+		</table>";*/
+       echo"<table width='90%' align='center'>
+			<tr>
+				<td>
+					
+                                        <div style='height:450px;overflow:auto'>";
+                                                include_once('manage_radio_group_account.php'); 
+                                echo"</div>
+					
 				</td>
 			</tr>
 		</table>";
