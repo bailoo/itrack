@@ -1103,6 +1103,7 @@ function accounts_for_device()
 		var poststr="action_type="+action_type; 
 		//alert("poststr="+poststr);
 		makePOSTRequest(file_name, poststr);
+                $('body, html').animate({scrollTop:$('html').offset().top-50}, 'slow');
 	}
 	
 	function manage_show_account(value,file_name)
