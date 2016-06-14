@@ -257,7 +257,7 @@ $distance1=array(array());
       </tr>
       </table>
       <!--<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>-->
-      <table class="table table-condened table-hover table-striped">
+      <table class="table table-condened table-hover ">
       <thead>
       <tr>
         
