@@ -226,7 +226,7 @@ echo '<center>';
   echo'<br>';
   report_title("Distance Report",$date1,$date2);
   
-	echo'<div style="overflow: auto;height: 300px; width: 620px;" align="center">';
+	echo'<div style="overflow: auto;height: 485px; width: 800px;" align="center">';
 							
 
   $j=-1;
