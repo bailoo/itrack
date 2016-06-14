@@ -256,23 +256,23 @@ $distance1=array(array());
       	<td class="text" align="center"><b>'.$title.'</b> <div style="height:8px;"></div></td>
       </tr>
       </table>
-      <!--<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>-->
+      <!--<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>-->	
       <table class="table table-condened table-hover table-striped">
       <thead>
-      <tr>
+       <tr>
         
-            <th class="" align="left"><b>SNo</b></th>
-            <th class="" align="left"><b>Start DateTime</b></th>
-            <th class="" align="left"><b>End DateTime</b></th>
-            <th class="" align="left"><b>Distance (km)</b></th>	
+            <th class="text" align="left"><b>SNo</b></th>
+            <th class="text" align="left"><b>Start DateTime</b></th>
+            <th class="text" align="left"><b>End DateTime</b></th>
+            <th class="text" align="left"><b>Distance (km)</b></th>	
         
-      </tr></thead><tbody>'; 
-       								
+      </tr></thead><tbody>';  								
     }                                                                        		
 		
     $sum_dist = $sum_dist + $distanceDisplay[$i];
 	              
-    echo'<tr><td class="text" align="left" width="4%"><b>'.$sno.'</b></td>';        												
+    echo'<tr>'
+    . '<td class="text" align="left" width="4%"><b>'.$sno.'</b></td>';        												
 		echo'<td class="text" align="left">'.$dateFromDisplay[$i].'</td>';		
     echo'<td class="text" align="left">'.$dateToDisplay[$i].'</td>';
 
