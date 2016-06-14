@@ -27,7 +27,8 @@
 				</tr>
 			</table>';
 	}
-*/			
+*/
+        /*
 echo'<center>
 	<form name="manage1">
 		<fieldset class="manage_fieldset">
@@ -47,6 +48,29 @@ echo'<center>
 		</fieldset>
 		<div style"display:none;" id="edit_div"> </div>
 	</form>
-</center>'; 
+</center>';*/
+ echo'<form name="manage1">
+     <ol class="breadcrumb">
+                <li><a href="#">Manage</a></li>
+                <li class="active"><b>Substation '.$report_type.'</b> 
+                    <div id="tab" class="btn-group" data-toggle="buttons" >
+                            <a onclick="'.$js_function_name.'(\'src/php/manage_substation_vehicle_assignment_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                               <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_substation_vehicle_assignment_prev.php\')"/><i class="fa fa-link" aria-hidden="true"></i> Assignment
+                            </a>
+                            <a onclick="'.$js_function_name.'(\'src/php/manage_substation_vehicle_deassignment_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                              <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_substation_vehicle_deassignment_prev.php\')"/><i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assignment
+                            </a>
+                    </div>
+                </li>
+            </ol>';
+ echo'
+	
+            
+			
+                <center>
+                    <div style"display:none;" id="edit_div"> </div>
+                </center>
+	</form>
+'; 
 ?>
 	
