@@ -27,7 +27,43 @@
 				</tr>
 			</table>';
 	}
+         echo'<form name="manage1">
+     <ol class="breadcrumb">
+                <li><a href="#">Manage</a></li>
+                <li class="active"><b>'.$report_type.'</b> 
+                    <div id="tab" class="btn-group" data-toggle="buttons" >
+                            <a onclick="'.$js_function_name.'(\'src/php/manage_add_vehicle.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                               <input type="radio" name="new_exist" value="new" onclick="'.$js_function_name.'(\'src/php/manage_add_vehicle.php\')"/><i class="fa fa-plus-square" aria-hidden="true"></i> Add
+                            </a>
+                            <a onclick="'.$js_function_name.'(\'src/php/manage_edit_vehicle_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                              <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_edit_vehicle_prev.php\')"/><i class="fa fa-pencil" aria-hidden="true"></i> Edit &nbsp; <i class="fa fa-minus-square" aria-hidden="true"></i> Delete
+                            </a>
+
+                            <a onclick="'.$js_function_name.'(\'src/php/manage_device_vehicle_register_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                              <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_device_vehicle_register_prev.php\')"/><i class="fa fa-check-square-o" aria-hidden="true"></i> Register
+                            </a>
+
+                            <a onclick="'.$js_function_name.'(\'src/php/manage_device_vehicle_deregister_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                              <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_device_vehicle_deregister_prev.php\')"/><i class="fa fa-circle" aria-hidden="true"></i> De-Register
+                            </a>
+
+                            <a onclick="'.$js_function_name.'(\'src/php/manage_vehicle_assignment_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                              <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_vehicle_assignment_prev.php\')"/> <i class="fa fa-link" aria-hidden="true"></i> Assignment &nbsp;<i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assignment
+                            </a>
+
+                    </div>
+                </li>
+            </ol>';
+ echo'
+	
+            
 			
+                <center>
+                    <div style"display:none;" id="edit_div"> </div>
+                </center>
+	</form>
+'; 
+/*			
 echo'<center>
 	<form name="manage1">
 		<fieldset class="manage_fieldset">
@@ -47,6 +83,6 @@ echo'<center>
 		</fieldset>
 		<div style"display:none;" id="edit_div"> </div>
 	</form>
-</center>'; 
+</center>'; */
 ?>
 	
