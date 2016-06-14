@@ -60,7 +60,7 @@
                                 <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_assign.php\',\'assign\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
                                     <input type="radio" name="new_exist" value="add" onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_assign.php\',\'assign\')"/><i class="fa fa-link" aria-hidden="true"></i> Assign
                                 </a>
-                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_deassign.php\',\'deassign\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_deassign.php\',\'deassign\')" class="btn btn-default active" data-toggle="tab" style="padding: 3px 12px;">
                                     <input type="radio" name="new_exist" value="edit_delete" onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_deassign.php\',\'deassign\')" checked/><i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assign
                                 </a>
                             ';
