@@ -5,7 +5,7 @@
   
   echo"<input type='hidden' id='prev_landmark_point'>";
 	echo"<input type='hidden' id='zoom_level'>"; 
-	
+	/*
 	echo '<center>
 			<form name="manage1">
 				<fieldset class="manage_fieldset">
@@ -21,6 +21,27 @@
 				</fieldset>
 				<div style"display:none;" id="edit_div"> </div>			
 			</form>
-		</center>'; 
+		</center>'; */
+         echo" <form name='manage1'>
+            <ol class='breadcrumb'>
+                <li><a href='#'>Manage</a></li>
+                <li class='active'><b>Landmark&nbsp;</b>
+                 <div id='tab' class='btn-group' data-toggle='buttons' >
+                 ";
+                  echo'
+                   <a onclick="'.$js_function_name.'(\'src/php/manage_add_landmark.php\');" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                    <input type="radio" name="new_exist" value="new" onclick="'.$js_function_name.'(\'src/php/manage_add_landmark.php\')"/><i class="fa fa-plus-square" aria-hidden="true"></i> Add
+                   </a>
+                   <a onclick="'.$js_function_name.'(\'src/php/manage_edit_landmark_prev.php\');" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+		    <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_edit_landmark_prev.php\')"/><i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                   </a>
+                  </div>
+                 </li>
+            </ol>
+                <center>
+                    <div style"display:none;" id="edit_div"> </div>	
+                </center>
+            </form>
+            ';
 ?>  
  
