@@ -256,13 +256,18 @@ $distance1=array(array());
       	<td class="text" align="center"><b>'.$title.'</b> <div style="height:8px;"></div></td>
       </tr>
       </table>
-      <table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
+      <!--<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>-->
+      <table class="table table-condened table-hover table-striped">
+      <thead>
       <tr>
-			<td class="text" align="left"><b>SNo</b></td>
-			<td class="text" align="left"><b>Start DateTime</b></td>
-			<td class="text" align="left"><b>End DateTime</b></td>
-			<td class="text" align="left"><b>Distance (km)</b></td>								
-      </tr>';  								
+        
+            <th class="text" align="left"><b>SNo</b></th>
+            <th class="text" align="left"><b>Start DateTime</b></th>
+            <th class="text" align="left"><b>End DateTime</b></th>
+            <th class="text" align="left"><b>Distance (km)</b></th>	
+        
+      </tr></thead><tbody>'; 
+       								
     }                                                                        		
 		
     $sum_dist = $sum_dist + $distanceDisplay[$i];
@@ -297,7 +302,7 @@ $distance1=array(array());
 													
 			echo'<td class="text"><font color="red"><strong>'.round($total_distance[$j],2).'</strong></font></td>';
 			echo'</tr>'; 
-      echo '</table>';
+      echo '</tbody></table>';
       
       $no_of_data[$j] = $k;
 		}  
