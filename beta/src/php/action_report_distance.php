@@ -257,14 +257,14 @@ $distance1=array(array());
       </tr>
       </table>
       <!--<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>-->
-      <table class="table table-condened table-hover ">
+      <table class="table table-condened table-hover table-striped">
       <thead>
       <tr>
         
-            <th class="text" align="left"><b>SNo</b></th>
-            <th class="text" align="left"><b>Start DateTime</b></th>
-            <th class="text" align="left"><b>End DateTime</b></th>
-            <th class="text" align="left"><b>Distance (km)</b></th>	
+            <th class="" align="left"><b>SNo</b></th>
+            <th class="" align="left"><b>Start DateTime</b></th>
+            <th class="" align="left"><b>End DateTime</b></th>
+            <th class="" align="left"><b>Distance (km)</b></th>	
         
       </tr></thead><tbody>'; 
        								
