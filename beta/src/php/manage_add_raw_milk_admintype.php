@@ -221,7 +221,7 @@
 			if($function_account_type=='raw_milk' ){
 				// $tmCnt++;
 				
-			  //$option_transporter.="<option value=$account_id_local>$user_id1</option>";
+			  $option_transporter.="<option value=$account_id_local>$user_id1</option>";
 			  //$option_transporter.="<option value=$account_id_local>$account_name</option>";
                           $option_transporter_arr[]=array($user_id1,$account_id_local);
 			  $uploadTransporter[trim(strtolower($user_id1))]=$account_id_local;
@@ -269,7 +269,7 @@
 			if($function_account_type=='raw_milk' ){
 				// $tmCnt++;
 				
-			  //$option_transporter.="<option value=$account_id_local>$user_id1</option>";
+			  $option_transporter.="<option value=$account_id_local>$user_id1</option>";
 			  //$option_transporter.="<option value=$account_id_local>$account_name</option>";
                           $option_transporter_arr[]=array($user_id1,$account_id_local);
 			  $uploadTransporter[trim(strtolower($user_id1))]=$account_id_local;
@@ -288,7 +288,7 @@
 	//print_r($option_transporter_arr);
         foreach($option_transporter_arr as $option_transp)
         {
-             $option_transporter.="<option value=$option_transp[1]>$option_transp[0]</option>";
+             //$option_transporter.="<option value=$option_transp[1]>$option_transp[0]</option>";
         }
 	function read_sent_file($read_excel_path)
 	{
