@@ -142,9 +142,11 @@
 	//print_r($final_lorry_list);
 	
 	global $option_transporter;
+        global $option_transporter_arr;
 	global $uploadTransporter;
 	$uploadTransporter=array();
 	$option_transporter="<option value='select'>Select</option>";	
+        $option_transporter_arr=array();
 	global $tmCnt;
 	$tmCnt=0;
 	//echo "Pending=".$pending;
@@ -191,6 +193,7 @@
 		//echo"AC";
 		global $DbConnection;
 		global $option_transporter;
+                global $option_transporter_arr;
 		global $uploadTransporter;//bin type
 	    global $tmCnt;
 		// $option_transporter="AC";
@@ -218,8 +221,9 @@
 			if($function_account_type=='raw_milk' ){
 				// $tmCnt++;
 				
-			  $option_transporter.="<option value=$account_id_local>$user_id1</option>";
+			  //$option_transporter.="<option value=$account_id_local>$user_id1</option>";
 			  //$option_transporter.="<option value=$account_id_local>$account_name</option>";
+                          $option_transporter_arr[]=array($user_id1,$account_id_local);
 			  $uploadTransporter[trim(strtolower($user_id1))]=$account_id_local;
 			  //$uploadTransporter[trim(strtolower($account_name))]=$account_id_local;
 			
@@ -265,8 +269,9 @@
 			if($function_account_type=='raw_milk' ){
 				// $tmCnt++;
 				
-			  $option_transporter.="<option value=$account_id_local>$user_id1</option>";
+			  //$option_transporter.="<option value=$account_id_local>$user_id1</option>";
 			  //$option_transporter.="<option value=$account_id_local>$account_name</option>";
+                          $option_transporter_arr[]=array($user_id1,$account_id_local);
 			  $uploadTransporter[trim(strtolower($user_id1))]=$account_id_local;
 			  //$uploadTransporter[trim(strtolower($account_name))]=$account_id_local;
 			
@@ -279,7 +284,12 @@
 		} 
 		
 	}
-	
+	asort($option_transporter_arr);
+	//print_r($option_transporter_arr);
+        foreach($option_transporter_arr as $option_transp)
+        {
+             $option_transporter.="<option value=$option_transp[1]>$option_transp[0]</option>";
+        }
 	function read_sent_file($read_excel_path)
 	{
 		global $LRNO;  global $Vehicle; global $Transporter; global $mobileno; global $emailid; global $drivername; global $drivermobile; global $qty; global $snf_per; global $snf_kg;
