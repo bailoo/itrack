@@ -4,15 +4,16 @@
 	$RowNo=0;
 	$count=0;
 	echo "<br>
-	<table border=1 cellspacing=0 cellpadding=0 class='module_left_menu' align='center' width='70%'>";
+	<!--<table border=1 cellspacing=0 cellpadding=0 class='module_left_menu' align='center' width='70%'>-->
+         <table cellspacing=0 cellpadding=0 class='table-bordered table-hover module_tree_hierarchy' style='width:90%'>";
 	FindColumnCnt($root);
-	echo"<tr>";
+	echo"<thead class='alert-warning'><tr>";
 			for($i=0;$i<$MaxColumnNo;$i++)
 			{
-				echo"<td>&nbsp;".'Level'.$i."</td>";
+				echo"<th>&nbsp;".'Level'.$i."</th>";
 			}
-				echo"<td>&nbsp; Group Name</td>";
-	echo"</tr>";
+				echo"<th>&nbsp; Group Name</th>";
+	echo"</tr></thead>";
 
 	$ColumnNo=0;
 	$RowNo=0;
