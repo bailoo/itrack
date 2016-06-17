@@ -107,7 +107,7 @@
 									<td align="center"  colspan="3">
 										<div style="height:10px"></div>
 										<input type="button" class="btn btn-default" Onclick="javascript:action_manage_vehicle(manage1, \''.$temp_type.'\')" value="Add" id="enter_button">										
-										&nbsp;<input type="reset" value="Clear">
+										&nbsp;<input type="reset" class="btn btn-default" value="Clear">
 										<input type="button" class="btn btn-default" Onclick="javascript:show_device_imei_no()" value="Add With Register" id="enter_button_1">
 									</td>
 								</tr>
