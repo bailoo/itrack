@@ -8,7 +8,7 @@
 	include_once('tree_hierarchy_information.php');
 	include_once('manage_radio_group.php');
 	echo'<br>
-		<input type="button" value="Enter" onclick="javascript:manage_edit_prev(\'src/php/manage_edit_delete_group.php\');">&nbsp;			
+		<input type="button" class="btn btn-default" value="Enter" onclick="javascript:manage_edit_prev(\'src/php/manage_edit_delete_group.php\');">&nbsp;			
 		';
 ?>
   
