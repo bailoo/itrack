@@ -27,29 +27,29 @@
 				</tr>
 			</table>';
 	}
-         echo'<form name="manage1">
-             <div class="alert-info" style="background-color:#f7fafc;padding:1px 15px;border-radius:0px">
+        echo'<form name="manage1">
+      <div class="alert-info" style="background-color:#f7fafc;padding:1px 15px;border-radius:0px">
                     <table width=100% cellspacing=0 cellpading=0>
                         <tr>
                             <td width=10%><span class="active"><b>'.$report_type.'</b></span></td>
                             <td>
                                <div id="tab" class="btn-group" data-toggle="buttons" >
-                                    <a onclick="'.$js_function_name.'(\'src/php/manage_add_vehicle.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                                    <a onclick="'.$js_function_name.'(\'src/php/manage_add_vehicle.php\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                                        <input type="radio" name="new_exist" value="new" onclick="'.$js_function_name.'(\'src/php/manage_add_vehicle.php\')"/><i class="fa fa-plus-square" aria-hidden="true"></i> Add
                                     </a>
-                                    <a onclick="'.$js_function_name.'(\'src/php/manage_edit_vehicle_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                                    <a onclick="'.$js_function_name.'(\'src/php/manage_edit_vehicle_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                                       <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_edit_vehicle_prev.php\')"/><i class="fa fa-pencil" aria-hidden="true"></i> Edit &nbsp; <i class="fa fa-minus-square" aria-hidden="true"></i> Delete
                                     </a>
 
-                                    <a onclick="'.$js_function_name.'(\'src/php/manage_device_vehicle_register_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                                    <a onclick="'.$js_function_name.'(\'src/php/manage_device_vehicle_register_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                                       <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_device_vehicle_register_prev.php\')"/><i class="fa fa-check-square-o" aria-hidden="true"></i> Register
                                     </a>
 
-                                    <a onclick="'.$js_function_name.'(\'src/php/manage_device_vehicle_deregister_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                                    <a onclick="'.$js_function_name.'(\'src/php/manage_device_vehicle_deregister_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                                       <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_device_vehicle_deregister_prev.php\')"/><i class="fa fa-circle" aria-hidden="true"></i> De-Register
                                     </a>
 
-                                    <a onclick="'.$js_function_name.'(\'src/php/manage_vehicle_assignment_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                                    <a onclick="'.$js_function_name.'(\'src/php/manage_vehicle_assignment_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                                       <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_vehicle_assignment_prev.php\')"/> <i class="fa fa-link" aria-hidden="true"></i> Assignment &nbsp;<i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assignment
                                     </a>
 
@@ -59,6 +59,7 @@
                     </table>
                   </div>
      ';
+
  echo'
 	
             
