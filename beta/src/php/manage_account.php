@@ -4,11 +4,14 @@
 	include_once('util_php_mysql_connectivity.php');
 	$root=$_SESSION['root'];
 	include_once('tree_hierarchy_information.php');
-        echo'<ol class="breadcrumb">
-                <li><a href="#">Manage</a></li>
-                <li class="active"><b>Accounts</b>                  
-                </li>
-            </ol>';
+        echo'<div class="alert-info" style="background-color:#f7fafc;padding:5px 15px;border-radius:0px">
+                    <table width=100% cellspacing=0 cellpading=0>
+                        <tr>
+                            <td width=10%><span class="active"><b>Accounts</b></span></td>
+                           
+                       </tr>
+                    </table>
+            </div>';
 		/*echo"<table width='70%' align='center'>
 			<tr>
 				<td><br>
@@ -35,9 +38,9 @@
 			</tr>
 		</table>";
 	echo'<br><center>
-			<input type="button" value="Update"  id="enter_button" onclick="javascript:return validation_user(\'src/php/manage_edit_account.php\',\'edit\');">&nbsp;        
-			<input type="button" value="Create New" onclick="javascript:validation_user(\'src/php/manage_add_account.php\',\'add\');">&nbsp;
-			<input type="button" value="Delete Account" id="enter_button" Onclick="javascript:return validation_user(\'\',\'delete\')">&nbsp';
+			<input type="button" class="btn btn-default" value="Update"  id="enter_button" onclick="javascript:return validation_user(\'src/php/manage_edit_account.php\',\'edit\');">&nbsp;        
+			<input type="button" class="btn btn-default" value="Create New" onclick="javascript:validation_user(\'src/php/manage_add_account.php\',\'add\');">&nbsp;
+			<input type="button" class="btn btn-default" value="Delete Account" id="enter_button" Onclick="javascript:return validation_user(\'\',\'delete\')">&nbsp';
 			include_once('manage_loading_message.php');
 	echo'</center>
 	</form>';
