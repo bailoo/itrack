@@ -23,7 +23,7 @@
 	$ColumnNo;		$RowNo;		$MaxColumnNo;		$MaxColumnNo=0; 	$ColumnNo=0;	$RowNo=0;
 	
 	echo "<br>
-		<table width='70%' align='center'>
+		<table width='90%' align='center'>
 			<tr>
 				<td>
 					<div style='height:250px;overflow:auto;'>
