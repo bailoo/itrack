@@ -21,22 +21,22 @@
 									<tr>
 										<td>Name</td>
 										<td>&nbsp;:&nbsp;</td>
-										<td><input type="text" name="vehicle_name" id="vehicle_name" onkeyup="manage_availability(this.value, \'vehicle\')" onmouseup="manage_availability(this.value,\'vehicle\')" onchange="manage_availability(this.value, \'vehicle\')"></td>
+										<td><input type="text" class="form-control" name="vehicle_name" id="vehicle_name" onkeyup="manage_availability(this.value, \'vehicle\')" onmouseup="manage_availability(this.value,\'vehicle\')" onchange="manage_availability(this.value, \'vehicle\')"></td>
 									</tr>	
 									<tr>
 										<td>Vehicle Number</td>
 										<td>&nbsp;:&nbsp;</td>
-										<td> <input type ="text" name="vehicle_number" id="vehicle_number"> </td>
+										<td> <input type ="text" class="form-control" name="vehicle_number" id="vehicle_number"> </td>
 									</tr>
 									<tr>
 										<td>Sim Number</td>
 										<td>&nbsp;:&nbsp;</td>
-										<td> <input type ="text" name="sim_number" id="sim_number"> </td>
+										<td> <input type ="text" class="form-control" name="sim_number" id="sim_number"> </td>
 									</tr>
 									<tr>
 										<td>Mobile Number</td>
 										<td>&nbsp;:&nbsp;</td>
-										<td> <input type ="text" name="mobile_number" id="mobile_number"> </td>
+										<td> <input type ="text" class="form-control" name="mobile_number" id="mobile_number"> </td>
 									</tr>									
 									';
 								if($report_type!="Person")
@@ -44,12 +44,12 @@
 								echo'<tr>
 										<td>Max Speed</td>
 										<td>&nbsp;:&nbsp;</td>
-										<td> <input type ="text" name="max_speed" id="max_speed"> </td>
+										<td> <input type ="text" class="form-control" name="max_speed" id="max_speed"> </td>
 									</tr>  		
 									<tr>
 										<td>Tag</td>
 										<td>&nbsp;:&nbsp;</td>
-										<td> <input type ="text" name="vehicle_tag" id="vehicle_tag"> </td>
+										<td> <input type ="text" class="form-control" name="vehicle_tag" id="vehicle_tag"> </td>
 									</tr>';
 								}
 								if($report_type=="Person")
@@ -58,7 +58,7 @@
 										<td>Type</td>
 										<td>&nbsp;:&nbsp;</td>
 										<td>
-											<select name="vehicle_type" id="vehicle_type">
+											<select class="form-control" name="vehicle_type" id="vehicle_type">
 												<option value="select">Select</option> 											
 												<option value="person">Person</option>
 											</select>
@@ -71,7 +71,7 @@
 										<td>Type</td>
 										<td>&nbsp;:&nbsp;</td>
 										<td>
-											<select name="vehicle_type" id="vehicle_type">
+											<select class="form-control" name="vehicle_type" id="vehicle_type">
 												<option value="select">Select</option>												
 												<option value="car">Car</option>
 												<option value="truck">Truck</option>
@@ -86,7 +86,7 @@
 										<td>Category</td>
 										<td>&nbsp;:&nbsp;</td>
 										<td>											
-											<select id="category">
+											<select class="form-control" id="category">
 												<option value="select">Select</option>											
 											</select>													
 										</td>
@@ -95,7 +95,7 @@
 									<td>Register</td>
 									<td>&nbsp;:&nbsp;</td>
 									<td>
-										<select id="register_option" onchange="javascript:show_device_imei_no(this.value,\''.$report_type.'\');">
+										<select class="form-control" id="register_option" onchange="javascript:show_device_imei_no(this.value,\''.$report_type.'\');">
 											<option value="select">Select</option>
 											<option value="yes">YES</option>
 											<option value="no">NO</option>
@@ -106,9 +106,9 @@
 							echo'<tr>                    									
 									<td align="center"  colspan="3">
 										<div style="height:10px"></div>
-										<input type="button" Onclick="javascript:action_manage_vehicle(manage1, \''.$temp_type.'\')" value="Add" id="enter_button">										
+										<input type="button" class="btn btn-default" Onclick="javascript:action_manage_vehicle(manage1, \''.$temp_type.'\')" value="Add" id="enter_button">										
 										&nbsp;<input type="reset" value="Clear">
-										<input type="button" Onclick="javascript:show_device_imei_no()" value="Add With Register" id="enter_button_1">
+										<input type="button" class="btn btn-default" Onclick="javascript:show_device_imei_no()" value="Add With Register" id="enter_button_1">
 									</td>
 								</tr>
 							</table>
