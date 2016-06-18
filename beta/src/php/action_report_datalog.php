@@ -245,7 +245,7 @@ echo'<center>
                  $move_a = array_reverse($move_a);
                  $lowv_a = array_reverse($lowv_a);*/
             }                      
-            $csv_string = ""; 
+         
             for($i=0;$i<sizeof($imei);$i++)
             {                                              
                 if(($i===0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )
@@ -254,8 +254,7 @@ echo'<center>
                     $title="VTS DataLog For UserID : ".$userid[$i].", ".$report_type." : ".$vname[$i]." &nbsp;<font color=red>(".$imei[$i].")</font>";
                     echo"<input TYPE=\"hidden\" VALUE=\"$title1\" NAME=\"title\">";
                      echo"<input TYPE=\"hidden\" VALUE=\"$title1\" NAME=\"title\">";
-                        $csv_string = $csv_string.$title1."\n";
-                        $csv_string = $csv_string."SNo,STS,DateTime,";
+                      
             echo'<form  name="text_data_report" method="post" target="_blank">
                     <br>
                     <table align="center">
@@ -286,7 +285,7 @@ echo'<center>
                             {
                             echo'<!--<td class="text"><b><font size="1">VehName</font></b></td>-->  
                                 <td class="text"><b><font size="1">VehTp</font></b></td>';  
-                                $csv_string = $csv_string."VehTp,";
+                               
                             }           
                         echo'<!--<td class="text"><b><font size="1">UserID</font></b></td>-->
                             <!--<td class="text"><b><font size="1">IMEI</font></b></td>-->      
@@ -294,25 +293,25 @@ echo'<center>
                             <td class="text"><b><font size="1">Fix</font></b></td>   
                             <td class="text"><b><font size="1">Latitude</font></b></td>    
                             <td class="text"><b><font size="1">Longitude</font></b></td>';
-                            $csv_string = $csv_string."MsgTp,Fix,Latitude,Longitude,";
+                           
 
                             if($report_type!='Person')
                             {            
                                 echo'<td class="text"><b><font size="1">Speed</font></b></td>   
                                     <td class="text"><b><font size="1">Distance</font></b></td>';
-                                $csv_string = $csv_string."Speed,Distance,";
+                               
                             }   
                             if($report_type=='Person')
                             {            
                                 echo'<td class="text">
                                         <b><font size="1">Boot Status</font></b>
                                     </td>';
-                                $csv_string = $csv_string."Boot Status,";
+                            
                             }                
                             echo'<td class="text">
                                     <b><font size="1">Version</font></b>
                                 </td>';
-                            $csv_string = $csv_string."Version,";
+                           
                             if($report_type!="Person")
                             {
                                 echo'<td class="text">
@@ -321,7 +320,7 @@ echo'<center>
                                     <td class="text">
                                         <b><font size="1">SgnlSt</font></b>
                                     </td>';
-                            }       $csv_string = $csv_string."SupplyV,SgnlSt,";
+                            }      
                             if($account_id=='1594')
                             {
                                 echo'<td class="text"><b><font size="1">AX &nbsp;&nbsp;</font></b></td>';
@@ -333,7 +332,7 @@ echo'<center>
                                 echo'<td class="text"><b><font size="1">BX &nbsp;&nbsp;</font></b></td>';
                                 echo'<td class="text"><b><font size="1">BY &nbsp;&nbsp;</font></b></td>';
                                 echo'<td class="text"><b><font size="1">BZ &nbsp;&nbsp;</font></b></td>';
-                                 $csv_string = $csv_string."AX,AY,AZ,MX,MY,MZ,BX,BY,BZ,";
+                               
                             }       
 
                             if($report_type!='Person')
@@ -341,12 +340,11 @@ echo'<center>
                                 if($login == "iesplweb") 
                                 {
                                     echo'<td class="text"><b><font size="1">IO8</font></b></td>';
-                                    $csv_string = $csv_string."IO8,";
+                                   
                                 }
                             }             
                     echo'</tr>';
-                    $csv_string=substr($csv_string,0,-1);
-                    $csv_string = $csv_string."\n";
+                   
                 }    
 
                 if ($sno%2==0)
@@ -417,7 +415,7 @@ echo'<center>
                 echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$i][SNo]\">";
                 echo"<input TYPE=\"hidden\" VALUE=\"$sts[$i]\" NAME=\"temp[$i][STS]\">";
                 echo"<input TYPE=\"hidden\" VALUE=\"$datetime[$i]\" NAME=\"temp[$i][DateTime]\">";
-                $csv_string = $csv_string.$sno.','.$sts[$i].','.$datetime[$i].',';
+                
                 if($report_type!='Person')
                 {
                 echo"<input TYPE=\"hidden\" VALUE=\"$vtype[$i]\" NAME=\"temp[$i][Vehicle Type]\">";
@@ -427,25 +425,25 @@ echo'<center>
                 echo"<input TYPE=\"hidden\" VALUE=\"$fix[$i]\" NAME=\"temp[$i][Fix]\">";
                 echo"<input TYPE=\"hidden\" VALUE=\"$lat[$i]\" NAME=\"temp[$i][Latitude]\">";
                 echo"<input TYPE=\"hidden\" VALUE=\"$lng[$i]\" NAME=\"temp[$i][Longitude]\">";
-                $csv_string = $csv_string.$msgtype[$i].",".$fix[$i].",".$lat[$i].",".$lng[$i].",";
+               
                 if($report_type!='Person')
                 {
                 echo"<input TYPE=\"hidden\" VALUE=\"$speed[$i]\" NAME=\"temp[$i][Speed]\">";
                 echo"<input TYPE=\"hidden\" VALUE=\"$distance[$i]\" NAME=\"temp[$i][Distance]\">";
-                $csv_string = $csv_string.$speed[$i].",".$distance[$i].",";
+               
                 }
                 if($report_type=="Person")
                 {
                 echo"<input TYPE=\"hidden\" VALUE=\"$bootStatus\" NAME=\"temp[$i][Boot Status]\">";
-                $csv_string = $csv_string.$bootStatus[$i].",";
+            
                 }
                 echo"<input TYPE=\"hidden\" VALUE=\"$ver[$i]\" NAME=\"temp[$i][Version]\">";
-                $csv_string = $csv_string.$ver[$i].",";
+               
                 if($report_type!="Person")
                 {
                     echo"<input TYPE=\"hidden\" VALUE=\"$sup_v[$i]\" NAME=\"temp[$i][Supply Voltage]\">";
                     echo"<input TYPE=\"hidden\" VALUE=\"$sig_str[$i]\" NAME=\"temp[$i][SgnlSt]\">";
-                    $csv_string = $csv_string.$sup_v[$i].",".$sig_str[$i].",";
+              
                 }
                 if($account_id=='1594')
                 {                   
@@ -459,19 +457,17 @@ echo'<center>
                     echo"<input TYPE=\"hidden\" VALUE=\"$by[$i]\" NAME=\"temp[$i][BY]\">";
                     echo"<input TYPE=\"hidden\" VALUE=\"$bz[$i]\" NAME=\"temp[$i][BZ]\">";
                     
-                    $csv_string = $csv_string.$ax[$i].",".$ay[$i].",".$az[$i].",".$mx[$i].",".$my[$i].",".$mz[$i].",".$bx[$i].",".$by[$i].",".$bz[$i].",";
+                    
                 } 
                 if($report_type!='Person')
                 { 
                     if($login == "iesplweb") 
                     {
                         echo"<input TYPE=\"hidden\" VALUE=\"$io8[$i]\" NAME=\"temp[$i][IO8]\">";
-                        $csv_string = $csv_string.$io8[$i].",".$sig_str[$i].",";
+                        
                     }
                 }
-                $csv_string=substr($csv_string,0,-1);
-                $csv_string = $csv_string."\n";
-                ////////// For CSV Report
+               
                 //$csv_string = $csv_string.$sno.','.$sts[$i].','.$datetime[$i].','.$msgtype[$i].','.$fix[$i].','.$lat[$i].','.$lng[$i].','.$bootStatus.','.$ver[$i]."\n";
           
         if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
@@ -479,11 +475,7 @@ echo'<center>
         echo'</table>';
             //if($report_type=="Person")
             {
-            echo'<input TYPE="hidden" VALUE="datalog" NAME="csv_type">';
-            echo'<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">';
-            echo'<br>
-            <input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size=1\');" value="Get PDF" class="noprint">&nbsp;
-            <input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">';
+           echo'<input TYPE="hidden" VALUE="datalog" NAME="csv_type">';            
             }
         }                                          
         $sno++;
@@ -493,67 +485,104 @@ echo'<center>
             </tbody>
         </table>
     </div>
+    <br>
+    <center>
+    <input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size=1\');" value="Get PDF" class="noprint">&nbsp;
+    <input type="button" onclick="javascript:report_csv_submit(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">
+    </center>
 </form>';
-/*if($option=="today")
-{
-$displayPageName='datalog_today_records.htm';
-echo'<center>
-        <a href="javascript:showReportPrevPage(\''.$displayPageName.'\',\''.$selected_account_id.'\',\''.$selected_options_value.'\',\''.$s_vehicle_display_option.'\');" class="back_css">
-            &nbsp;<b>Back</b>
-        </a>
-    </center>';
-}
-else if($option=="date")
-{
-$displayPageName='datalog_between_dates.htm';
-echo'<center>
-        <a href="javascript:showReportPrevPage(\''.$displayPageName.'\',\''.$selected_account_id.'\',\''.$selected_options_value.'\',\''.$s_vehicle_display_option.'\');" class="back_css">
-            &nbsp;<b>Back</b>
-        </a>
-    </center>';
-}*/
-
-/*$csv_string = "";
-$cs_pdf_no=1;
-  for($i=0;$i<sizeof($imei);$i++)
-    {                                          
+                
+echo'<form  name="csvForm" method="post" target="_blank">';                
+$csv_string = ""; 
+for($i=0;$i<sizeof($imei);$i++)
+{                                              
     if(($i===0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )
     {
-      $title="VTS DataLog For UserID : ".$userid[$i].", ".$report_type." : ".$vname[$i]." &nbsp;<font color=red>(".$imei[$i].")</font>";
-       echo"<input TYPE=\"hidden\" VALUE=\"$title1\" NAME=\"title\">";
-       $csv_string = $csv_string.$title1."\n";
-       $csv_string = $csv_string."SNo,STS,DateTime,MsgTp,Fix,Latitude,Longitude,Version,CellName\n";
-    }
-      ///////////For PDF Report /////////
-    echo"<input TYPE=\"hidden\" VALUE=\"$cs_pdf_no\" NAME=\"temp[$i][SNo]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$sts[$i]\" NAME=\"temp[$i][STS]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$datetime[$i]\" NAME=\"temp[$i][DateTime]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$msgtype[$i]\" NAME=\"temp[$i][MsgTp]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$fix[$i]\" NAME=\"temp[$i][Fix]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$lat[$i]\" NAME=\"temp[$i][Latitude]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$lng[$i]\" NAME=\"temp[$i][Longitude]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$ver[$i]\" NAME=\"temp[$i][Version]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$cellname[$i]\" NAME=\"temp[$i][CellName]\">";
-        ////////// For CSV Report
-        $csv_string = $csv_string.$cs_pdf_no.','.$sts[$i].','.$datetime[$i].','.$msgtype[$i].','.$fix[$i].','.$lat[$i].','.$lng[$i].','.$ver[$i].','.$cellname[$i]."\n";
-    $cs_pdf_no++;
-  }
-
-  if(sizeof($imei)==0)
-        {                        
-            print"<center><FONT color=\"Red\" size=2><strong>No Report Found</strong></font></center>";
-            //echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=HaltReport.php\">";
-            echo'<br><br>';
-        }    
-        else
+        $sno = 1;
+        $title="VTS DataLog For UserID : ".$userid[$i].", ".$report_type." : ".$vname[$i]." &nbsp;<font color=red>(".$imei[$i].")</font>";
+        $csv_string = $csv_string.$title1."\n";
+        $csv_string = $csv_string."SNo,STS,DateTime,";
+        if($report_type=='Person')
         {
-      echo'<input TYPE="hidden" VALUE="halt" NAME="csv_type">';
-      echo'<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">';                 
-      echo'<br><center><input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size=1\');" value="Get PDF" class="noprint">&nbsp;
-      <input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
-      <!--<input type="button" value="Print it" onclick="window.print()" class="noprint">-->&nbsp;';
+            //echo'<th class="text"><b><font size="1">Person Name</font></b></td>'; 
+        }
+        else
+        {        
+            $csv_string = $csv_string."VehTp,";
+        }
+        $csv_string = $csv_string."MsgTp,Fix,Latitude,Longitude,";
+        if($report_type!='Person')
+        {
+            $csv_string = $csv_string."Speed,Distance,";
+        }   
+        if($report_type=='Person')
+        { 
+            $csv_string = $csv_string."Boot Status,";
+        }                
+        $csv_string = $csv_string."Version,";
+        if($report_type!="Person")
+        {
+           $csv_string = $csv_string."SupplyV,SgnlSt,";
+        }       
+        if($account_id=='1594')
+        {                               
+            $csv_string = $csv_string."AX,AY,AZ,MX,MY,MZ,BX,BY,BZ,";
+        } 
+        if($report_type!='Person')
+        {          
+            if($login == "iesplweb") 
+            {
+                $csv_string = $csv_string."IO8,";
+            }
+        }
+        $csv_string=substr($csv_string,0,-1);
+        $csv_string = $csv_string."\n";
+    } 
+                $csv_string = $csv_string.$sno.','.$sts[$i].','.$datetime[$i].',';
+                if($report_type!='Person')
+                {
+                $csv_string = $csv_string.$vtype[$i].",";
+                }
+                $csv_string = $csv_string.$msgtype[$i].",".$fix[$i].",".$lat[$i].",".$lng[$i].",";
+                if($report_type!='Person')
+                {
+                $csv_string = $csv_string.$speed[$i].",".$distance[$i].",";
+                }
+                if($report_type=="Person")
+                {
+                $csv_string = $csv_string.$bootStatus[$i].",";
+                }
+                $csv_string = $csv_string.$ver[$i].",";
+                if($report_type!="Person")
+                {
+                    $csv_string = $csv_string.$sup_v[$i].",".$sig_str[$i].",";
+                }
+                if($account_id=='1594')
+                {                    
+                    $csv_string = $csv_string.$ax[$i].",".$ay[$i].",".$az[$i].",".$mx[$i].",".$my[$i].",".$mz[$i].",".$bx[$i].",".$by[$i].",".$bz[$i].",";
+                } 
+                if($report_type!='Person')
+                { 
+                    if($login == "iesplweb") 
+                    {
+                        $csv_string = $csv_string.$io8[$i].",".$sig_str[$i].",";
+                    }
+                }
+                $csv_string=substr($csv_string,0,-1);
+                $csv_string = $csv_string."\n";
+               
+        if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
+        {
+ 
+            //if($report_type=="Person")
+            {
+            echo'<input TYPE="hidden" VALUE="datalog" NAME="csv_type">';
+            echo'<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">';           
+            }
+        }                                          
+        $sno++;
     }
- echo'</form>'; */
+echo'</form>';
 if(sizeof($imei)>0)
 {
   echo'
