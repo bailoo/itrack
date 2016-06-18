@@ -4,17 +4,21 @@
 	$js_function_name = "manage_show_file";    // FUNCTION NAME  
         echo'
             <form name="manage1">
-            <ol class="breadcrumb">
-                <li><a href="#">Manage</a></li>
-                <li class="active"><b>Managing ThirdParty Vehicle</b> 
-                    <div id="tab" class="btn-group" data-toggle="buttons" >
-                            <a onclick="'.$js_function_name.'(\'src/php/manage_assign_vehicle_thirdparty.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
-                               <input type="radio" name="new_exist" value="new" onclick="'.$js_function_name.'(\'src/php/manage_assign_vehicle_thirdparty.php\')"/> Assign/DeAssign ThirdParty
-                            </a>                                   
-                    </div>
-
-                </li>
-            </ol>';
+            <div class="alert-info" style="background-color:#f7fafc;padding:1px 15px;border-radius:0px">
+                <table width=100% cellspacing=0 cellpading=0>
+                    <tr>
+                        <td width=20%><span class="active"><b>Managing ThirdParty Vehicle</b></span></td>
+                        <td>
+                           <div id="tab" class="btn-group" data-toggle="buttons" >
+                                    <a onclick="'.$js_function_name.'(\'src/php/manage_assign_vehicle_thirdparty.php\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
+                                       <input type="radio" name="new_exist" value="new" onclick="'.$js_function_name.'(\'src/php/manage_assign_vehicle_thirdparty.php\')"/> Assign/DeAssign ThirdParty
+                                    </a>                                   
+                            </div>
+                        </td>
+                   </tr>
+                </table>
+              </div>
+            ';
 	/*echo '<center>
 			<form name="manage1">
 				<fieldset class="manage_fieldset">
