@@ -26,7 +26,7 @@ echo'<form name="manage1">
 		<table border=0 width="100%">
 		<tr>
 			<td align="center">
-				<table width=70% border=1>
+				<table width=90% >
 					<tr>
 					 <td>
 						<fieldset class="assignment_manage_fieldset">
@@ -43,7 +43,7 @@ echo'<form name="manage1">
 									<table border="0" align=center class="manage_interface" cellspacing="2" cellpadding="2">
 									<tr>
 										<td valign="top">
-											<fieldset class="assignment_manage_fieldset">
+											<fieldset class="">
 												<legend>Select Device</legend>		
 													<table border="0" align=center class="manage_interface" cellspacing="2" cellpadding="2">        
 														<tr>
