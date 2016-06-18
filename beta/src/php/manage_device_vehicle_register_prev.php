@@ -16,7 +16,7 @@
 	}
 	
 	include_once('tree_hierarchy_information.php');
-echo"<table width='70%' align='center'>
+echo"<table width='90%' align='center'>
 		<tr>
 			<td><br>
 				<fieldset class='assignment_manage_fieldset'>
@@ -49,7 +49,7 @@ echo"<table width='70%' align='center'>
 	<div align="center" id="portal_vehicle_information" style="display:none;"></div>
 			
 		<br>
-		<input type="button" value="Enter" onclick="javascript:manage_option_vehicle_prev(\'src/php/manage_device_vehicle_register.php\');">&nbsp;			
+		<input type="button" class="btn btn-default" value="Enter" onclick="javascript:manage_option_vehicle_prev(\'src/php/manage_device_vehicle_register.php\');">&nbsp;			
 	</center>';
 	include_once('manage_loading_message.php');
 ?>
