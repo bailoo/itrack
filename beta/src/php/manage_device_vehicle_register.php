@@ -26,7 +26,7 @@ echo'<form name="manage1">
 		<table border=0 width="100%">
 		<tr>
 			<td align="center">
-				<table width=70%>
+				<table width=70% border=1>
 					<tr>
 					 <td>
 						<fieldset class="assignment_manage_fieldset">
