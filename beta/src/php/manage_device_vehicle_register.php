@@ -45,7 +45,7 @@ echo'<form name="manage1">
 										<td valign="top">
 											<fieldset class="">
 												<legend>Select Device</legend>		
-													<table border="0" align=center class="manage_interface" cellspacing="2" cellpadding="2">        
+													<table border="0" align=center class="manage_interface" cellspacing="2" cellpadding="2" width=100%>        
 														<tr>
 															<!--<td><input type="radio" name="left_search" value="1" onclick="javascript:this.form.ls.disabled=false;this.form.lo.disabled=true"></td>-->
 															<td>By Search</td>
@@ -73,7 +73,7 @@ echo'<form name="manage1">
 																			echo'
 																			<tr>
 																				<td>
-																					<label class="radio-inline"><input type="radio" class="form-control" name="lo" value="'.$device_imei_no.'" onclick="javascript:set_device_option(\'ls\',\'lo\');">'.$device_imei_no.'</label>
+																					<label class="radio-inline"><input type="radio"  name="lo" value="'.$device_imei_no.'" onclick="javascript:set_device_option(\'ls\',\'lo\');">'.$device_imei_no.'</label>
 																				</td>
 																			</tr>';
 																		} 
@@ -94,7 +94,7 @@ echo'<form name="manage1">
 												echo'Select Vehicle to Assign';
 											echo'</legend>  
 
-											<table border="0" align=center class="manage_interface" cellspacing="2" cellpadding="2">        
+											<table border="0" align=center class="manage_interface" cellspacing="2" cellpadding="2" width=100%>        
 												<tr>
 													<!--<td><input type="radio" class="form-control" name="right_search" value="1" onclick="javascript:this.form.rs.disabled=false;this.form.ro.disabled=true"></td>-->
 													<td>By Search</td>
