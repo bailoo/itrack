@@ -225,6 +225,11 @@ function delete_this_file(file_path,tr_id)
   	 makePOSTRequest('src/php/report_vehicle_details.htm', poststr);	
   }
   
+  function report_csv_submit(target_file)
+  {
+    document.csvForm.action = target_file;    
+    document.csvForm.submit();
+  }
   
     
   function report_csv(target_file)
