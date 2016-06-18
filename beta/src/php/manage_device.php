@@ -69,49 +69,57 @@
           </center>	
         </form>
       ';*/
-     echo"
-      <form method ='post' name='manage1'>
-        <ol class='breadcrumb'>
-                <li><a href='#'>Manage</a></li>
-                ";
-                        if($report_type=="Person")
-                        {
-                          echo"<li class='active'><b>Mobile</b> ";
-                        }
-                        else
-                        {
-                           echo"<li class='active'><b>Device</b> ";
-                        } 
-                        
-                        echo'
-                         <div id="tab" class="btn-group" data-toggle="buttons" >
+        
+     echo'
+         <form method ="post" name="manage1">
+          <div class="alert-info" style="background-color:#f7fafc;padding:1px 15px;border-radius:0px">
+                    <table width=100% cellspacing=0 cellpading=0>
+                        <tr>
+                            <td width=10%><span class="active"><b>
                             ';
-                            if($device_permission==1)
-                            {
-                              echo'
-                            <a onclick="javascript:manage_show_file(\'src/php/manage_add_device.php\');" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
-                               <input type="radio" name="option" value="new" onclick="javascript:manage_show_file(\'src/php/manage_add_device.php\');"> <i class="fa fa-plus-square" aria-hidden="true"></i>New
-                            </a>';
-                            }						
-                            echo'
-                                <a onclick="javascript:manage_show_file(\'src/php/manage_device_assignment.php\');" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
-                                  <input type="radio" name="option" value="new" onclick="javascript:manage_show_file(\'src/php/manage_device_assignment.php\');">
-                                  <i class="fa fa-link" aria-hidden="true"></i> Assignment&nbsp; <i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assignment
-                                </a>
-                            ';
-                            if($report_type!="Person")
-                            {
-                              echo'
-                                  <a onclick="javascript:manage_show_file(\'src/php/manage_edit_device_account.php\');" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
-                                  <input type="radio" name="option" value="new" onclick="javascript:manage_show_file(\'src/php/manage_edit_device_account.php\');">
-                                  <i class="fa fa-pencil" aria-hidden="true"></i>Edit
-                                  </a>
-                                  ';
-                            }
-                            echo'
-                    </div>
-                </li>
-            </ol>
+                                if($report_type=="Person")
+                                {
+                                  echo"<span class=active><b>Mobile</b></span> ";
+                                }
+                                else
+                                {
+                                   echo"<span class=active><b>Device</b></span> ";
+                                }
+                                echo'
+                            </b></span></td>
+                            <td>
+                               <div id="tab" class="btn-group" data-toggle="buttons" >
+                                        ';
+                                        if($device_permission==1)
+                                        {
+                                          echo'
+                                        <a onclick="javascript:manage_show_file(\'src/php/manage_add_device.php\');" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
+                                           <input type="radio" name="option" value="new" onclick="javascript:manage_show_file(\'src/php/manage_add_device.php\');"> <i class="fa fa-plus-square" aria-hidden="true"></i>New
+                                        </a>';
+                                        }						
+                                        echo'
+                                            <a onclick="javascript:manage_show_file(\'src/php/manage_device_assignment.php\');" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
+                                              <input type="radio" name="option" value="new" onclick="javascript:manage_show_file(\'src/php/manage_device_assignment.php\');">
+                                              <i class="fa fa-link" aria-hidden="true"></i> Assignment&nbsp; <i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assignment
+                                            </a>
+                                        ';
+                                        if($report_type!="Person")
+                                        {
+                                          echo'
+                                              <a onclick="javascript:manage_show_file(\'src/php/manage_edit_device_account.php\');" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
+                                              <input type="radio" name="option" value="new" onclick="javascript:manage_show_file(\'src/php/manage_edit_device_account.php\');">
+                                              <i class="fa fa-pencil" aria-hidden="true"></i>Edit
+                                              </a>
+                                              ';
+                                        }
+                                        echo'
+                                </div>
+                            </td>
+                       </tr>
+                    </table>
+                  </div>
+    
+     
            <center>
             <div align="center" id="edit_div" style="display:none;"></div>
             <div id="available_message" style="display:none;" align="center"></div>				
