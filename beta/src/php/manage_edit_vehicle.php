@@ -53,41 +53,41 @@
 								<td>Name</td>
 								<td>&nbsp;:&nbsp;</td>
 								<td> 
-								<input type="text" name="vehicle_name" id="vehicle_name" value="'.$vehicle_name.'"> </td>
+								<input type="text" class="form-control" name="vehicle_name" id="vehicle_name" value="'.$vehicle_name.'"> </td>
 							</tr>	
 							<tr>
 								<td>Number</td>
 								<td>&nbsp;:&nbsp;</td>
-								<td> <input type ="text" name="vehicle_number" id="vehicle_number" value="'.$vehicle_number.'"> </td>
+								<td> <input type ="text" class="form-control" name="vehicle_number" id="vehicle_number" value="'.$vehicle_number.'"> </td>
 							</tr>
 							<tr>
 								<td>Sim Number</td>
 								<td>&nbsp;:&nbsp;</td>
-								<td> <input type ="text" name="sim_number" id="sim_number" value="'.$sim_number.'"> </td>
+								<td> <input type ="text" class="form-control" name="sim_number" id="sim_number" value="'.$sim_number.'"> </td>
 							</tr>
 							<tr>
 								<td>Mobile Number</td>
 								<td>&nbsp;:&nbsp;</td>
-								<td> <input type ="text" name="mobile_number" id="mobile_number" value="'.$mobile_number.'"> </td>
+								<td> <input type ="text" class="form-control" name="mobile_number" id="mobile_number" value="'.$mobile_number.'"> </td>
 							</tr>';
 							if($report_type!="Person")
 							{
 						echo'<tr>
 								<td>Max Speed</td>
 								<td>&nbsp;:&nbsp;</td>
-								<td> <input type ="text" name="max_speed" id="max_speed" value="'.$max_speed.'"> </td>
+								<td> <input type ="text" class="form-control" name="max_speed" id="max_speed" value="'.$max_speed.'"> </td>
 							</tr>  		
 							<tr>
 								<td>Tag</td>
 								<td>&nbsp;:&nbsp;</td>
-								<td> <input type ="text" name="vehicle_tag" id="vehicle_tag" value="'.$vehicle_tag.'"> </td>
+								<td> <input type ="text" class="form-control" name="vehicle_tag" id="vehicle_tag" value="'.$vehicle_tag.'"> </td>
 							</tr>';
 							}
 						echo'<tr>
 								<td>Type</td>
 								<td>&nbsp;:&nbsp;</td>
 								<td>
-									<select name="vehicle_type" id="vehicle_type">';
+									<select class="form-control" name="vehicle_type" id="vehicle_type">';
 										if($vehicle_type!="")
 										echo'<option value="'.$vehicle_type.'" selected>'.ucfirst($vehicle_type).'</option>
 											<option value="car">Car</option>
@@ -101,7 +101,7 @@
 									<td>Category</td>
 									<td>&nbsp;:&nbsp;</td>
 									<td>											
-										<select id="category">
+										<select class="form-control" id="category">
                       <option value="select">Select</option>';
 										for($i=0;$i<$feature_size;$i++)
 										{
@@ -121,8 +121,8 @@
 						echo'<tr>                    									
 								<td align="center"  colspan="3">
 								<div style="height:10px"></div>
-								<input type="button" Onclick="javascript:action_manage_vehicle(this.form, \''.$temp_type.'\')" value="Enter">&nbsp;
-								<input type="reset" value="Clear">&nbsp;								
+								<input type="button" class="btn btn-default" Onclick="javascript:action_manage_vehicle(this.form, \''.$temp_type.'\')" value="Enter">&nbsp;
+								<input type="reset" class="btn btn-default" value="Clear">&nbsp;								
 								</td>
 							</tr>
 						</table>
