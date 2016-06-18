@@ -40,7 +40,7 @@
 	<div align="center" id="portal_vehicle_information" style="display:none;"></div>
 			
 		<br>
-		<input type="button" value="Enter" onclick="javascript:manage_option_vehicle_prev(\'src/php/manage_select_vehicle.php\');">&nbsp;			
+		<input type="button" class="btn btn-default" value="Enter" onclick="javascript:manage_option_vehicle_prev(\'src/php/manage_select_vehicle.php\');">&nbsp;			
 	</center>';
 	include_once('manage_loading_message.php');
 ?>
