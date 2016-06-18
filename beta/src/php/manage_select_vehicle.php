@@ -101,8 +101,8 @@
 			</tr>
 		</table>
 	<center>
-		<input type="button" Onclick="javascript:action_manage_vehicle(this.form, \'edit\')" value="Edit">&nbsp;
-		<input type="button" Onclick="javascript:action_manage_vehicle(this.form, \'delete\')" value="Delete">
+		<input type="button" class="btn btn-default" Onclick="javascript:action_manage_vehicle(this.form, \'edit\')" value="Edit">&nbsp;
+		<input type="button" class="btn btn-default" Onclick="javascript:action_manage_vehicle(this.form, \'delete\')" value="Delete">
 	<center>
 	</form><br>
 		<center><a href="javascript:show_option(\'manage\',\'vehicle\');" class="back_css">&nbsp;<b>Back</b></a></center>';
