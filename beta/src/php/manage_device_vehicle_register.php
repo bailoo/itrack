@@ -40,7 +40,7 @@ echo'<form name="manage1">
 							echo'</strong>								                
 							</legend>	
 							<div style="height:480px;overflow:auto">
-									<table border="0" align=center class="manage_interface" cellspacing="2" cellpadding="2">
+									<table border="0" align=center class="manage_interface" cellspacing="2" cellpadding="2" width=100%>
 									<tr>
 										<td valign="top">
 											<fieldset class="">
@@ -73,7 +73,7 @@ echo'<form name="manage1">
 																			echo'
 																			<tr>
 																				<td>
-																					<input type="radio" class="form-control" name="lo" value="'.$device_imei_no.'" onclick="javascript:set_device_option(\'ls\',\'lo\');">'.$device_imei_no.'
+																					<label class="radio-inline"><input type="radio" class="form-control" name="lo" value="'.$device_imei_no.'" onclick="javascript:set_device_option(\'ls\',\'lo\');">'.$device_imei_no.'</label>
 																				</td>
 																			</tr>';
 																		} 
@@ -126,7 +126,7 @@ echo'<form name="manage1">
 																		$vehicle_id=$dt['vehicle_id'];	
 																		$vehicle_name=$dt['vehicle_name'];
 																		echo'<tr>
-																				<td><input type="radio" class="form-control" name="ro" name="vehicle_id" value="'.$vehicle_id.','.$vehicle_name.'" onclick="javascript:set_vehicle_option(\'rs\',\'ro\');">'.$vehicle_name.'</td>
+																				<td><input type="radio" name="ro" name="vehicle_id" value="'.$vehicle_id.','.$vehicle_name.'" onclick="javascript:set_vehicle_option(\'rs\',\'ro\');">'.$vehicle_name.'</td>
 																			</tr>';								
 																	}									
 																}
@@ -149,7 +149,7 @@ echo'<form name="manage1">
 																		echo'
 																		<tr>
 																			<td>
-																				<input type="radio" class="form-control" name="ro" name="vehicle_id" value="'.$vehicle_id.','.$vehicle_name.'" onclick="javascript:set_vehicle_option(\'rs\',\'ro\');">'.$vehicle_name.'
+																				<input type="radio"  name="ro" name="vehicle_id" value="'.$vehicle_id.','.$vehicle_name.'" onclick="javascript:set_vehicle_option(\'rs\',\'ro\');">'.$vehicle_name.'
 																			</td>
 																		</tr>';									
 																	}
@@ -173,7 +173,7 @@ echo'<form name="manage1">
 									<td height="5px"></td>
 								</tr>
 							</table>
-							  <center><input type="button" class="btn btn-default" name="enter_button" id="enter_button" Onclick="javascript:return action_manage_vehicle(manage1,\'register\')" value="Register">&nbsp;<input type="reset" value="Cancel" onclick="javascript:thisform.enter_button.disabled=true;"></center>
+							  <center><input type="button" class="btn btn-default" name="enter_button" id="enter_button" Onclick="javascript:return action_manage_vehicle(manage1,\'register\')" value="Register">&nbsp;<input type="reset" class="btn btn-default" value="Cancel" onclick="javascript:thisform.enter_button.disabled=true;"></center>
 					   </fieldset> 
 					 </td>
 				</tr>
