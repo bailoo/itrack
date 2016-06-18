@@ -51,12 +51,12 @@ echo'<form name="manage1">
 															<td>By Search</td>
 															<td>&nbsp;:&nbsp;</td>
 															<td>
-																<input type="text" name="ls" id="ls" onFocus="javascript:thisform.left_search[0].checked=true;" onkeyup="manage_availability(this.value, \'device_assignment\')" onmouseup="manage_availability(this.value,\'device_assignment\')" onchange="manage_availability(this.value, \'device_assignment\')">
+																<input type="text" class="form-control" name="ls" id="ls" onFocus="javascript:thisform.left_search[0].checked=true;" onkeyup="manage_availability(this.value, \'device_assignment\')" onmouseup="manage_availability(this.value,\'device_assignment\')" onchange="manage_availability(this.value, \'device_assignment\')">
 															</td>
 														</tr> 
 
 														<tr valign="top">
-															<!--<td><input type="radio" name="left_search" value="2" onclick="javascript:this.form.lo.disabled=false;this.form.ls.disabled=true"></td>-->
+															<!--<td><input type="radio" class="form-control" name="left_search" value="2" onclick="javascript:this.form.lo.disabled=false;this.form.ls.disabled=true"></td>-->
 															<td>By Select</td>
 															<td>&nbsp;:&nbsp;</td>
 															<td valign="top">
@@ -73,7 +73,7 @@ echo'<form name="manage1">
 																			echo'
 																			<tr>
 																				<td>
-																					<input type="radio" name="lo" value="'.$device_imei_no.'" onclick="javascript:set_device_option(\'ls\',\'lo\');">'.$device_imei_no.'
+																					<input type="radio" class="form-control" name="lo" value="'.$device_imei_no.'" onclick="javascript:set_device_option(\'ls\',\'lo\');">'.$device_imei_no.'
 																				</td>
 																			</tr>';
 																		} 
@@ -96,15 +96,15 @@ echo'<form name="manage1">
 
 											<table border="0" align=center class="manage_interface" cellspacing="2" cellpadding="2">        
 												<tr>
-													<!--<td><input type="radio" name="right_search" value="1" onclick="javascript:this.form.rs.disabled=false;this.form.ro.disabled=true"></td>-->
+													<!--<td><input type="radio" class="form-control" name="right_search" value="1" onclick="javascript:this.form.rs.disabled=false;this.form.ro.disabled=true"></td>-->
 													<td>By Search</td>
 													<td>&nbsp;:&nbsp;</td>
 													<td>
-														<input type="text" name="rs" id="rs" onFocus="javascript:thisform.right_search[0].checked=true;" onkeyup="manage_availability(this.value, \'vehicle_assignment\')" onmouseup="manage_availability(this.value,\'vehicle_assignment\')" onchange="manage_availability(this.value, \'vehicle_assignment\')">
+														<input type="text" class="form-control" name="rs" id="rs" onFocus="javascript:thisform.right_search[0].checked=true;" onkeyup="manage_availability(this.value, \'vehicle_assignment\')" onmouseup="manage_availability(this.value,\'vehicle_assignment\')" onchange="manage_availability(this.value, \'vehicle_assignment\')">
 													</td>
 												</tr>         
 												<tr valign="top">
-													<!--<td><input type="radio" name="right_search" value="2" onclick="javascript:this.form.ro.disabled=false;this.form.rs.disabled=true"></td>-->
+													<!--<td><input type="radio" class="form-control" name="right_search" value="2" onclick="javascript:this.form.ro.disabled=false;this.form.rs.disabled=true"></td>-->
 													<td> By Select</td>
 													<td>&nbsp;:&nbsp;</td>
 													<td>
@@ -126,7 +126,7 @@ echo'<form name="manage1">
 																		$vehicle_id=$dt['vehicle_id'];	
 																		$vehicle_name=$dt['vehicle_name'];
 																		echo'<tr>
-																				<td><input type="radio" name="ro" name="vehicle_id" value="'.$vehicle_id.','.$vehicle_name.'" onclick="javascript:set_vehicle_option(\'rs\',\'ro\');">'.$vehicle_name.'</td>
+																				<td><input type="radio" class="form-control" name="ro" name="vehicle_id" value="'.$vehicle_id.','.$vehicle_name.'" onclick="javascript:set_vehicle_option(\'rs\',\'ro\');">'.$vehicle_name.'</td>
 																			</tr>';								
 																	}									
 																}
@@ -149,7 +149,7 @@ echo'<form name="manage1">
 																		echo'
 																		<tr>
 																			<td>
-																				<input type="radio" name="ro" name="vehicle_id" value="'.$vehicle_id.','.$vehicle_name.'" onclick="javascript:set_vehicle_option(\'rs\',\'ro\');">'.$vehicle_name.'
+																				<input type="radio" class="form-control" name="ro" name="vehicle_id" value="'.$vehicle_id.','.$vehicle_name.'" onclick="javascript:set_vehicle_option(\'rs\',\'ro\');">'.$vehicle_name.'
 																			</td>
 																		</tr>';									
 																	}
@@ -173,7 +173,7 @@ echo'<form name="manage1">
 									<td height="5px"></td>
 								</tr>
 							</table>
-							  <center><input type="button" name="enter_button" id="enter_button" Onclick="javascript:return action_manage_vehicle(manage1,\'register\')" value="Register">&nbsp;<input type="reset" value="Cancel" onclick="javascript:thisform.enter_button.disabled=true;"></center>
+							  <center><input type="button" class="btn btn-default" name="enter_button" id="enter_button" Onclick="javascript:return action_manage_vehicle(manage1,\'register\')" value="Register">&nbsp;<input type="reset" value="Cancel" onclick="javascript:thisform.enter_button.disabled=true;"></center>
 					   </fieldset> 
 					 </td>
 				</tr>
