@@ -50,7 +50,7 @@
 																$tr_count=0;
 															}
 															echo'<td>
-																	<input type="radio" name="vehicle_id" value="'.$row->vehicle_id.'">
+																	<input type="radio" class="form-control" name="vehicle_id" value="'.$row->vehicle_id.'">
 																</td>
 																<td>
 																	'.$row->vehicle_name.'
@@ -80,7 +80,7 @@
 															$tr_count=0;
 														}
 														echo'<td>
-																<input type="radio" name="vehicle_id" value="'.$row->vehicle_id.'">
+																<input type="radio" class="form-control" name="vehicle_id" value="'.$row->vehicle_id.'">
 															</td>
 															<td>
 																'.$row->vehicle_name.'
