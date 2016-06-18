@@ -7,14 +7,14 @@
 	$file_name="src/php/manage_option_vehicles.php";
 	echo "edit##"; 
 	include_once('tree_hierarchy_information.php');
-	echo"<table width='70%'>
+	echo"<table width='90%'>
 			<tr>
 				<td>
 					<fieldset class='assignment_manage_fieldset'>
 					<legend>
 						<strong>Accounts</strong>
 					</legend>
-					<div style='height:350px;overflow:auto'>";
+					<div style='height:450px;overflow:auto'>";
 						include_once('manage_radio_account.php');
 					echo"</div>
 				</td>
