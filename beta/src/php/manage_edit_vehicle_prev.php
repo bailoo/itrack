@@ -14,7 +14,7 @@
 					<legend>
 						<strong>Accounts</strong>
 					</legend>
-					<div style='height:420px;overflow:auto'>";
+					<div style='height:400px;overflow:auto'>";
 						include_once('manage_radio_account.php');
 					echo"</div>
 				</td>
