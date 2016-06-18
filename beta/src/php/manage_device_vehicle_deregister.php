@@ -92,8 +92,8 @@ echo'<br><center>
 			</tr>
 			  
 			<tr>                    									
-				<td align="center" colspan="3"><br><input type="button" id="enter_button" name="enter_button" disabled="true" Onclick="javascript:return action_manage_vehicle(manage1,\'deregister\')" value="De-Register">
-					&nbsp;<input type="reset" value="Cancel" onclick="javascript:thisform.enter_button.disabled=true;">
+				<td align="center" colspan="3"><br><input type="button"  class="btn btn-default" id="enter_button" name="enter_button" disabled="true" Onclick="javascript:return action_manage_vehicle(manage1,\'deregister\')" value="De-Register">
+					&nbsp;<input type="reset"  class="btn btn-default" value="Cancel" onclick="javascript:thisform.enter_button.disabled=true;">
 				</td>
 			</tr>
 		</table>
