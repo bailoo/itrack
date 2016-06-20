@@ -24,16 +24,16 @@
             </form>
     </center>'; */
         echo" <form name='manage1'>
-            <ol class='breadcrumb'>
-                <li><a href='#'>Manage</a></li>
-                <li class='active'><b>Vehicle Trip&nbsp;</b>
+            <ol class='breadcrumb' style='background-color:#f7fafc;padding:1px 15px;border-radius:0px'>
+               
+                <li class='active'><b>Vehicle Trip&nbsp;</b>&nbsp;&nbsp;
                  <div id='tab' class='btn-group' data-toggle='buttons' >
                  ";
          echo'
-                   <a onclick="'.$js_function_name.'(\'src/php/manage_add_trip.php\');" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                   <a onclick="'.$js_function_name.'(\'src/php/manage_add_trip.php\');" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                     <input type="radio" name="new_exist" value="new" onclick="'.$js_function_name.'(\'src/php/manage_add_trip.php\')"/><i class="fa fa-plus-square" aria-hidden="true"></i> Add
                    </a>
-                   <a onclick="'.$js_function_name.'(\'src/php/manage_edit_trip_prev.php\');" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                   <a onclick="'.$js_function_name.'(\'src/php/manage_edit_trip_prev.php\');" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
 		    <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_edit_trip_prev.php\')"/><i class="fa fa-times-circle" aria-hidden="true"></i> Close
                    </a>
                   </div>
