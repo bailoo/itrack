@@ -71,24 +71,24 @@
 						</table>     
 				</fieldset>		
 		</center>';*/ 
-         echo"  <ol class='breadcrumb'>
-                <li><a href='#'>Manage</a></li>
-                <li class='active'><b>Escalation&nbsp;</b>
+         echo"  <ol class='breadcrumb' style='ackground-color:#f7fafc;padding:1px 15px;border-radius:0px'>
+                
+                <li class='active'><b>Escalation</b>&nbsp;&nbsp;&nbsp;
                  <div id='tab' class='btn-group' data-toggle='buttons' >
                 ";
                     if($action_type1=="add")
                     {
                     echo'
-                         <a onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\');" class="btn btn-default active" data-toggle="tab" style="padding: 3px 12px;">
+                         <a onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\');" class="btn btn-default active" data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="add" onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\')" checked/><i class="fa fa-plus-square" aria-hidden="true"></i> Add
                          </a>
-                         <a onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                         <a onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="edit_delete" onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\')"/><i class="fa fa-pencil" aria-hidden="true"></i> Edit &nbsp;<i class="fa fa-minus-square" aria-hidden="true"></i> Delete
                         </a>
-                        <a onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="assign" onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\')"/><i class="fa fa-link" aria-hidden="true"></i> Assign 
                         </a>
-                        <a onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="de-assign" onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\')"/><i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assign 
                         </a>
                 ';
@@ -96,16 +96,16 @@
                      else if($action_type1=="edit_delete")
                     {
                     echo'
-                         <a onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                         <a onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="add" onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\')" /><i class="fa fa-plus-square" aria-hidden="true"></i> Add
                          </a>
-                         <a onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\');" class="btn btn-default active" data-toggle="tab" style="padding: 3px 12px;">
+                         <a onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\');" class="btn btn-default active" data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="edit_delete" onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\')" checked /><i class="fa fa-pencil" aria-hidden="true"></i> Edit &nbsp;<i class="fa fa-minus-square" aria-hidden="true"></i> Delete
                         </a>
-                        <a onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="assign" onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\')"/><i class="fa fa-link" aria-hidden="true"></i> Assign 
                         </a>
-                        <a onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="de-assign" onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\')"/><i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assign 
                         </a>
                 ';
@@ -113,16 +113,16 @@
                     else if($action_type1=="assign")
                     {
                     echo'
-                         <a onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                         <a onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="add" onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\')" /><i class="fa fa-plus-square" aria-hidden="true"></i> Add
                          </a>
-                         <a onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                         <a onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="edit_delete" onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\')"/><i class="fa fa-pencil" aria-hidden="true"></i> Edit &nbsp;<i class="fa fa-minus-square" aria-hidden="true"></i> Delete
                         </a>
-                        <a onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\');" class="btn btn-default active" data-toggle="tab" style="padding: 3px 12px;">
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\');" class="btn btn-default active" data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="assign" onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\')" checked/><i class="fa fa-link" aria-hidden="true"></i> Assign 
                         </a>
-                        <a onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="de-assign" onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\')"/><i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assign 
                         </a>
                 ';
@@ -130,16 +130,16 @@
                     else if($action_type1=="de-assign")
                     {
                     echo'
-                         <a onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                         <a onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="add" onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\')" /><i class="fa fa-plus-square" aria-hidden="true"></i> Add
                          </a>
-                         <a onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                         <a onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="edit_delete" onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\')"/><i class="fa fa-pencil" aria-hidden="true"></i> Edit &nbsp;<i class="fa fa-minus-square" aria-hidden="true"></i> Delete
                         </a>
-                        <a onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="assign" onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\')"/><i class="fa fa-link" aria-hidden="true"></i> Assign 
                         </a>
-                        <a onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\');" class="btn btn-default active" data-toggle="tab" style="padding: 3px 12px;">
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\');" class="btn btn-default active" data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="de-assign" onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\')" checked /><i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assign 
                         </a>
                 ';
@@ -147,16 +147,16 @@
                     else
                     {
                     echo'
-                         <a onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                         <a onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="add" onclick="'.$js_function_name.'(\'src/php/manage_add_escalation.php\',\'add\')" /><i class="fa fa-plus-square" aria-hidden="true"></i> Add
                          </a>
-                         <a onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                         <a onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="edit_delete" onclick="'.$js_function_name.'(\'src/php/manage_edit_escalation_prev.php\',\'edit_delete\')"/><i class="fa fa-pencil" aria-hidden="true"></i> Edit &nbsp;<i class="fa fa-minus-square" aria-hidden="true"></i> Delete
                         </a>
-                        <a onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\');" class="btn btn-default " data-toggle="tab" style="padding: 3px 12px;">
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\');" class="btn btn-default " data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="assign" onclick="'.$js_function_name.'(\'src/php/manage_assignment_escalation_prev.php\',\'assign\')"/><i class="fa fa-link" aria-hidden="true"></i> Assign 
                         </a>
-                        <a onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\');" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\');" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                             <input type="radio" name="new_exist" value="de-assign" onclick="'.$js_function_name.'(\'src/php/manage_deassignment_escalation_prev.php\',\'de-assign\')"/><i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assign 
                         </a>
                 ';
