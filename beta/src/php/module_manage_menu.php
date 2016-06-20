@@ -108,14 +108,14 @@ $contetnbsp="&nbsp;";
                                                             if($flag_proc_admin!=1)
                                                             {
 								echo'{type:"Text",
-									label:"<table border=0 cellspacing=0 cellpading=0 class=mystyle>"+
+									label:"<table border=0 class=mystyle>"+
 										"<tr>"+ 																	
 											"<td valign=\'top\'>"+
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_group.htm\');>"+
-																"<i class=\'fa fa-users fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/group.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_group.htm\'); style=\'color:#b7a333;\'>"+
+																"<i class=\'fa fa-users fa-2x\' aria-hidden=\'true\' ></i><!--<img src=\'images/manage/group.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -145,8 +145,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_account.htm\');>"+
-																"<i class=\'fa fa-user fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/account.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_account.htm\'); style=\'color:#9c8536;\' >"+
+																"<i class=\'fa fa-user fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;&nbsp;<!--<img src=\'images/manage/account.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -179,7 +179,7 @@ $contetnbsp="&nbsp;";
 													"<table border=0 class=mystyle>"+													
 														"<tr>"+
 															"<td>'.$nbsp.'"+ 																				
-																"<a href=javascript:manage_show_file(\'src/php/manage_account_thirdparty.htm\');>"+
+																"<a href=javascript:manage_show_file(\'src/php/manage_account_thirdparty.htm\');  style=\'color:#d49e32;\'>"+
 																	"<i class=\'fa fa-user-plus fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/account.png\' style='.$style1.'>-->"+
 																"</a>"+																
 															"</td>"+
@@ -213,8 +213,8 @@ $contetnbsp="&nbsp;";
 													"<table border=0 class=mystyle>"+													
 														"<tr>"+
 															"<td>'.$nbsp.'"+ 																				
-																"<a href=javascript:manage_show_file(\'src/php/manage_vehicle_thirdparty.htm\');>"+
-																	"<i class=\'fa fa-truck fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/vehicle.png\' style='.$style1.'>-->"+
+																"<a href=javascript:manage_show_file(\'src/php/manage_vehicle_thirdparty.htm\'); style=\'color:#d49e32;\'>"+
+																	"<i class=\'fa fa-truck fa-2x\' aria-hidden=\'true\'></i>&nbsp;<!--<img src=\'images/manage/vehicle.png\' style='.$style1.'>-->"+
 																"</a>"+																
 															"</td>"+
 														"</tr>"+
@@ -247,8 +247,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_consignment_info.htm\');>"+
-																"<i class=\'fa fa-shopping-cart fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/vehicle.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_consignment_info.htm\'); style=\'color:#b7ac33\'>"+
+																"<i class=\'fa fa-shopping-cart fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;&nbsp;<!--<img src=\'images/manage/vehicle.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -282,8 +282,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_vehicle.htm\');>"+
-																"<i class=\'fa fa-truck fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/vehicle.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_vehicle.htm\');  style=\'color:#9e9215\'>"+
+																"<i class=\'fa fa-truck fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/vehicle.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -316,8 +316,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_device.htm\');>"+
-																"<i class=\'fa fa-anchor fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_device.htm\'); style=\'color:#9c655c\'>"+
+																"<i class=\'fa fa-anchor fa-2x\' aria-hidden=\'true\'></i>&nbsp;<!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -331,7 +331,7 @@ $contetnbsp="&nbsp;";
 													"<tr>"+
 														"<td valign=\'top\'>"+ 																				
 															"<a href=javascript:manage_show_file(\'src/php/manage_device.htm\'); class=\'menuitem\'>"+
-																"'.$contetnbsp.'Mobile"+
+																"'.$nbsp.'Mobile"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -352,8 +352,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_device.htm\');>"+
-																"<i class=\'fa fa-anchor fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_device.htm\'); style=\'color:#9c655c\'>"+
+																"<i class=\'fa fa-anchor fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -387,8 +387,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_calibration.htm\');>"+
-																"<i class=\'fa fa-tachometer  fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_calibration.htm\'); style=\'color:#346086\'>"+
+																"<i class=\'fa fa-tachometer  fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -418,8 +418,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_escalation.htm\');>"+
-																"<i class=\'fa fa-hand-o-right  fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_escalation.htm\'); style=\'color:#456\'>"+
+																"<i class=\'fa fa-hand-o-right  fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -449,8 +449,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_io_assignment.htm\');>"+
-																"<i class=\'fa fa-check-square-o  fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/assignment.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_io_assignment.htm\'); style=\'color:#405f48\'>"+
+																"<i class=\'fa fa-check-square-o  fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;&nbsp;<!--<img src=\'images/manage/assignment.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -483,8 +483,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_klp_input.htm\');>"+
-																"<i class=\'fa fa-globe fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_klp_input.htm\'); style=\'color:#293948\'>"+
+																"<i class=\'fa fa-globe fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -515,8 +515,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_landmark.htm\');>"+
-																"<i class=\'fa fa-map-pin fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/landmark.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_landmark.htm\'); style=\'color:#293948\'>"+
+																"<i class=\'fa fa-map-pin fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--<img src=\'images/manage/landmark.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -548,8 +548,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_trip.htm\');>"+
-																"<i class=\'fa fa-globe fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/trip.jpg\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_trip.htm\'); style=\'color:#3a63b9\'>"+
+																"<i class=\'fa fa-globe fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;&nbsp;&nbsp;<!--<img src=\'images/manage/trip.jpg\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -579,8 +579,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_geofence.htm\');>"+
-																"<i class=\'fa fa-connectdevelop fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/geofence.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_geofence.htm\'); style=\'color:#8f3d27\'>"+
+																"<i class=\'fa fa-connectdevelop fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/geofence.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -610,8 +610,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_polyline.htm\');>"+
-																"<i class=\'fa fa-code-fork fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/geofence.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_polyline.htm\'); style=\'color:#686c29\'>"+
+																"<i class=\'fa fa-code-fork fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--<img src=\'images/manage/geofence.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -641,8 +641,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_polyline_history.htm\');>"+
-																"<i class=\'fa fa-random  fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/geofence.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_polyline_history.htm\'); style=\'color:#686c29\'>"+
+																"<i class=\'fa fa-random  fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;&nbsp;<!--<img src=\'images/manage/geofence.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
