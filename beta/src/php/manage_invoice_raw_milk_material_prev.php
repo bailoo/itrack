@@ -8,7 +8,7 @@
                         <div class="alert-info" style="background-color:#f7fafc;padding:1px 15px;border-radius:0px">
                         <table width=100% cellspacing=0 cellpading=0>
                             <tr>
-                                <td width=30%><span class="active"><b>Manage Invoice Material</b></span></td>
+                                <td width=20%><span class="active"><b>Manage Invoice Material</b></span></td>
                                 <td>
 
                                     <div id="tab" class="btn-group" data-toggle="buttons" style="margin-left:-50px">
