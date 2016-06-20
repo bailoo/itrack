@@ -38,18 +38,18 @@
 		</center>';  
                */ 
         echo'
-            <ol class="breadcrumb">
-                <li><a href="#">Manage</a></li>
-                <li class="active"><b>Secondary Vehicle</b> 
+            <ol class="breadcrumb" style="background-color:#f7fafc;padding:1px 15px;border-radius:0px">
+                
+                <li class="active"><b>Secondary Vehicle</b>&nbsp;&nbsp; 
                 <div id="tab" class="btn-group" data-toggle="buttons" >
                     ';
                     if($action_type1=="assign")
                     {
                             echo'
-                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_assign.php\',\'assign\')" class="btn btn-default active" data-toggle="tab" style="padding: 3px 12px;">
+                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_assign.php\',\'assign\')" class="btn btn-default active" data-toggle="tab" style="padding: 1px 12px;">
                                     <input type="radio" name="new_exist" value="add" onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_assign.php\',\'assign\')" checked/><i class="fa fa-link" aria-hidden="true"></i> Assign
                                 </a>
-                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_deassign.php\',\'deassign\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_deassign.php\',\'deassign\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                                     <input type="radio" name="new_exist" value="edit_delete" onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_deassign.php\',\'deassign\')"/><i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assign
                                 </a>
                             ';
@@ -57,10 +57,10 @@
                     else if($action_type1=="deassign")
                     {                	
                             echo'
-                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_assign.php\',\'assign\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_assign.php\',\'assign\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                                     <input type="radio" name="new_exist" value="add" onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_assign.php\',\'assign\')"/><i class="fa fa-link" aria-hidden="true"></i> Assign
                                 </a>
-                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_deassign.php\',\'deassign\')" class="btn btn-default active" data-toggle="tab" style="padding: 3px 12px;">
+                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_deassign.php\',\'deassign\')" class="btn btn-default active" data-toggle="tab" style="padding: 1px 12px;">
                                     <input type="radio" name="new_exist" value="edit_delete" onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_deassign.php\',\'deassign\')" checked/><i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assign
                                 </a>
                             ';
@@ -68,10 +68,10 @@
                     else if($action_type1=="")
                     {
                             echo'
-                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_assign.php\',\'assign\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_assign.php\',\'assign\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                                     <input type="radio" name="new_exist" value="add" onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_assign.php\',\'assign\')"/><i class="fa fa-link" aria-hidden="true"></i> Assign
                                 </a>
-                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_deassign.php\',\'deassign\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                                <a onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_deassign.php\',\'deassign\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                                     <input type="radio" name="new_exist" value="edit_delete" onclick="'.$js_function_name.'(\'src/php/manage_secondary_vehicle_deassign.php\',\'deassign\')"/><i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assign
                                 </a>';
                     }
