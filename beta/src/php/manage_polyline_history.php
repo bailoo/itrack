@@ -25,7 +25,7 @@
         echo" <form name='manage1'>
             <ol class='breadcrumb' style='background-color:#f7fafc;padding:1px 15px;border-radius:0px'>
                 
-                <li class='active'><b>Route(Polyline)From History</b>&nbsp;
+                <li class='active'><b>Route(Polyline)From History</b>&nbsp;&nbsp;
                  <div id='tab' class='btn-group' data-toggle='buttons' >
                  ";
                 echo'
