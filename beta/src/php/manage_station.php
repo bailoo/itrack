@@ -22,23 +22,23 @@
 			</form>';
         */
      echo'<form name="manage1">
-     <ol class="breadcrumb">
-                <li><a href="#">Manage</a></li>
-                <li class="active"><b>Station</b> 
+     <ol class="breadcrumb" style="background-color:#f7fafc;padding:1px 15px;border-radius:0px">
+               
+                <li class="active"><b>Station</b>&nbsp;&nbsp;
                     <div id="tab" class="btn-group" data-toggle="buttons" >
-                            <a onclick="'.$js_function_name.'(\'src/php/manage_add_station.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                            <a onclick="'.$js_function_name.'(\'src/php/manage_add_station.php\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                                <input type="radio" name="new_exist" value="new" onclick="'.$js_function_name.'(\'src/php/manage_add_station.php\')"/><i class="fa fa-plus-square" aria-hidden="true"></i> Add
                             </a>
-                            <a onclick="'.$js_function_name.'(\'src/php/manage_edit_station_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                            <a onclick="'.$js_function_name.'(\'src/php/manage_edit_station_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                               <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_edit_station_prev.php\');document.getElementById(\'automatic\').style.display=none;document.getElementById(\'manual\').style.display=none;"/><i class="fa fa-pencil" aria-hidden="true"></i> Edit
                             </a>
-                            <a onclick="'.$js_function_name.'(\'src/php/manage_assignment_station_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                            <a onclick="'.$js_function_name.'(\'src/php/manage_assignment_station_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                               <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_assignment_station_prev.php\');document.getElementById(\'automatic\').style.display=none;document.getElementById(\'manual\').style.display=none;"/><i class="fa fa-link" aria-hidden="true"></i> Assign
                             </a>
-                            <a onclick="'.$js_function_name.'(\'src/php/manage_deassignment_station_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                            <a onclick="'.$js_function_name.'(\'src/php/manage_deassignment_station_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                               <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_deassignment_station_prev.php\');document.getElementById(\'automatic\').style.display=none;document.getElementById(\'manual\').style.display=none;"/><i class="fa fa-chain-broken" aria-hidden="true"></i> De-Assign 
                             </a>
-                            <a onclick="'.$js_function_name.'(\'src/php/manage_delete_station_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                            <a onclick="'.$js_function_name.'(\'src/php/manage_delete_station_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 1px 12px;">
                               <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_delete_station_prev.php\');document.getElementById(\'automatic\').style.display=none;document.getElementById(\'manual\').style.display=none;"/><i class="fa fa-minus-square" aria-hidden="true"></i> Delete
                             </a>
                     </div>
