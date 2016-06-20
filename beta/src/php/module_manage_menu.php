@@ -548,7 +548,7 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_trip.htm\'); style=\'color:#3a63b9\'>"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_trip.htm\'); style=\'color:#243948\'>"+
 																"<i class=\'fa fa-globe fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;&nbsp;&nbsp;<!--<img src=\'images/manage/trip.jpg\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
@@ -674,8 +674,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_invoice.htm\');>"+
-																"<i class=\'fa fa-file-text-o fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_invoice.htm\'); style=\'color:#979f47\'>"+
+																"<i class=\'fa fa-file-text-o fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;&nbsp;&nbsp;<!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -709,8 +709,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file_jquery(\'src/php/manage_invoice_raw_milk_material_prev.htm\');>"+
-																"<i class=\'fa fa-flask fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file_jquery(\'src/php/manage_invoice_raw_milk_material_prev.htm\'); style=\'color:#979f47\'>"+
+																"<i class=\'fa fa-flask fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -742,8 +742,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=\'src/php/manage_invoice_milk_add_upload.htm\' target=\'_blank\' >"+
-																"<i class=\'fa fa-plus-square fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
+															"<a href=\'src/php/manage_invoice_milk_add_upload.htm\' target=\'_blank\' style=\'color:#9b8e46\'>"+
+																"<i class=\'fa fa-plus-square fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;&nbsp;<!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -774,8 +774,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file_jquery(\'src/php/manage_edit_invoice_raw_milk_admin_prev.htm\');>"+
-																"<i class=\'fa fa-file-text fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file_jquery(\'src/php/manage_edit_invoice_raw_milk_admin_prev.htm\'); style=\'color:#6e4c26\'>"+
+																"<i class=\'fa fa-file-text fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;&nbsp;<!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -806,8 +806,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_account_plant.htm\');>"+
-																"<i class=\'fa fa-industry fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_account_plant.htm\'); style=\'color:#18222a\'>"+
+																"<i class=\'fa fa-industry fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -838,8 +838,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_default_chilling_plant.htm\');>"+
-																"<i class=\'fa fa-link fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_default_chilling_plant.htm\'); style=\'color:#90812e\'>"+
+																"<i class=\'fa fa-link fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -873,8 +873,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_edit_hindalco_invoice_admin_prev.htm\');>"+
-																"<i class=\'fa fa-flask fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_edit_hindalco_invoice_admin_prev.htm\'); style=\'color:#90842e\'>"+
+																"<i class=\'fa fa-flask fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -905,8 +905,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_substation_vehicle.htm\');>"+
-																"<i class=\'fa fa-stop fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_substation_vehicle.htm\'); style=\'color:#90812e\'>"+
+																"<i class=\'fa fa-stop fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -940,8 +940,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_vtrip.htm\');>"+
-																"<i class=\'fa fa-globe fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_vtrip.htm\'); style=\'color:#90312e\'>"+
+																"<i class=\'fa fa-globe fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -975,8 +975,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_station.htm\');>"+
-																"<i class=\'fa fa-stop fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_station.htm\'); style=\'color:#90812e\'>"+
+																"<i class=\'fa fa-stop fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -1009,8 +1009,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_route.htm\');>"+
-																"<i class=\'fa fa-random fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_route.htm\'); style=\'color:#90612e\'>"+
+																"<i class=\'fa fa-random fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -1043,8 +1043,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_secondary_vehicle.htm\');>"+
-																"<i class=\'fa fa-paperclip fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_secondary_vehicle.htm\'); style=\'color:#90842e\'>"+
+																"<i class=\'fa fa-paperclip fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -1079,8 +1079,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_substation_vehicle.htm\');>"+
-																"<i class=\'fa fa-stop-circle fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_substation_vehicle.htm\'); style=\'color:#90712e\'>"+
+																"<i class=\'fa fa-stop-circle fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -1113,8 +1113,8 @@ $contetnbsp="&nbsp;";
 													"<table border=0 class=mystyle>"+													
 														"<tr>"+
 															"<td>'.$nbsp.'"+ 																				
-																"<a href=javascript:manage_show_file(\'src/php/manage_upload_file_format.htm\');>"+
-																	"<i class=\'fa fa-upload fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
+																"<a href=javascript:manage_show_file(\'src/php/manage_upload_file_format.htm\'); style=\'color:#90812e\'>"+
+																	"<i class=\'fa fa-upload fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
 																"</a>"+																
 															"</td>"+
 														"</tr>"+
@@ -1147,8 +1147,8 @@ $contetnbsp="&nbsp;";
 														"<table border=0 class=mystyle>"+													
 															"<tr>"+
 																"<td>'.$nbsp.'"+ 																				
-																	"<a href=javascript:manage_show_file(\'src/php/manage_consignment.htm\');>"+
-																		"<i class=\'fa fa-shopping-basket  fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
+																	"<a href=javascript:manage_show_file(\'src/php/manage_consignment.htm\'); style=\'color:#90862e\'>"+
+																		"<i class=\'fa fa-shopping-basket  fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/device.png\' style='.$style1.'>-->"+
 																	"</a>"+																
 																"</td>"+
 															"</tr>"+
@@ -1186,8 +1186,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_schedule_upl.htm\');>"+
-																"<i class=\'fa fa-calendar-plus-o  fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/visit.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_schedule_upl.htm\'); style=\'color:#90812e\'>"+
+																"<i class=\'fa fa-calendar-plus-o  fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/visit.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -1258,8 +1258,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_route.htm\');>"+
-																"<i class=\'fa fa-road  fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/route.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_route.htm\'); style=\'color:#90312e\'>"+
+																"<i class=\'fa fa-road  fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/route.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -1293,8 +1293,8 @@ $contetnbsp="&nbsp;";
 													"<table border=0 class=mystyle>"+													
 														"<tr>"+
 															"<td>'.$nbsp.'"+ 																				
-																"<a href=javascript:manage_show_file(\'src/php/manage_load_cell.htm\');>"+
-																	"<i class=\'fa fa-battery-full  fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/load_cell.png\' style='.$style1.'>-->"+
+																"<a href=javascript:manage_show_file(\'src/php/manage_load_cell.htm\'); style=\'color:#90815e\'>"+
+																	"<i class=\'fa fa-battery-full  fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/load_cell.png\' style='.$style1.'>-->"+
 																"</a>"+																
 															"</td>"+
 														"</tr>"+
@@ -1343,8 +1343,8 @@ $contetnbsp="&nbsp;";
 												"<table border=0 class=mystyle>"+													
 													"<tr>"+
 														"<td>'.$nbsp.'"+ 																				
-															"<a href=javascript:manage_show_file(\'src/php/manage_visit.htm\');>"+
-																"<i class=\'fa fa-font-awesome  fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/student.png\' style='.$style1.'>-->"+
+															"<a href=javascript:manage_show_file(\'src/php/manage_visit.htm\'); style=\'color:#90812e\'>"+
+																"<i class=\'fa fa-font-awesome  fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/student.png\' style='.$style1.'>-->"+
 															"</a>"+																
 														"</td>"+
 													"</tr>"+
@@ -1377,8 +1377,8 @@ $contetnbsp="&nbsp;";
 											"<table border=0 class=mystyle>"+													
 												"<tr>"+
 													"<td>'.$nbsp.'"+ 																				
-														"<a href=javascript:manage_show_file(\'src/php/manage_milestone.htm\');>"+
-															"<i class=\'fa fa-fighter-jet  fa-2x\' aria-hidden=\'true\'></i><!--<img src=\'images/manage/student.png\' style='.$style1.'>-->"+
+														"<a href=javascript:manage_show_file(\'src/php/manage_milestone.htm\'); style=\'color:#90312e\'>"+
+															"<i class=\'fa fa-fighter-jet  fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/student.png\' style='.$style1.'>-->"+
 														"</a>"+																
 													"</td>"+
 												"</tr>"+
