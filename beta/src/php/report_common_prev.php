@@ -35,7 +35,7 @@
 			</table>
 		<div align="center" id="portal_vehicle_information" style="display:none;"></div>			
 		<br>
-		<input type="button" value="Enter" onclick="javascript:report_display_vehicle(\''.$filename1.'\',\''.$title1.'\');">&nbsp;			
+		<input type="button" class="btn btn-default btn-sm" value="Enter" onclick="javascript:report_display_vehicle(\''.$filename1.'\',\''.$title1.'\');">&nbsp;			
 	</form>
   </center>';
 ?>
