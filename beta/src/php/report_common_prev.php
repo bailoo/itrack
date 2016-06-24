@@ -13,10 +13,13 @@
 			<div class="report_div_height"></div>
 				<center>
 					<div class="report_title"><b>'.$title1.'</b></div>
-				</center>';  
+				 <table align=center width=90%>
+                                            <tr><td>
+				';  
 				include_once('tree_hierarchy_information.php');	
+                                
 				include_once('report_radio_account.php');
-	echo'<center>
+	echo'          </td></tr></table>
 			<table border=0 cellspacing=0 cellpadding=0 class="module_left_menu">
 				<tr>
 					<td>
