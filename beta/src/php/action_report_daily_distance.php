@@ -313,7 +313,7 @@ echo'<table align="center">
         </tr>
     </table>';
 echo'<center>
-        <div style="overflow: auto;height: 350px; width: 620px;" align="center">';			                      
+        <div style="overflow: auto;height: 350px; width: 800px;" align="center">';			                      
         $xml_path = $xmltowrite;
         $j=-1;
         $k=0;
