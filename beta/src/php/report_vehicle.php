@@ -115,11 +115,11 @@
 		<table align="center">
 			<tr>
 				<td>
-					<input type="button" Onclick="javascript:action_report_vehicle(this.form)" value="Enter">
+					<input type="button" class="btn btn-default btn-sm" Onclick="javascript:action_report_vehicle(this.form)" value="Enter">
 				</td>
 				&nbsp;
 				<td>
-					<input type="reset" value="Clear">
+					<input type="reset" class="btn btn-default btn-sm" value="Clear">
 				</td>
 			</tr>
 		</table>
