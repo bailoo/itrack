@@ -94,55 +94,56 @@
 			</tr>
 		</table>
 		<br>';
-	echo'<table border=1 rules=all width="95%" align="center" cellspacing=0 cellpadding=3>';	
+	//echo'<table border=1 rules=all width="95%" align="center" cellspacing=0 cellpadding=3>';
+        echo'<center><table cellspacing=0 cellpadding=0 class="table-bordered table-hover" style="width:90%">';	
 	$j=0;
 	for($i=0;$i<$vsize;$i++)
   	{
 		$j++;
 		if($i==0)
 		{
-		echo'<tr>
-				<td class="text" align="left">
+		echo'<tr><thead class="alert-warning">
+				<th class="text" align="left">
 					<b>&nbsp;SNo</b>
-				</td>';
+				</th>';
 				if($imei)
 				{
-					echo'<td class="text" align="left">
+					echo'<th class="text" align="left">
 							<b>&nbsp;IMEI No</b>
-						</td>';
+						</th>';
 				}	
 				if($name)
 				{
-				echo'<td class="text" align="left">
+				echo'<th class="text" align="left">
 						<b>&nbsp;Vehicle Name</b>
-					</td>';
+					</th>';
 				}
 				if($number)
 				{
-					echo'<td class="text" align="left">
+					echo'<th class="text" align="left">
 							<b>&nbsp;Vehicle Number</b>
-						</td>';
+						</th>';
 				}
 
 				if($max_speed)
 				{					
-					echo'<td class="text" align="left">
+					echo'<th class="text" align="left">
 							<b>&nbsp;Max Speed</b>
-						</td>';
+						</th>';
 				}
 
 				if($type)
 				{
-					echo'<td class="text" align="left">
+					echo'<th class="text" align="left">
 							<b>&nbsp;Type</b>
-						</td>';
+						</th>';
 				}
 
 				if($tag)
 				{					
-					echo'<td class="text" align="left">
+					echo'<th class="text" align="left">
 							<b>&nbsp;Tag</b>
-						</td>';
+						</th>';
 				}
 
 				/*if($geo_name)
@@ -158,7 +159,7 @@
 							<b>Route Name</b>
 						</td>';
 				}*/
-		echo'</tr>';
+		echo'</tr></thead>';
 		}
 		echo"<input TYPE=\"hidden\" VALUE=\"$j\" NAME=\"temp[$i][SNo]\">";
 		$vehicle_info=get_vehicle_info($root,$device[$i]);
@@ -220,13 +221,13 @@
 		echo'</tr>';
 	}
 	echo'
-	</table>
+	</table></center>
 	<center>
 	<input TYPE="hidden" VALUE="vehicle" NAME="csv_type">
 	<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">			
-	<input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size='.$vsize.'\');" value="Get PDF" class="noprint">
+	<input type="button" class="btn btn-default btn-sm" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size='.$vsize.'\');" value="Get PDF" class="noprint">
 	&nbsp;
-	<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">
+	<input type="button" class="btn btn-default btn-sm" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">
 	&nbsp;
 	</center>
 </form>';
