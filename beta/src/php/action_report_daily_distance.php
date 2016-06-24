@@ -320,16 +320,18 @@ echo'<center>
         $final_maxspeed_tmp=0;
         $endtable=0;
 		
-    echo'<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
+    //echo'<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>
+        echo'<center><table cellspacing=0 cellpadding=0 class="table-bordered table-hover" style="width:90%">
+            <thead class="alert-warning">
             <tr>
-		<td class="text" align="left"><b>SNo</b></td>
-		<td class="text" align="left"><b>Vehicle</b></td>
-		<td class="text" align="left"><b>Date</b></td>
-		<!--<td class="text" align="left"><b>IMEI</b></td>-->
-		<td class="text" align="left"><b>Distance (km)</b></td>';	
-            echo'<td class="text" align="left"><b>Average Speed (km/hr)</b></td>
-		<td class="text" align="left"><b>Max Speed (km/hr)</b></td>';
-	echo'</tr>';
+		<th class="text" align="left"><b>SNo</b></th>
+		<th class="text" align="left"><b>Vehicle</b></th>
+		<th class="text" align="left"><b>Date</b></th>
+		<!--<th class="text" align="left"><b>IMEI</b></th>-->
+		<th class="text" align="left"><b>Distance (km)</b></th>';	
+            echo'<th class="text" align="left"><b>Average Speed (km/hr)</b></th>
+		<th class="text" align="left"><b>Max Speed (km/hr)</b></th>';
+	echo'</tr></thead>';
 	for($i=0;$i<sizeof($imei);$i++)
 	{       
             $sno=$i+1;
@@ -347,7 +349,7 @@ echo'<center>
 		$sno++;      		
         }  
    echo"</div>
-  </table>";  
+  </table></center>";  
    echo'<br>';   
 
    $vsize = sizeof($imei);
@@ -387,16 +389,16 @@ echo'<center>
     echo'
 	<center>
 	<input TYPE="hidden" VALUE="vehicle" NAME="csv_type">
-	<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">			
-	<input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size='.$vsize.'\');" value="Get PDF" class="noprint">
+	<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">	<br>		
+	<input type="button" class="btn btn-default btn-sm" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size='.$vsize.'\');" value="Get PDF" class="noprint">
 	&nbsp;
-	<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">
+	<input type="button" class="btn btn-default btn-sm" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">
 	&nbsp;
 	</center>
 </form>';             
 
 echo '</center>'; 
-echo'<center>		
+echo'<br><center>		
         <a href="javascript:showReportPrevPageNew();" class="back_css">
             &nbsp;<b>Back</b>
         </a>
