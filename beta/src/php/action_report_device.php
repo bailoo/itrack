@@ -57,27 +57,28 @@
 		</table>
 		<br>';
 	echo '<div style="height:400px;overflow:auto;">';
-	echo'<table border=1 rules=all width="60%" align="center" cellspacing=0 cellpadding=3>';	
+	//echo'<table border=1 rules=all width="60%" align="center" cellspacing=0 cellpadding=3>';	
+        echo'<center><table cellspacing=0 cellpadding=0 class="table-bordered table-hover" style="width:90%">';	
 	$j=0;
 	for($i=0;$i<$dsize;$i++)
   	{
 		$j++;
 		if($i==0)
 		{
-			echo'<tr>
-			<td class="text" align="left" width="12%">
+			echo'<thead class="alert-warning"><tr>
+			<th class="text" align="left" width="12%">
 			<b>&nbsp;SNo</b>
-			</td>';
+			</th>';
 
-			echo'<td class="text" align="left" width="40%">
+			echo'<th class="text" align="left" width="40%">
 			<b>&nbsp;Device IMEI No</b>
-			</td>';
+			</th>';
 
-			echo'<td class="text" align="left">
+			echo'<th class="text" align="left">
 			<b>&nbsp;Vehicle Name</b>
-			</td>';
+			</th>';
 
-			echo'</tr>';
+			echo'</tr></thead>';
 		}
 		echo"<input TYPE=\"hidden\" VALUE=\"$j\" NAME=\"temp[$i][SNo]\">";
 		$vehicle_info=get_vehicle_info($root,$device[$i]);
@@ -104,19 +105,19 @@
 	}
 	
 	echo'
-	</table>
+	</table></center>
 	</div>
 	<center>
 	<input TYPE="hidden" VALUE="device" NAME="csv_type">
-	<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">			
-	<input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size='.$dsize.'\');" value="Get PDF" class="noprint">
+	<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">	<br>		
+	<input type="button" class="btn btn-default btn-sm" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size='.$dsize.'\');" value="Get PDF" class="noprint">
 	&nbsp;
-	<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">
+	<input type="button" class="btn btn-default btn-sm" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">
 	&nbsp;
 	</center>
 </form>';
 //echo "fileName=".$filename."title=".$title1."<br>";
-echo'<center>
+echo'<br><center>
 		<a href="javascript:showCommonPrevPage(\'report_common_prev.htm\',\''.$filename.'\',\''.$title1.'\');" class="back_css">
 			&nbsp;<b>Back</b>
 		</a>
