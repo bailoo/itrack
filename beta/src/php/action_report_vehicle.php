@@ -224,7 +224,7 @@
 	</table></center>
 	<center>
 	<input TYPE="hidden" VALUE="vehicle" NAME="csv_type">
-	<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">			
+	<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string"><br>			
 	<input type="button" class="btn btn-default btn-sm" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size='.$vsize.'\');" value="Get PDF" class="noprint">
 	&nbsp;
 	<input type="button" class="btn btn-default btn-sm" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">
