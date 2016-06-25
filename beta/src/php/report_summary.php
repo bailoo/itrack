@@ -71,9 +71,9 @@
 			<br>
 			<table border=0 align="center">						
 		  <tr>
-			<td class="text" align="left"><input type="button" onclick="javascript:action_report_summary(this.form);" value="Enter">
+			<td class="text" align="left"><input type="button" class="btn btn-default btn-sm" onclick="javascript:action_report_summary(this.form);" value="Enter">
       &nbsp;
-				<input type="reset" value="Clear"></td>
+				<input type="reset" class="btn btn-default btn-sm" value="Clear"></td>
 		</tr>
 		</table>				 
     
