@@ -154,9 +154,9 @@
 										
 			<tr>
 				<td align="center" colspan=2>
-					<input type="button" onclick="javascript:action_report_monthly_distance(this.form);" value="Enter">
+					<input type="button" class="btn btn-default btn-sm" onclick="javascript:action_report_monthly_distance(this.form);" value="Enter">
 						&nbsp;
-					<input type="reset" value="Clear">
+					<input type="reset" class="btn btn-default btn-sm" value="Clear">
 				</td>
 			</tr>
 		</table>
