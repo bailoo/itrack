@@ -333,7 +333,7 @@
 	//$parameterizeData=null;	
         report_title("Monthly Distance",$dateStartDisplay,$dateEndDisplay);
     echo'<center>
-            <div style="overflow: auto;height: 350px; width: 620px;" align="center">';
+            <div style="overflow: auto;height: 350px; width: 90%;" align="center">';
             $j=-1;
             $k=0;
             $final_maxspeed_tmp=0;
@@ -361,14 +361,18 @@
                         <td class="text" align="center"><b>'.$title.'</b> <div style="height:8px;"></div></td>
                     </tr>
                     </table>
-                    <table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>	
+                   <!-- <table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>-->	
+                    <table cellspacing=0 cellpadding=0 class="table-bordered table-hover" style="width:95%" >
+                    <thead class="alert-warning">
                     <tr>
-                        <td class="text" align="left"><b>SNo</b></td>
-                        <td class="text" align="left"><b>Date</b></td>
-                        <td class="text" align="left"><b>Daily Distance (km)</b></td>
-                        <td class="text" align="left"><b>Max Speed (km/hr)</b></td>
-                        <td class="text" align="left"><b>Avg Speed (km/hr)</b></td>
-                    </tr>';  								
+                        <th class="text" align="left"><b>SNo</b></th>
+                        <th class="text" align="left"><b>Date</b></th>
+                        <th class="text" align="left"><b>Daily Distance (km)</b></th>
+                        <th class="text" align="left"><b>Max Speed (km/hr)</b></th>
+                        <th class="text" align="left"><b>Avg Speed (km/hr)</b></th>
+                    </tr>
+                    </thead>
+                    ';  								
                 }  	
 		$sum_dailydist = $sum_dailydist + $dailyDistDisplay[$i];
 
@@ -490,7 +494,7 @@
     		{
           echo'<input TYPE="hidden" VALUE="monthly_distance" NAME="csv_type">';
           echo'<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">';                 
-          echo'<br><center><input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type4.php?size='.$vsize.'\');" value="Get PDF" class="noprint">&nbsp;<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
+          echo'<br><center><input type="button" class="btn btn-default btn-sm" onclick="javascript:report_csv(\'src/php/report_getpdf_type4.php?size='.$vsize.'\');" value="Get PDF" class="noprint">&nbsp;<input type="button" class="btn btn-default btn-sm" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
           <!--<input type="button" value="Print it" onclick="window.print()" class="noprint">-->&nbsp;';      
         }
                     
