@@ -435,21 +435,21 @@ echo '<td class="text" align="left" width="318px"><strong>Halt (hr.min)-1 hr int
 echo '<td class="text" align="left"><strong>Track</strong></td>';  
 echo '</tr>';*/
 
-echo '<div style="overflow:auto;height:420px;width:950px;">
-<table border=1 style="width:2000px;" bordercolor="#e5ecf5" align="center" cellspacing="0" cellpadding="0">';
-
-echo '<tr valign="top">';
-echo '<td class="text" align="left" width="100px"><strong>Vehiclename</strong></td>';
-echo '<td class="text" align="left" width="100px"><strong>IMEI</strong></td>';
-echo '<td class="text" align="left" width="120px"><strong>StartDate</strong></td>';
-echo '<td class="text" align="left" width="120px"><strong>EndDate</strong></td>';
-echo '<td class="text" align="left" width="300px"><strong>Start Location</strong></td>';
-echo '<td class="text" align="left" width="300px"><strong>End Location</strong></td>';
-echo '<td class="text" align="left" width="50px"><strong>Total Distance (km)</strong></td>';
-echo '<td class="text" align="left" width="50px"><strong>Journey Time (hr.min)</strong></td>';
-echo '<td class="text" align="left" width="310px"><strong>Halt (hr.min)-1 hr interval</strong></td>';
-echo '<td class="text" align="left"><strong>Track</strong></td>';
-echo '</tr>';
+echo '<div style="overflow:auto;height:420px;width:100%;">
+<!--<table border=1 style="width:2000px;" bordercolor="#e5ecf5" align="center" cellspacing="0" cellpadding="0">-->
+<center><table cellspacing=0 cellpadding=0 class="table-bordered table-hover" style="width:95%" >';
+echo '<thead class="alert-warning"><tr valign="top">';
+echo '<th class="text" align="left" width="100px"><strong>Vehiclename</strong></th>';
+echo '<th class="text" align="left" width="100px"><strong>IMEI</strong></th>';
+echo '<th class="text" align="left" width="120px"><strong>StartDate</strong></th>';
+echo '<th class="text" align="left" width="120px"><strong>EndDate</strong></th>';
+echo '<th class="text" align="left" width="300px"><strong>Start Location</strong></th>';
+echo '<th class="text" align="left" width="300px"><strong>End Location</strong></th>';
+echo '<th class="text" align="left" width="50px"><strong>Total Distance (km)</strong></th>';
+echo '<th class="text" align="left" width="50px"><strong>Journey Time (hr.min)</strong></th>';
+echo '<th class="text" align="left" width="310px"><strong>Halt (hr.min)-1 hr interval</strong></th>';
+echo '<th class="text" align="left"><strong>Track</strong></th>';
+echo '</tr></thead>';
 
     
 for($i=0;$i<sizeof($imei);$i++)
@@ -603,7 +603,7 @@ for($i=0;$i<sizeof($imei);$i++)
 		echo'</tr>';	          		
  }
  
- echo "</table></div>";     
+ echo "</table></center></div>";     
 
  $csv_string = ""; 
  
@@ -651,7 +651,7 @@ for($i=0;$i<sizeof($imei);$i++)
   		{
         echo'<input TYPE="hidden" VALUE="summary report" NAME="csv_type">';
         echo'<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string">';                 
-        echo'<br><center><input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type3_summary.php?size='.$vsize.'\');" value="Get PDF" class="noprint">&nbsp;<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
+        echo'<br><center><input type="button" class="btn btn-default btn-sm" onclick="javascript:report_csv(\'src/php/report_getpdf_type3_summary.php?size='.$vsize.'\');" value="Get PDF" class="noprint">&nbsp;<input type="button" class="btn btn-default btn-sm" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
         <!--<input type="button" value="Print it" onclick="window.print()" class="noprint">-->&nbsp;';      
       }
                   
