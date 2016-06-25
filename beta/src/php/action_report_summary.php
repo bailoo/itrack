@@ -447,8 +447,8 @@ echo '<th class="text" align="left" width="300px"><strong>Start Location</strong
 echo '<th class="text" align="left" width="300px"><strong>End Location</strong></th>';
 echo '<th class="text" align="left" width="50px"><strong>Total Distance (km)</strong></th>';
 echo '<th class="text" align="left" width="50px"><strong>Journey Time (hr.min)</strong></th>';
-echo '<th class="text" align="left" width="310px"><strong>Halt (hr.min)-1 hr interval</strong></th>';
-echo '<th class="text" align="left"><strong>Track</strong></th>';
+echo '<th class="text" align="left" ><strong>Halt (hr.min)-1 hr interval</strong></th>';
+echo '<th class="text" align="left" width="310px"><strong>Track</strong></th>';
 echo '</tr></thead>';
 
     
