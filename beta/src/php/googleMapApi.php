@@ -1208,7 +1208,8 @@ var input = (document.getElementById('pac-input'));
 					if((latarr.length ==1) && (!latarr[0]) && (!lngarr[0]))
 					{
 						alert('Sorry! Either -GPS or Data Not Found');
-						exit;
+                                                return;
+						//exit;
 					}
 					var mouse_action = document.forms[0].mouse_action.value; // for google map mouseOver and click option
 					var latlngbounds = new google.maps.LatLngBounds();	
