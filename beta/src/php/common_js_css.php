@@ -15,7 +15,12 @@
 <?php
 $getUrlModule=$_SERVER['REQUEST_URI'];
 //echo "getUrlModule1=".$getUrlModule."<br>";
+//$getUrlModule = substr($getUrlModule, 0, strpos($getUrlModule, "?")); //this condition allow for get data log by person popup window for removing get method string
+if($dataLogImei!='')
+{
 $getUrlModule = substr($getUrlModule, 0, strpos($getUrlModule, "?")); //this condition allow for get data log by person popup window for removing get method string
+}
+
 if($getUrlModule=='/report.htm')
 {
 	echo'<script language="javascript" src="src/js/reportAjax.js?<?php echo time();?>"></script>';
