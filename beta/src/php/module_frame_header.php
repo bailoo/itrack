@@ -84,7 +84,7 @@ echo'
                 }
                 if($interface == "live.php")
                 {
-                    $routeComboArr=getAccountPolyline($account_id,$DbConnection);
+                    /*$routeComboArr=getAccountPolyline($account_id,$DbConnection);
                     // print_r($routeComboArr);
                     if($routeComboArr!="No Data Found")
                      {
@@ -102,13 +102,13 @@ echo'
                              echo"</select>
                                  </div>
                          </li>";
-                     }
+                     }*/
                     echo'<li>
                         <a href="javascript:show_live_vehicles_hide_div();" style="padding: 1px 1px;margin-top:5px;font-size:12px;">
                         Select vehicle
                         </a>
                     </li>';
-                    //echo '<li><span id="selected_routes" style="display:none;padding: 1px 1px;margin-top:5px;font-size:12px;"></span></li>';
+                    echo '<li><span id="selected_routes" style="display:none;padding: 1px 1px;margin-top:5px;font-size:12px;"></span></li>';
                     echo '
                     <li>
                         <div  style="padding: 1px 1px;margin-top:5px;font-size:12px;">

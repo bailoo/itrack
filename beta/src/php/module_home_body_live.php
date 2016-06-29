@@ -9,7 +9,26 @@
 <input type="checkbox" id="trail_path_real"><span style="font-size:11px;color:green;">
 <b>Add Trail </b>
 </span>
-<font size=2px ><font color="maroon"><b>Route(if any) </font></b></font><span id="selected_routes" style="display:none;"></span>
+<!--<font size=2px ><font color="maroon"><b>Route(if any) </font></b></font><span id="selected_routes" style="display:none;"></span>-->
+<?php
+     $routeComboArr=getAccountPolyline($account_id,$DbConnection);
+        // print_r($routeComboArr);
+        if($routeComboArr!="No Data Found")
+         {
+            $jsonArray=json_encode($routeComboArr);
+            echo"<input type='hidden' value='".$jsonArray."' id='routeJsonData'>";
+         echo"
+                 <font size=2px ><font color=maroon><b>All Routes </font></b></font>
+                 <select id='user_type_option' style='font-size:10px' onchange='javascript:showRouteOnLiveMap(this.value);'>
+                     <option value='select'>Routes</option>";  
+                     foreach($routeComboArr as $key=>$value)
+                     {
+                         echo"<option value=".$key.">".$routeComboArr[$key]['polylineName']."</option>";
+                     }
+                 echo"</select>
+                    ";
+         }
+?>
 </div>
 <?php    
     echo ' <!--MAP DETAIL -->
