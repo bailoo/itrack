@@ -84,7 +84,12 @@ echo'
                 }
                 if($interface == "live.php")
                 {
-                    echo '<li><span id="selected_routes" style="display:none;"></span></li>';
+                    echo'<li>
+                        <a href="javascript:show_live_vehicles_hide_div();" style="padding: 1px 1px;margin-top:5px;font-size:12px;">
+                        Select vehicle
+                        </a>
+                    </li>';
+                    echo '<li><span id="selected_routes" style="display:none;padding: 1px 1px;margin-top:5px;font-size:12px;"></span></li>';
                     echo '
                     <li>
                         <div  style="padding: 1px 1px;margin-top:5px;font-size:12px;">
@@ -94,12 +99,8 @@ echo'
                             </select>
                         </div>
                     </li>
-                    <li>
-                        <a href="javascript:show_live_vehicles_hide_div();" style="padding: 1px 1px;margin-top:5px;font-size:12px;">
-                        Select vehicle
-                        </a>
-                    </li>
-                    <li> 
+                    
+                    <!--<li> 
                         <div  style="padding: 1px 1px;margin-top:5px;font-size:12px;">
                             <span id="ref_time" style="color:red;"></span>
                             &nbsp;
@@ -113,7 +114,7 @@ echo'
                                 Trail
                             </span>
                        </div>
-                    </li>';
+                    </li>-->';
                 }
                 if($user_id=='lab')
                 {
