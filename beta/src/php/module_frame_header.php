@@ -56,7 +56,7 @@ echo'
                     if($size_utype_session>1)
                     {
                         echo'<input type="hidden" id="default_category" value="'.$user_typeid_array[0].'">';
-                        echo"<li><div  style='padding: 5px 5px;'>Category
+                        echo"<li><div  style='padding: 1px 1px;margin-top:5px;font-size:12px;'>Category
                         <select id='category' onchange='javascript:setDisplayOption(this.value);'>";
                         for($i=0;$i<$size_utype_session;$i++)
                         {	echo'<option value="'.$user_typeid_array[$i].'">'.$user_type_name_session[$i].'</option>';	}
@@ -70,7 +70,7 @@ echo'
                     }
 
                     echo"<li>
-                        <div  style='padding: 5px 5px;'>Category
+                        <div  style='padding: 1px 1px;margin-top:5px;font-size:12px;'>Category
                         <select id='user_type_option'  onchange='javascript:show_main_home_vehicle(this.value);'>
                         <option value='all'>All</option>
                         <option value='group'>By Group</option>
@@ -87,7 +87,7 @@ echo'
                     echo '<li><span id="selected_routes" style="display:none;"></span></li>';
                     echo '
                     <li>
-                        <div  style="padding: 5px 5px;">
+                        <div  style=style="padding: 1px 1px;margin-top:5px;font-size:12px;">
                             <select id="mode_selector" onchange="javascript:select_mode_dropdown(this.form);">
                             <option value="1">Map Mode</option>
                             <option value="2">Text Mode</option>
