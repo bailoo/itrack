@@ -60,7 +60,7 @@ echo'
                         <select id='category' onchange='javascript:setDisplayOption(this.value);'>";
                         for($i=0;$i<$size_utype_session;$i++)
                         {	echo'<option value="'.$user_typeid_array[$i].'">'.$user_type_name_session[$i].'</option>';	}
-                        echo"</select>
+                        echo"</select>&nbsp;
                            
                         </div></li>";
                     }
@@ -78,7 +78,7 @@ echo'
                         <option value='vehicle_tag'>By Vehicle Tag</option>
                         <option value='vehicle_type'>By Vehicle Type</option>
 
-                        </select>
+                        </select>&nbsp;
                         </div>
                     </li>";
                 }
