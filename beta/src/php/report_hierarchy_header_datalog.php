@@ -95,26 +95,37 @@ function common_function_for_vehicle($vehicle_imei,$vehicle_id,$vehicle_name,$op
 }
 
  function common_display_vehicle($vehicle_name_arr,$vehicleid_or_imei,$color,$vehicle_type_arr)
-  {
-    global $type;        	  
-    if(sizeof($vehicle_name_arr)>0)
-    {
-      natcasesort($vehicle_name_arr);
-      foreach($vehicle_name_arr as $vehicle)
-      { 
-        $cnt++;          
-      		if($cnt==1){echo'<tr>';}         		
-          echo'<td align="left">
-                  <INPUT TYPE="checkbox"  name="vehicleserial[]" VALUE="'.$vehicleid_or_imei[$vehicle].'">
-                </td>
-                <td class=\'text\'> 				                  
-                  <font color="'.$color.'">'.$vehicle.'</font>';if($type==1){echo ' ('.$vehicle_type_arr[$vehicle].')';}echo'		
-                </td>';         
-        	if($cnt==3)
-         	{echo'</tr><tr>';$cnt=0;}
-      }
-    }      
-  }
+{
+global $type;
+global $dataLogImei; /// coming from map popup window
+if(sizeof($vehicle_name_arr)>0)
+{
+natcasesort($vehicle_name_arr);
+foreach($vehicle_name_arr as $vehicle)
+{
+$cnt++;
+if($cnt==1){echo'<tr>';}
+
+if($vehicleid_or_imei[$vehicle]==$dataLogImei)
+{
+echo'<td align="left">
+<INPUT TYPE="checkbox" name="vehicleserial[]" VALUE="'.$vehicleid_or_imei[$vehicle].'" checked>
+</td>';
+}
+else
+{
+echo'<td align="left">
+<INPUT TYPE="checkbox" name="vehicleserial[]" VALUE="'.$vehicleid_or_imei[$vehicle].'">
+</td>';
+}
+echo' <td class=\'text\'>
+<font color="'.$color.'">'.$vehicle.'</font>';if($type==1){echo ' ('.$vehicle_type_arr[$vehicle].')';}echo'
+</td>';
+if($cnt==3)
+{echo'</tr><tr>';$cnt=0;}
+}
+}
+}
   
     
 						
