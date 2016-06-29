@@ -89,7 +89,7 @@ echo'
                         Select vehicle
                         </a>
                     </li>';
-                    //echo '<li><span id="selected_routes" style="display:none;padding: 1px 1px;margin-top:5px;font-size:12px;"></span></li>';
+                    echo '<li><span id="selected_routes" style="display:none;padding: 1px 1px;margin-top:5px;font-size:12px;"></span></li>';
                     echo '
                     <li>
                         <div  style="padding: 1px 1px;margin-top:5px;font-size:12px;">
