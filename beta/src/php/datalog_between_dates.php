@@ -90,13 +90,26 @@
 										</TR>																	
 									</table>
 
-                <br><table align="center"><tr>
+                <br><table align="center">';
+              if($dataLogImei!='') ////// this is for person data log coming from track on map and last data report
+              {
+              echo'<tr>
+							<td class="text"><input type="radio" name="rec" id="rec" value="10" >last 10</td> 
+							<td class="text"><input type="radio" name="rec" id="rec" value="30">last 30</td>                                                
+    						<td class="text">&nbsp;<input type="radio" name="rec" id="rec" value="100">last 100</td>                                              
+    						<td class="text">&nbsp;<input type="radio" name="rec" id="rec" value="all" checked>all</td>
+                </tr>';
+              }
+              else
+              {
+                  echo'<tr>
 							<td class="text"><input type="radio" name="rec" id="rec" value="10" >last 10</td> 
 							<td class="text"><input type="radio" name="rec" id="rec" value="30" checked>last 30</td>                                                
     						<td class="text">&nbsp;<input type="radio" name="rec" id="rec" value="100">last 100</td>                                              
     						<td class="text">&nbsp;<input type="radio" name="rec" id="rec" value="all">all</td>
-                </tr>
-                </table></center>					
+                </tr>'; 
+              }
+              echo'  </table></center>					
 					
 							<br>
 							<table border=0 align="center">						
