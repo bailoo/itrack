@@ -84,7 +84,7 @@ echo'
                 }
                 if($interface == "live.php")
                 {
-                    /*$routeComboArr=getAccountRoutes($account_id,$DbConnection);
+                    $routeComboArr=getAccountPolyline($account_id,$DbConnection);
                     // print_r($routeComboArr);
                     if($routeComboArr!="No Data Found")
                      {
@@ -94,7 +94,7 @@ echo'
                          <li>
                             <div  style='padding: 1px 1px;margin-top:5px;font-size:12px';>
                              <select id='user_type_option' style='font-size:10px' onchange='javascript:showRouteOnLiveMap(this.value);'>
-                                 <option value='select'>Routes</option>";  
+                                 <option value='select'>Polylines</option>";  
                                  foreach($routeComboArr as $key=>$value)
                                  {
                                      echo"<option value=".$key.">".$routeComboArr[$key]['polylineName']."</option>";
@@ -102,7 +102,7 @@ echo'
                              echo"</select>
                                  </div>
                          </li>";
-                     }*/
+                     }
                     echo'<li>
                         <a href="javascript:show_live_vehicles_hide_div();" style="padding: 1px 1px;margin-top:5px;font-size:12px;">
                         Select vehicle
