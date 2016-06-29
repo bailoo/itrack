@@ -18,7 +18,7 @@
             $jsonArray=json_encode($routeComboArr);
             echo"<input type='hidden' value='".$jsonArray."' id='routeJsonData'>";
          echo"
-                 <font size=2px ><font color=maroon><b>All Routes </font></b></font>
+                 <font size=1px ><font color=maroon><b>All Routes </font></b></font>
                  <select id='user_type_option' style='font-size:10px' onchange='javascript:showRouteOnLiveMap(this.value);'>
                      <option value='select'>Routes</option>";  
                      foreach($routeComboArr as $key=>$value)
