@@ -84,7 +84,7 @@ echo'
                 }
                 if($interface == "live.php")
                 {
-                    $routeComboArr=getAccountRoutes($account_id,$DbConnection);
+                    /*$routeComboArr=getAccountRoutes($account_id,$DbConnection);
                     // print_r($routeComboArr);
                     if($routeComboArr!="No Data Found")
                      {
@@ -102,7 +102,7 @@ echo'
                              echo"</select>
                                  </div>
                          </li>";
-                     }
+                     }*/
                     echo'<li>
                         <a href="javascript:show_live_vehicles_hide_div();" style="padding: 1px 1px;margin-top:5px;font-size:12px;">
                         Select vehicle
