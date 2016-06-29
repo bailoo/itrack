@@ -328,7 +328,14 @@
 											}
 											else
 											{
-												echo'<td class="text">'.$vehiclename[$i].'</td>';
+												if($report_type=="Person")
+                                                                                                {
+                                                                                                echo'<td class="text"><a href="'.$pathToRoot.'/report.htm?dataLogImei='.$vehicleserial[$i].'" target="_blank" style="text-decoration:none">'.$vehiclename[$i].'</a></td>';
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                echo'<td class="text">'.$vehiclename[$i].'</td>';
+                                                                                                }
 											}
   										
 											if($vehicleserial[$i]=="")
