@@ -1013,8 +1013,7 @@ var input = (document.getElementById('pac-input'));
 									'<td class=\"live_td_css1\">Date Time</td>'+
 									'<td>:</td>'+
 									'<td class=\"live_td_css2\">'+dateTimeArr+'</td>'+
-									'</tr>'+
-									'<tr>'+
+									'</tr>'+									
 									'<tr>'+                                                    
 									'<td class=\"live_td_css1\">Distance Travel</td>'+
 									'<td>:</td>'+
@@ -1023,7 +1022,12 @@ var input = (document.getElementById('pac-input'));
 									'<tr>'+
 									'<td class=\"live_td_css1\">Address</td>'+
 									'<td>:</td>'+
-									'<td class=\"live_td_css2\">'+tmp_address+'</td></tr>'+										  
+									'<td class=\"live_td_css2\">'+tmp_address+'</td></tr>'+	
+                                                                         '<tr>'+
+                                                                        '<td>'+
+                                                                        '<a href=\"report.htm?dataLogImei='+vSerial+'\" target=\"_blank\">Show Data Log</a>'+
+                                                                        '</td>'+
+                                                                        '</tr>'+
 									'</table>'+
 									'<b><font color=black size=2>('+lat+','+lng+')</font></b>';										
 										infowindow.setContent(contentString);
