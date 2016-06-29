@@ -9,7 +9,7 @@
 <input type="checkbox" id="trail_path_real"><span style="font-size:11px;color:green;">
 <b>Add Trail </b>
 </span>
-<font size=1px >Route(if any):</font><span id="selected_routes" style="display:none;"></span>
+<font size=2px ><font color="maroon"><b>Route(if any) </font></b></font><span id="selected_routes" style="display:none;"></span>
 </div>
 <?php    
     echo ' <!--MAP DETAIL -->
