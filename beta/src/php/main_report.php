@@ -54,8 +54,10 @@
         });
         
        ///////// this is for data log by person map popup window
-        var result= "<?php echo $account_id; ?>";
-        var dataLogImei="<?php echo $dataLogImei; ?>";
+       var dataLogImei="<?php echo $dataLogImei; ?>";
+       if(dataLogImei!='')
+       {
+        var result= "<?php echo $account_id; ?>";        
         var poststr = "account_id_local="+result+
         "&vehicle_display_option=all"+
         "&title1=data log"+
@@ -64,6 +66,7 @@
         //alert("poststr="+poststr);
         showManageLoadingMessage();
         makePOSTRequest('src/php/datalog_between_dates.htm',poststr);
+        }
         ///////////////
            
        
