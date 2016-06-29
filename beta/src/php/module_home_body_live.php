@@ -1,3 +1,15 @@
+<div style="position:absolute; right:250px; top:6%;z-index:99;" class="form-inline">
+<span id="ref_time" style="font-size:11px;color:red;"></span>
+&nbsp;&nbsp;<span>
+<input type="checkbox" checked id="trail_path"></span>
+<span style="font-size:11px;color:green;">
+<b> Add Arrow </b>
+</span>
+&nbsp;&nbsp;
+<input type="checkbox" id="trail_path_real"><span style="font-size:11px;color:green;">
+<b>Add Trail </b>
+</span>
+</div>
 <?php    
     echo ' <!--MAP DETAIL -->
     <div id="map" style="height:100%;width:100%;"></div>
