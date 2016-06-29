@@ -87,7 +87,7 @@ echo'
                     echo '<li><span id="selected_routes" style="display:none;"></span></li>';
                     echo '
                     <li>
-                        <div  style=style="padding: 1px 1px;margin-top:5px;font-size:12px;">
+                        <div  style="padding: 1px 1px;margin-top:5px;font-size:12px;">
                             <select id="mode_selector" onchange="javascript:select_mode_dropdown(this.form);">
                             <option value="1">Map Mode</option>
                             <option value="2">Text Mode</option>
@@ -95,12 +95,12 @@ echo'
                         </div>
                     </li>
                     <li>
-                        <a href="javascript:show_live_vehicles_hide_div();" style="padding: 5px 5px;">
+                        <a href="javascript:show_live_vehicles_hide_div();" style="padding: 1px 1px;margin-top:5px;font-size:12px;">
                         Select vehicle
                         </a>
                     </li>
                     <li> 
-                        <div  style="padding: 5px 5px;">
+                        <div  style="padding: 1px 1px;margin-top:5px;font-size:12px;">
                             <span id="ref_time" style="color:red;"></span>
                             &nbsp;
                             <input type="checkbox" checked id="trail_path">
