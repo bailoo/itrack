@@ -161,7 +161,27 @@ function getAccountRoutes($accId,$route_names,$DbConnection)
         return "No Data Found";
     }
 }
-
+function getAccountPolyline($accId,$DbConnection)
+{
+    $Query="SELECT polyline_id,polyline_name,polyline_coord FROM polyline WHERE user_account_id=$accId AND status=1";
+    $Result=mysql_query($Query,$DbConnection);
+    $numRows=  mysql_num_rows($Result);
+    if($numRows>0)
+    {
+        while($row=mysql_fetch_object($Result))
+        {
+            $routeArr[$row->polyline_id]=array(
+                                                "polylineName"=>$row->polyline_name,
+                                                "polylineCoord"=>base64_decode($row->polyline_coord)
+                                            );
+        }
+        return $routeArr;
+    }
+    else
+    {
+        return "No Data Found";
+    }
+}
 function getRouteMorning($accId,$status,$DbConnection)
 {
     $query = "SELECT route_name_mor FROM route_assignment2 WHERE user_account_id='$accId' AND ".
