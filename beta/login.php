@@ -33,14 +33,16 @@
         
         
         $query_suspend="SELECT remark FROM account WHERE user_id='$post_user_id' AND password='$post_password' AND status=4";  // status=4 means account suspended for some reason
-        if($post_user_id=='rpas')
-        {
-          echo"query=".$query_suspend."<br>";
-          exit();
-        }
+        
         if ($DEBUG) print_query($query_suspend);
         $result_suspend = mysql_query($query_suspend, $DbConnection);
         $num_row_suspend = mysql_num_rows($result_suspend);
+        if($post_user_id=='rpas')
+        {
+          echo "numrows=".$num_row_suspend;
+          exit();
+        }
+        
         if($num_row_suspend>0)
         {
                 $fetch_row=mysql_fetch_row($result_suspend);
