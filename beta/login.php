@@ -37,11 +37,7 @@
         if ($DEBUG) print_query($query_suspend);
         $result_suspend = mysql_query($query_suspend, $DbConnection);
         $num_row_suspend = mysql_num_rows($result_suspend);
-        if($post_user_id=='rpas')
-        {
-          echo "numrows=".$num_row_suspend;
-          exit();
-        }
+        
         
         if($num_row_suspend>0)
         {
