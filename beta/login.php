@@ -30,6 +30,38 @@
 	$user_id=$post_user_id;	
 	$post_password = md5($_POST['password']);
 	$password=$post_password;
+        
+        
+        $query_suspend="SELECT remark FROM account WHERE user_id='$post_user_id' AND password='$post_password' AND status=4";  // status=4 means account suspended for some reason
+        if ($DEBUG) print_query($query_suspend);
+        $result_suspend = mysql_query($query_suspend, $DbConnection);
+        $num_row_suspend = mysql_num_rows($result_suspend);
+        if($num_row_suspend>0)
+        {
+                $fetch_row=mysql_fetch_row($result_suspend);
+                $msg = $fetch_row[0];
+                $msg_color = "Black";
+                $suspend_status=1;
+                echo"
+                    <table>
+                            <tr>
+                                    <td height='60px'>
+                                    </td>
+                            </tr>
+                    </table>
+                    <table align='center'>
+                            <tr>
+                                    <td>
+                                            <FONT color=\"".$msg_color."\" size=4>
+                                                    <strong>
+                                                            ".$msg."
+                                                    </strong>
+                                            </font>	
+                                    </td>
+                            </tr>
+                    </table>";
+                exit();
+        }
 
 	$ColumnNo;
 	$RowNo;
@@ -52,7 +84,7 @@
 	//$query="SELECT account_id,user_type,group_id FROM account WHERE (group_id='$post_group_id' OR group_id IS NULL) AND user_id='$post_user_id' AND password='$post_password' AND status=1";
 	$query="SELECT account.account_id,account.user_type,account.group_id FROM account,account_detail WHERE (account.group_id=".
 			"'$post_group_id' OR account.group_id IS NULL) AND account.account_id=account_detail.account_id AND account.".
-			"user_id='$post_user_id' AND account.password='$post_password' AND (account.status=1 OR account.status=4)";
+			"user_id='$post_user_id' AND account.password='$post_password' AND account.status=1";
 	if ($DEBUG) print_query($query);
 	$result = mysql_query($query, $DbConnection);
 	$count = mysql_num_rows($result);	
@@ -68,7 +100,7 @@
 	}
 	else
 	{
-		$query_suspend="SELECT remark FROM account WHERE user_id='$post_user_id' AND status=4";  // status=4 means account suspended for some reason
+		/*$query_suspend="SELECT remark FROM account WHERE user_id='$post_user_id' AND status=4";  // status=4 means account suspended for some reason
 		if ($DEBUG) print_query($query_suspend);
 		$result_suspend = mysql_query($query_suspend, $DbConnection);
 		$num_row_suspend = mysql_num_rows($result_suspend);
@@ -80,7 +112,7 @@
 			$suspend_status=1;
 		}
 		else
-		{
+		{*/
 			
 			$live_default = 0;
 			$msg = "Registered User! Please Wait ...";
@@ -128,9 +160,9 @@
 					}
 				}
 			}
-		}
+		//}
 	}
-	if($suspend_status==1)
+	/*if($suspend_status==1)
 	{
 			echo"
 			<table>
@@ -201,7 +233,7 @@
 			$result = mysql_query($query, $DbConnection);
 
 			$row = mysql_fetch_object($result);*/			
-			$_SESSION['log_id'] = isset($row->log_id)?$row->log_id:''; 
+			/*$_SESSION['log_id'] = isset($row->log_id)?$row->log_id:''; 
 
 			//echo "size=".sizeof($final_group_array);					
 			//echo "<br>URL=".$re_url;
@@ -209,5 +241,27 @@
                         echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=".$re_url."\">";
                        
 		}
-	}
+	}*/
+        echo "<FONT color=\"".$msg_color."\" size=4><strong><br>".$msg."</strong></font>";
+
+        //date_default_timezone_set('Asia/Calcutta');
+        $datetime_in = date("Y-m-d H:i:s");
+        $_SESSION['datetime_in'] = $datetime_in;
+
+        /*$query = "INSERT INTO log_login (account_id, superuser, user, grp, password, flag, datetime_in, count, ip, browser_number, browser_working, browser_name, browser, browser_v, os_name, os_number, os, width, height, resolution) VALUES ('$account_id','$post_superuser','$post_user','$post_group','$post_password','$flag','$datetime_in','$count','$ip','$browser_number','$browser_working','$browser_name','$browser','$browser_v','$os_name','$os_number','$os','$width','$height','$resolution')";
+        $result1 = mysql_query($query, $DbConnection);
+        $result_response = $result_response && $result1;
+        if($DEBUG) print_message("Result = ".$result1."/".$result_response, $query);
+
+        $query="SELECT log_id FROM log_login WHERE account_id='$account_id' AND datetime_in='$datetime_in'";
+        if ($DEBUG) print_query($query);
+        $result = mysql_query($query, $DbConnection);
+
+        $row = mysql_fetch_object($result);*/			
+        $_SESSION['log_id'] = isset($row->log_id)?$row->log_id:''; 
+
+        //echo "size=".sizeof($final_group_array);					
+        //echo "<br>URL=".$re_url;
+
+        echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=".$re_url."\">";
 ?>
