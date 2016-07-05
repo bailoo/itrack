@@ -1,185 +1,270 @@
-<style>
-table.menu
-{font-size: 9pt;
-margin: 0px;
-padding: 0px;
-font-weight: normal;}
-</style>
-<?php 
-    include_once('src/php/util_session_variable.php');
-	include_once('src/php/util_session_variable.php');
-    $device_str = $_POST['deviceStr'];
-	$vserial = explode(':',$device_str);
-    
-	$vsize=count($vserial);
-    $chekcedVehicleSerial=array();
-    for($i=0;$i<$vsize;$i++)
-    {
-        $chekcedVehicleSerial[$vserial[$i]]=$vserial[$i];
-    }
- 
-    date_default_timezone_set('Asia/Calcutta');
-	$date1=date('Y-m-d');
-    $todayTime=explode(":",date("H:i:s"));
-    //$timeCnt=(integer)$todayTime[0];
-  
-    $timeCntClm=$timeCnt+3;	
-    $destfile="../../../logBetaXml/".$date1."/processedData.xml";
-	//echo "destFile=".$destfile."<br>";
-	/*if(file_exists($destfile))
+<?php
+include_once("main_vehicle_information_1.php");
+ include_once('Hierarchy.php');
+include_once('util_session_variable.php');
+include_once('util_php_mysql_connectivity.php');
+
+
+echo'<link rel="StyleSheet" href="src/css/menu.css">';
+include_once('xmlParameters.php');
+include_once('parameterizeData.php');
+include_once('lastRecordData.php');
+include_once('getXmlData.php');	
+if($personOption=="singlePerson")
+{
+	//echo "in if";
+	//echo"vehicleserialRadio=".$vehicleserialRadio."<br>";
+	
+	//var_dump($root);
+	$vehicle_info=get_vehicle_info($root,$vehicleserialRadio);
+	//echo "vehicleInfo=".$vehicle_info."<br>";	
+	$vehicle_detail_local=explode(",",$vehicle_info);
+	//print_r($vehicle_detail_local);
+
+	$parameterizeData=new parameterizeData();
+	$parameterizeData->version='b';
+	$LastRecordObject=getLastRecord($vehicleserialRadio,$sortBy,$parameterizeData);
+	$sortBy="h";
+	$versionString=$LastRecordObject->versionLR[0];
+	$vehicleDetailArr[$vehicleserialRadio]=$vehicle_detail_local[0]."@".$vehicle_detail_local[8]."@".$versionString;
+	//print_r($vehicleDetailArr);
+	preg_match('#\((.*?)\)#', $versionString, $match);
+	$versionOnly=$match[1];
+	$version=substr($versionOnly,0,-2);
+
+	$versionArr=explode('-',$version);
+	if(count($versionArr)==1)
 	{
-		echo "true";
+		$durationFrom=0;
+		$durationTo=$versionArr[0];
 	}
 	else
 	{
-		echo "false";
-	}*/
-	//echo "destFile=".$destfile."<br>";
-    $xml = @fopen($destfile, "r") or $fexist = 0; 
-    $c=0;
-   
+		$durationFrom=$versionArr[0];
+		$durationTo=$versionArr[1];
+	}
+	//echo "durationFron=".$durationFrom."DurationTo=".$durationTo."<br>";
 
-	
-	  echo "<center>
-            <table class='menu'>
-                <tr>
-                    <td style='font-size: 16px;font-style:bold;'>
-                       Hourly Tracking Report
-                    </td>
-                 </tr>
-            </table>
-            <table>
-                <tr>
-                    <td style='height:5px;'>
-                    </td>
-                </tr>
-           </table>
-            </center>";
-           echo'<form name="personHourlyReport" method="POST" target="_blank" action="reportHoulyDistanceDownload.php">
-		   <div style="height:550px;overflow:auto">
-               <table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3 class="menu"> ';   
-            echo"<tr bgcolor='#EAC752'>
-                    <td>
-                    <b>SR No.
-                    </td>
-                     <td>
-                   <b> Name
-                    </td>
-                     <td>
-                   <b>Emp No
-                    </td>
-                     <td>
-                 <b>  Mobile No
-                    </td>";
-        for($i=1;$i<=$todayTime[0];$i++)
+	//exit();
+}
+else if($personOption=="multiplePerson")
+{
+	$durationFrom=8;
+	$durationTo=21;	
+}
+
+$mysqlTableColumns="";
+$switchFlag=0;
+
+for($i=$durationFrom;$i<=$durationTo;$i++) // for making dynamic column duration half hour fetching record from mysql
+{
+	$hr=($i<10)?'0'.$i:$i;
+	if($timeInterval==0) /////// this is only for 30 minute interval
+	{
+		$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00,";
+		if($i!=$durationTo) // for skiping last column becuase it exceed duration time
 		{
-			if($i<10)
-			{
-				echo "<td><b>0".$i.":00</td>";
-			}
-			else
-			{
-				echo "<td><b>".$i.":00</td>";			
-			}
-		}
-       // echo "<td><b>Total Distance</td>";
-        //echo "<td><b>Final Closure</td>";
-        echo "</tr>";
-	$rowCnt=1;
-	while(!feof($xml))          // WHILE LINE != NULL
-	{			
-		$DataValid = 0;
-		//echo "<br>line";
-		//echo fgets($file). "<br />";
-		$line = fgets($xml);  // STRING SHOULD BE IN SINGLE QUOTE	
-		//echo "<textarea>".$line."</textarea>";
-
-		$status = preg_match('/vs="[^" ]+/', $line, $vSerialTmp);
-		$vSerialTmp1 = explode("=",$vSerialTmp[0]);
-		$tmpVerial = preg_replace('/"/', '', $vSerialTmp1[1]);
-		
-		if($chekcedVehicleSerial[$tmpVerial]!="")
-		{ 
-			if($$rowCnt%2==0)
-			{
-			echo"<tr bgcolor='#C2DFFF'>";
-			}
-			else
-			{
-			echo"<tr bgcolor='#FFFDF9'>";
-			}
-			$status = preg_match('/vn="[^"]+/', $line, $vNameTmp);
-			$vNameTmp1 = explode("=",$vNameTmp[0]);
-			$tmpVname= preg_replace('/"/', '', $vNameTmp1[1]);
-			   
-			$tmpEmpName ='not available';
-			$tmpMobNo ='not available';	
-			
-		echo"<td>".$rowCnt."</td>
-			<td>".$tmpVname."</td>
-			<td>".$tmpEmpName."</td>
-			<td>".$tmpMobNo."</td>";
-			
-			
-			/*preg_match('/dis="[^"]+/', $line, $disTmp);
-			//print_r($addressTmp);
-			$disTmp1 = explode("=",@$disTmp[0]);
-			$disWithHour = preg_replace('/"/', '', @$disTmp1[1]);
-			
-			$disWithHour1=explode("#",$disWithHour);*/
-			
-			for($i=1;$i<=$todayTime[0];$i++)
-			{
-				if($i<10)
-				{
-					preg_match('/a0'.$i.'="[^"]+/', $line, $addressTmp);
-					//print_r($addressTmp);
-					$addressTmp1 = explode("=",@$addressTmp[0]);
-					$tmpAddress = preg_replace('/"/', '', @$addressTmp1[1]);
-					if($tmpAddress!="")
-					{
-						echo"<td>".$tmpAddress."</td>";
-					}
-					else
-					{
-						echo"<td>-</td>";
-					}
-				}
-				else
-				{
-					preg_match('/a'.$i.'="[^"]+/', $line, $addressTmp);
-					//print_r($addressTmp);
-					$addressTmp1 = explode("=",@$addressTmp[0]);
-					$tmpAddress = preg_replace('/"/', '', @$addressTmp1[1]);
-					if($tmpAddress!="")
-					{
-						echo"<td>".$tmpAddress."</td>";
-					}
-					else
-					{
-						echo"<td>-</td>";
-					}
-				}
-				
-			}
-			echo"</tr>";
-			$rowCnt++;
+			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30,";
 		}
 	}
-		echo"</table></div>";
-        $strArr = serialize($chekcedVehicleSerial);
-       $strArrEnc = urlencode($strArr);
-        echo "<input type='hidden' name='checkedVehicleArr' value=".$strArrEnc.">";
-	echo"</table>
-             <table>
-                <tr>
-                    <td style='height:5px;'>
-                    </td>
-                </tr>
-           </table>
-            <input type='hidden' name='enterDate' value='".$date1."'>
-            <center>
-                <input type='submit' Value='Get Excel' onclick='javascript:getReportExcel()'>
-           </center>
-        </form>";	
-?>
+	else ///// this for except interval
+	{	
+		if($switchFlag==0)
+		{
+			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00,";
+			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30,";
+		}
+		else
+		{
+			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00,";
+			//echo "i=".$i."durationTo=".$durationTo."<br>";
+			if($i!=$durationTo) // for skiping last column becuase it exceed duration time
+			{
+				$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30,";	
+			}			
+		}
+	}
+	$switchFlag=1;
+}
+
+$switchFlag=0;
+$durationThis=0;
+for($i=$durationFrom;$i<=$durationTo;$i++) ///// this is for column headings of table
+{
+	if($switchFlag==0) // for storing value of i one time in durationThis variable
+	{
+		$durationThis =$i;
+	}
+	
+	$durationThis=$durationThis+$timeInterval;		
+	if($durationThis>$durationTo) // when durationThis exceed from date end range than break the loop
+	{
+		break;
+	}
+	
+	$hr=($i<10)?'0'.$i:$i;
+	if($timeInterval==0) /////// this is only for 30 minute interval
+	{
+		$durationArr[]=$hr.":00";
+		if($i!=$durationTo) // for skiping last column becuase it exceed duration time
+		{
+			$durationArr[]=$hr.":30";
+		}
+	}
+	else ///// this for except interval
+	{	
+		if($switchFlag==0)
+		{				
+			$durationThis =$hr;
+			$durationArr[]=$hr.":00";
+		}
+		else
+		{
+			$durationArr[]=$durationThis.":00";		
+		}
+	}
+	$switchFlag=1;
+}
+
+//print_r($durationArr);
+//echo"<br><br>";
+//echo" personOption=".$personOption."<br>";
+//echo" mysqlTableColumns=".$mysqlTableColumns."<br>";
+$mysqlTableColumns=substr($mysqlTableColumns,0,-1);
+if($personOption=="singlePerson")
+{
+$Query="SELECT imei,date,latitude,longitude,".$mysqlTableColumns." FROM hourly_distance_log USE INDEX(imei,date) WHERE imei='$vehicleserialRadio'".
+	   " AND date BETWEEN '$start_date' AND '$end_date'";
+//echo "Query1=".$Query."<br>";
+$Result=mysql_query($Query,$DbConnection);
+}
+else if($personOption=="multiplePerson")
+{
+
+
+$imeiCondition="";
+for($i=0;$i<sizeof($vehicleserial);$i++)
+{
+	$vehicle_info=get_vehicle_info($root,$vehicleserial[$i]);
+	//echo "vehicleInfo=".$vehicle_info."<br>";	
+	$vehicle_detail_local=explode(",",$vehicle_info);	
+	$parameterizeData=new parameterizeData();
+	$parameterizeData->version='b';
+	$LastRecordObject=getLastRecord($vehicleserial[$i],$sortBy,$parameterizeData);
+	$sortBy="h";
+	$versionString=$LastRecordObject->versionLR[0];
+	$vehicleDetailArr[$vehicleserial[$i]]=$vehicle_detail_local[0]."@".$vehicle_detail_local[8]."@".$versionString;
+	$vSerialMultiple=explode(',',$vSerial[$i]);
+	
+	$imeiCondition=$imeiCondition."imei='".$vehicleserial[$i]."' OR ";
+}
+$imeiCondition=substr($imeiCondition,0,-3);
+$Query="SELECT imei,date,latitude,longitude,".$mysqlTableColumns." FROM hourly_distance_log USE INDEX(imei,date) WHERE  date='$single_date' AND".
+		" ($imeiCondition)";
+//echo "Query2=".$Query."<br>";
+$Result=mysql_query($Query,$DbConnection);
+//print_r($vSerial);
+}
+if($timeInterval==0)
+{
+	$dataInterval=1;
+}
+else
+{
+	$dataInterval=($timeInterval*60)/30;
+}
+
+echo'<center><br>
+		<font color="black"><b>Hourly Distance Report</font>
+	</center>';
+if(mysql_num_rows($Result)==0)
+{
+echo'<center><br>
+		<font color="red"><b>No data found for selected option.</font>
+	</center>';
+	exit();
+}
+
+echo'<center><br>
+<table class="menu" border=1 rules=all bordercolor="#e5ecf5" style="font-size: 10pt;margin: 0px;padding: 0px;font-weight: normal;" cellspacing=3 cellpadding=3>
+		<tr bgcolor="darkgray">
+			<td>
+			<b>Serial
+			</td>
+			<td>
+			<b>Date
+			</td>
+			<td>
+			<b>User Name
+			</td>
+			<td>
+			<b>Mobile Number
+			</td>
+			<td>
+			<b>Apd Version
+			</td>';
+	for($i=0;$i<sizeof($durationArr);$i++)
+	{
+		echo"<td><b>".$durationArr[$i]."</td>";
+	}
+		echo"</tr>";
+	$serial=1;
+	$mysqlTableColumnsArr=explode(",",$mysqlTableColumns);
+	//echo "mysqlTableColumns=".$mysqlTableColumns."<br>";
+	$columnSize=sizeof($mysqlTableColumnsArr);
+	
+	
+	while($row=mysql_fetch_object($Result))
+	{
+	if($serial%2==0)
+	{
+		echo"<tr bgcolor='lightgray'>";
+	}
+	else
+	{
+		echo"<tr>";
+	}
+	$imeiDetailArr=explode("@",$vehicleDetailArr[$row->imei]);
+	echo"<td>".$serial."</td>
+		<td>".$row->date."</td>
+		<td>".$imeiDetailArr[0]."</td>
+		<td>".$imeiDetailArr[1]."</td>
+		<td>".$imeiDetailArr[2]."</td>";
+		//echo"columnSize=".$columnSize."<br>";
+		//echo"dataInterval=".$dataInterval."<br>";
+		$durationBreakCount=1;
+		$culumnSum=0;
+		
+		for($ci=0;$ci<$columnSize;$ci++)
+		{
+			if($ci==0)
+			{
+				echo"<td>".$row->$mysqlTableColumnsArr[$ci]."</td>";
+				continue;
+			}
+			
+			if($durationBreakCount<=$dataInterval)
+			{
+				//$culumnSum+=$culumnSum+$row->$mysqlTableColumnsArr[$ci];
+				//echo"durationBreakCount=".$durationBreakCount."dataInterval=".$dataInterval."mysqlTableColumnsArr=".$mysqlTableColumnsArr[$ci]."<br>";
+				if($durationBreakCount==$dataInterval)
+				{
+					echo"<td>".$row->$mysqlTableColumnsArr[$ci]."</td>";
+					$culumnSum=0;
+					$durationBreakCount=1;
+					if($ci==$columnSize)
+					{
+						break;
+					}
+					continue;
+				}			
+				$durationBreakCount++;
+			}
+		}
+echo"</tr>";
+$serial++;
+	}		
+echo"</table></center>";
+exit();
+		
+			
