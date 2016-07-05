@@ -47,5 +47,6 @@ class data
 	Public $bxParamData=array();
 	Public $byParamData=array();
 	Public $bzParamData=array();
+        Public $ciData=array();
 }
 ?>
