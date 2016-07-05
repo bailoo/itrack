@@ -4,23 +4,19 @@
     $account_id_local1 = $_POST['account_id_local'];	
     $vehicle_display_option1 = $_POST['vehicle_display_option'];	
     $options_value1 = $_POST['options_value'];
-
-    $account_id_local1 = $_POST['account_id_local'];	
+	
     echo "<input type='hidden' id='selected_account_id' value=".$account_id_local1.">";
-    $vehicle_display_option1 = $_POST['vehicle_display_option'];
-
     echo "<input type='hidden' id='s_vehicle_display_option' value=".$vehicle_display_option1.">";
-    $options_value1 = $_POST['options_value'];
     echo "<input type='hidden' id='selected_options_value' value='".$options_value1."'>";  
   
     $options_value2=explode(",",$options_value1);			
     $option_size=sizeof($options_value2);
     $option_string="";  
+	//echo "reportType=".$title1."<br>";
   
     $function_string='get_'.$vehicle_display_option1.'_vehicle';   
-  
- echo'<center>
 
+ echo'<br><center>
 <table border=0 width = 100% cellspacing=2 cellpadding=0>
     <tr>
         <td height=10 class="report_heading" align="center">
@@ -29,37 +25,89 @@
     </tr>
 </table>			
 <br>
-<form  method="post" name="hourlyDistance">							
-    <br>
+<form  method="post" name="hourlyDistance">	
 	<input type="hidden" id="deviceStr" name="deviceStr">
+	<table border=0  cellspacing=0 cellpadding=0>
+		<tr>
+			<td align="center">	
+				Person Option
+			</td>
+			<td>&nbsp;:&nbsp;</td>
+			<td>
+				<select id="personOption" name="personOption" onchange="javascript:switcPersonOption(this.value);">
+					<option value="singlePerson">Single Person</option>
+					<option value="multiplePerson">Multiple Person</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+	<br>
 	<fieldset class="report_fieldset">
-            <legend>Select Vehicle</legend>	
+            <legend>Vehicles</legend>	
                 <table border=0  cellspacing=0 cellpadding=0  width="100%">
                     <tr>
                         <td align="center">							
                             <div style="overflow: auto;height: 150px; width: 650px;" align="center">
                                 <table border=0 cellspacing=0 cellpadding=0 align="center" width="100%">						
-                                    <tr>
-                                        <td height="10px" align="center" colspan="6" class=\'text\'>
-                                            &nbsp;<input type=\'checkbox\' name=\'all\' value=\'1\' onClick=\'javascript:select_all_vehicle(this.form);\'>
+                                    <tr id="allCheckboxOption" style="display:none">
+                                        <td height="10px" align="left" colspan="6" class=\'text\'>
+                                            <input type=\'checkbox\' name=\'all\' value=\'1\' onClick=\'javascript:select_all_vehicle(this.form);\'>
                                             &nbsp;&nbsp;Select All
                                         </td>
                                     </tr>';                 
-                                        $function_string($account_id_local1,$options_value1);							
+									$function_string($account_id_local1,$options_value1);							
                             echo'</table>
                             </div>
                         </td>
                     </tr>
                 </table>
       </fieldset>
-      <br>
-      <fieldset class="report_fieldset">
-        <legend>Select display Option</legend>
-        <br><br>
+      <br><center><SPAN STYLE="font-size: xx-small">Select Interval </SPAN>
+      <select name="timeInterval" id="timeInterval">';
+			echo '<option value="0">30 Min</option>';
+			echo '<option value="1">One Hour</option>';
+			echo '<option value="2">Two Hour</option>';	
+			echo '<option value="3">Three Hour</option>';			
+			echo '<option value="4">Four Hour</option>';			
+			echo '<option value="5">Five Hour</option>';			
+			echo '<option value="6">Six Hour</option>						
+
+			</select>&nbsp;<SPAN STYLE="font-size: xx-small"> hr/hrs</SPAN></center><br>
         <center>';
-        $dateCurrent=date("Y/m/d");
-		
-        echo'<table border=0 cellspacing=0 cellpadding=3 align="center">
+        $dateCurrent=date("Y/m/d");	
+$start_date=date("Y/m/d");	
+$end_date=date("Y/m/d");		
+        echo'<table border=0 cellspacing=0 cellpadding=3 align="center" id="singleDateOption">	
+				<tr>
+					<td  class="text"><b>Select Duration : </b></td>
+					<td>
+						<table>
+							<tr>
+								<td  class="text">	</td>
+								<td class="text">
+									Start Date
+															
+							<input type="text" id="date1" name="start_date" value="'.$start_date.'" size="10" maxlength="19">
+					
+										<a href=javascript:NewCal_SD("date1","yyyymmdd",false,24)>
+											<img src="./images/cal.gif" width="16" height="16" border="0" alt="Pick a date">
+										</a>
+											&nbsp;&nbsp;&nbsp;End Date
+
+							<input type="text" id="date2" name="end_date" value="'.$end_date.'" size="10" maxlength="19">
+					
+										<a href=javascript:NewCal("date2","yyyymmdd",false,24)>
+											<img src="./images/cal.gif" width="16" height="16" border="0" alt="Pick a date">
+										</a>
+														
+								</TD>																
+								</td>
+							</tr>
+						</table>
+					<td>
+				</tr>										
+			</table>
+			<table border=0 cellspacing=0 cellpadding=3 align="center" id="multipleDateOption" style="display:none;">
 				<!--<tr>
                     <td  class="text">
                         <b>Report Type</b>
@@ -81,8 +129,8 @@
                                 <td  class="text"></td>
                                 <td class="text">
                                     Start Date
-                                    <input type="text" id="date1" name="start_date" value="'.$dateCurrent.'" size="10" maxlength="19">
-                                    <a href=javascript:NewCal_SD("date1","yyyymmdd",false,24)>
+                                    <input type="text" id="single_date" name="single_date" value="'.$dateCurrent.'" size="10" maxlength="19">
+                                    <a href=javascript:NewCal_SD("single_date","yyyymmdd",false,24)>
                                         <img src="./images/cal.gif" width="16" height="16" border="0" alt="Pick a date">
                                     </a>
                                 </td>
@@ -90,8 +138,7 @@
                         </table>
                     <td>
                 </tr>										
-            </table>			
-        </fieldset>	
+            </table>
         <br>
         <table border=0 cellspacing=0 cellpadding=3 align="center">							
             <tr>
