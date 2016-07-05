@@ -47,6 +47,7 @@ class parameterizeData
 	Public $bxParam;
 	Public $byParam;
 	Public $bzParam;
+        Public $ci;
 	Public $dataLog;
 
 	function __construct()
@@ -97,6 +98,7 @@ class parameterizeData
 		$this->bxParam = null;
 		$this->byParam = null;
 		$this->bzParam = null;	
+                $this->ci = null;
 
 		$this->dataLog = null;
 	}
