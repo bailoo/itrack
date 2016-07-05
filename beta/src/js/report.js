@@ -167,7 +167,68 @@ function report_upload_file(filename,title)            // manage.js
     makePOSTRequest('src/php/action_report_schedule_assignment.htm', poststr);
   }
   
-  
+  function switchPersonOption(personOption)
+{
+	var imeino1 = document.hourlyDistance.elements['vehicleserial[]'];
+	if(imeino1.length!=undefined)
+	{
+		
+		for(var i=0;i<imeino1.length;i++)
+		{
+			var vchecktmp = "vcheckbox"+imeino1[i].value;
+			var vradiotmp = "vradio"+imeino1[i].value;
+			if(personOption=="singlePerson")
+			{	
+				document.getElementById('allCheckboxOption').style.display='none';
+				document.getElementById(vchecktmp).style.display='none';
+				document.getElementById(vradiotmp).style.display='';
+				
+				document.getElementById("singleDateOption").style.display='';				
+				document.getElementById("multipleDateOption").style.display='none';
+			}
+			else
+			{
+				document.getElementById('allCheckboxOption').style.display='';
+				document.getElementById(vchecktmp).style.display='';
+				document.getElementById(vradiotmp).style.display='none';
+				document.getElementById("singleDateOption").style.display='none';
+				document.getElementById("multipleDateOption").style.display='';
+			}
+		}
+	}
+	else
+	{
+		var vchecktmp = "vcheckbox"+imeino1.value;
+		var vradiotmp = "vradio"+imeino1.value;
+		if(personOption=="singlePerson")
+		{	
+			document.getElementById('allCheckboxOption').style.display='none';
+			document.getElementById(vchecktmp).style.display='none';
+			document.getElementById(vradiotmp).style.display='';
+			
+			document.getElementById("singleDateOption").style.display='';
+			document.getElementById("multipleDateOption").style.display='none';
+		}
+		else
+		{
+			document.getElementById('allCheckboxOption').style.display='';
+			document.getElementById(vchecktmp).style.display='';
+			document.getElementById(vradiotmp).style.display='none';
+			document.getElementById("singleDateOption").style.display='none';
+			document.getElementById("multipleDateOption").style.display='';
+		}
+	}
+	if(personOption=="singlePerson")
+	{
+		document.getElementById("singleDateOption").style.display='';				
+		document.getElementById("multipleDateOption").style.display='none';
+	}
+	else
+	{
+		document.getElementById("singleDateOption").style.display='none';
+		document.getElementById("multipleDateOption").style.display='';
+	}
+}
   /////////////////////////
   
 function report_show_download_file(file_path,file_name)
@@ -3072,13 +3133,33 @@ function action_report_station_halt(obj)
 		//alert(poststr);
     makePOSTRequest('src/php/action_report_station_halt.htm', poststr);
 	}
- function action_report_hourly_distance(obj)
+  function action_report_hourly_distance(obj)
   {
 	//alert("test");
 	var todayDate=getTodayDate();
 	var enterDate=document.getElementById("date1").value;
-	//alert('date1='+enterDate+'date2='+todayDate);
-	if(enterDate==todayDate)
+	/*if(enterDate>=todayDate)
+	{
+		alert("Please Enter Previous Day.");
+		document.getElementById("loading_msg").style.display='none';
+		return false;
+	}*/
+	//alert("in if");	
+	//alert("todayDate="+todayDate+"enterDate="+enterDate);
+	document.getElementById("loading_msg").style.display = '';
+	/*var device_str = get_selected_vehicle(obj); 
+	if(device_str==false)
+	{
+		document.getElementById("loading_msg").style.display='none';
+		return false;
+	}*/
+	document.getElementById("loading_msg").style.display='none';
+	//document.getElementById("deviceStr").value=device_str;
+	document.hourlyDistance.action="src/php/action_report_hourly_distance.php";
+	document.hourlyDistance.target="_blank";
+	document.hourlyDistance.submit();
+//alert('date1='+enterDate+'date2='+todayDate);
+	/*if(enterDate==todayDate)
 	{
 		//alert("in if");	
 		//alert("todayDate="+todayDate+"enterDate="+enterDate);
@@ -3119,7 +3200,7 @@ function action_report_station_halt(obj)
 		document.hourlyDistance.action="src/php/action_report_hourly_distance_prev_date.php";
 		document.hourlyDistance.target="_blank";
 		document.hourlyDistance.submit();
-	}
+	}*/
 	
    /* if(device_str!=false)
     {
