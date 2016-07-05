@@ -360,6 +360,7 @@ function deviceDataBetweenDatesLogOnly($vSerial, $dateRangeStart, $dateRangeEnd 
         $bx = $item->bx;
         $by = $item->by;
         $bz = $item->bz;
+        $ci = $item->ci;
           
                   
         $dataObject->serverDatetime[] = $datetime_server;
@@ -467,6 +468,10 @@ function deviceDataBetweenDatesLogOnly($vSerial, $dateRangeStart, $dateRangeEnd 
         if ($parameterizeData->bzParam != null) 
         {
             $dataObject->bzParamData[] = $bz;
+        }
+        if ($parameterizeData->ci != null) 
+        {
+            $dataObject->ciData[] = $ci;
         }
 
         if ($parameterizeData->latitude != null && $parameterizeData->longitude != null) 
