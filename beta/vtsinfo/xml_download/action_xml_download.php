@@ -65,6 +65,7 @@ $parameterizeData->mzParam = 'mz';
 $parameterizeData->bxParam = 'bx';
 $parameterizeData->byParam = 'by';
 $parameterizeData->bzParam = 'bz';
+$parameterizeData->ci = 'ci';
 
     
 $SortedDataObject=new data(); 
@@ -75,7 +76,7 @@ $rawData[]=array(
 $rawData[]=array(
                             'SNo','STS', 'DateTime','MsgTp','Version','Fix','Latitude','Longitude','Speed',
                     'SupplyV', 'SgnlSt','io1','io2','io3', 'io4','io5','io6','io7','io8','ax','ay','az',
-                    'mx','my','mz','bx','by','bz'
+                    'mx','my','mz','bx','by','bz','ci'
                 );
 $date_1 = explode(" ",$startdate);
 $date_2 = explode(" ",$enddate);
@@ -156,6 +157,7 @@ for($di=0;$di<=($date_size-1);$di++)
             $bx = ($SortedDataObject->bxParamData[$obi]!='')? $SortedDataObject->bxParamData[$obi] : '-';
             $by = ($SortedDataObject->byParamData[$obi]!='')? $SortedDataObject->byParamData[$obi] : '-';
             $bz = ($SortedDataObject->bzParamData[$obi]!='')? $SortedDataObject->bzParamData[$obi] : '-';
+            $ci = ($SortedDataObject->ciData[$obi]!='')? $SortedDataObject->ciData[$obi] : '-';
             $rawData[]=array(
                             "sno"=>$sno,
                  "sts"=>$sts,                
