@@ -186,7 +186,8 @@ for($di=0;$di<=($date_size-1);$di++)
                 "mz"=>$mz,
                 "bx"=>$bx,
                 "by"=>$by,
-                "bz"=>$bz
+                "bz"=>$bz,
+                "ci"=>$ci
                 );
             //$csv_string = $csv_string.$sno.','.$sts.','.$datetime.','.$msgtype.','.$ver.','.$fix.','.$lat.','.$lng.','.$speed.','.$sup_v.','.$sig_str.','.$io1.','.$io2.','.$io3.','.$io4.','.$io5.','.$io6.','.$io7.','.$io8.','.$ax.','.$ay.','.$az.','.$mx.','.$my.','.$mz.','.$bx.','.$by.','.$bz."\n";
         }
