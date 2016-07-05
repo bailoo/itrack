@@ -118,7 +118,7 @@
         }
     }
 
-    function common_display_vehicle($vehicle_name_arr,$vehicleid_or_imei,$color,$vehicle_type_arr)
+    /*function common_display_vehicle($vehicle_name_arr,$vehicleid_or_imei,$color,$vehicle_type_arr)
     {
         global $type;
         global $report_station_halt_option;	
@@ -143,6 +143,68 @@
                 else
                 {
                     echo'<INPUT TYPE="checkbox"  name="vehicleserial[]" VALUE="'.$vehicleid_or_imei[$vehicle].'">';
+                }
+                echo'</td>
+                    <td class=\'text\'> 				
+                        <font color="'.$color.'">
+                            '.$vehicle.'
+                        </font>';
+                if($type==1)
+                {
+                    echo ' ('.$vehicle_type_arr[$vehicle].')';
+                }
+                echo'</td>';         
+                if($cnt==3)
+                {
+                    echo'</tr><tr>';$cnt=0;
+                }
+            }
+        }            
+    }*/
+    function common_display_vehicle($vehicle_name_arr,$vehicleid_or_imei,$color,$vehicle_type_arr)
+    {
+	//echo "in function <br>";
+        global $type;
+		global $title1; ///// this is report title
+        global $report_station_halt_option;	
+	//echo "report_station_halt_option=".$report_station_halt_option."<br>";
+	if(sizeof($vehicle_name_arr)>0)
+	{
+            natcasesort($vehicle_name_arr);
+            foreach($vehicle_name_arr as $vehicle)
+            { 
+                //echo "<br>in common display";				
+                $cnt++;          
+                if($cnt==1)
+                {
+                echo'<tr>';
+                }         		
+                    echo'<td align="left">';
+                if($report_station_halt_option=="1")
+                {
+                    //echo'<INPUT TYPE="radio"  name="station_vehicle_id" VALUE="'.$vehicleid_or_imei[$vehicle].','.$vehicle.'">';
+                    echo'<INPUT TYPE="checkbox"  name="station_vehicle_id[]" VALUE="'.$vehicleid_or_imei[$vehicle].','.$vehicle.'">';
+                }
+                else
+                {
+					$vchk = "vcheckbox".$vehicleid_or_imei[$vehicle];
+					$vrad = "vradio".$vehicleid_or_imei[$vehicle]; 
+                 
+					if($title1=="Hourly Report")
+					{
+					  echo'<span id="'.$vrad.'">
+								<INPUT TYPE="radio"  name="vehicleserialRadio" VALUE="'.$vehicleid_or_imei[$vehicle].'">
+						</span>';				
+				   echo'<span id="'.$vchk.'"  style="display:none;">
+								<INPUT TYPE="checkbox"  name="vehicleserial[]" VALUE="'.$vehicleid_or_imei[$vehicle].'">
+						</span>';
+					}
+					else
+					{
+					echo'<span id="'.$vchk.'">
+							<INPUT TYPE="checkbox"  name="vehicleserial[]" VALUE="'.$vehicleid_or_imei[$vehicle].'">
+						</span>';
+					}
                 }
                 echo'</td>
                     <td class=\'text\'> 				
