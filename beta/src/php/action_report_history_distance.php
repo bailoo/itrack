@@ -33,6 +33,9 @@
     $date_2 = explode(" ",$date2);
     $datefrom = $date_1[0];
     $dateto = $date_2[0];	
+    
+    get_All_Dates($datefrom, $dateto, $userdates);    
+    $date_size = sizeof($userdates); 
 
     //## MAKE Dates
     $time_1 = explode(":",$date_1[1]);
@@ -75,7 +78,7 @@
 
 
 	$multiple_date_flag = true;
-	if(strtotime($tmpd1) > strtotime($tmpd2) ) {
+	if($date_size > 1) {
 		$dateA = date('Y-m-d', strtotime($date1 . ' +1 day'));
 		$dateB = date('Y-m-d', strtotime($date2 . ' -1 day'));
 	} else {
@@ -231,7 +234,7 @@ for($i=0;$i<sizeof($imei);$i++)
       <td class="text"><strong>Total<strong>&nbsp;</td>
 			<td class="text"><strong>'.$date1.'</strong></td>';      								
       
-			if( ($k>0) || (sizeof($imei)==1))
+			if( ($k>0) || ($date_size==1))
 			{
 				//echo  "<br>sum_avgspeed=".$sum_avgspeed."<br>";
 				$total_distance[$j] = round($sum_dist,2);
