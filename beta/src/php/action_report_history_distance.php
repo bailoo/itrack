@@ -119,9 +119,9 @@
 			//echo "\nSizeField=".sizeof($time1_hr_fields);
 			for($f=0;$f<sizeof($time1_hr_fields);$f++) {
 				$col = $time1_hr_fields[$f];
-				echo "<br>Col=".$col;
+				//echo "<br>Col=".$col;
 				$total_dist+=$ROW1->$col;
-				echo "\nT=".$total_dist;
+				//echo "\nT=".$total_dist;
 			}
 							
                         //echo "<br>Dist=".$total_dist." ,imei=".$vserial[$i];
@@ -245,7 +245,7 @@ for($i=0;$i<sizeof($imei);$i++)
     {
       echo '<tr style="height:20px;background-color:lightgrey">
       <td class="text"><strong>Total<strong>&nbsp;</td>
-			<td class="text"><strong>'.$date1.'</strong></td>';      								
+			<td class="text"></td>';      								
       
 			if( ($k>0) || ($date_size==1))
 			{
@@ -303,7 +303,7 @@ for($i=0;$i<sizeof($imei);$i++)
 		$m = $y+1;								
 		
 		echo"<input TYPE=\"hidden\" VALUE=\"Total\" NAME=\"temp[$x][$m][SNo]\">";
-		echo"<input TYPE=\"hidden\" VALUE=\"$date1\" NAME=\"temp[$x][$m][Date]\">";		
+		echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$m][Date]\">";		
 		echo"<input TYPE=\"hidden\" VALUE=\"$total_distance[$x]\" NAME=\"temp[$x][$m][Distance (km)]\">";
                 $csv_string = $csv_string.'Total,'.$date1.','.$date2.','.$total_distance[$x]."\n";																																										
 	}																						
