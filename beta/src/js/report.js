@@ -1704,8 +1704,8 @@ function action_report_nearby_location(obj)
     {    
       var poststr = "vehicleserial=" + encodeURI( device_str ) +					
                     "&start_date=" + encodeURI( document.getElementById("date1").value )+
-                    "&end_date=" + encodeURI( document.getElementById("date2").value )+  
-                    "&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
+                    "&end_date=" + encodeURI( document.getElementById("date2").value );  
+                    //"&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
                     //alert("riz:"+poststr);  
     }                     
     makePOSTRequest('src/php/action_report_history_distance.htm', poststr);
