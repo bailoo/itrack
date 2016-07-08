@@ -1692,24 +1692,24 @@ function action_report_nearby_location(obj)
     
     //var device_str = get_selected_vehicle(obj); 
     var rec = obj.vehicleserial;
-    var device_str = radio_selection(rec);    
+    //var device_str = radio_selection(rec);
+    var device_str = get_selected_vehicle(obj);
     
-  	if(device_str==false)
-  	{
-  		document.getElementById("loading_msg").style.display='none';
-  	}
+    if(device_str==false)
+    {
+  	document.getElementById("loading_msg").style.display='none';
+    }
 	
     if(device_str!=false)
-  	{    
+    {    
       var poststr = "vehicleserial=" + encodeURI( device_str ) +					
                     "&start_date=" + encodeURI( document.getElementById("date1").value )+
                     "&end_date=" + encodeURI( document.getElementById("date2").value )+  
                     "&user_interval=" + encodeURI( document.getElementById("user_interval").value );                  
                     //alert("riz:"+poststr);  
-  	}                     
+    }                     
     makePOSTRequest('src/php/action_report_history_distance.htm', poststr);
   }
-
 
   function showReportPrevPage(displayPageName,selected_account_id,selected_options_value,s_vehicle_display_option,start_date,end_date,strArrEnc)
   {
