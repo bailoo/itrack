@@ -113,14 +113,14 @@
 		
 		while($ROW1 = mysql_fetch_object($RESULT1)) {
 			
-			$total_dist = 0.0;
+			$total_dist = array();
 			
 			$reportDate = $ROW1->date;
 			//echo "\nSizeField=".sizeof($time1_hr_fields);
 			for($f=0;$f<sizeof($time1_hr_fields);$f++) {
 				$col = $time1_hr_fields[$f];
 				//echo "<br>Col=".$col;
-				$total_dist+=$ROW1->$col;
+				$total_dist[] = $ROW1->$col;
 				//echo "\nT=".$total_dist;
 			}
 							
@@ -128,7 +128,7 @@
 			$imei[]=$vserial[$i];
 			$vname[]=$vehicle_detail_local[0];
 			$dateDisplay[]=$reportDate;                                
-			$distanceDisplay[]=$total_dist;
+			$distanceDisplay[]= max($total_dist);
 		}
 
 
@@ -140,18 +140,38 @@
 		
 		while($ROW2 = mysql_fetch_object($RESULT2)) {
 			
-			$total_dist = 0.0;
+			$total_dist = array();
 			
 			$reportDate = $ROW2->date;
-			$total_dist+= $ROW2->HR_01 + $ROW2->HR_02 + $ROW2->HR_03 + $ROW2->HR_04 + $ROW2->HR_05 + $ROW2->HR_06 + $ROW2->HR_07 +
-						$ROW2->HR_08 + $ROW2->HR_09 + $ROW2->HR_10 + $ROW2->HR_11 + $ROW2->HR_12 + $ROW2->HR_13 + $ROW2->HR_14 +
-						$ROW2->HR_15 + $ROW2->HR_16 + $ROW2->HR_17 + $ROW2->HR_18 + $ROW2->HR_19 + $ROW2->HR_20 + $ROW2->HR_21 +
-						$ROW2->HR_22 + $ROW2->HR_23 + $ROW2->HR_24;
+			$total_dist[] = $ROW2->HR_01;
+                        $total_dist[] = $ROW2->HR_02;
+                        $total_dist[] = $ROW2->HR_03;
+                        $total_dist[] = $ROW2->HR_04;
+                        $total_dist[] = $ROW2->HR_05;
+                        $total_dist[] = $ROW2->HR_06;
+                        $total_dist[] = $ROW2->HR_07;                        
+			$total_dist[] = $ROW2->HR_08;
+                        $total_dist[] = $ROW2->HR_09;
+                        $total_dist[] = $ROW2->HR_10;
+                        $total_dist[] = $ROW2->HR_11;
+                        $total_dist[] = $ROW2->HR_12;
+                        $total_dist[] = $ROW2->HR_13;
+                        $total_dist[] = $ROW2->HR_14;
+			$total_dist[] = $ROW2->HR_15;
+                        $total_dist[] = $ROW2->HR_16;
+                        $total_dist[] = $ROW2->HR_17;
+                        $total_dist[] = $ROW2->HR_18;
+                        $total_dist[] = $ROW2->HR_19;
+                        $total_dist[] = $ROW2->HR_20;
+                        $total_dist[] = $ROW2->HR_21;
+			$total_dist[] = $ROW2->HR_22;
+                        $total_dist[] = $ROW2->HR_23;
+                        $total_dist[] = $ROW2->HR_24;
 							
 			$imei[]=$vserial[$i];
 			$vname[]=$vehicle_detail_local[0];
 			$dateDisplay[]=$reportDate;                                
-			$distanceDisplay[]=$total_dist;
+			$distanceDisplay[] = max($total_dist);
 		}
     
         
@@ -162,23 +182,23 @@
 		
 		while($ROW3 = mysql_fetch_object($RESULT3)) {
 			
-			$total_dist = 0.0;
+			$total_dist = array();
 			
 			$reportDate = $ROW3->date;
 			
 			for($f=0;$f<sizeof($time2_hr_fields);$f++) {
 				$col = $time2_hr_fields[$f];
-				$total_dist+=$ROW3->$col;
+				$total_dist[] = $ROW3->$col;
 			}
 							
 			$imei[]=$vserial[$i];
 			$vname[]=$vehicle_detail_local[0];
 			$dateDisplay[]=$reportDate;                                
-			$distanceDisplay[]=$total_dist;
+			$distanceDisplay[]= max($total_dist);
 		}
 		}
 	}
-	
+	a
   echo '<center>';
 	  
   echo'<br>';
