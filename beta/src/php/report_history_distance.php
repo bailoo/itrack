@@ -10,41 +10,37 @@
 	$option_size=sizeof($options_value2);
 	$option_string="";  
   
-	//$function_string='get_'.$vehicle_display_option1.'_vehicle';
-  $function_string='get_'.$vehicle_display_option1.'_vehicle_radio'; 		
-		
-  echo '		
-	<center>
-  <table border=0 width = 100% cellspacing=2 cellpadding=0>
-		<tr>
-			<td height=10 class="report_heading" align="center">History Distance Report</td>
-		</tr>
-	</table>    
-  
-  <form  method="post" name="thisform">
-		
-	<br>			
-	<fieldset class="report_fieldset">
-		<legend>Select Vehicle</legend>		
-		
-		<table border=0  cellspacing=0 cellpadding=0  width="100%">
-			<tr>
-				<td align="center">							
-					<div style="overflow: auto;height: 150px; width: 650px;" align="center">
-						<table border=0 cellspacing=0 cellpadding=0 align="center" width="100%">';								
-							
-						//echo'<tr><td height="5px" align="center" colspan="6" class=\'text\'>&nbsp;<input type=\'checkbox\' name=\'all\' value=\'1\' onClick=\'javascript:select_all_vehicle(this.form);\'>&nbsp;&nbsp;Select All</td></tr>';                 
-						$function_string($account_id_local1,$options_value1);
+	$function_string='get_'.$vehicle_display_option1.'_vehicle'; 
 
-						echo'</table>
-					</div>
-				</td>
-			</tr>
-		</table>
-		</fieldset>
-		<br>';							
-
-	 echo'
+  echo'	
+    <center>
+    
+    	<table border=0 width = 100% cellspacing=2 cellpadding=0>
+				<tr>
+					<td height=10 class="report_heading" align="center">Daily Distance Report</td>
+				</tr>
+			</table>			
+			
+		<form  method="post" name="thisform">
+                <br>
+		<fieldset class="report_fieldset">
+		<legend>Select Vehicle</legend>	
+		
+                <table border=0  cellspacing=0 cellpadding=0  width="100%">
+                <tr>
+                    <td align="center">							
+                            <div style="overflow: auto;height: 150px; width: 650px;" align="center">
+                                    <table border=0 cellspacing=0 cellpadding=0 align="center" width="100%">';	
+                                      echo'<tr><td height="5px" align="center" colspan="6" class=\'text\'>&nbsp;<input type=\'checkbox\' name=\'all\' value=\'1\' onClick=\'javascript:select_all_vehicle(this.form);\'>&nbsp;&nbsp;Select All</td></tr>';                 
+                                                    $function_string($account_id_local1,$options_value1);
+                                    echo'</table>
+                            </div>
+                    </td>
+                </tr>
+        </table>
+    </fieldset> <br>';	
+                                                
+   echo'
    <fieldset class="report_fieldset">
 		<legend>Select display Option</legend>';		
 		
