@@ -5,6 +5,7 @@
     date_default_timezone_set("Asia/Kolkata");
     include_once("main_vehicle_information_1.php");
     include_once('Hierarchy.php');
+    include_once('util_php_mysql_connectivity.php');	
     include_once('util_session_variable.php');    
     include_once("report_title.php");
     include_once("calculate_distance.php");
@@ -54,7 +55,7 @@
     //====================================	
 
     $t2 = intval($time_2[0]);
-    echo "<br>t2=".$t2;
+    //echo "<br>t2=".$t2;
 	$time2_hr = "";
 	for($i=1;$i<=$t2;$i++) {
 		
@@ -72,12 +73,15 @@
 	$tmpd1 = $date_1[0]." 00:00:00";
 	$tmpd2 = $date_2[0]." 00:00:00";
 
+
+	$multiple_date_flag = true;
 	if(strtotime($tmpd1) > strtotime($tmpd2) ) {
 		$dateA = date('Y-m-d', strtotime($date1 . ' +1 day'));
 		$dateB = date('Y-m-d', strtotime($date2 . ' -1 day'));
 	} else {
 		$dateA = $date_1[0];
 		$dateB = $date_2[0];
+		$multiple_date_flag = false;
  	}
     
     for($i=0;$i<$vsize;$i++)
@@ -88,7 +92,7 @@
                 
 		//##BLOCK 1
 		$QUERY1 = "SELECT imei,date,".$time1_hr." FROM distance_log WHERE date ='$datefrom' AND imei='$vserial[$i]' ORDER BY date ASC";
-echo "<br>QUERY1=".$QUERY1."<br>";
+                //echo "<br>QUERY1=".$QUERY1.", DB=".$DbConnection."<br>";
 		$RESULT1 = mysql_query($QUERY1,$DbConnection);
 		
 		while($ROW1 = mysql_fetch_object($RESULT1)) {
@@ -96,12 +100,15 @@ echo "<br>QUERY1=".$QUERY1."<br>";
 			$total_dist = 0.0;
 			
 			$reportDate = $ROW1->date;
-			
+			//echo "\nSizeField=".sizeof($time1_hr_fields);
 			for($f=0;$f<sizeof($time1_hr_fields);$f++) {
-				$col = "HR_".$time1_hr_fields[$f];
+				$col = $time1_hr_fields[$f];
+				echo "<br>Col=".$col;
 				$total_dist+=$ROW1->$col;
+				echo "\nT=".$total_dist;
 			}
 							
+                        //echo "<br>Dist=".$total_dist." ,imei=".$vserial[$i];
 			$imei[]=$vserial[$i];
 			$vname[]=$vehicle_detail_local[0];
 			$dateDisplay[]=$reportDate;                                
@@ -109,9 +116,10 @@ echo "<br>QUERY1=".$QUERY1."<br>";
 		}
 
 
+		if($multiple_date_flag) {
 		//##BLOCK 2
 		$QUERY2 = "SELECT * FROM distance_log WHERE date BETWEEN '$dateA' AND '$dateB' AND imei='$vserial[$i]' ORDER BY date ASC";
-echo "<br>QUERY2=".$QUERY2."<br>";
+                //echo "<br>QUERY2=".$QUERY2."<br>";
 		$RESULT2 = mysql_query($QUERY2,$DbConnection);
 		
 		while($ROW2 = mysql_fetch_object($RESULT2)) {
@@ -133,7 +141,7 @@ echo "<br>QUERY2=".$QUERY2."<br>";
         
 		//##BLOCK 3
 		$QUERY3 = "SELECT imei,date,".$time2_hr." FROM distance_log WHERE date ='$dateto' AND imei='$vserial[$i]' ORDER BY date ASC";
-echo "<br>QUERY3<br>".$QUERY3;
+                //echo "<br>QUERY3<br>".$QUERY3;
 		$RESULT3 = mysql_query($QUERY3,$DbConnection);
 		
 		while($ROW3 = mysql_fetch_object($RESULT3)) {
@@ -143,7 +151,7 @@ echo "<br>QUERY3<br>".$QUERY3;
 			$reportDate = $ROW3->date;
 			
 			for($f=0;$f<sizeof($time2_hr_fields);$f++) {
-				$col = "HR_".$time2_hr_fields[$f];
+				$col = $time2_hr_fields[$f];
 				$total_dist+=$ROW3->$col;
 			}
 							
@@ -151,6 +159,7 @@ echo "<br>QUERY3<br>".$QUERY3;
 			$vname[]=$vehicle_detail_local[0];
 			$dateDisplay[]=$reportDate;                                
 			$distanceDisplay[]=$total_dist;
+		}
 		}
 	}
 	
@@ -168,8 +177,8 @@ echo "<br>QUERY3<br>".$QUERY3;
 	$datefrom1=array(array());	
 	$dateto1=array(array());
 	$distance1=array(array());
-	for($i=0;$i<sizeof($imei);$i++)
-	{								              
+for($i=0;$i<sizeof($imei);$i++)
+{								              
     if(($i==0) || (($i>0) && ($imei[$i-1] != $imei[$i])) )
     {
       $k=0;                                              
@@ -213,16 +222,16 @@ echo "<br>QUERY3<br>".$QUERY3;
     
     $datefrom1[$j][$k] = $dateDisplay[$i];	
     //$dateto1[$j][$k] = $dateToDisplay[$i];	
-	$distance1[$j][$k] = round($distanceDisplay[$i],2); 
+    $distance1[$j][$k] = round($distanceDisplay[$i],2); 
 	
 	
-	if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
+    if( (($i>0) && ($imei[$i+1] != $imei[$i])) )
     {
       echo '<tr style="height:20px;background-color:lightgrey">
       <td class="text"><strong>Total<strong>&nbsp;</td>
 			<td class="text"><strong>'.$date1.'</strong></td>';      								
       
-			if($k>0)
+			if( ($k>0) || (sizeof($imei)==1))
 			{
 				//echo  "<br>sum_avgspeed=".$sum_avgspeed."<br>";
 				$total_distance[$j] = round($sum_dist,2);
@@ -234,7 +243,7 @@ echo "<br>QUERY3<br>".$QUERY3;
       echo '</tbody></table>';
       
       $no_of_data[$j] = $k;
-		}  
+    }  
 		
     $k++;   
     $sno++;                       							  		
@@ -246,7 +255,7 @@ echo "<br>QUERY3<br>".$QUERY3;
 	
   $csv_string = "";
 	
-  for($x=0;$x<=$j;$x++)
+        for($x=0;$x<=$j;$x++)
 	{								
 		$title = $vname1[$x][0]." (".$imei1[$x][0]."): History Distance Report- From DateTime : ".$date1."-".$date2;
 		$csv_string = $csv_string.$title."\n";
@@ -280,7 +289,7 @@ echo "<br>QUERY3<br>".$QUERY3;
 		echo"<input TYPE=\"hidden\" VALUE=\"Total\" NAME=\"temp[$x][$m][SNo]\">";
 		echo"<input TYPE=\"hidden\" VALUE=\"$date1\" NAME=\"temp[$x][$m][Date]\">";		
 		echo"<input TYPE=\"hidden\" VALUE=\"$total_distance[$x]\" NAME=\"temp[$x][$m][Distance (km)]\">";
-    $csv_string = $csv_string.'Total,'.$date1.','.$date2.','.$total_distance[$x]."\n";																																										
+                $csv_string = $csv_string.'Total,'.$date1.','.$date2.','.$total_distance[$x]."\n";																																										
 	}																						
 
       
