@@ -1,6 +1,6 @@
 <?php
-    //error_reporting(-1);
-    //ini_set('display_errors', 'On');
+    /*error_reporting(-1);
+    ini_set('display_errors', 'On');*/
     set_time_limit(300);	
     date_default_timezone_set("Asia/Kolkata");
     include_once("main_vehicle_information_1.php");
@@ -33,31 +33,34 @@
     $datefrom = $date_1[0];
     $dateto = $date_2[0];	
 
-	//## MAKE Dates
-	$time_1 = explode(":",$date_1);
-	$time_2 = explode(":",$date_2);
-	
-	$t1 = intval($time_1[0]);
-	$time1_hr = "";
-	for($i=$t1;$i<24;$i++) {
-		
-		$hr = $i;
-		
-		if($i<9) { $hr = "0".$hr; }
-		
-		$time1_hr.= "HR_".$hr.",";
-	}
-	$time1_hr = substr($time1_hr, 0, -1);
-	$time1_hr_fields = explode(",",$time1_hr);
-	//====================================	
-	
-	$t2 = intval($time_2[0]);
+    //## MAKE Dates
+    $time_1 = explode(":",$date_1[1]);
+    $time_2 = explode(":",$date_2[1]);
+
+    $t1 = intval($time_1[0]);
+    $time1_hr = "";
+    for($i=$t1;$i<=24;$i++) {
+
+            if($i>0) {
+            $hr = $i;
+
+            if($i<=9) { $hr = "0".$hr; }
+
+            $time1_hr.= "HR_".$hr.",";
+            }
+    }
+    $time1_hr = substr($time1_hr, 0, -1);
+    $time1_hr_fields = explode(",",$time1_hr);
+    //====================================	
+
+    $t2 = intval($time_2[0]);
+    echo "<br>t2=".$t2;
 	$time2_hr = "";
-	for($i=0;$i<$t2;$i++) {
+	for($i=1;$i<=$t2;$i++) {
 		
 		$hr = $i;
 		
-		if($i<9) { $hr = "0".$hr; }
+		if($i<=9) { $hr = "0".$hr; }
 		
 		$time2_hr.= "HR_".$hr.",";
 	}
@@ -66,8 +69,16 @@
 	//=====================================
 	
 	//## Get Next and Previous Dates
-	$dateA = date('Y-m-d', strtotime($date1 . ' +1 day'));
-	$dateB = date('Y-m-d', strtotime($date2 . ' -1 day'));
+	$tmpd1 = $date_1[0]." 00:00:00";
+	$tmpd2 = $date_2[0]." 00:00:00";
+
+	if(strtotime($tmpd1) > strtotime($tmpd2) ) {
+		$dateA = date('Y-m-d', strtotime($date1 . ' +1 day'));
+		$dateB = date('Y-m-d', strtotime($date2 . ' -1 day'));
+	} else {
+		$dateA = $date_1[0];
+		$dateB = $date_2[0];
+ 	}
     
     for($i=0;$i<$vsize;$i++)
     {
@@ -77,13 +88,14 @@
                 
 		//##BLOCK 1
 		$QUERY1 = "SELECT imei,date,".$time1_hr." FROM distance_log WHERE date ='$datefrom' AND imei='$vserial[$i]' ORDER BY date ASC";
+echo "<br>QUERY1=".$QUERY1."<br>";
 		$RESULT1 = mysql_query($QUERY1,$DbConnection);
 		
 		while($ROW1 = mysql_fetch_object($RESULT1)) {
 			
 			$total_dist = 0.0;
 			
-			$reportDate = $ROW1->`date`;
+			$reportDate = $ROW1->date;
 			
 			for($f=0;$f<sizeof($time1_hr_fields);$f++) {
 				$col = "HR_".$time1_hr_fields[$f];
@@ -99,13 +111,14 @@
 
 		//##BLOCK 2
 		$QUERY2 = "SELECT * FROM distance_log WHERE date BETWEEN '$dateA' AND '$dateB' AND imei='$vserial[$i]' ORDER BY date ASC";
+echo "<br>QUERY2=".$QUERY2."<br>";
 		$RESULT2 = mysql_query($QUERY2,$DbConnection);
 		
 		while($ROW2 = mysql_fetch_object($RESULT2)) {
 			
 			$total_dist = 0.0;
 			
-			$reportDate = $ROW2->`date`;
+			$reportDate = $ROW2->date;
 			$total_dist+= $ROW2->HR_01 + $ROW2->HR_02 + $ROW2->HR_03 + $ROW2->HR_04 + $ROW2->HR_05 + $ROW2->HR_06 + $ROW2->HR_07 +
 						$ROW2->HR_08 + $ROW2->HR_09 + $ROW2->HR_10 + $ROW2->HR_11 + $ROW2->HR_12 + $ROW2->HR_13 + $ROW2->HR_14 +
 						$ROW2->HR_15 + $ROW2->HR_16 + $ROW2->HR_17 + $ROW2->HR_18 + $ROW2->HR_19 + $ROW2->HR_20 + $ROW2->HR_21 +
@@ -120,13 +133,14 @@
         
 		//##BLOCK 3
 		$QUERY3 = "SELECT imei,date,".$time2_hr." FROM distance_log WHERE date ='$dateto' AND imei='$vserial[$i]' ORDER BY date ASC";
+echo "<br>QUERY3<br>".$QUERY3;
 		$RESULT3 = mysql_query($QUERY3,$DbConnection);
 		
 		while($ROW3 = mysql_fetch_object($RESULT3)) {
 			
 			$total_dist = 0.0;
 			
-			$reportDate = $ROW3->`date`;
+			$reportDate = $ROW3->date;
 			
 			for($f=0;$f<sizeof($time2_hr_fields);$f++) {
 				$col = "HR_".$time2_hr_fields[$f];
