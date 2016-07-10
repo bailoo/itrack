@@ -63,7 +63,8 @@ var MondayFirstDay=true;//true:Use Monday as first day; false:Sunday as first da
 
 function NewCal_SD(pCtrl,pFormat,pShowTime,pTimeMode,pScroller,pHideSeconds)
 {
-	Cal=new Calendar(dtStart);
+	//Cal=new Calendar(dtStart);
+        Cal=new Calendar(dtToday);
 	if ((pShowTime!=null) && (pShowTime))
 	{
 		Cal.ShowTime=true;
