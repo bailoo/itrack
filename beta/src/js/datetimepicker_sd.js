@@ -289,6 +289,7 @@ function RenderCal()
 	CalDate=new Date(Cal.Year,Cal.Month);
 	CalDate.setDate(1);
 	vFirstDay=CalDate.getDay();
+        //alert(vFirstDay);
 	//Added version 1.7
 	if (MondayFirstDay==true)
 	{
@@ -420,6 +421,7 @@ function Calendar(pDate,pCtrl)
 {
 	//Properties
 	this.Date=pDate.getDate();//selected date
+        //alert(pDate.getDate());
 	this.Month=pDate.getMonth();//selected month number
 	this.Year=pDate.getFullYear();//selected year in 4 digits
 	this.Hours=pDate.getHours();	
