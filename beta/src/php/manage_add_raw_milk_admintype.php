@@ -752,7 +752,7 @@
 										}
 										else
 										{
-											document.getElementById('transporter:'+l).value=Transporter_Tags[l];
+											document.getElementById('transporter:'+l).value=Transporter_Tags[l].trim();
 										}
 										
 										document.getElementById('email:'+l).value=emailid_Tags[l];
@@ -772,8 +772,8 @@
 										document.getElementById('milk_age:'+l).value=milk_age_Tags[l];
 										document.getElementById('disp_time:'+l).value=disp_time_Tags[l];
 										document.getElementById('target_time:'+l).value=target_time_Tags[l];
-										document.getElementById('plant:'+l).value=plant_Tags[l];
-										document.getElementById('chillplant:'+l).value=chillplant_Tags[l];
+										document.getElementById('plant:'+l).value=plant_Tags[l].trim();
+										document.getElementById('chillplant:'+l).value=chillplant_Tags[l].trim();
 										document.getElementById('chillplant:'+l).readonly = true;
 										document.getElementById('tankertype:'+l).value=tankertype_Tags[l];
 										document.getElementById('div_display_error').innerHTML= document.getElementById('div_display_error').innerHTML + error_upload_Tags[l];
@@ -846,7 +846,7 @@
 								{
 									document.getElementById('lrno:'+l).value=LR_Tags[l];
 									document.getElementById('vehno:'+l).value=Vehicle_Tags[l];
-									document.getElementById('transporter:'+l).value=Transporter_Tags[l];
+									document.getElementById('transporter:'+l).value=Transporter_Tags[l].trim();
 									document.getElementById('email:'+l).value=emailid_Tags[l];
 									document.getElementById('mobile:'+l).value=mobileno_Tags[l];
 									document.getElementById('driver:'+l).value=drivername_Tags[l];
@@ -864,8 +864,8 @@
 									document.getElementById('milk_age:'+l).value=milk_age_Tags[l];
 									document.getElementById('disp_time:'+l).value=disp_time_Tags[l];
 									document.getElementById('target_time:'+l).value=target_time_Tags[l];
-									document.getElementById('plant:'+l).value=plant_Tags[l];
-									document.getElementById('chillplant:'+l).value=chillplant_Tags[l];
+									document.getElementById('plant:'+l).value=plant_Tags[l].trim();
+									document.getElementById('chillplant:'+l).value=chillplant_Tags[l].trim();
 									document.getElementById('chillplant:'+l).readonly = true;
 									if(tankertype_Tags[l]=='Production')
 									{
@@ -945,7 +945,7 @@
 								{
 									document.getElementById('lrno:'+l).value=LR_Tags[l];
 									document.getElementById('vehno:'+l).value=Vehicle_Tags[l];
-									document.getElementById('transporter:'+l).value=Transporter_Tags[l];
+									document.getElementById('transporter:'+l).value=Transporter_Tags[l].trim();
 									document.getElementById('email:'+l).value=emailid_Tags[l];
 									document.getElementById('mobile:'+l).value=mobileno_Tags[l];
 									document.getElementById('driver:'+l).value=drivername_Tags[l];
@@ -963,8 +963,8 @@
 									document.getElementById('milk_age:'+l).value=milk_age_Tags[l];
 									document.getElementById('disp_time:'+l).value=disp_time_Tags[l];
 									document.getElementById('target_time:'+l).value=target_time_Tags[l];
-									document.getElementById('plant:'+l).value=plant_Tags[l];
-									document.getElementById('chillplant:'+l).value=chillplant_Tags[l];
+									document.getElementById('plant:'+l).value=plant_Tags[l].trim();
+									document.getElementById('chillplant:'+l).value=chillplant_Tags[l].trim();
 									document.getElementById('chillplant:'+l).readonly = true;
 									if(tankertype_Tags[l]=='Production')
 									{
