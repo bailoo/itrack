@@ -650,7 +650,7 @@ echo'<table border="0" align="center">
 						}
 						else if($upload_type=="master")
 						{
-							if($c==2 || $c==3)
+							if($c==3 || $c==4)
 							{														
 								if(!preg_match("/^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$/", $data[$c]))
 								{
