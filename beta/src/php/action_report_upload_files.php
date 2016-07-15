@@ -541,7 +541,7 @@ echo'<table border="0" align="center">
 							
 	function validate_csv_fields($format_ids_cnd,$upload_type,$final_file_name,$sub_files_ids,$tmp_upload_file)
 	{
-		
+		global $account_id;
 		global $flag;
 		copy($_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['tmp_name'],$tmp_upload_file);
 		$original_file_name=basename($_FILES['file_'.$format_ids_cnd."_".$sub_files_ids]['name']);
@@ -648,9 +648,22 @@ echo'<table border="0" align="center">
 							}
 							//echo "datac=".$data[$c]."<br>";
 						}
-						else if($upload_type=="master")
+                                                else if($upload_type=="master" && $account_id==231 && $format_ids_cnd=="#1")
 						{
 							if($c==3 || $c==4)
+							{														
+								if(!preg_match("/^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$/", $data[$c]))
+								{
+									$tmp_val=$cnt." => ".$c." => ".$data[$c];
+									delete_file_with_error_message("h:mm",$original_file_name,$tmp_upload_file,$tmp_val);								
+									$flag=1;														
+									break;
+								}									
+							}
+						}
+						else if($upload_type=="master")
+						{
+							if($c==2 || $c==3)
 							{														
 								if(!preg_match("/^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$/", $data[$c]))
 								{
