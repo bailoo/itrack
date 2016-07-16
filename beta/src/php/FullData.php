@@ -797,10 +797,10 @@ include_once($path_mapwindow);
 											}
 											else if($text_report_io_element1[1]=="engine")
 											{												
-												if(${$tmp_io}[$i]<=350)
+												if(${$tmp_io}[$i]<=500)
 												{
 												echo'<td class="text" align="left">
-														Off
+														ON
 													</td>';
 												echo"<input TYPE=\"hidden\" VALUE=\"ON\" NAME=\"temp[$i][$text_report_io_element1[1]]\">";
 													$csv_string=$csv_string.',ON';
@@ -808,7 +808,7 @@ include_once($path_mapwindow);
 												else
 												{
 												echo'<td class="text" align="left" width="4%">
-														ON
+														Off
 													</td>';
 												echo"<input TYPE=\"hidden\" VALUE=\"$pdf_io_value\" NAME=\"temp[$i][$text_report_io_element1[1]]\">";
 												$csv_string=$csv_string.',Off';	
