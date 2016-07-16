@@ -274,13 +274,13 @@ $vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
                                                                     //echo "engine".$iotype_iovalue_str1[1]."<br>";
                                                                     if(trim($iotype_iovalue_str1[1])=="engine")
                                                                     {
-                                                                            if($io_values<=350)
+                                                                            if($io_values<=500)
                                                                             {					
-                                                                                    $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>Off</td></tr>";
+                                                                                    $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>&nbsp;:&nbsp;</td><td class='live_td_css2'>ON</td></tr>";
                                                                             }
                                                                             else
                                                                             {
-                                                                                    $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>:</td><td class='live_td_css2'>ON</td></tr>";
+                                                                                    $io_str=$io_str."<tr><td class='live_td_css1'>".$iotype_iovalue_str1[1]."</td><td>:</td><td class='live_td_css2'>Off</td></tr>";
                                                                             }
                                                                     }
                                                                     else if(trim($iotype_iovalue_str1[1])=="ac")
