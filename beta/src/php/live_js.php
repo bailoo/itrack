@@ -2482,7 +2482,7 @@ function LeftPanPlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename
 						//alert("io="+getFinalIO[1]);
 						if(getFinalIO[1]==1)
 						{
-							if(eval(io_values)<350)
+							if(eval(io_values)<500)
 							{
 								io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">ON</td></tr>";
 							}
@@ -2493,7 +2493,7 @@ function LeftPanPlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename
 						}
 						else
 						{
-							if(eval(io_values)<=350)
+							if(eval(io_values)<=500)
 							{
 									io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">Off</td></tr>";
 							}
@@ -3017,7 +3017,7 @@ function PlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed
 						//alert("io="+getFinalIO[1]);
 						if(getFinalIO[1]==1)
 						{
-							if(eval(io_values)<350)
+							if(eval(io_values)<500)
 							{
 								io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">ON</td></tr>";
 							}
@@ -3028,7 +3028,7 @@ function PlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename, speed
 						}
 						else
 						{
-							if(eval(io_values)<=350)
+							if(eval(io_values)<=500)
 							{
 									io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">Off</td></tr>";
 							}
