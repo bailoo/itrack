@@ -157,7 +157,8 @@
                             $lnglast =  $lng2;
                             
                             
-                            if(($tmp_time_diff>2.0) && ($tmp_time_diff1>2.0))
+                            //if(($tmp_time_diff>2.0) && ($tmp_time_diff1>2.0))
+                            if($tmp_time_diff>2.0)
                             {
                                 $SpeedThsld = 90.0;
                             }
