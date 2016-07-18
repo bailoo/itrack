@@ -65,7 +65,7 @@
 	$linetowrite="";
 	$firstdata_flag =0;
         $total_dist = 0.0;
-        
+        $highSpeedCnt=0;
         for($di=0;$di<=($date_size-1);$di++)
         {
             //echo "userdate=".$userdates[$di]."<br>";
@@ -141,12 +141,18 @@
                             {
                                 $tmp_speed1 = 1000.0; //very high value
                             }
+                            
                             if($tmp_speed<250.0)
                             {
                                 $speeed_data_valid_time = $datetime;
+                                $highSpeedCnt=0;
+                            }
+                            else
+                            {
+                                $highSpeedCnt++;
                             }
 
-                            if(( strtotime($datetime) - strtotime($speeed_data_valid_time) )>300) //data high speed for 5 mins
+                            if((( strtotime($datetime) - strtotime($speeed_data_valid_time) )>300) && ($highSpeedCnt>1))//data high speed for 5 mins
                             {
                                 $lat1 = $lat2;
                                 $lng1 = $lng2;
