@@ -427,7 +427,7 @@ function filter_live_vehicle()
   }   */ 
 //alert("obj="+document.getElementById('prepage').style.visibility);  
   document.getElementById('prepage').style.visibility='visible';
-  alert("obj="+document.getElementById('prepage').style.visibility);
+  //alert("obj="+document.getElementById('prepage').style.visibility);
   pt = null;
   imei1 = null;
   vname1 = null;
@@ -701,7 +701,7 @@ var poststr = "mode=" + encodeURI( dmode )+
                 "&vserial=" + encodeURI( imei_data )+
                 "&startdate=" + encodeURI( startdate )+
                 "&enddate=" + encodeURI( enddate );				
-                document.getElementById('prepage').style.visibility='visible';                                                   
+                                                              
         //alert("poststr1="+poststr);
         makePOSTRequestMap1('get_consignment_filtered_xml_live.php', poststr);
         
