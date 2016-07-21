@@ -1027,7 +1027,7 @@ var input = (document.getElementById('pac-input'));
 									'<td class=\"live_td_css2\">'+tmp_address+'</td></tr>'+	
                                                                          '<tr>'+
                                                                         '<td>'+
-                                                                        '<a href=\"report.htm?dataLogImei='+vSerial+'\" target=\"_blank\">DataLog</a>'+
+                                                                        '<a href=\"report.htm?dataLogImei='+vSerial+'&start_date_map='+start_date_map+'&end_date_map='+end_date_map+'\" target=\"_blank\">DataLog</a>'+
                                                                         '</td>'+
                                                                         '</tr>'+
 									'</table>'+
