@@ -563,7 +563,7 @@ echo'<table border="0" align="center">
 					$tmp_str="";
 					for ($c=0; $c < $num; $c++) 
 					{
-						//echo "format_id_cnd=".$format_ids_cnd."upload_type=".$upload_type."<br>"; 
+						echo "format_id_cnd=".$format_ids_cnd."upload_type=".$upload_type."<br>"; 
 						if((($upload_type=="master") && ($format_ids_cnd=="#4" || $format_ids_cnd=="#5")) || ($upload_type=="get_report" && $format_ids_cnd=="#1"))
 						{
 							//echo "datgc=".$data[$c]."<br>";
@@ -669,6 +669,7 @@ echo'<table border="0" align="center">
 						}
 						else if($upload_type=="master" && $sub_files_ids!="#15")
 						{
+                                                    echo "in if";
 							if($c==2 || $c==3)
 							{														
 								if(!preg_match("/^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$/", $data[$c]))
