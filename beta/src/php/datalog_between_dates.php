@@ -67,13 +67,14 @@
 							//date_default_timezone_set('Asia/Calcutta');
                                                 if($dataLogImei!='') ////// this is for person data log coming from track on map and last data report
                                                 {
-							$StartDate=date('Y/m/d 00:00:00');
-							$EndDate=date('Y/m/d H:i:s');	
+                                                    $StartDate=$start_date_map;
+                                                    $EndDate=$end_date_map;
+							
                                                 }
                                                 else 
                                                 {
-                                                    $StartDate=$start_date_map;
-                                                    $EndDate=$end_date_map;
+                                                    $StartDate=date('Y/m/d 00:00:00');
+                                                    $EndDate=date('Y/m/d H:i:s');	
                                                 }
 						  
               echo'
