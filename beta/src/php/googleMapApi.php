@@ -929,8 +929,8 @@ var input = (document.getElementById('pac-input'));
 				{	
 					return function() 
 					{
-                                            var start_date_map=getDocumentById(\'date1\').value;
-                                            var end_date_map=getDocumentById(\'date2\').value;
+                                            var start_date_map=getDocumentById('date1').value;
+                                            var end_date_map=getDocumentById('date2').value;
 						 var contentString='';
 							if (infowindow) infowindow.close();
 						infowindow = new google.maps.InfoWindow();
