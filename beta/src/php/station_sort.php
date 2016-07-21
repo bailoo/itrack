@@ -88,7 +88,7 @@ function get_master_detail($account_id, $shift_time)
 		}
                 
                 
-                if( ($file_ext[0] == "9") && ($shift_time=="ZPTST") )			//###### MORNING FILE
+                if( ($file_ext[0] == "15") && ($shift_time=="ZPTST") )			//###### MORNING FILE
 		{
 			$path = $dir."/".$file;
 			$row = 1;        
@@ -148,7 +148,7 @@ function get_master_detail($account_id, $shift_time)
         
 	if($shift_time == "ZPTST")
 	{
-            $plant_customer_write_path_tst = $abspath."/".$account_id."/master/tst_plant_customer#1#11.csv";
+            $plant_customer_write_path_tst = $abspath."/".$account_id."/master/tst_plant_customer#1#18.csv";
             unlink($plant_customer_write_path_tst);
 
             $plantTstFileArr=explode("/",$plant_customer_write_path_tst);
