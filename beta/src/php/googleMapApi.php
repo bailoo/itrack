@@ -929,8 +929,6 @@ var input = (document.getElementById('pac-input'));
 				{	
 					return function() 
 					{
-                                                var startDate=document.getElementById(\'date1\').value; // this for data log
-                                                var endDate=document.getElementById(\'date2\').value; // this for data log
 						 var contentString='';
 							if (infowindow) infowindow.close();
 						infowindow = new google.maps.InfoWindow();
@@ -1027,7 +1025,7 @@ var input = (document.getElementById('pac-input'));
 									'<td class=\"live_td_css2\">'+tmp_address+'</td></tr>'+	
                                                                          '<tr>'+
                                                                         '<td>'+
-                                                                        '<a href=\"report.htm?dataLogImei='+vSerial+'&start_date='+startDate+'&end_date='+endDate+'\" target=\"_blank\">DataLog</a>'+
+                                                                        '<a href=\"report.htm?dataLogImei='+vSerial+'\" target=\"_blank\">DataLog</a>'+
                                                                         '</td>'+
                                                                         '</tr>'+
 									'</table>'+
