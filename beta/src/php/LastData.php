@@ -573,7 +573,8 @@
 									{
 										$m++;
 										if($report_type=="Person")
-										{ 
+										{
+                                                                                   
 											echo'<tr valign="top" bgcolor="#FFFAF5" onMouseOver="this.className=\'highlight1\'" onMouseOut="this.className=\'normal1\'">
 													<td class="text">'.$m.'</td>
 													<td class="text">'.$tmp_vname.'</td>
@@ -587,7 +588,8 @@
 										{
 											echo'<tr valign="top" bgcolor="#FFFAF5" onMouseOver="this.className=\'highlight1\'" onMouseOut="this.className=\'normal1\'">
 													<td class="text">'.$m.'</td>
-													<td class="text">'.$tmp_vname.'</td>
+                                                                                                       
+													<td class="text"><a href="'.$pathToRoot.'/report.htm?dataLogImei='.$vserial_post[$k].'&start_date_map='.$startdate.'end_date_map='.$enddate.'" target="_blank" style="text-decoration:none">'.$tmp_vname.'</a></td>
 													<td class="text">'.$vserial_post[$k].'</td>	
 													<td colspan="7" class="text">
 														<font color="red">Inactive</font>
