@@ -344,6 +344,12 @@ echo'<table border="0" align="center">
 					}
 					get_master_detail($account_id, $shift_time);
 				}
+                                if( ($upload_type=="master" && $format_ids_cnd=="#15") && ($account_id=='1882'))
+				{
+					//echo "in if 1 <br>";
+                                        $shift_time = "ZPTST";
+					get_master_detail($account_id, $shift_time);
+				}                                
 			}
 			else
 			{
