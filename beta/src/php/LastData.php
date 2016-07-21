@@ -330,7 +330,7 @@
 											{
 												if($report_type=="Person")
                                                                                                 {
-                                                                                                echo'<td class="text"><a href="'.$pathToRoot.'/report.htm?dataLogImei='.$vehicleserial[$i].'&start_date_map='.$startdate.'end_date_map='.$enddate.'" target="_blank" style="text-decoration:none">'.$vehiclename[$i].'</a></td>';
+                                                                                                echo'<td class="text"><a href="'.$pathToRoot.'/report.htm?dataLogImei='.$vehicleserial[$i].'&start_date_map='.$startdate.'&end_date_map='.$enddate.'" target="_blank" style="text-decoration:none">'.$vehiclename[$i].'</a></td>';
                                                                                                 }
                                                                                                 else
                                                                                                 {
@@ -577,7 +577,7 @@
                                                                                    
 											echo'<tr valign="top" bgcolor="#FFFAF5" onMouseOver="this.className=\'highlight1\'" onMouseOut="this.className=\'normal1\'">
                                                                                             <td class="text">'.$m.'</td>
-                                                                                            <td class="text"><a href="'.$pathToRoot.'/report.htm?dataLogImei='.$vserial_post[$k].'&start_date_map='.$startdate.'end_date_map='.$enddate.'" target="_blank" style="text-decoration:none">'.$tmp_vname.'</a></td>
+                                                                                            <td class="text"><a href="'.$pathToRoot.'/report.htm?dataLogImei='.$vserial_post[$k].'&start_date_map='.$startdate.'&end_date_map='.$enddate.'" target="_blank" style="text-decoration:none">'.$tmp_vname.'</a></td>
                                                                                             <td colspan="7" class="text">
                                                                                                     <font color="red">Inactive&nbsp;&nbsp;&nbsp;&nbsp;</font>
                                                                                                     <font color="blue">'.$vnumber_post[$k].'</font>
