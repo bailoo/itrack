@@ -13730,6 +13730,13 @@ function action_manage_vehicle_thirdparty(file_name)
 		//alert(poststr);
 		makePOSTRequest('src/php/action_manage_vehicle_thirdparty.htm', poststr);	
 	}
+        else
+        {
+            var poststr = "destination_account=" + encodeURI(destination_account)+
+					"&vehicle_id=";
+		//alert(poststr);
+		makePOSTRequest('src/php/action_manage_vehicle_thirdparty.htm', poststr);
+        }
 	
 }
 
