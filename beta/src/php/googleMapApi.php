@@ -929,8 +929,10 @@ var input = (document.getElementById('pac-input'));
 				{	
 					return function() 
 					{
-                                            var start_date_map='abc';
-                                            var end_date_map='xyz';
+                                            var start_date_map=document.getElementById('date1').value;
+                                            var end_date_map=document.getElementById('date2').value;
+                                            var getUrlFormat='report.htm?dataLogImei='+vSerial+'&start_date_map='+start_date_map+'&end_date_map='+end_date_map;
+                                            getUrlFormat = encodeURI(getUrlFormat);
 						 var contentString='';
 							if (infowindow) infowindow.close();
 						infowindow = new google.maps.InfoWindow();
@@ -1027,7 +1029,7 @@ var input = (document.getElementById('pac-input'));
 									'<td class=\"live_td_css2\">'+tmp_address+'</td></tr>'+	
                                                                          '<tr>'+
                                                                         '<td>'+
-                                                                        '<a href=\"report.htm?dataLogImei='+vSerial+'&start_date_map='+start_date_map+'&end_date_map='+end_date_map+'\" target=\"_blank\">DataLog</a>'+
+                                                                        '<a href=\"'+getUrlFormat+'\" target=\"_blank\">DataLog</a>'+
                                                                         '</td>'+
                                                                         '</tr>'+
 									'</table>'+
