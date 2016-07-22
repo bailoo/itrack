@@ -130,7 +130,7 @@
                                                     $dateFromDisplay[]=$time1;
                                                     $dateTodisplay[]=$time2;
                                                     $temperatureDisplay[]=$temperature;
-                                                    $fieldsData['tmp'][$datetime] = $temperature;
+                                                    $fieldsData[$datetime] = $temperature;
                                                     $time1 = $datetime;
                                                     $date_secs1 = strtotime($time1);
                                                     $date_secs1 = (double)($date_secs1 + $interval);
@@ -224,12 +224,12 @@
 echo '<center>';
 if($account_id==723)
 {
-    echo "1";
-    print_r($fieldsData);
+   // echo "1";
+    //print_r($fieldsData);
 $fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
 	 $tmp_data = $fieldsDataSort['datetimeTS'];
-           echo "<br>2<br>";
-           print_r($tmp_data);
+           //echo "<br>2<br>";
+          // print_r($tmp_data);
 	//echo "sizeofspeedData=".sizeof($speedData)."<br>";
 	//date_default_timezone_set('Asia/Calcutta');
 	$datetime_now = date("Y:m:d H:i:s", time());
@@ -255,10 +255,10 @@ $fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
 			}
 		}
 	} 
-	print_r($tmperat);
+	//print_r($tmperat);
 	// $speed_sortTS = UTIL::sort_datetimeTS($speed);
 		$session_name = "TMP_" . time();
-		$_SESSION[$session_name] = $tmperat;
+		$_SESSION[$session_name] = $fieldsData;
 		//print "<center><img src=\"graph/GraphDateLine.php?s=".$session_name."\"></center>";
 		print "<center><a href=\"graph/GraphDateLine.php?s=".$session_name."\">Show graph</a></center>";
 }	  
