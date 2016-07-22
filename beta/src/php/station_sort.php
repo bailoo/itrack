@@ -85,36 +85,7 @@ function get_master_detail($account_id, $shift_time)
 				}
 				fclose($handle);			
 			}
-		}
-                
-                
-                if( ($file_ext[0] == "15") && ($shift_time=="ZPTST") )			//###### MORNING FILE
-		{
-			$path = $dir."/".$file;
-			$row = 1;        
-			if (($handle = fopen($path, "r")) !== FALSE) {
-					
-				while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-					$num = count($data);
-					//echo "<p> $num fields in line $row: <br /></p>\n";              
-					$row++;
-					
-					if($num<10)
-					{
-						continue;
-					}
-					if($row > 2)
-					{				
-						$plant_input_tst[] = $data[5];
-						$route_input_tst[] = $data[6];
-						$transporter_input_tst[] = $data[8];
-						$customer_input_tst[] = $data[9];
-						//echo "\nMOR::r=".$row." ,data[5]=".$data[5]." ,data[9]=".$data[9]."\n";
-					}											
-				}
-				fclose($handle);			
-			}
-		}	                
+		}                   
 	}  //
             
   
@@ -144,19 +115,6 @@ function get_master_detail($account_id, $shift_time)
 
             //$plant_customer_write_path_mor = "C:\\xampp/htdocs/sorting_motherdairy/morning_plant_customer#1#8.csv";	
             sort_station($plant_input_mor, $customer_input_mor, $transporter_input_mor, $route_input_mor, $plant_customer_write_path_mor); 
-	}
-        
-	if($shift_time == "ZPTST")
-	{
-            $plant_customer_write_path_tst = $abspath."/".$account_id."/master/tst_plant_customer#1#18.csv";
-            unlink($plant_customer_write_path_tst);
-
-            $plantTstFileArr=explode("/",$plant_customer_write_path_tst);
-            $delPlantTstFile="gps_report/".$account_id."/master/".$plantTstFileArr[sizeof($plantTstFileArr)-1];
-            delFile($delPlantMorFile);
-
-            //$plant_customer_write_path_mor = "C:\\xampp/htdocs/sorting_motherdairy/morning_plant_customer#1#8.csv";	
-            sort_station($plant_input_tst, $customer_input_tst, $transporter_input_tst, $route_input_tst, $plant_customer_write_path_tst); 
 	}        
   
 } //function closed
