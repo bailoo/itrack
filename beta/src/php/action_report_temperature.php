@@ -226,7 +226,7 @@ if($account_id==723)
 {
    // echo "1";
     //print_r($fieldsData);
-$fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
+/*$fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
 	 $tmp_data = $fieldsDataSort['datetimeTS'];
            //echo "<br>2<br>";
           // print_r($tmp_data);
@@ -254,11 +254,12 @@ $fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
 				}
 			}
 		}
-	} 
+	} */
 	//print_r($tmperat);
 	// $speed_sortTS = UTIL::sort_datetimeTS($speed);
 		$session_name = "TMP_" . time();
 		$_SESSION[$session_name] = $fieldsData;
+                print_r($fieldsData);
 		//print "<center><img src=\"graph/GraphDateLine.php?s=".$session_name."\"></center>";
 		print "<center><a href=\"graph/GraphDateLine.php?s=".$session_name."\">Show graph</a></center>";
 }	  
