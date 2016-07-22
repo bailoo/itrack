@@ -222,6 +222,8 @@
         $parameterizeData=null;
 
 echo '<center>';
+if($account_id==723)
+{
 $fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
 	 $tmp_data = $fieldsDataSort['datetimeTS'];
 	//echo "sizeofspeedData=".sizeof($speedData)."<br>";
@@ -249,13 +251,13 @@ $fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
 			}
 		}
 	} 
-	
+	print_r($tmperat);
 	// $speed_sortTS = UTIL::sort_datetimeTS($speed);
 		$session_name = "TMP_" . time();
 		$_SESSION[$session_name] = $tmperat;
-		print "<center><img src=\"graph/GraphDateLine.php?s=".$session_name."\"></center>";
-		//print "<center><a href=\"graph/GraphDateLine.php?s=".$session_name."\">Show graph</a></center>";
-	  
+		//print "<center><img src=\"graph/GraphDateLine.php?s=".$session_name."\"></center>";
+		print "<center><a href=\"graph/GraphDateLine.php?s=".$session_name."\">Show graph</a></center>";
+}	  
   echo'<br>';
   report_title("Temperature Report",$date1,$date2);
   
