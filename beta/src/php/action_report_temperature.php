@@ -5,7 +5,7 @@
 	date_default_timezone_set("Asia/Kolkata");
 	include_once("main_vehicle_information_1.php");
 	include_once('Hierarchy.php');
-        include_once('lib/Util.php');
+        include_once('lib/UTIL.php');
 	$root=$_SESSION["root"];
 	include_once('util_session_variable.php');
 	include_once('xmlParameters.php');
@@ -222,7 +222,7 @@
         $parameterizeData=null;
 
 echo '<center>';
-//$fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
+$fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
 	 $tmp_data = $fieldsDataSort['datetimeTS'];
 	//echo "sizeofspeedData=".sizeof($speedData)."<br>";
 	//date_default_timezone_set('Asia/Calcutta');
