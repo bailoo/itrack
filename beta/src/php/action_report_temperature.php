@@ -5,7 +5,7 @@
 	date_default_timezone_set("Asia/Kolkata");
 	include_once("main_vehicle_information_1.php");
 	include_once('Hierarchy.php');
-        include_once('lib/UTIL.php');
+      
 	$root=$_SESSION["root"];
 	include_once('util_session_variable.php');
 	include_once('xmlParameters.php');
@@ -222,47 +222,7 @@
         $parameterizeData=null;
 
 echo '<center>';
-if($account_id==723)
-{
-   // echo "1";
-    //print_r($fieldsData);
-/*$fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
-	 $tmp_data = $fieldsDataSort['datetimeTS'];
-           //echo "<br>2<br>";
-          // print_r($tmp_data);
-	//echo "sizeofspeedData=".sizeof($speedData)."<br>";
-	//date_default_timezone_set('Asia/Calcutta');
-	$datetime_now = date("Y:m:d H:i:s", time());
-	$startDateTimeTS = strtotime($date1);
-	$endDateTimeTS = strtotime($date2);
 
-
-	if(sizeof($tmp_data)>0)
-	{
-		foreach($tmp_data as $datetimeTS => $tmp_datetime)
-		{ 
-		  //echo "datetime=".$datetime."datetime1=".$speed_datetime."<br>";
-			// $datetimeTS = strtotime($datetime); 
-			//echo "datetime=".$datetimeTS."start_date=".$startDateTimeTS."end_date=".$endDateTimeTS."<br>";
-			if(($datetimeTS >= $startDateTimeTS) && ($datetimeTS <=$endDateTimeTS))
-			{
-				//if($speed_datetime >= 0)
-				{
-					$datetmp = date('Y-m-d H:i:s',$datetimeTS);
-					$tmperat[$datetmp] = $tmp_datetime;
-					//echo "speed_data=".$speed[$datetmp]."<br>";
-				}
-			}
-		}
-	} */
-	//print_r($tmperat);
-	// $speed_sortTS = UTIL::sort_datetimeTS($speed);
-		$session_name = "TMP_" . time();
-		$_SESSION['abc'] = $fieldsData;
-                //print_r($fieldsData);
-		//print "<center><img src=\"graph/GraphDateLine.php?s=".$session_name."\"></center>";
-		print "<center><a href=\"graph/GraphDateLine.php?s=".$session_name."\">Show graph</a></center>";
-}	  
   echo'<br>';
   report_title("Temperature Report",$date1,$date2);
   
