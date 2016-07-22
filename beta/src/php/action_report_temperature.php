@@ -224,8 +224,12 @@
 echo '<center>';
 if($account_id==723)
 {
+    echo "1";
+    print_r($fieldsData);
 $fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
 	 $tmp_data = $fieldsDataSort['datetimeTS'];
+           echo "<br>2<br>";
+           print_r($tmp_data);
 	//echo "sizeofspeedData=".sizeof($speedData)."<br>";
 	//date_default_timezone_set('Asia/Calcutta');
 	$datetime_now = date("Y:m:d H:i:s", time());
