@@ -258,7 +258,7 @@ if($account_id==723)
 	//print_r($tmperat);
 	// $speed_sortTS = UTIL::sort_datetimeTS($speed);
 		$session_name = "TMP_" . time();
-		$_SESSION[$session_name] = $fieldsData;
+		$_SESSION['abc'] = $fieldsData;
                 //print_r($fieldsData);
 		//print "<center><img src=\"graph/GraphDateLine.php?s=".$session_name."\"></center>";
 		print "<center><a href=\"graph/GraphDateLine.php?s=".$session_name."\">Show graph</a></center>";
