@@ -129,7 +129,7 @@
                                                     $dateFromDisplay[]=$time1;
                                                     $dateTodisplay[]=$time2;
                                                     $temperatureDisplay[]=$temperature;
-                                                    
+                                                    $fieldsData['tmp'][$datetime] = $temperature;
                                                     $time1 = $datetime;
                                                     $date_secs1 = strtotime($time1);
                                                     $date_secs1 = (double)($date_secs1 + $interval);
@@ -221,7 +221,38 @@
         $parameterizeData=null;
 
 echo '<center>';
+	 $tmp_data = $fieldsData['datetimeTS'];
+	//echo "sizeofspeedData=".sizeof($speedData)."<br>";
+	//date_default_timezone_set('Asia/Calcutta');
+	$datetime_now = date("Y:m:d H:i:s", time());
+	$startDateTimeTS = strtotime($date1);
+	$endDateTimeTS = strtotime($date2);
 
+
+	if(sizeof($tmp_data)>0)
+	{
+		foreach($tmp_data as $datetimeTS => $tmp_datetime)
+		{ 
+		  //echo "datetime=".$datetime."datetime1=".$speed_datetime."<br>";
+			// $datetimeTS = strtotime($datetime); 
+			//echo "datetime=".$datetimeTS."start_date=".$startDateTimeTS."end_date=".$endDateTimeTS."<br>";
+			if(($datetimeTS >= $startDateTimeTS) && ($datetimeTS <=$endDateTimeTS))
+			{
+				//if($speed_datetime >= 0)
+				{
+					$datetmp = date('Y-m-d H:i:s',$datetimeTS);
+					$tmperat[$datetmp] = $tmp_datetime;
+					//echo "speed_data=".$speed[$datetmp]."<br>";
+				}
+			}
+		}
+	} 
+	
+	// $speed_sortTS = UTIL::sort_datetimeTS($speed);
+		$session_name = "TMP_" . time();
+		$_SESSION[$session_name] = $tmperat;
+		print "<center><img src=\"graph/GraphDateLine.php?s=".$session_name."\"></center>";
+		//print "<center><a href=\"graph/GraphDateLine.php?s=".$session_name."\">Show graph</a></center>";
 	  
   echo'<br>';
   report_title("Temperature Report",$date1,$date2);
