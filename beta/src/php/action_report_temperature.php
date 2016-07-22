@@ -1,6 +1,6 @@
 ﻿<?php
-	error_reporting(-1);
-	ini_set('display_errors', 'On');
+	//error_reporting(-1);
+	//ini_set('display_errors', 'On');
 	set_time_limit(300);	
 	date_default_timezone_set("Asia/Kolkata");
 	include_once("main_vehicle_information_1.php");
@@ -222,7 +222,7 @@
         $parameterizeData=null;
 
 echo '<center>';
-$fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
+//$fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
 	 $tmp_data = $fieldsDataSort['datetimeTS'];
 	//echo "sizeofspeedData=".sizeof($speedData)."<br>";
 	//date_default_timezone_set('Asia/Calcutta');
