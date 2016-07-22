@@ -223,7 +223,7 @@
 
 echo '<center>';
 $fieldsDataSort = UTIL::sortDateTimeArray($fieldsData);
-	 $tmp_data = $fieldsData['datetimeTS'];
+	 $tmp_data = $fieldsDataSort['datetimeTS'];
 	//echo "sizeofspeedData=".sizeof($speedData)."<br>";
 	//date_default_timezone_set('Asia/Calcutta');
 	$datetime_now = date("Y:m:d H:i:s", time());
