@@ -33,6 +33,7 @@
 <?php    
     echo ' <!--MAP DETAIL -->
     <div id="map" style="height:100%;width:100%;"></div>
+  
      <!--MAP DETAIL CLOSED-->
   </TD>  
   
