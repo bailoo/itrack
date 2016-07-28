@@ -58,6 +58,7 @@ obj=false;
 return obj;
 }
 </script>
+
  </head>
   
 <body class="body_part" topmargin="0" onresize="javascript:resize()" onload="javascript:resize();">  
