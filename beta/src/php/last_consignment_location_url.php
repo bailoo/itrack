@@ -275,7 +275,7 @@ var marker_prev = new Array();
 var label_prev = new Array();
 var date_prev = new Array();
 var angle_prev = new Array();
-
+var liveDataDisplay=[[]];
 function filter_live_vehicle()
 {  
   
@@ -310,8 +310,10 @@ function filter_live_vehicle()
       movingVehicle_prev(result);    // FOR MOVING VEHICLE FOR NOW       
       //LP_prev('.$stopped_vimei[$i].')              
     }
-  }   */  
-  
+  }   */ 
+//alert("obj="+document.getElementById('prepage').style.visibility);  
+  document.getElementById('prepage').style.visibility='visible';
+  //alert("obj="+document.getElementById('prepage').style.visibility);
   pt = null;
   imei1 = null;
   vname1 = null;
@@ -556,48 +558,225 @@ function Load_MovingData(startdate,enddate,pt_for_zoom,zoom_level,status)
 {  
 	//alert("In load moving data");
 	
+  //alert("In load moving data");
   if (GBrowserIsCompatible()) 
   {	  			
   		//alert("in GBrowserIsCompatible")
   		//map.clearOverlays();	
   		//alert('user_date='+user_dates.length+'vehicleserial='+vehicleSerial);
-  		//if(imei_tmp!=null)
+  		if(imei_tmp!=null)
   		{
   		 //alert('check');
         var date = new Date();
         // COPY ORIGINAL XML FILE        
-        var dest = "../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
-       var exists = isFile(dest);
-       // alert("exists="+exists);
+        //var dest = "../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml"
+       
         dmode = 1; 
-        thisdest = dest;        
+       // thisdest = dest;        
         //thisaccess = access;
         //var dest = "xml_tmp/filtered_xml/tmp_1295185453465.xml" ;
         //alert("d="+dest);        
         
         // MAKE FILTERED COPY        
-        var poststr = "xml_file=" + encodeURI( dest )+
+        /*var poststr = "xml_file=" + encodeURI( dest )+
                 "&mode=" + encodeURI( dmode )+
                 "&vserial=" + encodeURI( imei_data )+
                 "&startdate=" + encodeURI( startdate )+
-                "&enddate=" + encodeURI( enddate );                       
-                                                                   
+                "&enddate=" + encodeURI( enddate ); */
+var poststr = "mode=" + encodeURI( dmode )+
+                "&vserial=" + encodeURI( imei_data )+
+                "&startdate=" + encodeURI( startdate )+
+                "&enddate=" + encodeURI( enddate );				
+                                                              
         //alert("poststr1="+poststr);
-        makePOSTRequestMap('get_consignment_filtered_xml_live.php', poststr);
+        makePOSTRequestMap1('get_consignment_filtered_xml_live.php', poststr);
         
-		    //makePOSTRequestMap('src/php/get_filtered_xml.php', poststr);			
-			  thisdest = "../../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
-                            var exists = isFile(thisdest);
-        //alert("exists_1="+exists);
+        //alert("length1="+liveDataDisplay.length);        
+        //makePOSTRequestMap('src/php/get_filtered_xml.php', poststr);			
+		//thisdest = "../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
         TryCnt =0;
-        clearTimeout(timer);
-        timer = setTimeout('displayInfo_live()',1000);        
-         	 
+        //clearTimeout(timer);
+        //timer = setTimeout('displayInfo_live()',1000);        
+         //displayInfo();
+        //alert("poststr2="+poststr);
+        //alert("after req1");        
+        
+        //TryCnt =0;
+        //clearTimeout(timer);
+        
+        //alert("before displayinfo1");
+        //timer = setTimeout('displayInfo()',3000);
+        //timer = setTimeout('displayInfo()',1000);
+        //setTimeout('displayInfo2()',1000);               
+        //alert("after displayinfo1");
+       // timer = setTimeout('shams()',1000);
+        //timer = setTimeout('shams()',1000);
+        //alert("after displayinfo");
+        //alert("after req2");	 
       } // if vid closed
    } //is compatible closed
 } //function load1 closed
 
+var http_request = false;
+	function makePOSTRequestMap1(url, parameters) 
+	{
+		//alert("IN POST REQ");
+		http_request = false;
+		if (window.XMLHttpRequest) 
+		{ 
+			http_request = new XMLHttpRequest();
+			if (http_request.overrideMimeType)
+			{
+				// set type accordingly to anticipated content type
+				//http_request.overrideMimeType('text/xml');
+				http_request.overrideMimeType('text/html');
+			}
+		}
+		else if (window.ActiveXObject) 
+		{ // IE
+		try 
+		{
+		http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch (e) 
+		{
+		try 
+		{
+		http_request = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		catch (e)
+		{}
+		}
+		}
+		if (!http_request) 
+		{
+		alert('Cannot create XMLHTTP instance');
+		return false;
+		}
 
+		http_request.onreadystatechange = alertContentsMap1;
+		http_request.open('POST', url, true);
+		http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		//http_request.setRequestHeader("Content-length", parameters.length);
+		//http_request.setRequestHeader("Connection", "close");
+		http_request.send(parameters);
+                //alert("Closed");
+	}
+   
+  function alertContentsMap1()
+  {
+    //alert("in fun");
+    //alert("IN alert CNT="+http_request.readyState);
+    if (http_request.readyState == 4) 
+    {
+        //alert("IN alert CNT2="+http_request.status);
+       if (http_request.status == 200) 
+       {
+          result = http_request.responseText;
+          //alert("RESSSS="+result);
+          liveDataDisplay = JSON.parse(result);
+          displayInfo_live();
+	  //alert("poststr="+poststr_route);
+	  //makePOSTRequestRoute('src/php/get_polyline_detail.php', poststr_route);
+          //alert("length="+liveDataDisplay.length);
+          //alert("lat="+testJsonStr[0]['']);
+       }
+    }
+  }
+function displayInfo_live()
+{  
+    //alert("in displayInfo main");
+    var lat_arr = new Array();
+    var lng_arr = new Array();
+    var vid_arr = new Array();
+    var vehiclename_arr = new Array();
+    var speed_arr = new Array();
+    var datetime_arr = new Array();
+    var place_arr = new Array();
+    var fuel_arr = new Array();
+    var vehicletype_arr = new Array();
+    var running_status_arr = new Array();
+    var Final_DateTime=new Array();
+
+    var day_max_speed_arr = new Array();
+    var day_max_speed_time_arr = new Array();
+    var last_halt_time_arr = new Array(); 
+
+    var io1_arr=new Array(); 
+    var io2_arr=new Array(); 
+    var io3_arr=new Array(); 
+    var io4_arr=new Array(); 
+    var io5_arr=new Array(); 
+    var io6_arr=new Array(); 
+    var io7_arr=new Array(); 
+    var io8_arr=new Array(); 
+    //alert('liveLenghtnew='+liveDataDisplay.length);
+  
+    var len2=0;
+
+    /////////////// GET IO ///////////////
+    var imei = liveDataDisplay[0]['deviceImeiNo']		
+    var str = imei+",temperature";  
+		
+    for(var k = 0; k < liveDataDisplay.length; k++) 
+    {																													
+        //alert("t11111111==="+liveDataDisplay[k].getAttribute("datetime"));												
+        lat_tmp = liveDataDisplay[k]['latitudeLR'];
+        lng_tmp = liveDataDisplay[k]['longitudeLR'];	
+
+        lat_arr[len2] = liveDataDisplay[k]['latitudeLR'];
+        lng_arr[len2] = liveDataDisplay[k]['longitudeLR'];
+        vid_arr[len2] = liveDataDisplay[k]['deviceImeiNo'];
+        vehiclename_arr[len2] = liveDataDisplay[k]['vehicleName'];
+        //alert("v000="+vehiclename_arr[len2] );
+        speed_arr[len2] = Math.round(liveDataDisplay[k]['speedLR']*100)/100;
+        if( (speed_arr[len2]<=3) || (speed_arr[len2]>200))
+        {
+                speed_arr[len2] = 0;
+        }
+        io1_arr[len2]=liveDataDisplay[k]['io1LR'];
+        io2_arr[len2]=liveDataDisplay[k]['io2LR'];
+        io3_arr[len2]=liveDataDisplay[k]['io3LR'];
+        io4_arr[len2]=liveDataDisplay[k]['io4LR'];
+        io5_arr[len2]=liveDataDisplay[k]['io5LR'];
+        io6_arr[len2]=liveDataDisplay[k]['io6LR'];
+        io7_arr[len2]=liveDataDisplay[k]['io7LR'];
+        io8_arr[len2]=liveDataDisplay[k]['io8LR'];
+                   											
+        vehicletype_arr[len2] = liveDataDisplay[k]['vehilceType'];
+        datetime_arr[len2] =  liveDataDisplay[k]['deviceDatetimeLR'];
+        running_status_arr[len2] = liveDataDisplay[k]['status'];
+
+        if(label_type!="Person")
+        {
+                day_max_speed_arr[len2] =  liveDataDisplay[k]['dayMaxSpeedLR'];
+                day_max_speed_time_arr[len2] =  liveDataDisplay[k]['dayMaxSpeedTimeLR'];
+                  last_halt_time_arr[len2] =  liveDataDisplay[k]['lastHaltTimeLR'];
+
+                if(day_max_speed_arr[len2] > 200)
+                {
+                        day_max_speed_arr[len2] = "";
+                        day_max_speed_time_arr[len2] ="";
+                }			  
+        }			
+        //alert("Status1="+running_status_arr[len2]);
+        //alert("lt=="+lat_arr[len2]+"lng_arr(len2) ="+lng_arr[len2]+"vid arr="+vid_arr[len2]);
+        len2++;		
+    }	//XML LEN LOOP CLOSEDhaa
+    if(len2>0)
+    {	      
+        //alert("record found");
+        clearTimeout(timer);
+        //alert("data found");
+        //document.form1.status.value = "["+ vid_arr[0]+ "]"+"-("+lat_arr[0]+","+lng_arr[0]+")";
+        //alert("LPCOUNT="+lp_count);
+        //alert("before plottin markers "+len2+" "+lat_arr+" "+lng_arr+" "+vid_arr+" "+vehiclename_arr+" "+speed_arr+" "+datetime_arr+"  VTYPE="+vehicletype_arr);				
+        var flag=1;
+        getxml_MovingData(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_arr, speed_arr, datetime_arr, fuel_arr, running_status_arr, day_max_speed_arr, day_max_speed_time_arr, last_halt_time_arr,io1_arr,io2_arr,io3_arr,io4_arr,io5_arr,io6_arr,io7_arr,io8_arr);	  //HERE ARR IS JUST NORMAL VARIABLE NOT ARRAY
+        //alert("K");
+        document.getElementById('prepage').style.visibility='hidden';	
+    }     		
+}  
 function displayInfo_live()
 {  
   //alert("in displayInfo main");
@@ -606,123 +785,27 @@ function displayInfo_live()
   var vid_arr = new Array();
   var vehiclename_arr = new Array();
   var place_arr = new Array();
-  var vehicletype_arr = new Array();
- 
+  var vehicletype_arr = new Array();  
   
+	var len2=0;
 
-  
-  
-      
-  var xml_data; 
-  var DataReceived = false; 
-   
-  try
-  {
-    var bname = navigator.appName;
-    //alert("bname="+bname);      
-    /*if (bname == "Microsoft Internet Explorer")
-    {
-      alert("Wait for data, please use Mozilla for better compatibility");
-    }//alert(bname);   */
-              
-    var xmlObj = null;        
-    //alert("thisdest="+thisdest);
-    xmlObj = loadXML(thisdest);
-     
-    //alert("xmObj="+xmlObj); 
-       
-    if (bname == "Microsoft Internet Explorer")
-    {
-      //alert("In IE:"+xmlObj);
-      if(xmlObj!=null)	
-      {                                      
-        xml_data = xmlObj.documentElement.getElementsByTagName("x");
-        DataReceived = true;
-      } 
-      else
-      {
-        if(TryCnt<=MAX_TIMELIMIT)
-        {
-          TryCnt++;
-          clearTimeout(timer);
-          timer = setTimeout('displayInfo()',1000);
-        }
-      }                                
-    }
-    else
-    {
-      //alert("In Mozilla");
-      xml_data = xmlObj.documentElement.getElementsByTagName("x");
-      //alert("marker length :"+xml_data.length);
-      //var xml_data1 = xmlObj.getElementsByTagName("t1");
-      var xml_data1 = xmlObj.documentElement.getElementsByTagName("a1");
-	    // alert("length 2:"+xml_data1.length);
-      if(xml_data1.length>0)
-      {
-         /* if (GBrowserIsCompatible()) 
-          {	  			  		      
-  		      map.clearOverlays();
-  		    } */
-              
-        //alert("A");
-        DataReceived = true;
-      }
-      else
-      {
-        //alert("B:"+TryCnt);
-        if(TryCnt<=MAX_TIMELIMIT)
-        {
-          TryCnt++;
-          clearTimeout(timer);
-          timer = setTimeout('displayInfo_live()',1000);
-        }
-      }
-    }   
-    //alert("xml_data="+xml_data);             
-	}
-	catch(err)
-	{
-		//alert("file not found");
-	}	
-    
-
-	
-  if((((xml_data.length==0) || (xml_data.length==undefined)) && (DataReceived==true)) || (TryCnt>=MAX_TIMELIMIT))
-	{	
-	  //alert("No Data Found");
-    document.getElementById('prepage').style.visibility='hidden';	
-    clearTimeout(timer);	
-    var poststr = "dest=" + encodeURI( thisdest );
-	  makePOSTRequest('src/php/del_xml.php', poststr);								
-	}
-	else  if(DataReceived==true)
-	{	
-	  
-    
-    clearTimeout(timer);
-		var len2=0;
-		
     /////////////// GET IO ///////////////
-    var imei = xml_data[0].getAttribute("v")		
-		var str = imei+",temperature"; 
-       
+    var imei = liveDataDisplay[0]['deviceImeiNo']		
+    var str = imei+",temperature";  
 		
-		for (var k = 0; k < xml_data.length; k++) 
-		{																													
-                    //alert("t11111111==="+xml_data[k].getAttribute("datetime"));												
-                    lat_tmp = xml_data[k].getAttribute("d");
-                    lng_tmp = xml_data[k].getAttribute("e");	
-                        
-                    lat_arr[len2] = xml_data[k].getAttribute("d");
-                    lng_arr[len2] = xml_data[k].getAttribute("e");
-                    vid_arr[len2] = xml_data[k].getAttribute("v");
-                    vehiclename_arr[len2] = xml_data[k].getAttribute("w");
-                   // alert("vehicle_name="+vehiclename_arr);
-                    len2++;		
-		}	//XML LEN LOOP CLOSEDhaa
-		
-	 
-    if(len2>0)
+    for(var k = 0; k < liveDataDisplay.length; k++) 
+    {																													
+        //alert("t11111111==="+liveDataDisplay[k].getAttribute("datetime"));												
+        lat_tmp = liveDataDisplay[k]['latitudeLR'];
+        lng_tmp = liveDataDisplay[k]['longitudeLR'];	
+
+        lat_arr[len2] = liveDataDisplay[k]['latitudeLR'];
+        lng_arr[len2] = liveDataDisplay[k]['longitudeLR'];
+        vid_arr[len2] = liveDataDisplay[k]['deviceImeiNo'];
+        vehiclename_arr[len2] = liveDataDisplay[k]['vehicleName'];       
+        len2++;		
+    }	//XML LEN LOOP CLOSEDhaa
+	if(len2>0)
     {	      
       //alert("record found");
       clearTimeout(timer);
@@ -734,8 +817,7 @@ function displayInfo_live()
       getxml_MovingData(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_arr);	  //HERE ARR IS JUST NORMAL VARIABLE NOT ARRAY
       //alert("K");
       document.getElementById('prepage').style.visibility='hidden';	
-    }					
-	} // ELSE CLOSED       		
+    }    		
 }
 function getxml_MovingData(len2, flag1, lat_arr, lng_arr, vid_arr, vehiclename_arr)
 {
@@ -1487,6 +1569,7 @@ function getLandMark1(event,newzoomlevel)
 }  
 
 </script>
+ 
  <style>
           table.main
             {
@@ -1609,8 +1692,6 @@ function getLandMark1(event,newzoomlevel)
 
 
 </body>
-</html>
-</html>
 </html>
 <?php
    }
