@@ -1054,7 +1054,7 @@ function initialize()
 			{
 				var bounds = map.getBounds();
 			});		
-
+                          
 			if(navigator.userAgent.indexOf("Firefox")==-1)
 			{				
 				GSearch.setOnLoadCallback(initialize);
