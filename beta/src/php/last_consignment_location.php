@@ -1688,8 +1688,6 @@ function getLandMark1(event,newzoomlevel)
 
 </body>
 </html>
-</html>
-</html>
 <?php
    }
   ?>
