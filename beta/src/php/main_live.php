@@ -2,7 +2,16 @@
 <html>  
   <head>      
      <?php  
+         include('util_session_variable.php');
+         if($account_id!='demo')
+         {
         include('main_google_key.php');
+         }
+         else
+         {
+             echo'<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhLWXnQP-3SJ5WTazE878MSg2C1Q3Cmmc&libraries=places"
+         async defer></script>'; 
+         }
     	include('live_js_css.php');
     	//echo'<script language="javascript" src="src/js/live.js"></script>';
         include('util_calculate_distance_js.php');	
@@ -58,7 +67,68 @@ obj=false;
 return obj;
 }
 </script>
+<?php
+if($account=='demo')
+{
+?>
+<style>
+      html, body, #map {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+      .controls {
+        margin-top: 11px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 25px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
 
+      #pac-input {
+        background-color: #fff;
+        padding: 0 11px 0 13px;
+        width: 200px;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        text-overflow: ellipsis;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+        margin-left: -1px;
+        padding-left: 14px;  /* Regular padding-left + 1. */
+        width: 201px;
+      }
+
+      .pac-container {
+        font-family: Roboto;
+      }
+
+      #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+      }
+
+      #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+	   #target {
+        width: 345px;
+      }
+}
+
+    </style>
+<?php
+}
+?>
  </head>
   
 <body class="body_part" topmargin="0" onresize="javascript:resize()" onload="javascript:resize();">  
