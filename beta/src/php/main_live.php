@@ -3,14 +3,15 @@
   <head>      
      <?php  
          include('util_session_variable.php');
-         if($account_id!='demo')
+         if($account_id==2)
          {
-        include('main_google_key.php');
+               echo'<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhLWXnQP-3SJ5WTazE878MSg2C1Q3Cmmc&libraries=places"
+         async defer></script>'; 
+
          }
          else
          {
-             echo'<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhLWXnQP-3SJ5WTazE878MSg2C1Q3Cmmc&libraries=places"
-         async defer></script>'; 
+                include('main_google_key.php');
          }
     	include('live_js_css.php');
     	//echo'<script language="javascript" src="src/js/live.js"></script>';
@@ -68,7 +69,7 @@ return obj;
 }
 </script>
 <?php
-if($account=='demo')
+if($account_id==2)
 {
 ?>
 <style>
