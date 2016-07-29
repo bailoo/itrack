@@ -32,17 +32,26 @@ $sortBy="h";
 
 if(!empty($_POST['jsonData']))
 {
-	$jsonData=$_POST['jsonData'];	
-	//echo "jsonDecodedData=".$jsonData."<br>";
-	$response=getJsonSampleData($jsonData);
-	if($response=="fail")
-	{
-		deliverResponse(400,'Data Not Inserted',NULL);
-	}
-	else if($response=="success")
-	{
-		deliverResponse(200,'Data Inserted Successfully',$response);
-	}
+        $keyData=$_POST['key'];
+        if($keyData=='mother2016_itrack')
+        {
+            $jsonData=$_POST['jsonData'];	
+            //echo "jsonDecodedData=".$jsonData."<br>";
+            $response=getJsonSampleData($jsonData);
+            if($response=="fail")
+            {
+                    deliverResponse(400,'Data Not Inserted',NULL);
+            }
+            else if($response=="success")
+            {
+                    deliverResponse(200,'Data Inserted Successfully',$response);
+            }
+        }
+        else
+        {
+            deliverResponse(400,'Invalid Key Request',NULL);
+        }
+	
 }
 else
 {
