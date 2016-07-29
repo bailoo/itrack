@@ -802,7 +802,7 @@ function filter_live_vehicle(obj,jsActionNo)
 	close_popup();
 	//alert("s1.len="+s1.length);
 //alert("befforeGB");
-	if (GBrowserIsCompatible()) 
+	//if (GBrowserIsCompatible()) 
 	{
             liveDataDisplay=[[]];
 		//alert("in GBrowserIsCompatible")
