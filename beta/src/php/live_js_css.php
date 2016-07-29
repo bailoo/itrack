@@ -5,10 +5,22 @@
 <script type="text/javascript" src="src/js/jquery.js"></script> 
 
 <?php 
+if($account_id!='demo')
+{
   include_once("live_js.php");
+}
+ else {
+    
+     include_once("live_js_test.php");
+ }
 ?>
 
 <script language="javascript" src="src/js/liveAjax.js?<?php echo time();?>"></script>
+<?php
+if($account_id!='demo')
+{
+    
+?>
 <script language="javascript" src="src/js/elabel.js"></script>
 <script type="text/javascript" src="src/dragzoom/gzoom.js"></script> 
 
@@ -17,6 +29,9 @@
 </script>
 <script language="javascript" src="src/js/labeledmarker.js"></script>
 <script language="javascript" src="src/js/pdmarker.js"></script>
+<?php
+}
+?>
 <script language="javascript" src="src/js/toggle_panel.js"></script>
 
 
