@@ -5,19 +5,18 @@
 <script type="text/javascript" src="src/js/jquery.js"></script> 
 
 <?php 
-if($account_id!='demo')
+if($account_id==2)
 {
-  include_once("live_js.php");
+      include_once("live_js_test.php"); 
 }
- else {
-    
-     include_once("live_js_test.php");
+ else {    
+    include_once("live_js.php");
  }
 ?>
 
 <script language="javascript" src="src/js/liveAjax.js?<?php echo time();?>"></script>
 <?php
-if($account_id!='demo')
+if($account_id!=2)
 {
     
 ?>
