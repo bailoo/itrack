@@ -1,5 +1,5 @@
 <?php
-header("content-Type:application/json");
+header("content-Type;application/json");
 include_once("calculate_distance.php");
 
 include_once('xmlParameters.php');
@@ -72,7 +72,7 @@ function deliverResponse($status,$statusMessage,$response)
 function getJsonSampleData($jsonData)
 {
 	//echo "in function ";
-    //$jsonData='{"VEHICLENO":"MH04DK2999","DATAELEMENTS":[{"DATAELEMENTS":{"LOCATION":"","HEADING":237.2,"SPEED":0,"LONGITUDE":76.6232,"DATETIME":"2015\/10\/08 09:37:41","IGNSTATUS":0,"LATITUDE":28.1179}}]}';
+    //$jsonData='{"VEHICLENO";"MH04DK2999","DATAELEMENTS";[{"DATAELEMENTS";{"LOCATION";"","HEADING";237.2,"SPEED";0,"LONGITUDE";76.6232,"DATETIME";"2015\/10\/08 09;37;41","IGNSTATUS";0,"LATITUDE";28.1179}}]}';
     $jsonDecodedData = json_decode($jsonData,true);
     //print_r($jsonDecodedData);
     $innerData=$jsonDecodedData['DATAELEMENTS'][0]['DATAELEMENTS'];
@@ -103,8 +103,8 @@ function getJsonSampleData($jsonData)
     $IoValue8=0;
     $SignalStrength=0;
     $SupVoltage=0.0;
-    $data=$MsgType.",".$Version.",".$Fix.",".$Latitude.",".$Longitude.",".$Speed.",".$IoValue1.",".$IoValue2.",".$IoValue3.",".$IoValue4.",".$IoValue5.",".$IoValue6.",".$IoValue7.",".$IoValue.",".$SignalStrength.",".$SupVoltage;
-
+    $data=$MsgType.";".$Version.";".$Fix.";".$Latitude.";".$Longitude.";".$Speed.";".$IoValue1.";".$IoValue2.";".$IoValue3.";".$IoValue4.";".$IoValue5.";".$IoValue6.";".$IoValue7.";".$IoValue.";".$SignalStrength.";".$SupVoltage;
+	//echo "data=".$data."<br>";
     insertFullData($deviceImei,$DeviceDatetime,$data);
 	
     $lastHaltTime="";
@@ -150,8 +150,9 @@ function getJsonSampleData($jsonData)
     }
 
     $cellname="device";	
-    $dataLive=$MsgType.",".$Version.",".$Fix.",".$Latitude.",".$Longitude.",".$Speed.",".$IoValue1.",".$IoValue2.",".$IoValue3.",".$IoValue4.",".$IoValue5.",".$IoValue6.",".$IoValue7.",".$IoValue.",".$SignalStrength.",".$SupVoltage.",".$dayMaxSpeed.",".$dayMaxSpeedDt.",".$lastHaltTime.",".$cellname;
-    insertLiveData($deviceImei,$dataLive);
+    $dataLive=$MsgType.";".$Version.";".$Fix.";".$Latitude.";".$Longitude.";".$Speed.";".$DeviceDatetime.";".$IoValue1.";".$IoValue2.";".$IoValue3.";".$IoValue4.";".$IoValue5.";".$IoValue6.";".$IoValue7.";".$IoValue.";".$SignalStrength.";".$SupVoltage.";".$dayMaxSpeed.";".$dayMaxSpeedDt.";".$lastHaltTime.";".$cellname;
+    //echo "datalive=".$dataLive."<br>";
+	insertLiveData($deviceImei,$dataLive);
 
     $dataArr[]=array('vehicleName'=>$vehicleName,'location'=>$location,'heading'=>$heading,'speed'=>$speed,"lat"=>$lat,'lng'=>$lng);
 	//print_r($dataArr);
