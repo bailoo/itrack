@@ -72,7 +72,7 @@ function deliverResponse($status,$statusMessage,$response)
 function getJsonSampleData($jsonData)
 {
 	//echo "in function ";
-    //$jsonData='{"VEHICLENO";"MH04DK2999","DATAELEMENTS";[{"DATAELEMENTS";{"LOCATION";"","HEADING";237.2,"SPEED";0,"LONGITUDE";76.6232,"DATETIME";"2015\/10\/08 09;37;41","IGNSTATUS";0,"LATITUDE";28.1179}}]}';
+    //$jsonData='{"VEHICLENO":"111231031744301","DATAELEMENTS":[{"DATAELEMENTS":{"LOCATION":"","HEADING":237.2,"SPEED":45,"LONGITUDE":76.6232,"DATETIME":"2016\/07\/29 16:01:41","IGNSTATUS":0,"LATITUDE":28.1179}}]}';
     $jsonDecodedData = json_decode($jsonData,true);
     //print_r($jsonDecodedData);
     $innerData=$jsonDecodedData['DATAELEMENTS'][0]['DATAELEMENTS'];
