@@ -73,7 +73,7 @@ function getJsonSampleData($jsonData)
 {
 	//echo "in function ";
     //$jsonData='{"VEHICLENO":"111231031744301","DATAELEMENTS":[{"DATAELEMENTS":{"LOCATION":"","HEADING":237.2,"SPEED":45,"LONGITUDE":76.6232,"DATETIME":"2016\/07\/29 16:01:41","IGNSTATUS":0,"LATITUDE":28.1179}}]}';
-    //$jsonData='{"vno":"GJ06-N-1234","loc":"","heading":"0","speed":"45","lng":"79.5827","lat":"26.03842","date":"2016-07-28 16:18:41","ignstatus":"0" }';
+    //$jsonData='{"vno":"GJ06-N-1234","speed":"45","lng":"79.5827","lat":"26.03842","date":"2016-07-28 16:18:41","ignstatus":"0" }';
     $jsonDecodedData = json_decode($jsonData,true);
     /*
     $innerData=$jsonDecodedData['DATAELEMENTS'][0]['DATAELEMENTS'];
@@ -90,8 +90,8 @@ function getJsonSampleData($jsonData)
 
 
     $deviceImei=$jsonDecodedData['vno'];
-    $location=$jsonDecodedData['loc'];
-    $heading=$jsonDecodedData['heading'];
+    //$location=$jsonDecodedData['loc'];
+    //$heading=$jsonDecodedData['heading'];
     $speed=$jsonDecodedData['speed'];
     $lat=$jsonDecodedData['lat'];
     $lng=$jsonDecodedData['lng'];
@@ -168,7 +168,8 @@ function getJsonSampleData($jsonData)
     //echo "datalive=".$dataLive."<br>";
 	insertLiveData($deviceImei,$dataLive);
 
-    $dataArr[]=array('vehicleName'=>$vehicleName,'location'=>$location,'heading'=>$heading,'speed'=>$speed,"lat"=>$lat,'lng'=>$lng);
+    //$dataArr[]=array('vehicleName'=>$vehicleName,'location'=>$location,'heading'=>$heading,'speed'=>$speed,"lat"=>$lat,'lng'=>$lng);
+    $dataArr[]=array('vehicleName'=>$vehicleName,'speed'=>$speed,"lat"=>$lat,'lng'=>$lng);
 	//print_r($dataArr);
     if(count($dataArr)>0)
     {
