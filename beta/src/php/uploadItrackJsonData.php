@@ -30,12 +30,12 @@ $parameterizeData->lastHaltTime='u';
 $parameterizeData->cellName='ab';
 $sortBy="h";	
 
-if(!empty($_POST['jsonData']))
+if(!empty($_POST['deviceData']))
 {
         $keyData=$_POST['key'];
         if($keyData=='mother2016_itrack')
         {
-            $jsonData=$_POST['jsonData'];	
+            $jsonData=$_POST['deviceData'];	
             //echo "jsonDecodedData=".$jsonData."<br>";
             $response=getJsonSampleData($jsonData);
             if($response=="fail")
