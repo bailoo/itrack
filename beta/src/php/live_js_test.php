@@ -11,7 +11,8 @@ var customerMarker = 'images/customer_plant_on_map/station.png';
 var routeMarker = 'images/green_Marker1.png';
 var startMarker = 'images/start_marker.png'; 
 var endMarker = 'images/stop_marker.png';
-
+var markers=new Array();
+ var infowindow;
 var RouteNMCustomer=new Array(); // Route Number Evening Customer Type
 var RouteMCustomerLat=new Array();
 var RouteMCustomerLng=new Array();
@@ -800,36 +801,13 @@ function filter_live_vehicle(obj,jsActionNo)
 	//var s1 = result.split(',');
 
 	close_popup();
-	//alert("s1.len="+s1.length);
-//alert("befforeGB");
-	//if (GBrowserIsCompatible()) 
-	{
-            liveDataDisplay=[[]];
-		//alert("in GBrowserIsCompatible")
-		map.clearOverlays();	
-	}	
-	/*if((browser=="Microsoft Internet Explorer") && (version>=4)) // for internet xeplorer
-	{
-		alert("Retrieving data ..... plz wait!");
-	} */ 
+	markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    markers = [];
 	document.getElementById('prepage').style.visibility='visible';
     
-	/*if(s1.length>0)
-	{
-	//alert("In Moving V");  		
-	  
-	for(var i=0;i<s1.length;i++)
-	{
-	  var s2 = s1[i].split('#');
-	  imei_tmp = s2[0];
-	  date_tmp = s2[1];       
-		 
-	  alert("In Moving:"+imei_tmp);
-	  //alert("date_tmp1="+date_tmp);
-	  movingVehicle_prev(result);    // FOR MOVING VEHICLE FOR NOW       
-	  //LP_prev('.$stopped_vimei[$i].')              
-	}
-	}   */  
+ 
   
 	pt = null;
 	imei1 = null;
@@ -945,7 +923,7 @@ function initialize()
     searchBox.setBounds(map.getBounds());
   });
 
-  var markers = [];
+  var markerThis = [];
   // [START region_getplaces]
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
@@ -956,11 +934,11 @@ function initialize()
       return;
     }
 
-    // Clear out the old markers.
-    markers.forEach(function(marker) {
+    // Clear out the old markerThis.
+    markerThis.forEach(function(marker) {
       marker.setMap(null);
     });
-    markers = [];
+    markerThis = [];
 
     // For each place, get the icon, name and location.
     var bounds = new google.maps.LatLngBounds();
@@ -974,7 +952,7 @@ function initialize()
       };
 
       // Create a marker for each place.
-      markers.push(new google.maps.Marker({
+      markerThis.push(new google.maps.Marker({
         map: map,
         icon: icon,
         title: place.name,
@@ -1281,60 +1259,18 @@ function load_live(dmode,startdate,enddate,pt_for_zoom,zoom_level,status,jsActio
 var dist_array = new Array();
 
 function Load_MovingData_Map(startdate,enddate,pt_for_zoom,zoom_level,status)
-{  
-//alert("In load moving data");
-  if (GBrowserIsCompatible()) 
-  {	  			
-  		//alert("in GBrowserIsCompatible")
-  		//map.clearOverlays();	
-  		//alert('user_date='+user_dates.length+'vehicleserial='+vehicleSerial);
-  		if(imei_tmp!=null)
-  		{
-  		 //alert('check');
-        var date = new Date();
-        // COPY ORIGINAL XML FILE        
-        var dest = "../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml"
-       
-        dmode = 1; 
-        thisdest = dest;        
-        //thisaccess = access;
-        //var dest = "xml_tmp/filtered_xml/tmp_1295185453465.xml" ;
-        //alert("d="+dest);        
-        
-        // MAKE FILTERED COPY        
-        var poststr = "xml_file=" + encodeURI( dest )+
-                "&mode=" + encodeURI( dmode )+
+{	
+    if(imei_tmp!=null)
+    {       
+        //dmode = 1;              
+        var poststr = "mode=" + encodeURI( 1 )+
                 "&vserial=" + encodeURI( imei_data )+
                 "&startdate=" + encodeURI( startdate )+
-                "&enddate=" + encodeURI( enddate );                       
-                                                                   
-        //alert("poststr1="+poststr);
-        makePOSTRequestMap1('src/php/get_filtered_xml_live.php', poststr);
-        
-        //alert("length1="+liveDataDisplay.length);        
-        //makePOSTRequestMap('src/php/get_filtered_xml.php', poststr);			
-	thisdest = "../../xml_tmp/filtered_xml/tmp_"+date.getTime()+".xml";
-        TryCnt =0;
-        //clearTimeout(timer);
-        //timer = setTimeout('displayInfo_live()',1000);        
-         //displayInfo();
-        //alert("poststr2="+poststr);
-        //alert("after req1");        
-        
-        //TryCnt =0;
-        //clearTimeout(timer);
-        
-        //alert("before displayinfo1");
-        //timer = setTimeout('displayInfo()',3000);
-        //timer = setTimeout('displayInfo()',1000);
-        //setTimeout('displayInfo2()',1000);               
-        //alert("after displayinfo1");
-       // timer = setTimeout('shams()',1000);
-        //timer = setTimeout('shams()',1000);
-        //alert("after displayinfo");
-        //alert("after req2");	 
-      } // if vid closed
-   } //is compatible closed
+                "&enddate=" + encodeURI( enddate );             
+      
+        makePOSTRequestMap1('src/php/get_filtered_xml_live.php', poststr);         
+    } // if vid closed
+ 
 } //function load1 closed
 function Load_MovingData_Text(startdate,enddate,pt_for_zoom,zoom_level,status,jsActionNo)
 {  
@@ -1426,10 +1362,7 @@ function displayInfo_live()
     var str = imei+",temperature";  
 		
     for(var k = 0; k < liveDataDisplay.length; k++) 
-    {																													
-        //alert("t11111111==="+liveDataDisplay[k].getAttribute("datetime"));												
-        lat_tmp = liveDataDisplay[k]['latitudeLR'];
-        lng_tmp = liveDataDisplay[k]['longitudeLR'];	
+    {
 
         lat_arr[len2] = liveDataDisplay[k]['latitudeLR'];
         lng_arr[len2] = liveDataDisplay[k]['longitudeLR'];
@@ -1471,8 +1404,7 @@ function displayInfo_live()
         len2++;		
     }	//XML LEN LOOP CLOSEDhaa
     if(len2>0)
-    {	      
-        //alert("record found");
+    {
         clearTimeout(timer);
         //alert("data found");
         //document.form1.status.value = "["+ vid_arr[0]+ "]"+"-("+lat_arr[0]+","+lng_arr[0]+")";
@@ -1519,67 +1451,106 @@ obj=false;
 }
 return obj;
 }
-
+function getLandMarkNew(landmarkLocal)
+{
+   
+    var i;
+    var landmark;	
+    var markerL;
+    var zoomlevel;
+    var point;
+    var lnmark_data=landmarkLocal.split('#');
+    //alert('landmark_data_length='+lnmark_data.length);
+    var lnmark_data1;
+    //var icon1='images/landmark.png';
+    //var icon1='images/landmark.png';
+    var icon1 = 
+            {
+                url: 'images/landmark.png',
+                size: new google.maps.Size(10, 10),
+                scaledSize: new google.maps.Size(10, 10)
+            };
+        for(i=0; i<lnmark_data.length; i++) 
+        {
+            lnmark_data1=lnmark_data[i].split('@');	
+            landmark=lnmark_data1[0];
+            //alert('landmark_name='+landmark+'lat='+lnmark_data1[2]+'lng='+lnmark_data1[3]);
+            point=new google.maps.LatLng(lnmark_data1[2], lnmark_data1[3]);
+            if(lnmark_data1[2].length>6 && lnmark_data1[3].length>6)
+            {
+                markerL = new google.maps.Marker
+                ({
+                        position: point,	
+                        map: map, 
+                        icon: icon1, 
+                        title:'landmark'
+                });					
+                        // markers.push(marker);
+                markers.push(markerL);
+                google.maps.event.addListener
+                (
+                        markerL, 'click', infoCallbackLandmark(landmark,lnmark_data1[2],lnmark_data1[3],markerL)
+                );	
+            }
+             						
+        }
+} 
+function infoCallbackLandmark(landmark,lat,lng,markerL) 
+{				
+    return function() 
+    {
+            //alert('in click');
+            var contentString='';
+            if (infowindow) infowindow.close();
+            infowindow = new google.maps.InfoWindow();
+            //var latlng = new google.maps.LatLng(lat, lng);
+            contentString='<table>'+
+            '<tr>'+
+            '<td class=\"live_td_css1\">Landmark Name</td>'+
+            '<td>:</td>'+
+            '<td class=\"live_td_css2\">'+landmark+'</td>'+
+       '</tr>'+
+            '<tr>'+
+            '<td class=\"live_td_css1\">Coordinates</td>'+
+            '<td>:</td>'+
+            '<td class=\"live_td_css2\">'+lat+','+lng+'</td>'+
+       '</tr>'+										   							
+            '</table>';
+            //alert('icontentString'+contentString);
+            //alert('map_canvas'+map_canvas);			
+            infowindow.setContent(contentString);
+            infowindow.open(map, markerL);					 						
+    };
+}
 function getxml_MovingData(len2, flag1, lat_arr, lng_arr, vid_arr, vehiclename_arr, speed_arr, datetime_arr, fuel_arr, running_status_arr, day_max_speed_arr,day_max_speed_time_arr,last_halt_time_arr,io1_arr,io2_arr,io3_arr,io4_arr,io5_arr,io6_arr,io7_arr,io8_arr)
 {
-	if(vid_arr.length<=0)
-	{
-		flag1=0;
-	}	
+    if(vid_arr.length<=0)
+    {
+        flag1=0;
+    }	
 	
-	if(flag1)
-	{
-		var point;	
-		//alert("startup="+startup_var);
-		if(startup_var == 1)
-		{
-			var bounds = new GLatLngBounds();
-			for(var z=0;z<lat_arr.length;z++)
-			{
-				point = new GLatLng(parseFloat(lat_arr[z]),
-							parseFloat(lng_arr[z]));
-
-				bounds.extend(point); 
-			}			
-			var center = bounds.getCenter(); 			
-			
-			if(len2>0 && len2<2)
-				var zoom = map.getBoundsZoomLevel(bounds)-7; 
-			else if(len2>2 && len2<6)
-				var zoom = map.getBoundsZoomLevel(bounds)-1; 
-			else
-				var zoom = map.getBoundsZoomLevel(bounds)-1;							
-			/*if(access=="Zone")
-			{
-				//alert("access="+access+"ms="+ms);
-				show_milestones();
-				//alert("access="+access);
-			//map.setCenter(center,zoom); 
-			}
-			else
-			{*/
-				map.setCenter(center,zoom);
-			//}
-			startup_var = 0;
-		}		
-		
-		//alert("L0");
+    if(flag1)
+    {
     	Moving_DataMarkers(lat_arr,lng_arr,vid_arr,vehiclename_arr,speed_arr,datetime_arr, fuel_arr, len2, running_status_arr, day_max_speed_arr,day_max_speed_time_arr,last_halt_time_arr,io1_arr,io2_arr,io3_arr,io4_arr,io5_arr,io6_arr,io7_arr,io8_arr);
 
-		var zoom;
-		var event = 0;
-		var newzoomlevel=0;		
+        var zoom;
+        var event = 0;
+        var newzoomlevel=0;
+        var str='';
+        var strURL='src/php/select_landmark_live_test.php?content='+str;        
+        var req = getXMLHTTP();
+        req.open('GET', strURL, false); //third parameter is set to false here
+        req.send(null);
+        var landmark_str = req.responseText;
+        //alert('landmark_str='+landmark_str);
+        if(landmark_str!='')
+        {
+        getLandMarkNew(landmark_str);
+        }
 		
 		//alert("L1");
-    	getLandMark1(event,newzoomlevel);
-		
-		////////////////////// CALL GET LANDMARK ON EVENT LISTENER FOR LAST POSITION //////////////////////////
-		GEvent.addListener(map, 'zoomend',function (oldzoomlevel,newzoomlevel) 
-		{
-			var event =1;
-			getLandMark1(event,newzoomlevel);
-		}); //GEvent addListener												
-	}//if flag1 closed			
+    	//getLandMark1(event,newzoomlevel);												
+    }//if flag1 closed			
  	//document.getElementById('prepage').style.visibility='visible';								
 		//////////////////////////////////////////////////////////////			
 } //FUNCTION getxmlDataTrack
@@ -1588,154 +1559,110 @@ function getxml_MovingData(len2, flag1, lat_arr, lng_arr, vid_arr, vehiclename_a
 var vlist = "";
 
 function Moving_DataMarkers(lat_arr,lng_arr,vid_arr,vehiclename_arr,speed_arr,datetime_arr, fuel_arr, len2, running_status_arr, day_max_speed_arr,day_max_speed_time_arr,last_halt_time_arr,io1_arr,io2_arr,io3_arr,io4_arr,io5_arr,io6_arr,io7_arr,io8_arr)
-{	
-	var gmarkersA = new Array();      
-	var gmarkersB = new Array();  
-	var gmarkersC = new Array();  
-	
-	var j = 0;
-	var colr = ["#00FF66","#0066FF","#FF0000","#33FFFF","#FF33CC","#9966FF","#FF9900","#FFFF00"];
-	var i,vehiclename,speed,point,datetime,place,marker,polyline,last,running_status1, day_max_speed,day_max_speed_time,last_halt_time;
+{ 
+    deleteOverlays();
+    
+    var str='';
+    var strURL='src/php/select_landmark.php?content='+str;        
+    var req = getXMLHTTP();
+    req.open('GET', strURL, false); //third parameter is set to false here
+    req.send(null);
+    var landmark_str = req.responseText;
+    //alert('landmark_str='+landmark_str);
+    if(landmark_str!='')
+    {
+            getLandMarkNew(landmark_str);
+    }
+    
+    var j = 0;
+    var colr = ["#00FF66","#0066FF","#FF0000","#33FFFF","#FF33CC","#9966FF","#FF9900","#FFFF00"];
+    var i,vehiclename,speed,point,datetime,place,marker,polyline,last,running_status1, day_max_speed,day_max_speed_time,last_halt_time;
   
-	var vid1=0;
-	var vid2=0;
-	var pt = new Array();
-	var value = new Array();
-	var poly = new Array();
-	var dist = 0;
-	var lastmarker = 0;
-	var p = 0;
-	var fuel=0;
+    var vid1=0;
+    var vid2=0;
+    var pt = new Array();
+    var value = new Array();
+    var poly = new Array();
+    var dist = 0;
+    var lastmarker = 0;
+    var p = 0;
+    var fuel=0;
     var lat1,lat2,lng1,lng2,coord;	  
 	
-	vlist ="<table style='font-size:11px;'><tr style='background-color:004D96;color:#FFFFFF'><td align=center><strong>LIVE TRACKING LEGEND</strong></td></tr></table><br><table style='font-size:10px;' CELLPADDING=0 CELLSPACING=0><tr><td></td></tr>";
+    vlist ="<table style='font-size:11px;'><tr style='background-color:004D96;color:#FFFFFF'><td align=center><strong>LIVE TRACKING LEGEND</strong></td></tr></table><br><table style='font-size:10px;' CELLPADDING=0 CELLSPACING=0><tr><td></td></tr>";
 	  
-	if(!(document.getElementById('trail_path').checked))  // IF TRAIL PATH NOT CHECKED, CLEAR PREVIOUS OVERLAYS
-	{
-	  if (GBrowserIsCompatible()) 
-	  {	  			
-	    		//alert("in GBrowserIsCompatible")
-	    		map.clearOverlays();	
-	  }	    
-	}		
+    if(!(document.getElementById('trail_path').checked))  // IF TRAIL PATH NOT CHECKED, CLEAR PREVIOUS OVERLAYS
+    {
+        markers.forEach(function(marker) {
+        marker.setMap(null);
+        });	    
+    }		
       
-  	if(!(document.getElementById('trail_path').checked))
-  	{		
-	    //alert("in reint2");	 	  
-		point_prev = null;
-		vid_prev = null;
-		dist_prev = null;
-		marker_prev = null;
-		label_prev = null;
-		angle_prev =null;
-		date_prev = null;	     
+    if(!(document.getElementById('trail_path').checked))
+    {		
+        //alert("in reint2");	 	  
+        point_prev = null;
+        vid_prev = null;
+        dist_prev = null;
+        marker_prev = null;
+        label_prev = null;
+        angle_prev =null;
+        date_prev = null;	     
 	
-		point_prev = new Array();           
-		vid_prev = new Array();
-		dist_prev = new Array(); 
-		marker_prev = new Array();
-		label_prev = new Array();
-		angle_prev = new Array(); 
-		date_prev = new Array();
-			
-	    for(var j=0;j<vid_prev.length;j++)
-	    {
-	       map.removeOverlay(marker_prev[j]);
-	       map.removeOverlay(label_prev[j]);
-	    }	
-	    
-	    trail_flag = false;	
-	}			
+        point_prev = new Array();           
+        vid_prev = new Array();
+        dist_prev = new Array(); 
+        marker_prev = new Array();
+        label_prev = new Array();
+        angle_prev = new Array(); 
+        date_prev = new Array();
+		
+        vid_prev.forEach(function(marker) {
+            vid_prev.setMap(null);
+        });
+    
+        label_prev.forEach(function(marker) 
+        {
+            label_prev.setMap(null);
+        });
+        trail_flag = false;	
+    }			
     var tmp=1;
-  	for (i = 0; i < len2; i++) 
-	{
-		tmp=tmp+i;
+    for (i = 0; i < len2; i++) 
+    {
+        tmp=tmp+i;
     	var total_dist = 0;
     
-   	 	vid = vid_arr[i];
-		vehiclename = vehiclename_arr[i];		
-		speed = speed_arr[i];
-		if(speed<=3)
-			speed = 0;
+        vid = vid_arr[i];
+        vehiclename = vehiclename_arr[i];		
+        speed = speed_arr[i];
+        if(speed<=3)
+            speed = 0;
 
-		point = new GLatLng(parseFloat(lat_arr[i]),parseFloat(lng_arr[i]));		
-		
-    	datetime = datetime_arr[i];		
-		fuel = fuel_arr[i];	
-		//vehicletype = vehicletype_arr[i];
-		running_status1 = running_status_arr[i];
+        point = new google.maps.LatLng(parseFloat(lat_arr[i]),parseFloat(lng_arr[i]));		
+
+        datetime = datetime_arr[i];		
+        fuel = fuel_arr[i];	
+        //vehicletype = vehicletype_arr[i];
+        running_status1 = running_status_arr[i];
 
     	day_max_speed = day_max_speed_arr[i];
-		day_max_speed_time = day_max_speed_time_arr[i];
-		last_halt_time = last_halt_time_arr[i];
-		io_1=io1_arr[i];
-		io_2=io2_arr[i];
-		io_3=io3_arr[i];
-		io_4=io4_arr[i];
-		io_5=io5_arr[i];
-		io_6=io6_arr[i];
-		io_7=io7_arr[i];
-		io_8=io8_arr[i];
-		
-		//alert("point recieved="+point);
-		pt[i] = point;
-		place=0;				
-    
-	// PLOT LABEL
-	//var label_detail = "<font color=#006600><strong>"+vehiclename+"</strong></font><font color=#FF0000><strong>["+running_status1+"]</strong></font>";
-
-	/*if(running_status1 == "Running")
-	{
-	  var label_detail = "<font color=blue><strong>"+vehiclename+"</strong></font><font color=red><strong>("+running_status1+")</strong></font>";
-	}
-	else
-	{
-	  var label_detail = "<font color=blue><strong>"+vehiclename+"</strong></font><font color=red><strong>("+running_status1+")</strong></font>";      
-	}*/
+        day_max_speed_time = day_max_speed_time_arr[i];
+        last_halt_time = last_halt_time_arr[i];
+        io_1=io1_arr[i];
+        io_2=io2_arr[i];
+        io_3=io3_arr[i];
+        io_4=io4_arr[i];
+        io_5=io5_arr[i];
+        io_6=io6_arr[i];
+        io_7=io7_arr[i];
+        io_8=io8_arr[i];		
+       
+        pt[i] = point;
+        place=0;   
 		
 	var label_detail = "<div style='width:80px;'>"+vehiclename+"</div>";
-	//var label_detail = vehiclename;        
-				   
-	//var label = new ELabel(new GLatLng(43.9,-79.5), "Utopia", "style2");
-	//map.addOverlay(label);
-	  
-	//FILTER INVALID DATETIME
-	/*var date1string = datetime;
-	var date1tmp = date1string.replace(/-/g,"/");
-	//alert("date1tmp="+date1tmp);
-
-	var previou_datetime = new Date(date1tmp);//yyyy-mm-dd format
-	//var date2 = new Date('2012/08/09 11:50:10');
-	var current_datetime = new Date();       
-	/////////////////////////
-
-	var d1 = (previou_datetime.getTime())/(1000*60);
-	var d2 = (current_datetime.getTime())/(1000*60);	
-	//alert("d1="+d1+" ,d2="+d2);
-
-	var timediff = Math.abs(d2 - d1);
-	//alert("diff="+diff);
-
-	if(timediff > 8)
-	{
-		//alert("IDLE");
-		running_status1 == "Stop";
-	} */
-   /*   
-    if(running_status1 == "Running")
-    {
-      var label = new ELabel(point, label_detail, "style1");
-    }
-    else if(running_status1 == "Idle")
-    {
-      var label = new ELabel(point, label_detail, "style2"); 
-    }
-    else
-    {
-      var label = new ELabel(point, label_detail, "style3"); 
-    } 
-	*/
-	//violet = #EE82EE
+	
 	var font_color ="#000000";			
 	var label;
 	
@@ -1888,18 +1815,7 @@ function Moving_DataMarkers(lat_arr,lng_arr,vid_arr,vehiclename_arr,speed_arr,da
 			{
 				angle_deg = angle_prev[j];
 			}
-			/*var IconArrow = new GIcon(); 
-
-			//var a=
-			//alert("val="+a);
-			IconArrow.image = "images/arrow_images/"+angle_deg+'.png';
-			IconArrow.iconSize = new GSize(20, 19);
-			IconArrow.iconAnchor = new GPoint(10, 10);	*/		
-
-			//var marker2 = new GMarker(coord, IconArrow);       		
-			// map.addOverlay(marker2);		//COMMENTED TO PREVENT TRAIL ANGEL
-			/////// DIRECTION ARROW CLOSED
-                         
+		
             var distance = calculate_distance(point_prev[j].lat(), point.lat(), point_prev[j].lng(), point.lng());
             distance += dist_prev[j];
             total_dist += distance;
@@ -3895,26 +3811,21 @@ function checkbox_selection(obj)
                 //alert("Closed");
 	}
    
-  function alertContentsMap1()
-  {
-    //alert("in fun");
-    //alert("IN alert CNT="+http_request.readyState);
-    if (http_request.readyState == 4) 
+    function alertContentsMap1()
     {
-        //alert("IN alert CNT2="+http_request.status);
-       if (http_request.status == 200) 
-       {
-          result = http_request.responseText;
-          //alert("RESSSS="+result);
-          liveDataDisplay = JSON.parse(result);
-          displayInfo_live();
-	  //alert("poststr="+poststr_route);
-	  makePOSTRequestRoute('src/php/get_polyline_detail.php', poststr_route);
-          //alert("length="+liveDataDisplay.length);
-          //alert("lat="+testJsonStr[0]['']);
-       }
-    }
-  } 
+        if (http_request.readyState == 4) 
+        {
+            if (http_request.status == 200) 
+            {
+                    result = http_request.responseText;
+                    //alert("RESSSS="+result);
+                    liveDataDisplay = JSON.parse(result);
+                    displayInfo_live();
+                    //alert("poststr="+poststr_route);
+                    makePOSTRequestRoute('src/php/get_polyline_detail.php', poststr_route);      
+           }
+        }
+    } 
   
    function makePOSTRequestText(url, parameters) 
     {
