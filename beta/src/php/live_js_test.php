@@ -1561,7 +1561,7 @@ var vlist = "";
 
 function Moving_DataMarkers(lat_arr,lng_arr,vid_arr,vehiclename_arr,speed_arr,datetime_arr, fuel_arr, len2, running_status_arr, day_max_speed_arr,day_max_speed_time_arr,last_halt_time_arr,io1_arr,io2_arr,io3_arr,io4_arr,io5_arr,io6_arr,io7_arr,io8_arr)
 { 
-    deleteOverlays();
+    //deleteOverlays();
     
     var str='';
     var strURL='src/php/select_landmark.php?content='+str;        
