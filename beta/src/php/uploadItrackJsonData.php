@@ -74,8 +74,7 @@ function getJsonSampleData($jsonData)
 	//echo "in function ";
     //$jsonData='{"VEHICLENO":"111231031744301","DATAELEMENTS":[{"DATAELEMENTS":{"LOCATION":"","HEADING":237.2,"SPEED":45,"LONGITUDE":76.6232,"DATETIME":"2016\/07\/29 16:01:41","IGNSTATUS":0,"LATITUDE":28.1179}}]}';
     $jsonDecodedData = json_decode($jsonData,true);
-    print_r($jsonDecodedData);
-    exit();
+    
     $innerData=$jsonDecodedData['DATAELEMENTS'][0]['DATAELEMENTS'];
     $deviceImei=$jsonDecodedData['VEHICLENO'];
     $location=$innerData['LOCATION'];
