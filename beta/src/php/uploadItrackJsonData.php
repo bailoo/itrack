@@ -63,7 +63,7 @@ function deliverResponse($status,$statusMessage,$response)
 	header("HTTP/1.1 $status $statusMessage");
 	$responseArr['status']=$status;
 	$responseArr['statusMessage']=$statusMessage;
-	$responseArr['jsonResponse']=$response;
+	$responseArr['dataResponse']=$response;
 	
 	$jsonResponse=json_encode($responseArr);
 	echo $jsonResponse;	
