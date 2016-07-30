@@ -2,6 +2,7 @@
 include_once("user_type_setting.php"); 
 ?>
 <script type="text/javascript">
+var label_type = "<?php echo $report_type; ?>";
 var lvIcon1 = 'images/live/live_vehicle.gif';
 var lvIcon2 = 'images/live/lp_vehicle1.gif'; 
 var lvIcon3 ='images/live/lp_vehicle2.gif';
