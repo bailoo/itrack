@@ -30,12 +30,12 @@ $parameterizeData->lastHaltTime='u';
 $parameterizeData->cellName='ab';
 $sortBy="h";	
 
-if(!empty($_POST['jsonData']))
+if(!empty($_POST['deviceData']))
 {
         $keyData=$_POST['key'];
         if($keyData=='mother2016_itrack')
         {
-            $jsonData=$_POST['jsonData'];	
+            $jsonData=$_POST['deviceData'];	
             //echo "jsonDecodedData=".$jsonData."<br>";
             $response=getJsonSampleData($jsonData);
             if($response=="fail")
@@ -63,7 +63,7 @@ function deliverResponse($status,$statusMessage,$response)
 	header("HTTP/1.1 $status $statusMessage");
 	$responseArr['status']=$status;
 	$responseArr['statusMessage']=$statusMessage;
-	$responseArr['jsonResponse']=$response;
+	$responseArr['dataResponse']=$response;
 	
 	$jsonResponse=json_encode($responseArr);
 	echo $jsonResponse;	
@@ -73,8 +73,9 @@ function getJsonSampleData($jsonData)
 {
 	//echo "in function ";
     //$jsonData='{"VEHICLENO":"111231031744301","DATAELEMENTS":[{"DATAELEMENTS":{"LOCATION":"","HEADING":237.2,"SPEED":45,"LONGITUDE":76.6232,"DATETIME":"2016\/07\/29 16:01:41","IGNSTATUS":0,"LATITUDE":28.1179}}]}';
+    //$jsonData='{"vno":"GJ06-N-1234","speed":"45","lng":"79.5827","lat":"26.03842","date":"2016-07-28 16:18:41","ignstatus":"0" }';
     $jsonDecodedData = json_decode($jsonData,true);
-    //print_r($jsonDecodedData);
+    /*
     $innerData=$jsonDecodedData['DATAELEMENTS'][0]['DATAELEMENTS'];
     $deviceImei=$jsonDecodedData['VEHICLENO'];
     $location=$innerData['LOCATION'];
@@ -85,7 +86,20 @@ function getJsonSampleData($jsonData)
     $datetime=$innerData['DATETIME'];
     $datetime=str_replace("/","-",$datetime);
     $ignstatus=$innerData['IGNSTATUS'];
-	
+	*/
+
+
+    $deviceImei=$jsonDecodedData['vno'];
+    //$location=$jsonDecodedData['loc'];
+    //$heading=$jsonDecodedData['heading'];
+    $speed=$jsonDecodedData['speed'];
+    $lat=$jsonDecodedData['lat'];
+    $lng=$jsonDecodedData['lng'];
+    $datetime=$jsonDecodedData['date'];
+    $datetime=str_replace("/","-",$datetime);
+    $ignstatus=$jsonDecodedData['ignstatus'];
+    
+    
     $MsgType="NORMAL";
     $Version="1.1";
     $Fix=1;
@@ -154,7 +168,8 @@ function getJsonSampleData($jsonData)
     //echo "datalive=".$dataLive."<br>";
 	insertLiveData($deviceImei,$dataLive);
 
-    $dataArr[]=array('vehicleName'=>$vehicleName,'location'=>$location,'heading'=>$heading,'speed'=>$speed,"lat"=>$lat,'lng'=>$lng);
+    //$dataArr[]=array('vehicleName'=>$vehicleName,'location'=>$location,'heading'=>$heading,'speed'=>$speed,"lat"=>$lat,'lng'=>$lng);
+    $dataArr[]=array('vehicleName'=>$vehicleName,'speed'=>$speed,"lat"=>$lat,'lng'=>$lng);
 	//print_r($dataArr);
     if(count($dataArr)>0)
     {
