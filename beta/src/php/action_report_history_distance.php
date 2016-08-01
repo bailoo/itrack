@@ -103,6 +103,7 @@
     for($i=0;$i<$vsize;$i++)
     {
         $dataCnt=0;
+        $total_dist = 0.0;
         $vehicle_info=get_vehicle_info($root,$vserial[$i]);
         $vehicle_detail_local=explode(",",$vehicle_info);
                 
@@ -113,91 +114,74 @@
 		
 		while($ROW1 = mysql_fetch_object($RESULT1)) {
 			
-			$total_dist = array();
-			
 			$reportDate = $ROW1->date;
 			//echo "\nSizeField=".sizeof($time1_hr_fields);
 			for($f=0;$f<sizeof($time1_hr_fields);$f++) {
 				$col = $time1_hr_fields[$f];
 				//echo "<br>Col=".$col;
-				$total_dist[] = $ROW1->$col;
+				$total_dist += $ROW1->$col;
 				//echo "\nT=".$total_dist;
 			}
 							
                         //echo "<br>Dist=".$total_dist." ,imei=".$vserial[$i];
-			$imei[]=$vserial[$i];
-			$vname[]=$vehicle_detail_local[0];
-			$dateDisplay[]=$reportDate;                                
-			$distanceDisplay[]= max($total_dist);
 		}
 
 
 		if($multiple_date_flag) {
-		//##BLOCK 2
-		$QUERY2 = "SELECT * FROM distance_log WHERE date BETWEEN '$dateA' AND '$dateB' AND imei='$vserial[$i]' ORDER BY date ASC";
-                //echo "<br>QUERY2=".$QUERY2."<br>";
-		$RESULT2 = mysql_query($QUERY2,$DbConnection);
-		
-		while($ROW2 = mysql_fetch_object($RESULT2)) {
-			
-			$total_dist = array();
+                    //##BLOCK 2
+                    $QUERY2 = "SELECT * FROM distance_log WHERE date BETWEEN '$dateA' AND '$dateB' AND imei='$vserial[$i]' ORDER BY date ASC";
+                    //echo "<br>QUERY2=".$QUERY2."<br>";
+                    $RESULT2 = mysql_query($QUERY2,$DbConnection);
+
+                    while($ROW2 = mysql_fetch_object($RESULT2)) {
 			
 			$reportDate = $ROW2->date;
-			$total_dist[] = $ROW2->HR_01;
-                        $total_dist[] = $ROW2->HR_02;
-                        $total_dist[] = $ROW2->HR_03;
-                        $total_dist[] = $ROW2->HR_04;
-                        $total_dist[] = $ROW2->HR_05;
-                        $total_dist[] = $ROW2->HR_06;
-                        $total_dist[] = $ROW2->HR_07;                        
-			$total_dist[] = $ROW2->HR_08;
-                        $total_dist[] = $ROW2->HR_09;
-                        $total_dist[] = $ROW2->HR_10;
-                        $total_dist[] = $ROW2->HR_11;
-                        $total_dist[] = $ROW2->HR_12;
-                        $total_dist[] = $ROW2->HR_13;
-                        $total_dist[] = $ROW2->HR_14;
-			$total_dist[] = $ROW2->HR_15;
-                        $total_dist[] = $ROW2->HR_16;
-                        $total_dist[] = $ROW2->HR_17;
-                        $total_dist[] = $ROW2->HR_18;
-                        $total_dist[] = $ROW2->HR_19;
-                        $total_dist[] = $ROW2->HR_20;
-                        $total_dist[] = $ROW2->HR_21;
-			$total_dist[] = $ROW2->HR_22;
-                        $total_dist[] = $ROW2->HR_23;
-                        $total_dist[] = $ROW2->HR_24;
-							
-			$imei[]=$vserial[$i];
-			$vname[]=$vehicle_detail_local[0];
-			$dateDisplay[]=$reportDate;                                
-			$distanceDisplay[] = max($total_dist);
-		}
-    
-        
-		//##BLOCK 3
-		$QUERY3 = "SELECT imei,date,".$time2_hr." FROM distance_log WHERE date ='$dateto' AND imei='$vserial[$i]' ORDER BY date ASC";
-                //echo "<br>QUERY3<br>".$QUERY3;
-		$RESULT3 = mysql_query($QUERY3,$DbConnection);
-		
-		while($ROW3 = mysql_fetch_object($RESULT3)) {
-			
-			$total_dist = array();
+                        $total_dist+= $ROW2->HR_01;
+                        $total_dist+= $ROW2->HR_02;
+                        $total_dist+= $ROW2->HR_03;
+                        $total_dist+= $ROW2->HR_04;
+                        $total_dist+= $ROW2->HR_05;
+                        $total_dist+= $ROW2->HR_06;
+                        $total_dist+= $ROW2->HR_07;                        
+                        $total_dist+= $ROW2->HR_08;
+                        $total_dist+= $ROW2->HR_09;
+                        $total_dist+= $ROW2->HR_10;
+                        $total_dist+= $ROW2->HR_11;
+                        $total_dist+= $ROW2->HR_12;
+                        $total_dist+= $ROW2->HR_13;
+                        $total_dist+= $ROW2->HR_14;
+                        $total_dist+= $ROW2->HR_15;
+                        $total_dist+= $ROW2->HR_16;
+                        $total_dist+= $ROW2->HR_17;
+                        $total_dist+= $ROW2->HR_18;
+                        $total_dist+= $ROW2->HR_19;
+                        $total_dist+= $ROW2->HR_20;
+                        $total_dist+= $ROW2->HR_21;
+                        $total_dist+= $ROW2->HR_22;
+                        $total_dist+= $ROW2->HR_23;
+                        $total_dist+= $ROW2->HR_24;
+                    }        
+                    //##BLOCK 3
+                    $QUERY3 = "SELECT imei,date,".$time2_hr." FROM distance_log WHERE date ='$dateto' AND imei='$vserial[$i]' ORDER BY date ASC";
+                    //echo "<br>QUERY3<br>".$QUERY3;
+                    $RESULT3 = mysql_query($QUERY3,$DbConnection);
+
+                    while($ROW3 = mysql_fetch_object($RESULT3)) {
 			
 			$reportDate = $ROW3->date;
 			
 			for($f=0;$f<sizeof($time2_hr_fields);$f++) {
 				$col = $time2_hr_fields[$f];
-				$total_dist[] = $ROW3->$col;
+				$total_dist+= $ROW3->$col;
 			}
-							
-			$imei[]=$vserial[$i];
-			$vname[]=$vehicle_detail_local[0];
-			$dateDisplay[]=$reportDate;                                
-			$distanceDisplay[]= max($total_dist);
-		}
-		}
-	}
+                    }
+                }
+            
+                $imei[]=$vserial[$i];
+                $vname[]=$vehicle_detail_local[0];
+                $dateDisplay[]=$reportDate;                                
+                $distanceDisplay[] = $total_dist;
+            }
 	
   echo '<center>';
 	  
