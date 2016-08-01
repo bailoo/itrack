@@ -206,6 +206,7 @@ $js_function_name_switcher="report_show_file_switcher";
                         {
                             echo'<li><a href=javascript:'.$js_function_name_switcher.'(\'report.htm\',\'src/php/report_daily_distance.htm\',\'Daily%20Distance%20Report\',\''.$js_function_name.'\');><i class="fa fa-check-circle-o" aria-hidden="true"></i>'.$nbsp.'Daily Distance</a></li>                        
                             <li><a href=javascript:'.$js_function_name_switcher.'(\'report.htm\',\'src/php/report_monthly_distance.htm\',\'Monthly%20Distance%20Report\',\''.$js_function_name.'\');><i class="fa fa-calendar" aria-hidden="true"></i>'.$nbsp.'Monthly Distance</a></li>
+                            <li><a href=javascript:'.$js_function_name_switcher.'(\'report.htm\',\'src/php/report_history_distance.htm\',\'History%20Distance%20Report\',\''.$js_function_name.'\');><i class="fa fa-hourglass" aria-hidden="true"></i>'.$nbsp.'History Distance Report</a></li>
                            ';
                         }
                         if($flag_fuel)
