@@ -52,26 +52,7 @@
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
-        
-       ///////// this is for data log by person map popup window
-       var dataLogImei="<?php echo $dataLogImei; ?>";
-       var start_date_map="<?php echo $start_date_map; ?>";
-       var end_date_map="<?php echo $end_date_map; ?>";
-       if(dataLogImei!='')
-       {
-        var result= "<?php echo $account_id; ?>";        
-        var poststr = "account_id_local="+result+
-        "&vehicle_display_option=all"+
-        "&title1=fromHome"+
-        "&dataLogImei="+dataLogImei+
-        "&start_date_map="+start_date_map+
-        "&end_date_map="+end_date_map+
-        "&options_value=all";
-        //alert("poststr="+poststr);
-        showManageLoadingMessage();
-        makePOSTRequest('src/php/datalog_between_dates.htm',poststr);
-        }
-        ///////////////
+     
            
        
       </script>
