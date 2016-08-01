@@ -32,8 +32,13 @@
 </div>
 <?php    
     echo ' <!--MAP DETAIL -->
-    <div id="map" style="height:100%;width:100%;"></div>
-     <!--MAP DETAIL CLOSED-->
+    <div id="map" style="height:100%;width:100%;"></div>';
+    if($account_id==2)
+    {
+        echo'<input id="pac-input" class="controls" type="text" placeholder="Search Box">';
+    }
+  
+     echo'<!--MAP DETAIL CLOSED-->
   </TD>  
   
    <TD align="left" id="vlist_col">

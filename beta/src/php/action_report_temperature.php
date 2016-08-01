@@ -222,13 +222,7 @@
         $parameterizeData=null;
 
 echo '<center>';
-if($account_id==723)
-{
-// $speed_sortTS = UTIL::sort_datetimeTS($speed);
-$session_name = "SPEED_" . time();
-$_SESSION[$session_name] =  $fieldsData;
-print "<center><img src=\"graph/GraphDateLine.php?s=".$session_name."\">";
-}
+
   echo'<br>';
   report_title("Temperature Report",$date1,$date2);
   
