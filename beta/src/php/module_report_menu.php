@@ -51,13 +51,34 @@ if($_SESSION['drop_down_menu_module']=="report.htm")
   {
     ?>
    <script>
+      var dataLogImei="<?php echo $dataLogImei; ?>";
+       var start_date_map="<?php echo $start_date_map; ?>";
+       var end_date_map="<?php echo $end_date_map; ?>";
+   if(dataLogImei=="")
+   {
        window.onload = function () 
        { 
            //alert("un");
         <?php echo  $_SESSION['drop_down_menu_js_type']; ?>( <?php echo "'" .$_SESSION['drop_down_menu_file'] . "', '".$_SESSION['drop_down_menu_title_report'] . "'"; ?> );
        }
+   }
+   else
+   {
+        var result= "<?php echo $account_id; ?>";        
+        var poststr = "account_id_local="+result+
+        "&vehicle_display_option=all"+
+        "&title1=data log"+
+        "&dataLogImei="+dataLogImei+
+        "&options_value=all";
+        //alert("poststr="+poststr);
+        showManageLoadingMessage();
+        makePOSTRequest('src/php/datalog_between_dates.htm',poststr);
+    }
    </script>
     <?php
+     unset($dataLogImei);
+	unset($start_date_map);
+	unset($end_date_map);
   }
   else
   {
