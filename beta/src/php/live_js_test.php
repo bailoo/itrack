@@ -1629,6 +1629,12 @@ function Moving_DataMarkers(lat_arr,lng_arr,vid_arr,vehiclename_arr,speed_arr,da
         trail_flag = false;	
     }			
     var tmp=1;
+    var img;
+    var icon1;
+    var right_vehicle_style;
+    var vehicleNameLabel;
+    var marker;
+    var angle_deg;
     for (i = 0; i < len2; i++) 
     {
         tmp=tmp+i;
@@ -1676,7 +1682,7 @@ function Moving_DataMarkers(lat_arr,lng_arr,vid_arr,vehiclename_arr,speed_arr,da
 		font_color = "#FF0000";
 	}
 
-	if(running_status1 == "Running")
+	/*if(running_status1 == "Running")
 	{
 	  label = new ELabel(point, label_detail, "style1");
 	}
@@ -1687,8 +1693,63 @@ function Moving_DataMarkers(lat_arr,lng_arr,vid_arr,vehiclename_arr,speed_arr,da
 	else
 	{
 	  label = new ELabel(point, label_detail, "style3"); 
-	} 	
-	
+	}*/
+        
+        if(running_status1 == 'Running')
+    {
+        img = '<img src=images/live/live_vehicle.gif width=8px height=8px>&nbsp;';
+        icon1 = {
+                  url: 'images/live/live_vehicle.gif',
+                    size: new google.maps.Size(8, 8),
+                scaledSize: new google.maps.Size(8, 8),
+                anchor: new google.maps.Point(0, 32)
+                };
+        right_vehicle_style= '\"font-size: 10px;color: green\"';
+        vehicleNameLabel='<table style=\"background-color: green;color:white;font-size: 11px; font-weight: bold;font-family: Lucida Grande, Arial, sans-serif;\" >'+
+                                                '<tr>'+
+                                                        '<td>'+vehiclename+
+                                                        '</td>'+
+                                                '</tr>'+
+                                        '</table>';
+    }
+    else if(running_status1 == 'Idle')
+    {
+            img = '<img src=images/live/lp_vehicle1.gif width=8px height=8px>&nbsp;';							
+                    icon1 = {
+                                            url: 'images/live/lp_vehicle1.gif',
+                                            size: new google.maps.Size(8, 8),
+                                            scaledSize: new google.maps.Size(8, 8),
+                                            anchor: new google.maps.Point(0, 32)
+                                    };
+            right_vehicle_style= '\"font-size: 10px;color: yellow\"';	
+            vehicleNameLabel='<table style=\"background-color: yellow;color:white;font-size: 11px; font-weight: bold;font-family: Lucida Grande, Arial, sans-serif;\" >'+
+                                                    '<tr>'+
+                                                            '<td>'+vehiclename+
+                                                            '</td>'+
+                                                    '</tr>'+
+                                            '</table>';
+    }
+    else                                                                                                                                                                                                                              
+    {
+            img = '<img src=images/live/lp_vehicle2.gif width=8px height=8px>&nbsp;';							
+            icon1 = {
+                                    url: 'images/live/lp_vehicle2.gif',
+                                    size: new google.maps.Size(8, 8),
+                                    scaledSize: new google.maps.Size(8, 8),
+                                    anchor: new google.maps.Point(0, 12)
+                            };
+            right_vehicle_style= '\"font-size: 10px;color: red\"';
+            vehicleNameLabel='<table style=\"background-color: red;color:white;font-size: 11px; font-weight: bold;font-family: Lucida Grande, Arial, sans-serif;\" >'+
+                                                    '<tr>'+
+                                                            '<td>'+vehiclename+
+                                                            '</td>'+
+                                                    '</tr>'+
+                                            '</table>';
+    }
+	var position;
+						var lat_tmp=lat_arr[i];
+						var lng_tmp=lng_arr[i];
+						position=new google.maps.LatLng(lat_arr[i], lng_arr[i]);	
 	//############## COLOR SETTING CODE  ###########
 		
 	var feature_id_live_color = document.getElementById('live_color_flag').value;
@@ -1750,13 +1811,20 @@ function Moving_DataMarkers(lat_arr,lng_arr,vid_arr,vehiclename_arr,speed_arr,da
 
 		//document.getElementById('someElementId').className = 'cssClass';
 		//$('<style>.style4 {color: white; background-color: '+font_color+';} input::-webkit-outer-spin-button: {display: none;}</style>').appendTo('head');
-		label = new ELabel(point, label_detail, "style"+tmp); 		
+		//label = new ELabel(point, label_detail, "style"+tmp); 	
+                vehicleNameLabel='<table class="style'+tmp+'">'+
+                                                    '<tr>'+
+                                                            '<td>'+vehiclename+
+                                                            '</td>'+
+                                                    '</tr>'+
+                                            '</table>';
+                
 	}
     
-    map.removeOverlay(label)
+   /* map.removeOverlay(label)
     label.pixelOffset=new GSize(10,10);
     map.addOverlay(label);
-    // PLOT LABEL CLOSED
+    // PLOT LABEL CLOSED*/
         
     if(document.getElementById('trail_path').checked)
     {
@@ -1844,10 +1912,237 @@ function Moving_DataMarkers(lat_arr,lng_arr,vid_arr,vehiclename_arr,speed_arr,da
 			break;
     	}
 	  }
-	}    
+	}
+        
+    if(document.getElementById('trail_path').checked)
+                        {
+                                for(var j=0;j<vid_prev.length;j++)
+                                {
+                                        if(vid_prev[j]==vid)
+                                        {
+                                                var lattmplive1 = point_prev[j].lat();
+                                                var lngtmplive1 = point_prev[j].lng();
+
+                                                // alert('lattmplive1='+lattmplive1+'lngtmplive1='+lngtmplive1);
+                                                lattmplive2 = position.lat();
+                                                lngtmplive2 = position.lng();
+                                                //alert('lat2='+lat2+'lng2='+lng2);                                                 
+                                                var yaxis = (parseFloat(lattmplive1) + parseFloat(lattmplive2))/2;
+                                                var xaxis = (parseFloat(lngtmplive1) + parseFloat(lngtmplive2))/2;
+                                                //alert('yaxis='+yaxis+'xaxis='+xaxis);
+                                                var angle_t = Math.atan( (parseFloat(lattmplive2)-parseFloat(lattmplive1))/(parseFloat(lngtmplive2)-parseFloat(lngtmplive1)) );
+                                                angle_deg = 360 * angle_t/(2 * Math.PI);
+                                                if((lngtmplive2-lngtmplive1)<0)
+                                                {
+                                                        angle_deg = 180 + angle_deg;
+                                                }
+                                                else if((lattmplive2-lattmplive1)<0)
+                                                {
+                                                        angle_deg = 360 + angle_deg;
+                                                }
+                                                angle_deg = Math.round(angle_deg,0);
+                                                //alert('angle_degree='+angle_deg);
+
+                                                var image = 
+                                                {
+                                                        url: 'images/arrow_images/'+angle_deg+'.png'									
+                                                };
+                                           // alert('image='+image);
+                                                position=new google.maps.LatLng(yaxis, xaxis);
+                                           // alert('position='+position);											
+
+                                                if(trail_flag==true)
+                                                {
+                                                        if(vStatus[i] == 'Running')
+                                                        {						
+                                                                marker = new MarkerWithLabel({
+                                                                   position: position,
+                                                                   draggable: true,
+                                                                   icon:image,
+                                                                   map: map,
+                                                                   labelContent: vehicleNameLabel,
+                                                                   labelAnchor: new google.maps.Point(-12, 38)
+                                                                 });				
+                                                         }						 
+                                                         else
+                                                         {
+                                                                marker = new MarkerWithLabel({
+                                                                   position: position,
+                                                                   draggable: true,
+                                                                   icon:image,
+                                                                   map: map,
+                                                                   labelContent: vehicleNameLabel,
+                                                                   labelAnchor: new google.maps.Point(-12, 18)
+                                                                 });
+                                                         }																																	
+                                                        markers.push(marker);
+                                                }
+
+                                                if(document.getElementById('trail_path_real').checked)
+                                                {
+                                                        var line = new google.maps.Polyline
+                                                        ({
+                                                                path: [point_prev[j], position],
+                                                                strokeColor: '#ff0000',
+                                                                strokeOpacity: 1.0,
+                                                                strokeWeight: 1.5
+                                                        });	
+                                                        markers.push(line);						
+                                                        line.setMap(map);
+                                                }
+                                                //alert('point1='+point_prev[j]+'point2='+position);
+                                                if(point_prev[j]!=position)
+                                                {
+                                                        point_prev[j] = position;									
+                                                        angle_prev[j] = angle_deg;
+                                                        vname_prev[j] = vehiclename;
+                                                        trail_flag = true;
+                                                        //break;
+                                                }
+                                                break;
+                                        }
+                                }
+                        }
 	//
-    //alert("font_color2="+font_color);                                                                                                                          
-    marker = Create_MovingDataMarkers(angle_deg, point, vid, vehiclename, speed, datetime, fuel, len2, font_color, gmarkersC,p, running_status1, total_dist, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8);
+    //alert("font_color2="+font_color); 
+    
+    if(isNaN(angle_deg))
+  {
+    //alert("No Angle found");
+	  if(running_status == "Running")
+	  {
+		vIcon= new GIcon(lvIcon1);    //BLINK DOT ICON
+	  }
+	  else if(running_status == "Idle")
+	  {
+		vIcon= new GIcon(lvIcon2);
+	  }
+	  else
+	  {
+		vIcon= new GIcon(lvIcon3);
+	  }		
+  }
+  else
+  {
+  	arrowIcon.image = "images/arrow_images/"+angle_deg+'.png';
+	vIcon= new GIcon(arrowIcon);
+  }
+  
+  /*	
+  if(running_status == "Running")
+  {
+    vIcon= new GIcon(lvIcon1);    //BLINK DOT ICON
+  }
+  else if(running_status == "Idle")
+  {
+    vIcon= new GIcon(lvIcon2);
+  }
+  else
+  {
+    vIcon= new GIcon(lvIcon3);
+  }
+ */
+ 
+ //vIcon = IconArrow;
+	
+	pt[p] = point;
+	imei1[p] = imei;
+	vname1[p] = vehiclename;
+	speed1[p] = speed;
+	datetime1[p] = datetime;
+	fuel1[p] = fuel;
+  	day_max_speed1[p] = new Array();
+  	day_max_speed_time1[p] = new Array();
+  	last_halt_time1[p] = new Array();	
+	
+	//var lt_1 = Math.round(point.lat()*100000)/100000; 
+	//var ln_1 = Math.round(point.lng()*100000)/100000;
+	
+	var lat = point.lat(); 
+	var lng = point.lng();	
+
+	var marker = new GMarker(point, vIcon);
+	marker1[p] = marker;
+                  
+  
+  	var img = "";
+  	////CONCAT GLOBAL VLIST STRING
+  	if(running_status == "Running")
+  	{
+    	img = "<img src=./images/live/live_vehicle.gif width=8px height=8px>&nbsp;";
+  	}
+  	else if(running_status == "Idle")
+ 	{
+    	img = "<img src=./images/live/lp_vehicle1.gif width=8px height=8px>&nbsp;";
+  	}
+  	else                                                                                                                                                                                                                              
+  	{
+    	img = "<img src=./images/live/lp_vehicle2.gif width=8px height=8px>&nbsp;";
+  	}
+  
+  	//vlist += "<tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+vIcon+"\",\""+lat+"\",\""+lng+"\",\""+p+"\",\""+imei+"\",\""+vehiclename+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+running_status+"\",\""+total_dist+"\");'>"+img+"<font color=#006600>"+vehiclename+"</font>&nbsp;&nbsp;<font color=red>("+running_status+")</font></a></td></tr><tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+vIcon+"\",\""+lat+"\",\""+lng+"\",\""+p+"\",\""+imei+"\",\""+vehiclename+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+running_status+"\",\""+total_dist+"\");'><font color=blue>("+imei+")</font></a></td></tr><tr><td>&nbsp;</td></tr>";
+			
+	var route="";
+	var feature_id_map = document.getElementById('station_flag_map').value;
+	if(feature_id_map == 1)
+	{		
+		var len_route;		
+		var vname_id;
+		var route_id;
+			
+		//alert("route_shift="+route_shift);		
+		if(route_shift == 1)
+		{
+			len_route = document.getElementById('route_limit_ev').value;
+			vname_id = "vname_ev";
+			route_id = "route_ev";			
+		}
+		else if(route_shift == 2)
+		{
+			len_route = document.getElementById('route_limit_mor').value;
+			vname_id = "vname_mor";
+			route_id = "route_mor";			
+		}
+		
+		//alert("lenroute="+len_route+" ,vname="+vname_id+" ,route_id="+route_id);
+		for(var i=0;i<len_route;i++)
+		{
+			var vname_id_tmp = vname_id+i;
+			var route_id_tmp = route_id+i;
+			
+			//alert("vname="+vname_id_tmp+" ,route_id="+route_id_tmp);			
+			var master_vehicle = document.getElementById(vname_id_tmp).value;
+			var master_route = document.getElementById(route_id_tmp).value;
+
+			//alert("master_vehicle="+master_vehicle+" ,vehiclename="+vehiclename+" ,vname_id="+vname_id+" ,route_id="+route_id);
+			if( trim(master_vehicle) == trim(vehiclename))
+			{
+				route = master_route;
+				//alert("matched="+route);
+				break;
+			}
+		}
+		if(route=="") route = "NA";
+		vlist += "<tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+vIcon+"\",\""+lat+"\",\""+lng+"\",\""+p+"\",\""+imei+"\",\""+vehiclename+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+day_max_speed+"\",\""+day_max_speed_time+"\",\""+last_halt_time+"\",\""+running_status+"\",\""+total_dist+"\",\""+route+"\",\""+io_1+"\",\""+io_2+"\",\""+io_3+"\",\""+io_4+"\",\""+io_5+"\",\""+io_6+"\",\""+io_7+"\",\""+io_8+"\");'>"+img+"<font color="+font_color+">"+vehiclename+"</font>&nbsp;<font color=red>("+route+")</font>&nbsp;<font color=blue>["+running_status+"]</font></a></td></tr><tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+vIcon+"\",\""+lat+"\",\""+lng+"\",\""+p+"\",\""+imei+"\",\""+vehiclename+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+day_max_speed+"\",\""+day_max_speed_time+"\",\""+last_halt_time+"\",\""+running_status+"\",\""+total_dist+"\",,\""+route+"\"\""+io_1+"\",\""+io_2+"\",\""+io_3+"\",\""+io_4+"\",\""+io_5+"\",\""+io_6+"\",\""+io_7+"\",\""+io_8+"\");'></a></td></tr><tr><td>&nbsp;</td></tr>";
+	}
+	else
+	{
+		vlist += "<tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+vIcon+"\",\""+lat+"\",\""+lng+"\",\""+p+"\",\""+imei+"\",\""+vehiclename+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+day_max_speed+"\",\""+day_max_speed_time+"\",\""+last_halt_time+"\",\""+running_status+"\",\""+total_dist+"\",\""+route+"\",\""+io_1+"\",\""+io_2+"\",\""+io_3+"\",\""+io_4+"\",\""+io_5+"\",\""+io_6+"\",\""+io_7+"\",\""+io_8+"\");'>"+img+"<font color="+font_color+">"+vehiclename+"</font>&nbsp;&nbsp;<font color=blue>["+running_status+"]</font></a></td></tr><tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+vIcon+"\",\""+lat+"\",\""+lng+"\",\""+p+"\",\""+imei+"\",\""+vehiclename+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+day_max_speed+"\",\""+day_max_speed_time+"\",\""+last_halt_time+"\",\""+running_status+"\",\""+total_dist+"\",\""+route+"\",\""+io_1+"\",\""+io_2+"\",\""+io_3+"\",\""+io_4+"\",\""+io_5+"\",\""+io_6+"\",\""+io_7+"\",\""+io_8+"\");'></a></td></tr><tr><td>&nbsp;</td></tr>";
+	}
+  	//alert("vlist="+vlist);
+  	//////////////////////////////
+  
+  	if(running_status == "Running")
+  	{
+    	//PlotLastMarkerWithAddress(point, vIcon, marker, imei, vehiclename, speed,datetime, fuel, running_status, total_dist, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8);
+  	}
+  
+  	GEvent.addListener(marker, 'mouseover', function()
+  	{			
+  		PlotLastMarkerWithAddress(point, vIcon, marker, imei, vehiclename, speed,datetime, fuel, running_status, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8);
+  	});  
+		
+   // marker = Create_MovingDataMarkers(angle_deg, point, vid, vehiclename, speed, datetime, fuel, len2, font_color, gmarkersC,p, running_status1, total_dist, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8);
         
     // POST ASSIGNMENT OF MARKER_PREV
     if(document.getElementById('trail_path').checked)
