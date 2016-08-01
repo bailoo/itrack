@@ -58,7 +58,36 @@ $time_2 = explode(":", $date_2[1]);
 
 $t1 = intval($time_1[0]);
 $time1_hr = "";
-for ($i = $t1; $i <= 24; $i++) {
+
+$t2 = intval($time_2[0]);
+//echo "<br>t2=".$t2;
+$time2_hr = "";
+
+$multiple_date_flag = false;
+
+//echo "<br>D1=".$date_1[0]." ,D2=".$date_2[0];
+if($date_1[0]==$date_2[0]) {
+for ($i = $t1+1; $i <= $t2; $i++) {
+
+    if ($i > 0) {
+        $hr = $i;
+
+        if ($i <= 9) {
+            $hr = "0" . $hr;
+        }
+
+        $time1_hr.= "HR_" . $hr . ",";
+    }
+}
+$time1_hr = substr($time1_hr, 0, -1);
+$time1_hr_fields = explode(",", $time1_hr);
+//====================================
+    $dateA = $date_1[0];
+    $dateB = $date_2[0];
+    $multiple_date_flag = false;
+
+} else {
+for ($i = $t1+1; $i <= 24; $i++) {
 
     if ($i > 0) {
         $hr = $i;
@@ -74,9 +103,6 @@ $time1_hr = substr($time1_hr, 0, -1);
 $time1_hr_fields = explode(",", $time1_hr);
 //====================================	
 
-$t2 = intval($time_2[0]);
-//echo "<br>t2=".$t2;
-$time2_hr = "";
 for ($i = 1; $i <= $t2; $i++) {
 
     $hr = $i;
@@ -90,20 +116,17 @@ for ($i = 1; $i <= $t2; $i++) {
 $time2_hr = substr($time2_hr, 0, -1);
 $time2_hr_fields = explode(",", $time2_hr);
 //=====================================
+
+    $dateA = date('Y-m-d', strtotime($date1 . ' +1 day'));
+    $dateB = date('Y-m-d', strtotime($date2 . ' -1 day'));
+    $multiple_date_flag = false;
+
+}  //else closed
+
 //## Get Next and Previous Dates
 $tmpd1 = $date_1[0] . " 00:00:00";
 $tmpd2 = $date_2[0] . " 00:00:00";
 
-
-$multiple_date_flag = true;
-if ($date_size > 1) {
-    $dateA = date('Y-m-d', strtotime($date1 . ' +1 day'));
-    $dateB = date('Y-m-d', strtotime($date2 . ' -1 day'));
-} else {
-    $dateA = $date_1[0];
-    $dateB = $date_2[0];
-    $multiple_date_flag = false;
-}
 
 for ($i = 0; $i < $vsize; $i++) {
     $dataCnt = 0;
@@ -112,6 +135,7 @@ for ($i = 0; $i < $vsize; $i++) {
     $vehicle_detail_local = explode(",", $vehicle_info);
 
     //##BLOCK 1
+   if (!$multiple_date_flag) {
     $QUERY1 = "SELECT imei,date," . $time1_hr . " FROM distance_log WHERE date ='$datefrom' AND imei='$vserial[$i]' ORDER BY date ASC";
     //echo "<br>QUERY1=".$QUERY1.", DB=".$DbConnection."<br>";
     $RESULT1 = mysql_query($QUERY1, $DbConnection);
@@ -129,7 +153,7 @@ for ($i = 0; $i < $vsize; $i++) {
 
         //echo "<br>Dist=".$total_dist." ,imei=".$vserial[$i];
     }
-
+   }
 
     if ($multiple_date_flag) {
         //##BLOCK 2
