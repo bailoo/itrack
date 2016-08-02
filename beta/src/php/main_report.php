@@ -81,7 +81,7 @@ if($_SESSION['drop_down_menu_module']=="report.htm")
    //alert("test");
       ///////// this is for data log by person map popup window
        var dataLogImei="<?php echo $dataLogImei; ?>";
-        //alert("dataLogImei="+dataLogImei);
+    //alert("dataLogImei="+dataLogImei);
        var start_date_map="<?php echo $start_date_map; ?>";
        var end_date_map="<?php echo $end_date_map; ?>";
    if(dataLogImei=="")
@@ -99,6 +99,8 @@ if($_SESSION['drop_down_menu_module']=="report.htm")
         "&vehicle_display_option=all"+
         "&title1=data log"+
         "&dataLogImei="+dataLogImei+
+        "&start_date_map="+start_date_map+
+        "&end_date_map="+end_date_map+
         "&options_value=all";
         //alert("poststr="+poststr);
         showManageLoadingMessage();
@@ -145,13 +147,15 @@ else
    else
    {
 		  var result= "<?php echo $account_id; ?>";        
-        var poststr = "account_id_local="+result+
+          var poststr = "account_id_local="+result+
         "&vehicle_display_option=all"+
         "&title1=data log"+
         "&dataLogImei="+dataLogImei+
+        "&start_date_map="+start_date_map+
+        "&end_date_map="+end_date_map+
         "&options_value=all";
         //alert("poststr="+poststr);
-        showManageLoadingMessage();
+        //showManageLoadingMessage();
         makePOSTRequest('src/php/datalog_between_dates.htm',poststr);
 		
    }
