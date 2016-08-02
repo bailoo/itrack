@@ -65,9 +65,9 @@ $time2_hr = "";
 
 $multiple_date_flag = false;
 
-if (getenv('REMOTE_ADDR')=='103.210.29.74'){
+/*if (getenv('REMOTE_ADDR')=='103.210.29.74'){
 echo "<br>D1=".$date_1[0]." ,D2=".$date_2[0];
-}
+}*/
 
 
 //echo "<br>D1=".$date_1[0]." ,D2=".$date_2[0];
@@ -91,9 +91,9 @@ $time1_hr_fields = explode(",", $time1_hr);
     $dateB = $date_2[0];
     $multiple_date_flag = false;
 
-if (getenv('REMOTE_ADDR')=='103.210.29.74'){
+/*if (getenv('REMOTE_ADDR')=='103.210.29.74'){
 echo "<br>SameDay";
-}
+}*/
 
 
 } else {
@@ -128,12 +128,11 @@ for ($i = 1; $i <= $t2; $i++) {
 //$time2_hr_fields = explode(",", $time2_hr);
 //=====================================
 
-if (getenv('REMOTE_ADDR')=='103.210.29.74'){
-
+/*if (getenv('REMOTE_ADDR')=='103.210.29.74'){
 echo "T1=".$time1_hr."<br>";
 echo "T2=".$time2_hr."<br>";
 echo "t2=".$t2."<br>";
-}
+}*/
     //$dateA = date('Y-m-d', strtotime($date1 . ' -1 day'));
     //$dateB = date('Y-m-d', strtotime($date2 . ' +1 day'));
 
@@ -158,9 +157,9 @@ for ($i = 0; $i < $vsize; $i++) {
     //##BLOCK 1
    if (!$multiple_date_flag) {
 
-if (getenv('REMOTE_ADDR')=='103.210.29.74'){
+/*if (getenv('REMOTE_ADDR')=='103.210.29.74'){
 echo "Not multiple<br>";
-}
+}*/
     $QUERY1 = "SELECT imei,date," . $time1_hr . " FROM distance_log WHERE date ='$datefrom' AND imei='$vserial[$i]' ORDER BY date ASC";
     //echo "<br>QUERY1=".$QUERY1.", DB=".$DbConnection."<br>";
     $RESULT1 = mysql_query($QUERY1, $DbConnection);
@@ -187,10 +186,10 @@ echo "Not multiple<br>";
         //##BLOCK 2
         $QUERY2 = "SELECT * FROM distance_log WHERE date BETWEEN '$dateA' AND '$dateB' AND imei='$vserial[$i]' ORDER BY date ASC";
 
-if (getenv('REMOTE_ADDR')=='103.210.29.74'){
+/*if (getenv('REMOTE_ADDR')=='103.210.29.74'){
 echo "MultipleDates<br>";
 echo "<br>QUERY2=".$QUERY2."<br>";
-}
+}*/
 
         //echo "<br>QUERY2=".$QUERY2."<br>";
         $RESULT2 = mysql_query($QUERY2, $DbConnection);
@@ -203,7 +202,7 @@ echo "<br>QUERY2=".$QUERY2."<br>";
 		for($d=1;$d<=$t2;$d++){
 			if($d<=9) { $c1 = "0".$d; } else { $c1= $d; }
 			$col = "HR_".$c1;
-                if (getenv('REMOTE_ADDR')=='103.210.29.74'){ echo $col."<br>"; }
+                //if (getenv('REMOTE_ADDR')=='103.210.29.74'){ echo $col."<br>"; }
 			$total_dist+= $ROW2->$col;
 		}
 
