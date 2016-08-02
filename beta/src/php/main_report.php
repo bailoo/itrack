@@ -151,7 +151,7 @@ else
         "&dataLogImei="+dataLogImei+
         "&options_value=all";
         //alert("poststr="+poststr);
-        //showManageLoadingMessage();
+        showManageLoadingMessage();
         makePOSTRequest('src/php/datalog_between_dates.htm',poststr);
 		
    }
