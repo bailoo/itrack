@@ -180,6 +180,14 @@
 			document.getElementById("window").style.display = '';
 			load_vehicle_on_map(vname,datetime,lat,lng);							
 		}
+                function submitDataLog(vSerial,startdate,enddate) // this function is used for datalog href option in google map track
+                {
+                    document.getElementById('dataLogImei').value=vSerial;
+                    document.getElementById('start_date_map').value=startdate;
+                    document.getElementById('end_date_map').value=enddate;
+                    document.dataLogSubmit.target='_blank';
+                    document.dataLogSubmit.submit();
+                }
 	</script>	
 </head>
 <body>
@@ -330,7 +338,7 @@
 											{
 												if($report_type=="Person")
                                                                                                 {
-                                                                                                echo'<td class="text"><a href="'.$pathToRoot.'/report.htm?dataLogImei='.$vehicleserial[$i].'&start_date_map='.$startdate.'&end_date_map='.$enddate.'" target="_blank" style="text-decoration:none">'.$vehiclename[$i].'</a></td>';
+                                                                                                echo'<td class="text"><a href="#" onclick="javascript:submitDataLog(\''.$vehicleserial[$i].'\',\''.$startdate.'\',\''.$enddate.'\');" style="text-decoration:none">'.$vehiclename[$i].'</a></td>';
                                                                                                 }
                                                                                                 else
                                                                                                 {
@@ -574,10 +582,10 @@
 										$m++;
 										if($report_type=="Person")
 										{
-                                                                                   
+                                                                                
 											echo'<tr valign="top" bgcolor="#FFFAF5" onMouseOver="this.className=\'highlight1\'" onMouseOut="this.className=\'normal1\'">
                                                                                             <td class="text">'.$m.'</td>
-                                                                                            <td class="text"><a href="'.$pathToRoot.'/report.htm?dataLogImei='.$vserial_post[$k].'&start_date_map='.$startdate.'&end_date_map='.$enddate.'" target="_blank" style="text-decoration:none">'.$tmp_vname.'</a></td>
+                                                                                            <td class="text"><a href="#" onclick="javascript:submitDataLog(\''.$vserial_post[$k].'\',\''.$startdate.'\',\''.$enddate.'\');" style="text-decoration:none">'.$tmp_vname.'</a></td>
                                                                                             <td colspan="7" class="text">
                                                                                                     <font color="red">Inactive&nbsp;&nbsp;&nbsp;&nbsp;</font>
                                                                                                     <font color="blue">'.$vnumber_post[$k].'</font>
@@ -947,7 +955,23 @@
 						
 unlink($xml_path);
 						
-					?>	
+					?>
+<?php
+if($report_type=='Person')
+{
+    ?>
+}
+<?php
+echo'<form name="dataLogSubmit" action="'.$pathToRoot.'/report.htm" method="POST"> <!-- this is for datlog option of person in google map track option-->';
+?>
+    
+        <input type='hidden' name='dataLogImei' id='dataLogImei'>   
+        <input type='hidden' name='start_date_map' id='start_date_map'> 
+        <input type='hidden' name='end_date_map' id='end_date_map'> 
+</form>
+<?php
+}
+?>
 <!--<br><br><center><input type="button" value="CLOSE" onlick="javascript:window.close();"></center>-->
 					
 		</BODY>
