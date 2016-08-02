@@ -52,12 +52,49 @@
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
-      var dataLogImei="<?php echo $dataLogImei; ?>";
-	  // alert("dataLogImei="+dataLogImei);
+     
+           
+       
+      </script>
+        <?php
+//echo "ddd".$_SESSION['drop_down_menu_js_type'];
+/*if($_SESSION['drop_down_menu_js_type']=='undefined')
+{
+ ?>
+<script>
+    window.onload = function () 
+    {        
+     manage_show_file( <?php echo "'" .$_SESSION['drop_down_menu_file'] . "'"; ?> );
+    }
+</script>
+ <?php
+}*/
+
+if($_SESSION['drop_down_menu_module']=="report.htm")
+{
+	
+  //if($_SESSION['drop_down_menu_js_type']=='report_common_prev')
+  if($_SESSION['drop_down_menu_report_type_upload']=='')
+  {
+    ?>
+   <script>
+   //alert("test");
+      ///////// this is for data log by person map popup window
+       var dataLogImei="<?php echo $dataLogImei; ?>";
+        //alert("dataLogImei="+dataLogImei);
        var start_date_map="<?php echo $start_date_map; ?>";
        var end_date_map="<?php echo $end_date_map; ?>";
-           
-         var result= "<?php echo $account_id; ?>";        
+   if(dataLogImei=="")
+   {
+       window.onload = function () 
+       { 
+           //alert("un");
+        <?php echo  $_SESSION['drop_down_menu_js_type']; ?>( <?php echo "'" .$_SESSION['drop_down_menu_file'] . "', '".$_SESSION['drop_down_menu_title_report'] . "'"; ?> );
+       }
+   }
+   else
+   {
+		  var result= "<?php echo $account_id; ?>";        
         var poststr = "account_id_local="+result+
         "&vehicle_display_option=all"+
         "&title1=data log"+
@@ -66,8 +103,65 @@
         //alert("poststr="+poststr);
         showManageLoadingMessage();
         makePOSTRequest('src/php/datalog_between_dates.htm',poststr);
-      </script>
-      
+		
+   }
+   </script>
+    <?php
+	unset($dataLogImei);
+	unset($start_date_map);
+	unset($end_date_map);
+  }
+  else
+  {
+       ?>
+   <script>
+       window.onload = function () 
+       {  
+          // alert("fn");
+        <?php echo  $_SESSION['drop_down_menu_js_type']; ?>( <?php echo "'" .$_SESSION['drop_down_menu_file'] . "', '".$_SESSION['drop_down_menu_title_report'] . "', '".$_SESSION['drop_down_menu_report_type_upload'] . "'  "; ?> );
+       }
+   </script>
+    <?php
+  }
+}
+else
+{//final else
+ ?>
+   <script>
+      // alert("test");
+      ///////// this is for data log by person map popup window
+       var dataLogImei="<?php echo $dataLogImei; ?>";
+	  // alert("dataLogImei="+dataLogImei);
+       var start_date_map="<?php echo $start_date_map; ?>";
+       var end_date_map="<?php echo $end_date_map; ?>";
+   if(dataLogImei=="")
+   {
+       window.onload = function () 
+       { 
+           //alert("un");
+        <?php echo  $_SESSION['drop_down_menu_js_type']; ?>( <?php echo "'" .$_SESSION['drop_down_menu_file'] . "', '".$_SESSION['drop_down_menu_title_report'] . "'"; ?> );
+       }
+   }
+   else
+   {
+		  var result= "<?php echo $account_id; ?>";        
+        var poststr = "account_id_local="+result+
+        "&vehicle_display_option=all"+
+        "&title1=data log"+
+        "&dataLogImei="+dataLogImei+
+        "&options_value=all";
+        //alert("poststr="+poststr);
+        //showManageLoadingMessage();
+        makePOSTRequest('src/php/datalog_between_dates.htm',poststr);
+		
+   }
+   </script>
+    <?php
+	unset($dataLogImei);
+	unset($start_date_map);
+	unset($end_date_map);
+}
+?>
 </body>
             
 </html>
