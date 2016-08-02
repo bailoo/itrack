@@ -29,4 +29,52 @@
       </td>
   </tr>
 </table>
+  <?php
+//echo "ddd".$_SESSION['drop_down_menu_js_type'];
+/*if($_SESSION['drop_down_menu_js_type']=='undefined')
+{
+ ?>
+<script>
+    window.onload = function () 
+    {        
+     manage_show_file( <?php echo "'" .$_SESSION['drop_down_menu_file'] . "'"; ?> );
+    }
+</script>
+ <?php
+}*/
+
+if($_SESSION['drop_down_menu_module']=="report.htm")
+{
+	
+  //if($_SESSION['drop_down_menu_js_type']=='report_common_prev')
+  if($_SESSION['drop_down_menu_report_type_upload']=='')
+  {
+    ?>
+   <script>
+   //alert("test");
+      ///////// this is for data log by person map popup window
+       
+       window.onload = function () 
+       { 
+           //alert("un");
+        <?php echo  $_SESSION['drop_down_menu_js_type']; ?>( <?php echo "'" .$_SESSION['drop_down_menu_file'] . "', '".$_SESSION['drop_down_menu_title_report'] . "'"; ?> );
+       }
+  
+   </script>
+    <?php
+  }
+  else
+  {
+       ?>
+   <script>
+       window.onload = function () 
+       {  
+          // alert("fn");
+        <?php echo  $_SESSION['drop_down_menu_js_type']; ?>( <?php echo "'" .$_SESSION['drop_down_menu_file'] . "', '".$_SESSION['drop_down_menu_title_report'] . "', '".$_SESSION['drop_down_menu_report_type_upload'] . "'  "; ?> );
+       }
+   </script>
+    <?php
+  }
+}
+?>
 		  
