@@ -929,10 +929,12 @@ var input = (document.getElementById('pac-input'));
 				{	
 					return function() 
 					{
-                                            var start_date_map=document.getElementById('date1').value;
-                                            var end_date_map=document.getElementById('date2').value;
-                                            var getUrlFormat='report.htm?dataLogImei='+vSerial+'&start_date_map='+start_date_map+'&end_date_map='+end_date_map;
-                                            getUrlFormat = encodeURI(getUrlFormat);
+                                        // these three id is hidden field found at last in main_home.php
+						document.getElementById('dataLogImei').value=vSerial;
+						document.getElementById('start_date_map').value=document.getElementById('date1').value;
+						document.getElementById('end_date_map').value=document.getElementById('date2').value;
+						////////
+                                            
 						 var contentString='';
 							if (infowindow) infowindow.close();
 						infowindow = new google.maps.InfoWindow();
@@ -1029,7 +1031,7 @@ var input = (document.getElementById('pac-input'));
 									'<td class=\"live_td_css2\">'+tmp_address+'</td></tr>'+	
                                                                          '<tr>'+
                                                                         '<td>'+
-                                                                        '<a href=\"'+getUrlFormat+'\" target=\"_blank\">DataLog</a>'+
+                                                                        '<a href=\"#\" onclick=\"javascript:submitForDatalog();\">DataLog</a>'+
                                                                         '</td>'+
                                                                         '</tr>'+
 									'</table>'+
@@ -1049,6 +1051,11 @@ var input = (document.getElementById('pac-input'));
 							//contentString='';
 						}); 						
 					};
+				}
+                                function submitForDatalog() // this function is used for datalog href option in google map track
+				{
+					document.dataLogSubmit.target='_blank';
+					document.dataLogSubmit.submit();
 				}
 
 				function infoCallbackPerson(lat,lng,dateTimeArr,vSerial,vName,vNumber,marker) 
