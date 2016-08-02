@@ -229,19 +229,7 @@
 
 
                                                     </script>
-                                                   <?php
-                                                    if($report_type=='Person')
-                                                    {
-                                                        ?>
-                                                    }
-                                                    <form name='dataLogSubmit' action="report.htm" method="POST"> <!-- this is for datlog option of person in google map track option-->
-                                                            <input type='hidden' name='dataLogImei' id='dataLogImei'>   
-                                                            <input type='hidden' name='start_date_map' id='start_date_map'> 
-                                                            <input type='hidden' name='end_date_map' id='end_date_map'> 
-                                                    </form>
-                                                    <?php
-                                                    }
-                                                    ?>
+                                               
                                                 </body>
 
                                                 </html>
