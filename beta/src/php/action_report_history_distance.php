@@ -65,6 +65,11 @@ $time2_hr = "";
 
 $multiple_date_flag = false;
 
+if (getenv('REMOTE_ADDR')=='103.210.29.74'){
+echo "<br>D1=".$date_1[0]." ,D2=".$date_2[0];
+}
+
+
 //echo "<br>D1=".$date_1[0]." ,D2=".$date_2[0];
 if($date_1[0]==$date_2[0]) {
 for ($i = $t1+1; $i <= $t2; $i++) {
@@ -85,6 +90,11 @@ $time1_hr_fields = explode(",", $time1_hr);
     $dateA = $date_1[0];
     $dateB = $date_2[0];
     $multiple_date_flag = false;
+
+if (getenv('REMOTE_ADDR')=='103.210.29.74'){
+echo "<br>SameDay";
+}
+
 
 } else {
 for ($i = $t1+1; $i <= 24; $i++) {
@@ -111,15 +121,26 @@ for ($i = 1; $i <= $t2; $i++) {
         $hr = "0" . $hr;
     }
 
-    $time2_hr.= "HR_" . $hr . ",";
+   // $time2_hr.= "HR_" . $hr . ",";
+   $time2_hr= "HR_" . $hr;
 }
-$time2_hr = substr($time2_hr, 0, -1);
-$time2_hr_fields = explode(",", $time2_hr);
+//$time2_hr = substr($time2_hr, 0, -1);
+//$time2_hr_fields = explode(",", $time2_hr);
 //=====================================
 
-    $dateA = date('Y-m-d', strtotime($date1 . ' +1 day'));
-    $dateB = date('Y-m-d', strtotime($date2 . ' -1 day'));
-    $multiple_date_flag = false;
+if (getenv('REMOTE_ADDR')=='103.210.29.74'){
+
+echo "T1=".$time1_hr."<br>";
+echo "T2=".$time2_hr."<br>";
+echo "t2=".$t2."<br>";
+}
+    //$dateA = date('Y-m-d', strtotime($date1 . ' -1 day'));
+    //$dateB = date('Y-m-d', strtotime($date2 . ' +1 day'));
+
+    $dateA = $date_1[0];
+    $dateB = $date_2[0];
+ 
+    $multiple_date_flag = true;
 
 }  //else closed
 
@@ -136,6 +157,10 @@ for ($i = 0; $i < $vsize; $i++) {
 
     //##BLOCK 1
    if (!$multiple_date_flag) {
+
+if (getenv('REMOTE_ADDR')=='103.210.29.74'){
+echo "Not multiple<br>";
+}
     $QUERY1 = "SELECT imei,date," . $time1_hr . " FROM distance_log WHERE date ='$datefrom' AND imei='$vserial[$i]' ORDER BY date ASC";
     //echo "<br>QUERY1=".$QUERY1.", DB=".$DbConnection."<br>";
     $RESULT1 = mysql_query($QUERY1, $DbConnection);
@@ -155,15 +180,34 @@ for ($i = 0; $i < $vsize; $i++) {
     }
    }
 
+//echo "<br>".getenv('REMOTE_ADDR');;
+
+
     if ($multiple_date_flag) {
         //##BLOCK 2
         $QUERY2 = "SELECT * FROM distance_log WHERE date BETWEEN '$dateA' AND '$dateB' AND imei='$vserial[$i]' ORDER BY date ASC";
+
+if (getenv('REMOTE_ADDR')=='103.210.29.74'){
+echo "MultipleDates<br>";
+echo "<br>QUERY2=".$QUERY2."<br>";
+}
+
         //echo "<br>QUERY2=".$QUERY2."<br>";
         $RESULT2 = mysql_query($QUERY2, $DbConnection);
 
         while ($ROW2 = mysql_fetch_object($RESULT2)) {
 
             $reportDate = $ROW2->date;
+
+	     if($dateB==$reportDate) {
+		for($d=1;$d<=$t2;$d++){
+			if($d<=9) { $c1 = "0".$d; } else { $c1= $d; }
+			$col = "HR_".$c1;
+                if (getenv('REMOTE_ADDR')=='103.210.29.74'){ echo $col."<br>"; }
+			$total_dist+= $ROW2->$col;
+		}
+
+	     } else {
             $total_dist+= $ROW2->HR_01;
             $total_dist+= $ROW2->HR_02;
             $total_dist+= $ROW2->HR_03;
@@ -188,9 +232,15 @@ for ($i = 0; $i < $vsize; $i++) {
             $total_dist+= $ROW2->HR_22;
             $total_dist+= $ROW2->HR_23;
             $total_dist+= $ROW2->HR_24;
+	}
         }
         //##BLOCK 3
-        $QUERY3 = "SELECT imei,date," . $time2_hr . " FROM distance_log WHERE date ='$dateto' AND imei='$vserial[$i]' ORDER BY date ASC";
+        /*$QUERY3 = "SELECT imei,date," . $time2_hr . " FROM distance_log WHERE date ='$dateto' AND imei='$vserial[$i]' ORDER BY date ASC";
+
+if (getenv('REMOTE_ADDR')=='103.210.29.74'){
+echo "<br>QUERY3=".$QUERY3."<br>";
+}
+
         //echo "<br>QUERY3<br>".$QUERY3;
         $RESULT3 = mysql_query($QUERY3, $DbConnection);
 
@@ -202,7 +252,7 @@ for ($i = 0; $i < $vsize; $i++) {
                 $col = $time2_hr_fields[$f];
                 $total_dist+= $ROW3->$col;
             }
-        }
+        }*/
     }
 
     $imei[] = $vserial[$i];
@@ -271,12 +321,12 @@ for ($i = 0; $i < sizeof($imei); $i++) {
     $distance1[$j][$k] = round($distanceDisplay[$i], 2);
 
 
-    if ((($i > 0) && ($imei[$i + 1] != $imei[$i]))) {
+    if ( ($i==0) || (($i > 0) && ($imei[$i + 1] != $imei[$i]))) {
         echo '<tr style="height:20px;background-color:lightgrey">
       <td class="text"><strong>Total<strong>&nbsp;</td>
 			<td class="text"></td>';
 
-        if (($k > 0) || ($date_size == 1)) {
+        if (($k >= 0) || ($date_size == 1)) {
             //echo  "<br>sum_avgspeed=".$sum_avgspeed."<br>";
             $total_distance[$j] = round($sum_dist, 2);
             //echo  "<br>total_avgspeed[$j]=".$total_avgspeed[$j]."<br>";
