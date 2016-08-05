@@ -31,7 +31,7 @@ echo'
     <form name="cell" method="POST" action="index_cellid.php">
 <table border=0 cellspacing=0 cellpadding=3 align="center">	
         <tr>
-                <td  class="text"><b>Select IMEI : </b></td><td><input type="text" name="imei"></td>
+                <td  class="text"><b>Select IMEI : </b></td><td><input type="text" name="imei" value="'.$imei.'"></td>
                 <td  class="text"><b>Select Duration : </b></td>
                 <td>
                         <table>
@@ -169,10 +169,10 @@ $date_size = sizeof($userdates);
 //echo "<br>Vsize=".$vsize;
 
 if($vsize>0) {
-    echo "entered";
+    //echo "entered";
 for ($i = 0; $i < $vsize; $i++) {
     $dataCnt = 0;
-    echo "vsdfsdfs=".$vserial[$i]."<br>";
+    //echo "vsdfsdfs=".$vserial[$i]."<br>";
     //$vehicle_info=get_vehicle_info($root,$vserial[$i]);
     //$vehicle_detail_local=explode(",",$vehicle_info);
     $home_report_type = "map_report";
