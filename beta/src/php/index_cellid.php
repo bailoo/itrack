@@ -408,8 +408,7 @@ for ($i = 0; $i < $vsize; $i++) {
                 preg_match('/ci="[^"]+/', $lineF[$n], $cellID_tmp);
                 $cellID_tmp1 = explode("=", $cellID_tmp[0]);
                 $cell = preg_replace('/"/', '', $cellID_tmp1[1]);
-                $cell_tmp = explode("$", $cell);
-                
+                $cell_tmp = explode("$", $cell);               
                 
                 if($cell_id_existing[trim($cell)] != "") {
                     $lat_arr_last[] = $lat_existing[trim($cell)];
@@ -418,14 +417,18 @@ for ($i = 0; $i < $vsize; $i++) {
                     $lac_tmp = hexdec($cell_tmp[2]);
                     $cellid_tmp = hexdec($cell_tmp[3]);
 
-                    $gps_data = explode(",", (get_gps($cell_tmp[0], $cell_tmp[1], $lac_tmp, $cellid_tmp)));
-                    //echo "<br>CELL=".$cell." <br>MCC=".$gps_data[0]." ,MNC=".$gps_data[1]." ,LAC=".$gps_data[3]." ,CELLID=".$gps_data[4];
-                    $lat_arr_last[] = $gps_data[0];
-                    $lng_arr_last[] = $gps_data[1];
+                    if( ($cell_tmp[0]!="") && ($cell_tmp[1]!="") && ($lac_tmp!="") && ($cellid_tmp!="")) {
+                        $gps_data = explode(",", (get_gps($cell_tmp[0], $cell_tmp[1], $lac_tmp, $cellid_tmp)));
+                        //echo "<br>CELL=".$cell." <br>MCC=".$gps_data[0]." ,MNC=".$gps_data[1]." ,LAC=".$gps_data[3]." ,CELLID=".$gps_data[4];
+                        $lat_arr_last[] = $gps_data[0];
+                        $lng_arr_last[] = $gps_data[1];
 
-                    $cell_id_existing[trim($cell)] = 1;
-                    $lat_existing[trim($cell)] = $gps_data[0];
-                    $lng_existing[trim($cell)] = $gps_data[1];
+                        $cell_id_existing[trim($cell)] = 1;
+                        $lat_existing[trim($cell)] = $gps_data[0];
+                        $lng_existing[trim($cell)] = $gps_data[1];
+                    } //else {
+                         //echo "<br>CELL=".$cell." ,Datetime=".$datetime;                       
+                    //}
                 }
                 
                 $cellIDArr[] = $cell;
@@ -436,8 +439,10 @@ for ($i = 0; $i < $vsize; $i++) {
             //$gps_data = get_gps($mcc, $mnc, $lac, $cellid);
             //print_r($cellIDArr);
             //exit();
-            $googleMapthisapi = new GoogleMapHelper();
-            echo $googleMapthisapi->addMultipleMarker("map_canvas", $lat_arr_last, $lng_arr_last, $datetime_arr_last, $vserial_arr_last, $vehiclename_arr_last, $speed_arr_last, $cellIDArr);
+            if(sizeof($lat_arr_last)>0 && sizeof($lng_arr_last)>0) {
+                $googleMapthisapi = new GoogleMapHelper();
+                echo $googleMapthisapi->addMultipleMarker("map_canvas", $lat_arr_last, $lng_arr_last, $datetime_arr_last, $vserial_arr_last, $vehiclename_arr_last, $speed_arr_last, $cellIDArr);
+            }
         }
     }
 }
