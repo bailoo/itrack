@@ -53,7 +53,8 @@
     $parameterizeData->latitude='d';
     $parameterizeData->longitude='e';
     $parameterizeData->speed='f';
-    $parameterizeData->cellName='ci';
+    //$parameterizeData->cellName='ci';
+    $parameterizeData->io1='i';
     $parameterizeData->supVoltage='r';
     $parameterizeData->io8='p';
     $parameterizeData->dataLog='yes';
@@ -169,7 +170,7 @@
                         $lat[]=$SortedDataObject->latitudeData[$obi];
                         $lng[]=$SortedDataObject->longitudeData[$obi];
                         $speed[]=$SortedDataObject->speedData[$obi];
-                        $cellname[]=$SortedDataObject->cellNameData[$obi];
+                        $cellname[]=$SortedDataObject->io1Data[$obi];
                         $io8[]=$SortedDataObject->io8Data[$obi];
                         $sig_str[]=$SortedDataObject->sigStrData[$obi];
                         $sup_v[]=$SortedDataObject->supVoltageData[$obi];                    
