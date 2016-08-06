@@ -2508,7 +2508,7 @@ function LeftPanPlotLastMarkerWithAddress(point, Icon, marker, imei, vehiclename
                                                 }
                                                 else
                                                 {
-                                                        io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">Off</td></tr>";
+                                                        io_str=io_str+"<tr><td "+window_style1+">"+iotype_iovalue_str1[1]+"</td><td>&nbsp;:&nbsp;</td><td "+window_style2+">OFF</td></tr>";
                                                 }
     
 					}
