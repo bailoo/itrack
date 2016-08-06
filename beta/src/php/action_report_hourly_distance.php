@@ -140,23 +140,21 @@ $Result=mysql_query($Query,$DbConnection);
 }
 else if($personOption=="multiplePerson")
 {
-
-
+    
 $imeiCondition="";
 for($i=0;$i<sizeof($vehicleserial);$i++)
 {
-	$vehicle_info=get_vehicle_info($root,$vehicleserial[$i]);
-	//echo "vehicleInfo=".$vehicle_info."<br>";	
-	$vehicle_detail_local=explode(",",$vehicle_info);	
-	$parameterizeData=new parameterizeData();
-	$parameterizeData->version='b';
-	$LastRecordObject=getLastRecord($vehicleserial[$i],$sortBy,$parameterizeData);
-	$sortBy="h";
-	$versionString=$LastRecordObject->versionLR[0];
-	$vehicleDetailArr[$vehicleserial[$i]]=$vehicle_detail_local[0]."@".$vehicle_detail_local[8]."@".$versionString;
-	$vSerialMultiple=explode(',',$vSerial[$i]);
-	
-	$imeiCondition=$imeiCondition."imei='".$vehicleserial[$i]."' OR ";
+    $vehicle_info=get_vehicle_info($root,$vehicleserial[$i]);
+    //echo "vehicleInfo=".$vehicle_info."<br>";	
+    $vehicle_detail_local=explode(",",$vehicle_info);	
+    $parameterizeData=new parameterizeData();
+    $parameterizeData->version='b';
+    $LastRecordObject=getLastRecord($vehicleserial[$i],$sortBy,$parameterizeData);
+    $sortBy="h";
+    $versionString=$LastRecordObject->versionLR[0];
+    $vehicleDetailArr[$vehicleserial[$i]]=$vehicle_detail_local[0]."@".$vehicle_detail_local[8]."@".$versionString;
+    $vSerialMultiple=explode(',',$vSerial[$i]);	
+    $imeiCondition=$imeiCondition."imei='".$vehicleserial[$i]."' OR ";
 }
 $imeiCondition=substr($imeiCondition,0,-3);
 $Query="SELECT imei,date,latitude,longitude,".$mysqlTableColumns." FROM hourly_distance_log USE INDEX(imei,date) WHERE  date='$single_date' AND".
