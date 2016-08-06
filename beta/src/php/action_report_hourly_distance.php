@@ -61,26 +61,26 @@ for($i=$durationFrom;$i<=$durationTo;$i++) // for making dynamic column duration
 	$hr=($i<10)?'0'.$i:$i;
 	if($timeInterval==0) /////// this is only for 30 minute interval
 	{
-		$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00,";
-		if($i!=$durationTo) // for skiping last column becuase it exceed duration time
+		$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30_LOC,";
+		if($i!=$durationTo) // for skiping last column because it exceed duration time
 		{
-			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30,";
+			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00,";
 		}
 	}
 	else ///// this for except interval
 	{	
 		if($switchFlag==0)
 		{
-			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00,";
-			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30,";
+			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00_LOC,";
+			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30_LOC,";
 		}
 		else
 		{
-			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00,";
+			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00_LOC,";
 			//echo "i=".$i."durationTo=".$durationTo."<br>";
 			if($i!=$durationTo) // for skiping last column becuase it exceed duration time
 			{
-				$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30,";	
+				$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30_LOC,";	
 			}			
 		}
 	}
@@ -133,7 +133,7 @@ for($i=$durationFrom;$i<=$durationTo;$i++) ///// this is for column headings of 
 $mysqlTableColumns=substr($mysqlTableColumns,0,-1);
 if($personOption=="singlePerson")
 {
-$Query="SELECT imei,date,latitude,longitude,".$mysqlTableColumns." FROM hourly_distance_log USE INDEX(imei,date) WHERE imei='$vehicleserialRadio'".
+$Query="SELECT imei,date,".$mysqlTableColumns." FROM hourly_distance_log USE INDEX(imei,date) WHERE imei='$vehicleserialRadio'".
 	   " AND date BETWEEN '$start_date' AND '$end_date'";
 //echo "Query1=".$Query."<br>";
 $Result=mysql_query($Query,$DbConnection);
