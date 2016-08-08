@@ -2274,8 +2274,8 @@ border: none;
 				<select name="plant_list" id="plant_list">
 					<option value="0">Select Customer</option>
 					<?php
-                                        //if($proc_user_type=='plant_raw_milk' || $proc_user_type=='plant_admin'){
-                                         if($proc_user_type=='plant_raw_milk' ){    
+                                        //if($proc_user_type=='proc_admin' || $proc_user_type=='plant_admin'){
+                                         if($proc_user_type=='proc_admin' ){    
                                             $query_plant = "SELECT customer_no FROM station WHERE type=1 AND user_account_id='$parent_admin_id_tmp' AND status=1";
                                            
                                             
