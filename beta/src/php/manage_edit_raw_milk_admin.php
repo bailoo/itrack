@@ -2257,6 +2257,7 @@ border: none;
                     $account_admin_id_tmp =getAccountAdminId($account_id,$DbConnection);
                     //echo $account_admin_id_tmp."<br>";
                     $parent_admin_id_tmp=getAccountIdByAdminId($account_admin_id_tmp,$DbConnection);
+                    echo $parent_admin_id_tmp."/".$proc_user_type;
                     ?>
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="skyblue">							
 			<tr>
