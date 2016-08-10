@@ -2,16 +2,18 @@
 <link rel="shortcut icon" href="images/iesicon.ico">
 <link rel="StyleSheet" href="src/css/menu.css">	
 <link rel="StyleSheet" href="src/css/module_hide_show_div.css">	
+<link rel="StyleSheet" href="src/css/mapPopUpCss.css">	
 <script type="text/javascript" src="src/js/jquery.js"></script> 
 
 <?php 
-if($account_id==2)
+/*if($account_id==2)
 {
       include_once("live_js_test.php"); 
 }
  else {    
     include_once("live_js.php");
- }
+ }*/
+  include_once("live_js_new.php");
 ?>
 
 <script language="javascript" src="src/js/liveAjax.js?<?php echo time();?>"></script>
@@ -20,14 +22,14 @@ if($account_id!=2)
 {
     
 ?>
-<script language="javascript" src="src/js/elabel.js"></script>
+<!--<script language="javascript" src="src/js/elabel.js"></script>
 <script type="text/javascript" src="src/dragzoom/gzoom.js"></script> 
 
 <script type="text/javascript">
 	document.write('<script type="text/javascript" src="src/js/extlargemapcontrol'+(document.location.search.indexOf('packed')>-1?'_packed':'')+'.js"><'+'/script>');
 </script>
 <script language="javascript" src="src/js/labeledmarker.js"></script>
-<script language="javascript" src="src/js/pdmarker.js"></script>
+<script language="javascript" src="src/js/pdmarker.js"></script>-->
 <?php
 }
 ?>
