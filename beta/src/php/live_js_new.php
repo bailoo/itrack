@@ -2161,7 +2161,7 @@ function getMapMarker(angle_deg,running_status1,position,vehiclename,last_halt_t
 		{
 			url: 'images/arrow_images/'+angle_deg+'.png',
 			size: new google.maps.Size(13, 13),
-			scaledSize: new google.maps.Size(8, 8),
+			scaledSize: new google.maps.Size(13, 13),
 			anchor: new google.maps.Point(0, 32)
 		};
 		if(running_status1 == 'Running')
