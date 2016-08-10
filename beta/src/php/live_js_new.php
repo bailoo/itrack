@@ -2160,7 +2160,7 @@ function getMapMarker(angle_deg,running_status1,position,vehiclename,last_halt_t
 		var imageIcon = 
 		{
 			url: 'images/arrow_images/'+angle_deg+'.png',
-			size: new google.maps.Size(8, 8),
+			size: new google.maps.Size(13, 13),
 			scaledSize: new google.maps.Size(8, 8),
 			anchor: new google.maps.Point(0, 32)
 		};
