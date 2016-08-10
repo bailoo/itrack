@@ -66,7 +66,6 @@ var date_prev = new Array();
 var angle_prev = new Array();
 var infowindow;
 
-var markerBound;
 var trail_flag = false;
 var route_div_flag = 0;
 
@@ -1395,7 +1394,7 @@ function processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_ar
 	var icon1;
 	var right_vehicle_style;
 	
-	markerBound = new google.maps.LatLngBounds();	
+	var latlngbounds = new google.maps.LatLngBounds();	
 	for (i = 0; i < len2; i++) 
 	{
 		tmp=tmp+i;
@@ -1510,7 +1509,7 @@ function processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_ar
 			}
 		} 
 		plotLiveMarkers(lat_arr[i],lng_arr[i],p,angle_deg,running_status1,position,icon1,point,imei,vehiclename,speed,datetime,fuel,total_dist, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8,tmp)
-	
+                latlngbounds.extend(position);
 		if(document.getElementById('trail_path').checked)
 		{
 			//alert("In trail path,vid_prev="+vid_prev.length);
@@ -1532,6 +1531,12 @@ function processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_ar
 			date_prev[i] = datetime;  		
 		}	
 	}
+        if(startup_var==1)
+        {
+	map.setCenter(latlngbounds.getCenter());
+	map.fitBounds(latlngbounds);
+        startup_var=0;
+        }
 	marker1[i]=marker;
 	clicked_vehicle_list += "</table>";  
   
@@ -1701,7 +1706,7 @@ function plotLiveMarkers(lat,lng,p,angle_deg,running_status1,position,icon1,poin
 	
 	var img=getLeftPanImage(running_status1);
 	
-	markerBound.extend(position);
+	
 	pt[p] = point;
 	imei1[p] = imei;
 	vname1[p] = vehiclename;
@@ -1766,12 +1771,7 @@ function plotLiveMarkers(lat,lng,p,angle_deg,running_status1,position,icon1,poin
 	(
 		marker, 'click', infoCallbackLive(point, marker, imei, vehiclename, speed,datetime, fuel, running_status1, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8) 
 	);
-        if(startup_var==1)
-        {
-	map.setCenter(markerBound.getCenter());
-	map.fitBounds(markerBound);
-        startup_var=0;
-        }
+       
 }
 
 function getLeftPanImage(running_status1)
