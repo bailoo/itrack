@@ -310,7 +310,7 @@ function showRouteOnLiveMap(polylineId, shift)
 		//alert("polyline="+polyline+"routeMarkerStart="+routeMarkerStart+"routeMarkerEnd="+routeMarkerEnd);
         if(polyline!=undefined && routeMarkerStart!=undefined && routeMarkerEnd!=undefined)
         {
-			alert("in if");
+			//alert("in if");
 			polyline.setMap(null);
 			routeMarkerStart.setMap(null);
 			routeMarkerEnd.setMap(null);
