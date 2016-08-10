@@ -366,7 +366,7 @@
                                                 }
                                                 else
                                                 {
-                                                    if(${$tmp_io}[$i]>=500)
+                                                    if(${$tmp_io}[$i]<=500)
                                                     {
                                                         $html_tmp_io=$html_tmp_io.$io_typ_value1[1]." : ON : ";
                                                     }
@@ -538,7 +538,7 @@
                                                             }
                                                             else
                                                             {
-                                                                if(${$tmp_io}[$i]>=500)
+                                                                if(${$tmp_io}[$i]<=500)
                                                                 {
                                                                     $pdf_tmp_io=$pdf_tmp_io.$io_typ_value1[1]." : ON : ";
                                                                 }
