@@ -72,7 +72,7 @@ return obj;
 }
 </script>
 <?php
-if($account_id==2)
+//if($account_id==2)
 {
 ?>
 <style>
