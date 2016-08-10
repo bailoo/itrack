@@ -2851,18 +2851,22 @@ function checkbox_selection(obj)
     if (http_request.readyState == 4) 
     {
         //alert("IN alert CNT2="+http_request.status);
-		if (http_request.status == 200) 
-		{
-			result = http_request.responseText;
-			//document.getElementById("debugDiv").innerHTML=result;
-			liveDataDisplay = JSON.parse(result);
-	
-			displayInfo_live();
-			//alert("poststr="+poststr_route);
-			makePOSTRequestRoute('src/php/get_polyline_detail.php', poststr_route);
-          //alert("length="+liveDataDisplay.length);
-          //alert("lat="+testJsonStr[0]['']);
-		}
+        if (http_request.status == 200) 
+        {
+            result = http_request.responseText;
+            //document.getElementById("debugDiv").innerHTML=result;
+            liveDataDisplay = JSON.parse(result);
+
+            displayInfo_live();
+            //alert("poststr="+poststr_route);
+            var feature_id_map = document.getElementById('station_flag_map').value;
+            if(feature_id_map == 1)
+            {
+                makePOSTRequestRoute('src/php/get_polyline_detail.php', poststr_route);
+            }
+            //alert("length="+liveDataDisplay.length);
+        //alert("lat="+testJsonStr[0]['']);
+        }
     }
   } 
   
