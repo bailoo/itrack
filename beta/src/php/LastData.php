@@ -696,7 +696,7 @@
 																				}
 																				else
 																				{
-																					if(${$tmp_io}[$i]>=500)
+																					if(${$tmp_io}[$i]<=500)
 																					{
 																						$pdf_tmp_io=$pdf_tmp_io.$io_typ_value1[1]." : ON : ";
 																					}
