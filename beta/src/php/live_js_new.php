@@ -66,6 +66,7 @@ var date_prev = new Array();
 var angle_prev = new Array();
 var infowindow;
 
+var markerBound;
 var trail_flag = false;
 var route_div_flag = 0;
 
@@ -1394,7 +1395,7 @@ function processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_ar
 	var icon1;
 	var right_vehicle_style;
 	
-	var latlngbounds = new google.maps.LatLngBounds();	
+	var markerBound = new google.maps.LatLngBounds();	
 	for (i = 0; i < len2; i++) 
 	{
 		tmp=tmp+i;
@@ -1508,7 +1509,7 @@ function processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_ar
 				}	
 			}
 		} 
-		plotLiveMarkers(latlngbounds,lat_arr[i],lng_arr[i],p,angle_deg,running_status1,position,icon1,point,imei,vehiclename,speed,datetime,fuel,total_dist, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8,tmp)
+		plotLiveMarkers(lat_arr[i],lng_arr[i],p,angle_deg,running_status1,position,icon1,point,imei,vehiclename,speed,datetime,fuel,total_dist, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8,tmp)
 	
 		if(document.getElementById('trail_path').checked)
 		{
@@ -1623,7 +1624,7 @@ function infoCallbackLandmark(landmark,lat,lng,markerL)
 	};
 }
 
-function plotLiveMarkers(latlngbounds,lat,lng,p,angle_deg,running_status1,position,icon1,point,imei,vehiclename,speed,datetime,fuel,total_dist, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8,tmp)
+function plotLiveMarkers(lat,lng,p,angle_deg,running_status1,position,icon1,point,imei,vehiclename,speed,datetime,fuel,total_dist, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8,tmp)
 {
 	//alert("in function");
 	total_dist = Math.round((total_dist)*100)/100;
@@ -1700,7 +1701,7 @@ function plotLiveMarkers(latlngbounds,lat,lng,p,angle_deg,running_status1,positi
 	
 	var img=getLeftPanImage(running_status1);
 	
-	latlngbounds.extend(position);
+	markerBound.extend(position);
 	pt[p] = point;
 	imei1[p] = imei;
 	vname1[p] = vehiclename;
@@ -1767,8 +1768,8 @@ function plotLiveMarkers(latlngbounds,lat,lng,p,angle_deg,running_status1,positi
 	);
         if(startup_var==1)
         {
-	map.setCenter(latlngbounds.getCenter());
-	map.fitBounds(latlngbounds);
+	map.setCenter(markerBound.getCenter());
+	map.fitBounds(markerBound);
         startup_var=0;
         }
 }
