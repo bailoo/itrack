@@ -1,0 +1,47 @@
+ .labels {
+     color: red;   
+     font-family: 'Lucida Grande', 'Arial', sans-serif;
+     font-size: 10px;
+     font-weight: bold;
+     text-align: center;
+     width: auto;     
+     border: 1px solid black;
+     white-space: nowrap;
+   }
+ .live_td_css1 {
+   color: black;
+   //background-color: white;
+   font-family: 'Lucida Grande', 'Arial', sans-serif;
+   font-size: 11px;
+   font-weight: bold;
+   text-align: left;
+   width: 60px;     
+ //  border: 2px solid black;
+   white-space: nowrap;
+ }
+  .live_td_css2 {
+   color: blue;
+   //background-color: white;
+   font-family: 'Lucida Grande', 'Arial', sans-serif;
+   font-size: 11px;
+   text-align: left;
+   width: 60px;     
+  // border: 2px solid black;
+   white-space: nowrap;
+ }
+ 
+.ioCustomerTransporterCss1
+{
+	color:#000000;
+	font-family: arial, helvetica, sans-serif; 
+	font-size:11px;
+	text-decoration:none;
+	font-weight:bold;
+}
+.ioCustomerTransporterCss2
+{
+	color:blue;
+	font-family: arial, helvetica, sans-serif; 
+	font-size:11px;
+	text-decoration:none;
+}
