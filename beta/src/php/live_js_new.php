@@ -1765,8 +1765,12 @@ function plotLiveMarkers(latlngbounds,lat,lng,p,angle_deg,running_status1,positi
 	(
 		marker, 'click', infoCallbackLive(point, marker, imei, vehiclename, speed,datetime, fuel, running_status1, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8) 
 	);
+        if(startup_var==1)
+        {
 	map.setCenter(latlngbounds.getCenter());
 	map.fitBounds(latlngbounds);
+        startup_var=0;
+        }
 }
 
 function getLeftPanImage(running_status1)
