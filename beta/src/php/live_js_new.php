@@ -1395,7 +1395,7 @@ function processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_ar
 	var icon1;
 	var right_vehicle_style;
 	
-	var markerBound = new google.maps.LatLngBounds();	
+	markerBound = new google.maps.LatLngBounds();	
 	for (i = 0; i < len2; i++) 
 	{
 		tmp=tmp+i;
