@@ -149,7 +149,7 @@ if($personOption=="singlePerson")
 {
 $Query="SELECT imei,date,".$mysqlTableColumns." FROM hourly_distance_log USE INDEX(date_imei) WHERE imei='$vehicleserialRadio'".
 	   " AND date BETWEEN '$start_date' AND '$end_date'";
-echo "Query1=".$Query."<br>";
+//echo "Query1=".$Query."<br>";
 $Result=mysql_query($Query,$DbConnection);
 }
 else if($personOption=="multiplePerson")
