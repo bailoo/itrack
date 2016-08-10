@@ -1,8 +1,11 @@
-
 <html>  
-  <head>      
+  <head> 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhLWXnQP-3SJ5WTazE878MSg2C1Q3Cmmc&libraries=places"
+         async defer></script> 		 
+    <script type="text/javascript" src="src/js/markerwithlabel.js"></script>
      <?php  
-         include('util_session_variable.php');
+     
+         /*include('util_session_variable.php');
          if($account_id==2)
          {
                echo'<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhLWXnQP-3SJ5WTazE878MSg2C1Q3Cmmc&libraries=places"
@@ -12,7 +15,7 @@
          else
          {
                 include('main_google_key.php');
-         }
+         }*/
     	include('live_js_css.php');
     	//echo'<script language="javascript" src="src/js/live.js"></script>';
         include('util_calculate_distance_js.php');	
