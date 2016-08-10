@@ -133,7 +133,7 @@ for($i=$durationFrom;$i<=$durationTo;$i++) ///// this is for column headings of 
 $mysqlTableColumns=substr($mysqlTableColumns,0,-1);
 if($personOption=="singlePerson")
 {
-$Query="SELECT imei,date,".$mysqlTableColumns." FROM hourly_distance_log USE INDEX(imei,date) WHERE imei='$vehicleserialRadio'".
+$Query="SELECT imei,date,".$mysqlTableColumns." FROM hourly_distance_log USE INDEX(date_imei) WHERE imei='$vehicleserialRadio'".
 	   " AND date BETWEEN '$start_date' AND '$end_date'";
 echo "Query1=".$Query."<br>";
 $Result=mysql_query($Query,$DbConnection);
