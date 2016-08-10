@@ -2859,7 +2859,7 @@ function checkbox_selection(obj)
 	
 			displayInfo_live();
 			//alert("poststr="+poststr_route);
-			//makePOSTRequestRoute('src/php/get_polyline_detail.php', poststr_route);
+			makePOSTRequestRoute('src/php/get_polyline_detail.php', poststr_route);
           //alert("length="+liveDataDisplay.length);
           //alert("lat="+testJsonStr[0]['']);
 		}
