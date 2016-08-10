@@ -64,7 +64,7 @@ for($i=$durationFrom;$i<=$durationTo;$i++) // for making dynamic column duration
 		$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30_LOC,";
 		if($i!=$durationTo) // for skiping last column because it exceed duration time
 		{
-			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00,";
+			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00_LOC,";
 		}
 	}
 	else ///// this for except interval
