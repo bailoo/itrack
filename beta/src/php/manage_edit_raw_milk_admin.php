@@ -74,6 +74,7 @@ border: none;
 	$root=$_SESSION['root'];		
 	//echo "edit##"; 
 	include_once("util_account_detail.php");
+        $proc_user_type= $user_type;
 	$account_id_local=$_POST['common_id'];	
 	$startdate = str_replace('/','-',$startdate);
 	$enddate = str_replace('/','-',$enddate);
@@ -2252,7 +2253,12 @@ border: none;
 		
 		<br><center><input type="button" value="Assign" onclick="javascript:close_plant_list_transporter();"></center>
 		<?php }
-		else { ?>
+		else { 
+                    $account_admin_id_tmp =getAccountAdminId($account_id,$DbConnection);
+                    //echo $account_admin_id_tmp."<br>";
+                    $parent_admin_id_tmp=getAccountIdByAdminId($account_admin_id_tmp,$DbConnection);
+                    //echo $parent_admin_id_tmp."/".$proc_user_type;
+                    ?>
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="skyblue">							
 			<tr>
 				<td class="manage_interfarce" align="right"><a href="#" onclick="javascript:return close_plant_list()" class="hs3">Close</a></td> 													
@@ -2268,7 +2274,17 @@ border: none;
 				<select name="plant_list" id="plant_list">
 					<option value="0">Select Customer</option>
 					<?php
-						$query_plant = "SELECT customer_no FROM station WHERE type=1 AND user_account_id='$account_id' AND status=1";
+                                        //if($proc_user_type=='proc_admin' || $proc_user_type=='plant_admin'){
+                                         if($proc_user_type=='proc_admin' ){    
+                                            $query_plant = "SELECT customer_no FROM station WHERE type=1 AND user_account_id='$parent_admin_id_tmp' AND status=1";
+                                           
+                                            
+                                        }
+                                        else
+                                        {
+                                            $query_plant = "SELECT customer_no FROM station WHERE type=1 AND user_account_id='$account_id' AND status=1";
+                                        }
+						//$query_plant = "SELECT customer_no FROM station WHERE type=1 AND user_account_id='$account_id' AND status=1";
 						$result_query = mysql_query($query_plant,$DbConnection);
 						while($row=mysql_fetch_object($result_query))
 						{
