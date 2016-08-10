@@ -61,12 +61,16 @@ for($i=$durationFrom;$i<=$durationTo;$i++) // for making dynamic column duration
 	$hr=($i<10)?'0'.$i:$i;
 	if($timeInterval==0) /////// this is only for 30 minute interval
 	{
-            if("HR_".$hr."_00_LOC"!="HR_00_00_LOC" || "HR_".$hr."_00_LOC"!="HR_24_00_LOC")
+            if("HR_".$hr."_00_LOC"=="HR_00_00_LOC") //for setting 00_30 colume only
             {
-		$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30_LOC,";
+                $mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30_LOC,";
+            }
+            else
+            {
+		$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00_LOC,";
 		if($i!=$durationTo) // for skiping last column because it exceed duration time
 		{
-			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00_LOC,";
+			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30_LOC,";
 		}
             }
 	}
@@ -108,11 +112,18 @@ for($i=$durationFrom;$i<=$durationTo;$i++) ///// this is for column headings of 
 	$hr=($i<10)?'0'.$i:$i;
 	if($timeInterval==0) /////// this is only for 30 minute interval
 	{
+            if($hr."_00"!="00_00") //for setting 00_30 colume only
+            {
+                $durationArr[]=$hr.":30";
+            }
+            else
+            {
 		$durationArr[]=$hr.":00";
 		if($i!=$durationTo) // for skiping last column becuase it exceed duration time
 		{
 			$durationArr[]=$hr.":30";
 		}
+            }
 	}
 	else ///// this for except interval
 	{	
