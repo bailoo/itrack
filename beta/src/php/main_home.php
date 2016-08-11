@@ -9,7 +9,8 @@
         include('common_js_css.php');
         include('util_calculate_distance_js.php');
         //echo"<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false'></script>";
-        echo"<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places'></script>";
+        //echo"<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places'></script>";
+       echo'<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhLWXnQP-3SJ5WTazE878MSg2C1Q3Cmmc&libraries=places"></script>';
         echo'<script type="text/javascript" src="src/js/markerwithlabel.js"></script>';
         include('googleMapApi.php');
         //include('main_frame_part1.php');          
