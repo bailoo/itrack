@@ -2117,7 +2117,7 @@ function getMapMarker(angle_deg,running_status1,position,vehiclename,last_halt_t
 				  url: 'images/live/live_vehicle.gif',
 					size: new google.maps.Size(8, 8),
 				scaledSize: new google.maps.Size(8, 8),
-				anchor: new google.maps.Point(0, 32)
+				anchor: new google.maps.Point(2, 7)
 				};
 		
 			vehicleNameLabel='<table style=\"background-color: green;color:white;font-size: 11px; font-weight: bold;font-family: Lucida Grande, Arial, sans-serif;\" >'+
@@ -2133,7 +2133,7 @@ function getMapMarker(angle_deg,running_status1,position,vehiclename,last_halt_t
 							url: 'images/live/lp_vehicle1.gif',
 							size: new google.maps.Size(8, 8),
 							scaledSize: new google.maps.Size(8, 8),
-							anchor: new google.maps.Point(0, 32)
+							anchor: new google.maps.Point(2, 7)
 						};
 				
 			vehicleNameLabel='<table style=\"background-color: yellow;color:white;font-size: 11px; font-weight: bold;font-family: Lucida Grande, Arial, sans-serif;\" >'+
@@ -2150,7 +2150,7 @@ function getMapMarker(angle_deg,running_status1,position,vehiclename,last_halt_t
 							url: 'images/live/lp_vehicle2.gif',
 							size: new google.maps.Size(8, 8),
 							scaledSize: new google.maps.Size(8, 8),
-							anchor: new google.maps.Point(0, 32)
+							anchor: new google.maps.Point(2, 7)
 						};			
 			vehicleNameLabel='<table style=\"background-color: red;color:white;font-size: 11px; font-weight: bold;font-family: Lucida Grande, Arial, sans-serif;\" >'+
 								'<tr>'+
@@ -2167,7 +2167,7 @@ function getMapMarker(angle_deg,running_status1,position,vehiclename,last_halt_t
 			url: 'images/arrow_images/'+angle_deg+'.png',
 			size: new google.maps.Size(20, 20),
 			scaledSize: new google.maps.Size(20, 20),
-			anchor: new google.maps.Point(0, 32)
+			anchor: new google.maps.Point(2, 7)
 		};
 		if(running_status1 == 'Running')
 		{		
@@ -2202,11 +2202,11 @@ function getMapMarker(angle_deg,running_status1,position,vehiclename,last_halt_t
 	
 	var markerThis = new MarkerWithLabel({
 			   position: position,
-			   draggable: true,
+			   draggable: false,
 			   icon:imageIcon,
 			   map: map,
 			   labelContent: vehicleNameLabel,
-			   labelAnchor: new google.maps.Point(-12, 38)
+			   labelAnchor: new google.maps.Point(-12, 14)
 			 });
 	
 	
