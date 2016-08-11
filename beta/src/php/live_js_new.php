@@ -1887,7 +1887,7 @@ function Prev_PlotLastMarkerWithAddress(angle_deg,lat ,lng, marker, imei, vehicl
 	var io_str="";
 	if(imei_iotype_arr[imei]!=undefined)
 	{
-		io_str=getIoString(imei_iotype_arr);
+		io_str=getIoString(imei_iotype_arr,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8);
 	}
 	
 	var position=new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
@@ -2415,7 +2415,7 @@ function infoCallbackLive(point, marker, imei, vehiclename, speed,datetime, fuel
 		var io_str="";
 		if(imei_iotype_arr[imei]!=undefined)
 		{
-			io_str=getIoString(imei_iotype_arr);
+			io_str=getIoString(imei_iotype_arr,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8);
 		}
 		//alert("io_str"+io_str);
 		var nearest_customer_string = "";
