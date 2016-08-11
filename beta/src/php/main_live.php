@@ -20,10 +20,7 @@
         include('util_calculate_distance_js.php');	
         include('coreDb.php');
        //include('main_frame_part1.php');
-       echo"<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places'></script>";
-        echo'<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhLWXnQP-3SJ5WTazE878MSg2C1Q3Cmmc&libraries=places"
-         async defer></script> ';
-        echo'<script type="text/javascript" src="src/js/markerwithlabel.js"></script>';
+      
      ?>
       <!-- Bootstrap core CSS -->
     <link href="src/thirdparty/ast_bs/dist/css/bootstrap.css" rel="stylesheet">   
@@ -135,7 +132,11 @@ return obj;
     </style>
 <?php
 }
+ echo"<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places'></script>";
+      
+        echo'<script type="text/javascript" src="src/js/markerwithlabel.js"></script>';
 ?>
+    
  </head>
   
 <body class="body_part" topmargin="0" onresize="javascript:resize()" onload="javascript:resize();">  
