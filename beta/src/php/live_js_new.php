@@ -2214,7 +2214,7 @@ function getMapMarker(angle_deg,running_status1,position,vehiclename,last_halt_t
 	markers.push(markerThis);
 	return markerThis;
 }
-function getIoString(imei_iotype_arr)
+function getIoString(imei_iotype_arr,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8)
 {
 	var iotype_iovalue_str=imei_iotype_arr[imei].split(":");
 	/*if(iotype_iovalue_str.length==2)
