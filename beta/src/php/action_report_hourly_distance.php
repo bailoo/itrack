@@ -228,22 +228,22 @@ echo'<center><br>
 	
 	while($row=mysql_fetch_object($Result))
 	{
-	if($serial%2==0)
-	{
-		echo"<tr bgcolor='lightgray'>";
-	}
-	else
-	{
-		echo"<tr>";
-	}
+            if($serial%2==0)
+            {
+                    echo"<tr bgcolor='lightgray'>";
+            }
+            else
+            {
+                    echo"<tr>";
+            }
 	$imeiDetailArr=explode("@",$vehicleDetailArr[$row->imei]);
 	echo"<td>".$serial."</td>
 		<td>".$row->date."</td>
 		<td>".$imeiDetailArr[0]."</td>
 		<td>".$imeiDetailArr[1]."</td>
 		<td>".$imeiDetailArr[2]."</td>";
-		//echo"columnSize=".$columnSize."<br>";
-		//echo"dataInterval=".$dataInterval."<br>";
+		echo"columnSize=".$columnSize."<br>";
+		echo"dataInterval=".$dataInterval."<br>";
 		$durationBreakCount=1;
 		$culumnSum=0;
 		
