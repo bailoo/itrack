@@ -1891,6 +1891,9 @@ function Prev_PlotLastMarkerWithAddress(angle_deg,lat ,lng, marker, imei, vehicl
 	}
 	
 	var position=new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+        
+        var latlngbounds = new google.maps.LatLngBounds();
+        latlngbounds.extend(new google.maps.LatLng(parseFloat(lat),parseFloat(lng)));
 	
 	var markerThis=getMapMarker(angle_deg,running_status1,position,vehiclename,last_halt_time,tmp);
 	
@@ -1983,7 +1986,9 @@ function Prev_PlotLastMarkerWithAddress(angle_deg,lat ,lng, marker, imei, vehicl
 			transporter_remark_string = "<tr><td class='ioCustomerTransporterCss1'>Transporter</td><td>&nbsp;:&nbsp;</td><td class='ioCustomerTransporterCss2'>"+uniqueRouteParseJson[vehiclename]+"</td></tr>";			
 		}			
 	}
-
+       
+	map.setCenter(latlngbounds.getCenter());
+	map.fitBounds(latlngbounds);
 	 //var geocoder = new GClientGeocoder();
 	 var address_tmp;
 	 var address1_tmp;
