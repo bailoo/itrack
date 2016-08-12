@@ -54,6 +54,7 @@ else if($personOption=="multiplePerson")
 }
 
 $mysqlTableColumns="";
+$mysqlDistTableColumns="";
 $switchFlag=0;
 
 for($i=$durationFrom;$i<=$durationTo;$i++) // for making dynamic column duration half hour fetching record from mysql
@@ -64,13 +65,17 @@ for($i=$durationFrom;$i<=$durationTo;$i++) // for making dynamic column duration
             if("HR_".$hr."_00_LOC"=="HR_00_00_LOC") //for setting 00_30 colume only
             {
                 $mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30_LOC,";
+                 $mysqlDistTableColumns=$mysqlDistTableColumns."HR_".$hr."_30_DIST,";
+           
             }
             else
             {
 		$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00_LOC,";
+                $mysqlDistTableColumns=$mysqlDistTableColumns."HR_".$hr."_00_DIST,";
 		if($i!=$durationTo) // for skiping last column because it exceed duration time
 		{
 			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30_LOC,";
+                        $mysqlDistTableColumns=$mysqlDistTableColumns."HR_".$hr."_30_DIST,";
 		}
             }
 	}
@@ -146,10 +151,12 @@ for($i=$durationFrom;$i<=$durationTo;$i++) ///// this is for column headings of 
 //echo" personOption=".$personOption."<br>";
 
 $mysqlTableColumns=substr($mysqlTableColumns,0,-1);
+$mysqlDistTableColumns=substr($mysqlDistTableColumns,0,-1);
+
 //echo" mysqlTableColumns=".$mysqlTableColumns."<br>";
 if($personOption=="singlePerson")
 {
-$Query="SELECT imei,date,".$mysqlTableColumns." FROM hourly_distance_log USE INDEX(date_imei) WHERE imei='$vehicleserialRadio'".
+$Query="SELECT imei,date,".$mysqlTableColumns.",".$mysqlDistTableColumns." FROM hourly_distance_log USE INDEX(date_imei) WHERE imei='$vehicleserialRadio'".
 	   " AND date BETWEEN '$start_date' AND '$end_date'";
 //echo "Query1=".$Query."<br>";
 $Result=mysql_query($Query,$DbConnection);
@@ -173,7 +180,7 @@ for($i=0;$i<sizeof($vehicleserial);$i++)
     $imeiCondition=$imeiCondition."imei='".$vehicleserial[$i]."' OR ";
 }
 $imeiCondition=substr($imeiCondition,0,-3);
-$Query="SELECT imei,date,latitude,longitude,".$mysqlTableColumns." FROM hourly_distance_log USE INDEX(imei,date) WHERE  date='$single_date' AND".
+$Query="SELECT imei,date,latitude,longitude,".$mysqlTableColumns.",".$mysqlDistTableColumns." FROM hourly_distance_log USE INDEX(imei,date) WHERE  date='$single_date' AND".
 		" ($imeiCondition)";
 //echo "Query2=".$Query."<br>";
 $Result=mysql_query($Query,$DbConnection);
@@ -224,6 +231,8 @@ echo'<center><br>
 		echo"</tr>";
 	$serial=1;
 	$mysqlTableColumnsArr=explode(",",$mysqlTableColumns);
+        $mysqlDistTableColumns=explode(",",$mysqlDistTableColumns);
+        
 	//echo "mysqlTableColumns=".$mysqlTableColumns."<br>";
 	$columnSize=sizeof($mysqlTableColumnsArr);
 	
@@ -263,7 +272,7 @@ echo'<center><br>
 				//echo"durationBreakCount=".$durationBreakCount."dataInterval=".$dataInterval."mysqlTableColumnsArr=".$mysqlTableColumnsArr[$ci]."<br>";
 				if($durationBreakCount==$dataInterval)
 				{
-					echo"<td>".$row->$mysqlTableColumnsArr[$ci]."</td>";
+					echo"<td>".$row->$mysqlTableColumnsArr[$ci]."[".$mysqlDistTableColumns[$ci]."]</td>";
 					$culumnSum=0;
 					$durationBreakCount=1;
 					if($ci==$columnSize)
