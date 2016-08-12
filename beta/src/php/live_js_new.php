@@ -1989,6 +1989,7 @@ function Prev_PlotLastMarkerWithAddress(angle_deg,lat ,lng, marker, imei, vehicl
        
 	map.setCenter(latlngbounds.getCenter());
 	map.fitBounds(latlngbounds);
+        map.setZoom(map.getZoom()-9);
 	 //var geocoder = new GClientGeocoder();
 	 var address_tmp;
 	 var address1_tmp;
