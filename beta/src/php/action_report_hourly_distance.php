@@ -112,7 +112,8 @@ for($i=$durationFrom;$i<=$durationTo;$i++) ///// this is for column headings of 
 	$hr=($i<10)?'0'.$i:$i;
 	if($timeInterval==0) /////// this is only for 30 minute interval
 	{
-            if($hr."_00"!="00_00") //for setting 00_30 colume only
+              
+            if($hr."_00"=="00_00") //for setting 00_30 colume only
             {
                 $durationArr[]=$hr.":30";
             }
@@ -145,7 +146,7 @@ for($i=$durationFrom;$i<=$durationTo;$i++) ///// this is for column headings of 
 //echo" personOption=".$personOption."<br>";
 
 $mysqlTableColumns=substr($mysqlTableColumns,0,-1);
-echo" mysqlTableColumns=".$mysqlTableColumns."<br>";
+//echo" mysqlTableColumns=".$mysqlTableColumns."<br>";
 if($personOption=="singlePerson")
 {
 $Query="SELECT imei,date,".$mysqlTableColumns." FROM hourly_distance_log USE INDEX(date_imei) WHERE imei='$vehicleserialRadio'".
@@ -243,7 +244,7 @@ echo'<center><br>
 		<td>".$imeiDetailArr[0]."</td>
 		<td>".$imeiDetailArr[1]."</td>
 		<td>".$imeiDetailArr[2]."</td>";
-		echo"columnSize=".$columnSize."<br>";
+		//echo"columnSize=".$columnSize."<br>";
 		//echo"dataInterval=".$dataInterval."<br>";
 		$durationBreakCount=1;
 		$culumnSum=0;
