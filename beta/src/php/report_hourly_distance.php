@@ -43,7 +43,7 @@
 	</table>
 	<br>
 	<fieldset class="report_fieldset">
-            <legend>Vehicles</legend>	
+            <legend>Person</legend>	
                 <table border=0  cellspacing=0 cellpadding=0  width="100%">
                     <tr>
                         <td align="center">							
