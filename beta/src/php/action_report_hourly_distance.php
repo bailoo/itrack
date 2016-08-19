@@ -180,9 +180,9 @@ for($i=0;$i<sizeof($vehicleserial);$i++)
     $imeiCondition=$imeiCondition."imei='".$vehicleserial[$i]."' OR ";
 }
 $imeiCondition=substr($imeiCondition,0,-3);
-$Query="SELECT imei,date,latitude,longitude,".$mysqlTableColumns.",".$mysqlDistTableColumns." FROM hourly_distance_log USE INDEX(imei,date) WHERE  date='$single_date' AND".
+$Query="SELECT imei,date,latitude,longitude,".$mysqlTableColumns.",".$mysqlDistTableColumns." FROM hourly_distance_log USE INDEX(date_imei) WHERE  date='$single_date' AND".
 		" ($imeiCondition)";
-echo "Query2=".$Query."<br>";
+//echo "Query2=".$Query."<br>";
 $Result=mysql_query($Query,$DbConnection);
 //print_r($vSerial);
 }
