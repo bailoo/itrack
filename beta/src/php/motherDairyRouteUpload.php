@@ -57,12 +57,12 @@ $objPHPExcel_1 = PHPExcel_IOFactory::load($filePath);
 					//if($objPHPExcel_1->getActiveSheet()->getCell("H".$row)->getValue()!="")
 					{
 						$vname[$cnt]=trim($objPHPExcel_1->getActiveSheet()->getCell("A".$row)->getValue());
-						$cno[$cnt]=trim($objPHPExcel_1->getActiveSheet()->getCell("C".$row)->getValue());
+						$cno[$cnt]=trim(str_replace("&","",trim($objPHPExcel_1->getActiveSheet()->getCell("C".$row)->getValue())));
 						$rno[$cnt]=trim($objPHPExcel_1->getActiveSheet()->getCell("D".$row)->getValue());
 						$plant[$cnt]=trim($objPHPExcel_1->getActiveSheet()->getCell("E".$row)->getValue());
 						$ad_at[$cnt]=trim($objPHPExcel_1->getActiveSheet()->getCell("F".$row)->getValue())." ".str_replace("-","",trim($objPHPExcel_1->getActiveSheet()->getCell("G".$row)->getValue()));
 						$hd[$cnt]=trim($objPHPExcel_1->getActiveSheet()->getCell("H".$row)->getValue());
-						$tname[$cnt]=trim($objPHPExcel_1->getActiveSheet()->getCell("I".$row)->getValue());
+						$tname[$cnt]=trim(str_replace("&","",trim($objPHPExcel_1->getActiveSheet()->getCell("I".$row)->getValue())));
 						$cnt++;
 					}
 					break;				
