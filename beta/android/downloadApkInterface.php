@@ -43,11 +43,13 @@ $sNo=1;
 echo'<form name="downloadApkFile" method="post" action="downloadAndroidApk.php" target="_blank">
     <input type="hidden" id="sourceFilePath" name="sourceFilePath">
            <input type="hidden" id="destinationFileName" name="destinationFileName">';
-while($statement->fetch()) {
+while($statement->fetch()) 
+{
     if($version_name!=$apk_version_name)
-    {         
+    {  
+        echo "in if<br>";
     echo'<center><div><b>'.$apk_version_name.'</b></div></center><br>
-            <div style="margin-left :19%;"><b>&nbsp;'.$apk_heading.'</b></div><br>';
+    <div style="margin-left :19%;"><b>&nbsp;'.$apk_heading.'</b></div><br>';
    echo'<center><table border="1" class="menu" cellspacing="3" cellpadding="3" rules="all" bordercolor="grey">';  
     }
     $filePath="android/".$apk_type."/".$apk_version_name."/".$apk_heading."/".$download_file_name;
@@ -69,8 +71,8 @@ while($statement->fetch()) {
     {
          echo "</table>";
     }
-    }  
-echo "</table></center>
+}  
+echo "</center>
    </form>";
     $statement->close();
 
