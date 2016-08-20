@@ -54,30 +54,30 @@ $sNo=1;
 while($statement->fetch()) {
     if($version_name!=$apk_version_name)
     {         
-    print '<center><div><b>'.$apk_version_name.'</b></div></center><br>';    
+    echo '<center><div><b>'.$apk_version_name.'</b></div></center><br>';    
     }
     if($apk_heading!=$cmpHeading)
     {
         $sNo=1;
-       print'<div style="margin-left :19%;"><b>&nbsp;'.$apk_heading.'</b></div><br>';
-        print'<center><table border="1" class="menu" cellspacing="3" cellpadding="3" rules="all" bordercolor="grey">';  
+       echo'<div style="margin-left :19%;"><b>&nbsp;'.$apk_heading.'</b></div><br>';
+        echo'<center><table border="1" class="menu" cellspacing="3" cellpadding="3" rules="all" bordercolor="grey">';  
     }
     $filePath="android/".$apk_type."/".$apk_version_name."/".$apk_heading."/".$download_file_name;
     
     $downloadPathLink="http://www.itracksolution.com/android/downloadApkUrl.php?aT=".$apk_type."&vN=".$apk_version_name."&aH=".$apk_heading."&dFN=".$download_file_name;
-    print '<tr>';
-    print '<td>'.$sNo.'</td>';
-    print '<td>'.$downloadPathLink.'</td>';
-     print '<td>'.$download_file_name.'</td>';
-    print "<td> &nbsp;
+    echo '<tr>';
+    echo '<td>'.$sNo.'</td>';
+    echo '<td>'.$downloadPathLink.'</td>';
+     echo '<td>'.$download_file_name.'</td>';
+    echo "<td> &nbsp;
             <a href='#' onclick='javascript:downloadApkFile1(\"".$filePath."\",\"".$download_file_name."\");'>
                 Download
             </a>
         </td>";
-    print '</tr>';
+    echo '</tr>';
     if($apk_heading!=$cmpHeading)
     {
-       print'</table>';
+      echo'</table>';
     }
     $sNo++;
     $version_name=$apk_version_name;
