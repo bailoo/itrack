@@ -12,24 +12,25 @@ $apkType=$_GET['aT'];
 $versionName=$_GET['vN'];
 $apkHeading=$_GET['aH'];
 $downloadFileName=$_GET['dFN'];
-$S3Filename =$_POST['sourceFilePath'];
+//$S3Filename =$_POST['sourceFilePath'];
 
-//echo "serverFilePath=".$S3Filename."<br>";
+echo "serverFilePath=".$S3Filename."<br>";
 $S3Filename="android/".$apkType."/".$versionName."/".$apkHeading."/".$downloadFileName;
 $sourcefileNameArr=listFile($S3Filename);
-//print_r($sourcefileNameArr);
+print_r($sourcefileNameArr);
 $sourceFilePath=$S3Filename."/".$sourcefileNameArr[0]['name'];
 
 //echo "fileName=".$fileName."<br>";
 $destinationFileName=$sourcefileNameArr[0]['name'].".apk";
 $tmpFilePath="tmpFolder/".$destinationFileName;
-//echo "tmpFilePath=".$tmpFilePath."<br>";
+echo "tmpFilePath=".$tmpFilePath."<br>";
 
 $overwrite=true;
 $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
 
 if(count($sourcefileNameArr)>0)
 {
+    echo "in if";
     if($fd = fopen ($tmpFilePath, "r")) 
     {
         $fsize = filesize($tmpFilePath);
