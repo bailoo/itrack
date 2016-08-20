@@ -59,7 +59,7 @@ while($statement->fetch())
     }
     if($apk_heading!=$cmpHeading)
     {
-        echo "in if1<br>";
+        //echo "in if1<br>";
         $sNo=1;
         echo'<div style="margin-left :19%;"><b>&nbsp;'.$apk_heading.'</b></div><br>';
         echo'<center><table border="1" class="menu" cellspacing="3" cellpadding="3" rules="all" bordercolor="grey">';  
@@ -77,9 +77,9 @@ while($statement->fetch())
             </a>
         </td>";
     echo '</tr>';
-    if($apk_heading!=$cmpHeading)
+    if($apk_heading!=$cmpHeading && $sNo!=1)
     {
-         echo "in if2<br>";
+        //echo "in if2<br>";
       echo'</table>';
     }
     $sNo++;
