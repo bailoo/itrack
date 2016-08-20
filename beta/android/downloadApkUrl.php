@@ -24,12 +24,12 @@ $sourceFilePath=$S3Filename."/".$sourcefileNameArr[0]['name'];
 //echo "fileName=".$fileName."<br>";
 $destinationFileName=$sourcefileNameArr[0]['name'].".apk";
 $tmpFilePath="tmpFolder/".$destinationFileName;
-//echo "tmpFilePath=".$tmpFilePath."<br>";
-
+echo "tmpFilePath=".$tmpFilePath."<br>";
+exit();
 $overwrite=true;
 $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
 
-if(count($sourcefileNameArr)>0)
+/*if(count($sourcefileNameArr)>0)
 {
     //echo "in if";
     if($fd = fopen ($tmpFilePath, "r")) 
@@ -65,5 +65,5 @@ if(count($sourcefileNameArr)>0)
 else
 {
     echo 'file not found';
-}
+}*/
 ?>
