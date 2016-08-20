@@ -51,15 +51,17 @@ $statement->bind_result($apk_type, $apk_version_name, $apk_heading, $download_fi
 $version_name="";
 $cmpHeading="";
 $sNo=1;
-while($statement->fetch()) {
+while($statement->fetch()) 
+{
     if($version_name!=$apk_version_name)
     {         
-    echo '<center><div><b>'.$apk_version_name.'</b></div></center><br>';    
+        echo '<center><div><b>'.$apk_version_name.'</b></div></center><br>';    
     }
     if($apk_heading!=$cmpHeading)
     {
+        echo "in if1<br>";
         $sNo=1;
-       echo'<div style="margin-left :19%;"><b>&nbsp;'.$apk_heading.'</b></div><br>';
+        echo'<div style="margin-left :19%;"><b>&nbsp;'.$apk_heading.'</b></div><br>';
         echo'<center><table border="1" class="menu" cellspacing="3" cellpadding="3" rules="all" bordercolor="grey">';  
     }
     $filePath="android/".$apk_type."/".$apk_version_name."/".$apk_heading."/".$download_file_name;
@@ -77,6 +79,7 @@ while($statement->fetch()) {
     echo '</tr>';
     if($apk_heading!=$cmpHeading)
     {
+         echo "in if2<br>";
       echo'</table>';
     }
     $sNo++;
