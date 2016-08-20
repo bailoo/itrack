@@ -36,7 +36,7 @@ $query = "SELECT apk_type,apk_version_name,apk_heading,download_file_name FROM a
 $statement->bind_result($apk_type, $apk_version_name, $apk_heading, $download_file_name);
 
 
-
+echo "in file";
 //fetch records
 $version_name="";
 $sNo=1;
@@ -47,7 +47,7 @@ while($statement->fetch())
 {
     if($version_name!=$apk_version_name)
     {  
-        echo "in if<br>";
+       // echo "in if<br>";
     echo'<center><div><b>'.$apk_version_name.'</b></div></center><br>
     <div style="margin-left :19%;"><b>&nbsp;'.$apk_heading.'</b></div><br>';
    echo'<center><table border="1" class="menu" cellspacing="3" cellpadding="3" rules="all" bordercolor="grey">';  
