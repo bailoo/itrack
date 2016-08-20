@@ -65,7 +65,10 @@ while($statement->fetch()) {
    echo'</tr>';
     $sNo++;
     $version_name=$apk_version_name;
-    
+     if($version_name!=$apk_version_name)
+    {
+         echo "</table>";
+    }
     }  
 echo "</table></center>
    </form>";
