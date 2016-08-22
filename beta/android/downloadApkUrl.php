@@ -32,19 +32,13 @@ $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
 //exit();
 if(count($sourcefileNameArr)>0)
 {
-    header('Content-Description: File Transfer');
+    header("Cache-Control: public");
+    header("Content-Description: File Transfer");
     header('Content-Type: application/vnd.android.package-archive');
-    header('Content-Disposition: attachment; filename='.basename($tmpFilePath));
-    header('Content-Transfer-Encoding: binary');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-    header('Pragma: public');
-    header('Content-Length: ' . filesize($tmpFilePath));
-    //ob_clean();
-    //flush();
-    readfile($tmpFilePath);
-     //unlink($tmpFilePath);
-    exit;
+    header("Content-Transfer-Encoding: binary");    
+    header('Content-Disposition: attachment; filename="test.apk"');
+    readfile($sourceFilePath);
+    
     //echo "in if";
     /*if($fd = fopen ($tmpFilePath, "r")) 
     {
