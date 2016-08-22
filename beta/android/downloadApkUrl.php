@@ -39,6 +39,7 @@ if(count($sourcefileNameArr)>0)
     header('Content-Disposition: attachment; filename="' . $sourcefileNameArr[0]['name'] . '"');
     ob_end_flush();
     readfile($tmpFilePath);
+    unlink($tmpFilePath); 
     return true;
     
     /*if($fd = fopen ($tmpFilePath, "r")) 
