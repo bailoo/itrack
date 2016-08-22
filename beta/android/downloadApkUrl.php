@@ -16,9 +16,9 @@ $downloadFileName=$_GET['dFN'];
 
 
 $S3Filename="android/".$apkType."/".$versionName."/".$apkHeading."/".$downloadFileName;
-echo "serverFilePath=".$S3Filename."<br>";
+//echo "serverFilePath=".$S3Filename."<br>";
 $sourcefileNameArr=listFile($S3Filename);
-print_r($sourcefileNameArr);
+//print_r($sourcefileNameArr);
 
 
 $sourceFilePath=$S3Filename."/".$sourcefileNameArr[0]['name'];
@@ -29,11 +29,17 @@ $tmpFilePath="tmpFolder/".$destinationFileName;
 
 $overwrite=true;
 $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
-exit();
+//exit();
 if(count($sourcefileNameArr)>0)
 {
+    eader("Cache-Control: public");
+    header("Content-Description: File Transfer");
+    header('Content-Type: application/vnd.android.package-archive');
+    header("Content-Transfer-Encoding: binary");    
+    header('Content-Disposition: attachment; filename="test.apk"');
+    readfile($sourceFilePath);
     //echo "in if";
-    if($fd = fopen ($tmpFilePath, "r")) 
+    /*if($fd = fopen ($tmpFilePath, "r")) 
     {
         $fsize = filesize($tmpFilePath);
         $path_parts = pathinfo($tmpFilePath);
@@ -61,7 +67,7 @@ if(count($sourcefileNameArr)>0)
         }
         fclose ($fd);
         unlink($tmpFilePath); 
-    }
+    }*/
 }
 else
 {
