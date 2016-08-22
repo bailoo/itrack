@@ -16,9 +16,11 @@ $downloadFileName=$_GET['dFN'];
 
 
 $S3Filename="android/".$apkType."/".$versionName."/".$apkHeading."/".$downloadFileName;
-//echo "serverFilePath=".$S3Filename."<br>";
+echo "serverFilePath=".$S3Filename."<br>";
 $sourcefileNameArr=listFile($S3Filename);
-//print_r($sourcefileNameArr);
+print_r($sourcefileNameArr);
+
+exit();
 $sourceFilePath=$S3Filename."/".$sourcefileNameArr[0]['name'];
 
 //echo "fileName=".$fileName."<br>";
