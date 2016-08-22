@@ -32,22 +32,7 @@ $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
 //exit();
 if(count($sourcefileNameArr)>0)
 {
-    header('Content-Description: File Transfer');
-    header('Content-Type: application/vnd.android.package-archive');
-    header('Content-Disposition: attachment; filename='.basename($tmpFilePath));
-    header('Content-Transfer-Encoding: binary');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-    header('Pragma: public');
-    header('Content-Length: ' . filesize($tmpFilePath));
-    ob_clean();
-    flush();
-    readfile($file);
-    unlink($tmpFilePath);
-    exit;
-    
-    //echo "in if";
-    /*if($fd = fopen ($tmpFilePath, "r")) 
+    if($fd = fopen ($tmpFilePath, "r")) 
     {
         $fsize = filesize($tmpFilePath);
         $path_parts = pathinfo($tmpFilePath);
@@ -75,7 +60,8 @@ if(count($sourcefileNameArr)>0)
         }
         fclose ($fd);
         unlink($tmpFilePath); 
-    }*/
+        exit();
+    }
 }
 else
 {
