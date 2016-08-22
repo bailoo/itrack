@@ -40,10 +40,10 @@ if(count($sourcefileNameArr)>0)
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Pragma: public');
     header('Content-Length: ' . filesize($tmpFilePath));
-    ob_clean();
-    flush();
+    //ob_clean();
+    //flush();
     readfile($tmpFilePath);
-     unlink($tmpFilePath);
+     //unlink($tmpFilePath);
     exit;
     //echo "in if";
     /*if($fd = fopen ($tmpFilePath, "r")) 
