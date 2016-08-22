@@ -29,11 +29,15 @@ $parameterizeData->dayMaxSpeedTime='t';
 $parameterizeData->lastHaltTime='u';
 $parameterizeData->cellName='ab';
 $sortBy="h";	
+//---------Setting array password--//
 
+$key_array_pass['mother2016_itrack']='mother2016_itrack';
+$key_array_pass['knpankur2016']='knpankur2016';
 if(!empty($_POST['deviceData']))
 {
         $keyData=$_POST['key'];
-        if($keyData=='mother2016_itrack')
+        //if($keyData=='mother2016_itrack')
+        if(isset($key_array_pass[$keyData]))
         {
             $jsonData=$_POST['deviceData'];	
             //echo "jsonDecodedData=".$jsonData."<br>";
