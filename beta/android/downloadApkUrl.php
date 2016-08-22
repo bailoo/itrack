@@ -20,7 +20,7 @@ echo "serverFilePath=".$S3Filename."<br>";
 $sourcefileNameArr=listFile($S3Filename);
 print_r($sourcefileNameArr);
 
-exit();
+
 $sourceFilePath=$S3Filename."/".$sourcefileNameArr[0]['name'];
 
 //echo "fileName=".$fileName."<br>";
@@ -29,7 +29,7 @@ $tmpFilePath="tmpFolder/".$destinationFileName;
 
 $overwrite=true;
 $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
-
+exit();
 if(count($sourcefileNameArr)>0)
 {
     //echo "in if";
