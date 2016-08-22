@@ -29,7 +29,7 @@ $tmpFilePath="tmpFolder/".$destinationFileName;
 
 $overwrite=true;
 $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
-exit();
+//exit();
 if(count($sourcefileNameArr)>0)
 {
     header("Cache-Control: public");
