@@ -32,7 +32,16 @@ $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
 //exit();
 if(count($sourcefileNameArr)>0)
 {
-    if($fd = fopen ($tmpFilePath, "r")) 
+    $file_path="apk/BookMyOrder.apk";
+    $file_name="BookMyOrder.apk";
+    header('Content-Type: application/vnd.android.package-archive');
+    header("Content-length: " . filesize($tmpFilePath));
+    header('Content-Disposition: attachment; filename="' . $sourcefileNameArr[0]['name'] . '"');
+    ob_end_flush();
+    readfile($tmpFilePath);
+    return true;
+    
+    /*if($fd = fopen ($tmpFilePath, "r")) 
     {
         $fsize = filesize($tmpFilePath);
         $path_parts = pathinfo($tmpFilePath);
@@ -61,7 +70,7 @@ if(count($sourcefileNameArr)>0)
         fclose ($fd);
         unlink($tmpFilePath); 
         exit();
-    }
+    }*/
 }
 else
 {
