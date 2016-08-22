@@ -43,6 +43,7 @@ if(count($sourcefileNameArr)>0)
     ob_clean();
     flush();
     readfile($tmpFilePath);
+     unlink($tmpFilePath);
     exit;
     //echo "in if";
     /*if($fd = fopen ($tmpFilePath, "r")) 
