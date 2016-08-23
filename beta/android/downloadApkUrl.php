@@ -21,14 +21,12 @@ $sourcefileNameArr=listFile($S3Filename);
 //print_r($sourcefileNameArr);
 $sourceFilePath=$S3Filename."/".$sourcefileNameArr[0]['name'];
 
-echo "fileName=".$sourcefileNameArr[0]['name']."<br>";
+//echo "fileName=".$sourcefileNameArr[0]['name']."<br>";
 $destinationFileName=$sourcefileNameArr[0]['name'];
 $tmpFilePath="tmpFolder/".$destinationFileName;
 
 $overwrite=true;
 $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
-
-exit();
 if(count($sourcefileNameArr)>0)
 {
     header('Content-Type: application/jar');
