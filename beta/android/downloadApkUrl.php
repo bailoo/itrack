@@ -27,7 +27,7 @@ $tmpFilePath="tmpFolder/".$destinationFileName;
 
 $overwrite=true;
 $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
-
+exit();
 if(count($sourcefileNameArr)>0)
 {
     //echo "in if";
