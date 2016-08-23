@@ -30,14 +30,8 @@ $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
 
 if(count($sourcefileNameArr)>0)
 {
-    header('Content-Type: application/vnd.android.package-archive');
-    header("Content-length: " . filesize($file_path));
-    header('Content-Disposition: attachment; filename="' . $file_name . '"');
-    ob_end_flush();
-    readfile($file_path);
-    return true;
     //echo "in if";
-    /*if($fd = fopen ($tmpFilePath, "r")) 
+    if($fd = fopen ($tmpFilePath, "r")) 
     {
         $fsize = filesize($tmpFilePath);
         $path_parts = pathinfo($tmpFilePath);
@@ -65,7 +59,7 @@ if(count($sourcefileNameArr)>0)
         }
         fclose ($fd);
         unlink($tmpFilePath); 
-    }*/
+    }
 }
 else
 {
