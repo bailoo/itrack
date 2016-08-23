@@ -30,11 +30,12 @@ $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
 
 if(count($sourcefileNameArr)>0)
 {
-    header('Content-Type: application/jar');
-    header('Content-Type: application/apk');
-    header('Content-Disposition: attachment; filename="'.$sourcefileNameArr[0]['name'].'"');
-    header('Content-Length: ' . filesize ($tmpFilePath));
-    readfile($tmpFilePath);
+    header('Content-Type: application/vnd.android.package-archive');
+    header("Content-length: " . filesize($file_path));
+    header('Content-Disposition: attachment; filename="' . $file_name . '"');
+    ob_end_flush();
+    readfile($file_path);
+    return true;
     //echo "in if";
     /*if($fd = fopen ($tmpFilePath, "r")) 
     {
