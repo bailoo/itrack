@@ -1,5 +1,5 @@
 <?php
-include_once("utilSetUnsetSession.php");
+/*include_once("utilSetUnsetSession.php");
 
 $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 //$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]; //local path
@@ -28,42 +28,12 @@ $tmpFilePath="tmpFolder/".$destinationFileName;
 $overwrite=true;
 $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
 echo "TmpFilePath=".$tmpFilePath."<br>";
-exit();
-if(count($sourcefileNameArr)>0)
-{
-    //echo "in if";
-    if($fd = fopen ($tmpFilePath, "r")) 
-    {
-        $fsize = filesize($tmpFilePath);
-        $path_parts = pathinfo($tmpFilePath);
-       
-        $path_parts["basename"]=$destinationFileName;
-        $ext = strtolower($path_parts["extension"]);
-		
-        switch ($ext) 
-        {
-            case "pdf":
-            header("Content-type: application/pdf"); // add here more headers for diff. extensions
-            header("Content-Disposition: attachment; filename=\"".$path_parts["basename"]."\""); // use 'attachment' to force a download
-            break;
-            default;
-            header("Content-type: application/octet-stream");
-            header("Content-Disposition: filename=\"".$path_parts["basename"]."\"");
-        }
-        header("Content-length: $fsize");
-        header("Cache-control: private"); //use this to open files directly
+exit();*/
+header('Content-Type: application/jar');
+header('Content-Type: application/apk');
+header('Content-Disposition: attachment; filename="PersonTracker_8_21_hr.apk"');
+header('Content-Length: ' . filesize ("tmpFolder/PersonTracker_8_21_hr.apk"));
+readfile('tmpFolder/PersonTracker_8_21_hr.apk');
 
-        while(!feof($fd)) 
-        {
-            $buffer = fread($fd, 2048);
-            echo $buffer;
-        }
-        fclose ($fd);
-        unlink($tmpFilePath); 
-    }
-}
-else
-{
-    echo 'file not found';
-}
+
 ?>
