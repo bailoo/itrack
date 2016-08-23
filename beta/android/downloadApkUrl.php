@@ -29,17 +29,18 @@ $overwrite=true;
 $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
 
 
-if(count($sourcefileNameArr)>0)
+//if(count($sourcefileNameArr)>0)
 {
     header('Content-Type: application/jar');
     header('Content-Type: application/apk');
     header('Content-Disposition: attachment; filename="'.$sourcefileNameArr[0]['name'].'"');
     header('Content-Length: ' . filesize ($tmpFilePath));
     readfile($tmpFilePath);
-    unlink($tmpFilePath); 
+    //unlink($tmpFilePath); 
+    return true;
 }
-else
+//else
 {
-    echo 'file not found';
+    //echo 'file not found';
 }
 ?>
