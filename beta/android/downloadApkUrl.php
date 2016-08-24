@@ -44,8 +44,8 @@ function downloadApkFile($filePath,$fileName)
 }
 
 $fileArr=getFileForDownload($apkType,$versionName,$apkHeading,$downloadFileName);
-print_r($fileArr);
-exit();
+//print_r($fileArr);
+//exit();
 if(count($fileArr)>0)
 {
     downloadApkFile($fileArr[0]['filePath'],$fileArr[0]['fileName']);
