@@ -20,12 +20,7 @@ print"<br><br><br><br><br><br><br><br><br>
     //echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=index.php\">";
     exit();
 } 
-/*$pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
-$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]; ////// local path
-//$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]; /// server Path
-$filePathToS3Wrapper=$pathToRoot."/s3/S3Wrapper.php";
-    
-include_once($filePathToS3Wrapper);*/  
+
 $pathInPieces = explode(DIRECTORY_SEPARATOR ,dirname(__FILE__));
 //$pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]."/".$pathInPieces[3]; //local path
 $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2]; //server path
