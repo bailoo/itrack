@@ -82,7 +82,7 @@ while($statement->fetch())
     $overwrite=true;
     $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite);
     //$downloadPathLink="http://www.itracksolution.com/android/downloadApkUrl.php?aT=".$apk_type."&vN=".$apk_version_name."&aH=".$apk_heading."&dFN=".$download_file_name;
-    $downloadPathLink="http://www.itracksolution.com/android/downloadApkUrl.php?aT=".$destinationFileName;
+    $downloadPathLink="http://www.itracksolution.com/android/downloadApkUrl.php?fileName=".$destinationFileName;
    
     echo '<tr>';
     echo '<td>'.$sNo.'</td>';
