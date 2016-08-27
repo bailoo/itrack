@@ -303,7 +303,7 @@ echo'<center><br>
 				{
                                     //$valueArr[]=$row->$mysqlTableColumnsArr[$ci]."[".$row->$mysqlDistTableColumns[$ci]."]";
                                     $valueArr[]=$locationStr;
-					echo"<td>".$locationStr."[".$row->$mysqlDistTableColumns[$ci]."]</td>";
+					echo"<td>".$locationStr."</td>";
 					$culumnSum=0;
 					$durationBreakCount=1;
 					if($ci==$columnSize)
