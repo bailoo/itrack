@@ -85,6 +85,8 @@ for($i=$durationFrom;$i<=$durationTo;$i++) // for making dynamic column duration
 		{
 			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00_LOC,";
 			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30_LOC,";
+                        $mysqlDistTableColumns=$mysqlDistTableColumns."HR_".$hr."_00_DIST,";
+                        $mysqlDistTableColumns=$mysqlDistTableColumns."HR_".$hr."_30_DIST,";
 		}
 		else
 		{
@@ -92,7 +94,8 @@ for($i=$durationFrom;$i<=$durationTo;$i++) // for making dynamic column duration
 			//echo "i=".$i."durationTo=".$durationTo."<br>";
 			if($i!=$durationTo) // for skiping last column becuase it exceed duration time
 			{
-				$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30_LOC,";	
+				$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_30_LOC,";
+                                $mysqlDistTableColumns=$mysqlDistTableColumns."HR_".$hr."_30_DIST,";
 			}			
 		}
 	}
