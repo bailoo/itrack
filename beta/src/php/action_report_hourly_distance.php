@@ -16,9 +16,9 @@ $sheet = array(
       'd1 data',
     )
   );
-print_r($sheet);
+//print_r($sheet);
 
-  /*$doc = new PHPExcel();
+  $doc = new PHPExcel();
   $doc->setActiveSheetIndex(0);
 
   $doc->getActiveSheet()->fromArray($sheet, null, 'A1');
@@ -30,6 +30,7 @@ header('Cache-Control: max-age=0');
   $writer = PHPExcel_IOFactory::createWriter($doc, 'Excel5');
 
 $writer->save('download');
+echo "tst";
 //exit();*/
 ?>
 		
