@@ -315,10 +315,11 @@ $sheetFinalArr[]=$valueArr;
 $serial++;
 	}		
 echo"</table></center>";
-echo "in last <br>";
+print_r($sheetFinalArr);
 
-error_reporting(-1);
-ini_set('display_errors', 'On');
+
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 define('EOL', (PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 include_once ('PHPExcel/IOFactory.php');
 
