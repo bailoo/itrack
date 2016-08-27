@@ -10,6 +10,8 @@ include_once('xmlParameters.php');
 include_once('parameterizeData.php');
 include_once('lastRecordData.php');
 include_once('getXmlData.php');	
+error_reporting(-1);
+ini_set('display_errors', 'On');
 if($personOption=="singlePerson")
 {
 	//echo "in if";
@@ -261,11 +263,11 @@ echo'<center><br>
             $valueArr=array();
             if($serial%2==0)
             {
-                    echo"<tr bgcolor='lightgray'>";
+                echo"<tr bgcolor='lightgray'>";
             }
             else
             {
-                    echo"<tr>";
+                echo"<tr>";
             }
 	$imeiDetailArr=explode("@",$vehicleDetailArr[$row->imei]);
 	echo"<td>".$serial."</td>
@@ -310,7 +312,7 @@ echo'<center><br>
 				}			
 				$durationBreakCount++;
 			}
-                        echo "in 1for <br>";
+                        echo "in 1for change <br>";
 		}
                 echo "in 1while <br>";
 echo"</tr>";
