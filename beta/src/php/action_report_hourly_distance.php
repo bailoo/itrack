@@ -1,5 +1,5 @@
 <?php
-include_once("main_vehicle_information_1.php");
+/*include_once("main_vehicle_information_1.php");
  include_once('Hierarchy.php');
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
@@ -221,7 +221,7 @@ echo'<center><br>
 <table class="menu" border=1 rules=all bordercolor="#e5ecf5" style="font-size: 10pt;margin: 0px;padding: 0px;font-weight: normal;" cellspacing=3 cellpadding=3>
 		<tr bgcolor="darkgray">
 			<td>
-			<b>Serial 1
+			<b>Serial
 			</td>
 			<td>
 			<b>Date
@@ -299,9 +299,8 @@ echo"</tr>";
 $serial++;
 	}		
 echo"</table></center>";
-echo "in last <br>";
-error_reporting(-1);
-ini_set('display_errors', 'On');
+echo "in last <br>";*/
+
 define('EOL', (PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 include_once ('PHPExcel/IOFactory.php');
 
@@ -317,7 +316,7 @@ $sheet = array(
       'd1 data',
     )
   );
-print_r($sheet);
+//print_r($sheet);
 
   $doc = new PHPExcel();
   $doc->setActiveSheetIndex(0);
@@ -330,7 +329,7 @@ header('Cache-Control: max-age=0');
   // Do your stuff here
   $writer = PHPExcel_IOFactory::createWriter($doc, 'Excel5');
 
-$writer->save('php://output');
+$writer->save('download');
 //exit();
 		
 			
