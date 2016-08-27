@@ -218,7 +218,7 @@ echo'<center><br>
 	exit();
 }
 $titleArr=array();
-echo'<center><br>
+echo'<form name="locationForm" action="commonDownloadScript.php" target="_blank"> <center><br>
 <table class="menu" border=1 rules=all bordercolor="#e5ecf5" style="font-size: 10pt;margin: 0px;padding: 0px;font-weight: normal;" cellspacing=3 cellpadding=3>
 		<tr bgcolor="darkgray">
 			<td>
@@ -315,9 +315,12 @@ echo"</tr>";
 $sheetFinalArr[]=$valueArr;
 $serial++;
 	}		
-echo"</table></center>";
+echo"</table>
+<input type='hidden' name='downloadFilePath' value='/mnt/itrack/beta/src/php/download/personHourlyReport.xls'>
+<input type='hidden' name='downloadFileName' value='personHourlyReport.xls'>
+<input type='submit' value='Download Excel'></center></form>";
 
-print_r($sheetFinalArr);
+//print_r($sheetFinalArr);
 //error_reporting(-1);
 //ini_set('display_errors', 'On');
 define('EOL', (PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
@@ -340,7 +343,7 @@ header('Cache-Control: max-age=0');*/
   // Do your stuff here
   $writer = PHPExcel_IOFactory::createWriter($doc, 'Excel5');
 
-$writer->save('/mnt/itrack/beta/src/php/download/your_name.xls');
+$writer->save('/mnt/itrack/beta/src/php/download/personHourlyReport.xls');
 //echo "tst";
 //exit();*/
 ?>
