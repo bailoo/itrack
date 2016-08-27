@@ -221,13 +221,13 @@ echo'<center><br>
 <table class="menu" border=1 rules=all bordercolor="#e5ecf5" style="font-size: 10pt;margin: 0px;padding: 0px;font-weight: normal;" cellspacing=3 cellpadding=3>
 		<tr bgcolor="darkgray">
 			<td>
-			<b>Serial
+			<b>Serial 1
 			</td>
 			<td>
 			<b>Date
 			</td>
 			<td>
-			<b>User Name
+			<b>User Name 1
 			</td>
 			<td>
 			<b>Mobile Number
@@ -318,32 +318,6 @@ echo"</table></center>";
 echo "in last <br>";
 print_r($sheetFinalArr);
 
-/*
-//error_reporting(-1);
-//ini_set('display_errors', 'On');
-define('EOL', (PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
-include_once ('PHPExcel/IOFactory.php');
-
-$cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
-$cacheSettings = array('memoryCacheSize' => '1028MB');
-PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
-
-
-
-  $doc = new PHPExcel();
-  $doc->setActiveSheetIndex(0);
-
-  $doc->getActiveSheet()->fromArray($sheetFinalArr, null, 'A1');
-/*header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="your_name.xls"');
-header('Cache-Control: max-age=0');*/
-
-  // Do your stuff here
- /* $writer = PHPExcel_IOFactory::createWriter($doc, 'Excel5');
-
-$writer->save('/mnt/itrack/beta/src/php/download/your_name.xls');
-//echo "tst";
-//exit();*/
 ?>
 		
 			
