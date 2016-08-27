@@ -310,6 +310,7 @@ echo'<center><br>
 				}			
 				$durationBreakCount++;
 			}
+                        echo "in 1for <br>";
 		}
                 echo "in 1while <br>";
 echo"</tr>";
