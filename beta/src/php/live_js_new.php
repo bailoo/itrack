@@ -1235,6 +1235,7 @@ function displayInfo_live()
     var lng_arr = new Array();
     var vid_arr = new Array();
     var vehiclename_arr = new Array();
+    var vehiclenumber_arr = new Array();
     var speed_arr = new Array();
     var datetime_arr = new Array();
     var place_arr = new Array();
@@ -1273,6 +1274,7 @@ function displayInfo_live()
         lng_arr[len2] = liveDataDisplay[k]['longitudeLR'];
         vid_arr[len2] = liveDataDisplay[k]['deviceImeiNo'];
         vehiclename_arr[len2] = liveDataDisplay[k]['vehicleName'];
+        vehiclenumber_arr[len2] = liveDataDisplay[k]['vehilceNumber'];        
         //alert("v000="+vehiclename_arr[len2] );
         speed_arr[len2] = Math.round(liveDataDisplay[k]['speedLR']*100)/100;
         if( (speed_arr[len2]<=3) || (speed_arr[len2]>200))
@@ -1296,7 +1298,7 @@ function displayInfo_live()
         {
                 day_max_speed_arr[len2] =  liveDataDisplay[k]['dayMaxSpeedLR'];
                 day_max_speed_time_arr[len2] =  liveDataDisplay[k]['dayMaxSpeedTimeLR'];
-                  last_halt_time_arr[len2] =  liveDataDisplay[k]['lastHaltTimeLR'];
+                last_halt_time_arr[len2] =  liveDataDisplay[k]['lastHaltTimeLR'];
 
                 if(day_max_speed_arr[len2] > 200)
                 {
@@ -1317,18 +1319,18 @@ function displayInfo_live()
         //alert("LPCOUNT="+lp_count);
         //alert("before plottin markers "+len2+" "+lat_arr+" "+lng_arr+" "+vid_arr+" "+vehiclename_arr+" "+speed_arr+" "+datetime_arr+"  VTYPE="+vehicletype_arr);				
         var flag=1;
-		processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_arr, speed_arr, datetime_arr, fuel_arr, running_status_arr, day_max_speed_arr, day_max_speed_time_arr, last_halt_time_arr,io1_arr,io2_arr,io3_arr,io4_arr,io5_arr,io6_arr,io7_arr,io8_arr);	  //HERE ARR IS JUST NORMAL VARIABLE NOT ARRAY
+		processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_arr,vehiclenumber_arr, speed_arr, datetime_arr, fuel_arr, running_status_arr, day_max_speed_arr, day_max_speed_time_arr, last_halt_time_arr,io1_arr,io2_arr,io3_arr,io4_arr,io5_arr,io6_arr,io7_arr,io8_arr);	  //HERE ARR IS JUST NORMAL VARIABLE NOT ARRAY
        // getxml_MovingData(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_arr, speed_arr, datetime_arr, fuel_arr, running_status_arr, day_max_speed_arr, day_max_speed_time_arr, last_halt_time_arr,io1_arr,io2_arr,io3_arr,io4_arr,io5_arr,io6_arr,io7_arr,io8_arr);	  //HERE ARR IS JUST NORMAL VARIABLE NOT ARRAY
         //alert("K");
         document.getElementById('prepage').style.visibility='hidden';	
     }     		
 }
 
-function processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_arr, speed_arr, datetime_arr, fuel_arr, running_status_arr, day_max_speed_arr, day_max_speed_time_arr, last_halt_time_arr,io1_arr,io2_arr,io3_arr,io4_arr,io5_arr,io6_arr,io7_arr,io8_arr)	  //HERE ARR IS JUST NORMAL VARIABLE NOT ARRAY
+function processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_arr,vehiclenumber_arr, speed_arr, datetime_arr, fuel_arr, running_status_arr, day_max_speed_arr, day_max_speed_time_arr, last_halt_time_arr,io1_arr,io2_arr,io3_arr,io4_arr,io5_arr,io6_arr,io7_arr,io8_arr)	  //HERE ARR IS JUST NORMAL VARIABLE NOT ARRAY
 {
 	deleteOverlays();
 	var j = 0;
-	var i,vehiclename,speed,point,datetime,place,marker,polyline,last,running_status1, day_max_speed,day_max_speed_time,last_halt_time;
+	var i,vehiclename,vehiclenumber,speed,point,datetime,place,marker,polyline,last,running_status1, day_max_speed,day_max_speed_time,last_halt_time;
   
 	var str='';
 	var strURL='src/php/select_landmark.php?content='+str;        
@@ -1402,7 +1404,8 @@ function processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_ar
 	
 		vid = vid_arr[i];
 		imei = vid_arr[i];
-		vehiclename = vehiclename_arr[i];		
+		vehiclename = vehiclename_arr[i];
+                vehiclenumber = vehiclenumber_arr[i];
 		speed = speed_arr[i];
 		if(speed<=3)
 		{
@@ -1508,7 +1511,7 @@ function processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_ar
 				}	
 			}
 		} 
-		plotLiveMarkers(lat_arr[i],lng_arr[i],p,angle_deg,running_status1,position,icon1,point,imei,vehiclename,speed,datetime,fuel,total_dist, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8,tmp)
+		plotLiveMarkers(lat_arr[i],lng_arr[i],p,angle_deg,running_status1,position,icon1,point,imei,vehiclename,vehiclenumber,speed,datetime,fuel,total_dist, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8,tmp)
                 latlngbounds.extend(position);
 		if(document.getElementById('trail_path').checked)
 		{
@@ -1629,7 +1632,7 @@ function infoCallbackLandmark(landmark,lat,lng,markerL)
 	};
 }
 
-function plotLiveMarkers(lat,lng,p,angle_deg,running_status1,position,icon1,point,imei,vehiclename,speed,datetime,fuel,total_dist, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8,tmp)
+function plotLiveMarkers(lat,lng,p,angle_deg,running_status1,position,icon1,point,imei,vehiclename,vehiclenumber,speed,datetime,fuel,total_dist, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8,tmp)
 {
 	//alert("in function");
 	total_dist = Math.round((total_dist)*100)/100;
@@ -1702,7 +1705,7 @@ function plotLiveMarkers(lat,lng,p,angle_deg,running_status1,position,icon1,poin
 		}
 		document.getElementsByTagName('head')[0].appendChild(style);	
 	}
-	var marker = getMapMarker(angle_deg,running_status1,position,vehiclename,last_halt_time,tmp);
+	var marker = getMapMarker(angle_deg,running_status1,position,vehiclename,vehiclenumber,last_halt_time,tmp);
 	
 	var img=getLeftPanImage(running_status1);
 	
@@ -1758,18 +1761,18 @@ function plotLiveMarkers(lat,lng,p,angle_deg,running_status1,position,icon1,poin
 			}
 		}
 		if(route=="") route = "NA";
-		clicked_vehicle_list += "<tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+angle_deg+"\",\""+lat+"\",\""+lng+"\",\""+marker+"\",\""+imei+"\",\""+vehiclename+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+running_status1+"\",\""+total_dist+"\",\""+route+"\",\""+day_max_speed+"\",\""+day_max_speed_time+"\",\""+last_halt_time+"\",\""+io_1+"\",\""+io_2+"\",\""+io_3+"\",\""+io_4+"\",\""+io_5+"\",\""+io_6+"\",\""+io_7+"\",\""+io_8+"\",\""+tmp+"\");'>"+img+"<font color="+font_color+">"+vehiclename+"</font>&nbsp;<font color=red>("+route+")</font>&nbsp;<font color=blue>["+running_status1+"]</font></a></td></tr><tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+lat+"\",\""+lng+"\",\""+marker+"\",\""+imei+"\",\""+vehiclename+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+running_status1+"\",\""+total_dist+"\",\""+route+"\",\""+day_max_speed+"\",\""+day_max_speed_time+"\",\""+last_halt_time+"\",\""+io_1+"\",\""+io_2+"\",\""+io_3+"\",\""+io_4+"\",\""+io_5+"\",\""+io_6+"\",\""+io_7+"\",\""+io_8+"\",\""+tmp+"\");'></a></td></tr><tr><td>&nbsp;</td></tr>";
+		clicked_vehicle_list += "<tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+angle_deg+"\",\""+lat+"\",\""+lng+"\",\""+marker+"\",\""+imei+"\",\""+vehiclename+"\",\""+vehiclenumber+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+running_status1+"\",\""+total_dist+"\",\""+route+"\",\""+day_max_speed+"\",\""+day_max_speed_time+"\",\""+last_halt_time+"\",\""+io_1+"\",\""+io_2+"\",\""+io_3+"\",\""+io_4+"\",\""+io_5+"\",\""+io_6+"\",\""+io_7+"\",\""+io_8+"\",\""+tmp+"\");'>"+img+"<font color="+font_color+">"+vehiclename+"</font>&nbsp;<font color=red>("+route+")</font>&nbsp;<font color=blue>["+running_status1+"]</font></a></td></tr><tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+lat+"\",\""+lng+"\",\""+marker+"\",\""+imei+"\",\""+vehiclename+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+running_status1+"\",\""+total_dist+"\",\""+route+"\",\""+day_max_speed+"\",\""+day_max_speed_time+"\",\""+last_halt_time+"\",\""+io_1+"\",\""+io_2+"\",\""+io_3+"\",\""+io_4+"\",\""+io_5+"\",\""+io_6+"\",\""+io_7+"\",\""+io_8+"\",\""+tmp+"\");'></a></td></tr><tr><td>&nbsp;</td></tr>";
 	}
 	else
 	{
 		//alert("in else obj="+marker);
 		
-		clicked_vehicle_list += "<tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+angle_deg+"\",\""+lat+"\",\""+lng+"\",\""+marker+"\",\""+imei+"\",\""+vehiclename+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+running_status1+"\",\""+total_dist+"\",\""+route+"\",\""+day_max_speed+"\",\""+day_max_speed_time+"\",\""+last_halt_time+"\",\""+io_1+"\",\""+io_2+"\",\""+io_3+"\",\""+io_4+"\",\""+io_5+"\",\""+io_6+"\",\""+io_7+"\",\""+io_8+"\",\""+tmp+"\");'>"+img+"<font color="+font_color+">"+vehiclename+"</font>&nbsp;&nbsp;<font color=blue>["+running_status1+"]</font></a></td></tr><tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+lat+"\",\""+lng+"\","+marker+"\",\""+imei+"\",\""+vehiclename+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+running_status1+"\",\""+total_dist+"\",\""+route+"\",\""+day_max_speed+"\",\""+day_max_speed_time+"\",\""+last_halt_time+"\",\""+io_1+"\",\""+io_2+"\",\""+io_3+"\",\""+io_4+"\",\""+io_5+"\",\""+io_6+"\",\""+io_7+"\",\""+io_8+"\",\""+tmp+"\");'></a></td></tr><tr><td>&nbsp;</td></tr>";
+		clicked_vehicle_list += "<tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+angle_deg+"\",\""+lat+"\",\""+lng+"\",\""+marker+"\",\""+imei+"\",\""+vehiclename+"\",\""+vehiclenumber+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+running_status1+"\",\""+total_dist+"\",\""+route+"\",\""+day_max_speed+"\",\""+day_max_speed_time+"\",\""+last_halt_time+"\",\""+io_1+"\",\""+io_2+"\",\""+io_3+"\",\""+io_4+"\",\""+io_5+"\",\""+io_6+"\",\""+io_7+"\",\""+io_8+"\",\""+tmp+"\");'>"+img+"<font color="+font_color+">"+vehiclename+"</font>&nbsp;&nbsp;<font color=blue>["+running_status1+"]</font></a></td></tr><tr><td><a href='#' style='text-decoration:none;' Onclick='javascript:Prev_PlotLastMarkerWithAddress(\""+lat+"\",\""+lng+"\","+marker+"\",\""+imei+"\",\""+vehiclename+"\",\""+speed+"\",\""+datetime+"\",\""+fuel+"\",\""+running_status1+"\",\""+total_dist+"\",\""+route+"\",\""+day_max_speed+"\",\""+day_max_speed_time+"\",\""+last_halt_time+"\",\""+io_1+"\",\""+io_2+"\",\""+io_3+"\",\""+io_4+"\",\""+io_5+"\",\""+io_6+"\",\""+io_7+"\",\""+io_8+"\",\""+tmp+"\");'></a></td></tr><tr><td>&nbsp;</td></tr>";
 	}
 	
 	google.maps.event.addListener
 	(
-		marker, 'click', infoCallbackLive(point, marker, imei, vehiclename, speed,datetime, fuel, running_status1, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8) 
+		marker, 'click', infoCallbackLive(point, marker, imei, vehiclename,vehiclenumber, speed,datetime, fuel, running_status1, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8) 
 	);
        
 }
@@ -1877,7 +1880,7 @@ var io_6_after ="";
 var io_7_after ="";
 var io_8_after ="";
 
-function Prev_PlotLastMarkerWithAddress(angle_deg,lat ,lng, marker, imei, vehiclename, speed,datetime, fuel, running_status1, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8,tmp) 
+function Prev_PlotLastMarkerWithAddress(angle_deg,lat ,lng, marker, imei, vehiclename,vehiclenumber, speed,datetime, fuel, running_status1, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8,tmp) 
 {
 	var accuracy;
 	var largest_accuracy;	   
@@ -2042,6 +2045,11 @@ function Prev_PlotLastMarkerWithAddress(angle_deg,lat ,lng, marker, imei, vehicl
 						'<td class=live_td_css1>Vehicle Name</td>'+
 						'<td>&nbsp;:&nbsp;</td>'+
 						'<td class=live_td_css2>'+vehiclename+'</td>'+
+					   '</tr>'+
+                                           '<tr>'+
+						'<td class=live_td_css1>Vehicle Number</td>'+
+						'<td>&nbsp;:&nbsp;</td>'+
+						'<td class=live_td_css2>'+vehiclenumber+'</td>'+
 					   '</tr>'+
 					   '<tr>'+
 						'<td class=live_td_css1>Imei</td>'+
@@ -2403,7 +2411,7 @@ var place;
 var address1=0;
 
 
-function infoCallbackLive(point, marker, imei, vehiclename, speed,datetime, fuel, running_status, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8) 
+function infoCallbackLive(point, marker, imei, vehiclename,vehiclenumber, speed,datetime, fuel, running_status, total_dist, route, day_max_speed, day_max_speed_time, last_halt_time,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8) 
 {
 	 //alert("IN PLOT:"+point+":"+Icon+":"+marker+":"+imei+":"+vehiclename+":"+speed+":"+datetime+":"+fuel+":"+running_status);
 	//alert("lat="+point.lat()+"lng="+point.lng());
@@ -2567,6 +2575,11 @@ function infoCallbackLive(point, marker, imei, vehiclename, speed,datetime, fuel
 						'<td class=live_td_css1>Vehicle Name</td>'+
 						'<td>&nbsp;:&nbsp;</td>'+
 						'<td class=live_td_css2>'+vehiclename+'</td>'+
+					   '</tr>'+
+                                           '<tr>'+
+						'<td class=live_td_css1>Vehicle Number</td>'+
+						'<td>&nbsp;:&nbsp;</td>'+
+						'<td class=live_td_css2>'+vehiclenumber+'</td>'+
 					   '</tr>'+
 					   '<tr>'+
 						'<td class=live_td_css1>Imei</td>'+
