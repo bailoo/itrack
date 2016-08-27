@@ -257,6 +257,7 @@ echo'<center><br>
 	$sheetFinalArr[]=$titleArr;
 	while($row=mysql_fetch_object($Result))
 	{
+             echo "in 1while 0<br>";
             $valueArr=array();
             if($serial%2==0)
             {
@@ -310,6 +311,7 @@ echo'<center><br>
 				$durationBreakCount++;
 			}
 		}
+                echo "in 1while <br>";
 echo"</tr>";
 $sheetFinalArr[]=$valueArr;
 print_r($sheetFinalArr);
