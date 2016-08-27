@@ -269,6 +269,7 @@ echo'<center><br>
             {
                 echo"<tr>";
             }
+            $locationStr=isset($row->$mysqlTableColumnsArr[$ci])?$row->$mysqlTableColumnsArr[$ci]:'No Data Found';
 	$imeiDetailArr=explode("@",$vehicleDetailArr[$row->imei]);
 	echo"<td>".$serial."</td>
 		<td>".$row->date."</td>
@@ -289,8 +290,8 @@ echo'<center><br>
 		{
 			if($ci==0)
 			{
-                            $valueArr[]=$row->$mysqlTableColumnsArr[$ci];
-				echo"<td>".$row->$mysqlTableColumnsArr[$ci]."</td>";
+                            $valueArr[]=$locationStr;
+				echo"<td>".$locationStr."</td>";
 				//continue;
 			}
 			
@@ -301,8 +302,8 @@ echo'<center><br>
 				if($durationBreakCount==$dataInterval)
 				{
                                     //$valueArr[]=$row->$mysqlTableColumnsArr[$ci]."[".$row->$mysqlDistTableColumns[$ci]."]";
-                                    $valueArr[]=$row->$mysqlTableColumnsArr[$ci];
-					echo"<td>".$row->$mysqlTableColumnsArr[$ci]."[".$row->$mysqlDistTableColumns[$ci]."]</td>";
+                                    $valueArr[]=$locationStr;
+					echo"<td>".$locationStr."[".$row->$mysqlDistTableColumns[$ci]."]</td>";
 					$culumnSum=0;
 					$durationBreakCount=1;
 					if($ci==$columnSize)
