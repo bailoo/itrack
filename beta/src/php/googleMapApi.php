@@ -435,6 +435,11 @@ var input = (document.getElementById('pac-input'));
 										'<td width=\"1%\">:</td>'+
 										'<td class=\"live_td_css2\">'+vName+'</td>'+
 									   '</tr>'+
+                                                                           '<tr>'+
+										'<td class=\"live_td_css1\">Vehicle Number</td>'+
+										'<td width=\"1%\">:</td>'+
+										'<td class=\"live_td_css2\">'+vNumber+'</td>'+
+									   '</tr>'+
 									   '<tr>'+
 										'<td class=\"live_td_css1\">Imei</td>'+
 										'<td>:</td>'+
@@ -821,6 +826,11 @@ var input = (document.getElementById('pac-input'));
 									'<td class=\"live_td_css1\">Vehicle Name</td>'+
 									'<td width=\"1%\">:</td>'+
 									'<td class=\"live_td_css2\">'+vName+'</td>'+
+								   '</tr>'+
+                                                                   '<tr>'+
+									'<td class=\"live_td_css1\">Vehicle Number</td>'+
+									'<td width=\"1%\">:</td>'+
+									'<td class=\"live_td_css2\">'+vNumber+'</td>'+
 								   '</tr>'+
 								   '<tr>'+
 									'<td class=\"live_td_css1\">Imei</td>'+
