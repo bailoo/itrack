@@ -10,8 +10,6 @@ include_once('xmlParameters.php');
 include_once('parameterizeData.php');
 include_once('lastRecordData.php');
 include_once('getXmlData.php');	
-error_reporting(-1);
-ini_set('display_errors', 'On');
 if($personOption=="singlePerson")
 {
 	//echo "in if";
@@ -100,6 +98,7 @@ for($i=$durationFrom;$i<=$durationTo;$i++) // for making dynamic column duration
 		else
 		{
 			$mysqlTableColumns=$mysqlTableColumns."HR_".$hr."_00_LOC,";
+                        $mysqlDistTableColumns=$mysqlDistTableColumns."HR_".$hr."_00_DIST,";
 			//echo "i=".$i."durationTo=".$durationTo."<br>";
 			if($i!=$durationTo) // for skiping last column becuase it exceed duration time
 			{
@@ -223,13 +222,13 @@ echo'<center><br>
 <table class="menu" border=1 rules=all bordercolor="#e5ecf5" style="font-size: 10pt;margin: 0px;padding: 0px;font-weight: normal;" cellspacing=3 cellpadding=3>
 		<tr bgcolor="darkgray">
 			<td>
-			<b>Serial 1
+			<b>Serial
 			</td>
 			<td>
 			<b>Date
 			</td>
 			<td>
-			<b>User Name 1
+			<b>User Name
 			</td>
 			<td>
 			<b>Mobile Number
@@ -259,15 +258,14 @@ echo'<center><br>
 	$sheetFinalArr[]=$titleArr;
 	while($row=mysql_fetch_object($Result))
 	{
-             echo "in 1while 0<br>";
             $valueArr=array();
             if($serial%2==0)
             {
-                echo"<tr bgcolor='lightgray'>";
+                    echo"<tr bgcolor='lightgray'>";
             }
             else
             {
-                echo"<tr>";
+                    echo"<tr>";
             }
 	$imeiDetailArr=explode("@",$vehicleDetailArr[$row->imei]);
 	echo"<td>".$serial."</td>
@@ -277,11 +275,11 @@ echo'<center><br>
 		<td>".$imeiDetailArr[2]."</td>";
 		//echo"columnSize=".$columnSize."<br>";
 		//echo"dataInterval=".$dataInterval."<br>";
-                $valueArr[]=$serial;
-                $valueArr[]=$row->date;
-                $valueArr[]=$imeiDetailArr[0];
-                $valueArr[]=$imeiDetailArr[1];
-                $valueArr[]=$imeiDetailArr[2];
+        $valueArr[]=$serial;
+        $valueArr[]=$row->date;
+        $valueArr[]=$imeiDetailArr[0];
+        $valueArr[]=$imeiDetailArr[1];
+        $valueArr[]=$imeiDetailArr[2];
 		$durationBreakCount=1;
 		$culumnSum=0;
 		
@@ -291,7 +289,7 @@ echo'<center><br>
 			{
                             $valueArr[]=$row->$mysqlTableColumnsArr[$ci];
 				echo"<td>".$row->$mysqlTableColumnsArr[$ci]."</td>";
-				//continue;
+				continue;
 			}
 			
 			if($durationBreakCount<=$dataInterval)
@@ -300,31 +298,51 @@ echo'<center><br>
 				//echo"durationBreakCount=".$durationBreakCount."dataInterval=".$dataInterval."mysqlTableColumnsArr=".$mysqlTableColumnsArr[$ci]."<br>";
 				if($durationBreakCount==$dataInterval)
 				{
-                                    //$valueArr[]=$row->$mysqlTableColumnsArr[$ci]."[".$row->$mysqlDistTableColumns[$ci]."]";
-                                    $valueArr[]=$row->$mysqlTableColumnsArr[$ci];
-					echo"<td>".$row->$mysqlTableColumnsArr[$ci]."</td>";
+                                    $valueArr[]=$row->$mysqlTableColumnsArr[$ci]."[".$row->$mysqlDistTableColumns[$ci]."]";
+					echo"<td>".$row->$mysqlTableColumnsArr[$ci]."[".$row->$mysqlDistTableColumns[$ci]."]</td>";
 					$culumnSum=0;
 					$durationBreakCount=1;
 					if($ci==$columnSize)
 					{
-                                           // break;
+						break;
 					}
-					//continue;
+					continue;
 				}			
 				$durationBreakCount++;
 			}
-                        echo "in 1for change <br>";
 		}
-                echo "in 1while <br>";
 echo"</tr>";
 $sheetFinalArr[]=$valueArr;
-print_r($sheetFinalArr);
 $serial++;
 	}		
-echo"</table><br>dfdfaddfadfdfadsfadsfdfadsfadsdasf</center>";
-echo "in last <br>";
+echo"</table></center>";
+
+print_r($sheetFinalArr);
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
+define('EOL', (PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
+include_once ('PHPExcel/IOFactory.php');
+
+$cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
+$cacheSettings = array('memoryCacheSize' => '1028MB');
+PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
 
 
+
+  $doc = new PHPExcel();
+  $doc->setActiveSheetIndex(0);
+
+  $doc->getActiveSheet()->fromArray($sheetFinalArr, null, 'A1');
+/*header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="your_name.xls"');
+header('Cache-Control: max-age=0');*/
+
+  // Do your stuff here
+  $writer = PHPExcel_IOFactory::createWriter($doc, 'Excel5');
+
+$writer->save('/mnt/itrack/beta/src/php/download/your_name.xls');
+//echo "tst";
+//exit();*/
 ?>
 		
 			
