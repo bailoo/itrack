@@ -300,7 +300,8 @@ echo'<center><br>
 				//echo"durationBreakCount=".$durationBreakCount."dataInterval=".$dataInterval."mysqlTableColumnsArr=".$mysqlTableColumnsArr[$ci]."<br>";
 				if($durationBreakCount==$dataInterval)
 				{
-                                    $valueArr[]=$row->$mysqlTableColumnsArr[$ci]."[".$row->$mysqlDistTableColumns[$ci]."]";
+                                    //$valueArr[]=$row->$mysqlTableColumnsArr[$ci]."[".$row->$mysqlDistTableColumns[$ci]."]";
+                                    $valueArr[]=$row->$mysqlTableColumnsArr[$ci];
 					echo"<td>".$row->$mysqlTableColumnsArr[$ci]."[".$row->$mysqlDistTableColumns[$ci]."]</td>";
 					$culumnSum=0;
 					$durationBreakCount=1;
