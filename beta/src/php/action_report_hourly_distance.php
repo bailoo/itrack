@@ -317,7 +317,7 @@ $serial++;
 echo"</table></center>";
 print_r($sheetFinalArr);
 
-
+/*
 //error_reporting(-1);
 //ini_set('display_errors', 'On');
 define('EOL', (PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
@@ -338,7 +338,7 @@ header('Content-Disposition: attachment;filename="your_name.xls"');
 header('Cache-Control: max-age=0');*/
 
   // Do your stuff here
-  $writer = PHPExcel_IOFactory::createWriter($doc, 'Excel5');
+ /* $writer = PHPExcel_IOFactory::createWriter($doc, 'Excel5');
 
 $writer->save('/mnt/itrack/beta/src/php/download/your_name.xls');
 //echo "tst";
