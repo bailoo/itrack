@@ -274,11 +274,11 @@ echo'<center><br>
 		<td>".$imeiDetailArr[2]."</td>";
 		//echo"columnSize=".$columnSize."<br>";
 		//echo"dataInterval=".$dataInterval."<br>";
-        $valueArr[]=$serial;
-        $valueArr[]=$row->date;
-        $valueArr[]=$imeiDetailArr[0];
-        $valueArr[]=$imeiDetailArr[1];
-        $valueArr[]=$imeiDetailArr[2];
+                $valueArr[]=$serial;
+                $valueArr[]=$row->date;
+                $valueArr[]=$imeiDetailArr[0];
+                $valueArr[]=$imeiDetailArr[1];
+                $valueArr[]=$imeiDetailArr[2];
 		$durationBreakCount=1;
 		$culumnSum=0;
 		
@@ -303,20 +303,21 @@ echo'<center><br>
 					$durationBreakCount=1;
 					if($ci==$columnSize)
 					{
-						break;
+                                            break;
 					}
-					continue;
+					//continue;
 				}			
 				$durationBreakCount++;
 			}
 		}
 echo"</tr>";
 $sheetFinalArr[]=$valueArr;
+print_r($sheetFinalArr);
 $serial++;
 	}		
 echo"</table><br>dfdfaddfadfdfadsfadsfdfadsfadsdasf</center>";
 echo "in last <br>";
-print_r($sheetFinalArr);
+
 
 ?>
 		
