@@ -289,7 +289,7 @@ echo'<center><br>
 			{
                             $valueArr[]=$row->$mysqlTableColumnsArr[$ci];
 				echo"<td>".$row->$mysqlTableColumnsArr[$ci]."</td>";
-				continue;
+				//continue;
 			}
 			
 			if($durationBreakCount<=$dataInterval)
