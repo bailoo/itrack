@@ -8,14 +8,23 @@ $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
 $cacheSettings = array('memoryCacheSize' => '1028MB');
 PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cacheSettings);
 
-$sheet = array(
+/*$sheet = array(
     array(
       'a1 data',
       'b1 data',
       'c1 data',
       'd1 data',
     )
-  );
+  );*/
+for($i=1;$i<6;$i++)
+{
+    $aa[$i]='abc';
+    $aa[$i]='cde';
+    $aa[$i]='efr';
+    $aa[$i]='sfdf';
+}
+
+$sheet[]=$aa;
 //print_r($sheet);
 
   $doc = new PHPExcel();
