@@ -315,6 +315,7 @@ $sheet = array(
       'd1 data',
     )
   );
+print_r($sheet);
 
   $doc = new PHPExcel();
   $doc->setActiveSheetIndex(0);
