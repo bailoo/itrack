@@ -269,8 +269,8 @@ echo'<center><br>
             {
                 echo"<tr>";
             }
-            $locationStr=(isset($row->$mysqlTableColumnsArr[$ci])?$row->$mysqlTableColumnsArr[$ci]:'No Data Found');
-	$distStr=(isset($row->$mysqlDistTableColumns[$ci])?$row->$mysqlDistTableColumns[$ci]:'0');
+            $locationStr=(isset($mysqlTableColumnsArr[$ci])?$row->$mysqlTableColumnsArr[$ci]:'No Data Found');
+	$distStr=(isset($mysqlDistTableColumns[$ci])?$row->$mysqlDistTableColumns[$ci]:'0');
             $imeiDetailArr=explode("@",$vehicleDetailArr[$row->imei]);
 	echo"<td>".$serial."</td>
 		<td>".$row->date."</td>
