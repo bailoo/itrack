@@ -221,7 +221,7 @@ echo'<center><br>
 <table class="menu" border=1 rules=all bordercolor="#e5ecf5" style="font-size: 10pt;margin: 0px;padding: 0px;font-weight: normal;" cellspacing=3 cellpadding=3>
 		<tr bgcolor="darkgray">
 			<td>
-			<b>Serial
+			<b>Serial 1
 			</td>
 			<td>
 			<b>Date
