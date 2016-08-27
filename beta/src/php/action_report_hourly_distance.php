@@ -29,7 +29,7 @@ header('Cache-Control: max-age=0');
   // Do your stuff here
   $writer = PHPExcel_IOFactory::createWriter($doc, 'Excel5');
 
-$writer->save('download');
+$writer->save('/mnt/itrack/beta/src/php/download');
 echo "tst";
 //exit();*/
 ?>
