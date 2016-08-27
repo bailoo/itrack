@@ -29,8 +29,8 @@ header('Cache-Control: max-age=0');
   // Do your stuff here
   $writer = PHPExcel_IOFactory::createWriter($doc, 'Excel5');
 
-$writer->save('/mnt/itrack/beta/src/php/download');
-echo "tst";
+$writer->save('/mnt/itrack/beta/src/php/download/your_name.xls');
+//echo "tst";
 //exit();*/
 ?>
 		
