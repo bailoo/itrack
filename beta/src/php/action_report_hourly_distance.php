@@ -304,7 +304,7 @@ echo'<center><br>
 					$durationBreakCount=1;
 					if($ci==$columnSize)
 					{
-                                            break;
+                                           // break;
 					}
 					//continue;
 				}			
