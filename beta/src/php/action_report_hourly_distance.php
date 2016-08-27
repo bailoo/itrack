@@ -318,6 +318,7 @@ $serial++;
 echo"</table>
 <input type='hidden' name='downloadFilePath' value='/mnt/itrack/beta/src/php/download/personHourlyReport.xls'>
 <input type='hidden' name='downloadFileName' value='personHourlyReport.xls'>
+<br>
 <input type='submit' value='Download Excel'></center></form>";
 
 //print_r($sheetFinalArr);
