@@ -1705,7 +1705,7 @@ function plotLiveMarkers(lat,lng,p,angle_deg,running_status1,position,icon1,poin
 		}
 		document.getElementsByTagName('head')[0].appendChild(style);	
 	}
-	var marker = getMapMarker(angle_deg,running_status1,position,vehiclename,vehiclenumber,last_halt_time,tmp);
+	var marker = getMapMarker(angle_deg,running_status1,position,vehiclename,last_halt_time,tmp);
 	
 	var img=getLeftPanImage(running_status1);
 	
