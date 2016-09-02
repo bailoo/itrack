@@ -267,127 +267,57 @@ report_title("History Distance Report", $date1, $date2);
 
 echo'<div style="overflow: auto;height: 485px; width: 800px;" align="center">';
 
+$sno = 1;
+//print_r($imei);
+$csv_string = "";
+$title = 'History Distance Report:('.$datefrom." to ".$dateto.")";
+$csv_string = $csv_string . $title . "\n";
+$csv_string = $csv_string . "SNo,Date,Distance (km)\n";
+echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title[$x]\">";
 
-$j = -1;
-$k = 0;
-//print_r($imei);	
-$datefrom1 = array(array());
-$dateto1 = array(array());
-$distance1 = array(array());
+ echo'
+  <br><table align="center">
+  <tr>
+    <td class="text" align="center"><b>' . $title . '</b> <div style="height:8px;"></div></td>
+  </tr>
+  </table>
+  <!--<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>-->	
+  <table class="table table-condened table-hover table-striped">
+  <thead>
+   <tr>
+        <th class="text" align="left"><b>SNo</b></th>
+        <th class="text" align="left"><b>Date</b></th>            
+        <th class="text" align="left"><b>Distance (km)</b></th>	
+
+  </tr></thead><tbody>';
+ 
+ 
 for ($i = 0; $i < sizeof($imei); $i++) {
-    if (($i == 0) || (($i > 0) && ($imei[$i - 1] != $imei[$i]))) {
-        $k = 0;
-        $j++;
-        $sum_dist = 0.0;
-        $total_distance[$j] = 0;
-
-        $sno = 1;
-        $title = 'History Distance Report : ' . $vname[$i] . " &nbsp;<font color=red>(" . $imei[$i] . ")</font>";
-        $vname1[$j][$k] = $vname[$i];
-        $imei1[$j][$k] = $imei[$i];
-        //echo  "vname1=".$vname1[$j][$k]." j=".$j." k=".$k;
-
-        echo'
-      <br><table align="center">
-      <tr>
-      	<td class="text" align="center"><b>' . $title . '</b> <div style="height:8px;"></div></td>
-      </tr>
-      </table>
-      <!--<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>-->	
-      <table class="table table-condened table-hover table-striped">
-      <thead>
-       <tr>
-        
-            <th class="text" align="left"><b>SNo</b></th>
-            <th class="text" align="left"><b>Date</b></th>            
-            <th class="text" align="left"><b>Distance (km)</b></th>	
-        
-      </tr></thead><tbody>';
-    }
-
-    $sum_dist = $sum_dist + $distanceDisplay[$i];
-
+    $dist = round($distanceDisplay[$i], 2);
     echo'<tr>'
     . '<td class="text" align="left" width="4%"><b>' . $sno . '</b></td>';
     echo'<td class="text" align="left">' . $dateDisplay[$i] . '</td>';
-    echo'<td class="text" align="left">' . round($distanceDisplay[$i], 2) . '</td>';
-
+    echo'<td class="text" align="left">' . $dist . '</td>';
     echo'</tr>';
-    //echo "<br>arr_time1[$j][$k]main=".$arr_time1[$j][$k];
+    
+    echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$x][$y][SNo]\">";
+    echo"<input TYPE=\"hidden\" VALUE=\"$dateDisplay[$i]\" NAME=\"temp[$x][$y][Date]\">";
+    echo"<input TYPE=\"hidden\" VALUE=\"$dist\" NAME=\"temp[$x][$y][Distance (km)]\">";
 
-    $datefrom1[$j][$k] = $dateDisplay[$i];
-    //$dateto1[$j][$k] = $dateToDisplay[$i];	
-    $distance1[$j][$k] = round($distanceDisplay[$i], 2);
-
-
-    if ( ($i==0) || (($i > 0) && ($imei[$i + 1] != $imei[$i]))) {
-        echo '<tr style="height:20px;background-color:lightgrey">
-      <td class="text"><strong>Total<strong>&nbsp;</td>
-			<td class="text"></td>';
-
-        if (($k >= 0) || ($date_size == 1)) {
-            //echo  "<br>sum_avgspeed=".$sum_avgspeed."<br>";
-            $total_distance[$j] = round($sum_dist, 2);
-            //echo  "<br>total_avgspeed[$j]=".$total_avgspeed[$j]."<br>";
-        }
-
-        echo'<td class="text"><font color="red"><strong>' . round($total_distance[$j], 2) . '</strong></font></td>';
-        echo'</tr>';
-        echo '</tbody></table>';
-
-        $no_of_data[$j] = $k;
-    }
-
-    $k++;
+    $csv_string = $csv_string . $sno . ',' .$dateDisplay[$i]. ',' . $dist . "\n";
+    
     $sno++;
 }
 
+echo '</tbody></table>';
 echo "</div>";
 
 echo'<form method = "post" target="_blank">';
 
-$csv_string = "";
-
-for ($x = 0; $x <= $j; $x++) {
-    $title = $vname1[$x][0] . " (" . $imei1[$x][0] . "): History Distance Report- From DateTime : " . $date1 . "-" . $date2;
-    $csv_string = $csv_string . $title . "\n";
-    $csv_string = $csv_string . "SNo,Date,Distance (km)\n";
-    echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title[$x]\">";
-
-    $sno = 0;
-    for ($y = 0; $y <= $no_of_data[$x]; $y++) {
-        //$k=$j-1;
-        $sno++;
-
-        $datetmp1 = $datefrom1[$x][$y];
-        $datetmp2 = $dateto1[$x][$y];
-        $disttmp = $distance1[$x][$y];
-
-        //echo "dt=".$datetmp1;								
-        echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$x][$y][SNo]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$datetmp1\" NAME=\"temp[$x][$y][Date]\">";
-        echo"<input TYPE=\"hidden\" VALUE=\"$disttmp\" NAME=\"temp[$x][$y][Distance (km)]\">";
-
-        $csv_string = $csv_string . $sno . ',' . $datetmp1 . ',' . $datetmp2 . ',' . $disttmp . "\n";
-    }
-
-    echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][SNo]\">";
-    echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][Date]\">";
-    echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$y][Distance (km)]\">";
-
-    $m = $y + 1;
-
-    echo"<input TYPE=\"hidden\" VALUE=\"Total\" NAME=\"temp[$x][$m][SNo]\">";
-    echo"<input TYPE=\"hidden\" VALUE=\"\" NAME=\"temp[$x][$m][Date]\">";
-    echo"<input TYPE=\"hidden\" VALUE=\"$total_distance[$x]\" NAME=\"temp[$x][$m][Distance (km)]\">";
-    $csv_string = $csv_string . 'Total,' . $date1 . ',' . $date2 . ',' . $total_distance[$x] . "\n";
-}
-
-
 echo'	
     <table align="center">
-		<tr>
-			<td>';
+    <tr>
+            <td>';
 
 $vsize = sizeof($imei);
 
@@ -404,14 +334,14 @@ if ($vsize == 0) {
 
 echo'</td>		
     </tr>
-		</table>
-		</form>
+    </table>
+    </form>
  ';
 
 echo '</center>';
 echo'<center>		
-		<a href="javascript:showReportPrevPageNew();" class="back_css">
-			&nbsp;<b>Back</b>
-		</a>
-	</center>';
+    <a href="javascript:showReportPrevPageNew();" class="back_css">
+            &nbsp;<b>Back</b>
+    </a>
+    </center>';
 ?>
