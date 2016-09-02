@@ -276,12 +276,6 @@ $csv_string = $csv_string . "SNo,Date,Distance (km)\n";
 echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title[$x]\">";
 
  echo'
-  <br><table align="center">
-  <tr>
-    <td class="text" align="center"><b>' . $title . '</b> <div style="height:8px;"></div></td>
-  </tr>
-  </table>
-  <!--<table border=1 width="95%" rules=all bordercolor="#e5ecf5" align="center" cellspacing=0 cellpadding=3>-->	
   <table class="table table-condened table-hover table-striped">
   <thead>
    <tr>
@@ -296,15 +290,17 @@ for ($i = 0; $i < sizeof($imei); $i++) {
     $dist = round($distanceDisplay[$i], 2);
     echo'<tr>'
     . '<td class="text" align="left" width="4%"><b>' . $sno . '</b></td>';
-    echo'<td class="text" align="left">' . $dateDisplay[$i] . '</td>';
+    echo'<td class="text" align="left">' . $vname[$i] . '</td>';
+    //echo'<td class="text" align="left">' . $dateDisplay[$i] . '</td>';
     echo'<td class="text" align="left">' . $dist . '</td>';
     echo'</tr>';
     
     echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$x][$y][SNo]\">";
-    echo"<input TYPE=\"hidden\" VALUE=\"$dateDisplay[$i]\" NAME=\"temp[$x][$y][Date]\">";
+    echo"<input TYPE=\"hidden\" VALUE=\"$vname[$i]\" NAME=\"temp[$x][$y][Vehicle]\">";
+    //echo"<input TYPE=\"hidden\" VALUE=\"$dateDisplay[$i]\" NAME=\"temp[$x][$y][Date]\">";
     echo"<input TYPE=\"hidden\" VALUE=\"$dist\" NAME=\"temp[$x][$y][Distance (km)]\">";
 
-    $csv_string = $csv_string . $sno . ',' .$dateDisplay[$i]. ',' . $dist . "\n";
+    $csv_string = $csv_string . $sno . ',' .$vname[$i]. ',' . $dist . "\n";
     
     $sno++;
 }
@@ -328,7 +324,7 @@ if ($vsize == 0) {
 } else {
     echo'<input TYPE="hidden" VALUE="distance" NAME="csv_type">';
     echo'<input TYPE="hidden" VALUE="' . $csv_string . '" NAME="csv_string">';
-    echo'<br><center><input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type4.php?size=' . $vsize . '\');" value="Get PDF" class="noprint">&nbsp;<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
+    echo'<br><center><input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type2.php?size=' . $vsize . '\');" value="Get PDF" class="noprint">&nbsp;<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
         <!--<input type="button" value="Print it" onclick="window.print()" class="noprint">-->&nbsp;';
 }
 
