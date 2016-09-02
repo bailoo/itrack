@@ -263,6 +263,8 @@ echo "<br>QUERY3=".$QUERY3."<br>";
 echo '<center>';
 
 echo'<br>';
+
+echo'<form method = "post" target="_blank">';
 report_title("History Distance Report", $date1, $date2);
 
 echo'<div style="overflow: auto;height: 485px; width: 800px;" align="center">';
@@ -308,8 +310,6 @@ for ($i = 0; $i < sizeof($imei); $i++) {
 echo '</tbody></table>';
 echo "</div>";
 
-echo'<form method = "post" target="_blank">';
-
 echo'	
     <table align="center">
     <tr>
@@ -324,7 +324,7 @@ if ($vsize == 0) {
 } else {
     echo'<input TYPE="hidden" VALUE="distance" NAME="csv_type">';
     echo'<input TYPE="hidden" VALUE="' . $csv_string . '" NAME="csv_string">';
-    echo'<br><center><input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type2.php?size=' . $vsize . '\');" value="Get PDF" class="noprint">&nbsp;<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
+    echo'<br><center><input type="button" onclick="javascript:report_csv(\'src/php/report_getpdf_type3.php?size=' . $vsize . '\');" value="Get PDF" class="noprint">&nbsp;<input type="button" onclick="javascript:report_csv(\'src/php/report_csv.php\');" value="Get CSV" class="noprint">&nbsp;
         <!--<input type="button" value="Print it" onclick="window.print()" class="noprint">-->&nbsp;';
 }
 
