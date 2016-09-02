@@ -295,10 +295,10 @@ for ($i = 0; $i < sizeof($imei); $i++) {
     echo'<td class="text" align="left">' . $dist . '</td>';
     echo'</tr>';
     
-    echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$x][$y][SNo]\">";
-    echo"<input TYPE=\"hidden\" VALUE=\"$vname[$i]\" NAME=\"temp[$x][$y][Vehicle]\">";
+    echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$i][SNo]\">";
+    echo"<input TYPE=\"hidden\" VALUE=\"$vname[$i]\" NAME=\"temp[$i][Vehicle]\">";
     //echo"<input TYPE=\"hidden\" VALUE=\"$dateDisplay[$i]\" NAME=\"temp[$x][$y][Date]\">";
-    echo"<input TYPE=\"hidden\" VALUE=\"$dist\" NAME=\"temp[$x][$y][Distance (km)]\">";
+    echo"<input TYPE=\"hidden\" VALUE=\"$dist\" NAME=\"temp[$i][Distance (km)]\">";
 
     $csv_string = $csv_string . $sno . ',' .$vname[$i]. ',' . $dist . "\n";
     
