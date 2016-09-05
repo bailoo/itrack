@@ -11625,8 +11625,8 @@ function action_manage_invoice_raw_milk(){
             }
         }
          else{
-            alert("Field Required");
-            return false;
+            //alert("Field Required");
+            //return false;
         }
 		
 		//driver
