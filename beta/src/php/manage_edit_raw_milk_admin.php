@@ -40,7 +40,7 @@ border-left:1px solid #eee;
 border-bottom:1px solid #eee;
 /*background: #ddd;*/
 color: #000;
-padding: 5px 15px;
+padding: 5px 22px;
 }
 .tablescroll th {
 height: 0;
@@ -57,9 +57,9 @@ position: absolute;
 background: transparent;
 /*color: #fff;*/
 color: black;
-padding: 9px 25px;
+padding: 7px 22px;
 top: 0;
-margin-left: -25px;
+margin-left: -22px;
 line-height: normal;
 border-left: 1px solid #800;
 }
@@ -353,7 +353,7 @@ border: none;
 			<td>SNO</td><td>FIRST CREATE DATE</td><td>LORRY NO</td><td>VEHICLE NO</td><td>TANKER TYPE</td><td>DOCKET NO</td><td>EMAIL</td><td>TRANSPORTER MOBILE</td><td>QTY(KG)</td>
 				<td>FAT(%)</td><td>SNF(%)</td><td>FAT(KG)</td><td>SNF(KG)</td><td>MANUAL MILK AGE(Hrs)</td><td>DISPATCH TIME</td><td>TARGET TIME</td><td>DRIVER NAME</td><td>DRIVER MOBILE</td><td>USERNAME(USERID)</td><td>STATUS</td><td>CLOSE</td><td><font color=blue>PLANT</font></td><td><font color=blue>CHILLING PLANT</font></td><td>UNLOAD EST.In MINS(GateEntry)</td><td>UNLOAD ACCEPT TIME</td><td>FAT%(FT)</td><td>SNF%(FT)</td><td>Qty(FT)</td><td>Temp.(FT)</td><td>Acidity(FT)</td><td>MBRT-min(FT)</td><td>RM(FT)</td><td>BR(FT)</td><td>Protien%(FT)</td><td>Sodium(FT)</td><td>Testing Status</td><td>FAT%(RT)</td><td>SNF%(RT)</td><td>ADULTRATION</td><td>OtherADULTRATION</td>
 			</tr>";*/
-			echo "<tr class='header' style='background-color:silver;' rules='all'>
+			echo "<tr class='header' style='background-color:rgb(189, 104, 104);' rules='all'>
 			<th>SNO<div>SNO</div></th><th>FIRST CREATED<br>(General)<div>FIRST CREATED<br>(General)</div></th><th>TRACK EDITED<br>(Transp.Last/PlantFirstClose)<div>TRACK EDITED<br>(Transp.Last/PlantFirstClose)</div></th><th>LORRY NO<div>LORRY NO</div></th><th>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th>QTY(KG)<div>QTY(KG)</div></th>
 				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>CLOSE<div>CLOSE</div></th><th>PLANT<div>PLANT</div></th><th>CHILLING PLANT<div>CHILLING PLANT</div></th><th>LECI No<div>LECI No</div></th><th>MATERIAL<div>MATERIAL</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>POSTING DATE/TIME<div>POSTING DATE/TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th>
 			</tr>";
@@ -364,8 +364,8 @@ border: none;
 			<td>SNO</td><td>FIRST CREATE DATE</td><td>LORRY NO</td><td>VEHICLE NO</td><td>TANKER TYPE</td><td>DOCKET NO</td><td>EMAIL</td><td>TRANSPORTER MOBILE</td><td>QTY(KG)</td>
 				<td>FAT(%)</td><td>SNF(%)</td><td>FAT(KG)</td><td>SNF(KG)</td><td>MANUAL MILK AGE(Hrs)</td><td>DISPATCH TIME</td><td>TARGET TIME</td><td>DRIVER NAME</td><td>DRIVER MOBILE</td><td>USERNAME(USERID)</td><td>STATUS</td><td><font color=blue>PLANT</font></td><td><font color=blue>CHILLING PLANT</font></td><td>UNLOAD EST.In MINS(GateEntry)</td><td>UNLOAD ACCEPT TIME</td><td>FAT%(FT)</td><td>SNF%(FT)</td><td>Qty(FT)</td><td>Temp.(FT)</td><td>Acidity(FT)</td><td>MBRT-min(FT)</td><td>RM(FT)</td><td>BR(FT)</td><td>Protien%(FT)</td><td>Sodium(FT)</td><td>Testing Status</td><td>FAT%(RT)</td><td>SNF%(RT)</td><td>ADULTRATION</td><td>OtherADULTRATION</td><td>APPROVED TIME</td>
 			</tr>";*/
-			echo "<tr class='header' style='background-color:silver;' rules='all'>
-			<th>SNO<div>SNO</div></th><th>FIRST CREATED<br>(General)<div>FIRST CREATED<br>(General)</div></th><th>TRACK EDITED<br>(Transp.Last/PlantFirstClose)<div>TRACK EDITED<br>(Transp.Last/PlantFirstClose)</div></th><th>LORRY NO<div>LORRY NO</div></th><th>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th>QTY(KG)<div>QTY(KG)</div></th>
+			echo "<tr class='header' style='background-color:rgb(189, 104, 104);' rules='all'>
+			<th>SNO<div>SNO</div></th><th>FIRST CREATED<br>(General)<div>FIRST CREATED<br>(General)</div></th><th>TRACK EDITED<br>(Transp.Last/PlantFirstClose)<div>TRACK EDITED<br>(Transp.Last/PlantFirstClose)</div></th><th style='background-color:yellow'>L.R. No./Challan No<div>L.R. No./Challan No</div></th><th style='background-color:orange'>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th style='background-color:blue'>QTY(KG)<div>QTY(KG)</div></th>
 				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>PLANT<div>PLANT</div></th><th>CHILLING PLANT<div>CHILLING PLANT</div></th><th>LECI No<div>LECI No</div></th><th>MATERIAL<div>MATERIAL</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>POSTING DATE/TIME<div>POSTING DATE/TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th><th>APPROVED TIME<div>APPROVED TIME</div></th>
 			</tr>";
 			}
@@ -374,7 +374,7 @@ border: none;
 			<td>SNO</td><td>FIRST CREATE DATE</td><td>LORRY NO</td><td>VEHICLE NO</td><td>TANKER TYPE</td><td>DOCKET NO</td><td>EMAIL</td><td>TRANSPORTER MOBILE</td><td>QTY(KG)</td>
 				<td>FAT(%)</td><td>SNF(%)</td><td>FAT(KG)</td><td>SNF(KG)</td><td>MANUAL MILK AGE(Hrs)</td><td>DISPATCH TIME</td><td>TARGET TIME</td><td>DRIVER NAME</td><td>DRIVER MOBILE</td><td>USERNAME(USERID)</td><td>STATUS</td><td>CLOSE</td><td><font color=red>CANCEL</font></td><td><font color=blue>PLANT</font></td><td><font color=blue>CHILLING PLANT</font></td><td>UNLOAD EST.In MINS(GateEntry)</td><td>UNLOAD ACCEPT TIME</td><td>FAT%(FT)</td><td>SNF%(FT)</td><td>Qty(FT)</td><td>Temp.(FT)</td><td>Acidity(FT)</td><td>MBRT-min(FT)</td><td>RM(FT)</td><td>BR(FT)</td><td>Protien%(FT)</td><td>Sodium(FT)</td><td>Testing Status</td><td>FAT%(RT)</td><td>SNF%(RT)</td><td>ADULTRATION</td><td>OtherADULTRATION</td><td>APPROVED</td><td>APPROVED TIME</td>
 			</tr>";*/
-			echo "<tr class='header' style='background-color:silver;' rules='all'>
+			echo "<tr class='header' style='background-color:rgb(189, 104, 104);' rules='all'>
 			<th>SNO<div>SNO</div></th><th>FIRST CREATED<br>(General)<div>FIRST CREATED<br>(General)</div></th><th>TRACK EDITED<br>(Transp.Last/PlantFirstClose)<div>TRACK EDITED<br>(Transp.Last/PlantFirstClose)</div></th><th>LORRY NO<div>LORRY NO</div></th><th>VEHICLE NO<div>VEHICLE NO</div></th><th>TANKER TYPE<div>TANKER TYPE</div></th><th>DOCKET NO<div>DOCKET NO</div></th><th>EMAIL<div>EMAIL</div></th><th>TRANSPORTER MOBILE<div>TRANSPORTER MOBILE</div></th><th>QTY(KG)<div>QTY(KG)</div></th>
 				<th>FAT(%)<div>FAT(%)</div></th><th>SNF(%)<div>SNF(%)</div></th><th>FAT(KG)<div>FAT(KG)</div></th><th>SNF(KG)<div>SNF(KG)</div></th><th>MANUAL MILK AGE(Hrs)<div>MANUAL MILK AGE(Hrs)</div></th><th>DISPATCH TIME<div>DISPATCH TIME</div></th><th>TARGET TIME<div>TARGET TIME</div></th><th>DRIVER NAME<div>DRIVER NAME</div></th><th>DRIVER MOBILE<div>DRIVER MOBILE</div></th><th>USERNAME(USERID)<div>USERNAME(USERID)</div></th><th>STATUS<div>STATUS</div></th><th>CLOSE<div>CLOSE</div></th><th>CANCEL<div>CANCEL</div></th><th>PLANT<div>PLANT</div></th><th>CHILLING PLANT<div>CHILLING PLANT</div></th><th>LECI No<div>LECI No</div></th><th>MATERIAL<div>MATERIAL</div></th><th>UNLOAD EST.In MINS(GateEntry)<div>UNLOAD EST.In MINS(GateEntry)</div></th><th>POSTING DATE/TIME<div>POSTING DATE/TIME</div></th><th>FAT%(FT)<div>FAT%(FT)</div></th><th>SNF%(FT)<div>SNF%(FT)</div></th><th>Qty(FT)<div>Qty(FT)</div></th><th>Temp.(FT)<div>Temp.(FT)</div></th><th>Acidity(FT)<div>Acidity(FT)</div></th><th>MBRT-min(FT)<div>MBRT-min(FT)</div></th><th>RM(FT)<div>RM(FT)</div></th><th>BR(FT)<div>BR(FT)</div></th><th>Protien%(FT)<div>Protien%(FT)</div></th><th>Sodium(FT)<div>Sodium(FT)</div></th><th>Testing Status<div>Testing Status</div></th><th>FAT%(RT)<div>FAT%(RT)</div></th><th>SNF%(RT)<div>SNF%(RT)</div></th><th>ADULTRATION<div>ADULTRATION</div></th><th>OtherADULTRATION<div>OtherADULTRATION</div></th><th>APPROVED<div>APPROVED</div></th><th>APPROVED TIME<div>APPROVED TIME</div></th>
 			</tr>"; 
