@@ -63,25 +63,25 @@ function getScriptPage_raw_milk_new(val,ids,box){
 </script>
 
 <input type="hidden" name="tnum"  id="tnum" value="0">
-<table  border="1" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse"   width="1390px" >
+<table  border="1" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse"   width="1175px" ><!--  width="1390px" >-->
 <tr style="background-color:silver;">
 	<!--style="width:30px;font-size: 10px"-->
 	<td style="width:3%;font-size: 11px" >SL</td>
-	<td style="width:6.5%;font-size: 11px" >LR.No.</td>
+	<td style="width:6.5%;font-size: 11px">LR.No./<br>Challan No.</td>
 	<td style="width:6.5%;font-size: 11px">Vehicle No.</td>	
 	<td style="width:6.5%;font-size: 11px">Transporter</td>
-	<td style="width:6.5%;font-size: 11px">Email</td>
-	<td style="width:6.5%;font-size: 11px">Transp.Mobile</td>
+	<td style="width:6.5%;font-size: 11px">Supplier Name</td>
+	<!--<td style="width:6.5%;font-size: 11px">Transp.Mobile</td>-->
 	<td style="width:6.5%;font-size: 11px">Driver Name</td>
 	<td style="width:6.5%;font-size: 11px">Driver Mobile</td>
-	<td style="width:6.5%;font-size: 11px">Quantity(kg)</td>
-	<td style="width:6.5%;font-size: 11px">FAT(%)</td>
-	<td style="width:6.5%;font-size: 11px">SNF(%)</td>
-	<td style="width:6.5%;font-size: 11px">FAT(kg)</td>
-	<td style="width:6.5%;font-size: 11px">SNF(kg)</td>
-	<td style="width:6.5%;font-size: 11px">MILK_Ag(Hrs)</td>
-	<td style="width:6.5%;font-size: 11px">Disp.Time</td>
-	<td style="width:6.5%;font-size: 11px">Target Time</td>
+	<td style="width:3.3%;font-size: 11px">Qty(kg)</td>
+	<td style="width:3.3%;font-size: 11px">Fat(%)</td>
+	<td style="width:3.3%;font-size: 11px">Snf(%)</td>
+	<!--<td style="width:6.5%;font-size: 11px">FAT(kg)</td>-->
+	<!--<td style="width:6.5%;font-size: 11px">SNF(kg)</td>-->
+	<td style="width:5.5%;font-size: 11px">MilkAge(Hrs)</td>
+	<td style="width:13%;font-size: 11px">Disp.Time</td>
+	<td style="width:13%;font-size: 11px">Target Time</td>
 	<td style="width:6.5%;font-size: 11px" >Plant</td>
 	<td style="width:6.5%;font-size: 11px" >ChillingPlant</td>
 	<td style="width:6.5%;font-size: 11px">TankerType</td>
@@ -90,7 +90,7 @@ function getScriptPage_raw_milk_new(val,ids,box){
 
 <tr>
 	<td colspan="20">
-		<table width=1390px >
+		<table width=1175px >
 			<tr>
 				<td><input type="text" name="num" id="num:0" value="0" style="width:30px;" readonly />
 				<input type="hidden" name="sno_id" id="sno_id:0" value=""  />
@@ -105,28 +105,28 @@ function getScriptPage_raw_milk_new(val,ids,box){
 						?>
 					</select>
 				</td>
-				<td><input type="text" name="email" id="email:0" value="" style="width:70px;" placeholder="EMAIL" /></td>	
+				<td><input type="hidden" name="email" id="email:0" value="" style="width:70px;" placeholder="SUPPLIER" /></td>	
 				<td><input type="text" name="mobile" id="mobile:0" value="" style="width:70px;" placeholder="MOBILE" />	</td>
 				<td><input type="text" name="driver" id="driver:0" value="" style="width:70px;" placeholder="DRIVERNAME" />	</td>
 				<td><input type="text" name="drivermobile" id="drivermobile:0" value="" style="width:70px;" placeholder="DRIVERMOBILE" /></td>
-				<td><input type="text" name="qty" id="qty:0" value="" style="width:70px;" placeholder="QTY" onkeyup="javascript:put_fat_snf_kg(this.value,this.id);" />	</td>	
-				<td><input type="text" name="fat_per" id="fat_per:0" value="" style="width:70px;" placeholder="FAT%" onkeyup="javascript:put_fat_kg(this.value,this.id);" /></td>	
-				<td><input type="text" name="snf_per" id="snf_per:0" value="" style="width:70px;" placeholder="SNF%" onkeyup="javascript:put_snf_kg(this.value,this.id);" /></td>	
-				<td><input type="text" name="fat_kg" id="fat_kg:0" value="" style="width:70px;" placeholder="FAT(KG)" readonly /></td>	
-				<td><input type="text" name="snf_kg" id="snf_kg:0" value="" style="width:70px;" placeholder="SNF(KG)" readonly /></td>	
-				<td><input type="text" name="milk_age" id="milk_age:0" value="" style="width:70px;" placeholder="MilkAge(Hr)" /></td>
+				<td><input type="text" name="qty" id="qty:0" value="" style="width:35px;" placeholder="QTY" onkeyup="javascript:put_fat_snf_kg(this.value,this.id);" />	</td>	
+				<td><input type="text" name="fat_per" id="fat_per:0" value="" style="width:35px;" placeholder="FAT%" onkeyup="javascript:put_fat_kg(this.value,this.id);" /></td>	
+				<td><input type="text" name="snf_per" id="snf_per:0" value="" style="width:35px;" placeholder="SNF%" onkeyup="javascript:put_snf_kg(this.value,this.id);" /></td>	
+				<td><input type="hidden" name="fat_kg" id="fat_kg:0" value="" style="width:70px;" placeholder="FAT(KG)" readonly /></td>	
+				<td><input type="hidden" name="snf_kg" id="snf_kg:0" value="" style="width:70px;" placeholder="SNF(KG)" readonly /></td>	
+				<td><input type="text" name="milk_age" id="milk_age:0" value="" style="width:50px;" placeholder="MilkAge(Hr)" /></td>
                                 <?php
                                 if($user_type=='plant_admin')
                                 {
                                     ?>
-                                <td><input type="text" name="disp_time" id="disp_time:0" value="" style="width:70px;" placeholder="DISP TIME" onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>		
-                                    <td><input type="text" name="target_time" id="target_time:0" value="" style="width:70px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
+                                <td><input type="text" name="disp_time" id="disp_time:0" value="" style="width:140px;" placeholder="DISP TIME" onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>		
+                                    <td><input type="text" name="target_time" id="target_time:0" value="" style="width:140px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
                                     <?php
                                 }
                                 else {
                                     ?>
-                                    <td><input type="text" name="disp_time" id="disp_time:0" value="" style="width:70px;" placeholder="DISP TIME" onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>		
-                                    <td><input type="text" name="target_time" id="target_time:0" value="" style="width:70px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
+                                    <td><input type="text" name="disp_time" id="disp_time:0" value="" style="width:140px;" placeholder="DISP TIME" onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>		
+                                    <td><input type="text" name="target_time" id="target_time:0" value="" style="width:140px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
                                 <?php
                                 }
                                 ?>
@@ -220,7 +220,7 @@ function getScriptPage_raw_milk_new(val,ids,box){
 </table>
 
 <div id="readroot" name="readroot" style="display:none;">
-	<input name="num" id="num:" value="" style="width:30px;" readonly /><input type="hidden" name="sno_id" id="sno_id:" value=""  />
+	&nbsp;<input name="num" id="num:" value="" style="width:30px;" readonly /><input type="hidden" name="sno_id" id="sno_id:" value=""  />
 	<input type="text" name="lrno" id="lrno:" value="" style="width:70px;" placeholder="LRNO" onkeyup="javascript:alphanumeric_ucase(this.value,this.id);" onblur="javascript:invoice_lorry_unique_pre(this.value,this.id);" />
 	<!--<input type="text" name="vehno" id="vehno" value="" style="width:80px;" placeholder="VEHICLENO"  autocomplete="off" class="ui-autocomplete-input" onkeydown="dk(this.id);" />-->
 	<input type="text" name="vehno" id="vehno:" value="" style="width:70px;" placeholder="VEHICLENO" onclick="javascript:show_vehicle_list(this.id)" onfocus="javascript:show_vehicle_list(this.id)" onblur="javascript:invoice_lorry_unique(this.id,this.value);"  readonly />
@@ -231,33 +231,33 @@ function getScriptPage_raw_milk_new(val,ids,box){
 	</select>
 						
 	
-	<input type="text" name="email" id="email:" value="" style="width:70px;" placeholder="EMAIL" />	
+	<input type="hidden" name="email" id="email:" value="" style="width:70px;" placeholder="SUPPLIER" />	
 	<input type="text" name="mobile" id="mobile:" value="" style="width:70px;" placeholder="MOBILE" />
 	
 	<input type="text" name="driver" id="driver:" value="" style="width:70px;" placeholder="DRIVERNAME" />	
 	<input type="text" name="drivermobile" id="drivermobile:" value="" style="width:70px;" placeholder="DRIVERMOBILE" />
 	
-	<input type="text" name="qty" id="qty:" value="" style="width:70px;" placeholder="QTY" onkeyup="javascript:put_fat_snf_kg(this.value,this.id);" />		
-	<input type="text" name="fat_per" id="fat_per:" value="" style="width:70px;"  placeholder="FAT%" onkeyup="javascript:put_fat_kg(this.value,this.id);" />	
-	<input type="text" name="snf_per" id="snf_per:" value="" style="width:70px;" placeholder="SNF%" onkeyup="javascript:put_snf_kg(this.value,this.id);" />	
-	<input type="text" name="fat_kg" id="fat_kg:" value="" style="width:70px;" placeholder="FAT(KG)"  readonly />	
-	<input type="text" name="snf_kg" id="snf_kg:" value="" style="width:70px;" placeholder="SNF(KG)" readonly />
-	<input type="text" name="milk_age" id="milk_age:" value="" style="width:70px;" placeholder="MilkAge(Hr)" />
+	<input type="text" name="qty" id="qty:" value="" style="width:35px;" placeholder="QTY" onkeyup="javascript:put_fat_snf_kg(this.value,this.id);" />		
+	<input type="text" name="fat_per" id="fat_per:" value="" style="width:35px;"  placeholder="FAT%" onkeyup="javascript:put_fat_kg(this.value,this.id);" />	
+	<input type="text" name="snf_per" id="snf_per:" value="" style="width:35px;" placeholder="SNF%" onkeyup="javascript:put_snf_kg(this.value,this.id);" />	
+	<input type="hidden" name="fat_kg" id="fat_kg:" value="" style="width:70px;" placeholder="FAT(KG)"  readonly />	
+	<input type="hidden" name="snf_kg" id="snf_kg:" value="" style="width:70px;" placeholder="SNF(KG)" readonly />
+	&nbsp;<input type="text" name="milk_age" id="milk_age:" value="" style="width:50px;" placeholder="MilkAge(Hr)" />
 	 <?php
                                 if($user_type=='plant_admin')
                                 {
                                     ?>
-        <input type="text" name="disp_time" id="disp_time:"  value="" style="width:70px;" placeholder="DISP TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly />	
+        <input type="text" name="disp_time" id="disp_time:"  value="" style="width:140px;" placeholder="DISP TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly />	
 	
-	<input type="text" name="target_time" id="target_time:" value="" style="width:70px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"   readonly />	
+	<input type="text" name="target_time" id="target_time:" value="" style="width:140px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"   readonly />	
 	
 	   <?php
                                 }
                                 else {
                                     ?>
-        <input type="text" name="disp_time" id="disp_time:"  value="" style="width:70px;" placeholder="DISP TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly />	
+        <input type="text" name="disp_time" id="disp_time:"  value="" style="width:140px;" placeholder="DISP TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly />	
 	
-	<input type="text" name="target_time" id="target_time:" value="" style="width:70px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"   readonly />	
+	<input type="text" name="target_time" id="target_time:" value="" style="width:140px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"   readonly />	
                                 <?php } ?>
 	<select name="plant" id="plant:" style="width:70px; position:relative; z-index:+1;"
    onactivate="this.style.width='auto';"

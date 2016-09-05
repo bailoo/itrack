@@ -45,7 +45,7 @@
 						?>
 					</select>
 				</td>
-				<td><input type="text" name="email" id="email:0" value="" style="width:70px;" placeholder="EMAIL" /></td>	
+				<td><input type="text" name="email" id="email:0" value="" style="width:70px;" placeholder="SUPPLIER" /></td>	
 				<td><input type="hidden" name="mobile" id="mobile:0" value=""  placeholder="MOBILE" />	</td>
 				<td><input type="text" name="driver" id="driver:0" value="" style="width:70px;" placeholder="DRIVERNAME" />	</td>
 				<td><input type="text" name="drivermobile" id="drivermobile:0" value="" style="width:70px;" placeholder="DRIVERMOBILE" /></td>
@@ -146,7 +146,7 @@
 	</select>
 						
 	
-	<input type="text" name="email" id="email:" value="" style="width:70px;" placeholder="EMAIL" />	
+	<input type="text" name="email" id="email:" value="" style="width:70px;" placeholder="SUPPLIER" />	
 	<input type="hidden" name="mobile" id="mobile:" value=""  placeholder="MOBILE" />
 	
 	<input type="text" name="driver" id="driver:" value="" style="width:70px;" placeholder="DRIVERNAME" />	
