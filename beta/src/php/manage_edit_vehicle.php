@@ -36,6 +36,7 @@
 		$vehicle_number=$dt['vehicle_number'];
 		$sim_number=$dt['sim_number'];
 		$mobile_number=$dt['mobile_number'];
+                $manufacturer_name=$dt['manufacturer_name'];
 		$max_speed=$dt['max_speed'];
 		$vehicle_tag=$dt['vehicle_tag'];
 		$vehicle_type=$dt['vehicle_type'];
@@ -69,6 +70,11 @@
 								<td>Mobile Number</td>
 								<td>&nbsp;:&nbsp;</td>
 								<td> <input type ="text" class="form-control" name="mobile_number" id="mobile_number" value="'.$mobile_number.'"> </td>
+							</tr>
+                                                        <tr>
+								<td>Manufacturer Name</td>
+								<td>&nbsp;:&nbsp;</td>
+								<td> <input type ="text" class="form-control" name="manufacturer_name" id="manufacturer_name" value="'.$manufacturer_name.'"> </td>
 							</tr>';
 							if($report_type!="Person")
 							{
