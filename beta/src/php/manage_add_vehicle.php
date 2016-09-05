@@ -37,7 +37,12 @@
 										<td>Mobile Number</td>
 										<td>&nbsp;:&nbsp;</td>
 										<td> <input type ="text" class="form-control" name="mobile_number" id="mobile_number"> </td>
-									</tr>									
+									</tr>
+                                                                        <tr>
+										<td>Manufacturer Name</td>
+										<td>&nbsp;:&nbsp;</td>
+										<td> <input type ="text" class="form-control" name="manufacturer_name" id="manufacturer_name"> </td>
+									</tr>
 									';
 								if($report_type!="Person")
 								{
