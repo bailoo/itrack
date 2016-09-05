@@ -10480,7 +10480,7 @@ function close_vehicle_list(value)
 	document.getElementById(param1).style.display = "none";
 	document.getElementById(param2).style.display = "none";
 	
-    invoice_lorry_unique(serial,put_string.toUpperCase() );
+    //invoice_lorry_unique(serial,put_string.toUpperCase() ); //temporary blocked
 	
 	
 }
@@ -11628,8 +11628,8 @@ function action_manage_invoice_raw_milk(){
             }
         }
          else{
-            alert("Field Required");
-            return false;
+            //alert("Field Required");
+            //return false;
         }
 		
 		//driver
@@ -12266,8 +12266,8 @@ function action_manage_invoice_raw_milk_from_admin(){
             }
         }
          else{
-            alert("Field Required");
-            return false;
+            //alert("Field Required");
+            //return false;
         }
 		
 		//driver
