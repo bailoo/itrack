@@ -54,10 +54,10 @@
 				<td><input type="text" name="snf_per" id="snf_per:0" value="" style="width:35px;" placeholder="SNF%" onkeyup="javascript:put_snf_kg(this.value,this.id);" /></td>	
 				<td><input type="hidden" name="fat_kg" id="fat_kg:0" value="" style="width:70px;" placeholder="FAT(KG)" readonly /></td>	
 				<td><input type="hidden" name="snf_kg" id="snf_kg:0" value="" style="width:70px;" placeholder="SNF(KG)" readonly /></td>	
-				<td><input type="text" name="milk_age" id="milk_age:0" value="" style="width:70px;" placeholder="MilkAge(Hr)" /></td>
-				<td><input type="text" name="disp_time" id="disp_time:0" value="" style="width:70px;" placeholder="DISP TIME" onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
+				<td><input type="text" name="milk_age" id="milk_age:0" value="" style="width:50px;" placeholder="MilkAge(Hr)" /></td>
+				<td><input type="text" name="disp_time" id="disp_time:0" value="" style="width:140px;" placeholder="DISP TIME" onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
 		
-				<td><input type="text" name="target_time" id="target_time:0" value="" style="width:70px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
+				<td><input type="text" name="target_time" id="target_time:0" value="" style="width:140px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
 		
 				<td>
 					<!--<div style="width: 70px; overflow: hidden;" >-->
