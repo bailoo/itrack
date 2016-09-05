@@ -48,15 +48,23 @@
 	}
 	else if ($action_type1=="delete")
 	{
-		// $type="edit_delete";
-		$geo_id1 = $_POST['geo_id'];
-		 		
-		$result=deleteGeofence($account_id,$date,0,$geo_id1,1,$DbConnection); 		
-		if($result)
-		{
-			$flag=1;
-			$action_perform="Deleted";
-		}
+            // $type="edit_delete";
+            $geo_id1 = $_POST['geo_id'];
+            
+            $foundCount=checkGeofenceAssignment($geo_id1,$DbConnection);
+            if($foundCount==0)
+            {
+                $result=deleteGeofence($account_id,$date,0,$geo_id1,1,$DbConnection); 		
+                if($result)
+                {
+                    $flag=1;
+                    $action_perform="Deleted";
+                }
+            }
+            else
+            {
+                $flag=2;               
+            }
 	}
 	else if($action_type1=="assign")
 	{
@@ -94,7 +102,12 @@
 		$msg = "Geofence ".$action_perform." Successfully";
 		$msg_color = "green";				
 	}	
-	else
+	else if($flag==2)
+	{
+		$msg = "Geofence already assigned to vehicle. De-assign first than delete.";
+		$msg_color = "red";		
+	}
+        else
 	{
 		$msg = "Sorry! Unable to process request.";
 		$msg_color = "red";		
