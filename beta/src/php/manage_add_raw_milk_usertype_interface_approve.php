@@ -7,7 +7,7 @@
 <tr style="background-color:silver;">
 	<!--style="width:30px;font-size: 10px"-->
 	<td style="width:3%;font-size: 11px">SL</td>
-	<td style="width:6.5%;font-size: 11px">LR.No./ Challan No.</td>
+	<td style="width:6.5%;font-size: 11px">LR.No./<br>Challan No.</td>
 	<td style="width:6.5%;font-size: 11px">Vehicle No.</td>	
 	<td style="width:6.5%;font-size: 11px">Transporter</td>
 	<td style="width:6.5%;font-size: 11px">Supplier Name</td>
@@ -46,14 +46,14 @@
 					</select>
 				</td>
 				<td><input type="text" name="email" id="email:0" value="" style="width:70px;" placeholder="EMAIL" /></td>	
-				<td><input type="hidden" name="mobile" id="mobile:0" value="" style="width:70px;" placeholder="MOBILE" />	</td>
+				<td><input type="hidden" name="mobile" id="mobile:0" value=""  placeholder="MOBILE" />	</td>
 				<td><input type="text" name="driver" id="driver:0" value="" style="width:70px;" placeholder="DRIVERNAME" />	</td>
 				<td><input type="text" name="drivermobile" id="drivermobile:0" value="" style="width:70px;" placeholder="DRIVERMOBILE" /></td>
 				<td><input type="text" name="qty" id="qty:0" value="" style="width:35px;" placeholder="QTY" onkeyup="javascript:put_fat_snf_kg(this.value,this.id);" />	</td>	
 				<td><input type="text" name="fat_per" id="fat_per:0" value="" style="width:35px;" placeholder="FAT%" onkeyup="javascript:put_fat_kg(this.value,this.id);" /></td>	
 				<td><input type="text" name="snf_per" id="snf_per:0" value="" style="width:35px;" placeholder="SNF%" onkeyup="javascript:put_snf_kg(this.value,this.id);" /></td>	
-				<td><input type="hidden" name="fat_kg" id="fat_kg:0" value="" style="width:70px;" placeholder="FAT(KG)" readonly /></td>	
-				<td><input type="hidden" name="snf_kg" id="snf_kg:0" value="" style="width:70px;" placeholder="SNF(KG)" readonly /></td>	
+				<td><input type="hidden" name="fat_kg" id="fat_kg:0" value="" placeholder="FAT(KG)" readonly /></td>	
+				<td><input type="hidden" name="snf_kg" id="snf_kg:0" value=""  placeholder="SNF(KG)" readonly /></td>	
 				<td><input type="text" name="milk_age" id="milk_age:0" value="" style="width:50px;" placeholder="MilkAge(Hr)" /></td>
 				<td><input type="text" name="disp_time" id="disp_time:0" value="" style="width:140px;" placeholder="DISP TIME" onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly /></td>	
 		
@@ -135,7 +135,7 @@
 </table>
 
 <div id="readroot" name="readroot" style="display:none;">
-	<input name="num" id="num:" value="" style="width:30px;" readonly /><input type="hidden" name="sno_id" id="sno_id:" value=""  />
+	&nbsp;<input name="num" id="num:" value="" style="width:30px;" readonly /><input type="hidden" name="sno_id" id="sno_id:" value=""  />
 	<input type="text" name="lrno" id="lrno:" value="" style="width:70px;" placeholder="LRNO" onkeyup="javascript:alphanumeric_ucase(this.value,this.id);" onblur="javascript:invoice_lorry_unique_pre(this.value,this.id);" />
 	<!--<input type="text" name="vehno" id="vehno" value="" style="width:80px;" placeholder="VEHICLENO"  autocomplete="off" class="ui-autocomplete-input" onkeydown="dk(this.id);" />-->
 	<input type="text" name="vehno" id="vehno:" value="" style="width:70px;" placeholder="VEHICLENO" onclick="javascript:show_vehicle_list(this.id)" onfocus="javascript:show_vehicle_list(this.id)" onblur="javascript:invoice_lorry_unique(this.id,this.value);" readonly />
@@ -147,7 +147,7 @@
 						
 	
 	<input type="text" name="email" id="email:" value="" style="width:70px;" placeholder="EMAIL" />	
-	<input type="hidden" name="mobile" id="mobile:" value="" style="width:70px;" placeholder="MOBILE" />
+	<input type="hidden" name="mobile" id="mobile:" value=""  placeholder="MOBILE" />
 	
 	<input type="text" name="driver" id="driver:" value="" style="width:70px;" placeholder="DRIVERNAME" />	
 	<input type="text" name="drivermobile" id="drivermobile:" value="" style="width:70px;" placeholder="DRIVERMOBILE" />
@@ -155,9 +155,9 @@
 	<input type="text" name="qty" id="qty:" value="" style="width:35px;" placeholder="QTY" onkeyup="javascript:put_fat_snf_kg(this.value,this.id);" />		
 	<input type="text" name="fat_per" id="fat_per:" value="" style="width:35px;"  placeholder="FAT%" onkeyup="javascript:put_fat_kg(this.value,this.id);" />	
 	<input type="text" name="snf_per" id="snf_per:" value="" style="width:35px;" placeholder="SNF%" onkeyup="javascript:put_snf_kg(this.value,this.id);" />	
-	<input type="hidden" name="fat_kg" id="fat_kg:" value="" style="width:70px;" placeholder="FAT(KG)"  readonly />	
-	<input type="hidden" name="snf_kg" id="snf_kg:" value="" style="width:70px;" placeholder="SNF(KG)" readonly />
-	<input type="text" name="milk_age" id="milk_age:" value="" style="width:50px;" placeholder="MilkAge(Hr)" />
+	<input type="hidden" name="fat_kg" id="fat_kg:" value=""  placeholder="FAT(KG)"  readonly />	
+	<input type="hidden" name="snf_kg" id="snf_kg:" value=""  placeholder="SNF(KG)" readonly />
+	&nbsp;&nbsp;<input type="text" name="milk_age" id="milk_age:" value="" style="width:50px;" placeholder="MilkAge(Hr)" />
 	<input type="text" name="disp_time" id="disp_time:"  value="" style="width:140px;" placeholder="DISP TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"  readonly />	
 	
 	<input type="text" name="target_time" id="target_time:" value="" style="width:140px;" placeholder="TARG.TIME"  onclick="javascript:NewCal_SD(this.id,'yyyymmdd',true,24);"   readonly />	
