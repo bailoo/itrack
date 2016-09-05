@@ -973,12 +973,12 @@ function insertDeviceMInfo($imei_no_1,$io_ids_1,$manufacturing_date_1,$make_1,$a
 	return $result;
 }
 
-function insertVehicleRecord($post_vehicle_name,$post_vehicle_type,$post_vehicle_tag,$post_max_speed,$post_category,$post_vehicle_number,$post_sim_number,$post_mobile_number,$status,$account_id,$date,$DbConnection)
+function insertVehicleRecord($post_vehicle_name,$post_vehicle_type,$post_vehicle_tag,$post_max_speed,$post_category,$post_vehicle_number,$post_sim_number,$post_mobile_number,$post_manufacturer_name,$status,$account_id,$date,$DbConnection)
 {
 	$query="INSERT INTO vehicle(vehicle_name,vehicle_type,vehicle_tag,max_speed,category,vehicle_number,".
-		   "sim_number,mobile_number,status,create_id,create_date) VALUES('$post_vehicle_name',".
+		   "sim_number,mobile_number,manufacturer_name,status,create_id,create_date) VALUES('$post_vehicle_name',".
 		   "'$post_vehicle_type','$post_vehicle_tag','$post_max_speed','$post_category',".
-		   "'$post_vehicle_number','$post_sim_number','$post_mobile_number','$status','$account_id','$date')";
+		   "'$post_vehicle_number','$post_sim_number','$post_mobile_number','$post_manufacturer_name',$status','$account_id','$date')";
 			//echo "query=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);
 	return $result;
@@ -1082,10 +1082,10 @@ function updateVehicleAssignment($account_id,$date,$deviceImei,$DbConnection)
 	return $result;
 }
 
-function updateVehicleDetail($vehicle_name_edit,$vehicle_number_edit,$post_sim_number,$post_mobile_number,$max_speed_edit,$vehicle_tag_edit,$vehicle_type_edit,$category,$account_id,$date,$vehicle_id_edit,$status,$DbConnection)
+function updateVehicleDetail($vehicle_name_edit,$vehicle_number_edit,$post_sim_number,$post_mobile_number,$post_manufacturer_name,$max_speed_edit,$vehicle_tag_edit,$vehicle_type_edit,$category,$account_id,$date,$vehicle_id_edit,$status,$DbConnection)
 {
 	$query="UPDATE vehicle SET vehicle_name='$vehicle_name_edit',vehicle_number='$vehicle_number_edit',".
-		"sim_number='$post_sim_number',mobile_number='$post_mobile_number',max_speed='$max_speed_edit',".
+		"sim_number='$post_sim_number',mobile_number='$post_mobile_number',manufacturer_name='$post_manufacturer_name',max_speed='$max_speed_edit',".
 		"vehicle_tag='$vehicle_tag_edit',vehicle_type='$vehicle_type_edit',category='$category',".
 		"edit_id='$account_id', edit_date='$date' WHERE vehicle_id='$vehicle_id_edit' AND status=$status"; 
     //echo "query=".$query; 
@@ -3292,6 +3292,13 @@ function deleteGeofence($account_id,$date,$upstatus,$geo_id1,$constatus,$DbConne
 	$result=mysql_query($query,$DbConnection);
 	return $result;
 } 
+function checkGeofenceAssignment($geo_id1,$DbConnection)
+{
+   $query="SELECT geo_id FROM geofence_assignment WHERE geo_id='$geo_id1' AND status=1";
+    $result=mysql_query($query,$DbConnection); 
+    $numRows=  mysql_num_rows($result);
+    return $numRows;	 
+}
 
 
 
@@ -3797,7 +3804,17 @@ while($row=mysql_fetch_object($result))
         $vehicle_tag = $row->vehicle_tag;
         $vehicle_type = $row->vehicle_type;*/
 
-        $dataV[]=array('vehicle_id'=>$row->vehicle_id,'vehicle_name'=>$row->vehicle_name,'vehicle_number'=>$row->vehicle_number,'sim_number'=>$row->sim_number,'mobile_number'=>$row->mobile_number,'max_speed'=>$row->max_speed,'vehicle_tag'=>$row->vehicle_tag,'vehicle_type'=>$row->vehicle_type);	
+        $dataV[]=array(
+                    'vehicle_id'=>$row->vehicle_id,
+                    'vehicle_name'=>$row->vehicle_name,
+                    'vehicle_number'=>$row->vehicle_number,
+                    'sim_number'=>$row->sim_number,
+                    'mobile_number'=>$row->mobile_number,
+                    'manufacturer_name'=>$row->manufacturer_name,
+                    'max_speed'=>$row->max_speed,
+                    'vehicle_tag'=>$row->vehicle_tag,
+                    'vehicle_type'=>$row->vehicle_type
+                );	
     }
 	return $dataV;
 }
