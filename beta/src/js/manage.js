@@ -12263,8 +12263,8 @@ function action_manage_invoice_raw_milk_from_admin(){
             }
         }
          else{
-            alert("Field Required");
-            return false;
+            //alert("Field Required");
+            //return false;
         }
 		
 		//driver
