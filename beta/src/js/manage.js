@@ -1862,7 +1862,8 @@ function unchecked_substation()
 					"&vehicle_name=" + document.getElementById("vehicle_name").value+
 					"&vehicle_number=" +document.getElementById("vehicle_number").value+conditional_string+	
 					"&sim_number=" + document.getElementById("sim_number").value+
-					"&mobile_number=" +document.getElementById("mobile_number").value+											
+					"&mobile_number=" +document.getElementById("mobile_number").value+
+                                        "&manufacturer_name=" +document.getElementById("manufacturer_name").value+
 					"&vehicle_type=" +document.getElementById("vehicle_type").value+
 					"&category=" +document.getElementById("category").value; 
 				}
@@ -1885,8 +1886,9 @@ function unchecked_substation()
 					"&device_imei_no="+dev_result+					
 					"&vehicle_name=" + document.getElementById("vehicle_name").value+
 					"&vehicle_number=" +document.getElementById("vehicle_number").value+conditional_string+						
-					"&vehicle_type=" +document.getElementById("vehicle_type").value+
-          "&category=" +document.getElementById("category").value;	
+					"&manufacturer_name=" +document.getElementById("manufacturer_name").value+
+                                        "&vehicle_type=" +document.getElementById("vehicle_type").value+
+                                        "&category=" +document.getElementById("category").value;	
           //alert("poststr="+poststr);   
 			}
 				var file_name="src/php/action_manage_vehicle.htm";		
@@ -1906,11 +1908,12 @@ function unchecked_substation()
                         "&vehicle_name=" + encodeURI( document.getElementById("vehicle_name").value ) +
                         "&vehicle_number=" + encodeURI( document.getElementById("vehicle_number").value )+conditional_string+
                         "&sim_number=" + document.getElementById("sim_number").value+
-						"&mobile_number=" +document.getElementById("mobile_number").value+	
-						"&vehicle_type=" + encodeURI( document.getElementById("vehicle_type").value )+
+                        "&mobile_number=" +document.getElementById("mobile_number").value+
+                        "&manufacturer_name=" +document.getElementById("manufacturer_name").value+
+                        "&vehicle_type=" + encodeURI( document.getElementById("vehicle_type").value )+
                         "&category1=" + encodeURI( document.getElementById("category").value); 
             //alert("poststr="+poststr);
-						var file_name="src/php/action_manage_vehicle.htm";
+                        var file_name="src/php/action_manage_vehicle.htm";
 			}
 		}		
 		else if(action_type=="edit" || action_type=="delete")
