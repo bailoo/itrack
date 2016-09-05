@@ -9,7 +9,7 @@
 	$post_action_type = $_POST['action_type'];		
 	if($DEBUG) 
 	{
-		echo "post_action_type=".$post_action_type;
+            echo "post_action_type=".$post_action_type;
 	}
 	$parent_account_ids=array();
 
@@ -17,35 +17,36 @@
 	//echo "action_type=".$post_action_type."<br>";
 	if($post_action_type=="add" || $post_action_type=="add_register")
 	{	
-		$local_account_ids=$_POST['account_ids'];	
-		$local_account_ids1=explode(",",$local_account_ids);
-		$account_size=sizeof($local_account_ids1);		
-		$post_vehicle_name=$_POST['vehicle_name'];	
-		$post_vehicle_number=$_POST['vehicle_number'];
-		$post_sim_number=$_POST['sim_number'];	
-		$post_mobile_number=$_POST['mobile_number'];			
-		$post_max_speed=$_POST['max_speed'];
-		$post_vehicle_tag=$_POST['vehicle_tag'];	
-		$post_vehicle_type=$_POST['vehicle_type'];	
-		$post_category=$_POST['category'];
-		//echo "post_cat=".$post_category;	
-		if($DEBUG)
-		{
-			echo "Vehicle Name = ".$post_vehicle_name." (Length: ".strlen($post_vehicle_name).") <br>";	
-			echo "Vehicle Number = ".$post_vehicle_number." (Length: ".strlen($post_vehicle_number).") <br>";
-			echo "MAX Speed = ".$post_max_speed." (Length: ".strlen($post_max_speed).") <br>";	
-			echo "Vehicle Tag = ".$post_vehicle_tag." (Length: ".strlen($post_vehicle_tag).") <br>";
-			echo "Vehicle Type = ".$post_vehicle_type." (Length: ".strlen($post_vehicle_type).") <br>";
-		}
+            $local_account_ids=$_POST['account_ids'];	
+            $local_account_ids1=explode(",",$local_account_ids);
+            $account_size=sizeof($local_account_ids1);		
+            $post_vehicle_name=$_POST['vehicle_name'];	
+            $post_vehicle_number=$_POST['vehicle_number'];
+            $post_sim_number=$_POST['sim_number'];	
+            $post_mobile_number=$_POST['mobile_number'];
+            $post_manufacturer_name=$_POST['manufacturer_name'];
+            $post_max_speed=$_POST['max_speed'];
+            $post_vehicle_tag=$_POST['vehicle_tag'];	
+            $post_vehicle_type=$_POST['vehicle_type'];	
+            $post_category=$_POST['category'];
+            //echo "post_cat=".$post_category;	
+            if($DEBUG)
+            {
+                echo "Vehicle Name = ".$post_vehicle_name." (Length: ".strlen($post_vehicle_name).") <br>";	
+                echo "Vehicle Number = ".$post_vehicle_number." (Length: ".strlen($post_vehicle_number).") <br>";
+                echo "MAX Speed = ".$post_max_speed." (Length: ".strlen($post_max_speed).") <br>";	
+                echo "Vehicle Tag = ".$post_vehicle_tag." (Length: ".strlen($post_vehicle_tag).") <br>";
+                echo "Vehicle Type = ".$post_vehicle_type." (Length: ".strlen($post_vehicle_type).") <br>";
+            }
 		
-		$count=getVehicleNumRow($post_vehicle_name,1,$DbConnection);		
-		if($count > 0)
-		{
-			$message = $report_type." Name already exist!";
-		}
-		else
-		{			
-			$result=insertVehicleRecord($post_vehicle_name,$post_vehicle_type,$post_vehicle_tag,$post_max_speed,$post_category,$post_vehicle_number,$post_sim_number,$post_mobile_number,1,$account_id,$date,$DbConnection);
+            $count=getVehicleNumRow($post_vehicle_name,1,$DbConnection);		
+            if($count > 0)
+            {
+                    $message = $report_type." Name already exist!";
+            }
+            else
+            {			
+			$result=insertVehicleRecord($post_vehicle_name,$post_vehicle_type,$post_vehicle_tag,$post_max_speed,$post_category,$post_vehicle_number,$post_sim_number,$post_mobile_number,$post_manufacturer_name,1,$account_id,$date,$DbConnection);
 			if($result)
 			{				
 				$vehicle_id=getVehicleId($post_vehicle_name,1,$DbConnection);				
@@ -187,8 +188,9 @@
 		$category = $_POST['category1'];  
 		$post_sim_number=$_POST['sim_number'];	
 		$post_mobile_number=$_POST['mobile_number'];
+                $post_manufacturer_name=$_POST['manufacturer_name'];
 
-		$result=updateVehicleDetail($vehicle_name_edit,$vehicle_number_edit,$post_sim_number,$post_mobile_number,$max_speed_edit,$vehicle_tag_edit,$vehicle_type_edit,$category,$account_id,$date,$vehicle_id_edit,1,$DbConnection);
+		$result=updateVehicleDetail($vehicle_name_edit,$vehicle_number_edit,$post_sim_number,$post_mobile_number,$post_manufacturer_name,$max_speed_edit,$vehicle_tag_edit,$vehicle_type_edit,$category,$account_id,$date,$vehicle_id_edit,1,$DbConnection);
 		
 		if($result)
 		{
