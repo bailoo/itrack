@@ -35,9 +35,9 @@
 				<td><input type="text" name="num" id="num:0" value="0" style="width:30px;" readonly />
 				<input type="hidden" name="sno_id" id="sno_id:0" value=""  />
 				</td>
-				<td><input type="text" name="lrno" id="lrno:0" value="" style="width:70px;" placeholder="LRNO" onkeyup="javascript:alphanumeric_ucase(this.value,this.id);" onblur="javascript:invoice_lorry_unique_pre(this.value,this.id);" /></td>
+				<td><input type="text" name="lrno" id="lrno:0" value="" style="width:70px;" placeholder="LRNO" onkeyup="javascript:alphanumeric_ucase(this.value,this.id);"  /></td> <!--onblur="javascript:invoice_lorry_unique_pre(this.value,this.id);" -->
 				<!--<input type="text" name="vehno" id="vehno0" value="" style="width:80px;" placeholder="VEHICLENO"  autocomplete="off" class="ui-autocomplete-input" onkeydown="dk(this.id);" />-->
-				<td><input type="text" name="vehno" id="vehno:0" value="" style="width:70px;" placeholder="VEHICLENO" onclick="javascript:show_vehicle_list(this.id)" onfocus="javascript:show_vehicle_list(this.id)"  onblur="javascript:invoice_lorry_unique(this.id,this.value);" readonly /></td>
+				<td><input type="text" name="vehno" id="vehno:0" value="" style="width:70px;" placeholder="VEHICLENO" onclick="javascript:show_vehicle_list(this.id)" onfocus="javascript:show_vehicle_list(this.id)"   readonly /></td> <!--onblur="javascript:invoice_lorry_unique(this.id,this.value);"-->
 				<td>					
 					<select name="transporter" id="transporter:0" style="width:70px;">
 						<?php							
@@ -136,9 +136,9 @@
 
 <div id="readroot" name="readroot" style="display:none;">
 	&nbsp;<input name="num" id="num:" value="" style="width:30px;" readonly /><input type="hidden" name="sno_id" id="sno_id:" value=""  />
-	<input type="text" name="lrno" id="lrno:" value="" style="width:70px;" placeholder="LRNO" onkeyup="javascript:alphanumeric_ucase(this.value,this.id);" onblur="javascript:invoice_lorry_unique_pre(this.value,this.id);" />
+	<input type="text" name="lrno" id="lrno:" value="" style="width:70px;" placeholder="LRNO" onkeyup="javascript:alphanumeric_ucase(this.value,this.id);"  /><!--onblur="javascript:invoice_lorry_unique_pre(this.value,this.id);"-->
 	<!--<input type="text" name="vehno" id="vehno" value="" style="width:80px;" placeholder="VEHICLENO"  autocomplete="off" class="ui-autocomplete-input" onkeydown="dk(this.id);" />-->
-	<input type="text" name="vehno" id="vehno:" value="" style="width:70px;" placeholder="VEHICLENO" onclick="javascript:show_vehicle_list(this.id)" onfocus="javascript:show_vehicle_list(this.id)" onblur="javascript:invoice_lorry_unique(this.id,this.value);" readonly />
+	<input type="text" name="vehno" id="vehno:" value="" style="width:70px;" placeholder="VEHICLENO" onclick="javascript:show_vehicle_list(this.id)" onfocus="javascript:show_vehicle_list(this.id)"  readonly /><!--onblur="javascript:invoice_lorry_unique(this.id,this.value);"-->
 	<select name="transporter" id="transporter:" style="width:70px;">
 		<?php							
 			echo $option_transporter;							
