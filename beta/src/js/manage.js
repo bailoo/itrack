@@ -10477,7 +10477,7 @@ function close_vehicle_list(value)
 	document.getElementById(param1).style.display = "none";
 	document.getElementById(param2).style.display = "none";
 	
-    invoice_lorry_unique(serial,put_string.toUpperCase() );
+    //invoice_lorry_unique(serial,put_string.toUpperCase() ); //temporary blocked
 	
 	
 }
