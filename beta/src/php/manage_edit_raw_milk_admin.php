@@ -2003,7 +2003,7 @@ border: none;
 	</form>';
 	echo'
 	<form name="invoice_form_csv" id="invoice_form_csv" method = "post" target="_blank">
-		<div align=left>
+		<div align=center>
 		<input TYPE="hidden" VALUE="Raw_Milk_Invoice" NAME="csv_type" id="csv_type">
 		<input TYPE="hidden" VALUE="'.$csv_string.'" NAME="csv_string" id="csv_string">			
 		<input type="button" onclick="javascript:manage_csv(\'src/php/report_getpdf_type3.php?size='.$sno_local.'\');" value="Get PDF" class="noprint">
@@ -2017,7 +2017,7 @@ border: none;
 	
                             </div>
 	
-	<table align="left">
+	<table align="center">
 		<tr>
 			<td colspan="3">
 				<?php		
