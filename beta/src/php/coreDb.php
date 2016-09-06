@@ -3294,7 +3294,7 @@ function deleteGeofence($account_id,$date,$upstatus,$geo_id1,$constatus,$DbConne
 } 
 function checkGeofenceAssignment($geo_id1,$DbConnection)
 {
-   $query="SELECT geo_id FROM geofence_assignment WHERE geo_id='$geo_id1' AND status=1";
+   $query="SELECT geo_id FROM geo_assignment WHERE geo_id='$geo_id1' AND status=1";
    $result=mysql_query($query,$DbConnection); 
    $numRows= mysql_num_rows($result);
    return $numRows;	 
