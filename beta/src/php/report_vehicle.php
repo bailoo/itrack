@@ -94,10 +94,10 @@
 				<td class="text">
 					 <input type="checkbox" name="voption[]" id="option6" value="6">Vehicle Type
 				</td>															
-				<td class="text" colspan="2">
+				<td class="text">
 					 <input type="checkbox" name="voption[]" id="option7" value="7">Vehicle Tag
 				</td>
-                                <td class="text" colspan="2">
+                                <td class="text">
 					 <input type="checkbox" name="voption[]" id="option8" value="8">Manufacturer Name
 				</td>
 			</tr>		
