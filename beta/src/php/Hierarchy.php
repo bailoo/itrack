@@ -428,6 +428,7 @@ class Hierarchy
 							$AccountInfo -> VehicleMaxSpeed[$AccountInfo -> VehicleCnt] =$vehicleData['max_speed'];
 							$AccountInfo -> VehicleFuelVoltage[$AccountInfo -> VehicleCnt] =$vehicleData['fuel_voltage'];
 							$AccountInfo -> VehicleTankCapacity[$AccountInfo -> VehicleCnt] = $vehicleData['tank_capacity'];
+                                                        $AccountInfo -> ManufacturerName[$AccountInfo -> VehicleCnt] = $vehicleData['manufacturer_name'];
 							$AccountInfo -> DeviceIMEINo[$AccountInfo -> VehicleCnt] =$device_imei_no_local; 
 							
                                                         
