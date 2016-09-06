@@ -27,7 +27,9 @@
 		$type = "1"; 
 		
 		if($option1[$i] == "6")
-		$tag = "1";    
+		$tag = "1"; 
+                if($option1[$i] == "8")
+		$manufacturer_name = "1"; 
 		/* if($option1[$i] == "7")
 		$geo_name = "1";     
 		if($option1[$i] == "8") 
@@ -69,6 +71,11 @@
 		{
 			$csv_string = $csv_string."Tag,";
 		}
+                if($manufacturer_name) 
+		{
+			$csv_string = $csv_string."Manufacturer Name,";
+		}
+                
 		$csv_string=$csv_string." \n";    
         /*if($geo_name)
 		{
@@ -145,6 +152,12 @@
 							<b>&nbsp;Tag</b>
 						</th>';
 				}
+                                if($manufacturer_name)
+				{					
+					echo'<th class="text" align="left">
+							<b>&nbsp;Manufacturer Name</b>
+						</th>';
+				}
 
 				/*if($geo_name)
 				{
@@ -217,6 +230,15 @@
 				echo"<input TYPE=\"hidden\" VALUE=\"$vehicle_detail_local[3]\" NAME=\"temp[$i][Tag]\">";
 				$csv_string=$csv_string.$vehicle_detail_local[3].",";
 				}
+                                if($manufacturer_name)
+				{
+				echo'<td class="text" align="left">
+						&nbsp;'.$vehicle_detail_local[9].'
+					</td>';
+				echo"<input TYPE=\"hidden\" VALUE=\"$vehicle_detail_local[9]\" NAME=\"temp[$i][Manufacturer Name]\">";
+				$csv_string=$csv_string.$vehicle_detail_local[9].",";
+				}
+                                
 				$csv_string=$csv_string." \n";
 		echo'</tr>';
 	}
