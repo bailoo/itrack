@@ -3295,9 +3295,9 @@ function deleteGeofence($account_id,$date,$upstatus,$geo_id1,$constatus,$DbConne
 function checkGeofenceAssignment($geo_id1,$DbConnection)
 {
    $query="SELECT geo_id FROM geofence_assignment WHERE geo_id='$geo_id1' AND status=1";
-    $result=mysql_query($query,$DbConnection); 
-    $numRows=  mysql_num_rows($result);
-    return $numRows;	 
+   $result=mysql_query($query,$DbConnection); 
+   $numRows= mysql_num_rows($result);
+   return $numRows;	 
 }
 
 
@@ -4496,7 +4496,7 @@ function getGroupGroupIdGroupName($account_id,$DbConnection)
 function getVehicleTableData($vehicle_id,$DbConnection,$j)
 {
     $query_test1 = "SELECT vehicle.vehicle_id,vehicle.vehicle_name,vehicle.vehicle_type,vehicle.category,vehicle.vehicle_tag,vehicle.vehicle_number,vehicle.mobile_number,".
-    "vehicle.max_speed,vehicle.fuel_voltage,vehicle.tank_capacity,vehicle_assignment.device_imei_no FROM vehicle ".
+    "vehicle.max_speed,vehicle.fuel_voltage,vehicle.tank_capacity,vehicle.manufacturer_name,vehicle_assignment.device_imei_no FROM vehicle ".
     "USE INDEX (v_vehicleid_status),vehicle_assignment USE INDEX (va_vehicleid_status) WHERE".
     " vehicle.vehicle_id=vehicle_assignment.vehicle_id AND ( ";
     $join_query="";
@@ -4527,7 +4527,8 @@ function getVehicleTableData($vehicle_id,$DbConnection,$j)
             'device_imei_no'=>$row_1->device_imei_no,
             'max_speed'=>$row_1->max_speed,
             'fuel_voltage'=>$row_1->fuel_voltage,
-            'tank_capacity'=>$row_1->tank_capacity);
+            'tank_capacity'=>$row_1->tank_capacity,
+            'manufacturer_name'=>$row_1->manufacturer_name);
     }
     return $data;
 }
