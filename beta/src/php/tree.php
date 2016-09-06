@@ -54,9 +54,10 @@ class Info {
 	Public $VehicleTag=array();
 	Public $VehicleGroup=array();
 	Public $VehicleGroupName=array();
+        Public $ManufacturerName=array();
 	//==code updated 27032015==//
 	Public $VehicleTypeThirdParty=array();
-	Public $VehicleActiveDate=array();
+	Public $VehicleActiveDate=array();        
 	//==end====================//
 	
 	function __construct()
