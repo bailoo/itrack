@@ -3500,6 +3500,7 @@ function action_report_station_halt_1(obj)
 			obj.option5.checked="true";
 			obj.option6.checked="true";	
 			obj.option7.checked="true";
+                        obj.option8.checked="true";
 			//obj.option8.checked="true";				
 		}
 		else if(obj.selectall.checked==false)
@@ -3508,12 +3509,13 @@ function action_report_station_halt_1(obj)
 			obj.option2.checked=false;
 			if(actionType=="Vehicle")
 			{
-				obj.option3.checked="true";
+                        obj.option3.checked=false;
 			}
 			obj.option4.checked=false;
 			obj.option5.checked=false;
 			obj.option6.checked=false;	
 			obj.option7.checked=false;
+                        obj.option8.checked=false;
 			//obj.option8.checked=false;			
 		} 
 	} 
