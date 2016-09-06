@@ -14,6 +14,7 @@ function get_vehicle_info($AccountNode,$imei)
 		$max_speed_local = $AccountNode->data->VehicleMaxSpeed[$j];
 		$vehicle_fuel_voltage = $AccountNode->data->VehicleFuelVoltage[$j];
 		$vehicle_tank_Capacity = $AccountNode->data->VehicleTankCapacity[$j];
+                $manufacturer_name = $AccountNode->data->ManufacturerName[$j];
 		
 		if($vehicle_imei_no==$imei)
 		{
@@ -31,7 +32,7 @@ function get_vehicle_info($AccountNode,$imei)
 					//echo "vehicle_name=".$vehicle_name." tmp_iotype_str1=".$tmp_iotype_str."<br>";
 			}			
 			$flag=1;
-			$vehicle_info_local=$vehicle_name_local.",".$vehicle_type_local.",".$vehicle_number_1.",".$vehicle_tag_local.",".$max_speed_local.",".$vehicle_fuel_voltage.",".$vehicle_tank_Capacity.",".$tmp_iotype_str.",".$mobile_number_1;
+			$vehicle_info_local=$vehicle_name_local.",".$vehicle_type_local.",".$vehicle_number_1.",".$vehicle_tag_local.",".$max_speed_local.",".$vehicle_fuel_voltage.",".$vehicle_tank_Capacity.",".$tmp_iotype_str.",".$mobile_number_1.",".$manufacturer_name;
 			return $vehicle_info_local;			
 		}
 	}
