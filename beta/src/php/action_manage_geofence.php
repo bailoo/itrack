@@ -52,6 +52,8 @@
             $geo_id1 = $_POST['geo_id'];
             
             $foundCount=checkGeofenceAssignment($geo_id1,$DbConnection);
+            echo "foundCount=".$foundCount."<br>";
+            exit();
             if($foundCount==0)
             {
                 $result=deleteGeofence($account_id,$date,0,$geo_id1,1,$DbConnection); 		
