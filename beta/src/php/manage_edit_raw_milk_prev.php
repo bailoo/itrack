@@ -66,7 +66,7 @@ echo'
 	}
 	echo'
 	<center>	
-	<fieldset class="manage_fieldset_invoice">
+	<fieldset class="manage_fieldset_invoice" align=left>
 		<legend><strong>Select Date</strong></legend>
 	<table>
 	<tr>

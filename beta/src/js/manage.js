@@ -9450,6 +9450,7 @@ function close_lorry_pre()
         var flag_not=0;
         if(document.getElementById('edit_lorryno').value!=document.getElementById('temp_lorryno').value)
         {
+             /* //temporary disabled
             //validating lorry no
             var lorry_val=document.getElementById('edit_lorryno').value;
             var final_lrno=document.getElementById('final_lrno').value;                    
@@ -9481,6 +9482,7 @@ function close_lorry_pre()
                         }
                 }
             }
+            */
             /////
             
             var serial = document.getElementById('tmp_serial').value;
@@ -9540,6 +9542,7 @@ function close_vehicle_no_pre()
         var flag_not=0;
         if(document.getElementById('vehicle_list').value!=document.getElementById('temp_vehicle_no').value)
         {
+             /* //temporary disabled
             //validating vehicle no
             var vehicle_val=document.getElementById('vehicle_list').value;
             var final_vehicleno=document.getElementById('final_vehicleno').value;                    
@@ -9573,6 +9576,7 @@ function close_vehicle_no_pre()
                         }
                 }
             }
+            */
             /////
             var serial = document.getElementById('tmp_serial').value;
             if(flag_not==0)
