@@ -978,7 +978,7 @@ function insertVehicleRecord($post_vehicle_name,$post_vehicle_type,$post_vehicle
 	$query="INSERT INTO vehicle(vehicle_name,vehicle_type,vehicle_tag,max_speed,category,vehicle_number,".
 		   "sim_number,mobile_number,manufacturer_name,status,create_id,create_date) VALUES('$post_vehicle_name',".
 		   "'$post_vehicle_type','$post_vehicle_tag','$post_max_speed','$post_category',".
-		   "'$post_vehicle_number','$post_sim_number','$post_mobile_number','$post_manufacturer_name',$status','$account_id','$date')";
+		   "'$post_vehicle_number','$post_sim_number','$post_mobile_number','$post_manufacturer_name','$status','$account_id','$date')";
 			//echo "query=".$query."<br>";
 	$result=mysql_query($query,$DbConnection);
 	return $result;
