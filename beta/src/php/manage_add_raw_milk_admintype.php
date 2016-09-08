@@ -865,6 +865,7 @@
 									document.getElementById('disp_time:'+l).value=disp_time_Tags[l];
 									document.getElementById('target_time:'+l).value=target_time_Tags[l];
 									document.getElementById('plant:'+l).value=plant_Tags[l];
+                                                                        //alert(chillplant_Tags[l]);
 									document.getElementById('chillplant:'+l).value=chillplant_Tags[l];
 									document.getElementById('chillplant:'+l).readonly = true;
 									if(tankertype_Tags[l]=='Production')
