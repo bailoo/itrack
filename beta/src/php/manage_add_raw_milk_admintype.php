@@ -773,7 +773,7 @@
 										document.getElementById('disp_time:'+l).value=disp_time_Tags[l];
 										document.getElementById('target_time:'+l).value=target_time_Tags[l];
 										document.getElementById('plant:'+l).value=plant_Tags[l];
-										document.getElementById('chillplant:'+l).value=chillplant_Tags[l].split();
+										document.getElementById('chillplant:'+l).value=chillplant_Tags[l].trim();
 										document.getElementById('chillplant:'+l).readonly = true;
 										document.getElementById('tankertype:'+l).value=tankertype_Tags[l];
 										document.getElementById('div_display_error').innerHTML= document.getElementById('div_display_error').innerHTML + error_upload_Tags[l];
