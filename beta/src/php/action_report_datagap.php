@@ -169,6 +169,7 @@ for($i=0;$i<$vsize;$i++)
                         $tdiff_no_data[$imei][] = $tdiff_nodata;
                         if($nodata_lat_prev!="" && $nodata_lng_prev!="")
                         {
+                            $supv_on_no_data=isset($supv_on_no_data)?$supv_on_no_data:'0';
                             $distance_no_data[$imei][] = '0';
                             $supv_no_data[$imei][] = $supv_on_no_data;
                         }
@@ -194,9 +195,10 @@ for($i=0;$i<$vsize;$i++)
 							//echo "latStart_1=".$start_gps_lat."lngStart_2=".$start_gps_lng." lat=".$lat." lng=".$lng."<br>";
 							if($start_gps_lat=="" && $start_gps_lng=="")
 							{
+                                                            $supv=isset($supv)?$supv:'0';
 								$battory_voltage_arr[$imei][] = '0';
 								//calculate_distance($start_gps_lat, $lat, $start_gps_lng, $lng, $distance);
-								$arial_distance_arr[$imei][] = '0';
+								$arial_distance_arr[$imei][] = $supv;
 								
 							}
 							else
