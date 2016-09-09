@@ -235,7 +235,7 @@ function show_geofence(map)
 			var latlng = new google.maps.LatLng(center4[0], center4[1]);				
 			var marker = new MarkerWithLabel({
 			position: latlng,
-			draggable: true,							
+			draggable: false,							
 			map:map,
 			icon: {path: google.maps.SymbolPath.CIRCLE,},
 			labelContent: '<table><tr><td><font color="green" size=2><b>'+geo_name+'</b></font></td></tr></table>',
