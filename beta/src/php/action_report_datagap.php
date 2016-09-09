@@ -167,7 +167,7 @@ for($i=0;$i<$vsize;$i++)
                         $t1_no_data[$imei][] = $prev_xml_date;
                         $t2_no_data[$imei][] = $xml_date;
                         $tdiff_no_data[$imei][] = $tdiff_nodata;
-                        if($nodata_lat_prev=="" && $nodata_lng_prev=="")
+                        if(($nodata_lat_prev=="" && $nodata_lng_prev=="") || ($nodata_lat_next=="" && $nodata_lng_next=""))
                         {
                             $supv_on_no_data=isset($supv_on_no_data)?$supv_on_no_data:'0';
                             $distance_no_data[$imei][] = '0';
