@@ -422,7 +422,7 @@ for($i=0;$i<$vsize;$i++)
 	{
 		$title = $vname_datagap[$i]." (".$vserial[$i]."): Data Gap Report- From DateTime : ".$date1."-".$date2;
 		$csv_string = $csv_string.$title."\n";
-		$csv_string = $csv_string."SNo,Start Date Time,End Date Time,Difference(H:m:s)\n";
+		$csv_string = $csv_string."SNo,Start Date Time,End Date Time,Difference(H:m:s),Battery Voltage,Distance\n";
 		echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title[$i]\">";
 		$sno = 1;
 		for($j=0;$j<sizeof($t1_no_data[$vserial[$i]]);$j++)
@@ -432,12 +432,16 @@ for($i=0;$i<$vsize;$i++)
 			if($tdiff_no_data[$vserial[$i]][$j]!="")
 			  $diff_nodata = sec_to_time($tdiff_no_data[$vserial[$i]][$j]);
 			$tmp_dgap_sd=$t1_no_data[$vserial[$i]][$j];
-			$tmp_dgap_ed=$t2_no_data[$vserial[$i]][$j];			
+			$tmp_dgap_ed=$t2_no_data[$vserial[$i]][$j];
+                        $tmp_supv_gap=$supv_no_data[$vserial[$i]][$j];
+                        $tmp_distance_gap=$distance_no_data[$vserial[$i]][$j];
 			echo"<input TYPE=\"hidden\" VALUE=\"$sno\" NAME=\"temp[$i][$j][SNo]\">";
 			echo"<input TYPE=\"hidden\" VALUE=\"$tmp_dgap_sd\" NAME=\"temp[$i][$j][Start Date Time]\">";
 			echo"<input TYPE=\"hidden\" VALUE=\"$tmp_dgap_ed\" NAME=\"temp[$i][$j][End Date Time]\">";
 			echo"<input TYPE=\"hidden\" VALUE=\"$diff_nodata\" NAME=\"temp[$i][$j][Difference(H:m:s)]\">";
-			$csv_string = $csv_string.$sno.','.$tmp_dgap_sd.','.$tmp_dgap_ed.','.$diff_nodata."\n"; 			
+                        echo"<input TYPE=\"hidden\" VALUE=\"$tmp_supv_gap\" NAME=\"temp[$i][$j][Battery Voltage]\">";
+                        echo"<input TYPE=\"hidden\" VALUE=\"$tmp_distance_gap\" NAME=\"temp[$i][$j][Distance]\">";
+			$csv_string = $csv_string.$sno.','.$tmp_dgap_sd.','.$tmp_dgap_ed.','.$diff_nodata.','.$tmp_supv_gap.','.$tmp_distance_gap."\n"; 			
 			$sno++;
 		}
 	}
@@ -456,7 +460,7 @@ for($i=0;$i<$vsize;$i++)
 	{
 		$title = $vname_datagap[$i]." (".$vserial[$i]."): NO GPS Report- From DateTime : ".$date1."-".$date2;
 		$csv_string = $csv_string.$title."\n";
-		$csv_string = $csv_string."SNo,Start Date Time,End Date Time,Difference(H:m:s)\n";
+		$csv_string = $csv_string."SNo,Start Date Time,End Date Time,Difference(H:m:s),Battery Voltage,Distance\n";
 		echo"<input TYPE=\"hidden\" VALUE=\"$title\" NAME=\"title[$i]\">";
 		$sno = 1;
 		for($j=0;$j<sizeof($t1_no_gps[$vserial[$i]]);$j++)
