@@ -125,7 +125,7 @@ for($i=0;$i<$vsize;$i++)
                 if(strlen($lat)>2 && strlen($lng)>2) 
                 {				 
                     $gps_valid = 1;	
-					$for_last_nogps_data=$SortedDataObject->supVoltageData[$obi];
+                    $for_last_nogps_data=$SortedDataObject->supVoltageData[$obi];
                 }
                 if($firstdata_flag==0)
                 {
@@ -138,8 +138,8 @@ for($i=0;$i<$vsize;$i++)
                             $t1_no_data[$imei][] = $startdate;
                             $t2_no_data[$imei][] = $xml_date;
                             $tdiff_no_data[$imei][] = $tdiff_nodata;
-							$distance_no_data[$imei][]='0';
-							$supv_no_data[$imei][] ='0';
+                            $distance_no_data[$imei][]='0';
+                            $supv_no_data[$imei][] ='0';
                         }
                     }
                     $firstdata_flag=1;
@@ -158,7 +158,7 @@ for($i=0;$i<$vsize;$i++)
                     $tmp_diff=$xml_date_sec-$prev_xml_date_sec;
 					$nodata_lat_next=$lat;
                     $nodata_lng_next=$lng;
-					$supv_on_no_data=$SortedDataObject->supVoltageData[$obi];
+                    $supv_on_no_data=$SortedDataObject->supVoltageData[$obi];
                     //echo "xml_date_sec=".$xml_date_sec."prev_xml_date_sec=".$prev_xml_date_sec."diff=".$tmp_diff."skip_nodata_interval=".$skip_nodata_interval."<br>";
                     if($tmp_diff>$skip_nodata_interval)
                     {
@@ -167,9 +167,18 @@ for($i=0;$i<$vsize;$i++)
                         $t1_no_data[$imei][] = $prev_xml_date;
                         $t2_no_data[$imei][] = $xml_date;
                         $tdiff_no_data[$imei][] = $tdiff_nodata;
-						calculate_distance($nodata_lat_prev, $nodata_lat_next, $nodata_lng_prev, $nodata_lng_next, $distance);
-						$distance_no_data[$imei][] = round($distance,3);
-						$supv_no_data[$imei][] = $supv_on_no_data;
+                        if($nodata_lat_prev!="" && $nodata_lng_prev!="")
+                        {
+                            $distance_no_data[$imei][] = '0';
+                            $supv_no_data[$imei][] = $supv_on_no_data;
+                        }
+                        else 
+                        {
+                            calculate_distance($nodata_lat_prev, $nodata_lat_next, $nodata_lng_prev, $nodata_lng_next, $distance);
+                            $distance_no_data[$imei][] = round($distance,3);
+                            $supv_no_data[$imei][] = $supv_on_no_data;
+                        }
+						
                         //echo "in if<br>";
                     }
                     //if(($no_gps_found) && (($gps_valid) || ($tmp_diff>$skip_nodata_interval)))
