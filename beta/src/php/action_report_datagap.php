@@ -60,7 +60,9 @@ $parameterizeData->supVoltage='r';
 
 get_All_Dates($datefrom, $dateto, $userdates);    
 $date_size = sizeof($userdates);
-
+function IsNullOrEmptyString($question){
+    return (!isset($question) || trim($question)==='');
+}
 for($i=0;$i<$vsize;$i++)
 {
     $skip_interval=$skip_nogps_interval;
@@ -167,8 +169,10 @@ for($i=0;$i<$vsize;$i++)
                         $t1_no_data[$imei][] = $prev_xml_date;
                         $t2_no_data[$imei][] = $xml_date;
                         $tdiff_no_data[$imei][] = $tdiff_nodata;
-                        if(($nodata_lat_prev=="" && $nodata_lng_prev=="") || ($nodata_lat_next=="" && $nodata_lng_next="")) // for eleminating garbage value
+						
+                        if((IsNullOrEmptyString($nodata_lat_prev) && IsNullOrEmptyString($nodata_lng_prev)) || (IsNullOrEmptyString($nodata_lat_next) && IsNullOrEmptyString($nodata_lng_next))) // for eleminating garbage value
                         {
+							//echo "in if";
                             $supv_on_no_data=isset($supv_on_no_data)?$supv_on_no_data:'0';
                             $distance_no_data[$imei][] = '0';
                             $supv_no_data[$imei][] = $supv_on_no_data;
@@ -176,6 +180,7 @@ for($i=0;$i<$vsize;$i++)
                         else 
                         {
                             calculate_distance($nodata_lat_prev, $nodata_lat_next, $nodata_lng_prev, $nodata_lng_next, $distance);
+							//echo "dateFrom=".$prev_xml_date."dateTo=".$xml_date."distance=".$distance." nodata_lat_prev=".$nodata_lat_prev."=".$nodata_lng_prev."nodata_lat_next=".$nodata_lat_next."nodata_lng_next=".$nodata_lng_next."<br>";
                             $distance_no_data[$imei][] = round($distance,3);
                             $supv_no_data[$imei][] = $supv_on_no_data;
                         }
@@ -193,7 +198,7 @@ for($i=0;$i<$vsize;$i++)
                             $t2_no_gps[$imei][] = $t2;
 							
 							//echo "latStart_1=".$start_gps_lat."lngStart_2=".$start_gps_lng." lat=".$lat." lng=".$lng."<br>";
-							if($start_gps_lat=="" && $start_gps_lng=="") // for eleminating garbage value
+							if((IsNullOrEmptyString($start_gps_lat) && IsNullOrEmptyString($start_gps_lng)) || (IsNullOrEmptyString($lat) && IsNullOrEmptyString($lng))) // for eleminating garbage value
 							{
                                                             $supv=isset($supv)?$supv:'0';
 								$battory_voltage_arr[$imei][] = '0';
