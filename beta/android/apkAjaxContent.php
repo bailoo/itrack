@@ -77,6 +77,15 @@ while($statement->fetch())
                                 );
 }
 
+foreach ($apkDetailArr as $key => $values) {
+$keyValue=explode("###",$key);
+echo $keyValue[0]." ".$keyValue[1];
+    foreach ($values as $anotherkey => $val) {
+        echo 'downloadPathLink:'.$val['downloadPathLink']. ' download_file_name: '.$val['download_file_name'].' filePath:'.$val['filePath'].'<br>';
+    }
+
+}
+
 print_r($apkDetailArr);
 
 $statement->close();
