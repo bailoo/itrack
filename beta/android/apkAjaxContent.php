@@ -86,7 +86,7 @@ foreach ($apkDetailArr as $key => $values)
     
     $keyValue=explode("###",$key);
            
-    echo '<center><div><b>'.$keyValue[0].'</b></div></center><br>'; 
+    echo '<center><div><b>'.$keyValue[0].'</b></div></center>'; 
     echo'<div style="margin-left :19%;"><b>&nbsp;'.$keyValue[1].'</b></div><br>';
     echo'<center>
         <table border="1" class="menu" cellspacing="3" cellpadding="3" rules="all" bordercolor="grey">';
