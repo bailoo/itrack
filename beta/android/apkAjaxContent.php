@@ -92,6 +92,7 @@ foreach ($apkDetailArr as $key => $values)
     echo'<div style="margin-left :19%;"><b>&nbsp;'.$keyValue[1].'</b></div><br>';
     echo'<center>
         <table border="1" class="menu" cellspacing="3" cellpadding="3" rules="all" bordercolor="grey">';
+    $sNo=1;
     foreach ($values as $anotherkey => $val) 
     { 
         echo'<tr>
@@ -104,6 +105,7 @@ foreach ($apkDetailArr as $key => $values)
                 </a>
             </td>";
         echo '</tr>';
+        $sNo++;
      }
      echo' </table>';
 }  
