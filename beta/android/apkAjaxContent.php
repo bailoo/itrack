@@ -85,10 +85,8 @@ foreach ($apkDetailArr as $key => $values)
 {
     
     $keyValue=explode("###",$key);
-    if($version_name!=$apk_version_name)
-    {         
-        echo '<center><div><b>'.$keyValue[0].'</b></div></center><br>';    
-    }
+           
+    echo '<center><div><b>'.$keyValue[0].'</b></div></center><br>'; 
     echo'<div style="margin-left :19%;"><b>&nbsp;'.$keyValue[1].'</b></div><br>';
     echo'<center>
         <table border="1" class="menu" cellspacing="3" cellpadding="3" rules="all" bordercolor="grey">';
@@ -107,6 +105,6 @@ foreach ($apkDetailArr as $key => $values)
         echo '</tr>';
         $sNo++;
      }
-     echo' </table>';
+     echo'</table><br>';
 }  
 ?>
