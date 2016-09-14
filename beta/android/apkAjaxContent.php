@@ -46,13 +46,45 @@ $query = "SELECT apk_type,apk_version_name,apk_heading,download_file_name FROM a
 //bind result variables
 $statement->bind_result($apk_type, $apk_version_name, $apk_heading, $download_file_name);
 
-
-
 //fetch records
 $version_name="";
 $cmpHeading="";
 $sNo=1;
 while($statement->fetch()) 
+{
+    
+    $filePath="android/".$apk_type."/".$apk_version_name."/".$apk_heading."/".$download_file_name;    
+    $S3Filename="android/".$apk_type."/".$apk_version_name."/".$apk_heading."/".$download_file_name;
+    //echo "serverFilePath=".$S3Filename."<br>";
+    $sourcefileNameArr=listFile($S3Filename);
+    //print_r($sourcefileNameArr);
+    $sourceFilePath=$S3Filename."/".$sourcefileNameArr[0]['name'];
+    $destinationFileName=$sourcefileNameArr[0]['name'];
+    $tmpFilePath="tmpFolder/".$destinationFileName;
+    if(!file_exists($tmpFilePath))
+    {
+        $overwrite=true;
+        $copyResult=copyFile($sourceFilePath,$tmpFilePath,$overwrite); 
+    }   
+    
+    //$downloadPathLink="http://www.itracksolution.com/android/downloadApkUrl.php?aT=".$apk_type."&vN=".$apk_version_name."&aH=".$apk_heading."&dFN=".$download_file_name;
+    $downloadPathLink="http://www.itracksolution.com/android/downloadApkUrl.php?fileName=".$destinationFileName;
+    $arrKey=$apk_version_name."###".$apk_heading;
+    $apkDetailArr[$arrKey][]=array(
+                                    'downloadPathLink'=>$downloadPathLink,
+                                    'download_file_name'=>$download_file_name,
+                                    "filePath"=>$filePath  
+                                );
+}
+
+print_r($apkDetailArr);
+
+$statement->close();
+
+
+
+
+/*while($statement->fetch()) 
 {
     if($version_name!=$apk_version_name)
     {         
@@ -124,5 +156,5 @@ echo "</table></center>";
         }
     }
 }*/
-//echo "filePath=".$filePathToS3Wrapper."<br>";   
+//echo "filePath=".$filePathToS3Wrapper."<br>";   */
 ?>
