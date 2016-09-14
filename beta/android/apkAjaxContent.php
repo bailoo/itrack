@@ -90,11 +90,11 @@ foreach ($apkDetailArr as $key => $values)
         echo '<center><div><b>'.$keyValue[0].'</b></div></center><br>';    
     }
     echo'<div style="margin-left :19%;"><b>&nbsp;'.$keyValue[1].'</b></div><br>';
-    foreach ($values as $anotherkey => $val) 
-    {     
     echo'<center>
-        <table border="1" class="menu" cellspacing="3" cellpadding="3" rules="all" bordercolor="grey">
-        <tr>
+        <table border="1" class="menu" cellspacing="3" cellpadding="3" rules="all" bordercolor="grey">';
+    foreach ($values as $anotherkey => $val) 
+    { 
+        echo'<tr>
         <td>'.$sNo.'</td>
         <td>'.$val['downloadPathLink'].'</td>
         <td>'.$val['download_file_name'].'</td>';
@@ -103,8 +103,8 @@ foreach ($apkDetailArr as $key => $values)
                     Download
                 </a>
             </td>";
-        echo '</tr>
-        </table>';
+        echo '</tr>>';
      }
+     echo' </table>';
 }  
 ?>
