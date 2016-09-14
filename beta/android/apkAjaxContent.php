@@ -105,6 +105,6 @@ foreach ($apkDetailArr as $key => $values)
         echo '</tr>';
         $sNo++;
      }
-     echo'</table><br>';
+     echo'</table></center><br>';
 }  
 ?>
