@@ -103,7 +103,7 @@ foreach ($apkDetailArr as $key => $values)
                     Download
                 </a>
             </td>";
-        echo '</tr>>';
+        echo '</tr>';
      }
      echo' </table>';
 }  
