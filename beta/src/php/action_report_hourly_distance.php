@@ -285,21 +285,29 @@ echo'<form name="locationForm" action="commonDownloadScript.php" target="_blank"
 		
 		for($ci=0;$ci<$columnSize;$ci++)
 		{
+                    if($row->$mysqlTableColumnsArr[$ci]=="NODATA")
+                    {
+                        $locationRecord='No Record Found';
+                    }
+                    else
+                    {
+                        $locationRecord=$row->$mysqlTableColumnsArr[$ci];
+                    }
 			if($ci==0)
 			{
-                            $valueArr[]=$row->$mysqlTableColumnsArr[$ci];
-				echo"<td>".$row->$mysqlTableColumnsArr[$ci]."</td>";
+                            $valueArr[]=$locationRecord;
+				echo"<td>".$locationRecord."</td>";
 				continue;
 			}
 			
 			if($durationBreakCount<=$dataInterval)
 			{
-				//$culumnSum+=$culumnSum+$row->$mysqlTableColumnsArr[$ci];
+				//$culumnSum+=$culumnSum+$locationRecord;
 				//echo"durationBreakCount=".$durationBreakCount."dataInterval=".$dataInterval."mysqlTableColumnsArr=".$mysqlTableColumnsArr[$ci]."<br>";
 				if($durationBreakCount==$dataInterval)
 				{
-                                    $valueArr[]=$row->$mysqlTableColumnsArr[$ci]."[".$row->$mysqlDistTableColumns[$ci]."]";
-					echo"<td>".$row->$mysqlTableColumnsArr[$ci]."[".$row->$mysqlDistTableColumns[$ci]."]</td>";
+                                    $valueArr[]=$locationRecord."[".$row->$mysqlDistTableColumns[$ci]."]";
+					echo"<td>".$locationRecord."[".$row->$mysqlDistTableColumns[$ci]."]</td>";
 					$culumnSum=0;
 					$durationBreakCount=1;
 					if($ci==$columnSize)
