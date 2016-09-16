@@ -332,7 +332,11 @@ function setInvoiceRawMilk($lorry_no,$Vehicle_no,$group_id,$user_id,$trans_mobil
 	
 	$validity_time = date('Y-m-d H:i:s', strtotime($target_time .' +4 day'));
 	//insertion
-	
+	if(strtotime($target_time)< strtotime($dispatch_time))
+        {
+            $msg="Fail";
+            exit();
+        }
 	if($db_serial_no!="" || $db_serial_no!=null) // for pending invoice
 	{
 		if($Vehicle_no=="" || $Vehicle_no==null) //simply update the pending invoice
