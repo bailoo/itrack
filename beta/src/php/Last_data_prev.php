@@ -379,7 +379,7 @@ if($dwt=="1")
 }
           
 echo'
-	<input type="hidden" name="vehicleserial" value='.serialize($vehicleserial).'>
+	<input type="hidden" name="vehicleserial" value='.base64_encode(serialize($vehicleserial)).'>
 	<input type="hidden" name="lat" value='.serialize($lat).'>
 	<input type="hidden" name="lng" value='.serialize($lng).'>
 	<input type="hidden" name="datetimeXml" value='.base64_encode(serialize($datetimeXml)).'>
