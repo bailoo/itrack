@@ -63,7 +63,7 @@
 	}
 	else
 	{
-		$vehicleserial=unserialize($vehicleserial);
+		$vehicleserial=unserialize(base64_decode($vehicleserial));
 		$lat = unserialize($lat);
 		$lng = unserialize($lng);
 		$datetime = unserialize(base64_decode($datetimeXml));	
