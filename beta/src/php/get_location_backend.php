@@ -12,7 +12,8 @@ function calculate_report_distance($lat1, $lat2, $lon1, $lon2, &$distance) {
     $temp = pow(sin($delta_lat / 2.0), 2) + cos($lat1) * cos($lat2) * pow(sin($delta_lon / 2.0), 2);
     $distance = 6378.1 * 2 * atan2(sqrt($temp), sqrt(1 - $temp));
 }
-function get_report_location($lat, $lng, &$placename) {
+$lat=$_REQUEST['lat'];
+$lng=$_REQUEST['lng'];
     /* $geoCodeURL = "http://nominatim.openstreetmap.org/reverse?format=xml&lat=".$lat."&lon=".$lng."&zoom=18&addressdetails=1";
       $xml=@simplexml_load_file($geoCodeURL);
       foreach($xml->result[0]->attributes() as $a => $b)
@@ -85,11 +86,9 @@ function get_report_location($lat, $lng, &$placename) {
         }
     }
     curl_close($curl_handle);
-}
 
 
-$lat=$_REQUEST['lat'];
-$lng=$_REQUEST['lng'];
-get_report_location($lat, $lng, &$placename);
+
+
 echo $placename;
 ?>
