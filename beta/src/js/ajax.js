@@ -37,7 +37,7 @@ function show_option(type, option, target_file)      // type="manage/report/sett
 {
   var poststr = "setting_account_id="+option;
  
-  //alert("riz:"+poststr +file);
+  alert("riz:"+poststr +file);
   makePOSTRequest('src/php/'+ file + '.php', poststr);
 }
 
