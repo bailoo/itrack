@@ -96,7 +96,14 @@
 		$_SESSION['final_group_array'] = $final_group_array;
 		
 		//echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"2; URL=add_account.php\">";
-	}					
+	}include_once("util_account_detail.php");
+        if($user_type=="raw_milk" || $user_type=='substation' || $user_type=="plant_raw_milk" || $user_type=="hindalco_invoice" )
+        {
+            
+        }
+        else
+        {
 	 echo'<center><a href="javascript:show_option(\'setting\',\'update_account_prev\');" class="back_css">&nbsp;<b>Back</b></a></center>';
+        }
 ?>
         
