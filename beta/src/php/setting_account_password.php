@@ -49,6 +49,7 @@
     </table>
   </form>';
   if($user_type=="raw_milk" || $user_type=='substation' || $user_type=='plant_raw_milk'){
+      echo'<center><a href="javascript:load_kyc(\'setting_account_detail\',\''.$account_id.'\');" class="back_css">&nbsp;<b>Fill KYC/Account Detail here</b></a></center>';
   }
   else{
 	echo'<center><a href="javascript:show_option(\'setting\',\'account_password_prev\');" class="back_css">&nbsp;<b>Back</b></a></center>';

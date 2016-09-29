@@ -1,7 +1,7 @@
 <?php
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');
-
+        include_once("util_account_detail.php");
 	$account_id_local=$_POST['setting_account_id'];
 	$tmp = explode(',',$account_id_local);
 	//echo $tmp[0].','.$tmp[1].'<BR>';
@@ -90,5 +90,12 @@
 				</tr>
 			</table>			
 		</form>';
+                 if($user_type=="raw_milk" || $user_type=='substation' || $user_type=="plant_raw_milk" || $user_type=="hindalco_invoice" )
+            {
+                    
+                }
+                else
+                {
 			echo'<center><a href="#" onclick="javascript:setting_account_detail(\'src/php/setting_update_choose_account.php\',\'first_stage\');" class="menuitem">&nbsp;<b>Back</b></a></center>';
+                }
 ?>

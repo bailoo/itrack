@@ -33,6 +33,14 @@ function show_option(type, option, target_file)      // type="manage/report/sett
   makePOSTRequest('src/php/' + type + '_' + option + '.php', poststr);
 }
 
+ function load_kyc(file, option)      // type="manage/report/setting, option=account,vehicle,device,speed,distance,fuel etc"
+{
+  var poststr = "setting_account_id="+option;
+ 
+  //alert("riz:"+poststr +file);
+  makePOSTRequest('src/php/'+ file + '.php', poststr);
+}
+
 function show_option_with_value(type, option)      // type="manage/report/setting, option=account,vehicle,device,speed,distance,fuel etc"
 {
 
