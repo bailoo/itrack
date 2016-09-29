@@ -141,7 +141,7 @@ for($i=0;$i<$vsize;$i++)
                             $t2_no_data[$imei][] = $xml_date;
                             $tdiff_no_data[$imei][] = $tdiff_nodata;
                             $distance_no_data[$imei][]='0';
-                            $supv_no_data[$imei][] ='0';
+                            $supv_no_data[$imei][] =$SortedDataObject->supVoltageData[$obi];
                         }
                     }
                     $firstdata_flag=1;
@@ -197,28 +197,28 @@ for($i=0;$i<$vsize;$i++)
                             $t1_no_gps[$imei][] = $t1;
                             $t2_no_gps[$imei][] = $t2;
 							
-							//echo "latStart_1=".$start_gps_lat."lngStart_2=".$start_gps_lng." lat=".$lat." lng=".$lng."<br>";
-							if((IsNullOrEmptyString($start_gps_lat) && IsNullOrEmptyString($start_gps_lng)) || (IsNullOrEmptyString($lat) && IsNullOrEmptyString($lng))) // for eleminating garbage value
-							{
-                                                            $supv=isset($supv)?$supv:'0';
-								$battory_voltage_arr[$imei][] = '0';
-								//calculate_distance($start_gps_lat, $lat, $start_gps_lng, $lng, $distance);
-								$arial_distance_arr[$imei][] = $supv;
-								
-							}
-							else
-							{
-								$battory_voltage_arr[$imei][] = $supv;
-								calculate_distance($start_gps_lat, $lat, $start_gps_lng, $lng, $distance);
-								if($distance>0.1)
-								{
-									$arial_distance_arr[$imei][] = round($distance,3);
-								}
-								else
-								{
-									$arial_distance_arr[$imei][] = 0;
-								}
-							}
+                            //echo "latStart_1=".$start_gps_lat."lngStart_2=".$start_gps_lng." lat=".$lat." lng=".$lng."<br>";
+                            if((IsNullOrEmptyString($start_gps_lat) && IsNullOrEmptyString($start_gps_lng)) || (IsNullOrEmptyString($lat) && IsNullOrEmptyString($lng))) // for eleminating garbage value
+                            {
+                                $supv=isset($supv)?$supv:'0';
+                                    $battory_voltage_arr[$imei][] = $supv;
+                                    //calculate_distance($start_gps_lat, $lat, $start_gps_lng, $lng, $distance);
+                                    $arial_distance_arr[$imei][] = $supv;
+
+                            }
+                            else
+                            {
+                                    $battory_voltage_arr[$imei][] = $supv;
+                                    calculate_distance($start_gps_lat, $lat, $start_gps_lng, $lng, $distance);
+                                    if($distance>0.1)
+                                    {
+                                            $arial_distance_arr[$imei][] = round($distance,3);
+                                    }
+                                    else
+                                    {
+                                            $arial_distance_arr[$imei][] = 0;
+                                    }
+                            }
 						
 												
 							
@@ -240,17 +240,17 @@ for($i=0;$i<$vsize;$i++)
                         if(!$no_gps_found)
                         {
                             $no_gps_found = true;
-							$start_gps_lat=$SortedDataObject->latitudeData[$obi-1];
-							$start_gps_lng=$SortedDataObject->longitudeData[$obi-1];
-							$supv = $SortedDataObject->supVoltageData[$obi];
-							//echo "latStart=".$start_gps_lat."lngStart=".$start_gps_lng."<br>";
+                            $start_gps_lat=$SortedDataObject->latitudeData[$obi-1];
+                            $start_gps_lng=$SortedDataObject->longitudeData[$obi-1];
+                            $supv = $SortedDataObject->supVoltageData[$obi];
+                            //echo "latStart=".$start_gps_lat."lngStart=".$start_gps_lng."<br>";
                             $t1 = $xml_date;
                         }
                         $t2 = $xml_date;		
                     }
                     $valid_data = true;
                     $prev_xml_date = $xml_date;
-					$nodata_lat_prev=$lat;
+                    $nodata_lat_prev=$lat;
                     $nodata_lng_prev=$lng;
                     $t1NoData= $xml_date;
                     ////////////////// 
