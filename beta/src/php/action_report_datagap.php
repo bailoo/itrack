@@ -299,7 +299,7 @@ for($i=0;$i<$vsize;$i++)
 				$t1_no_gps[$imei][] = $t1;									
 				$t2_no_gps[$imei][] = $t2;
 				$tdiff_no_gps[$imei][] = $tdiff;	
-				$for_last_nogps_battery_voltage=isset($for_last_nogps_battery_voltage)?$for_last_nogps_battery_voltage:'0';
+				$for_last_nogps_battery_voltage=isset($supv)?$supv:'0';
 				$battory_voltage_arr[$imei][] =$for_last_nogps_battery_voltage;       // t1_no_gps
 				//calculate_distance($last_lat_prev, $lat, $last_lng_prev, $lng, $distance);
 				$arial_distance_arr[$imei][] = '0';       // t1_no_gps
