@@ -203,7 +203,7 @@ for($i=0;$i<$vsize;$i++)
                                 $supv=isset($supv)?$supv:'0';
                                     $battory_voltage_arr[$imei][] = $supv;
                                     //calculate_distance($start_gps_lat, $lat, $start_gps_lng, $lng, $distance);
-                                    $arial_distance_arr[$imei][] = $supv;
+                                    $arial_distance_arr[$imei][] = 0;
 
                             }
                             else
