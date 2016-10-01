@@ -620,7 +620,7 @@ echo'<form method="post" action="action_report_travel_1.php" target="_self">
 	echo'<textarea id="geocodedPostcodesStart" name="geocodedPostcodesStart" cols="40" rows="20" style="display:none"></textarea>
 	<textarea id="geocodedPostcodesEnd" name="geocodedPostcodesEnd" cols="40" rows="20" style="display:none"></textarea>
 	<input type="hidden" name="imei_prev" value="'.$imei_str.'">
-	<input type="hidden" name="vname_prev" value="'.$vname_str.'">
+	<input type="hidden" name="vname_prev" value="'.base64_encode(serialize($vname_str)).'">
 	<input type="hidden" name="lat_start_prev" value="'.$lat_start_str.'">
 	<input type="hidden" name="lng_start_prev" value="'.$lng_start_str.'">
 	<input type="hidden" name="lat_end_prev" value="'.$lat_end_str.'">
