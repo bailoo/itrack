@@ -16,7 +16,7 @@
 		 "<br>google_place_end=".$geocodedPostcodesEnd."<br>distance_travelled_prev=".$distance_travelled_prev."<br>travel_time_prev=".$travel_time_prev."<br>";*/
 		
 	$imei=explode(":",$imei_prev);
-	$vname=explode(":",$vname_prev);
+	$vname=explode(":",unserialize(base64_decode($vname_prev)));
 	$lat_start=explode(":",$lat_start_prev);
 	$lng_start=explode(":",$lng_start_prev);
 	$lat_end=explode(":",$lat_end_prev);
