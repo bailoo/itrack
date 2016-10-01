@@ -531,7 +531,7 @@ for($i=0;$i<$vsize;$i++)
         }
 
         $imei[]=$vserial[$i];
-        $vname[]=$finalVNameArr[$i];
+        $vname[]=$vehicle_detail_local[0];
         $time1[]=$datetime_travel_start;
         $time2[]=$datetime_travel_end;
         $lat_start[]=$lat_travel_start;
