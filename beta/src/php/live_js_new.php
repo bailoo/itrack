@@ -1472,7 +1472,7 @@ function processMapMarkers(len2, flag, lat_arr, lng_arr, vid_arr, vehiclename_ar
 
 					
 				   // alert('image='+image);
-					position=new google.maps.LatLng(yaxis, xaxis);
+					//position=new google.maps.LatLng(yaxis, xaxis);
 					//alert('position='+position);											
 					//alert("trail_flag="+trail_flag);
 					
