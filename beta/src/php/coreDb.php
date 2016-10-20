@@ -5254,6 +5254,146 @@ function updateRawMilkInvoiceMaterial($material_name1,$material_code1,$account_i
 	$result=mysql_query($query,$DbConnection); 
 	return $result;
 }
+
+//==========person++++++//
+function getStationPersonMaxSerial($DbConnection)
+{
+	$query ="select Max(sno)+1 as serial_no from station_person";  ///// for auto increament of geo_id ///////////   
+	$result=mysql_query($query,$DbConnection);
+	$row=mysql_fetch_object($result);
+	$max_no= $row->serial_no;
+	return $max_no;
+}
+
+function insertStationPerson($account_size,$local_account_ids,$max_no,$station_no1,$station_name1,$station_coord1,$type1,$status,$account_id,$date,$DbConnection)
+ {
+	$query_string1="INSERT INTO station_person(user_account_id,station_id,customer_no,station_name,station_coord,type,status,create_id,create_date) VALUES";
+	for($i=0;$i<$account_size;$i++)
+	{
+		//echo "accout_id=".$local_account_ids[$i]."<br>";
+		if($i==$account_size-1)
+		{
+			$query_string2.="('$local_account_ids[$i]',$max_no,'$station_no1','$station_name1','$station_coord1','$type1',$status,'$account_id','$date');";
+		}
+		else
+		{
+			$query_string2.="('$local_account_ids[$i]',$max_no,'$station_no1','$station_name1','$station_coord1','$type1',$status,'$account_id','$date'),";
+		}
+	}
+	$query=$query_string1.$query_string2; 
+	//echo "query=".$query;
+	
+	$result=mysql_query($query,$DbConnection); 
+	return $result;
+ }
+ 
+ function getCustomerNoStationPerson($field_value,$account_id,$DbConnection)
+ {
+    $query = "SELECT customer_no FROM station_person USE INDEX(stn_stncno_uaid_status) WHERE customer_no='$field_value' and user_account_id='$account_id' and status='1'";
+    //if($DEBUG==1){print_query($query);}
+    //echo $query;
+    //exit();
+    $result = @mysql_query($query, $DbConnection);
+    $row_result=@mysql_num_rows($result);
+    return $row_result;
+ }
+ 
+ function getDetailAllStationPerson($account_id_local,$station_type1,$DbConnection)
+{
+    $query="select station_id,customer_no,station_name,distance_variable FROM station_person USE INDEX(stn_uaid_status) WHERE user_account_id=$account_id_local and status=1";
+    //echo "query=".$query."<br>";
+	//echo "DbConnection=".$DbConnection."<br>";
+	$result=mysql_query($query,$DbConnection);            							
+    while($row=mysql_fetch_object($result))
+    {
+		//echo "in while";
+        /*$station_id=$row->station_id;
+        $customer_no=$row->customer_no;	
+        $station_name=$row->station_name;
+        $distance_variable=$row->distance_variable;
+        $type=$row->type;*/				
+        $data[]=array('station_id'=>$row->station_id,'customer_no'=>$row->customer_no,'station_name'=>$row->station_name,'distance_variable'=>$row->distance_variable,'type'=>$row->type);
+    }
+	//print_r($data);
+    return $data;
+}
+ function updateStationPerson($geo_name1,$geo_coord1,$customer_no1,$distance_variable1,$account_id,$date,$geo_id1,$DbConnection)
+   {
+           $query="UPDATE station_person SET station_name='$geo_name1',station_coord='$geo_coord1',customer_no='$customer_no1',distance_variable='$distance_variable1',edit_id='$account_id',edit_date='$date' WHERE station_id='$geo_id1'";
+           //echo "query=".$query;
+           $result=mysql_query($query,$DbConnection);
+           return $result;		
+   }
+function updateStationPerson2($station_size,$distance_variable1,$date,$local_station_ids,$DbConnection)
+{
+$query_string1="UPDATE station_person SET distance_variable='$distance_variable1',edit_date='$date' WHERE station_id IN(";
+$update_str = "";
+for($i=0;$i<$station_size;$i++)
+{
+//echo "local_geofenc_id=".$local_geofenc_id[$i]."<br>";
+if($i==0)
+{
+$update_str= $update_str.$local_station_ids[$i];
+}
+else
+{
+$update_str= $update_str.",'".$local_station_ids[$i]."'";
+}
+}
+$query=$query_string1.$update_str.")";
+//echo $query;
+$result=mysql_query($query,$DbConnection);
+    return $result;
+}
+
+function getNumRowStationPerson($field_value,$local_account_id,$DbConnection)
+ {
+    $query = "SELECT station_name FROM station_person USE INDEX(stn_stnname_uaid_status) WHERE station_name='$field_value' and user_account_id='$local_account_id' and status='1'";  
+    if($DEBUG==1)
+    {
+        print_query($query);            
+    }
+    $result = @mysql_query($query, $DbConnection);     	     	                       
+    $row_result=@mysql_num_rows($result);
+    return $row_result;
+ }
+  function getPersonStationIDCustomerNoStation($common_id1,$DbConnection)
+ {
+  $query="SELECT station_id,customer_no FROM station_person USE INDEX(stn_uaid_status) WHERE user_account_id='$common_id1' AND status='1'";
+		//echo "query=".$query."<br>";
+		$result=mysql_query($query,$DbConnection);
+		$row_result=mysql_num_rows($result);
+        while($row=mysql_fetch_object($result))
+        {									
+            $geo_id=$row->station_id;
+            $customer_no=$row->customer_no;	
+
+            $data[]=array('geo_id'=>$row->station_id,'customer_no'=>$row->customer_no);
+        }
+        return $data;	
+ }
+ function deletePersonStation ($station_size,$local_station_ids,$DbConnection)
+ {
+	$query_string1="UPDATE station_person SET status=0 WHERE station_id IN(";
+	$del_str = "";
+	for($i=0;$i<$station_size;$i++)
+	{
+		//echo "local_geofenc_id=".$local_geofenc_id[$i]."<br>";
+		if($i==0)
+		{
+			$del_str= $del_str.$local_station_ids[$i];
+		}
+		else
+		{
+			$del_str= $del_str.",'".$local_station_ids[$i]."'";        
+		}
+	}
+	$query=$query_string1.$del_str.")"; 
+	
+	//echo $query;		
+	$result=mysql_query($query,$DbConnection);
+	return $result;
+ }
 //========================================================//
 //////////// end of hierarchy class ////////
 ///////////// end of excalation ////////////
