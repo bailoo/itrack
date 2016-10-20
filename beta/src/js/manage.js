@@ -11534,7 +11534,7 @@ function action_manage_invoice_raw_milk(){
    document.getElementById('offset_tankertype').value=tankertype;
    
    //var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
-   var iChars = ",";
+   var iChars = ",&";
    for(j=0;j<=parseInt(tnum);j++){
         if(document.getElementById('lrno:'+j).value!=""){
             
@@ -12172,7 +12172,7 @@ function action_manage_invoice_raw_milk_from_admin(){
    document.getElementById('offset_tankertype').value=tankertype;
    
    //var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
-   var iChars = ",";
+   var iChars = ",&";
    for(j=0;j<=parseInt(tnum);j++){
         if(document.getElementById('lrno:'+j).value!=""){
             
