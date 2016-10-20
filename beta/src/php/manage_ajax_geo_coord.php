@@ -11,6 +11,8 @@
   //echo "route_id=". $route_id_1;;
   $polyline_id_1=$_POST['polyline_id'];
   
+  $persons_station_id_1=$_POST['person_station_id'];
+  
   if($station_id_1!="")
   {
     $query="SELECT station_name,customer_no,station_coord,distance_variable,type FROM station WHERE station_id='$station_id_1'";
@@ -104,6 +106,27 @@
    
     echo "manage_polyline_coord##".$polyline_name1."##".$coord_1;
   }
+  
+  //person_station
+   if($persons_station_id_1!="")
+  {
+       
+    $query="SELECT station_name,customer_no,station_coord,distance_variable,type FROM station_person WHERE station_id='$persons_station_id_1'";
+    $result=mysql_query($query,$DbConnection);
+    $row=mysql_fetch_object($result);
+    $geo_name1=$row->station_name;
+    $customer_no1=$row->customer_no;
+    $coord_1=$row->station_coord;
+    $distance_variable1 =$row->distance_variable;
+    $type1 =$row->type;
+    $type1 = trim($type1);
+    if($type1 == "0")
+    {
+      $station_type = "Customer";
+    }    
+    
+    echo "manage_station_coord##".$geo_name1."##".$customer_no1."##".$coord_1."##".$distance_variable1."##".$station_type;
+  }  
 ?>
 
         
