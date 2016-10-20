@@ -261,4 +261,21 @@
                     echo "addMaterial##<font color=green>Available</font>"; 
                 }
 	}
+          //=========person
+        if($file_type=="station_no_person")
+	{
+
+		$row_result=getCustomerNoStationPerson($field_value,$account_id,$DbConnection);
+		//echo $row_result;
+                //exit();
+                $message=failure_successesor($row_result);
+		echo $message;
+	}
+        if($file_type=="station_person")
+	{     	
+		   	     	                       
+		$row_result=getNumRowStationPerson($field_value,$local_account_id,$DbConnection);
+		$message=failure_successesor($row_result);
+		echo $message;
+	}
 	?>
