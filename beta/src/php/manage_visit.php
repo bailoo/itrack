@@ -35,6 +35,22 @@
                         <a onclick="'.$js_function_name.'(\'src/php/manage_edit_visit_person_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
                           <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_edit_visit_person_prev.php\')"/><i class="fa fa-pencil" aria-hidden="true"></i> Edit Schedule
                         </a>
+                        
+                         <a onclick="'.$js_function_name.'(\'src/php/manage_add_person_station.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                               <input type="radio" name="new_exist" value="new" onclick="'.$js_function_name.'(\'src/php/manage_add_person_station.php\')"/><i class="fa fa-plus-square" aria-hidden="true"></i> Add Station
+                        </a>
+                       
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_edit_person_station_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                              <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_edit_person_station_prev.php\');document.getElementById(\'automatic\').style.display=none;document.getElementById(\'manual\').style.display=none;"/><i class="fa fa-pencil" aria-hidden="true"></i> Edit Station
+                        </a>
+                        
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_delete_person_station_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                              <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_delete_person_station_prev.php\');document.getElementById(\'automatic\').style.display=none;document.getElementById(\'manual\').style.display=none;"/><i class="fa fa-minus-square" aria-hidden="true"></i> Delete Station
+                        </a>
+                            
+                        <a onclick="'.$js_function_name.'(\'src/php/manage_assign_schedule_visit_prev.php\')" class="btn btn-default" data-toggle="tab" style="padding: 3px 12px;">
+                          <input type="radio" name="new_exist" value="exist" onclick="'.$js_function_name.'(\'src/php/manage_assign_schedule_visit_prev.php\')"/><i class="fa fa-pencil" aria-hidden="true"></i> Assign Schedule Visit
+                        </a>
                     </div>
                 </li>
             </ol>';

@@ -11534,7 +11534,7 @@ function action_manage_invoice_raw_milk(){
    document.getElementById('offset_tankertype').value=tankertype;
    
    //var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
-   var iChars = ",";
+   var iChars = ",&";
    for(j=0;j<=parseInt(tnum);j++){
         if(document.getElementById('lrno:'+j).value!=""){
             
@@ -12172,7 +12172,7 @@ function action_manage_invoice_raw_milk_from_admin(){
    document.getElementById('offset_tankertype').value=tankertype;
    
    //var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
-   var iChars = ",";
+   var iChars = ",&";
    for(j=0;j<=parseInt(tnum);j++){
         if(document.getElementById('lrno:'+j).value!=""){
             
@@ -15059,5 +15059,192 @@ function show_invoiceRawMIlkMaterial()
       //alert(poststr);
       makePOSTRequest('src/php/manage_ajax_invoiceRawmilkMaterial.htm', poststr);
       //alert(poststr);
+    }
+ }
+ 
+ /////////////person
+ function manage_newtarget_file(file_name)
+{	
+	var obj=document.manage1.manage_id;
+	var result=radio_selection(obj);		
+	if(result!=false)
+	{
+            //alert(file_name);
+            var win = window.open(file_name+"?common_id="+result+"", '_blank');
+            if (win) {
+                //Browser has allowed it to be opened
+                win.focus();
+            } else {
+                //Browser has blocked it
+                alert('Please allow popups for this website');
+            };
+
+
+            /*
+             document.getElementById('manage1').onsubmit=function() 
+             {
+      	     document.getElementById('manage1').target = '_blank';
+		showManageLoadingMessage();
+		manage_edit_prev_interface(file_name,result);
+	}*/
+    }
+    }
+ 
+ function action_manage_person_station(action_type)
+ {  
+    //alert("action_type="+action_type);    
+    if(action_type=="add")  
+    {
+  		var obj=document.manage1.elements['manage_id[]'];
+  		var result=checkbox_selection(obj);
+  		//alert("result"+result);
+  		if(result!=false)
+  		{
+  		var add_station_no=document.getElementById("add_station_no").value;   	    
+                    var add_station_name=document.getElementById("add_station_name").value; 
+    		  var station_coord=document.getElementById("landmark_point").value;
+         
+
+                  if(add_station_no=="")
+                  {
+                        alert("Please Enter Station Number");
+                        document.getElementById("add_station_no").focus();
+                        return false;
+                  }
+ 
+
+    		  if(add_station_name=="") 
+    		  {
+      			alert("Please Enter Station Name"); 
+      			document.getElementById("add_station_name").focus();
+      			return false;
+    		  }
+    		  if(station_coord=="") 
+    		  {
+      			alert("Please Add Station");
+      			document.getElementById("landmark_point").focus();
+      			return false;
+    		  }    		  
+	        var poststr = "action_type="+encodeURI(action_type ) + 
+					"&local_account_ids="+encodeURI(result) +
+                                        "&station_no="+encodeURI(add_station_no) +
+					"&station_name="+encodeURI(add_station_name) +
+					"&station_coord="+encodeURI(station_coord);
+			//alert(poststr);
+  		}
+    }
+    else if(action_type=="edit")
+    {    
+  		var station_id1=document.getElementById("station_id").value; 
+  		if(station_id1=="select")
+  		{
+  			alert("Please Select Station"); 
+  			document.getElementById("station_id").focus();
+  			return false;
+  		}       
+  		var station_name=document.getElementById("station_name").value;
+      var customer_no=document.getElementById("customer_no").value; 
+  		var station_coord=document.getElementById("landmark_point").value;
+  		var distance_variable=document.getElementById("distance_variable").value; 
+  		
+      if(station_name=="") 
+  		{
+  			alert("Please Enter Station Name"); 
+  			document.getElementById("station_name").focus();
+  			return false;
+  		}
+  		if(customer_no=="") 
+  		{
+  			alert("Please Add Customer No");
+  			document.getElementById("customer_no").focus();
+  			return false;
+  		}  		
+  		if(station_coord=="") 
+  		{
+  			alert("Please Add Station");
+  			document.getElementById("landmark_point").focus();
+  			return false;
+  		}
+		  if(distance_variable=="") 
+		  {
+  			alert("Please Enter Distance variable"); 
+  			document.getElementById("distance_variable").focus();
+  			return false;
+		  }  		
+  		var poststr ="action_type="+encodeURI(action_type ) + 
+  		"&station_id="+station_id1 +
+  		"&station_name="+station_name +
+  		"&customer_no="+customer_no +
+  		"&station_coord="+station_coord +
+  		"&distance_variable="+distance_variable;
+    }
+    else if(action_type=="edit_dist_var")
+    {  		
+      var form_obj=document.manage1.elements['station_id2[]'];      
+	   	var checkbox_result=checkbox_selection(form_obj); /////////validate and get vehicleids		      
+      var dist_var = document.getElementById('distance_variable').value;
+          
+      if(checkbox_result==false)
+      {
+        alert("Please Select One Station");
+        return false;
+      }      
+      if( (dist_var == "") || (isNaN(dist_var)) )
+      {
+        alert("Please Enter valid Distance variable");
+        return false;
+      }
+      
+      var poststr = "action_type="+encodeURI(action_type ) +                     
+                    "&station_ids=" + encodeURI(checkbox_result)+"&distance_variable="+dist_var;
+    }    
+    else if(action_type=="delete")
+    {
+  		var form_obj=document.manage1.elements['station_id[]'];
+	   	var checkbox_result=checkbox_selection(form_obj); /////////validate and get vehicleids		
+      
+      if(station_id1=="select")
+      {
+        alert("Please Select Station"); 
+        document.getElementById("station_id1").focus();
+        return false;
+      }    
+      var poststr = "action_type="+encodeURI(action_type ) +                     
+                    "&station_ids=" + encodeURI(checkbox_result);
+    }
+	
+	  //alert("poststr="+poststr);
+	showManageLoadingMessage();
+    makePOSTRequest('src/php/action_manage_person_station.htm', poststr);
+ }
+  function show_station_person(value)
+  {
+		var account_id_local = document.getElementById('account_id_local').value;
+		
+    if(value == "select")
+		{
+		  alert("Please select one Station type");
+    }
+    else
+    {
+      var poststr="station_type="+value+"&account_id_local="+account_id_local;
+      //alert("POST="+poststr);    
+      makePOSTRequest('src/php/manage_edit_person_station_distance_variable.htm', poststr);
+    }
+  }
+  
+ function show_person_station_coord(obj)
+ {
+    var station_id=document.getElementById("station_id").value;
+    if(station_id=="select")
+    {
+      document.getElementById("coord_area").style.display="none"; 
+    }
+    else
+    {
+      var poststr = "person_station_id=" + encodeURI( document.getElementById("station_id").value);
+      //alert(poststr);
+      
+      makePOSTRequest('src/php/manage_ajax_geo_coord.htm', poststr);
     }
  }
