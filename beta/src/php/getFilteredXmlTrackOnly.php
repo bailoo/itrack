@@ -602,7 +602,7 @@ for($i=0;$i<$vsize;$i++)
                         {
                             $DataValid = 1;
                         }
-                        if(($DataValid==1) && !(strtotime($datetime)>(strtotime($SortedDataObject->serverDatetime[$obi])+10*60)))
+                        if(($DataValid==1) && !(strtotime($datetime)>(strtotime($SortedDataObject->serverDatetime[$obi])+1*60*60)))
                         { 
                             $last_rec = $obi;
                             $xml_date_current = $datetime;
