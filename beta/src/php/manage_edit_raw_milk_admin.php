@@ -95,6 +95,10 @@ border: none;
 	{
 		$unloadaccepttime = 1;
 	}
+        if($order=="2")
+	{
+		$unloadaccepttimefull = 1;
+	}
 	$targetplant=$_POST['targetplant'];
 	//echo $targetplant;
         //echo $order."<br>";
@@ -220,9 +224,9 @@ border: none;
 							//echo$query1;
 						}
 					}
-                                        else if($unloadaccepttime)
+                                        else if($unloadaccepttimefull)
                                         {
-                                               $condition="unloadaccepttime";
+                                               $condition="unloadaccepttimefull";
                                                $orderA="2";
                                                $user_type="plant_raw_milk";
                                                $conditionStr="";
@@ -335,6 +339,14 @@ border: none;
                                        $conditionStr="";
                                        $result=getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type,$DbConnection);
                                 }
+                                else if($unloadaccepttimefull)
+                                        {
+                                               $condition="unloadaccepttimefull";
+                                               $orderA="2";
+                                               $user_type="admin";
+                                               $conditionStr="";
+                                               $result=getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type,$DbConnection);
+                                        }
                                else
                                {
                                        $condition="datebetween_invoicestatus";
