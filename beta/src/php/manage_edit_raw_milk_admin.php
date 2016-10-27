@@ -774,7 +774,7 @@ border: none;
 						{
                                                         $full_closetime=$row_select['close_time'];
 							if( $user_type!="raw_milk"){
-								echo '<td align=right>'.$full_closetime.'*</td>';	
+								echo '<td align=right>'.$full_closetime.'</td>';	
 							}
 							//if( $user_type=="plant_raw_milk"){
 							if( $user_type=="plant_raw_milk" || $user_type=="raw_milk"){
