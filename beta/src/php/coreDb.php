@@ -5037,8 +5037,8 @@ function getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$order,$use
 		{
 			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
 							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
-							AND ($plant_in) AND invoice_mdrm.invoice_status='$order' AND invoice_mdrm.system_time BETWEEN '$startdate' AND '$enddate'";
-							echo"Test";  
+							AND ($plant_in) AND invoice_mdrm.invoice_status='$order' AND invoice_mdrm.plant_acceptance_time BETWEEN '$startdate' AND '$enddate'";
+							//echo"Test";  
 		}
 		else //datebetween_invoicestatus //$condition="datebetween_invoicestatus";$orderA=$order;$user_type="plant_raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type);
 		{
