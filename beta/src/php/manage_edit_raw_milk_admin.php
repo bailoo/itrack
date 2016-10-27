@@ -220,6 +220,15 @@ border: none;
 							//echo$query1;
 						}
 					}
+                                        else if($unloadaccepttime)
+                                        {
+                                               $condition="unloadaccepttime";
+                                               $orderA="2";
+                                               $user_type="plant_raw_milk";
+                                               $conditionStr="";
+                                               $result=getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type,$DbConnection);
+                                        }
+                               
 					else
 					{
 						$condition="datebetween_invoicestatus";
