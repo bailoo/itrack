@@ -44,7 +44,7 @@
 		<option value="3">All</option>
 		<option value="1">Open with Date</option>
 		<option value="6">OpenAll</option>
-		<option value="8">Closed</option>
+		<option value="2">Closed</option>
 		<option value="0">Cancelled</option>		
 		<option value="5">Pending</option>
 		<option value="7">TargetDate</option>

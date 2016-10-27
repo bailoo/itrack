@@ -23,7 +23,7 @@
 	<td><select id="order">
 		<option value="3">All</option>
 		<option value="1">Open</option>
-		<option value="8">Closed</option>
+		<option value="2">Closed</option>
 		<option value="0">Cancelled</option>
 		<option value="5">Pending</option>
 	</select></td>
