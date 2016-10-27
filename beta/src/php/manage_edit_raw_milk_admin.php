@@ -772,8 +772,9 @@ border: none;
 					else{
 						if($row_select['invoice_status'] == 2)
 						{
+                                                        $full_closetime=$row_select['close_time'];
 							if( $user_type!="raw_milk"){
-								echo '<td align=right>'.$closetime.'</td>';	
+								echo '<td align=right>'.$full_closetime.'</td>';	
 							}
 							//if( $user_type=="plant_raw_milk"){
 							if( $user_type=="plant_raw_milk" || $user_type=="raw_milk"){
@@ -1966,7 +1967,8 @@ border: none;
 				}
 				
 				if( $user_type!="raw_milk"){
-					echo"<input TYPE=\"hidden\" VALUE=\"$closetime\" NAME=\"temp[$i][CLOSE TIME]\">";
+                                        $full_closetime=$row_select['close_time'];
+					echo"<input TYPE=\"hidden\" VALUE=\"$full_closetime\" NAME=\"temp[$i][CLOSE TIME]\">";
 				}
 				
 				$adultration_db_value1=explode(",",$row_select['adultration_ct']);
@@ -1978,11 +1980,11 @@ border: none;
 				$adultration_db_value=substr($adultration_db_value,0,-1);
 				
 				$user_name=str_replace(',','',$user_name);
-				
+				 $full_closetime=$row_select['close_time'];
 				if( $user_type=="plant_raw_milk"){
 					$csv_string = $csv_string.$sno_local.','.$row_select['create_date'] .','.$row_select['transporter_editdate'].','.$row_select['plant_editdate'].','. $row_select['lorry_no'].','.$row_select['vehicle_no'].','.$row_select['tanker_type'].','.$row_select['docket_no'].','.$row_select['email'].','.$row_select['mobile'].','.$row_select['qty_kg'].','.$row_select['fat_percentage'].','.$row_select['snf_percentage'].','.$row_select['fat_kg'].','.$row_select['snf_kg'].','.$manual_milk_hr.','.$row_select['dispatch_time'].','.$row_select['target_time'].','.$row_select['driver_name'].','.$row_select['driver_mobile'].','.$user_name.'('.$user_id.'),'.$status_download.','.$row_select['plant'].','.trim($row_select['lecino']).','.$row_select['chilling_plant'].'('.str_replace(',','',$row_select['station_name']).'),'.$row_select['invoice_material'].','.$row_select['unload_estimated_time'].','.$row_select['unload_estimated_datetime'].','.$row_select['unload_accept_time'].','.$row_select['fat_per_ft'].','.$row_select['snf_per_ft'].','.$row_select['qty_ct'].','.$row_select['temp_ct'].','.$row_select['acidity_ct'].','.$row_select['mbrt_min_ct']
 		.','.$row_select['mbrt_rm_ct'].','.$row_select['mbrt_br_ct'].','.$row_select['protien_per_ct'].','.$row_select['sodium_ct'].','.$row_select['testing_status'].','.$row_select['fat_per_rt']
-		.','.$row_select['snf_per_rt'].','.$adultration_db_value.','.$otheradultration_db_value.','.$closetime."\n";
+		.','.$row_select['snf_per_rt'].','.$adultration_db_value.','.$otheradultration_db_value.','.$full_closetime."\n";
 				}
 				else if( $user_type=="raw_milk"){
 					$csv_string = $csv_string.$sno_local.','.$row_select['create_date'] .','.$row_select['transporter_editdate'].','.$row_select['plant_editdate'].','.$row_select['lorry_no'].','.$row_select['vehicle_no'].','.$row_select['tanker_type'].','.$row_select['docket_no'].','.$row_select['email'].','.$row_select['mobile'].','.$row_select['qty_kg'].','.$row_select['fat_percentage'].','.$row_select['snf_percentage'].','.$row_select['fat_kg'].','.$row_select['snf_kg'].','.$manual_milk_hr.','.$row_select['dispatch_time'].','.$row_select['target_time'].','.$row_select['driver_name'].','.$row_select['driver_mobile'].','.$user_name.'('.$user_id.'),'.$status_download.','.$row_select['plant'].','.trim($row_select['lecino']).','.$row_select['chilling_plant'].'('.str_replace(',','',$row_select['station_name']).'),'.$row_select['invoice_material'].','.$plant_acceptance_time.','.$row_select['unload_estimated_time'].','.$row_select['unload_estimated_datetime'].','.$row_select['unload_accept_time'].','.$row_select['fat_per_ft'].','.$row_select['snf_per_ft'].','.$row_select['qty_ct'].','.$row_select['temp_ct'].','.$row_select['acidity_ct'].','.$row_select['mbrt_min_ct']
@@ -1993,7 +1995,7 @@ border: none;
 				else{
 					$csv_string = $csv_string.$sno_local.','.$row_select['create_date'] .','.$row_select['transporter_editdate'].','.$row_select['plant_editdate'].','.$row_select['lorry_no'].','.$row_select['vehicle_no'].','.$row_select['tanker_type'].','.$row_select['docket_no'].','.$row_select['email'].','.$row_select['mobile'].','.$row_select['qty_kg'].','.$row_select['fat_percentage'].','.$row_select['snf_percentage'].','.$row_select['fat_kg'].','.$row_select['snf_kg'].','.$manual_milk_hr.','.$row_select['dispatch_time'].','.$row_select['target_time'].','.$row_select['driver_name'].','.$row_select['driver_mobile'].','.$user_name.'('.$user_id.'),'.$status_download.','.$row_select['plant'].','.trim($row_select['lecino']).','.$row_select['chilling_plant'].'('.str_replace(',','',$row_select['station_name']).'),'.$row_select['invoice_material'].','.$plant_acceptance_time.','.$row_select['unload_estimated_time'].','.$row_select['unload_estimated_datetime'].','.$row_select['unload_accept_time'].','.$row_select['fat_per_ft'].','.$row_select['snf_per_ft'].','.$row_select['qty_ct'].','.$row_select['temp_ct'].','.$row_select['acidity_ct'].','.$row_select['mbrt_min_ct']
 		.','.$row_select['mbrt_rm_ct'].','.$row_select['mbrt_br_ct'].','.$row_select['protien_per_ct'].','.$row_select['sodium_ct'].','.$row_select['testing_status'].','.$row_select['fat_per_rt']
-		.','.$row_select['snf_per_rt'].','.$adultration_db_value.','.$otheradultration_db_value.','.$closetime."\n";
+		.','.$row_select['snf_per_rt'].','.$adultration_db_value.','.$otheradultration_db_value.','.$full_closetime."\n";
 				}
 				
 				//###########
