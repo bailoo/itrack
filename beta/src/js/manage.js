@@ -1495,9 +1495,9 @@ function show_consignment_vehicle(account_id_this)
 
                         showManageLoadingMessage();
                                 var poststr = "action_type=" + encodeURI( action_type )+
-                                "&account_id =" + encodeURI(document.getElementById('account_id_hidden').value) +
+                                "&account_id=" + encodeURI(document.getElementById('account_id_hidden').value) +
                                 "&vehicleserial=" + encodeURI(result) +                               
-                                "&version=" + encodeURI(document.manage1.apk_version.value);                                
+                                "&apk_version=" + encodeURI(document.manage1.apk_version.value);                                
 
                         showManageLoadingMessage();
                         
