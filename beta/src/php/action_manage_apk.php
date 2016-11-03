@@ -11,7 +11,7 @@ $post_action_type = $_POST['action_type'];
 $account_id1 = $_POST['account_id'];
 $device_str = $_POST['vehicleserial'];
 $apk_str_tmp = trim($_POST['apk_version']);
-echo "<br>AC=".$account_id1." ,device_str=".$device_str." ,apk_str_tmp=".$apk_str_tmp;
+//echo "<br>AC=".$account_id1." ,device_str=".$device_str." ,apk_str_tmp=".$apk_str_tmp;
     
 //$post_account_id = $_POST['account_id'];
 $flag = 0;
@@ -34,7 +34,7 @@ if($post_action_type == "add") {
     $GCM_registrationIds = array();
     
     for($i = 0;$i<$vsize;$i++) {
-        echo "<br>imei=".$vserial[$i]." ,account_id=".$account_id1." ,apk_version=".$apk_version;
+        //echo "<br>imei=".$vserial[$i]." ,account_id=".$account_id1." ,apk_version=".$apk_version;
         $count = getApk_Assignment_detail($account_id1, $vserial[$i], $DbConnection);
         if($count > 0) {
             $res = updateApk_Assignment_detail($apk_version1, $account_id1, $vserial[$i], $DbConnection);
@@ -43,7 +43,7 @@ if($post_action_type == "add") {
         }
         
         $gcm_id_tmp = getGCM_Id_Detail($vserial[$i], $apk_version1, $DbConnection);
-        echo "<br>gcm_id=".$gcm_id_tmp;
+        //echo "<br>gcm_id=".$gcm_id_tmp;
         if($gcm_id_tmp!='') {
             $GCM_registrationIds[] = $gcm_id_tmp;
         }
@@ -52,7 +52,7 @@ if($post_action_type == "add") {
     }
     
 
-    echo "<br>Size=".sizeof($GCM_registrationIds);
+    //echo "<br>Size=".sizeof($GCM_registrationIds);
     if(sizeof($GCM_registrationIds) > 0) {
         //######## START: PUSH NOTIFICATION TO ANDROID DEVICE USING GCM_ID ##################
         //############################################################################
@@ -76,20 +76,15 @@ if($post_action_type == "add") {
         );*/
 
         $msg = array
-        (
-            'message' 	=> "New version of Person APK is Available",
-            'version'	=> $apk_version,
-            'apk_url'	=> $apk_url,
-            'vibrate'	=> 1,
-            'sound'		=> 1,
-            'largeIcon'	=> 'large_icon',
-            'smallIcon'	=> 'small_icon'
+        (            
+            'version'	=> $apk_version1,
+            'apk_url'	=> urlencode ($apk_url)         
         );    
 
         $fields = array
         (
             'registration_ids' 	=> $GCM_registrationIds,
-            'data'			=> $msg
+            'data'              => $msg
         );
 
         $headers = array
