@@ -63,7 +63,7 @@
                 {
                   $version = $data[$i]['version'];
                   $apk_url = $data[$i]['apk_url'];
-                  $apk_str = $version.":".$apk_url;
+                  $apk_str = $version."$".$apk_url;
                   echo '<option value='.$apk_str.'>'.$version.'</option>';
                 }
          ?>
