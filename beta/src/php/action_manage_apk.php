@@ -8,18 +8,20 @@ include_once('coreDb.php');
 $DEBUG = 0;
 $root = $_SESSION['root'];
 $post_action_type = $_POST['action_type'];
-$post_account_id = $_POST['account_id'];
+$account_id1 = $_POST['account_id'];
+$device_str = $_POST['vehicleserial'];
+$apk_str_tmp = trim($_POST['apk_version']);
+echo "<br>AC=".$account_id1." ,device_str=".$device_str." ,apk_str_tmp=".$apk_str_tmp;
+    
+//$post_account_id = $_POST['account_id'];
 $flag = 0;
 if($post_action_type == "add") {
     // Date of account creation
     date_default_timezone_set('Asia/Calcutta'); // add conversion based on the time zone of user
     $datetime = date("Y-m-d H:i:s");
     $flag = 0;
-    $result_response = 1;    
+    $result_response = 1;
 
-    $account_id1 = $_POST['account_id'];
-    $device_str = $_POST['vehicleserial'];
-    $apk_str_tmp = trim($_POST['apk_version']);
     $apk_str = explode(':',$apk_str_tmp);
     
     $apk_version = $apk_str[0];
