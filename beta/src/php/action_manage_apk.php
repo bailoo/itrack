@@ -32,7 +32,8 @@ if($post_action_type == "add") {
     $GCM_registrationIds = array();
     
     for($i = 0;$i<$vsize;$i++) {
-        $count = getApk_Assignment_detail($post_account_id, $vserial[$i], $DbConnection);
+        echo "<br>imei=".$vserial[$i]." ,account_id=".$account_id1." ,apk_version=".$apk_version;
+        $count = getApk_Assignment_detail($account_id1, $vserial[$i], $DbConnection);
         if($count > 0) {
             $res = updateApk_Assignment_detail($apk_version, $account_id1, $vserial[$i], $DbConnection);
         } else {
