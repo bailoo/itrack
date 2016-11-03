@@ -32,7 +32,7 @@
     <br>
     <form name="v_form">
     <fieldset class="report_fieldset">
-    <legend>Select Vehicle</legend>	
+    <legend>Select Person</legend>	
     
     <table border=0  cellspacing=0 cellpadding=0  width="100%">
             <tr>
