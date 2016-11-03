@@ -24,7 +24,7 @@ if($post_action_type == "add") {
 
     $apk_str = explode(':',$apk_str_tmp);
     
-    $apk_version = $apk_str[0];
+    $apk_version1 = $apk_str[0];
     $apk_url = $apk_str[1];
     //echo "<br>devicestr=".$device_str;
     //exit();
@@ -37,12 +37,12 @@ if($post_action_type == "add") {
         echo "<br>imei=".$vserial[$i]." ,account_id=".$account_id1." ,apk_version=".$apk_version;
         $count = getApk_Assignment_detail($account_id1, $vserial[$i], $DbConnection);
         if($count > 0) {
-            $res = updateApk_Assignment_detail($apk_version, $account_id1, $vserial[$i], $DbConnection);
+            $res = updateApk_Assignment_detail($apk_version1, $account_id1, $vserial[$i], $DbConnection);
         } else {
-            $res = insertApk_Assignment_detail($vserial[$i], $account_id1, $apk_version, $datetime, $status, $DbConnection);
+            $res = insertApk_Assignment_detail($vserial[$i], $account_id1, $apk_version1, $datetime, $status, $DbConnection);
         }
         
-        $gcm_id_tmp = getGCM_Id_Detail($vserial[$i], $apk_version, $DbConnection);
+        $gcm_id_tmp = getGCM_Id_Detail($vserial[$i], $apk_version1, $DbConnection);
         echo "<br>gcm_id=".$gcm_id_tmp;
         if($gcm_id_tmp!='') {
             $GCM_registrationIds[] = $gcm_id_tmp;
