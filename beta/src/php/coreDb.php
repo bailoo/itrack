@@ -4514,6 +4514,7 @@ function getVehicleTableData($vehicle_id,$DbConnection,$j)
     }
     $query_test=$query_test1.$join_query.") AND vehicle.status=1 AND vehicle_assignment.status=1";
     //echo "<br>".$query_test;
+    
     $result_test=mysql_query($query_test,$DbConnection);
     while ($row_1=mysql_fetch_object($result_test))
     {
@@ -5408,6 +5409,63 @@ function getNumRowStationPerson($field_value,$local_account_id,$DbConnection)
 	$result=mysql_query($query,$DbConnection);
 	return $result;
  }
+ 
+ function getApk_versionDetail($DbConnection)
+ {
+    $query="SELECT version,apk_url FROM apk_versions WHERE type='person' AND status='1'";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbConnection);
+    $row_result=mysql_num_rows($result);
+
+    while($row=mysql_fetch_object($result))
+    {									
+        $data[]=array('version'=>$row->version,'apk_url'=>$row->apk_url);
+    }
+    return $data;
+ }
+
+function getApk_Assignment_detail($account_id, $imei, $DbConnection)
+{
+    $query= "SELECT imei from apk_assignment WHERE account_id = '$account_id' AND imei='$imei'";
+    //echo $query.'<BR>';
+    $result=mysql_query($query,$DbConnection);               
+    //$row=mysql_fetch_row($result);
+    $numrows = mysql_num_rows($result);
+    return $numrows;
+}
+
+function insertApk_Assignment_detail($imei, $account_id, $apk_version, $datetime, $status, $DbConnection)
+{
+    $query= "INSERT INTO apk_assignment(imei,account_id,apk_version,create_date,status) ".
+            "values('$imei','$account_id','$apk_version','$datetime',1)";
+    //echo $query.'<BR>';
+    $result=mysql_query($query,$DbConnection);               
+    $row=mysql_fetch_row($result);
+    return $row;
+}
+
+function getGCM_Id_Detail($imei, $apk_version, $DbConnection)
+{
+    $gcm_id = "";
+    $query="SELECT gcm_id FROM gcm_data WHERE imei='$imei' AND version='$apk_version' status=1";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbConnection);
+    //$row_result=mysql_num_rows($result);
+    if($row=mysql_fetch_object($result))
+    {		
+        $gcm_id = $row->gcm_id;
+    }
+    return $gcm_id;
+}
+
+function updateApk_Assignment_detail($apk_version, $account_id, $imei, $DbConnection)
+{
+    $query= "UPDATE apk_assignment SET apk_version='$apk_version',edit_date='$datetime' WHERE account_id='$account_id' AND imei='$imei' AND status=1";
+    //echo $query.'<BR>';
+    $result=mysql_query($query,$DbConnection);               
+    $row=mysql_fetch_row($result);
+    return $row;
+}
 //========================================================//
 //////////// end of hierarchy class ////////
 ///////////// end of excalation ////////////
