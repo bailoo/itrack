@@ -59,13 +59,13 @@
           <option value="select">Select</option>';
 
     	  //$query="select vehicle_id,vehicle_name from vehicle where account_id='$common_id1' and status='1'";
-          	for($i=0; $i<sizeof($data); $i++)			    			
-                {
-                  $version = $data[$i]['version'];
-                  $apk_url = $data[$i]['apk_url'];
-                  $apk_str = $version."$".$apk_url;
-                  echo '<option value='.$apk_str.'>'.$version.'</option>';
-                }
+            for($i=0; $i<sizeof($data); $i++)			    			
+            {
+              $version = $data[$i]['version'];
+              $apk_url = $data[$i]['apk_url'];
+              $apk_str = $version."$".$apk_url;
+              echo '<option value='.$apk_str.'>'.$version.'</option>';
+            }
          ?>
 
         </select>
