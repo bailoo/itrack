@@ -22,7 +22,7 @@ if($post_action_type == "add") {
     $flag = 0;
     $result_response = 1;
 
-    $apk_str = explode(':',$apk_str_tmp);
+    $apk_str = explode('$',$apk_str_tmp);
     
     $apk_version1 = $apk_str[0];
     $apk_url = $apk_str[1];
@@ -78,7 +78,7 @@ if($post_action_type == "add") {
         $msg = array
         (            
             'version'	=> $apk_version1,
-            'apk_url'	=> urlencode ($apk_url)         
+            'apk_url'	=> urlencode($apk_url)         
         );    
 
         $fields = array
