@@ -1502,7 +1502,7 @@ function show_consignment_vehicle(account_id_this)
 
                         showManageLoadingMessage();
                         
-                        //alert(poststr);                       
+                        alert(poststr);                       
                         makePOSTRequest('src/php/action_manage_apk.htm', poststr);
                     }
             }
