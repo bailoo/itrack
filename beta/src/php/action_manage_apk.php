@@ -103,7 +103,7 @@ if($post_action_type == "add") {
         $result = curl_exec($ch );
         curl_close( $ch );
 
-        echo $result;    
+        //echo $result;    
         //######## END: PUSH NOTIFICATION #############################################
     }
 }
@@ -112,7 +112,7 @@ if ($flag==1) {
     $message = "<br>
     <font color=\"Green\" size=4>
             <strong>
-                    APK Assigned Successfully!
+                    APK Assigned and Request has been sent to the selected Person
             </strong>
     </font>";
 }
