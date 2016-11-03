@@ -78,7 +78,7 @@ if($post_action_type == "add") {
         $msg = array
         (            
             'version'	=> $apk_version1,
-            'apk_url'	=> urlencode($apk_url)         
+            'apk_url'	=> $apk_url       
         );    
 
         $fields = array
