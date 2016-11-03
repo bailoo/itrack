@@ -43,6 +43,7 @@ if($post_action_type == "add") {
         }
         
         $gcm_id_tmp = getGCM_Id_Detail($vserial[$i], $apk_version, $DbConnection);
+        echo "<br>gcm_id=".$gcm_id_tmp;
         if($gcm_id_tmp!='') {
             $GCM_registrationIds[] = $gcm_id_tmp;
         }
@@ -51,7 +52,7 @@ if($post_action_type == "add") {
     }
     
 
-    
+    echo "<br>Size=".sizeof($GCM_registrationIds);
     if(sizeof($GCM_registrationIds) > 0) {
         //######## START: PUSH NOTIFICATION TO ANDROID DEVICE USING GCM_ID ##################
         //############################################################################
