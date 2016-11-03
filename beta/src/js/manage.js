@@ -1482,6 +1482,32 @@ function show_consignment_vehicle(account_id_this)
 		makePOSTRequest('src/php/action_manage_device.htm', poststr); 
 	}     
    
+   
+    function action_manage_apk(action_type)
+    {
+            //alert("action_type="+action_type);
+            if(action_type == "add")
+            {
+                    var obj=document.manage1.elements['vehicleserial[]'];
+                    var result=device_checkbox_selection(obj);
+                    //alert("result="+result);			
+                    if(result!=false) {
+
+                        showManageLoadingMessage();
+                                var poststr = "action_type=" + encodeURI( action_type )+
+                                "&account_id =" + document.getElementById('account_id_hidden').value +
+                                "&vehicleserial=" + encodeURI(result) +                               
+                                "&version=" + encodeURI(document.manage1.apk_version.value);
+                                
+
+                        showManageLoadingMessage();
+                        
+                        //alert(poststr);                       
+                        makePOSTRequest('src/php/action_manage_apk.htm', poststr);
+                    }
+            }
+    }
+        
    function action_manage_device_sale(obj, action_type)
    {
       var res = false;        
@@ -6869,6 +6895,26 @@ function select_all_assigned_vehicle(obj)
 	{
 		var i;
 		var s = obj.elements['vehicle_id[]'];
+		for(i=0;i<s.length;i++)
+			s[i].checked=false;			
+	}
+}
+
+function select_all_device(obj)
+{
+	if(obj.all.checked)
+	{
+		var i;
+		var s = obj.elements['vehicleserial[]'];
+		//alert("obj="+obj);
+		//alert("len="+len);
+		for(i=0;i<s.length;i++)
+			s[i].checked="true";			
+	}
+	else if(obj.all.checked==false)
+	{
+		var i;
+		var s = obj.elements['vehicleserial[]'];
 		for(i=0;i<s.length;i++)
 			s[i].checked=false;			
 	}
