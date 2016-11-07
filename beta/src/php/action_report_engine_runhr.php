@@ -111,7 +111,7 @@
                    $dateRangeStart=$userdates[$di]." 00:00:00";
                     $dateRangeEnd=$userdates[$di]." 23:59:59";
                 }
-                deviceDataBetweenDates($vserial[$i],$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);
+                deviceDataBetweenDatesIgnoreGPS($vserial[$i],$dateRangeStart,$dateRangeEnd,$sortBy,$parameterizeData,$SortedDataObject);
              
                 if(count($SortedDataObject->deviceDatetime)>0)
                 {
