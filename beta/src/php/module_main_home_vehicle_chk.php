@@ -3,14 +3,56 @@
     include_once('util_session_variable.php');
     include_once('util_php_mysql_connectivity.php');
     include_once('active_vehicle_func.php');
-    //if($account_id!=2)
-    {
-    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
-    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
     
+    include_once('xmlParameters.php');
+    include_once('parameterizeData.php');
+    include_once('lastRecordData.php');
+    include_once("getXmlData.php");
+    
+    //echo "DFSDDDDDDDDDDDDDDDDDDDFSDFADSF <br><br>";
+    //if($account_id!=2)
+    //{
+    //include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    //include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/ 
+//    include_once("C:\\xampp/htdocs/itrack_test_beta/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+//    include_once("C:\\xampp/htdocs/itrack_test_beta/phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
+    
+    /*if(file_exists("C:\\xampp/htdocs/itrack_test_beta/phpApi/Cassandra/Cassandra.php")) {
+        echo "<br><br><br>Exists";
+    } else {
+        echo "<br><br><br>Does not exist";
+    }*/
+   
     $o_cassandra = new Cassandra();	
     $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
-    }
+    //}
+    
+    //######## INTIALISE LAST DATA VARIABLES
+    $parameterizeData=new parameterizeData();
+    $parameterizeData->messageType='a';
+    $parameterizeData->version='b';
+    $parameterizeData->fix='c';
+    $parameterizeData->latitude='d';
+    $parameterizeData->longitude='e';
+    $parameterizeData->speed='f';	
+    $parameterizeData->io1='i';
+    $parameterizeData->io2='j';
+    $parameterizeData->io3='k';
+    $parameterizeData->io4='l';
+    $parameterizeData->io5='m';
+    $parameterizeData->io6='n';
+    $parameterizeData->io7='o';
+    $parameterizeData->io8='p';	
+    $parameterizeData->sigStr='q';
+    $parameterizeData->supVoltage='r';
+    $parameterizeData->dayMaxSpeed='s';
+    $parameterizeData->dayMaxSpeedTime='t';
+    $parameterizeData->lastHaltTime='u';
+    $parameterizeData->cellName='ab';	
+    $sortBy="h";
+    $LastRecordObject=new lastRecordData();           
+    //######## CLOSED- LAST DATA VARIABLES
+    
    $vehicle_color1=getColorFromAP($account_id,$DbConnection); /// A->Account P->Preference
 
     $vcolor = explode(':',$vehicle_color1); //account_name:active:inactive
@@ -91,6 +133,7 @@
     { 
         //$category="1";
         //echo "category=".$category1;
+        //var_dump($root);
         show_all_vehicle($root,$account_id,$category1);				
     } 
     else
@@ -197,12 +240,18 @@ echo"</table>";
       global $s;
       
       if(sizeof($vehicle_name_arr)>0)
-      { 
-         
+      {        
         natcasesort($vehicle_name_arr);
         //$img=0;
         foreach($vehicle_name_arr as $vehicle)
         {
+          $imei_tmp = explode("*", $imei_arr[$vehicle]);
+          $colorCode = "grey";
+          try {
+            $colorCode = getColorCodingByData($imei_tmp[0]);
+          } catch(Exception $e) { echo "Error";}
+          //echo "<br>IMEI=".$imei_tmp[0]." ,ColorCode=".$colorCode;
+          
           if($s==0)
           {
             //echo "<br>ss=".$s;
@@ -250,7 +299,7 @@ echo"</table>";
               <span id="'.$vrad.'" style="display:none;"><INPUT TYPE="radio"  name="vehicleserial_radio" VALUE="'.$imei_arr[$vehicle].'"></span>              
             </td>
             <td>
-              <font color="'.$color.'">'.$icon_display.'&nbsp;'.$vehicle.'</font>
+              <font color="'.$colorCode.'">'.$icon_display.'&nbsp;'.$vehicle.'</font>
             </td>
           </tr>
           ';
@@ -1081,4 +1130,88 @@ echo"</table>";
             print_vehicle($AccountNode->child[$i],$vehicle,$category1);
         }
     }
+    
+    
+function getColorCodingByData($imei) {
+    
+    global $parameterizeData;
+    global $LastRecordObject;
+    global $sortBy;
+    $colorCode = "grey";
+    //echo "imei=".$imei."<br>";
+    $LastRecordObject=getLastRecord($imei,$sortBy,$parameterizeData);
+    //echo "getOBJ";
+    //var_dump($LastRecordObject);
+
+    if(!empty($LastRecordObject))
+    {
+        /*$LastRecordObject->messageTypeLR[0]
+        $LastRecordObject->versionLR[0]
+        $LastRecordObject->fixLR[0]
+        $LastRecordObject->latitudeLR[0]
+        $LastRecordObject->longitudeLR[0]
+        $LastRecordObject->speedLR[0]
+        $LastRecordObject->serverDatetimeLR[0]
+        $LastRecordObject->deviceDatetimeLR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->sigStrLR[0]
+        $LastRecordObject->suplyVoltageLR[0] 
+        $LastRecordObject->dayMaxSpeedLR[0] 
+        $LastRecordObject->dayMaxSpeedTimeLR[0]
+        $LastRecordObject->lastHaltTimeLR[0]*/        
+        //echo "inOBJ";
+        date_default_timezone_set("Asia/Calcutta");
+        $current_date = date('Y-m-d');
+        //$current_time = date('Y-m-d H:i:s');
+        $current_time = '2016-11-08 13:28:00';
+
+        $device_time = $LastRecordObject->deviceDatetimeLR[0];
+        $device_time_sec = strtotime($device_time);
+        $device_date_tmp = explode(" ",$device_time);
+        $device_date = $device_date_tmp[0];
+                
+        $last_halt_time_sec = strtotime($LastRecordObject->lastHaltTimeLR[0]);	
+        $lat = $LastRecordObject->latitudeLR[0];
+        $lng = $LastRecordObject->longitudeLR[0];  
+        //echo "<br>Lat=".$lat." ,Lng=".$lng;
+
+        $current_time_sec = strtotime($current_time);
+        $diff_nodata = (($current_time_sec - $device_time_sec)/ 60);
+        $diff_nogps = (($current_time_sec - $last_halt_time_sec)/60); //## DIFF IN MINUTES   
+        
+        //echo "<br>current_time=".$current_time." ,device_time=".$device_time." ,diffNodata=".$diff_nodata." ,diffNogps=".$diff_nogps." ,lat=".$lat." ,lng=".$lng;       
+        if(trim($device_date)!= trim($current_date)) {
+             $colorCode = "grey";
+             return $colorCode;
+             
+        } else if($diff_nodata > 30) {
+            $colorCode = "red";
+            return $colorCode;
+            
+        } else if( ($diff_nodata < 30) && ($lat=='' && $lng=='') && ($diff_nogps > 30) ) {
+            $colorCode = "blue";
+            return $colorCode;
+            
+        } else {
+            $colorCode = "green";
+            return $colorCode;           
+        }
+    } else {
+        $colorCode = "grey";
+    }
+    $LastRecordObject=null;    
+         
+    return $colorCode;
+    //######## CLOSED -LAST DATA VARIABLES    
+}
+
+$o_cassandra->close();
+
 ?>
