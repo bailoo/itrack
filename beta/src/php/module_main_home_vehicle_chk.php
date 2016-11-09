@@ -3,15 +3,57 @@
     include_once('util_session_variable.php');
     include_once('util_php_mysql_connectivity.php');
     include_once('active_vehicle_func.php');
-    //if($account_id!=2)
-    {
-    include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
-    include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/
     
+    include_once('xmlParameters.php');
+    include_once('parameterizeData.php');
+    include_once('lastRecordData.php');
+    include_once("getXmlData.php");
+    
+    //echo "DFSDDDDDDDDDDDDDDDDDDDFSDFADSF <br><br>";
+    //if($account_id!=2)
+    //{
+    //include_once("../../../phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+    //include_once("../../../phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/ 
+//    include_once("C:\\xampp/htdocs/itrack_test_beta/phpApi/Cassandra/Cassandra.php");     //##### INCLUDE CASSANDRA API
+//    include_once("C:\\xampp/htdocs/itrack_test_beta/phpApi/libLog.php");     //##### INCLUDE CASSANDRA API*/    
+    
+    /*if(file_exists("C:\\xampp/htdocs/itrack_test_beta/phpApi/Cassandra/Cassandra.php")) {
+        echo "<br><br><br>Exists";
+    } else {
+        echo "<br><br><br>Does not exist";
+    }*/
+   
     $o_cassandra = new Cassandra();	
     $o_cassandra->connect($s_server_host, $s_server_username, $s_server_password, $s_server_keyspace, $i_server_port);
-    }
-   $vehicle_color1=getColorFromAP($account_id,$DbConnection); /// A->Account P->Preference
+    //}
+    
+    //######## INTIALISE LAST DATA VARIABLES
+    $parameterizeData=new parameterizeData();
+    $parameterizeData->messageType='a';
+    $parameterizeData->version='b';
+    $parameterizeData->fix='c';
+    $parameterizeData->latitude='d';
+    $parameterizeData->longitude='e';
+    $parameterizeData->speed='f';	
+    $parameterizeData->io1='i';
+    $parameterizeData->io2='j';
+    $parameterizeData->io3='k';
+    $parameterizeData->io4='l';
+    $parameterizeData->io5='m';
+    $parameterizeData->io6='n';
+    $parameterizeData->io7='o';
+    $parameterizeData->io8='p';	
+    $parameterizeData->sigStr='q';
+    $parameterizeData->supVoltage='r';
+    $parameterizeData->dayMaxSpeed='s';
+    $parameterizeData->dayMaxSpeedTime='t';
+    $parameterizeData->lastHaltTime='u';
+    $parameterizeData->cellName='ab';	
+    $sortBy="h";
+    $LastRecordObject=new lastRecordData();           
+    //######## CLOSED- LAST DATA VARIABLES
+    
+    $vehicle_color1=getColorFromAP($account_id,$DbConnection); /// A->Account P->Preference
 
     $vcolor = explode(':',$vehicle_color1); //account_name:active:inactive
     $vcolor1 = "#".$vcolor[0];
@@ -91,6 +133,7 @@
     { 
         //$category="1";
         //echo "category=".$category1;
+        //var_dump($root);
         show_all_vehicle($root,$account_id,$category1);				
     } 
     else
@@ -197,12 +240,18 @@ echo"</table>";
       global $s;
       
       if(sizeof($vehicle_name_arr)>0)
-      { 
-         
+      {                
         natcasesort($vehicle_name_arr);
         //$img=0;
         foreach($vehicle_name_arr as $vehicle)
         {
+          /*$imei_tmp = explode("*", $imei_arr[$vehicle]);
+          $colorCode = "grey";
+          try {
+            $colorCode = getColorCodingByData($imei_tmp[0]);
+          } catch(Exception $e) { echo "Error";}*/
+          //echo "<br>IMEI=".$imei_tmp[0]." ,ColorCode=".$colorCode;
+          
           if($s==0)
           {
             //echo "<br>ss=".$s;
@@ -281,9 +330,10 @@ echo"</table>";
         $vehicle_color=array();
         $vehicle_type_arr=array();
         $veh_flag=1; 
+        $colorCode = "grey";
 		  
         for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)   ///////this is for show root vehicle of any account /////////
-        {				
+        {                    
             if($AccountNode->data->VehicleCategory[$j]==$category1)
             {
                 $veh_flag=0;					
@@ -315,18 +365,27 @@ echo"</table>";
                     {
                         $vehicleid[@$vehicle_cnt]=$vehicle_id;
                         @$vehicle_cnt++;  
-                        if($AccountNode->data->DeviceRunningStatus[$j]=="1")
-                        {							
-                            $color= $vcolor2;
+
+                        //if($AccountNode->data->DeviceRunningStatus[$j]=="1")
+                        //{							
+                            //$color= $vcolor2;
+                            //$color= "grey";
+                            //####### GET COLOR CODE
+                            try {
+                              $color = getColorCodingByData($vehicle_imei);
+                            } catch(Exception $e) { }
+                            //echo "<br>IMEI=".$imei_tmp[0]." ,ColorCode=".$colorCode;
+                            //######### COLOR CODE ENDS
+                            
                             $vehicle_name_arr[$color][] =$vehicle_name; 
                             $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                             //$vehicle_type_arr[]=$vehicle_type;
-                             $vehicle_type_arr[$color][$vehicle_name]=$vehicle_type;
-                        }
-                        else
+                            $vehicle_type_arr[$color][$vehicle_name]=$vehicle_type;
+                        //}
+                        /*else
                         {
-                            $currentFilePath="/mnt/itrack/beta/src/php/vehicleStatus";
-			    //$currentFilePath="C:\\xampp/htdocs/itrack_rnd/beta_lf/src/php/vehicleStatus";
+                            //$currentFilePath="/mnt/itrack/beta/src/php/vehicleStatus";
+			    $currentFilePath="C:\\xampp/htdocs/itrack_test_beta/beta/src/php/vehicleStatus";
                             $iterator = new FilesystemIterator($currentFilePath);                       
                             //echo "imeiNo11=".count($iterator)."<br>";
                             $fileFoundFlag=0;
@@ -336,7 +395,7 @@ echo"</table>";
                             $exactFilePath=$currentFilePath."/".$vehicle_imei.".txt";
                             //echo "exactFilePath=".$exactFilePath."<br>";
                             
-                            $todayDataLog=hasImeiLogged($o_cassandra, $vehicle_imei, $todayDateOnly);
+                            //$todayDataLog=hasImeiLogged($o_cassandra, $vehicle_imei, $todayDateOnly);
                             if($todayDataLog!='')
                             {
                                 //echo "in if";
@@ -355,7 +414,7 @@ echo"</table>";
                             $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                             //$vehicle_type_arr[]=$vehicle_type;
                             $vehicle_type_arr[$color][$vehicle_name]=$vehicle_type;
-                        }
+                        }*/
                     }
                 }
             }
@@ -371,16 +430,35 @@ echo"</table>";
                    </thead>
                 </th>
             </tr>';
-            $grn_cnt=sizeof(@$vehicle_name_arr[$vcolor2]);
+                    
+            $grn_cl= "#008C05";
+            $gry_cl= "#000099";
+            $bl_cl= "#7A7A7A";
+            $rd_cl= "#FF0000";                      
+            //$grn_cnt=sizeof(@$vehicle_name_arr[$vcolor2]);
             //echo "sixe_of_green_vehicle=".$grn_cnt."<br>";
-            $gry_cnt=sizeof(@$vehicle_name_arr[$vcolor3]);
-            // echo "size_of_gray_vehicle=".$gry_cnt."<br>";	  
-            active_inactive_count($grn_cnt,$gry_cnt);
+            //$gry_cnt=sizeof(@$vehicle_name_arr[$vcolor3]);
+            // echo "size_of_gray_vehicle=".$gry_cnt."<br>";           
+            $grn_cntC=sizeof(@$vehicle_name_arr[$grn_cl]);
+            $gry_cntC=sizeof(@$vehicle_name_arr[$gry_cl]); 
+            //$bl_cntC=sizeof(@$vehicle_name_arr[$bl_cl]);            
+            //$rd_cntC=sizeof(@$vehicle_name_arr[$rd_cl]);
+            
+            //active_inactive_count($grn_cntC, $gry_cntC, $bl_cntC, $rd_cntC);
+            active_inactive_count($grn_cntC, $gry_cntC);
             //echo "<br>color:".$color;  
-            $color=@$vcolor2;
+            //$color=@$vcolor2;
+            $color=@$grn_cl;
             common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color,@$vehicle_type_arr[$color]); 
-            $color=@$vcolor3; 
+            //$color=@$vcolor3; 
+            $color=@$gry_cl;
             common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
+
+            $color=@$bl_cl;
+            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
+
+            $color=@$rd_cl;
+            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);            
         }
         $ChildCount=$AccountNode->ChildCnt;
         for($i=0;$i<$ChildCount;$i++)   /////////////this is for show child vehicle only ///////////
@@ -1081,4 +1159,97 @@ echo"</table>";
             print_vehicle($AccountNode->child[$i],$vehicle,$category1);
         }
     }
+    
+    
+function getColorCodingByData($imei) {
+    
+    global $parameterizeData;
+    global $LastRecordObject;
+    global $sortBy;
+    //$colorCode = "grey";
+    $colorCode = "#7A7A7A";
+    //echo "imei=".$imei."<br>";
+    $LastRecordObject=getLastRecord($imei,$sortBy,$parameterizeData);
+    //echo "getOBJ";
+    //var_dump($LastRecordObject);
+
+    if(!empty($LastRecordObject))
+    {
+        /*$LastRecordObject->messageTypeLR[0]
+        $LastRecordObject->versionLR[0]
+        $LastRecordObject->fixLR[0]
+        $LastRecordObject->latitudeLR[0]
+        $LastRecordObject->longitudeLR[0]
+        $LastRecordObject->speedLR[0]
+        $LastRecordObject->serverDatetimeLR[0]
+        $LastRecordObject->deviceDatetimeLR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->io1LR[0]
+        $LastRecordObject->sigStrLR[0]
+        $LastRecordObject->suplyVoltageLR[0] 
+        $LastRecordObject->dayMaxSpeedLR[0] 
+        $LastRecordObject->dayMaxSpeedTimeLR[0]
+        $LastRecordObject->lastHaltTimeLR[0]*/        
+        //echo "inOBJ";
+        date_default_timezone_set("Asia/Calcutta");
+        $current_date = date('Y-m-d');
+        $current_time = date('Y-m-d H:i:s');
+        //$current_time = '2016-11-08 13:28:00';
+
+        $device_time = $LastRecordObject->deviceDatetimeLR[0];
+        $device_time_sec = strtotime($device_time);
+        $device_date_tmp = explode(" ",$device_time);
+        $device_date = $device_date_tmp[0];
+                
+        $last_halt_time_sec = strtotime($LastRecordObject->lastHaltTimeLR[0]);	
+        $lat = $LastRecordObject->latitudeLR[0];
+        $lng = $LastRecordObject->longitudeLR[0];  
+        //echo "<br>Lat=".$lat." ,Lng=".$lng;
+
+        $current_time_sec = strtotime($current_time);
+        $diff_nodata = (($current_time_sec - $device_time_sec)/ 60);
+        $diff_nogps = (($current_time_sec - $last_halt_time_sec)/60); //## DIFF IN MINUTES   
+        
+        //echo "<br>current_time=".$current_time." ,device_time=".$device_time." ,diffNodata=".$diff_nodata." ,diffNogps=".$diff_nogps." ,lat=".$lat." ,lng=".$lng;       
+        //RED:GREEN:GREY:BLUE  
+        //FF0000:008C05:7A7A7A:000099
+          
+        if(trim($device_date)!= trim($current_date)) {
+             //$colorCode = "grey";
+             $colorCode = "#7A7A7A";
+             return $colorCode;
+             
+        } else if($diff_nodata > 30) {
+            //$colorCode = "red";
+            $colorCode = "#FF0000";
+            return $colorCode;
+            
+        } else if( ($diff_nodata < 30) && ($lat=='' && $lng=='') && ($diff_nogps > 30) ) {
+            //$colorCode = "blue";
+            $colorCode = "#000099";
+            return $colorCode;
+            
+        } else {
+            //$colorCode = "green";
+            $colorCode = "#008C05";
+            return $colorCode;           
+        }
+    } else {
+        //$colorCode = "grey";
+        $colorCode = "#7A7A7A";
+    }
+    $LastRecordObject=null;    
+         
+    return $colorCode;
+    //######## CLOSED -LAST DATA VARIABLES    
+}
+
+$o_cassandra->close();
+
 ?>
