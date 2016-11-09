@@ -368,7 +368,7 @@ echo"</table>";
                         if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                         {							
                             //$color= $vcolor2;
-                            $color= "grey";
+                            //$color= "grey";
                             //####### GET COLOR CODE
                             try {
                               $color = getColorCodingByData($vehicle_imei);
