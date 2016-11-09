@@ -340,6 +340,13 @@ echo"</table>";
                 $vehicle_id = $AccountNode->data->VehicleID[$j];
                 $vehicle_name = $AccountNode->data->VehicleName[$j];
                 $vehicle_imei = $AccountNode->data->DeviceIMEINo[$j];
+                
+                //####### GET COLOR CODE
+                try {
+                  $color = getColorCodingByData($vehicle_imei);
+                } catch(Exception $e) { echo "Error";}
+                //echo "<br>IMEI=".$imei_tmp[0]." ,ColorCode=".$colorCode;
+                //######### COLOR CODE ENDS                
                 ///array_search('green', $array);
                 $iovalueandtypearr = @$AccountNode->data->DeviceIOTypeValue[$j];
                 $vehicle_type = $AccountNode->data->VehicleType[$j];
@@ -367,15 +374,7 @@ echo"</table>";
                         @$vehicle_cnt++;  
                         if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                         {							
-                            //$color= $vcolor2;
-                            //$color= "grey";
-                            //####### GET COLOR CODE
-                            try {
-                              $color = getColorCodingByData($vehicle_imei);
-                            } catch(Exception $e) { echo "Error";}
-                            //echo "<br>IMEI=".$imei_tmp[0]." ,ColorCode=".$colorCode;
-                            //######### COLOR CODE ENDS
-                            
+                            //$color= $vcolor2;                            
                             $vehicle_name_arr[$color][] =$vehicle_name; 
                             $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                             //$vehicle_type_arr[]=$vehicle_type;
@@ -1178,8 +1177,8 @@ function getColorCodingByData($imei) {
         //echo "inOBJ";
         date_default_timezone_set("Asia/Calcutta");
         $current_date = date('Y-m-d');
-        $current_time = date('Y-m-d H:i:s');
-        //$current_time = '2016-11-08 13:28:00';
+        //$current_time = date('Y-m-d H:i:s');
+        $current_time = '2016-11-08 13:28:00';
 
         $device_time = $LastRecordObject->deviceDatetimeLR[0];
         $device_time_sec = strtotime($device_time);
