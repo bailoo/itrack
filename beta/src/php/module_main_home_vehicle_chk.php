@@ -330,7 +330,7 @@ echo"</table>";
         $vehicle_color=array();
         $vehicle_type_arr=array();
         $veh_flag=1; 
-        $color = "grey";
+        //$color = "grey";
 		  
         for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)   ///////this is for show root vehicle of any account /////////
         {                    
@@ -434,7 +434,7 @@ echo"</table>";
             // echo "size_of_gray_vehicle=".$gry_cnt."<br>";	  
             active_inactive_count($grn_cnt,$gry_cnt);
             //echo "<br>color:".$color;  
-            $color=@$vcolor2;
+//            $color=@$vcolor2;
             common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color,@$vehicle_type_arr[$color]); 
             $color=@$vcolor3; 
             common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
