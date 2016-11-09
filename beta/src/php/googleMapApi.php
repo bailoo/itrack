@@ -1229,6 +1229,7 @@ var input = (document.getElementById('pac-input'));
 				} 
 				function setMultipleMarker(map,latarr, lngarr,datetimearr,vSerial,vName,vNumber,speed,ioStr,dTravel,dMobileNoArr)
 				{ 
+                                        //alert('MAP');
 					deleteOverlays();
 					if((latarr.length ==1) && (!latarr[0]) && (!lngarr[0]))
 					{
@@ -1253,8 +1254,14 @@ var input = (document.getElementById('pac-input'));
 					var icon;
 					 var feature_id_map = document.getElementById('station_flag_map').value; 
 					// alert('feature_id_map='+feature_id_map);
-					for(var i=0;i<latarr.length;i++)
+                                        var prev_date;
+                                        
+                                        for(var i=0;i<latarr.length;i++)
 					{
+                                            if(i==0) { 
+                                                prev_date = datetimearr[i]; 
+                                            }
+                                            
 						icon_flag=0;					
 						//icon='';
 						if(i==0)
@@ -1329,15 +1336,35 @@ var input = (document.getElementById('pac-input'));
 							marker, mouse_action, infoCallbackTrack(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,marker,ioStrLocal,dTravelLocal,feature_id_map,dMobileNoLocal)
 						);						
 						
-						var line = new google.maps.Polyline
-						({
-							path: [new google.maps.LatLng(latarr[i], lngarr[i]),new google.maps.LatLng(latarr[i-1], lngarr[i-1])],
-							strokeColor: '#ff0000',
-							strokeOpacity: 1.0,
-							strokeWeight: 1.5
-						});	
+						var line;
+                                                     
+                                                var unixtimestamp1 = (new Date(prev_date.replace('-','/'))).getTime() / 1000;
+                                                var unixtimestamp2 = (new Date(datetimearr[i].replace('-','/'))).getTime() / 1000;
+                                                    
+                                                var diffMinutes = (unixtimestamp2 - unixtimestamp1)/60;
+
+                                                if(diffMinutes > 5) {
+                                                    line = new google.maps.Polyline
+                                                    ({
+                                                            path: [new google.maps.LatLng(latarr[i], lngarr[i]),new google.maps.LatLng(latarr[i-1], lngarr[i-1])],
+                                                            strokeColor: '#FF0000',
+                                                            strokeOpacity: 1.0,
+                                                            strokeWeight: 3.5
+                                                    });
+                                                } else {
+                                                    line = new google.maps.Polyline
+                                                    ({
+                                                            path: [new google.maps.LatLng(latarr[i], lngarr[i]),new google.maps.LatLng(latarr[i-1], lngarr[i-1])],
+                                                            strokeColor: '#0000FF',
+                                                            strokeOpacity: 1.0,
+                                                            strokeWeight: 1.5
+                                                    });
+                                                }
+
 						markers.push(line);						
 						line.setMap(map);
+                                                
+                                                prev_date = datetimearr[i];
 												
 					}
 					map.setCenter(latlngbounds.getCenter());
