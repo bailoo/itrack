@@ -321,8 +321,7 @@ echo"</table>";
         //global $logDate;
     
         //echo "cat:".$category1;
-        //echo $vcolor1.":".$vcolor2.":".$vcolor3;
-     
+        //echo $vcolor1.":".$vcolor2.":".$vcolor3;     
         $user_type_local=$AccountNode ->data-> AccountType;
         $account_name=$AccountNode->data->AccountName;
         $vehicle_name_arr=array();
@@ -1169,8 +1168,8 @@ function getColorCodingByData($imei) {
         //echo "inOBJ";
         date_default_timezone_set("Asia/Calcutta");
         $current_date = date('Y-m-d');
-        //$current_time = date('Y-m-d H:i:s');
-        $current_time = '2016-11-08 13:28:00';
+        $current_time = date('Y-m-d H:i:s');
+        //$current_time = '2016-11-08 13:28:00';
 
         $device_time = $LastRecordObject->deviceDatetimeLR[0];
         $device_time_sec = strtotime($device_time);
