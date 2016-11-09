@@ -1178,8 +1178,8 @@ function getColorCodingByData($imei) {
         //echo "inOBJ";
         date_default_timezone_set("Asia/Calcutta");
         $current_date = date('Y-m-d');
-        //$current_time = date('Y-m-d H:i:s');
-        $current_time = '2016-11-08 13:28:00';
+        $current_time = date('Y-m-d H:i:s');
+        //$current_time = '2016-11-08 13:28:00';
 
         $device_time = $LastRecordObject->deviceDatetimeLR[0];
         $device_time_sec = strtotime($device_time);
