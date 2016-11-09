@@ -435,8 +435,8 @@ echo"</table>";
             active_inactive_count($grn_cnt,$gry_cnt);
             //echo "<br>color:".$color;  
 //            $color=@$vcolor2;
-            common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color,@$vehicle_type_arr[$color]); 
-            $color=@$vcolor3; 
+//            common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color,@$vehicle_type_arr[$color]); 
+//            $color=@$vcolor3; 
             common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
         }
         $ChildCount=$AccountNode->ChildCnt;
