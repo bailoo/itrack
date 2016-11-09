@@ -240,16 +240,16 @@ echo"</table>";
       global $s;
       
       if(sizeof($vehicle_name_arr)>0)
-      {        
+      {                
         natcasesort($vehicle_name_arr);
         //$img=0;
         foreach($vehicle_name_arr as $vehicle)
         {
-          $imei_tmp = explode("*", $imei_arr[$vehicle]);
+          /*$imei_tmp = explode("*", $imei_arr[$vehicle]);
           $colorCode = "grey";
           try {
             $colorCode = getColorCodingByData($imei_tmp[0]);
-          } catch(Exception $e) { echo "Error";}
+          } catch(Exception $e) { echo "Error";}*/
           //echo "<br>IMEI=".$imei_tmp[0]." ,ColorCode=".$colorCode;
           
           if($s==0)
@@ -299,7 +299,7 @@ echo"</table>";
               <span id="'.$vrad.'" style="display:none;"><INPUT TYPE="radio"  name="vehicleserial_radio" VALUE="'.$imei_arr[$vehicle].'"></span>              
             </td>
             <td>
-              <font color="'.$colorCode.'">'.$icon_display.'&nbsp;'.$vehicle.'</font>
+              <font color="'.$color.'">'.$icon_display.'&nbsp;'.$vehicle.'</font>
             </td>
           </tr>
           ';
@@ -321,7 +321,8 @@ echo"</table>";
         //global $logDate;
     
         //echo "cat:".$category1;
-        //echo $vcolor1.":".$vcolor2.":".$vcolor3;     
+        //echo $vcolor1.":".$vcolor2.":".$vcolor3;
+     
         $user_type_local=$AccountNode ->data-> AccountType;
         $account_name=$AccountNode->data->AccountName;
         $vehicle_name_arr=array();
@@ -329,9 +330,10 @@ echo"</table>";
         $vehicle_color=array();
         $vehicle_type_arr=array();
         $veh_flag=1; 
+        $color = "grey";
 		  
         for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)   ///////this is for show root vehicle of any account /////////
-        {				
+        {                    
             if($AccountNode->data->VehicleCategory[$j]==$category1)
             {
                 $veh_flag=0;					
@@ -365,11 +367,19 @@ echo"</table>";
                         @$vehicle_cnt++;  
                         if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                         {							
-                            $color= $vcolor2;
+                            //$color= $vcolor2;
+                            $color= "grey";
+                            //####### GET COLOR CODE
+                            try {
+                              $color = getColorCodingByData($vehicle_imei);
+                            } catch(Exception $e) { echo "Error";}
+                            //echo "<br>IMEI=".$imei_tmp[0]." ,ColorCode=".$colorCode;
+                            //######### COLOR CODE ENDS
+                            
                             $vehicle_name_arr[$color][] =$vehicle_name; 
                             $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
                             //$vehicle_type_arr[]=$vehicle_type;
-                             $vehicle_type_arr[$color][$vehicle_name]=$vehicle_type;
+                            $vehicle_type_arr[$color][$vehicle_name]=$vehicle_type;
                         }
                         else
                         {
@@ -383,7 +393,7 @@ echo"</table>";
                             //echo"todayDate=".$todayDateOnly."<br>";
                             $exactFilePath=$currentFilePath."/".$vehicle_imei.".txt";
                             //echo "exactFilePath=".$exactFilePath."<br>";
-                            $todayDataLog='';
+                            
                             //$todayDataLog=hasImeiLogged($o_cassandra, $vehicle_imei, $todayDateOnly);
                             if($todayDataLog!='')
                             {
@@ -1168,8 +1178,8 @@ function getColorCodingByData($imei) {
         //echo "inOBJ";
         date_default_timezone_set("Asia/Calcutta");
         $current_date = date('Y-m-d');
-        $current_time = date('Y-m-d H:i:s');
-        //$current_time = '2016-11-08 13:28:00';
+        //$current_time = date('Y-m-d H:i:s');
+        $current_time = '2016-11-08 13:28:00';
 
         $device_time = $LastRecordObject->deviceDatetimeLR[0];
         $device_time_sec = strtotime($device_time);
