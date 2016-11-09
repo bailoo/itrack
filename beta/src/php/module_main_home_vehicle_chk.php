@@ -384,8 +384,8 @@ echo"</table>";
                             //echo"todayDate=".$todayDateOnly."<br>";
                             $exactFilePath=$currentFilePath."/".$vehicle_imei.".txt";
                             //echo "exactFilePath=".$exactFilePath."<br>";
-                            
-                            $todayDataLog=hasImeiLogged($o_cassandra, $vehicle_imei, $todayDateOnly);
+                            $todayDataLog='';
+                            //$todayDataLog=hasImeiLogged($o_cassandra, $vehicle_imei, $todayDateOnly);
                             if($todayDataLog!='')
                             {
                                 //echo "in if";
