@@ -865,7 +865,11 @@ echo"</table>";
                             try {
                                //echo "IMEI=".$vehicle_imei;
                                $color = getColorCodingByData($vehicle_imei);
-                            } catch(Exception $e) { }                            
+                            } catch(Exception $e) { }  
+                            
+                            $vehicle_name_arr[$color][] =$vehicle_name; 
+                            $imei_arr[$color][$vehicle_name]=$vehicle_imei.$tmp_iotype_str."*".$vehicle_name;
+
                             /*if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                             {
                                 $color=$vcolor2;
