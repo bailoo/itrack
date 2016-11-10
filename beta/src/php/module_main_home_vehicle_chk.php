@@ -846,7 +846,7 @@ echo"</table>";
                     {
                         $tmp_iotype_str="*tmp_str";
                     }
-                    echo "FunctionCnt1:";
+                    //echo "FunctionCnt1:";
                     if($vehicle_id!=null)
                     {
                         for($i=0;$i<$vehicle_cnt;$i++)
@@ -858,12 +858,13 @@ echo"</table>";
                         }			
                         if($i>=$vehicle_cnt)
                         {
-                            echo "FunctionCnt2";
+                            //echo "FunctionCnt2";
                             $vehicleid[$vehicle_cnt]=$vehicle_id;
                             $vehicle_cnt++;
                             
                             try {
-                              $color = getColorCodingByData($vehicle_imei);
+                               echo "IMEI=".$vehicle_imei;
+                               $color = getColorCodingByData($vehicle_imei);
                             } catch(Exception $e) { }                            
                             /*if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                             {
@@ -918,7 +919,6 @@ echo"</table>";
 
         $color=@$rd_cl;
         common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);            
-
     
         $ChildCount=$AccountNode->ChildCnt;
         for($i=0;$i<$ChildCount;$i++)
