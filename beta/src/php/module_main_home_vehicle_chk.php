@@ -492,7 +492,7 @@ echo"</table>";
             $grn_cnt_grp=$green_cnt1;
             $gry_cnt_grp =$gray_cnt1;
             //echo "green=".$grn_cnt_grp."gray=".$gry_cnt_grp."<br>"; 
-            active_inactive_count($grn_cnt_grp,$gry_cnt_grp);
+            //active_inactive_count($grn_cnt_grp,$gry_cnt_grp);
             $vehicle_cnt=0;
             print_group_vehicle($AccountNode,$groupid[$j],$category1);
         }
@@ -539,10 +539,14 @@ echo"</table>";
                         {
                             $vehicleid[$vehicle_cnt]=$vehicle_id;
                             $vehicle_cnt++;
+                            
+                            try {
+                              $color = getColorCodingByData($vehicle_imei);
+                            } catch(Exception $e) { }                            
                             //$logResult=hasImeiLogged($o_cassandra, $vehicle_imei, $logDate);
                             //$xml_current = "../../../xml_vts/xml_data/".$today_date2."/".$vehicle_imei.".xml";
                             //if (file_exists($xml_current))
-                            if($AccountNode->data->DeviceRunningStatus[$j]=="1")
+                            /*if($AccountNode->data->DeviceRunningStatus[$j]=="1")
                             {
                                 $green_cnt1++; 
                                 //$green_cnt1=$green_cnt;     		
@@ -551,11 +555,28 @@ echo"</table>";
                             {
                                 $gray_cnt1++; 
                                // $gray_cnt1=$gray_cnt;    				
-                            } 										
+                            } */										
                         }
                     }
                 }
-            }      
+            }  
+            
+            //#### COLOR CODING
+            $grn_cl= "#008C05";
+            $gry_cl= "#7A7A7A";
+            $bl_cl= "#000099";
+            $rd_cl= "#FF0000";                      
+            //$grn_cnt=sizeof(@$vehicle_name_arr[$vcolor2]);
+            //echo "sixe_of_green_vehicle=".$grn_cnt."<br>";
+            //$gry_cnt=sizeof(@$vehicle_name_arr[$vcolor3]);
+            // echo "size_of_gray_vehicle=".$gry_cnt."<br>";           
+            $grn_cntC=sizeof(@$vehicle_name_arr[$grn_cl]);
+            $gry_cntC=sizeof(@$vehicle_name_arr[$gry_cl]);   
+            //$bl_cntC=sizeof(@$vehicle_name_arr[$bl_cl]);            
+            $rd_cntC=sizeof(@$vehicle_name_arr[$rd_cl]);
+            $total_grn = $grn_cntC+$rd_cntC;
+
+        //active_inactive_count($grn_cntC, $gry_cntC, $bl_cntC, $rd_cntC);            
         }
         if($type=="group")   ///////only for group vehicle cnt 
         { 
@@ -567,7 +588,7 @@ echo"</table>";
     		$ChildCount=$AccountNode->ChildCnt;
     		for($i=0;$i<$ChildCount;$i++)
     		{ 
-                    print_count($AccountNode->child[$i],$cmd,$category1,$green_cnt1,$gray_cnt1,$type);
+                    print_count($AccountNode->child[$i],$cmd,$category1,$total_grn,$gry_cntC,$type);
     		}
             }
         }
@@ -576,7 +597,7 @@ echo"</table>";
             $ChildCount=$AccountNode->ChildCnt;
             for($i=0;$i<$ChildCount;$i++)
             { 
-                print_count($AccountNode->child[$i],$cmd,$category1,$green_cnt1,$gray_cnt1,$type);
+                print_count($AccountNode->child[$i],$cmd,$category1,$total_grn,$gry_cntC,$type);
             }
         }
     }
@@ -760,7 +781,7 @@ echo"</table>";
                 $grn_cnt_grp=$green_cnt1;
                 $gry_cnt_grp =$gray_cnt1;
             //echo "green=".$grn_cnt_grp."gray=".$gry_cnt_grp."<br>"; 
-                active_inactive_count($grn_cnt_grp,$gry_cnt_grp);
+                //active_inactive_count($grn_cnt_grp,$gry_cnt_grp);
                 $vehicle_cnt=0;
                 print_user_vehicle($AccountNode,$userid[$j],$category1);
             /*echo'<tr> 
@@ -799,8 +820,7 @@ echo"</table>";
         global $vcolor2;
         global $vcolor3;
         global $DbConnection;
-       
-		
+       		
         $vehicle_name_arr=array();
         $imei_arr=array();
         $vehicle_color=array();
@@ -885,16 +905,16 @@ echo"</table>";
         //echo "<br>color:".$color;  
         //$color=@$vcolor2;
         $color=@$grn_cl;
-        common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color,@$vehicle_type_arr[$color]); 
+        common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color); 
         //$color=@$vcolor3; 
         $color=@$gry_cl;
-        common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
+        common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);
 
         $color=@$bl_cl;
-        common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
+        common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);
 
         $color=@$rd_cl;
-        common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);            
+        common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);            
 
     
         $ChildCount=$AccountNode->ChildCnt;
