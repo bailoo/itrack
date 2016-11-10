@@ -863,7 +863,7 @@ echo"</table>";
                             $vehicle_cnt++;
                             
                             try {
-                               echo "IMEI=".$vehicle_imei;
+                               //echo "IMEI=".$vehicle_imei;
                                $color = getColorCodingByData($vehicle_imei);
                             } catch(Exception $e) { }                            
                             /*if($AccountNode->data->DeviceRunningStatus[$j]=="1")
