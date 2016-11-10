@@ -827,7 +827,7 @@ echo"</table>";
         $veh_flag=0;
         if($AccountNode->data->AccountID==$userid)
         {
-            echo "category1=".$category1." ,AccountNode->data->VehicleCnt=".$AccountNode->data->VehicleCnt;
+            //echo "category1=".$category1." ,AccountNode->data->VehicleCnt=".$AccountNode->data->VehicleCnt;
             for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
             {
                 if($AccountNode->data->VehicleCategory[$j]==$category1)
@@ -846,6 +846,7 @@ echo"</table>";
                     {
                         $tmp_iotype_str="*tmp_str";
                     }
+                    echo "FunctionCnt1:";
                     if($vehicle_id!=null)
                     {
                         for($i=0;$i<$vehicle_cnt;$i++)
@@ -857,6 +858,7 @@ echo"</table>";
                         }			
                         if($i>=$vehicle_cnt)
                         {
+                            echo "FunctionCnt2";
                             $vehicleid[$vehicle_cnt]=$vehicle_id;
                             $vehicle_cnt++;
                             
