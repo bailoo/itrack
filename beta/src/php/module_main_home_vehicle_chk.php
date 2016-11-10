@@ -829,7 +829,7 @@ echo"</table>";
         {
             for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
             {
-                if($AccountNode->data->VehicleCategory[$j]==$category1)
+                //if($AccountNode->data->VehicleCategory[$j]==$category1)
                 {
                     $veh_flag=1;
                     $vehicle_id = $AccountNode->data->VehicleID[$j];
