@@ -827,10 +827,10 @@ echo"</table>";
         $veh_flag=0;
         if($AccountNode->data->AccountID==$userid)
         {
-            echo "category1=".$category1." ,";
+            echo "category1=".$category1." ,AccountNode->data->VehicleCnt=".$AccountNode->data->VehicleCnt;
             for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
             {
-                //if($AccountNode->data->VehicleCategory[$j]==$category1)
+                if($AccountNode->data->VehicleCategory[$j]==$category1)
                 {
                     $veh_flag=1;
                     $vehicle_id = $AccountNode->data->VehicleID[$j];
