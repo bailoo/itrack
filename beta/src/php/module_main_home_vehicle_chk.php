@@ -443,10 +443,11 @@ echo"</table>";
             $grn_cntC=sizeof(@$vehicle_name_arr[$grn_cl]);
             $gry_cntC=sizeof(@$vehicle_name_arr[$gry_cl]);   
             //$bl_cntC=sizeof(@$vehicle_name_arr[$bl_cl]);            
-            //$rd_cntC=sizeof(@$vehicle_name_arr[$rd_cl]);
+            $rd_cntC=sizeof(@$vehicle_name_arr[$rd_cl]);
+            $total_grn = $grn_cntC+$rd_cntC;
             
             //active_inactive_count($grn_cntC, $gry_cntC, $bl_cntC, $rd_cntC);
-            active_inactive_count($grn_cntC, $gry_cntC);
+            active_inactive_count($total_grn, $gry_cntC);
             //echo "<br>color:".$color;  
             //$color=@$vcolor2;
             $color=@$grn_cl;
