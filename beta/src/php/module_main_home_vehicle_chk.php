@@ -827,6 +827,7 @@ echo"</table>";
         $veh_flag=0;
         if($AccountNode->data->AccountID==$userid)
         {
+            echo "category1=".$category1." ,";
             for($j=0;$j<$AccountNode->data->VehicleCnt;$j++)
             {
                 //if($AccountNode->data->VehicleCategory[$j]==$category1)
