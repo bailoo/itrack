@@ -431,16 +431,17 @@ echo"</table>";
                 </th>
             </tr>';
                     
+            //#### COLOR CODING
             $grn_cl= "#008C05";
-            $gry_cl= "#000099";
-            $bl_cl= "#7A7A7A";
+            $gry_cl= "#7A7A7A";
+            $bl_cl= "#000099";
             $rd_cl= "#FF0000";                      
             //$grn_cnt=sizeof(@$vehicle_name_arr[$vcolor2]);
             //echo "sixe_of_green_vehicle=".$grn_cnt."<br>";
             //$gry_cnt=sizeof(@$vehicle_name_arr[$vcolor3]);
             // echo "size_of_gray_vehicle=".$gry_cnt."<br>";           
             $grn_cntC=sizeof(@$vehicle_name_arr[$grn_cl]);
-            $gry_cntC=sizeof(@$vehicle_name_arr[$gry_cl]); 
+            $gry_cntC=sizeof(@$vehicle_name_arr[$gry_cl]);   
             //$bl_cntC=sizeof(@$vehicle_name_arr[$bl_cl]);            
             //$rd_cntC=sizeof(@$vehicle_name_arr[$rd_cl]);
             
