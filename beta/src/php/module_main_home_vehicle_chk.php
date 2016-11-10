@@ -1231,10 +1231,10 @@ function getColorCodingByData($imei) {
             $colorCode = "#FF0000";
             return $colorCode;
             
-        } else if( ($diff_nodata < 30) && ($lat=='' && $lng=='') && ($diff_nogps > 30) ) {
+        /*} else if( ($diff_nodata < 30) && ($lat=='' && $lng=='') && ($diff_nogps > 30) ) {
             //$colorCode = "blue";
             $colorCode = "#000099";
-            return $colorCode;
+            return $colorCode;*/
             
         } else {
             //$colorCode = "green";
