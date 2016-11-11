@@ -453,13 +453,13 @@ echo"</table>";
             $color=@$grn_cl;
             common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color,@$vehicle_type_arr[$color]); 
             //$color=@$vcolor3; 
-            $color=@$gry_cl;
-            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
-
+            $color=@$rd_cl;
+            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);            
+            
             $color=@$bl_cl;
             common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
 
-            $color=@$rd_cl;
+            $color=@$gry_cl;
             common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);            
         }
         $ChildCount=$AccountNode->ChildCnt;
@@ -730,14 +730,15 @@ echo"</table>";
             $color=@$grn_cl;
             common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color); 
             //$color=@$vcolor3; 
-            $color=@$gry_cl;
-            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);
-
+            $color=@$rd_cl;
+            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);            
+            
             $color=@$bl_cl;
             common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);
 
-            $color=@$rd_cl;
-            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);            
+            $color=@$gry_cl;
+            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);
+            
             /*$color=$vcolor2;
             common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
             $color=$vcolor3; 
@@ -887,43 +888,44 @@ echo"</table>";
                     }
                 }
             }
-        }
+            
+            //#### COLOR CODING
+            $grn_cl= "#008C05";
+            $gry_cl= "#7A7A7A";
+            $bl_cl= "#000099";
+            $rd_cl= "#FF0000";                      
+            //$grn_cnt=sizeof(@$vehicle_name_arr[$vcolor2]);
+            //echo "sixe_of_green_vehicle=".$grn_cnt."<br>";
+            //$gry_cnt=sizeof(@$vehicle_name_arr[$vcolor3]);
+            // echo "size_of_gray_vehicle=".$gry_cnt."<br>";           
+            $grn_cntC=sizeof(@$vehicle_name_arr[$grn_cl]);
+            $gry_cntC=sizeof(@$vehicle_name_arr[$gry_cl]);   
+            //$bl_cntC=sizeof(@$vehicle_name_arr[$bl_cl]);            
+            $rd_cntC=sizeof(@$vehicle_name_arr[$rd_cl]);
+            $total_grn = $grn_cntC+$rd_cntC;
+
+            //active_inactive_count($grn_cntC, $gry_cntC, $bl_cntC, $rd_cntC);
+            active_inactive_count($total_grn, $gry_cntC);
+            //echo "<br>color:".$color;  
+            //$color=@$vcolor2;
+            $color=@$grn_cl;
+            common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color); 
+            
+            $color=@$rd_cl;
+            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);              
+            //$color=@$vcolor3; 
+            
+            $color=@$bl_cl;
+            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);
+            
+            $color=@$gry_cl;
+            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);                     
+        } 
         /*$color=$vcolor2;
         common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);
         $color=$vcolor3; 
-        common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);*/
+        common_display_vehicle($vehicle_name_arr[$color],$imei_arr[$color],$color);*/      
         
-	//#### COLOR CODING
-        $grn_cl= "#008C05";
-        $gry_cl= "#7A7A7A";
-        $bl_cl= "#000099";
-        $rd_cl= "#FF0000";                      
-        //$grn_cnt=sizeof(@$vehicle_name_arr[$vcolor2]);
-        //echo "sixe_of_green_vehicle=".$grn_cnt."<br>";
-        //$gry_cnt=sizeof(@$vehicle_name_arr[$vcolor3]);
-        // echo "size_of_gray_vehicle=".$gry_cnt."<br>";           
-        $grn_cntC=sizeof(@$vehicle_name_arr[$grn_cl]);
-        $gry_cntC=sizeof(@$vehicle_name_arr[$gry_cl]);   
-        //$bl_cntC=sizeof(@$vehicle_name_arr[$bl_cl]);            
-        $rd_cntC=sizeof(@$vehicle_name_arr[$rd_cl]);
-        $total_grn = $grn_cntC+$rd_cntC;
-
-        //active_inactive_count($grn_cntC, $gry_cntC, $bl_cntC, $rd_cntC);
-        active_inactive_count($total_grn, $gry_cntC);
-        //echo "<br>color:".$color;  
-        //$color=@$vcolor2;
-        $color=@$grn_cl;
-        common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color); 
-        //$color=@$vcolor3; 
-        $color=@$gry_cl;
-        common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);
-
-        $color=@$bl_cl;
-        common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);
-
-        $color=@$rd_cl;
-        common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color);            
-    
         $ChildCount=$AccountNode->ChildCnt;
         for($i=0;$i<$ChildCount;$i++)
         { 
@@ -1106,14 +1108,14 @@ echo"</table>";
                 $color=@$grn_cl;
                 common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color,@$vehicle_type_arr[$color]); 
                 //$color=@$vcolor3; 
-                $color=@$gry_cl;
-                common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
-
-                $color=@$bl_cl;
-                common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
-
                 $color=@$rd_cl;
                 common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);            
+                
+                $color=@$bl_cl;
+                common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
+                
+                $color=@$gry_cl;
+                common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
                 
                 /*$grn_cnt=sizeof($vehicle_name_arr[$vcolor2]);
                 $gry_cnt=sizeof($vehicle_name_arr[$vcolor3]);	  
@@ -1259,14 +1261,14 @@ echo"</table>";
                 $color=@$grn_cl;
                 common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color,@$vehicle_type_arr[$color]); 
                 //$color=@$vcolor3; 
-                $color=@$gry_cl;
-                common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
-
-                $color=@$bl_cl;
-                common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
-
                 $color=@$rd_cl;
                 common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);                 
+                
+                $color=@$bl_cl;
+                common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
+                
+                $color=@$gry_cl;
+                common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
             } 
         }
         else
