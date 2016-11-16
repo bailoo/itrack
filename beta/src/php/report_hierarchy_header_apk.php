@@ -163,7 +163,7 @@
     }*/
     function common_display_vehicle($vehicle_name_arr,$vehicleid_or_imei,$color,$vehicle_type_arr)
     {
-        global $DbConnnection;;
+        global $DbConnection;;
 	//echo "in function <br>";
         global $type;
 		global $title1; ///// this is report title
