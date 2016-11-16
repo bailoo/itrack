@@ -5444,6 +5444,20 @@ function insertApk_Assignment_detail($imei, $account_id, $apk_version, $datetime
     return $row;
 }
 
+function checkGCM_Id_Detail($imei, $DbConnection)
+{
+    $gcm_id = false;
+    $query="SELECT gcm_id FROM gcm_data WHERE imei='$imei' AND status=1";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbConnection);
+    $numrows=mysql_num_rows($result);
+    
+    if($numrows>0) {
+        $gcm_id = true;
+    }
+    return $gcm_id;
+}
+
 function getGCM_Id_Detail($imei, $apk_version, $DbConnection)
 {
     $gcm_id = "";
