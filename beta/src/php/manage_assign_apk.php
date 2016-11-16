@@ -1,10 +1,10 @@
 <?php 
 	//include_once('Hierarchy.php');
-        include_once("report_hierarchy_header.php");
+        include_once('coreDb.php');
+        include_once("report_hierarchy_header_apk.php");
 	include_once('util_session_variable.php');
 	include_once('util_php_mysql_connectivity.php');
-        include_once('coreDb.php');
-        
+               
 	//$root=$_SESSION['root'];  
 	$DEBUG=0;
 	$parameter_type="apk";
