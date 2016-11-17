@@ -34,7 +34,7 @@ if($post_action_type == "add") {
     $GCM_registrationIds = array();
     
     for($i = 0;$i<$vsize;$i++) {
-        echo "<br>IMEINO=".$vserial[$i]." ,account_id=".$account_id1." ,apk_version=".$apk_version1;
+        //echo "<br>IMEINO=".$vserial[$i]." ,account_id=".$account_id1." ,apk_version=".$apk_version1;
         $count = getApk_Assignment_detail($account_id1, $vserial[$i], $DbConnection);
         if($count > 0) {
             $res = updateApk_Assignment_detail($apk_version1, $account_id1, $vserial[$i], $DbConnection);
@@ -43,7 +43,7 @@ if($post_action_type == "add") {
         }
         
         $gcm_id_tmp = getGCM_Id_Detail($vserial[$i], $DbConnection);
-        echo "<br>gcm_id=".$gcm_id_tmp;
+        //echo "<br>gcm_id=".$gcm_id_tmp;
         if($gcm_id_tmp!='') {
             $GCM_registrationIds[] = $gcm_id_tmp;
         }
@@ -52,7 +52,7 @@ if($post_action_type == "add") {
     }
     
 
-    echo "<br>Size=".sizeof($GCM_registrationIds);
+    //echo "<br>Size=".sizeof($GCM_registrationIds);
     if(sizeof($GCM_registrationIds) > 0) {
         //######## START: PUSH NOTIFICATION TO ANDROID DEVICE USING GCM_ID ##################
         //############################################################################
