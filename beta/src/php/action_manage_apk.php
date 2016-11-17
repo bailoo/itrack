@@ -42,7 +42,7 @@ if($post_action_type == "add") {
             $res = insertApk_Assignment_detail($vserial[$i], $account_id1, $apk_version1, $datetime, $status, $DbConnection);
         }
         
-        $gcm_id_tmp = getGCM_Id_Detail($vserial[$i], $apk_version1, $DbConnection);
+        $gcm_id_tmp = getGCM_Id_Detail($vserial[$i], $DbConnection);
         echo "<br>gcm_id=".$gcm_id_tmp;
         if($gcm_id_tmp!='') {
             $GCM_registrationIds[] = $gcm_id_tmp;
