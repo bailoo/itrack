@@ -5458,7 +5458,7 @@ function checkGCM_Id_Detail($imei, $DbConnection)
     return $gcm_id;
 }
 
-function getGCM_Id_Detail($imei, $apk_version, $DbConnection)
+function getGCM_Id_Detail($imei, $DbConnection)
 {
     $gcm_id = "";
     $query="SELECT gcm_id FROM gcm_data WHERE imei='$imei' AND status=1";
