@@ -5461,7 +5461,7 @@ function checkGCM_Id_Detail($imei, $DbConnection)
 function getGCM_Id_Detail($imei, $apk_version, $DbConnection)
 {
     $gcm_id = "";
-    $query="SELECT gcm_id FROM gcm_data WHERE imei='$imei' AND version='$apk_version' AND status=1";
+    $query="SELECT gcm_id FROM gcm_data WHERE imei='$imei' AND status=1";
     //echo "query=".$query."<br>";
     $result=mysql_query($query,$DbConnection);
     //$row_result=mysql_num_rows($result);
