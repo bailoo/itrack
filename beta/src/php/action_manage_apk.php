@@ -43,7 +43,7 @@ if($post_action_type == "add") {
         }
         
         $gcm_id_tmp = getGCM_Id_Detail($vserial[$i], $DbConnection);
-        //echo "<br>gcm_id=".$gcm_id_tmp;
+        //echo "<br>gcm_id=".$gcm_id_tmp; //TEST
         if($gcm_id_tmp!='') {
             $GCM_registrationIds[] = $gcm_id_tmp;
         }
