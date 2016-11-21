@@ -31,7 +31,7 @@ $parameterizeData->cellName='ab';
 $sortBy="h";	
 //---------Setting array password--//
 
-$key_array_pass['mother2016_itrack']='mother2016_itrack';
+//$key_array_pass['mother2016_itrack']='mother2016_itrack';
 $key_array_pass['knpankur2016']='knpankur2016';
 if(!empty($_POST['deviceData']))
 {
