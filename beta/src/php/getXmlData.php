@@ -1631,8 +1631,7 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 			$lat = $item->d;
 			$lng = $item->e;
 			$speed = $item->f;
-			
-			
+						
 			$datetime_server = str_replace('@',' ',$item->g);
 			$datetime_device = str_replace('@',' ',$item->h);              
 			$io1 = $item->i;
@@ -1645,10 +1644,12 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 			$io8 = $item->p;
 			$sig_str = $item->q;
 			$sup_v = $item->r;
-			
-		   
+                        //if($account_id=="449") {
+                            $last_time = $item->lt;
+                        //}
+					   
 			$DataValid = 0;
-	//exit();
+                        //exit();
 
 			/*if ($parameterizeData->latitude != null && $parameterizeData->longitude != null) {
 				 if ((strlen($lat) > 5) && ($lat != "-") && (strlen($lng) > 5) && ($lng != "-")) {
@@ -1664,7 +1665,7 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 			//echo "<br>DataValid=".$DataValid;
 			if ($parameterizeData->dataLog != null) {
 			   
-					$switchDatetime = $datetime_device;
+				$switchDatetime = $datetime_device;
 				 
 			} else {
 				if ($sortBy == "g") { /// server time
@@ -1699,6 +1700,9 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 				$dataObject->dayMaxSpeedTimeLR[]=$item->t;
 				$dataObject->lastHaltTimeLR[]=$item->u;	
 				$dataObject->cellNameLR[]='-';
+                                //if($account-id=="449") {
+                                    $dataObject->lastTimeLR[]=$item->lt;
+                                //}
 			}
 		}
 	}
