@@ -1391,9 +1391,9 @@ function getColorCodingByData($imei) {
         $lng = $LastRecordObject->longitudeLR[0];
         
         $last_time = $LastRecordObject->lastTimeLR[0];
-        if($account_id=="449") {
+        /*if($account_id=="449") {
            echo "<br>LastTime=".$last_time; 
-        }
+        }*/
         $last_time_sec = strtotime($last_time);
         $last_time_tmp = explode(" ",$last_time);
         $last_time_date = $last_time_tmp[0];
