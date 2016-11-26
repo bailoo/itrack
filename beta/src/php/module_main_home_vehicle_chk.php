@@ -1411,26 +1411,31 @@ function getColorCodingByData($imei) {
           
         //if( (trim($device_date)!= trim($current_date)) && (trim($device_date)!= trim($last_time_date)) ) {
         if( (trim($device_date)!= trim($current_date)) || ( (trim($device_date)!= trim($last_time_date)) && ($account_id=="449")) ) {
+            if($imei=="861074025250203") { echo "<br>INACTIVE-1"; echo "<br>DD=".$device_date; echo "<br>CD=".$current_date; echo "<br>LTD=".$last_time_date; }
             //$colorCode = "grey";     //## INACTIVE
              $colorCode = "#7A7A7A";
              return $colorCode;
              
         } else if( ($diff_nodata > 30) || ($diff_nodata > 30 && $account_id=="449" && (trim($device_date)== trim($last_time_date)) ) ) {
+            if($imei=="861074025250203") { echo "<br>NODATA"; echo "<br>diff_nodata=".$diff_nodata; echo "<br>DD=".$device_date; echo "<br>LTD=".$last_time_date; }
             //$colorCode = "red";        //## NO DATA
             $colorCode = "#FF0000";
             return $colorCode;            
         //} else if( ($diff_nodata < 30) && ($lat=='' && $lng=='') && ($diff_nogps > 30) ) {
         } else if( $diff_nogps > 30 ) {
+            if($imei=="861074025250203") { echo "<br>NOGPS"; echo "<br>diff_nogps=".$diff_nogps; echo "<br>DD=".$device_date; echo "<br>LTD=".$last_time_date; }
             //$colorCode = "blue";          //### NO GPS
             $colorCode = "#000099";
             return $colorCode;
             
         } else {
+            if($imei=="861074025250203") { echo "<br>ACTIVE"; echo "<br>diff_nogps=".$diff_nogps; echo "<br>DD=".$device_date; echo "<br>LTD=".$last_time_date; }
             //$colorCode = "green";     //### ACTIVE
             $colorCode = "#008C05";
             return $colorCode;           
         }
     } else {
+        if($imei=="861074025250203") { echo "<br>INACTIVE-2"; echo "<br>diff_nogps=".$diff_nogps; echo "<br>DD=".$device_date; echo "<br>LTD=".$last_time_date; }
         //$colorCode = "grey";          //### INACTIVE
         $colorCode = "#7A7A7A";
     }
