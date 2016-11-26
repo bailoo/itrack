@@ -1341,7 +1341,7 @@ echo"</table>";
     
     
 function getColorCodingByData($imei) {
-    
+    global $account_id;
     global $parameterizeData;
     global $LastRecordObject;
     global $sortBy;
@@ -1389,7 +1389,12 @@ function getColorCodingByData($imei) {
         $last_halt_time_sec = strtotime($LastRecordObject->lastHaltTimeLR[0]);	
         $lat = $LastRecordObject->latitudeLR[0];
         $lng = $LastRecordObject->longitudeLR[0];
-        $last_time_sec = strtotime($LastRecordObject->lastTimeLR[0]);
+        
+        $last_time = $LastRecordObject->lastTimeLR[0];
+        $last_time_sec = strtotime($last_time);
+        $last_time_tmp = explode(" ",$last_time);
+        $last_time_date = $last_time_tmp[0];
+        
         //echo "<br>Lat=".$lat." ,Lng=".$lng;
 
         $current_time_sec = strtotime($current_time);
@@ -1401,12 +1406,13 @@ function getColorCodingByData($imei) {
         //RED:GREEN:GREY:BLUE  
         //FF0000:008C05:7A7A7A:000099
           
-        if(trim($device_date)!= trim($current_date)) {
-             //$colorCode = "grey";     //## INACTIVE
+        //if( (trim($device_date)!= trim($current_date)) && (trim($device_date)!= trim($last_time_date)) ) {
+        if( (trim($device_date)!= trim($current_date)) || ( (trim($device_date)!= trim($last_time_date)) && ($account_id=="449")) ) {
+            //$colorCode = "grey";     //## INACTIVE
              $colorCode = "#7A7A7A";
              return $colorCode;
              
-        } else if($diff_nodata > 30) {
+        } else if( ($diff_nodata > 30) || ($diff_nodata > 30 && $account_id=="449" && (trim($device_date)== trim($last_time_date)) ) ) {
             //$colorCode = "red";        //## NO DATA
             $colorCode = "#FF0000";
             return $colorCode;            
