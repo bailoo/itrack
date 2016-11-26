@@ -25,5 +25,6 @@ class lastRecordData
 	Public $dayMaxSpeedTimeLR=array();
 	Public $lastHaltTimeLR=array();	
 	Public $cellNameLR=array();
+        Public $lastTimeLR=array();
 }
 ?>
