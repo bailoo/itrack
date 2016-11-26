@@ -1701,7 +1701,7 @@ function getLastRecord($vSerial,$sortBy,$parameterizeData)
 				$dataObject->lastHaltTimeLR[]=$item->u;	
 				$dataObject->cellNameLR[]='-';
                                 //if($account-id=="449") {
-                                    $dataObject->lastTimeLR[]=$item->lt;
+                                    $dataObject->lastTimeLR[]=$last_time;
                                 //}
 			}
 		}
