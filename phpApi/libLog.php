@@ -296,8 +296,8 @@ function truncLastLog($o_cassandra)
 function logParser($st_results, $dataType, $orderAsc)
 {
 	$st_obj = new stdClass();			
-	$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz');
-	$last_params = array('a','b','c','d','e','f','h','i','j','k','l','m','n','o','p','q','r','s','t','u','ci','ax','ay','az','mx','my','mz','bx','by','bz');
+	$full_params = array('a','b','c','d','e','f','i','j','k','l','m','n','o','p','q','r','ci','ax','ay','az','mx','my','mz','bx','by','bz', 'lt');
+	$last_params = array('a','b','c','d','e','f','h','i','j','k','l','m','n','o','p','q','r','s','t','u','ci','ax','ay','az','mx','my','mz','bx','by','bz', 'lt');
 	$gps_params = ($dataType)?$full_params:$last_params;
 	$paramSize = sizeof($gps_params);
 	$resArray = ($orderAsc)?array_reverse($st_results):$st_results;
