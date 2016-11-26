@@ -453,11 +453,11 @@ echo"</table>";
             $color=@$grn_cl;
             common_display_vehicle_image(@$vehicle_name_arr[$color],@$imei_arr[$color],@$color,@$vehicle_type_arr[$color]); 
             //$color=@$vcolor3; 
-            $color=@$rd_cl;
-            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);            
-            
             $color=@$bl_cl;
             common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);
+            
+            $color=@$rd_cl;
+            common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);            
 
             $color=@$gry_cl;
             common_display_vehicle_image($vehicle_name_arr[$color],$imei_arr[$color],$color,$vehicle_type_arr[$color]);            
