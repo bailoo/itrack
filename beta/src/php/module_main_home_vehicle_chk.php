@@ -1410,13 +1410,15 @@ function getColorCodingByData($imei) {
         //FF0000:008C05:7A7A7A:000099
           
         //if( (trim($device_date)!= trim($current_date)) && (trim($device_date)!= trim($last_time_date)) ) {
-        if( ( (trim($device_date)!= trim($current_date)) && ($account_id!="449") ) || ( (trim($current_date)!= trim($last_time_date)) && ($account_id=="449")) ) {
+        //if( ( (trim($device_date)!= trim($current_date)) && ($account_id!="449") ) || ( (trim($current_date)!= trim($last_time_date)) && ($account_id=="449")) ) {
+        if( (trim($device_date)!= trim($current_date)) && ( trim($current_date)!= trim($last_time_date)) ) {            
             //if($imei=="861074025250203") { echo "<br>INACTIVE-1"; echo "<br>DD=".$device_date; echo "<br>CD=".$current_date; echo "<br>LTD=".$last_time_date; }
             //$colorCode = "grey";     //## INACTIVE
              $colorCode = "#7A7A7A";
              return $colorCode;
              
-        } else if( ( ($diff_nodata > 30) && ($account_id!="449") ) || ($diff_nodata > 30 && $account_id=="449" && (trim($device_date)== trim($last_time_date)) ) ) {
+        //} else if( ( ($diff_nodata > 30) && ($account_id!="449") ) || ($diff_nodata > 30 && $account_id=="449" && (trim($device_date)== trim($last_time_date)) ) ) {
+        } else if( ($diff_nodata > 30) && (trim($device_date)== trim($last_time_date)) ) {
            //if($imei=="861074025250203") { echo "<br>NODATA"; echo "<br>diff_nodata=".$diff_nodata; echo "<br>DD=".$device_date; echo "<br>LTD=".$last_time_date; }
             //$colorCode = "red";        //## NO DATA
             $colorCode = "#FF0000";
