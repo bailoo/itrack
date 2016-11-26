@@ -1388,39 +1388,41 @@ function getColorCodingByData($imei) {
                 
         $last_halt_time_sec = strtotime($LastRecordObject->lastHaltTimeLR[0]);	
         $lat = $LastRecordObject->latitudeLR[0];
-        $lng = $LastRecordObject->longitudeLR[0];  
+        $lng = $LastRecordObject->longitudeLR[0];
+        $last_time_sec = strtotime($LastRecordObject->lastTimeLR[0]);
         //echo "<br>Lat=".$lat." ,Lng=".$lng;
 
         $current_time_sec = strtotime($current_time);
         $diff_nodata = (($current_time_sec - $device_time_sec)/ 60);
-        $diff_nogps = (($current_time_sec - $last_halt_time_sec)/60); //## DIFF IN MINUTES   
+        //$diff_nogps = (($current_time_sec - $last_halt_time_sec)/60); //## DIFF IN MINUTES 
+        $diff_nogps = (($last_time_sec - $device_time_sec)/60); //## DIFF IN MINUTES 
         
         //echo "<br>current_time=".$current_time." ,device_time=".$device_time." ,diffNodata=".$diff_nodata." ,diffNogps=".$diff_nogps." ,lat=".$lat." ,lng=".$lng;       
         //RED:GREEN:GREY:BLUE  
         //FF0000:008C05:7A7A7A:000099
           
         if(trim($device_date)!= trim($current_date)) {
-             //$colorCode = "grey";
+             //$colorCode = "grey";     //## INACTIVE
              $colorCode = "#7A7A7A";
              return $colorCode;
              
         } else if($diff_nodata > 30) {
-            //$colorCode = "red";
+            //$colorCode = "red";        //## NO DATA
             $colorCode = "#FF0000";
+            return $colorCode;            
+        //} else if( ($diff_nodata < 30) && ($lat=='' && $lng=='') && ($diff_nogps > 30) ) {
+        } else if( $diff_nogps > 30 ) {
+            //$colorCode = "blue";          //### NO GPS
+            $colorCode = "#000099";
             return $colorCode;
             
-        /*} else if( ($diff_nodata < 30) && ($lat=='' && $lng=='') && ($diff_nogps > 30) ) {
-            //$colorCode = "blue";
-            $colorCode = "#000099";
-            return $colorCode;*/
-            
         } else {
-            //$colorCode = "green";
+            //$colorCode = "green";     //### ACTIVE
             $colorCode = "#008C05";
             return $colorCode;           
         }
     } else {
-        //$colorCode = "grey";
+        //$colorCode = "grey";          //### INACTIVE
         $colorCode = "#7A7A7A";
     }
     $LastRecordObject=null;    
