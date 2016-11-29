@@ -80,7 +80,7 @@ for($i=0;$i<$vsize;$i++)
     //var_dump($LastDataObject);
     if ($LastDataObject->deviceDatetimeLD[0]!="")
     {       
-        $linetmp=$linetmp.'<x a="'.$LastDataObject->messageTypeLD[0].'" b="'.$LastDataObject->versionLD[0].'" c="'.$LastDataObject->fixLD[0].'" d="'.$LastDataObject->latitudeLD[0].'" e="'.$LastDataObject->longitudeLD[0].'" f="'.$LastDataObject->speedLD[0].'" g="'.$LastDataObject->serverDatetimeLD[0].'" h="'.$LastDataObject->deviceDatetimeLD[0].'" i="'.$LastDataObject->io1LD[0].'" j="'.$LastDataObject->io2LD[0].'" k="'.$LastDataObject->io3LD[0].'" l="'.$LastDataObject->io4LD[0].'" m="'.$LastDataObject->io5LD[0].'" n="'.$LastDataObject->io6LD[0].'" o="'.$LastDataObject->io7LD[0].'" p="'.$LastDataObject->io8LD[0].'" q="'.$LastDataObject->sigStrLD[0].'" r="'.$LastDataObject->suplyVoltageLD[0].'" s="'.$LastDataObject->dayMaxSpeedLD[0].'" t="'.$LastDataObject->dayMaxSpeedTimeLD[0].'" u="'.$LastDataObject->lastHaltTimeLD[0].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" z="'.$vehicle_detail_local[8].'"/>#';
+        $linetmp=$linetmp.'<x a="'.$LastDataObject->messageTypeLD[0].'" b="'.$LastDataObject->versionLD[0].'" c="'.$LastDataObject->fixLD[0].'" d="'.$LastDataObject->latitudeLD[0].'" e="'.$LastDataObject->longitudeLD[0].'" f="'.$LastDataObject->speedLD[0].'" g="'.$LastDataObject->serverDatetimeLD[0].'" h="'.$LastDataObject->deviceDatetimeLD[0].'" i="'.$LastDataObject->io1LD[0].'" j="'.$LastDataObject->io2LD[0].'" k="'.$LastDataObject->io3LD[0].'" l="'.$LastDataObject->io4LD[0].'" m="'.$LastDataObject->io5LD[0].'" n="'.$LastDataObject->io6LD[0].'" o="'.$LastDataObject->io7LD[0].'" p="'.$LastDataObject->io8LD[0].'" q="'.$LastDataObject->sigStrLD[0].'" r="'.$LastDataObject->suplyVoltageLD[0].'" s="'.$LastDataObject->dayMaxSpeedLD[0].'" t="'.$LastDataObject->dayMaxSpeedTimeLD[0].'" u="'.$LastDataObject->lastHaltTimeLD[0].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[2].'" y="'.$vehicle_detail_local[1].'" z="'.$vehicle_detail_local[8].'" aa="'.$vehicle_detail_local[9].'"/>#';
     }	
 }
 		
@@ -202,7 +202,12 @@ $vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
                                     $vehilce_type= preg_replace('/"/', '', $vehilce_type_tmp1[1]);
                                     $vehilce_type_arr[]=$vehilce_type;
 
-                                    preg_match('/z="[^"]+/', $lineF[$n], $dmobno_tmp);
+                                    preg_match('/z="[^"]+/', $lineF[$n], $driver_name_tmp);
+                                    $driver_name_tmp_tmp1 = explode("=",$driver_name_tmp[0]);
+                                    $driver_name = preg_replace('/"/', '', $driver_name_tmp_tmp1[1]);
+                                    $driverNameArr[]=$driver_name;
+                                    
+                                    preg_match('/aa="[^"]+/', $lineF[$n], $dmobno_tmp);
                                     $dmobno_tmp1 = explode("=",$dmobno_tmp[0]);
                                     $dmobno = preg_replace('/"/', '', $dmobno_tmp1[1]);
                                     $dMobileNoArr[]=$dmobno;
@@ -362,7 +367,7 @@ $vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
                             //print_r($lng_arr_last);
                             //print_r($vehilce_type_arr);
                             $googleMapthisapi=new GoogleMapHelper();
-                            echo $googleMapthisapi->addMultipleMarkerLast("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$io_str_last,$vehilce_type_arr,$day_max_speed_arr_last,$last_halt_time_arr_last,$dMobileNoArr);
+                            echo $googleMapthisapi->addMultipleMarkerLast("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$io_str_last,$vehilce_type_arr,$day_max_speed_arr_last,$last_halt_time_arr_last,$driverNameArr,$dMobileNoArr);
 
             }
             else
