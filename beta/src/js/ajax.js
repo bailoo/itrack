@@ -121,6 +121,7 @@ function show_option_with_value(type, option)      // type="manage/report/settin
           else if(result1[0].trim()=="driver_updated")
           {
               alert(result1[1]);
+              document.getElementById('update_driver').style.display='none';
           }
           else if(result1[0]=="group_vehicles")
           {
