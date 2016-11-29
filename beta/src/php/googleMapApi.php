@@ -375,12 +375,12 @@ var input = (document.getElementById('pac-input'));
 		        }
 		     }";
 			  $map .= "
-				function infoCallback(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,ioStr,marker,maxSpeed,maxHaltTime,dMobileNoLocal) 
-				{	
+				function infoCallback(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,ioStr,marker,maxSpeed,maxHaltTime,driverName,dMobileNoLocal) 
+				{	//alert('infocall');
 					return function() 
 					{
-						 var contentString='';
-							if (infowindow) infowindow.close();
+						var contentString='';
+						if (infowindow) infowindow.close();
 						infowindow = new google.maps.InfoWindow();
 						var latlng = new google.maps.LatLng(lat, lng);
 						//alert('latlng='+latlng);
@@ -429,7 +429,7 @@ var input = (document.getElementById('pac-input'));
 									{
 										tmp_address=landmark;
 									}
-									contentString='<table width=\"80%\" border=\"0\">'+
+									contentString='<table width=\"85%\" border=\"0\">'+
 										'<tr>'+
 										'<td class=\"live_td_css1\">Vehicle Name</td>'+
 										'<td width=\"1%\">:</td>'+
@@ -445,7 +445,12 @@ var input = (document.getElementById('pac-input'));
 										'<td>:</td>'+
 										'<td class=\"live_td_css2\">'+vSerial+'</td>'+
 									   '</tr>'+
-										'<tr>'+
+                                                                            '<tr>'+
+										'<td class=\"live_td_css1\">Driver Name </td>'+
+										'<td>:</td>'+
+										'<td class=\"live_td_css2\">'+driverName+'</td>'+
+									   '</tr>'+                                                                           
+                                                                            '<tr>'+
 										'<td class=\"live_td_css1\">Driver Name/Mob </td>'+
 										'<td>:</td>'+
 										'<td class=\"live_td_css2\">'+dMobileNoLocal+'</td>'+
@@ -477,9 +482,12 @@ var input = (document.getElementById('pac-input'));
 										'<td class=\"live_td_css2\">'+maxHaltTime+'</td>'+
 										'</tr>'+                                                                                
 										'</table>'+
-										'<b><font color=black size=2>('+lat+','+lng+')</font></b>';										
-											infowindow.setContent(contentString);
-											infowindow.open(map_canvas, marker);
+                                                                                '<b><font color=black size=2>('+lat+','+lng+')</font></b>'+
+                                                                                '<br><div align=right><a href=javascript:void(0); onclick=javascript:show_driver_form(\''+vSerial+'\',\''+driverName+'\',\''+dMobileNoLocal+'\')>Update Driver detail</a></div>';
+                                                                                
+							                        infowindow.setContent(contentString);
+                                                                                infowindow.open(map_canvas, marker);                                                                         
+                                                                                        
 								} 
 								else 
 								{
@@ -1865,7 +1873,7 @@ var input = (document.getElementById('pac-input'));
 						}
 					}					
 				}
-				function setMultipleMarkerLast(map,latarr,lngarr,datetimearr,vSerial,vName,vNumber,speed,ioStr,vType,dMaxSpeed,lHaltSpeed,dMobileNoArr)
+				function setMultipleMarkerLast(map,latarr,lngarr,datetimearr,vSerial,vName,vNumber,speed,ioStr,vType,dMaxSpeed,lHaltSpeed,driverNameArr,dMobileNoArr)
 				{  
 					//alert('hi1');				
 					 deleteOverlays();
@@ -1904,6 +1912,7 @@ var input = (document.getElementById('pac-input'));
 						var vSerialLocal=vSerial[i];
 						var vNameLocal=vName[i];
 						var vNumberLocal=vNumber[i];
+                                                var driverName = driverNameArr[i];
                                                 var dMobNoLocal=dMobileNoArr[i];
 						var speedLocal=speed[i];
 						var ioStrLocal=ioStr[i];
@@ -1916,7 +1925,7 @@ var input = (document.getElementById('pac-input'));
 							markers.push(marker);					
 						google.maps.event.addListener
 						(						
-							marker, mouse_action, infoCallback(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,ioStrLocal,marker,dMaxSpeedLocal,lHaltSpeedLocal,dMobNoLocal)
+							marker, mouse_action, infoCallback(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,ioStrLocal,marker,dMaxSpeedLocal,lHaltSpeedLocal,driverName,dMobNoLocal)
 						);					
 					}
 					
@@ -2257,7 +2266,7 @@ var input = (document.getElementById('pac-input'));
 		$marker .= "</script>";
 		return $marker;
 	}
-	function addMultipleMarkerLast($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$io_str_arr,$vehilce_type_arr,$day_max_speed_arrt,$last_halt_time_arr,$dMobileNoArr)
+	function addMultipleMarkerLast($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$io_str_arr,$vehilce_type_arr,$day_max_speed_arrt,$last_halt_time_arr,$driverNameArr,$dMobileNoArr)
 	{
 		//print_r($latarr);
 		//print_r($lngarr);
@@ -2284,11 +2293,12 @@ var input = (document.getElementById('pac-input'));
 			$vehilceTypeJs=json_encode($vehilce_type_arr);
 			$dayMaxSpeedJs=json_encode($day_max_speed_arrt);
 			$lastHaltTimeJs=json_encode($last_halt_time_arr);
+                        $driverNameArrJs=json_encode($driverNameArr);
                         $dMobileNoArrJs=json_encode($dMobileNoArr);
 		
                        
 			//echo "in if<br>";
-			$marker .= "setMultipleMarkerLast({$map_id},{$latJs},{$lngJS},{$dateTimeJs},{$vSerialJs},{$vNameJs},{$vNumberJs},{$speedJs},{$ioStrJs},{$vehilceTypeJs},{$dayMaxSpeedJs},{$lastHaltTimeJs},{$dMobileNoArrJs}".")";
+			$marker .= "setMultipleMarkerLast({$map_id},{$latJs},{$lngJS},{$dateTimeJs},{$vSerialJs},{$vNameJs},{$vNumberJs},{$speedJs},{$ioStrJs},{$vehilceTypeJs},{$dayMaxSpeedJs},{$lastHaltTimeJs},{$driverNameArrJs},{$dMobileNoArrJs}".")";
 		}		
 		$marker .= "</script>";
 		return $marker;
