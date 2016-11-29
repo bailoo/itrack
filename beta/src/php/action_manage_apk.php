@@ -28,7 +28,7 @@ if($post_action_type == "add") {
     $apk_url = $apk_str[1];
     //echo "<br>devicestr=".$device_str;
     //exit();
-    $vserial = explode(':', $device_str);
+    $vserial = explode(',', $device_str);
     $vsize = count($vserial);
     $status = 1;    
     $GCM_registrationIds = array();
