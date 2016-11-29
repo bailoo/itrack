@@ -4496,7 +4496,7 @@ function getGroupGroupIdGroupName($account_id,$DbConnection)
 }
 function getVehicleTableData($vehicle_id,$DbConnection,$j)
 {
-    $query_test1 = "SELECT vehicle.vehicle_id,vehicle.vehicle_name,vehicle.vehicle_type,vehicle.category,vehicle.vehicle_tag,vehicle.vehicle_number,vehicle.mobile_number,".
+    $query_test1 = "SELECT vehicle.vehicle_id,vehicle.vehicle_name,vehicle.vehicle_type,vehicle.category,vehicle.vehicle_tag,vehicle.vehicle_number,vehicle.driver_name,vehicle.mobile_number,".
     "vehicle.max_speed,vehicle.fuel_voltage,vehicle.tank_capacity,vehicle.manufacturer_name,vehicle_assignment.device_imei_no FROM vehicle ".
     "USE INDEX (v_vehicleid_status),vehicle_assignment USE INDEX (va_vehicleid_status) WHERE".
     " vehicle.vehicle_id=vehicle_assignment.vehicle_id AND ( ";
@@ -4525,6 +4525,7 @@ function getVehicleTableData($vehicle_id,$DbConnection,$j)
             'category'=>$row_1->category,
             'vehicle_tag'=>$row_1->vehicle_tag,
             'vehicle_number'=>$row_1->vehicle_number,
+            'driver_name'=>$row_1->driver_name,
             'mobile_number'=>$row_1->mobile_number,
             'device_imei_no'=>$row_1->device_imei_no,
             'max_speed'=>$row_1->max_speed,
@@ -5444,24 +5445,10 @@ function insertApk_Assignment_detail($imei, $account_id, $apk_version, $datetime
     return $row;
 }
 
-function checkGCM_Id_Detail($imei, $DbConnection)
-{
-    $gcm_id = false;
-    $query="SELECT gcm_id FROM gcm_data WHERE imei='$imei' AND status=1";
-    //echo "query=".$query."<br>";
-    $result=mysql_query($query,$DbConnection);
-    $numrows=mysql_num_rows($result);
-    
-    if($numrows>0) {
-        $gcm_id = true;
-    }
-    return $gcm_id;
-}
-
-function getGCM_Id_Detail($imei, $DbConnection)
+function getGCM_Id_Detail($imei, $apk_version, $DbConnection)
 {
     $gcm_id = "";
-    $query="SELECT gcm_id FROM gcm_data WHERE imei='$imei' AND status=1";
+    $query="SELECT gcm_id FROM gcm_data WHERE imei='$imei' AND version='$apk_version' status=1";
     //echo "query=".$query."<br>";
     $result=mysql_query($query,$DbConnection);
     //$row_result=mysql_num_rows($result);
@@ -5479,6 +5466,29 @@ function updateApk_Assignment_detail($apk_version, $account_id, $imei, $DbConnec
     $result=mysql_query($query,$DbConnection);               
     $row=mysql_fetch_row($result);
     return $row;
+}
+
+function get_vehicle_id($DbConnection, $imei)
+{
+    $query ="SELECT vehicle_id FROM vehicle_assignment WHERE device_imei_no='$imei' AND status=1";  ///// for auto increament of geo_id ///////////   
+    $result=mysql_query($query,$DbConnection);
+    $row=mysql_fetch_object($result);
+    $vehicle_id= $row->vehicle_id;
+    return $vehicle_id;
+}
+
+function updateVehicle_Detail($account_id1,$vehicle_id,$driver_name,$driver_mobile,$imei,$DbConnection) {
+    $query= "UPDATE vehicle SET driver_name='$driver_name',mobile_number='$driver_mobile' WHERE vehicle_id='$vehicle_id' AND status=1";
+    //echo $query.'<BR>';
+    $result1=mysql_query($query,$DbConnection);               
+    return $result1;    
+}
+function insertVehicleDriverHistory_Detail($account_id1,$vehicle_id, $imei,$driver_name,$driver_mobile,$create_date,$DbConnection) {
+    $query= "INSERT INTO vehicle_driver_history(account_id,vehicle_id,device_imei_no,driver_name,driver_mobile,create_date) ".
+            "values('$account_id1','$vehicle_id','$imei','$driver_name','$driver_mobile','$create_date')";
+    //echo $query.'<BR>';
+    $result2=mysql_query($query,$DbConnection);
+    return $result2;    
 }
 //========================================================//
 //////////// end of hierarchy class ////////
