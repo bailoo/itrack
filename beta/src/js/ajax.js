@@ -118,6 +118,10 @@ function show_option_with_value(type, option)      // type="manage/report/settin
             document.getElementById('available_message').innerHTML =result1[1];
             document.getElementById("enter_button").disabled=false;           
           }
+          else if(result1[0].trim()=="driver_updated")
+          {
+              alert(result1[1]);
+          }
           else if(result1[0]=="group_vehicles")
           {
             document.getElementById('mining_vehicle_display').style.display='';
