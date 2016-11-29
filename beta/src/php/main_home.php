@@ -118,6 +118,7 @@
                 <div id="page-content-wrapper" style="height:100%; width:100%;">
                      
                     ';
+                                                    include('module_update_driver.php');
                                                     include('module_home_body.php');
 
                                                     echo'
