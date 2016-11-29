@@ -1,6 +1,6 @@
 <?php
 echo '
-  <div id="update_driver" class="white_content" height="100%">
+  <div id="update_driver" class="white_content" height="100%" style="display:none;">
   <strong>Update Driver Profile</strong>
   <input type="hidden" id="imei">
   <table width="100%" border="0" height="100px;">
