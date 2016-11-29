@@ -424,6 +424,7 @@ class Hierarchy
 							$AccountInfo -> VehicleCategory[$AccountInfo -> VehicleCnt] =$vehicleData['category'];
 							$AccountInfo -> VehicleTag[$AccountInfo -> VehicleCnt] = $vehicleData['vehicle_tag'];
 							$AccountInfo -> VehicleNumber[$AccountInfo -> VehicleCnt] =$vehicleData['vehicle_number'];
+                                                        $AccountInfo -> DriverName[$AccountInfo -> VehicleCnt] =$vehicleData['driver_name'];
                                                         $AccountInfo -> MobileNumber[$AccountInfo -> VehicleCnt] =$vehicleData['mobile_number'];
 							$AccountInfo -> VehicleMaxSpeed[$AccountInfo -> VehicleCnt] =$vehicleData['max_speed'];
 							$AccountInfo -> VehicleFuelVoltage[$AccountInfo -> VehicleCnt] =$vehicleData['fuel_voltage'];
