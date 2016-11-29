@@ -1033,6 +1033,34 @@ function tree_validation(obj)
 					
 	}
 
+    function show_driver_form(imei, driver_name, driver_mobile) {
+        document.getElementById('update_driver').style.display='block';
+        document.getElementById('fade').style.display='block';
+        document.getElementById('driver_name').value = driver_name;
+        document.getElementById('driver_mobile').value = driver_mobile; 
+        document.getElementById('imei').value = imei;
+    }
+    function action_update_driver_history() {
+        //alert("IN ACTION-UpdateDriverHistory");
+        var poststr = '';
+        var driver_name = document.getElementById('driver_name').value;
+        var driver_mobile = document.getElementById('driver_mobile').value;
+        
+        if(driver_name=='') {
+            alert('Please fill Driver Name!');
+            return false;
+        }       
+        if(driver_mobile=='') {
+            alert('Please fill Driver Mobile!');
+            return false;
+        }        
+        poststr="action_type=update"+                
+                "&imei=" + document.getElementById('imei').value+
+                "&driver_name=" + document.getElementById('driver_name').value+
+                "&driver_mobile=" + document.getElementById('driver_mobile').value;
+        
+        makePOSTRequest('src/php/action_update_driver_history.php', poststr);
+    }
 	/*function open_win(value)
 	{
 	alert("val="+value);
