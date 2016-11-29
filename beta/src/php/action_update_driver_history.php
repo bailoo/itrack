@@ -17,10 +17,10 @@ if($post_action_type == "update")
     date_default_timezone_set('Asia/Calcutta'); 
     $create_date = date('Y-m-d H:i:s');
 
-    echo "AccountID=".$account_id." ,Imei=".$post_imei." ,driverName=".$post_driver_name." ,Mobile=".$post_driver_mobile." ,CreateDate=".$create_date;
+    //echo "AccountID=".$account_id." ,Imei=".$post_imei." ,driverName=".$post_driver_name." ,Mobile=".$post_driver_mobile." ,CreateDate=".$create_date;
     
     $vehicle_id = get_vehicle_id($DbConnection, $imei);
-    echo "\nVehicleID=".$vehicle_id;
+    //echo "\nVehicleID=".$vehicle_id;
     $result1=updateVehicle_Detail($account_id,$vehicle_id,$post_driver_name,$post_driver_mobile,$post_imei,$DbConnection);
     $result2=insertVehicleDriverHistory_Detail($account_id,$vehicle_id, $post_imei,$post_driver_name,$post_driver_mobile,$create_date,$DbConnection);
     
