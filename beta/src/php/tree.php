@@ -45,6 +45,7 @@ class Info {
 	Public $DeviceIOTypeValue=array();
 	Public $VehicleName=array();
 	Public $VehicleNumber=array();
+        Public $DriverName=array();
 	Public $MobileNumber=array();
 	Public $VehicleType=array();
 	Public $VehicleCategory=array();
