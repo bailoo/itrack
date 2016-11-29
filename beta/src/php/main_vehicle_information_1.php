@@ -10,6 +10,7 @@ function get_vehicle_info($AccountNode,$imei)
 		$vehicle_name_local = $AccountNode->data->VehicleName[$j];
 		$vehicle_imei_no = $AccountNode->data->DeviceIMEINo[$j];
 		$vehicle_number_1 = $AccountNode->data->VehicleNumber[$j];
+                $driver_name_1 = $AccountNode->data->DriverName[$j];
 		$mobile_number_1 = $AccountNode->data->MobileNumber[$j];
 		$max_speed_local = $AccountNode->data->VehicleMaxSpeed[$j];
 		$vehicle_fuel_voltage = $AccountNode->data->VehicleFuelVoltage[$j];
@@ -32,8 +33,10 @@ function get_vehicle_info($AccountNode,$imei)
 					//echo "vehicle_name=".$vehicle_name." tmp_iotype_str1=".$tmp_iotype_str."<br>";
 			}			
 			$flag=1;
-			$vehicle_info_local=$vehicle_name_local.",".$vehicle_type_local.",".$vehicle_number_1.",".$vehicle_tag_local.",".$max_speed_local.",".$vehicle_fuel_voltage.",".$vehicle_tank_Capacity.",".$tmp_iotype_str.",".$mobile_number_1.",".$manufacturer_name;
-			return $vehicle_info_local;			
+			$vehicle_info_local=$vehicle_name_local.",".$vehicle_type_local.",".$vehicle_number_1.",".$vehicle_tag_local.",".$max_speed_local.",".$vehicle_fuel_voltage.",".$vehicle_tank_Capacity.",".$tmp_iotype_str.",".$driver_name_1.",".$mobile_number_1.",".$manufacturer_name;
+			//echo "VInfo=".$vehicle_info_local;
+                        //exit();
+                        return $vehicle_info_local;			
 		}
 	}
 	$ChildCount=$AccountNode->ChildCnt;
