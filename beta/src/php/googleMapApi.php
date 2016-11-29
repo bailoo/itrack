@@ -448,12 +448,12 @@ var input = (document.getElementById('pac-input'));
                                                                             '<tr>'+
 										'<td class=\"live_td_css1\">Driver Name </td>'+
 										'<td>:</td>'+
-										'<td class=\"live_td_css2\">'+driverName+'</td>'+
+										'<td class=\"live_td_css2\" id=\"driver_name_js\">'+driverName+'</td>'+
 									   '</tr>'+                                                                           
                                                                             '<tr>'+
 										'<td class=\"live_td_css1\">Driver Mob </td>'+
 										'<td>:</td>'+
-										'<td class=\"live_td_css2\">'+dMobileNoLocal+'</td>'+
+										'<td class=\"live_td_css2\" id=\"driver_mobile_js\">'+dMobileNoLocal+'</td>'+
 									   '</tr>'+
 									   '<tr>'+
 									   '<tr>'+
