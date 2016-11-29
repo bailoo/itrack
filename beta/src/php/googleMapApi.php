@@ -451,7 +451,7 @@ var input = (document.getElementById('pac-input'));
 										'<td class=\"live_td_css2\">'+driverName+'</td>'+
 									   '</tr>'+                                                                           
                                                                             '<tr>'+
-										'<td class=\"live_td_css1\">Driver Name/Mob </td>'+
+										'<td class=\"live_td_css1\">Driver Mob </td>'+
 										'<td>:</td>'+
 										'<td class=\"live_td_css2\">'+dMobileNoLocal+'</td>'+
 									   '</tr>'+
