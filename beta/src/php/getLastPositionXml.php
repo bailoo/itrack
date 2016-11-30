@@ -412,11 +412,22 @@ $vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
                     $vnumber_arr_last[]=$vnumber;*/
                     //echo "vehicle_name=".$vehicle_name."<br>";
 
-                    preg_match('/z="[^"]+/', $lineF[$n], $dmobno_tmp);
+                    /*preg_match('/z="[^"]+/', $lineF[$n], $dmobno_tmp);
                     $dmobno_tmp1 = explode("=",$dmobno_tmp[0]);
                     $dmobno = preg_replace('/"/', '', $dmobno_tmp1[1]);
                     $dMobileNoArr[]=$dmobno;
                     //echo "vehicle_name=".$vehicle_name."<br>";
+                    
+                    preg_match('/z="[^"]+/', $lineF[$n], $driver_name_tmp);
+                    $driver_name_tmp_tmp1 = explode("=",$driver_name_tmp[0]);
+                    $driver_name = preg_replace('/"/', '', $driver_name_tmp_tmp1[1]);
+                    $driverNameArr[]=$driver_name;*/
+
+                    preg_match('/aa="[^"]+/', $lineF[$n], $dmobno_tmp);
+                    $dmobno_tmp1 = explode("=",$dmobno_tmp[0]);
+                    $dmobno = preg_replace('/"/', '', $dmobno_tmp1[1]);
+                    $dMobileNoArr[]=$dmobno;
+                                    
                     }				
                     $googleMapthisapi=new GoogleMapHelper();							
                     echo $googleMapthisapi->addPersonMultipleMarkerLast("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$dMobileNoArr);
