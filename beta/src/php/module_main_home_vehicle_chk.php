@@ -1413,6 +1413,8 @@ function getColorCodingByData($imei) {
         //$diff_nogps = (($current_time_sec - $last_halt_time_sec)/60); //## DIFF IN MINUTES 
         $diff_nogps = (($last_time_sec - $device_time_sec)/60); //## DIFF IN MINUTES 
         
+        $diff_nogps_currentTime = $current_time_sec - $last_time_sec;
+        
         //echo "<br>current_time=".$current_time." ,device_time=".$device_time." ,diffNodata=".$diff_nodata." ,diffNogps=".$diff_nogps." ,lat=".$lat." ,lng=".$lng;       
         //RED:GREEN:GREY:BLUE  
         //FF0000:008C05:7A7A7A:000099
@@ -1426,18 +1428,18 @@ function getColorCodingByData($imei) {
              return $colorCode;
              
         //} else if( ( ($diff_nodata > 30) && ($account_id!="449") ) || ($diff_nodata > 30 && $account_id=="449" && (trim($device_date)== trim($last_time_date)) ) ) {
-        } else if( ($diff_nodata > 30) && (trim($device_date)== trim($last_time_date)) ) {
-           //if($imei=="861074025250203") { echo "<br>NODATA"; echo "<br>diff_nodata=".$diff_nodata; echo "<br>DD=".$device_date; echo "<br>LTD=".$last_time_date; }
-            //$colorCode = "red";        //## NO DATA
-            $colorCode = "#FF0000";
-            return $colorCode;            
-        //} else if( ($diff_nodata < 30) && ($lat=='' && $lng=='') && ($diff_nogps > 30) ) {
-        } else if( $diff_nogps > 30 ) {
+        }  else if( ($diff_nogps > 30) && ($diff_nogps_currentTime<600) ) {
             //if($imei=="861074025250203") { echo "<br>NOGPS"; echo "<br>diff_nogps=".$diff_nogps; echo "<br>DD=".$device_date; echo "<br>LTD=".$last_time_date; }
             //$colorCode = "blue";          //### NO GPS
             $colorCode = "#000099";
             return $colorCode;
             
+        } else if( ($diff_nodata > 30) && (trim($device_date)== trim($last_time_date)) ) {
+           //if($imei=="861074025250203") { echo "<br>NODATA"; echo "<br>diff_nodata=".$diff_nodata; echo "<br>DD=".$device_date; echo "<br>LTD=".$last_time_date; }
+            //$colorCode = "red";        //## NO DATA
+            $colorCode = "#FF0000";
+            return $colorCode;            
+        //} else if( ($diff_nodata < 30) && ($lat=='' && $lng=='') && ($diff_nogps > 30) ) {   
         } else {
             //if($imei=="861074025250203") { echo "<br>ACTIVE"; echo "<br>diff_nogps=".$diff_nogps; echo "<br>DD=".$device_date; echo "<br>LTD=".$last_time_date; }
             //$colorCode = "green";     //### ACTIVE
