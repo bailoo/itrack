@@ -8,6 +8,7 @@
     include_once('parameterizeData.php');
     include_once('lastRecordData.php');
     include_once("getXmlData.php");
+    include("user_type_setting.php");
     
     //echo "DFSDDDDDDDDDDDDDDDDDDDFSDFADSF <br><br>";
     //if($account_id!=2)
@@ -1346,6 +1347,7 @@ function getColorCodingByData($imei) {
     global $parameterizeData;
     global $LastRecordObject;
     global $sortBy;
+    global $person_user_type;
     //$colorCode = "grey";
     $colorCode = "#7A7A7A";
     //echo "imei=".$imei."<br>";
@@ -1390,8 +1392,11 @@ function getColorCodingByData($imei) {
         $last_halt_time_sec = strtotime($LastRecordObject->lastHaltTimeLR[0]);	
         $lat = $LastRecordObject->latitudeLR[0];
         $lng = $LastRecordObject->longitudeLR[0];
-        
-        $last_time = $LastRecordObject->lastTimeLR[0];
+        if($person_user_type==1) {
+            $last_time = $LastRecordObject->io2LR[0];
+        } else {                
+            $last_time = $LastRecordObject->lastTimeLR[0];
+        }
         /*if($account_id=="449") {
            echo "<br>LastTime=".$last_time; 
         }*/
