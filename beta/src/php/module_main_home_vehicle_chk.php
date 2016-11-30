@@ -1392,8 +1392,9 @@ function getColorCodingByData($imei) {
         $last_halt_time_sec = strtotime($LastRecordObject->lastHaltTimeLR[0]);	
         $lat = $LastRecordObject->latitudeLR[0];
         $lng = $LastRecordObject->longitudeLR[0];
-        if($person_user_type==1) {
+        if($person_user_type==1) {            
             $last_time = $LastRecordObject->io2LR[0];
+            echo "<br>Person:".$last_time;
         } else {                
             $last_time = $LastRecordObject->lastTimeLR[0];
         }
