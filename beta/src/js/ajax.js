@@ -123,6 +123,7 @@ function show_option_with_value(type, option)      // type="manage/report/settin
               alert(result1[1]);
               document.getElementById('update_driver').style.display='none';
               document.getElementById('fade').style.display='none';
+              show_data_on_map('map_report');
               //document.getElementById('driver_name_js').innerHTML = document.getElementById('driver_name').value;
               //document.getElementById('driver_mobile_js').innerHTML = document.getElementById('driver_mobile').value;              
           }
