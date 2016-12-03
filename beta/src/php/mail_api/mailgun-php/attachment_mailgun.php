@@ -13,8 +13,13 @@ echo "V2";
 use Mailgun\Mailgun;
 echo "V3";
 # Instantiate the client.
+/*$mgClient = new Mailgun('key-88da0d744f1a79c0dc336210f561ca2c');
+$domain = "sandbox9d2e30efb63e41f899cbb0499833c2f1.mailgun.org";*/
+
 $mgClient = new Mailgun('key-88da0d744f1a79c0dc336210f561ca2c');
-$domain = "sandbox9d2e30efb63e41f899cbb0499833c2f1.mailgun.org";
+//$domain = "sandbox9d2e30efb63e41f899cbb0499833c2f1.mailgun.org";
+$domain = "itrackanalytics.co.in";
+
 echo "V4";
 /*# Make the call to the client.
 $result = $mgClient->sendMessage($domain, array(
