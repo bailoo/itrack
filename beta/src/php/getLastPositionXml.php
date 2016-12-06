@@ -551,15 +551,13 @@ $vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
 				$vname_tmp1 = explode("=",$vname_tmp[0]);
 				$vehiclename[] = preg_replace('/"/', '', $vname_tmp1[1]);
 			
-
-				/*preg_match('/x="[^"]+/', $lineF[$n], $vnumber_tmp);
+				preg_match('/x="[^"]+/', $lineF[$n], $vnumber_tmp);
 				$vnumber_tmp1 = explode("=",$vnumber_tmp[0]);
-				$vehiclenumber[] = preg_replace('/"/', '', $vnumber_tmp1[1]);*/
+				$vehiclenumber[] = preg_replace('/"/', '', $vnumber_tmp1[1]);
                                 
                                 preg_match('/aa="[^"]+/', $lineF[$n], $dmobno_tmp);
                                 $dmobno_tmp1 = explode("=",$dmobno_tmp[0]);
                                 $dmobno = preg_replace('/"/', '', $dmobno_tmp1[1]);
-                                $vehiclenumber[]=$dmobno;
                                 $dMobileNoArr[]=$dmobno;
                                 
 
