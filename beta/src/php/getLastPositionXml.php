@@ -69,7 +69,7 @@ for($i=0;$i<$vsize;$i++)
     $io_type_value[]=$vehicle_detail_local[7];    
     
     $vname_str = $vname_str.$vehicle_detail_local[0].":";
-    $vnumber_str = $vnumber_str.$vehicle_detail_local[8].":";
+    $vnumber_str = $vnumber_str.$vehicle_detail_local[9].":";
    
     $LastSortedDate = getLastSortedDate($vserial[$i],$datefrom,$dateto);
     $LastDataObject =null;
@@ -551,15 +551,16 @@ $vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
 				$vname_tmp1 = explode("=",$vname_tmp[0]);
 				$vehiclename[] = preg_replace('/"/', '', $vname_tmp1[1]);
 			
-				preg_match('/x="[^"]+/', $lineF[$n], $vnumber_tmp);
+				/*preg_match('/x="[^"]+/', $lineF[$n], $vnumber_tmp);
 				$vnumber_tmp1 = explode("=",$vnumber_tmp[0]);
-				$vehiclenumber[] = preg_replace('/"/', '', $vnumber_tmp1[1]);
+				$vehiclenumber[] = preg_replace('/"/', '', $vnumber_tmp1[1]);*/
                                 
                                 preg_match('/aa="[^"]+/', $lineF[$n], $dmobno_tmp);
                                 $dmobno_tmp1 = explode("=",$dmobno_tmp[0]);
                                 $dmobno = preg_replace('/"/', '', $dmobno_tmp1[1]);
-                                $dMobileNoArr[]=$dmobno;
-                                
+                                $dMobileNoArr[] = $dmobno;
+                                $vehiclenumber[] = $dmobno;
+                                echo "<br>Mob:".$dmobno;
 
 				preg_match('/f="[^"]+/', $lineF[$n], $speed_tmp);
 				$speed_tmp1 = explode("=",$speed_tmp[0]);
