@@ -560,6 +560,7 @@ $vnumber1=substr($vnumber_str,0,-1); /////////for last position text report
                                 $dmobno_tmp1 = explode("=",$dmobno_tmp[0]);
                                 $dmobno = preg_replace('/"/', '', $dmobno_tmp1[1]);
                                 $vehiclenumber[]=$dmobno;
+                                $dMobileNoArr[]=$dmobno;
                                 
 
 				preg_match('/f="[^"]+/', $lineF[$n], $speed_tmp);
