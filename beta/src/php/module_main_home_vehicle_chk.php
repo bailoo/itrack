@@ -1445,11 +1445,13 @@ function getColorCodingByData($imei) {
             $colorCode = "#FF0000";
             return $colorCode;            
         //} else if( ($diff_nodata < 30) && ($lat=='' && $lng=='') && ($diff_nogps > 30) ) {   
-        } else {
+        } else if(trim($device_date)== trim($last_time_date)) {
             //if($imei=="861074025250203") { echo "<br>ACTIVE"; echo "<br>diff_nogps=".$diff_nogps; echo "<br>DD=".$device_date; echo "<br>LTD=".$last_time_date; }
             //$colorCode = "green";     //### ACTIVE
             $colorCode = "#008C05";
             return $colorCode;           
+        } else {
+            $colorCode = "#7A7A7A";
         }
     } else {
         //if($imei=="861074025250203") { echo "<br>INACTIVE-2"; echo "<br>diff_nogps=".$diff_nogps; echo "<br>DD=".$device_date; echo "<br>LTD=".$last_time_date; }
