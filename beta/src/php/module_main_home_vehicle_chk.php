@@ -1439,7 +1439,8 @@ function getColorCodingByData($imei) {
             $colorCode = "#000099";
             return $colorCode;
             
-        } else if( ($diff_nodata > 30) && (trim($device_date)== trim($last_time_date)) ) {
+        //} else if( ($diff_nodata > 30) && (trim($device_date)== trim($last_time_date)) ) {
+        } else if($diff_nodata > 30) {
            //if($imei=="861074025250203") { echo "<br>NODATA"; echo "<br>diff_nodata=".$diff_nodata; echo "<br>DD=".$device_date; echo "<br>LTD=".$last_time_date; }
             //$colorCode = "red";        //## NO DATA
             $colorCode = "#FF0000";
