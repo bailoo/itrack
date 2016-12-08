@@ -5245,7 +5245,8 @@ function insertRawMilkInvoiceMaterial($name,$code,$status,$account_id,$account_i
 function getAllRawMilkInvoiceMaterial($account_id,$DbConnection)
 {
     $data=array();  
-    $query = "SELECT sno,name,code FROM rawmilk_material WHERE account_id='$account_id' and status=1 ";
+    //$query = "SELECT sno,name,code FROM rawmilk_material WHERE account_id='$account_id' and status=1 ";
+    $query = "SELECT sno,name,code FROM rawmilk_material WHERE status=1";
     $result=mysql_query($query,$DbConnection);            							
     while($row=mysql_fetch_object($result))
     {       		
