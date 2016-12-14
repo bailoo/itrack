@@ -24,6 +24,10 @@ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
     //$userInterval="30";
     $result=getLiveDeviceData($vehicleserialWithIo,$startDate,$endDate,$userInterval);
     echo $result;
+function IsNullOrEmptyString($question)
+{
+    return (!isset($question) || trim($question)==='');
+}
 function getLiveDeviceData($vehicleserialWithIo)
 {
     $device_str= $vehicleserialWithIo;
@@ -74,7 +78,7 @@ function getLiveDeviceData($vehicleserialWithIo)
         //var_dump($LastRecordObject);
         //echo "<br>";
         //echo "getOBJ";
-        if(!empty($LastRecordObject) && ($LastRecordObject->deviceDatetimeLR[0]!=null))
+        if(!empty($LastRecordObject) && (!(IsNullOrEmptyString($LastRecordObject->deviceDatetimeLR[0]))))
 	{
             //echo "inOBJ";
             $current_time = date('Y-m-d H:i:s');
