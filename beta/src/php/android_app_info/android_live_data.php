@@ -71,6 +71,8 @@ function getLiveDeviceData($vehicleserialWithIo)
         $LastRecordObject=new lastRecordData();	
 	//echo "imei=".$imei."<br>";
 	$LastRecordObject=getLastRecord($vesrial_2[$i],$sortBy,$parameterizeData);
+        var_dump($LastRecordObject);
+        echo "<br>";
         //echo "getOBJ";
         if(!empty($LastRecordObject))
 	{
