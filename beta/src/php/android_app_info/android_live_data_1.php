@@ -75,10 +75,10 @@ function getLiveDeviceData($vehicleserialWithIo)
         $LastRecordObject=new lastRecordData();	
 	//echo "imei=".$imei."<br>";
 	$LastRecordObject=getLastRecord($vesrial_2[$i],$sortBy,$parameterizeData);
-        //var_dump($LastRecordObject);
-        //echo "<br>";
+        var_dump($LastRecordObject);
+        echo "<br>";
         //echo "getOBJ";
-        if(!empty($LastRecordObject) && ((IsNullOrEmptyString($LastRecordObject->deviceDatetimeLR[0]))))
+        if(!empty($LastRecordObject) && ((!IsNullOrEmptyString($LastRecordObject->deviceDatetimeLR[0]))))
 	{
             //echo "inOBJ";
             $current_time = date('Y-m-d H:i:s');
