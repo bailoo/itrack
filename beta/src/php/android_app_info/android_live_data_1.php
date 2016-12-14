@@ -79,7 +79,7 @@ function getLiveDeviceData($vehicleserialWithIo)
         //echo "<br>";
         //echo "getOBJ";
         echo "div=".$LastRecordObject->deviceDatetimeLR[0]."<br>";
-        if(!empty($LastRecordObject) && ($LastRecordObject->deviceDatetimeLR[0]!=""))
+        if(!empty($LastRecordObject) && ($LastRecordObject->deviceDatetimeLR[0]!="null"))
 	{
             //echo "inOBJ";
             $current_time = date('Y-m-d H:i:s');
