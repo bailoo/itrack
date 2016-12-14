@@ -18,12 +18,12 @@ $pathToRoot=$pathInPieces[0]."/".$pathInPieces[1]."/".$pathInPieces[2];
     include_once($pathToRoot.'/beta/src/php/getDeviceDataTest.php');
     
     
-    /*$vehicleserialWithIo="862170017134329:#,";
+    $vehicleserialWithIo="865733024518912:862170018313518:862170017809318:862170018371375:865733021570106:862170018316420:862170018314003:865733024484446:862170017134329:862170018376333:862170018373561:862170018373363:862170018370831:862170018370724:862170018372654:862170018371367:862170018370757:862170018320844:862170018382695:862170018377349:862170018321255:#null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,";
     $startDate="2015/08/06 00:00:00";
     $endDate="2015/08/06 16:38:36";
     //$userInterval="30";
     $result=getLiveDeviceData($vehicleserialWithIo,$startDate,$endDate,$userInterval);
-    echo $result;*/
+    echo $result;
 function getLiveDeviceData($vehicleserialWithIo)
 {
     $device_str= $vehicleserialWithIo;
