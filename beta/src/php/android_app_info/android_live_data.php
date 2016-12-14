@@ -78,7 +78,7 @@ function getLiveDeviceData($vehicleserialWithIo)
         //var_dump($LastRecordObject);
         //echo "<br>";
         //echo "getOBJ";
-        if(!empty($LastRecordObject) && (!(IsNullOrEmptyString($LastRecordObject->deviceDatetimeLR[0]))))
+        if(!empty($LastRecordObject) && ((IsNullOrEmptyString($LastRecordObject->deviceDatetimeLR[0]))))
 	{
             //echo "inOBJ";
             $current_time = date('Y-m-d H:i:s');
