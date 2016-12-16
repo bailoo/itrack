@@ -1420,7 +1420,9 @@ function getColorCodingByData($imei) {
         
         $diff_nogps_currentTime = $current_time_sec - $last_time_sec;
         
-        //echo "<br>current_time=".$current_time." ,device_time=".$device_time." ,diffNodata=".$diff_nodata." ,diffNogps=".$diff_nogps." ,lat=".$lat." ,lng=".$lng;       
+        if($account_id=="2" && $imei=="862170018377992") {
+            echo "<br>current_time=".$current_time." ,device_time=".$device_time." ,device_date=".$device_date." ,current_date=".$current_date." ,last_time=".$last_time." ,last_time_date=".$last_time_date." ,diffNodata=".$diff_nodata." ,diffNogps=".$diff_nogps." ,lat=".$lat." ,lng=".$lng;       
+        }
         //RED:GREEN:GREY:BLUE  
         //FF0000:008C05:7A7A7A:000099
           
