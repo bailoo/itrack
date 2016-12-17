@@ -4705,14 +4705,15 @@ function getAcccountAccountId($account_admin_id,$DbConnection)
 function lorrylistAll($DbConnection)
 {
         $final_lorry_list=array();
-	$query_lorry_open = "SELECT lorry_no FROM invoice_mdrm WHERE invoice_status=1  AND status=1";	
+	$query_lorry_open = "SELECT lorry_no,vehicle_no FROM invoice_mdrm WHERE invoice_status=1  AND status=1";	
 	$result_lorry_open = mysql_query($query_lorry_open,$DbConnection);
         $num_rows=mysql_num_rows($result_lorry_open);
         if($num_rows>0)
 	{
             while($row_lorry_open=mysql_fetch_object($result_lorry_open))
             {
-                    $final_lorry_list[]=$row_lorry_open->lorry_no;					
+                    //$final_lorry_list[]=$row_lorry_open->lorry_no;	
+                $final_lorry_list[]=$row_lorry_open->lorry_no.'`~'.$row_lorry_open->vehicle_no;
             }
             return $final_lorry_list;
         }
@@ -4745,15 +4746,18 @@ function vehiclelistAll($DbConnection)
 function lorrylistTransporterAll($self_child_transporter_id,$DbConnection)
 {
         $final_lorry_list=array();
-        $query_lorry_open = "SELECT lorry_no FROM invoice_mdrm WHERE invoice_status=1 AND transporter_account_id IN($self_child_transporter_id) AND status=1";
+         //$query_lorry_open = "SELECT lorry_no ,vehicle_no FROM invoice_mdrm WHERE invoice_status=1 AND transporter_account_id IN($self_child_transporter_id) AND status=1";
         //echo "QLO=".$query_lorry_open;
+        $query_lorry_open = "SELECT lorry_no,vehicle_no FROM invoice_mdrm WHERE invoice_status=1  AND status=1";	
+       
         $result_lorry_open = mysql_query($query_lorry_open,$DbConnection);
          $num_rows=mysql_num_rows($result_lorry_open);
         if($num_rows>0)
 	{
             while($row_lorry_open=mysql_fetch_object($result_lorry_open))
             {
-                    $final_lorry_list[]=$row_lorry_open->lorry_no;					
+                    //$final_lorry_list[]=$row_lorry_open->lorry_no;
+                    $final_lorry_list[]=$row_lorry_open->lorry_no.'`~'.$row_lorry_open->vehicle_no;
             }
              return $final_lorry_list;
         }
@@ -4768,15 +4772,20 @@ function lorrylistTransporterAll($self_child_transporter_id,$DbConnection)
 function lorrylistPlantAll($self_child_plantno,$DbConnection)
 {
         $final_lorry_list=array();
-        $query_lorry_open = "SELECT lorry_no FROM invoice_mdrm WHERE invoice_status=1 AND plant IN($self_child_plantno) AND status=1";
+        //$query_lorry_open = "SELECT lorry_no FROM invoice_mdrm WHERE invoice_status=1 AND plant IN($self_child_plantno) AND status=1";
         //echo "QLO=".$query_lorry_open;
+        //$query_lorry_open = "SELECT lorry_no,vehicle_no FROM invoice_mdrm WHERE invoice_status=1 AND plant IN($self_child_plantno) AND status=1";
+        //echo "QLO=".$query_lorry_open;
+        $query_lorry_open = "SELECT lorry_no,vehicle_no FROM invoice_mdrm WHERE invoice_status=1  AND status=1";	
+        
         $result_lorry_open = mysql_query($query_lorry_open,$DbConnection);
         $num_rows=mysql_num_rows($result_lorry_open);
         if($num_rows>0)
 	{
             while($row_lorry_open=mysql_fetch_object($result_lorry_open))
             {
-                    $final_lorry_list[]=$row_lorry_open->lorry_no;					
+                    //$final_lorry_list[]=$row_lorry_open->lorry_no;
+                 $final_lorry_list[]=$row_lorry_open->lorry_no.'`~'.$row_lorry_open->vehicle_no;
             }
              return $final_lorry_list;
         }
