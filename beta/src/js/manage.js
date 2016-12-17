@@ -10766,7 +10766,7 @@ function invoice_lorry_unique(id,vehicle_no)
            //checking already open
            if(vehicle_no!="")
            {
-               //alert(lorry_val);alert(vehicle_no);
+               alert(lorry_val);alert(vehicle_no);
                 var final_lrno=document.getElementById('final_lrno').value; 
                 final_lrno=final_lrno.split(',');
                 for (var i = 0; i < final_lrno.length; i++)
