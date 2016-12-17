@@ -10774,7 +10774,7 @@ function invoice_lorry_unique(id,vehicle_no)
                     var final_lrnos=final_lrno[i].split("`~");
                     var final_lr=final_lrnos[0];
                     var final_veh=final_lrnos[1];
-                    //alert(final_lr);alert(final_veh);
+                    alert(final_lr);alert(final_veh);
                     if (final_lr.toUpperCase() == lorry_val.toUpperCase() && final_veh.toUpperCase()==vehicle_no.toUpperCase()) 
                     {
                             alert('Lorry No '+lorry_val +' already exist  with Same Vehicle('+vehicle_no+') in Previous Open! Please Enter other Lorry Number');
