@@ -10529,7 +10529,7 @@ function close_vehicle_list(value)
 	document.getElementById(param1).style.display = "none";
 	document.getElementById(param2).style.display = "none";
 	
-    //invoice_lorry_unique(serial,put_string.toUpperCase() ); //temporary blocked
+    invoice_lorry_unique(serial,put_string.toUpperCase() ); //temporary blocked
 	
 	
 }
@@ -10606,7 +10606,7 @@ function alphanumeric_ucase_upload(alphane,id)
 function invoice_lorry_unique_pre(val,id)
 {
 	//alert(val);
-	var final_lrno=document.getElementById('final_lrno').value; 
+	/*var final_lrno=document.getElementById('final_lrno').value; 
 		final_lrno=final_lrno.split(',');
 		for (var i = 0; i < final_lrno.length; i++)
 		{
@@ -10633,7 +10633,43 @@ function invoice_lorry_unique_pre(val,id)
 				}
 			}
 		}
+	}*/
+    var tnum_tmp=document.getElementById('tnum').value; //total loop
+        var id_no=id.split(":");
+        var self_vehicle =document.getElementById('vehno:'+id_no[1]).value;
+        //alert(self_vehicle);
+        //checking in the list
+	for (var j = 0; j < tnum_tmp; j++)
+	{
+            if(document.getElementById('vehno:'+j).value !="" )
+            {
+                    if(id != "lrno:"+j) //skip self value
+                    {
+                            if(document.getElementById('lrno:'+j).value.toUpperCase()==val.toUpperCase() && self_vehicle.toUpperCase()==document.getElementById('vehno:'+j).value.toUpperCase())
+                            {
+                                    alert('Lorry No '+val +' already exist with Same Vehicle('+self_vehicle+') in the List Open! Please Enter other Lorry Number');
+                                    document.getElementById(id).value="";//lorry =""
+                                    return false;
+                            }
+                    }
+            }
 	}
+        //checking already open
+        var final_lrno=document.getElementById('final_lrno').value; 
+        final_lrno=final_lrno.split(',');
+        for (var i = 0; i < final_lrno.length; i++)
+        {
+            var final_lrnos=final_lrno[i].split("`~");
+            var final_lr=final_lrnos[0];
+            var final_veh=final_lrnos[1];
+            
+            if (final_lr.toUpperCase() == val.toUpperCase() && final_veh.toUpperCase()==self_vehicle.toUpperCase()) 
+            {
+                    alert('Lorry No '+val +' already exist  with Same Vehicle('+self_vehicle+') in Previous Open! Please Enter other Lorry Number');
+                    document.getElementById(id).value="";//lorry =""
+                    return false;
+            }
+        }
 		
 }
 
@@ -10681,7 +10717,7 @@ function invoice_lorry_unique_pre_upload(val,id)
 
 function invoice_lorry_unique(id,vehicle_no)
 {
-	   var final_lrno=document.getElementById('final_lrno').value; 
+	  /* var final_lrno=document.getElementById('final_lrno').value; 
 	   var ids1=id.split(":");
 	   var ids=ids1[1];
 	   var lorry_val=document.getElementById('lrno:'+ids).value;
@@ -10716,7 +10752,57 @@ function invoice_lorry_unique(id,vehicle_no)
 				}
 			}
 		}
-	}
+	}*/
+    var ids1=id.split(":");
+	   var ids=ids1[1];
+	   var lorry_val=document.getElementById('lrno:'+ids).value;
+	   if(lorry_val=="")
+	   {
+		alert("Lorry Number cant be blank, Please Fill Lorry Number First!-3");
+		document.getElementById(id).value=""; //vehicle blank
+		return false;
+	   }
+           
+           //checking already open
+           if(vehicle_no!="")
+           {
+               //alert(lorry_val);alert(vehicle_no);
+                var final_lrno=document.getElementById('final_lrno').value; 
+                final_lrno=final_lrno.split(',');
+                for (var i = 0; i < final_lrno.length; i++)
+                {
+                    var final_lrnos=final_lrno[i].split("`~");
+                    var final_lr=final_lrnos[0];
+                    var final_veh=final_lrnos[1];
+                    //alert(final_lr);alert(final_veh);
+                    if (final_lr.toUpperCase() == lorry_val.toUpperCase() && final_veh.toUpperCase()==vehicle_no.toUpperCase()) 
+                    {
+                            alert('Lorry No '+lorry_val +' already exist  with Same Vehicle('+vehicle_no+') in Previous Open! Please Enter other Lorry Number');
+                            document.getElementById(id).value="";//lorry =""
+                            return false;
+                    }
+                }
+                
+                //checking self list
+                var tnum_tmp=document.getElementById('tnum').value; //total loop
+                for (var j = 0; j < tnum_tmp; j++)
+                {
+                    if(document.getElementById('vehno:'+j).value !="" )
+                    {
+                            if(id != "vehno:"+j) //skip self value
+                            {
+                                //alert(lorry_val);alert(document.getElementById('lrno:'+j).value);
+                                //alert(vehicle_no);alert(document.getElementById('vehno:'+j).value);
+                                    if(document.getElementById('lrno:'+j).value.toUpperCase()==lorry_val.toUpperCase() && vehicle_no.toUpperCase()==document.getElementById('vehno:'+j).value.toUpperCase())
+                                    {
+                                            alert('Lorry No '+lorry_val +' already exist with Same Vehicle('+vehicle_no+') in the List Open! Please Enter other Lorry Number');
+                                            document.getElementById(id).value="";//lorry =""
+                                            return false;
+                                    }
+                            }
+                    }
+                }
+           }
 		
 }
 
