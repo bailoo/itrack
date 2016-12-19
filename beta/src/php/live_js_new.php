@@ -1890,7 +1890,7 @@ function Prev_PlotLastMarkerWithAddress(angle_deg,lat ,lng, marker, imei, vehicl
 	var io_str="";
 	if(imei_iotype_arr[imei]!=undefined)
 	{
-		io_str=getIoString(imei_iotype_arr,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8);
+		io_str=getIoString(imei_iotype_arr[imei],io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8);
 	}
 	
 	var position=new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
@@ -2228,9 +2228,9 @@ function getMapMarker(angle_deg,running_status1,position,vehiclename,last_halt_t
 	markers.push(markerThis);
 	return markerThis;
 }
-function getIoString(imei_iotype_arr,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8)
+function getIoString(imeiWithIo,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8)
 {
-	var iotype_iovalue_str=imei_iotype_arr[imei].split(":");
+	var iotype_iovalue_str=imeiWithIo.split(":");
 	/*if(iotype_iovalue_str.length==2)
 	{
 		window_height="160px";
@@ -2429,7 +2429,7 @@ function infoCallbackLive(point, marker, imei, vehiclename,vehiclenumber, speed,
 		var io_str="";
 		if(imei_iotype_arr[imei]!=undefined)
 		{
-			io_str=getIoString(imei_iotype_arr,io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8);
+			io_str=getIoString(imei_iotype_arr[imei],io_1,io_2,io_3,io_4,io_5,io_6,io_7,io_8);
 		}
 		//alert("io_str"+io_str);
 		var nearest_customer_string = "";
