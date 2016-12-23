@@ -1,4 +1,5 @@
 <?php
+echo "UT=<br>".$user_type;
 if($user_type=='proc_admin')
 {
    $row_account_admin_id =getAccountAdminId($account_id,$DbConnection);
