@@ -1,5 +1,15 @@
 <?php
-$dataCustomerArr=getCustomerPlantChillingRecord($account_id,0,$DbConnection);
+if($user_type=='proc_admin')
+{
+   $row_account_admin_id =getAccountAdminId($account_id,$DbConnection);
+   $parent_admin_id=getAccountIdByAdminId($row_account_admin_id,$DbConnection);
+   //echo "PID=".$parent_admin_id;
+  $dataCustomerArr=getCustomerPlantChillingRecord($parent_admin_id,0,$DbConnection); 
+}
+else
+{
+    $dataCustomerArr=getCustomerPlantChillingRecord($account_id,0,$DbConnection);
+}
 $customerArr=array();
 $customerArrNew=array();
 if($dataCustomerArr>0)
@@ -20,7 +30,18 @@ if($dataCustomerArr>0)
 $_SESSION['uniqueCustomerArrNew'] = json_encode($customerArrNew);
 
 $plantArrNew=array();
-$dataPlantArr=getCustomerPlantChillingRecord($account_id,1,$DbConnection);
+if($user_type=='proc_admin')
+{
+   $row_account_admin_id =getAccountAdminId($account_id,$DbConnection);
+   $parent_admin_id=getAccountIdByAdminId($row_account_admin_id,$DbConnection);
+   //echo "PID=".$parent_admin_id;
+  $dataPlantArr=getCustomerPlantChillingRecord($parent_admin_id,1,$DbConnection); 
+}
+else
+{
+    $dataPlantArr=getCustomerPlantChillingRecord($account_id,1,$DbConnection);
+}
+
 if(count($dataPlantArr)>0)
 {
     foreach($dataPlantArr as $dPValue)
@@ -38,7 +59,18 @@ if(count($dataPlantArr)>0)
 $_SESSION['uniquePlantArrNew'] = json_encode($plantArrNew);
 
 $chillingArrNew=array();
-$dataChillingPlantArr=getCustomerPlantChillingRecord($account_id,2,$DbConnection);
+if($user_type=='proc_admin')
+{
+   $row_account_admin_id =getAccountAdminId($account_id,$DbConnection);
+   $parent_admin_id=getAccountIdByAdminId($row_account_admin_id,$DbConnection);
+   //echo "PID=".$parent_admin_id;
+  $dataChillingPlantArr=getCustomerPlantChillingRecord($parent_admin_id,2,$DbConnection);
+}
+else
+{
+    $dataChillingPlantArr=getCustomerPlantChillingRecord($account_id,2,$DbConnection);
+}
+
 if(count($dataChillingPlantArr)>0)
 {    
     foreach($dataChillingPlantArr as $dCPValue)
