@@ -110,7 +110,8 @@ echo"
 </table>
        
 <!--</form>-->";
-
+if($route_size > 0) {
+    echo '<br><center><input type="button" onclick="javascript:update_hourly_remark();" value="Update Hourly Remark"/></center>';
+}
 ?>  
-<br>
-<center><input type="button" onclick="javascript:update_hourly_remark();" value="Update Hourly Remark"/></center>
+
