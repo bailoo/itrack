@@ -15379,3 +15379,129 @@ function show_invoiceRawMIlkMaterial()
       makePOSTRequest('src/php/manage_ajax_geo_coord.htm', poststr);
     }
  }
+
+
+ function show_hourly_routes() {
+             
+    if(document.getElementById("date1").value=="")
+    {
+        alert("Please Select Date");
+        document.getElementById("date1").focus();
+        return false;
+    }    
+    
+    var poststr = "shift="+encodeURI(document.forms[0].shift.value) +
+            "&date1="+document.forms[0].date1.value;
+    //alert(poststr);
+
+    makePOSTRequest('src/php/manage_update_hourly_remark.htm', poststr);  
+ }
+ 
+ function update_hourly_remark() {
+    
+    var route_size = document.getElementById('route_size').value;
+    alert("Route_size="+route_size);
+    var s=0;
+    var RouteNo_str = "";
+    var ReportShift_str = "";
+    var ReportDate_str = "";
+    var Remarks_str = "";
+    var MarkCompleted_str = "";
+    
+    var id_Route;
+    var RouteNo;       
+    var id_ReportShift;
+    var ReportShift;
+    var id_ReportDate;
+    var ReportDate;  
+    var id_Remarks;
+    var Remarks;      
+    var id_MarkCompleted;
+    var MarkCompleted;    
+    
+    for(var i=0;i<route_size;i++) {
+        
+        var id_valid_entries = "valid_entries"+i;
+        var valid_entry = document.getElementById(id_valid_entries).value;
+        //alert("ValidEntry="+valid_entry);
+        
+        if(valid_entry==1) {
+            
+            if(s == 0) {
+                //alert("If");
+                id_Route = "RouteNo"+i;
+                RouteNo = document.getElementById(id_Route).value;
+                RouteNo_str = RouteNo_str + RouteNo;
+                //alert("RouteNo_str="+RouteNo_str);
+
+                id_ReportShift = "ReportShift"+i;
+                ReportShift = document.getElementById(id_ReportShift).value;         
+                ReportShift_str = ReportShift_str + ReportShift;
+                //alert("ReportShift_str="+ReportShift_str);
+
+                id_ReportDate = "ReportDate"+i;
+                ReportDate = document.getElementById(id_ReportDate).value;                        
+                ReportDate_str = ReportDate_str + ReportDate;
+                //alert("ReportDate_str="+ReportDate_str);
+
+                id_Remarks = "Remarks"+i;
+                Remarks = document.getElementById(id_Remarks).value;                        
+                Remarks_str = Remarks_str + Remarks;
+                //alert("Remarks="+Remarks);
+
+                id_MarkCompleted = "MarkCompleted"+i;
+                MarkCompleted = document.getElementById(id_MarkCompleted).checked; 
+                if(MarkCompleted==true) {
+                    MarkCompleted = 1;
+                } else {
+                    MarkCompleted = 0;
+                }                
+                MarkCompleted_str = MarkCompleted_str + MarkCompleted;
+                //alert("MarkCompleted_str="+MarkCompleted_str);
+                
+            } else {
+                alert("Else");
+                id_Route = "RouteNo"+i;
+                RouteNo = document.getElementById(id_Route).value;                        
+                RouteNo_str = RouteNo_str + "#" +RouteNo;
+                //alert("RouteNo_str="+RouteNo_str);
+
+                id_ReportShift = "ReportShift"+i;
+                ReportShift = document.getElementById(id_ReportShift).value;                        
+                ReportShift_str = ReportShift_str + "#" +ReportShift;
+                //alert("ReportShift_str="+ReportShift_str);
+
+                id_ReportDate = "ReportDate"+i;
+                ReportDate = document.getElementById(id_ReportDate).value;                        
+                ReportDate_str = ReportDate_str + "#" +ReportDate;
+                //alert("ReportDate_str="+ReportDate_str);
+
+                id_Remarks = "Remarks"+i;
+                Remarks = document.getElementById(id_Remarks).value;                        
+                Remarks_str = Remarks_str + "#" +Remarks;
+                //alert("Remarks_str="+Remarks_str);
+
+                id_MarkCompleted = "MarkCompleted"+i;
+                MarkCompleted = document.getElementById(id_MarkCompleted).checked;
+                if(MarkCompleted==true) {
+                    MarkCompleted = 1;
+                } else {
+                    MarkCompleted = 0;
+                }
+                MarkCompleted_str = MarkCompleted_str + "#" +MarkCompleted;
+                //alert("MarkCompleted_str="+MarkCompleted_str);
+            }
+            s++;
+        }
+    }
+    
+    var poststr = "RouteNo="+RouteNo_str +
+            "&ReportShift="+ReportShift_str +
+            "&ReportDate="+ReportDate_str +
+            "&Remarks="+Remarks_str +
+            "&MarkCompleted="+MarkCompleted_str;
+
+    alert(poststr);
+    //return false;
+    makePOSTRequest('src/php/action_manage_update_hourly_remark.htm', poststr);       
+ }
