@@ -5514,6 +5514,30 @@ function insertVehicleDriverHistory_Detail($account_id1,$vehicle_id, $imei,$driv
     $result2=mysql_query($query,$DbConnection);
     return $result2;    
 }
+
+//#### HOURLY REMARK UPDATE
+function getHourlyRemarkDetail($date, $shift, $DbConnection)
+ {
+    $query="SELECT * FROM hourly_remark_update WHERE ReportShift='$shift' AND date='$date' ORDER BY RouteNo ASC";
+    //echo "query=".$query."<br>";
+    $result=mysql_query($query,$DbConnection);
+    $row_result=mysql_num_rows($result);
+
+    while($row=mysql_fetch_object($result))
+    {									
+        //$data[]=array('version'=>$row->version,'apk_url'=>$row->apk_url);
+        $data[]=array('Date'=>$row->Date,'ReportShift'=>$row->ReportShift,'RouteNo'=>$row->RouteNo,'Vehicles'=>$row->Vehicles,'PendingCustomers'=>$row->PendingCustomers,'CompletedCustomers'=>$row->CompletedCustomers,'RouteCompleted'=>$row->RouteCompleted,'CompletedAuto'=>$row->CompletedAuto,'Remarks'=>$row->Remarks,'AccountID'=>$row->AccountID,'UpdateTime'=>$row->UpdateTime);
+    }
+    return $data;
+ }
+ 
+function updateHourlyRemark($route, $shift, $date, $remarks, $mark_completed, $DbConnection) {
+    $updateTime = date('Y-m-d H:i:s');
+    $query= "UPDATE hourly_remark_update SET RouteCompleted='$mark_completed',Remarks='$remarks',UpdateTime='$updateTime' WHERE Date='$date' AND ReportShift='$shift' AND RouteNo='$route'";
+    //echo "Q=".$query.'<BR>';
+    $result1=mysql_query($query,$DbConnection);           
+    return $result1;    
+} 
 //========================================================//
 //////////// end of hierarchy class ////////
 ///////////// end of excalation ////////////
