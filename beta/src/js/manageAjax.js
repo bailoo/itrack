@@ -103,8 +103,16 @@ function show_option_with_value(type, option)      // type="manage/report/settin
           //alert(result);                     
           var result1=result.split("##");  
          //alert("Rizwan:"+result1[0]);
-                      
-          if(result1[0].trim()=="success")
+
+          if(result1[0].trim()=="result_hourly_remark")
+          {
+            //alert("Found:"+result1[1]);
+            document.getElementById('result_hourly_remark').style.display='';
+            //alert("Found2:"+document.getElementById('result_hourly_remark'));
+            document.getElementById('result_hourly_remark').innerHTML =result1[1];  
+            //return false;
+          }                      
+          else if(result1[0].trim()=="success")
           {
             document.getElementById('available_message').style.display='';
             document.getElementById('available_message').innerHTML =result1[1];
