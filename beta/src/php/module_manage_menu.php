@@ -1034,6 +1034,40 @@ $contetnbsp="&nbsp;";
 									"</table>",editable:false, children:
 									[]},';
 
+                                                                        
+                                                                        echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_route.htm\'); style=\'color:#90612e\'>"+
+																"<i class=\'fa fa-check-square-o  fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/station.png\' style='.$style1.'>-->"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_update_hourly_remark_prev.htm\'); class=\'menuitem\'>"+
+																"'.$contetnbsp.'Hourly Remark Update"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';
+ 
+                                                                        
 									if($account_id=="231" || $account_id=="1115" || $account_id=="1100")
 									{	
 										echo'{type:"Text",
