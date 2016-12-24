@@ -15400,7 +15400,7 @@ function show_invoiceRawMIlkMaterial()
  function update_hourly_remark() {
     
     var route_size = document.getElementById('route_size').value;
-    alert("Route_size="+route_size);
+    //alert("Route_size="+route_size);
     var s=0;
     var RouteNo_str = "";
     var ReportShift_str = "";
@@ -15460,7 +15460,7 @@ function show_invoiceRawMIlkMaterial()
                 //alert("MarkCompleted_str="+MarkCompleted_str);
                 
             } else {
-                alert("Else");
+                //alert("Else");
                 id_Route = "RouteNo"+i;
                 RouteNo = document.getElementById(id_Route).value;                        
                 RouteNo_str = RouteNo_str + "#" +RouteNo;
@@ -15501,7 +15501,7 @@ function show_invoiceRawMIlkMaterial()
             "&Remarks="+Remarks_str +
             "&MarkCompleted="+MarkCompleted_str;
 
-    alert(poststr);
+    //alert(poststr);
     //return false;
     makePOSTRequest('src/php/action_manage_update_hourly_remark.htm', poststr);       
  }
