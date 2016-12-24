@@ -3,6 +3,8 @@
 //error_reporting(-1);
 //ini_set('display_errors', 'On');
 //include_once('Hierarchy.php');
+echo "result_hourly_remark##";
+
 include_once('util_session_variable.php');
 include_once('util_php_mysql_connectivity.php');
 include_once('coreDb.php');
@@ -18,7 +20,6 @@ $date_post = str_replace('/','-',$date_post);
 
 //EVENING SHIFT	
 $data = getHourlyRemarkDetail($date_post, $shift_post, $DbConnection);
-echo "result_hourly_remark##";
 
 echo'<input type="hidden" id="account_id_hidden" value=' . $common_id1 . '>';
 echo'<input type="hidden" id="shift" value=' . $shift1 . '>';
