@@ -47,9 +47,9 @@ echo"
                           </tr>';
                           $data = getHourlyRemarkDetail($date_post, $shift_post, $DbConnection);
                           $route_size = sizeof($data);  
-                          
+                            $sno = 1;
                             for($i=0;$i<$route_size;$i++) {
-                                $sno = $i+1;                             
+                                                         
                                 if($data[$i]['RouteCompleted']==1) {
                                   
                                     $routeCompleted = "Yes";
