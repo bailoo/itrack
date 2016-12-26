@@ -19,7 +19,7 @@ $date_post = str_replace('/','-',$date_post);
 //echo "DatePost=".$date_post." ,Shift=".$shift_post;
 
 //EVENING SHIFT	
-$data = getHourlyRemarkDetail($date_post, $shift_post, $DbConnection);
+//$data = getHourlyRemarkDetail($date_post, $shift_post, $DbConnection);
 
 echo'<input type="hidden" id="account_id_hidden" value=' . $common_id1 . '>';
 echo'<input type="hidden" id="shift" value=' . $shift1 . '>';
@@ -30,7 +30,7 @@ echo"
     <table width='100%'>						
         <tr>
             <td align='center'>			
-                <div style='overflow:auto;width:1000px;'> 	
+                <div style='overflow:auto;width:1000px;height:400px;'> 	
                     <table border=1 cellspacing=4 cellpadding=4 class='module_left_menu' rules='all' bordercolor='gray'>";
                     echo '<tr bgcolor="#d3d3d3">
                             <td><strong>RouteNo</strong></td>
