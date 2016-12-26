@@ -33,6 +33,7 @@ echo"
                 <div style='overflow:auto;width:1000px;height:400px;'> 	
                     <table border=1 cellspacing=4 cellpadding=4 class='module_left_menu' rules='all' bordercolor='gray'>";
                     echo '<tr bgcolor="#d3d3d3">
+                            <td><strong>SNo</strong></td>
                             <td><strong>RouteNo</strong></td>
                             <td><strong>ReportShift</strong></td>
                             <td><strong>Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
@@ -48,7 +49,7 @@ echo"
                           $route_size = sizeof($data);  
                           
                             for($i=0;$i<$route_size;$i++) {
-                                                            
+                                $sno = $i+1;                             
                                 if($data[$i]['RouteCompleted']==1) {
                                   
                                     $routeCompleted = "Yes";
@@ -59,6 +60,7 @@ echo"
                                     }
 
                                     echo '<tr>';
+                                    echo '<td>'.$sno.'</td>';
                                     echo '<td>'.$data[$i]['RouteNo'].'</td>';
                                     echo '<td>'.$data[$i]['ReportShift'].'</td>';
                                     echo '<td>'.$data[$i]['Date'].'</td>';                                                            
@@ -71,7 +73,8 @@ echo"
                                     echo '<td><input type="text" width="5" value="'.$data[$i]['Remarks'].'" readOnly></td>';
                                     echo '<td><input type="checkbox" checked disabled></td>';
                                     echo '</tr>';
-                                }
+                                    $sno++;
+                                }                                
                             }                              
                                                                          
                             echo '<input type="hidden" id="route_size" value="'.$route_size.'"/>';
@@ -86,6 +89,7 @@ echo"
                                     $routeCompletedAuto = "No";
                                     
                                     echo '<tr>';
+                                    echo '<td>'.$sno.'</td>';
                                     echo '<td>'.$data[$i]['RouteNo'].'<input type="hidden" id="RouteNo'.$i.'" value="'.$data[$i]['RouteNo'].'"></td>';
                                     echo '<td>'.$data[$i]['ReportShift'].'<input type="hidden" id="ReportShift'.$i.'" value="'.$data[$i]['ReportShift'].'"></td>';
                                     echo '<td>'.$data[$i]['Date'].'<input type="hidden" id="ReportDate'.$i.'" value="'.$data[$i]['Date'].'"></td>';                                                            
@@ -98,6 +102,7 @@ echo"
                                     echo '<td><input type="text" width="5" id="Remarks'.$i.'" value="'.$data[$i]['Remarks'].'"></td>';
                                     echo '<td><input type="checkbox" id="MarkCompleted'.$i.'"></td>';  
                                     echo '</tr>';
+                                    $sno++;
                                     
                                 } else {
                                     echo '<input type="hidden" id="valid_entries'.$i.'" value="0"/>';
