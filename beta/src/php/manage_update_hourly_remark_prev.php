@@ -36,7 +36,7 @@ echo"
                     </a>                    
                 </td>
                 <td>
-                    &nbsp;&nbsp;<input type="button" id="enter_button" name="enter_button" Onclick="javascript:show_hourly_routes();" value="Show Hourly Routes">
+                    &nbsp;&nbsp;<input type="button" id="enter_button" name="enter_button" Onclick="javascript:show_hourly_routes(1);" value="Show Hourly Routes">
                 </td>
         </tr>';              
         echo'</table>
