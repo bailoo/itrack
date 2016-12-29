@@ -15399,7 +15399,7 @@ function show_invoiceRawMIlkMaterial()
             "&date1="+document.forms[0].date1.value +                
             "&ctype="+document.getElementById('c_type').value;
     }    
-    alert(poststr+" ,val="+val);
+    //alert(poststr+" ,val="+val);
 
     makePOSTRequest('src/php/manage_update_hourly_remark.htm', poststr);  
  }
