@@ -15381,7 +15381,7 @@ function show_invoiceRawMIlkMaterial()
  }
 
 
- function show_hourly_routes() {
+ function show_hourly_routes(val) {
              
     if(document.getElementById("date1").value=="")
     {
@@ -15390,9 +15390,16 @@ function show_invoiceRawMIlkMaterial()
         return false;
     }    
     
-    var poststr = "shift="+encodeURI(document.forms[0].shift.value) +
+    var poststr = "";
+    if(val ==1) {
+        poststr = "shift="+encodeURI(document.forms[0].shift.value) +
             "&date1="+document.forms[0].date1.value;
-    //alert(poststr);
+    } else if (val ==2) {
+        poststr = "shift="+encodeURI(document.forms[0].shift.value) +
+            "&date1="+document.forms[0].date1.value +                
+            "&ctype="+document.getElementById('c_type').value;
+    }    
+    alert(poststr+" ,val="+val);
 
     makePOSTRequest('src/php/manage_update_hourly_remark.htm', poststr);  
  }
