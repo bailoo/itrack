@@ -193,7 +193,7 @@
 				//if((address.indexOf("NH") ==-1) && (address.indexOf("National Highway") ==-1) && (address.indexOf("State Highway") ==-1) && (address.indexOf("SH") ==-1))
 				if(address!="")
 				{
-					address2=distance + " km from " + address + ":"; 				
+					 address2=distance + " km from " + address.replace(/[^a-zA-Z ]/g,'') + ":"; 				
 					 document.getElementById("geocodedPostcodes").value += address2;  		
 				}
 				else
