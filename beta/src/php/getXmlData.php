@@ -66,11 +66,10 @@ function read_data_between_datetime($vSerial, $startDate, $endDate, $userInterva
         $msg_type = $item->a;                 
         $ver = $item->b;              
         $fix = $item->c;
-        $lat = $item->d;
-        $lng = $item->e;
+        $lat = round($item->d,7);
+        $lng = round($item->e,7);
         $speed = $item->f;
-        
-        
+                
         $datetime_server = str_replace('@',' ',$item->g);
         $datetime_device = str_replace('@',' ',$item->h);              
         $io1 = $item->i;
@@ -575,8 +574,8 @@ function deviceDataBetweenDates($vSerial, $dateRangeStart, $dateRangeEnd , $sort
         $msg_type = $item->a;                 
         $ver = $item->b;              
         $fix = $item->c;
-        $lat = $item->d;
-        $lng = $item->e;
+        $lat = round($item->d,7);
+        $lng = round($item->e,7);
         $speed = $item->f;
         
         $ax = $item->ax;
