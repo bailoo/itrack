@@ -226,11 +226,12 @@ if($header!="")
 	///===saving into database
 	date_default_timezone_set('Asia/Calcutta');
 	$current_time1 = date('Y-m-d H:i:s');
+        $current_date1 = date('Y-m-d');
         //$email_to='sachendra.chauhan@saahajmilk.com,rawmilk.control@gmail.com';
         //$email_to='taseen@iembsys.com';
 	$email_to='saahaj.control@gmail.com,rawmilk.control@gmail.com,hourlyreport4@gmail.com';
         //$email_to='prasad@charterhouse.in,rahul@charterhouse.in,Charterhouse GPS Team <gps.trakingitc@gmail.com>,logalert14@gmail.com';
-	$queryInsert="Insert into email_log (account_id,subject,email,message,message_type,status,create_date,create_id) Values('$account_id','NGC Vehicle RouteDeviation_$current_time1','$email_to','$header','NGC_RD',1,'$current_time1','$account_id')";
+	$queryInsert="Insert into email_log (account_id,subject,email,message,message_type,status,create_date,create_id) Values('$account_id','NGC Vehicle RouteDeviation_$current_date1','$email_to','$header','NGC_RD',1,'$current_time1','$account_id')";
 	//echo $queryInsert;
 	$Result=mysql_query($queryInsert,$DbConnection);
 	if($Result)
