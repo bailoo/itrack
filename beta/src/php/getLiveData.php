@@ -11,7 +11,6 @@ include_once('lastRecordData.php');
 include_once("getXmlData.php");	
 
 //echo "in if";
-
 $mode = $_REQUEST['mode'];
 $vserial1 = $_REQUEST['vserial'];
 //echo"veserial=".$vserial1."<br>";
@@ -85,8 +84,8 @@ for($i=0;$i<$vsize;$i++)
                             'messageTypeLR'=>$LastRecordObject->messageTypeLR[0],
                             'versionLR'=>$LastRecordObject->versionLR[0],
                             'fixLR'=>$LastRecordObject->fixLR[0],
-                            'latitudeLR'=>$LastRecordObject->latitudeLR[0],
-                            'longitudeLR'=>$LastRecordObject->longitudeLR[0],
+                            'latitudeLR'=>round($LastRecordObject->latitudeLR[0],7),
+                            'longitudeLR'=>round($LastRecordObject->longitudeLR[0],7),
                             'speedLR'=>$LastRecordObject->speedLR[0],
                             'serverDatetimeLR'=>$LastRecordObject->serverDatetimeLR[0],
                             'deviceDatetimeLR'=>$LastRecordObject->deviceDatetimeLR[0],
