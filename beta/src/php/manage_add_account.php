@@ -119,6 +119,7 @@
 			$flag_raw_milk=0;
 			$flag_plant_raw_milk=0;
 			$show_combo = 0;
+                        $flag_plant_gate=0;
 			$flagcombo=array();
 			$flagcombo[]=array("KEY"=>"0","DISPLAY"=>"None");	
 			for($k=0;$k<$size_feature_session;$k++)
@@ -158,6 +159,12 @@
 					$flag_plant_raw_milk = 1;
 					$show_combo = 1;
 					$flagcombo[]=array("KEY"=>"hindalco_invoice","DISPLAY"=>"Hindalco Invoice");
+				}
+                                if($feature_name_session[$k] == "plant_gate")
+				{
+					$flag_plant_gate = 1;
+					$show_combo = 1;
+					$flagcombo[]=array("KEY"=>"plant_gate","DISPLAY"=>"Plant GateKeeper");
 				}
 			}
 /*    if ($user_type1=="admin")

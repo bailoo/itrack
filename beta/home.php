@@ -8,7 +8,7 @@
   if($account_id)
   {
 						
-	if($user_type=="substation" || $user_type=="raw_milk" || $user_type=="plant_raw_milk" || $user_type=="hindalco_invoice" || $user_type=="plant_admin"){
+	if($user_type=="substation" || $user_type=="raw_milk" || $user_type=="plant_raw_milk" || $user_type=="hindalco_invoice" || $user_type=="plant_admin" || $user_type=="plant_gate"){
 		
 		//include("src/php/main_substation_home.php");
 		include("src/php/main_usertype_home.php");

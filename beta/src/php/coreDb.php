@@ -3128,7 +3128,7 @@ function getFieldStringAccountFeature($edit_account_id,$DbConnection)
     $result = mysql_query($query,$DbConnection);
     $row=mysql_fetch_object($result);
     $field_string="";
-    for($i=1;$i<=50;$i++)   //////for getting the field name having value 1 
+    for($i=1;$i<=51;$i++)   //////for getting the field name having value 1 
     {
         $field="field".$i;
         $field_value=$row->$field;
@@ -5538,6 +5538,157 @@ function updateHourlyRemark($route, $shift, $date, $remarks, $mark_completed, $D
     $result1=mysql_query($query,$DbConnection);           
     return $result1;    
 } 
+
+//new updation by taseen
+function getAccountIDGateUserID($DbConnection)
+{
+	$query = "SELECT account_id,user_id FROM account USE INDEX(acc_ut_status) WHERE user_type='plant_gate' AND status=1";		
+	//echo $query;
+	$result = mysql_query($query,$DbConnection);
+	while($row = mysql_fetch_object($result))
+	{
+		$account_id_sub = $row->account_id;
+		$user_id_sub = $row->user_id;
+		$dataAU[]=array('account_id_sub'=>$row->account_id,'user_id_sub'=>$row->user_id);
+	}
+	return $dataAU;
+	
+}
+function getNumRowPlanGateAssingment($plant_id_main,$account_id_gate,$DbConnection)
+ {
+	$query ="SELECT	* FROM gatekeeper_plant_assignment USE INDEX(pcno_accid_status) WHERE plant_customer_no='$plant_id_main' AND account_id='$account_id_gate' AND status=1";
+	//echo "query=".$query."<br>";
+	$result = mysql_query($query, $DbConnection);
+	$numrows = mysql_num_rows($result);	
+	return $numrows;
+ }
+ 
+ function insertGateKeeperPlantAssingment($plant_id_main,$account_id_gate,$account_id,$date,$DbConnection)
+ {
+	$query = "INSERT INTO gatekeeper_plant_assignment (plant_customer_no,account_id,status,create_id,create_date) VALUES('$plant_id_main',$account_id_gate,1,$account_id,'$date')";
+	//echo "query_insert=".$query."<br>";
+        //exit();
+	$result = mysql_query($query, $DbConnection);
+	return $result;
+ }
+ function updateGateKeeperPlantAssingmnet($date,$plant_id_main,$account_id_gate,$DbConnection)
+ {
+	$query = "UPDATE gatekeeper_plant_assignment SET status=0,edit_date='$date' WHERE sno='$plant_id_main' AND account_id='$account_id_gate'";			
+	//echo $query;
+	$result = mysql_query($query, $DbConnection);
+	return $result;
+ }
+ 
+ function getAccountIDGateKeeperID($DbConnection)
+{
+	$query = "SELECT account_id,user_id FROM account USE INDEX(acc_ut_status) WHERE user_type='plant_gate' AND status=1";		
+	//echo $query;
+	$result = mysql_query($query,$DbConnection);
+	while($row = mysql_fetch_object($result))
+	{
+		$account_id_sub = $row->account_id;
+		$user_id_sub = $row->user_id;
+		$dataAU[]=array('account_id_sub'=>$row->account_id,'user_id_sub'=>$row->user_id);
+	}
+	return $dataAU;
+	
+}
+
+function getDetailAllPGAD($account_id,$DbConnection)
+{
+        $data=array();
+	$query_plant="SELECT * FROM gatekeeper_plant_assignment USE INDEX(puass_accid_status) WHERE status=1 AND  account_id='$account_id'";
+	//echo "query=".$query_plant."<br>";
+	$result_plant = mysql_query($query_plant,$DbConnection);
+	while($row_plant = mysql_fetch_object($result_plant))
+	{
+		
+		$data[]=array('plant_customer_no'=>$row_plant->plant_customer_no,'sno'=>$row_plant->sno,'plant_customer_no'=>$row_plant->plant_customer_no);	
+	}
+	return $data;
+}
+
+function getInvoiceMDRMGate($condition,$startdate,$enddate,$conditionStr,$order,$user_type,$vehicle_no,$DbConnection)
+{
+	if($user_type=="plant_raw_milk")
+	{
+		$plant_in=$conditionStr;
+		if($condition=='datebetweenonly_alldata') //$condition="datebetweenonly_alldata";$orderA="";$user_type="plant_raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type);
+		{
+			
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate' AND ($plant_in)";
+		}
+		else if($condition=='invoicestatus_alldataNoDate')  //$condition="invoicestatus_alldataNoDate";$orderA="1";$user_type="plant_raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type);
+		{
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							AND ($plant_in) AND invoice_mdrm.invoice_status=$order AND (invoice_mdrm.unload_estimated_datetime is null or invoice_mdrm.unload_estimated_datetime='') ";
+		}
+                else if($condition=='invoicestatus_alldataNoDate_vehicle')  //$condition="invoicestatus_alldataNoDate";$orderA="1";$user_type="plant_raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type);
+		{
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							AND ($plant_in) AND invoice_mdrm.invoice_status=$order AND invoice_mdrm.vehicle_no='$vehicle_no' AND (invoice_mdrm.unload_estimated_datetime is null or invoice_mdrm.unload_estimated_datetime='') ";
+		}
+                else if($condition=='unloadaccepttimefull') //$condition="invoicestatus_alldataNoDate";$orderA="1";$user_type="admin";$conditionStr=""; getInvoiceMDRM($condition,$startdate,$enddate,$conditionStr,$orderA,$user_type);
+		{
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							AND ($plant_in) AND invoice_mdrm.invoice_status='$order' AND invoice_mdrm.close_time BETWEEN '$startdate' AND '$enddate'";
+							//echo"Test".$query;  
+		}
+		else //datebetween_invoicestatus //$condition="datebetween_invoicestatus";$orderA=$order;$user_type="plant_raw_milk"; getInvoiceMDRM($condition,$startdate,$enddate,$plant_in,$orderA,$user_type);
+		{
+			$query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							AND invoice_mdrm.create_date BETWEEN '$startdate' AND '$enddate' AND ($plant_in) AND invoice_mdrm.invoice_status='$order'";                                    
+		}
+	}
+	
+	$result = mysql_query($query,$DbConnection);	
+	//return $result;
+        $data_invoice=array();
+	while($row_select = mysql_fetch_object($result))
+	{
+            $station_name="";
+            if($row_select->chilling_plant !='' || $row_select->chilling_plant!=null)
+            {
+                $query_chillplant = "SELECT customer_no,station_name FROM station USE INDEX(stn_type_uaid_status) WHERE type=2  AND status=1 AND customer_no='$row_select->chilling_plant'";
+                $resultchill=mysql_query($query_chillplant,$DbConnection);
+		$rowchill=mysql_fetch_row($resultchill);
+                $station_name=$rowchill[1];
+            }
+		$data_invoice[]=array('uid'=>$row_select->uid,'nme'=>$row_select->nme,'sno'=>$row_select->sno,'invoice_status'=>$row_select->invoice_status,'unload_accept_time'=>$row_select->unload_accept_time,'create_date'=>$row_select->create_date,'transporter_account_id'=>$row_select->transporter_account_id,'create_id'=>$row_select->create_id,'qty_kg'=>$row_select->qty_kg,'plant_acceptance_time'=>$row_select->plant_acceptance_time,'system_time'=>$row_select->system_time,'close_type'=>$row_select->close_type,'milk_age'=>$row_select->milk_age,'dispatch_time'=>$row_select->dispatch_time,'unload_estimated_time'=>$row_select->unload_estimated_time,'lorry_no'=>$row_select->lorry_no,'target_time'=>$row_select->target_time,'vehicle_no'=>$row_select->vehicle_no,'plant'=>$row_select->plant,'tanker_type'=>$row_select->tanker_type,'docket_no'=>$row_select->docket_no,'email'=>$row_select->email,'mobile'=>$row_select->mobile,'fat_percentage'=>$row_select->fat_percentage,'snf_percentage'=>$row_select->snf_percentage,'fat_kg'=>$row_select->fat_kg,'snf_kg'=>$row_select->snf_kg,'driver_name'=>$row_select->driver_name,'driver_mobile'=>$row_select->driver_mobile,'validity_time'=>$row_select->validity_time,'chilling_plant'=>$row_select->chilling_plant,'station_name'=>$station_name,'unload_estimated_datetime'=>$row_select->unload_estimated_datetime,'fat_per_ft'=>$row_select->fat_per_ft,'snf_per_ft'=>$row_select->snf_per_ft,'qty_ct'=>$row_select->qty_ct,'temp_ct'=>$row_select->temp_ct,'acidity_ct'=>$row_select->acidity_ct,'mbrt_min_ct'=>$row_select->mbrt_min_ct,'mbrt_rm_ct'=>$row_select->mbrt_rm_ct,'mbrt_br_ct'=>$row_select->mbrt_br_ct,'protien_per_ct'=>$row_select->protien_per_ct,'sodium_ct'=>$row_select->sodium_ct,'testing_status'=>$row_select->testing_status,'fat_per_rt'=>$row_select->fat_per_rt,'snf_per_rt'=>$row_select->snf_per_rt,'adultration_ct'=>$row_select->adultration_ct,'otheradultration_ct'=>$row_select->otheradultration_ct,'edit_date'=>$row_select->edit_date,'invoice_material'=>$row_select->invoice_material,'lecino'=>$row_select->lecino,'transporter_editdate'=>$row_select->edit_date_transporter_last,'plant_editdate'=>$row_select->edit_date_plant_first,'close_time'=>$row_select->close_time);
+
+	}
+        return $data_invoice;
+}
+
+function updateInvoiceMdrmGateEntry($unload_estimatedatetime,$sno,$date,$account_id,$DbConnection)
+{
+    $query_update = "UPDATE invoice_mdrm SET unload_estimated_datetime='$unload_estimatedatetime',edit_date='$date',edit_date_plant_first='$date',edit_id='$account_id' WHERE sno='$sno'";
+    $result_update = mysql_query($query_update,$DbConnection);
+    return $result_update;
+}
+function getAllVehiclePlant($plant_in,$vehicle_like,$DbConnection)
+{
+    $query = "SELECT invoice_mdrm.*,account.user_id as uid,account_detail.name as nme FROM invoice_mdrm,account,account_detail USE INDEX(ad_account_id) WHERE 
+							account.account_id=account_detail.account_id AND invoice_mdrm.parent_account_id=account_detail.account_id AND invoice_mdrm.status=1 AND account.status=1
+							AND ($plant_in) AND invoice_mdrm.invoice_status=1 AND invoice_mdrm.vehicle_no LIKE '%$vehicle_like%' AND (invoice_mdrm.unload_estimated_datetime is null or invoice_mdrm.unload_estimated_datetime='') ";
+    //echo $query;
+    //exit();
+    $result = mysql_query($query,$DbConnection);	
+    //return $result;
+    $data_invoice=array();
+    while($row_select = mysql_fetch_object($result))
+    {
+        $data_invoice[]=$row_select->vehicle_no;
+    }
+    return $data_invoice;
+		
+}
 //========================================================//
 //////////// end of hierarchy class ////////
 ///////////// end of excalation ////////////

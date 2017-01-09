@@ -15512,3 +15512,152 @@ function show_invoiceRawMIlkMaterial()
     //return false;
     makePOSTRequest('src/php/action_manage_update_hourly_remark.htm', poststr);       
  }
+ 
+ 
+ //==new updation by taseen
+function action_manage_plant_gatekeeper(obj, action_type)
+{
+	//alert("K");
+	var poststr;
+	if(action_type=="assign")
+	{
+		var plant_str = get_selected_plant_substation(obj); 
+		//alert(device_str);
+		
+		if(plant_str!=false)
+		{
+			poststr = "plant_id=" + encodeURI( plant_str ) +
+					  "&plant_gate=" + encodeURI( document.getElementById("plant_gate").value )+  
+						"&action_type=" + action_type;
+					  //alert("Assign:"+poststr);  
+		}		
+		var file_name="src/php/action_manage_plant_gate.htm";						
+	}
+	else if(action_type=="deassign")
+	{
+		if(document.getElementById("plant_gate").value=="0"){
+		alert("Please select one Gate User");
+		return false;
+		}
+		var plant_str = get_selected_plant_substation(obj); 
+		//alert(device_str);
+		
+		if(plant_str!=false)
+		{
+			poststr = "plant_id=" + encodeURI( plant_str ) +
+					  "&plant_gate=" + encodeURI( document.getElementById("plant_gate").value )+  
+						"&action_type=" + action_type;
+					  //alert("Deassign:"+poststr);  
+		}		
+		var file_name="src/php/action_manage_plant_gate.htm";						
+	}
+	//alert("poststr="+poststr);
+	showManageLoadingMessage();
+	makePOSTRequest(file_name, poststr); 		
+}
+
+function show_gate_plant(obj, action_type)
+{
+	poststr = "local_account_id=" + encodeURI( document.getElementById("plant_gate").value )+
+	"&action_type=" + action_type;
+	var file_name="src/php/manage_account_plant_gate_deassignment.htm";
+	makePOSTRequest(file_name, poststr); 	
+}
+
+function show_plant_gate_rawmilk(type)
+{
+    if(type=='by_tanker')
+    {
+        var tanker=document.getElementById('keyword_tanker').value;
+        if(document.getElementById('keyword_tanker').value!='')
+        {
+            var poststr="action=show_invoice&type=tanker&vehicle_no="+tanker;
+            $.ajax({
+		type: "POST",
+		url:'src/php/manage_edit_raw_milk_gate.htm',
+		data: poststr,
+		success: function(response){
+		//console.log(response);
+		//alert("response="+response);		
+		document.getElementById('response').innerHTML="";	
+		$("#response").html(response);		
+            },
+            error: function()
+            {
+                    alert('An unexpected error has occurred! Please try later.');
+            }
+            });
+            
+        }
+    }
+    if(type=='by_pending_tanker')
+    {
+        var poststr="action=show_invoice&type=by_pending_tanker";
+        $.ajax({
+            type: "POST",
+            url:'src/php/manage_edit_raw_milk_gate.htm',
+            data: poststr,
+            success: function(response){
+            //console.log(response);
+            //alert("response="+response);		
+            document.getElementById('response').innerHTML="";	
+            $("#response").html(response);		
+        },
+        error: function()
+        {
+                alert('An unexpected error has occurred! Please try later.');
+        }
+        });
+    }
+}
+
+
+function getInvoiceGate(sno,lorry_no,station_name,plant,tanker_type,dispatch_time,target_time,transporter,driver_name,driver_mobile,vehicle_no)
+{
+    //alert(sno);
+   // alert(lorry_no);
+   document.getElementById('invoice_detail').style.display='';
+   document.getElementById('tanker_no').innerHTML=vehicle_no;
+   document.getElementById('invoice_sno').value=sno;
+   document.getElementById('invoice_lorry').value=lorry_no;
+   document.getElementById('station_plant').innerHTML=station_name+"/"+plant;   
+   document.getElementById('production_type').innerHTML=tanker_type;
+   document.getElementById('dispatch_date').innerHTML=dispatch_time;
+   document.getElementById('target_date').innerHTML=target_time;
+   document.getElementById('transporter').innerHTML=transporter;
+   document.getElementById('driver_name').innerHTML=driver_name;
+   document.getElementById('driver_mobile').innerHTML=driver_mobile;
+}
+
+function close_plant_gate_entry()
+{
+   var invoice_sno= document.getElementById('invoice_sno').value;
+   var gate_time= document.getElementById('gate_time').value
+   //alert(invoice_sno);
+   //alert(gate_time);
+   if(gate_time !="")
+   {
+        //alert(gate_time);
+        var poststr="action=submit_invoice_close&gate_time="+gate_time+"&sno="+invoice_sno;
+        $.ajax({
+            type: "POST",
+            url:'src/php/manage_edit_raw_milk_gate.htm',
+            data: poststr,
+            success: function(response){
+            //console.log(response);
+            //alert("response="+response);		
+            document.getElementById('response').innerHTML="";	
+            $("#response").html(response);		
+        },
+        error: function()
+        {
+                alert('An unexpected error has occurred! Please try later.');
+        }
+        });
+   }
+   else
+   {
+       alert("Please Enter Gate Entry Time");
+       return false;
+   }
+}

@@ -194,7 +194,7 @@
 
 		
 		$result=updateAccountDetail($post_edit_account_id[0],$post_user_name,$distance_variable,$post_perm_type,$DbConnection);
-		echo "result=".$result."<br>";
+		//echo "result=".$result."<br>";
 		
 		$result2=updateAccountFeature($update_string,$post_user_type,$post_edit_account_id[0],$DbConnection);			
 		echo "result=".$result2."<br>";

@@ -50,7 +50,9 @@
                 else if($user_type=='hindalco_invoice'){
                         include('module_frame_raw_milk_header.php');
                 }
-			
+		else if($user_type=='plant_gate'){
+                        include('module_frame_substation_header.php');
+                }	
 		 ?>
 		</td>   <!-- TABLE DATA 1 CLOSED -->      
     </tr>      
@@ -75,6 +77,9 @@
 									}
 									else if($user_type=='hindalco_invoice'){
 										include('manage_add_hindalco_invoice_usertype.php');
+									}
+                                                                        else if($user_type=='plant_gate'){
+										include('manage_add_raw_milk_usertype_gate.php');
 									}
                                                                 ?>
 							</div>

@@ -5,7 +5,7 @@
 
   if($account_id)
   {
-		if($user_type=="raw_milk" || $user_type=='substation' || $user_type=="plant_raw_milk" || $user_type=="hindalco_invoice" ){
+		if($user_type=="raw_milk" || $user_type=='substation' || $user_type=="plant_raw_milk" || $user_type=="hindalco_invoice" || $user_type=="plant_gate" ){
 			
 			include("src/php/main_usertype_setting.php");
 			

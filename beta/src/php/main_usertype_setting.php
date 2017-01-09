@@ -28,7 +28,9 @@
 			else if($user_type=='plant_raw_milk' ){
 				include('module_frame_substation_header.php');
 			}
-			
+			else if($user_type=='plant_gate'){
+                                include('module_frame_substation_header.php');
+                        }
 			
 		 ?>
 		</td>   <!-- TABLE DATA 1 CLOSED -->      

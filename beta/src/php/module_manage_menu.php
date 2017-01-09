@@ -830,6 +830,38 @@ $contetnbsp="&nbsp;";
 										"</tr>"+
 									"</table>",editable:false, children:
 									[]},';
+                                                                        
+                                                                        echo'{type:"Text",
+									label:"<table border=0 class=mystyle>"+
+										"<tr>"+ 																	
+											"<td valign=\'top\'>"+
+												"<table border=0 class=mystyle>"+													
+													"<tr>"+
+														"<td>'.$nbsp.'"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_account_gate_plant.htm\'); style=\'color:#18222a\'>"+
+																"<i class=\'fa fa-industry fa-2x\' aria-hidden=\'true\'></i>&nbsp;&nbsp;<!--<img src=\'images/manage/invoice.png\' style='.$style1.'>-->"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+
+											"</td>"+
+											"<td >"+
+												"<table border=0 class=mystyle valign=\'top\'>"+
+													"<tr>"+
+														"<td height=2px></td>"+
+													"</tr>"+
+													"<tr>"+
+														"<td valign=\'top\'>"+ 																				
+															"<a href=javascript:manage_show_file(\'src/php/manage_account_gate_plant.htm\'); class=\'menuitem\'>"+
+																"'.$contetnbsp.'GateKeeper Plant Assignment"+
+															"</a>"+																
+														"</td>"+
+													"</tr>"+
+												"</table>"+														
+											"</td>"+
+										"</tr>"+
+									"</table>",editable:false, children:
+									[]},';
 									
 									echo'{type:"Text",
 									label:"<table border=0 class=mystyle>"+

@@ -589,13 +589,21 @@ function show_option_with_value(type, option)      // type="manage/report/settin
             document.getElementById('substation_vehicles').style.display ="";              
             document.getElementById('substation_vehicles').innerHTML = result1[1];			
 		  }
-		  else if(result1[0]=="deassign_substation_plant")          
+		  else if(trim(result1[0])=="deassign_substation_plant")         
 		  {
 			//alert(result1[0]);
 			//alert(result1[1]);
 			hideManageLoadingMessage();
             document.getElementById('substation_plant').style.display ="";              
             document.getElementById('substation_plant').innerHTML = result1[1];			
+		  }
+                  else if(trim(result1[0])=="deassign_gate_plant")          
+		  {
+			//alert(result1[0]);
+			//alert(result1[1]);
+			hideManageLoadingMessage();
+                    document.getElementById('gate_plant').style.display ="";              
+                    document.getElementById('gate_plant').innerHTML = result1[1];			
 		  }
 		    else if(result1[0]=="destination_account")          
 		  {
