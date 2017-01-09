@@ -672,7 +672,7 @@ for($i=0;$i<$vsize;$i++)
             if(($overSpeed<$cmpOverSpeed) && ($last_rec!=0))
             {
                 $finalDistance = $finalDistance + $distance;	
-                $linetowrite='<x a="'.$SortedDataObject->messageTypeData[$last_rec].'" b="'.$SortedDataObject->versionData[$last_rec].'" c="'.$SortedDataObject->fixData[$last_rec].'" d="'.$SortedDataObject->latitudeData[$last_rec].'" e="'.$SortedDataObject->longitudeData[$last_rec].'" f="'.$SortedDataObject->speedData[$last_rec].'" g="'.$SortedDataObject->serverDatetime[$last_rec].'" h="'.$SortedDataObject->deviceDatetime[$last_rec].'" i="'.$SortedDataObject->io1Data[$last_rec].'" j="'.$SortedDataObject->io2Data[$last_rec].'" k="'.$SortedDataObject->io3Data[$last_rec].'" l="'.$SortedDataObject->io4Data[$last_rec].'" m="'.$SortedDataObject->io5Data[$last_rec].'" n="'.$SortedDataObject->io6Data[$last_rec].'" o="'.$SortedDataObject->io7Data[$last_rec].'" p="'.$SortedDataObject->io8Data[$last_rec].'" q="'.$SortedDataObject->sigStrData[$last_rec].'" r="'.$SortedDataObject->supVoltageData[$last_rec].'" s="'.$SortedDataObject->dayMaxSpeedData[$last_rec].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[8].'" y="'.$vehicle_detail_local[1].'" z="'.round($finalDistance,2).'"/>';
+                $linetowrite='<x a="'.$SortedDataObject->messageTypeData[$last_rec].'" b="'.$SortedDataObject->versionData[$last_rec].'" c="'.$SortedDataObject->fixData[$last_rec].'" d="'.$SortedDataObject->latitudeData[$last_rec].'" e="'.$SortedDataObject->longitudeData[$last_rec].'" f="'.$SortedDataObject->speedData[$last_rec].'" g="'.$SortedDataObject->serverDatetime[$last_rec].'" h="'.$SortedDataObject->deviceDatetime[$last_rec].'" i="'.$SortedDataObject->io1Data[$last_rec].'" j="'.$SortedDataObject->io2Data[$last_rec].'" k="'.$SortedDataObject->io3Data[$last_rec].'" l="'.$SortedDataObject->io4Data[$last_rec].'" m="'.$SortedDataObject->io5Data[$last_rec].'" n="'.$SortedDataObject->io6Data[$last_rec].'" o="'.$SortedDataObject->io7Data[$last_rec].'" p="'.$SortedDataObject->io8Data[$last_rec].'" q="'.$SortedDataObject->sigStrData[$last_rec].'" r="'.$SortedDataObject->supVoltageData[$last_rec].'" s="'.$SortedDataObject->dayMaxSpeedData[$last_rec].'" v="'.$vserial[$i].'" w="'.$vehicle_detail_local[0].'" x="'.$vehicle_detail_local[8].'" y="'.$vehicle_detail_local[1].'" z="'.round($finalDistance,2).'" za="'.$vehicle_detail_local[8].'"/>';
                 //echo"<textarea>".$linetowrite."</textarea>"; 
                 $lineTmpTrack=$lineTmpTrack.$linetowrite."@";            
             }
@@ -792,12 +792,16 @@ for($i=0;$i<$vsize;$i++)
                 $distance_travel_tmp1 = explode("=",$distance_travel_tmp[0]);
                 $distance_travel= preg_replace('/"/', '', $distance_travel_tmp1[1]);
                 $distance_travel_arr[]=$distance_travel;
+                preg_match('/za="[^"]+/', $lineF[$n], $dmobno_tmp);
+                $dmobno_tmp1 = explode("=",$dmobno_tmp[0]);
+                $dmobno = preg_replace('/"/', '', $dmobno_tmp1[1]);
+                $dMobileNoArr[]=$dmobno;
             }
             //print_r($lat_arr_last);
             //print_r($lng_arr_last);
             //print_r($io_str_last);
             $googleMapthisapi=new GoogleMapHelper();								
-            echo $googleMapthisapi->addMultipleMarkerPerson("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$distance_travel_arr);
+            echo $googleMapthisapi->addMultipleMarkerPerson("map_canvas",$lat_arr_last,$lng_arr_last,$datetime_arr_last,$vserial_arr_last,$vehiclename_arr_last,$speed_arr_last,$vehiclenumber_arr_last,$distance_travel_arr,$dMobileNoArr);
         }
     }
     else   // for text track report

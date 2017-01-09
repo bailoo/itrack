@@ -943,7 +943,7 @@ var input = (document.getElementById('pac-input'));
 				}
 				
 				
-				function infoCallbackPersonTrack(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,marker,dTravel) 
+				function infoCallbackPersonTrack(lat,lng,dateTimeArr,vSerial,vName,vNumber,speed,marker,dTravel,dMobileNumber) 
 				{	
 					return function() 
 					{
@@ -1024,7 +1024,7 @@ var input = (document.getElementById('pac-input'));
 									'<tr>'+
 									'<td class=\"live_td_css1\">Mobile Number </td>'+
 									'<td>:</td>'+
-									'<td class=\"live_td_css2\">'+vNumber+'</td>'+
+									'<td class=\"live_td_css2\">'+dMobileNumber+'</td>'+
 								   '</tr>'+
 								   '<tr>'+
 								   '<tr>'+
@@ -1662,7 +1662,7 @@ var input = (document.getElementById('pac-input'));
 					}
 				}
 				
-				function setMultipleMarkerPerson(map,latarr, lngarr,datetimearr,vSerial,vName,vNumber,speed,dTravel)
+				function setMultipleMarkerPerson(map,latarr, lngarr,datetimearr,vSerial,vName,vNumber,speed,dTravel,mobileNoArr)
 				{ 
 					deleteOverlays(); 
 					if((latarr.length ==1) && (!latarr[0]) && (!lngarr[0]))
@@ -1722,6 +1722,8 @@ var input = (document.getElementById('pac-input'));
 						var vNumberLocal=vNumber[i];
 						var speedLocal=speed[i];						
 						var dTravelLocal=dTravel[i];
+                                                var dMobileNumber=mobileNoArr[i];
+                                                
 						var marker = new google.maps.Marker
 						({
 							position: position,	 map: map, icon: image
@@ -1730,7 +1732,7 @@ var input = (document.getElementById('pac-input'));
 										
 						google.maps.event.addListener
 						(
-							marker, mouse_action, infoCallbackPersonTrack(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,marker,dTravelLocal)
+							marker, mouse_action, infoCallbackPersonTrack(lat_tmp,lng_tmp,dateTime,vSerialLocal,vNameLocal,vNumberLocal,speedLocal,marker,dTravelLocal,dMobileNumber)
 						);						
 						
 						var line = new google.maps.Polyline
@@ -2236,7 +2238,7 @@ var input = (document.getElementById('pac-input'));
 		return $marker;
 	}
 	
-	function addMultipleMarkerPerson($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$d_travel_str)
+	function addMultipleMarkerPerson($map_id, $latarr,$lngarr,$datetimearr,$vehicle_serial_arr,$vehicle_name_arr,$speed_arr,$vehicle_number_arr,$d_travel_str,$mobileNoArr)
 	{
 		//print_r($latarr);
 		//print_r($lngarr);
@@ -2259,9 +2261,11 @@ var input = (document.getElementById('pac-input'));
 			$vNameJs=json_encode($vehicle_name_arr);
 			$vNumberJs=json_encode($vehicle_number_arr);
 			$speedJs=json_encode($speed_arr);		
-			$dTravelJs=json_encode($d_travel_str);                      
+			$dTravelJs=json_encode($d_travel_str); 
+                        $mobileNoArrJs=json_encode($mobileNoArr);
+                        
 			//echo "in if<br>";
-			$marker .= "setMultipleMarkerPerson({$map_id},{$latJs},{$lngJS},{$dateTimeJs},{$vSerialJs},{$vNameJs},{$vNumberJs},{$speedJs},{$dTravelJs}".")";
+			$marker .= "setMultipleMarkerPerson({$map_id},{$latJs},{$lngJS},{$dateTimeJs},{$vSerialJs},{$vNameJs},{$vNumberJs},{$speedJs},{$dTravelJs},{$mobileNoArrJs}".")";
 		}		
 		$marker .= "</script>";
 		return $marker;
