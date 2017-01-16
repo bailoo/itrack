@@ -686,7 +686,8 @@ function show_option_with_value(type, option)      // type="manage/report/settin
             document.getElementById('manage_selection_information').innerHTML = result1[1];                           
           }
 		else if(result1[0].trim()=="portal_vehicle_information")
-          {                          
+          { 
+              document.getElementById("enter_button").disabled = false;
               document.getElementById('portal_vehicle_information').style.display ="";			 			  
               document.getElementById('portal_vehicle_information').innerHTML = result1[1];
       			  //alert("result2="+result1[2]);

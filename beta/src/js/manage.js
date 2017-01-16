@@ -860,6 +860,7 @@ function check_uncheck_features_button(fobj)
 
 function manage_checked_account(local_account)
 {
+        document.getElementById("enter_button").disabled = true;
 	var account_string="";
 	var account_status=document.getElementById('account_status').value;
 	var account_status1=account_status.split(":");
