@@ -714,7 +714,7 @@ function getDeviceImeiNo($imeiNo,$status,$DbConnection)
 function getDANumRowRecord($deviceImeiNo,$accountId,$DbConnection)
 {
 	$query="SELECT device_imei_no FROM device_assignment USE INDEX (DeviceImeiNo_accountID) WHERE ".
-			"device_imei_no = $deviceImeiNo AND account_id=$accountId";
+			"device_imei_no = '$deviceImeiNo' AND account_id=$accountId";
 	//echo "query3=".$query."<br>";
 	$result = mysql_query($query, $DbConnection);
 	$numrows = mysql_num_rows($result);	
@@ -725,7 +725,7 @@ function getDANumRowRecordNew($deviceImeiNo,$accountId,$DbConnection)
 {
 
 	$query="SELECT status FROM device_assignment USE INDEX (DeviceImeiNo_accountID) WHERE ".
-			"device_imei_no = $deviceImeiNo AND account_id=$accountId";
+			"device_imei_no = '$deviceImeiNo' AND account_id=$accountId";
 	$result = mysql_query($query, $DbConnection);
 	$numrows = mysql_num_rows($result);
 	if($numrows==0)

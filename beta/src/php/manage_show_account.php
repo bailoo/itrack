@@ -250,7 +250,14 @@
 		$group_id_local=$AccountNode->data->AccountGroupID;
 		$account_name=$AccountNode->data->AccountName;
 		$ChildCount=$AccountNode->ChildCnt;		
- 
+                if($account_id_local=="1")
+                {
+                $disablesStatus="disabled";
+                }
+                else
+                {
+                $disablesStatus="";
+                }
 		echo"<tr>";
 		for($k=0;$k<$ColumnNo;$k++)
 		{
@@ -268,14 +275,14 @@
 		{
 			$account_status_string=$account_status_string.$account_id_local.',1'.':';
 			echo"<td>
-						&nbsp;<INPUT TYPE='checkbox' name='manage_id[]' VALUE='$account_id_local' checked onclick='javascript:manage_checked_account(this);'><a href='tree_account_detail.php?account_id_local=$account_id_local'>".$account_name."</a>
+						&nbsp;<INPUT TYPE='checkbox' name='manage_id[]' VALUE='$account_id_local' checked onclick='javascript:manage_checked_account(this);' $disablesStatus><a href='tree_account_detail.php?account_id_local=$account_id_local'>".$account_name."</a>
 					</td>";		
 		}
 		else
 		{	
 			$account_status_string=$account_status_string.$account_id_local.",0".":";
 		echo"<td>&nbsp;                
-				<INPUT TYPE='checkbox' name='manage_id[]' VALUE='$account_id_local' onclick='javascript:manage_checked_account(this);'><a href='tree_account_detail.php?account_id_local=$account_id_local'>".$account_name."</a>
+				<INPUT TYPE='checkbox' name='manage_id[]' VALUE='$account_id_local' onclick='javascript:manage_checked_account(this);' $disablesStatus><a href='tree_account_detail.php?account_id_local=$account_id_local'>".$account_name."</a>
 			</td>";
 		}
 		for($l=($k+1);$l<$MaxColumnNo;$l++)
