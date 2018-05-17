@@ -94,12 +94,14 @@ for($i=0;$i<$vsize;$i++)
         {
             //echo "<br>END";
              $startdate_local = $userdates[$di]." 00:00:00";
+if($date_size == 1) { $startdate_local = $date1; }
              $enddate_local = $date2;
         }
         else
         {
             //echo "<br>MID";
             $startdate_local = $userdates[$di]." 00:00:00";
+if($date_size == 1) { $startdate_local = $date1; }
             $enddate_local = $userdates[$di]." 23:59:59";          
         }
         $startdate=$date1;
@@ -118,143 +120,146 @@ for($i=0;$i<$vsize;$i++)
             $imei=$vserial[$i];
             for($obi=0;$obi<$prevSortedSize;$obi++)
             {                
-                $lat=$SortedDataObject->latitudeData[$obi];
-                $lng=$SortedDataObject->longitudeData[$obi];	
-                $xml_date=$SortedDataObject->deviceDatetime[$obi];
-               
-				//echo "supv1=".$supv."<br>";
-                $gps_valid = 0;	
-                if(strlen($lat)>2 && strlen($lng)>2) 
-                {				 
-                    $gps_valid = 1;	
-                    $for_last_nogps_data=$SortedDataObject->supVoltageData[$obi];
-                }
-                if($firstdata_flag==0)
-                {
-                    if($xml_date!=$userdates[$di]." 00:00:00") //// this is for first datagap report
-                    {
-                        //echo "in if date=".$userdates[$i]."<br>";
-                        $tdiff_nodata=strtotime($xml_date)-strtotime($startdate);
-                        if($tdiff_nodata>$skip_nodata_interval) /// for considering first record of every date
-                        {
-                            $t1_no_data[$imei][] = $startdate;
-                            $t2_no_data[$imei][] = $xml_date;
-                            $tdiff_no_data[$imei][] = $tdiff_nodata;
-                            $distance_no_data[$imei][]='0';
-                            $supv_no_data[$imei][] =$SortedDataObject->supVoltageData[$obi];
-                        }
-                    }
-                    $firstdata_flag=1;
-                    $prev_xml_date=$xml_date;
-                    $t1NoData= $xml_date;
-                    $nodata_lat_prev=$lat;
-                    $nodata_lng_prev=$lng;
-                    //echo "xmldate=".$prev_xml_date."<br>";
-                }
-                else
-                {
-                    $t2NoData = $xml_date;							
-                    $xml_date_sec=strtotime($xml_date);
-                    $prev_xml_date_sec=strtotime($prev_xml_date);
+				$lat=$SortedDataObject->latitudeData[$obi];
+				$lng=$SortedDataObject->longitudeData[$obi];	
+				$xml_date=$SortedDataObject->deviceDatetime[$obi];
+										
+				if((strtotime($xml_date) >= strtotime($startdate_local)) && (strtotime($xml_date)<=strtotime($enddate_local)) )
+				{				   
+					//echo "supv1=".$supv."<br>";
+					$gps_valid = 0;	
+					if(strlen($lat)>2 && strlen($lng)>2) 
+					{				 
+						$gps_valid = 1;	
+						$for_last_nogps_data=$SortedDataObject->supVoltageData[$obi];
+					}
+					if($firstdata_flag==0)
+					{
+						if($xml_date!=$userdates[$di]." 00:00:00") //// this is for first datagap report
+						{
+							//echo "in if date=".$userdates[$i]."<br>";
+							$tdiff_nodata=strtotime($xml_date)-strtotime($startdate);
+							if($tdiff_nodata>$skip_nodata_interval) /// for considering first record of every date
+							{
+								$t1_no_data[$imei][] = $startdate;
+								$t2_no_data[$imei][] = $xml_date;
+								$tdiff_no_data[$imei][] = $tdiff_nodata;
+								$distance_no_data[$imei][]='0';
+								$supv_no_data[$imei][] =$SortedDataObject->supVoltageData[$obi];
+							}
+						}
+						$firstdata_flag=1;
+						$prev_xml_date=$xml_date;
+						$t1NoData= $xml_date;
+						$nodata_lat_prev=$lat;
+						$nodata_lng_prev=$lng;
+						//echo "xmldate=".$prev_xml_date."<br>";
+					}
+					else
+					{
+						$t2NoData = $xml_date;							
+						$xml_date_sec=strtotime($xml_date);
+						$prev_xml_date_sec=strtotime($prev_xml_date);
 
-                    $tmp_diff=$xml_date_sec-$prev_xml_date_sec;
-					$nodata_lat_next=$lat;
-                    $nodata_lng_next=$lng;
-                    $supv_on_no_data=$SortedDataObject->supVoltageData[$obi];
-                    //echo "xml_date_sec=".$xml_date_sec."prev_xml_date_sec=".$prev_xml_date_sec."diff=".$tmp_diff."skip_nodata_interval=".$skip_nodata_interval."<br>";
-                    if($tmp_diff>$skip_nodata_interval)
-                    {
-                        //echo "date1=".$prev_xml_date."date2=".$xml_date."<br>";
-                        $tdiff_nodata=strtotime($xml_date)-strtotime($prev_xml_date);
-                        $t1_no_data[$imei][] = $prev_xml_date;
-                        $t2_no_data[$imei][] = $xml_date;
-                        $tdiff_no_data[$imei][] = $tdiff_nodata;
-						
-                        if((IsNullOrEmptyString($nodata_lat_prev) && IsNullOrEmptyString($nodata_lng_prev)) || (IsNullOrEmptyString($nodata_lat_next) && IsNullOrEmptyString($nodata_lng_next))) // for eleminating garbage value
-                        {
-							//echo "in if";
-                            $supv_on_no_data=isset($supv_on_no_data)?$supv_on_no_data:'0';
-                            $distance_no_data[$imei][] = '0';
-                            $supv_no_data[$imei][] = $supv_on_no_data;
-                        }
-                        else 
-                        {
-                            calculate_distance($nodata_lat_prev, $nodata_lat_next, $nodata_lng_prev, $nodata_lng_next, $distance);
-							//echo "dateFrom=".$prev_xml_date."dateTo=".$xml_date."distance=".$distance." nodata_lat_prev=".$nodata_lat_prev."=".$nodata_lng_prev."nodata_lat_next=".$nodata_lat_next."nodata_lng_next=".$nodata_lng_next."<br>";
-                            $distance_no_data[$imei][] = round($distance,3);
-                            $supv_no_data[$imei][] = $supv_on_no_data;
-                        }
-						
-                        //echo "in if<br>";
-                    }
-                    //if(($no_gps_found) && (($gps_valid) || ($tmp_diff>$skip_nodata_interval)))
-                    if(($no_gps_found) && ($gps_valid))
-                    {
-                        $tdiff = strtotime($t2)-strtotime($t1);
-                        //echo "<br>LOOP: T1 = ".$t1."\tT2 = ".$t2."\tTdiff = ".$tdiff."\tTskip = ".$skip_interval."<br>";
-                        if( $tdiff >= $skip_interval) // a big interval found
-                        {									
-                            $t1_no_gps[$imei][] = $t1;
-                            $t2_no_gps[$imei][] = $t2;
+						$tmp_diff=$xml_date_sec-$prev_xml_date_sec;
+						$nodata_lat_next=$lat;
+						$nodata_lng_next=$lng;
+						$supv_on_no_data=$SortedDataObject->supVoltageData[$obi];
+						//echo "xml_date_sec=".$xml_date_sec."prev_xml_date_sec=".$prev_xml_date_sec."diff=".$tmp_diff."skip_nodata_interval=".$skip_nodata_interval."<br>";
+						if($tmp_diff>$skip_nodata_interval)
+						{
+							//echo "date1=".$prev_xml_date."date2=".$xml_date."<br>";
+							$tdiff_nodata=strtotime($xml_date)-strtotime($prev_xml_date);
+							$t1_no_data[$imei][] = $prev_xml_date;
+							$t2_no_data[$imei][] = $xml_date;
+							$tdiff_no_data[$imei][] = $tdiff_nodata;
 							
-                            //echo "latStart_1=".$start_gps_lat."lngStart_2=".$start_gps_lng." lat=".$lat." lng=".$lng."<br>";
-                            if((IsNullOrEmptyString($start_gps_lat) && IsNullOrEmptyString($start_gps_lng)) || (IsNullOrEmptyString($lat) && IsNullOrEmptyString($lng))) // for eleminating garbage value
-                            {
-                                $supv=isset($supv)?$supv:'0';
-                                    $battory_voltage_arr[$imei][] = $supv;
-                                    //calculate_distance($start_gps_lat, $lat, $start_gps_lng, $lng, $distance);
-                                    $arial_distance_arr[$imei][] = 0;
+							if((IsNullOrEmptyString($nodata_lat_prev) && IsNullOrEmptyString($nodata_lng_prev)) || (IsNullOrEmptyString($nodata_lat_next) && IsNullOrEmptyString($nodata_lng_next))) // for eleminating garbage value
+							{
+								//echo "in if";
+								$supv_on_no_data=isset($supv_on_no_data)?$supv_on_no_data:'0';
+								$distance_no_data[$imei][] = '0';
+								$supv_no_data[$imei][] = $supv_on_no_data;
+							}
+							else 
+							{
+								calculate_distance($nodata_lat_prev, $nodata_lat_next, $nodata_lng_prev, $nodata_lng_next, $distance);
+								//echo "dateFrom=".$prev_xml_date."dateTo=".$xml_date."distance=".$distance." nodata_lat_prev=".$nodata_lat_prev."=".$nodata_lng_prev."nodata_lat_next=".$nodata_lat_next."nodata_lng_next=".$nodata_lng_next."<br>";
+								$distance_no_data[$imei][] = round($distance,3);
+								$supv_no_data[$imei][] = $supv_on_no_data;
+							}
+							
+							//echo "in if<br>";
+						}
+						//if(($no_gps_found) && (($gps_valid) || ($tmp_diff>$skip_nodata_interval)))
+						if(($no_gps_found) && ($gps_valid))
+						{
+							$tdiff = strtotime($t2)-strtotime($t1);
+							//echo "<br>LOOP: T1 = ".$t1."\tT2 = ".$t2."\tTdiff = ".$tdiff."\tTskip = ".$skip_interval."<br>";
+							if( $tdiff >= $skip_interval) // a big interval found
+							{									
+								$t1_no_gps[$imei][] = $t1;
+								$t2_no_gps[$imei][] = $t2;
+								
+								//echo "latStart_1=".$start_gps_lat."lngStart_2=".$start_gps_lng." lat=".$lat." lng=".$lng."<br>";
+								if((IsNullOrEmptyString($start_gps_lat) && IsNullOrEmptyString($start_gps_lng)) || (IsNullOrEmptyString($lat) && IsNullOrEmptyString($lng))) // for eleminating garbage value
+								{
+									$supv=isset($supv)?$supv:'0';
+										$battory_voltage_arr[$imei][] = $supv;
+										//calculate_distance($start_gps_lat, $lat, $start_gps_lng, $lng, $distance);
+										$arial_distance_arr[$imei][] = 0;
 
-                            }
-                            else
-                            {
-                                    $battory_voltage_arr[$imei][] = $supv;
-                                    calculate_distance($start_gps_lat, $lat, $start_gps_lng, $lng, $distance);
-                                    if($distance>0.1)
-                                    {
-                                            $arial_distance_arr[$imei][] = round($distance,3);
-                                    }
-                                    else
-                                    {
-                                            $arial_distance_arr[$imei][] = 0;
-                                    }
-                            }
-						
-												
+								}
+								else
+								{
+										$battory_voltage_arr[$imei][] = $supv;
+										calculate_distance($start_gps_lat, $lat, $start_gps_lng, $lng, $distance);
+										if($distance>0.1)
+										{
+												$arial_distance_arr[$imei][] = round($distance,3);
+										}
+										else
+										{
+												$arial_distance_arr[$imei][] = 0;
+										}
+								}
 							
-                            /*if($tmp_diff>$skip_nodata_interval)
-                            {
-                                    $t2_no_gps[$imei][] = $prev_xml_date;
-                            }
-                            else
-                            {
-                                    $t2_no_gps[$imei][] = $t2;
-                            }*/
-                            $tdiff_no_gps[$imei][] = $tdiff;								
-                        }
-                        $no_gps_found = false;
-                    }
-                    if(!$gps_valid)
-                    {
-						
-                        if(!$no_gps_found)
-                        {
-                            $no_gps_found = true;
-                            $start_gps_lat=$SortedDataObject->latitudeData[$obi-1];
-                            $start_gps_lng=$SortedDataObject->longitudeData[$obi-1];
-                            $supv = $SortedDataObject->supVoltageData[$obi];
-                            //echo "latStart=".$start_gps_lat."lngStart=".$start_gps_lng."<br>";
-                            $t1 = $xml_date;
-                        }
-                        $t2 = $xml_date;		
-                    }
-                    $valid_data = true;
-                    $prev_xml_date = $xml_date;
-                    $nodata_lat_prev=$lat;
-                    $nodata_lng_prev=$lng;
-                    $t1NoData= $xml_date;
-                    ////////////////// 
-                }
+													
+								
+								/*if($tmp_diff>$skip_nodata_interval)
+								{
+										$t2_no_gps[$imei][] = $prev_xml_date;
+								}
+								else
+								{
+										$t2_no_gps[$imei][] = $t2;
+								}*/
+								$tdiff_no_gps[$imei][] = $tdiff;								
+							}
+							$no_gps_found = false;
+						}
+						if(!$gps_valid)
+						{
+							
+							if(!$no_gps_found)
+							{
+								$no_gps_found = true;
+								$start_gps_lat=$SortedDataObject->latitudeData[$obi-1];
+								$start_gps_lng=$SortedDataObject->longitudeData[$obi-1];
+								$supv = $SortedDataObject->supVoltageData[$obi];
+								//echo "latStart=".$start_gps_lat."lngStart=".$start_gps_lng."<br>";
+								$t1 = $xml_date;
+							}
+							$t2 = $xml_date;		
+						}
+						$valid_data = true;
+						$prev_xml_date = $xml_date;
+						$nodata_lat_prev=$lat;
+						$nodata_lng_prev=$lng;
+						$t1NoData= $xml_date;
+						////////////////// 
+					}
+				} //## IF DATE CLOSED 
             }
             //####### CHECK END TIME DATAGAP	
             $validDataFlag=0;
