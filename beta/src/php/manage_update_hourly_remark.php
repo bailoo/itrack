@@ -103,8 +103,14 @@ echo '<div class="panel panel-default">
                              echo '<td width="100px;">'.$data[$i]['Date'].'</td>';    
 
                              echo '<td width="120px;"><strong>'.$routeCompletedAuto.'</strong></td>';
-                             echo '<td width="200px;"><input type="text" width="5" value="'.$data[$i]['Remarks'].'" readOnly></td>';                             
-                             echo '<td width="100px;"><input type="checkbox" checked disabled></td>';
+                             
+                             if($routeCompletedAuto=="No") {
+                                echo '<td width="200px;"><input type="text" width="5" value="'.$data[$i]['Remarks'].'" readOnly></td>';                             
+                                echo '<td width="100px;"><input type="checkbox" checked disabled></td>';
+                             } else {
+                                echo '<td width="200px;"><input type="text" width="5" value="'.$data[$i]['Remarks'].'"></td>';                             
+                                echo '<td width="100px;"><input type="checkbox" checked></td>';                                 
+                             }
                              echo '<td width="150px;">'.$data[$i]['UpdateTime'].'</td>';
 
                              echo '<td width="300px">'.$data[$i]['Vehicles'].'</td>';
