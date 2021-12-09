@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy element &apos;TransactionServer.java&apos; to &apos;crts_9001_ok_v2/src/main/java/com.wanhive.rts&apos;&#x0D;&#x0A;- Original project: &apos;crts_8006_v2&apos;&#x0D;&#x0A;- Destination element: &apos;crts_9001_ok_v2/src/main/java/com.wanhive.rts&apos;&#x0D;&#x0A;- Original element: &apos;com.wanhive.rts.TransactionServer.java&apos;" description="Copy compilation unit" destination="=crts_9001_ok_v2/src\/main\/java&lt;com.wanhive.rts" element1="/src\/main\/java&lt;com.wanhive.rts{TransactionServer.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1439287750612" units="1" version="1.0"/>
-</session>

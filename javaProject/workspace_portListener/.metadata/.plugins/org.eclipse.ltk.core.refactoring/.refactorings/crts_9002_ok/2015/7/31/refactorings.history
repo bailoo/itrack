@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring accessors="true" comment="Delete 2 elements from project &apos;crts_9002_ok&apos;&#x0D;&#x0A;- Original project: &apos;crts_9002_ok&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     in.co.itracksolution.GetSpeedAlert.java&#x0D;&#x0A;     in.co.itracksolution.GetTurnAlert.java" description="Delete elements" element1="/src\/main\/java&lt;in.co.itracksolution{GetTurnAlert.java" element2="/src\/main\/java&lt;in.co.itracksolution{GetSpeedAlert.java" elements="2" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1438158396259" subPackages="false" version="1.0"/>
-</session>
