@@ -1,1 +1,0 @@
-<?php $fileatt ='PEAR.php';$fileatt_type = 'application/pdf/php';$fileatt_name ='peartmp.php'; $email_from = 'iespltest@gmail.com';$email_subject = 'TEST SUBJECT'; $email_message = 'TEST MESSAGE';$email_to = 'taseen@iembsys.com,rizwan@iembsys.com'; ?>
